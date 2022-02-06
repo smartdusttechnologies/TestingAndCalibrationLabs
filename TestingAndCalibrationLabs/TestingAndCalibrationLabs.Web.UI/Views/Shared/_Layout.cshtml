@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] TestingAndCalibrationLabs.</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/Style.css" />
+    <style>
+        .ddm {
+            display: block;
+            color: pink;
+            float: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: lightcyan
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: yellow;
+            min-width: 160px;
+            box-shadow: 0px 16px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: blue;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: grey;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row ">
+        <nav>
+            <div class="icon">
+                <img src="~/Image/Aditi_logo.jpg" />
+            </div>
+            <div class="search_box">
+                <input type="search" placeholder="Search" />
+                <span class="fa fa-search"></span>
+            </div>
+            <ol>
+                <li><a class="" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a class="" asp-area="" asp-controller="Home" asp-action="PlanPricing">Plan & Pricing</a></li>
+                <li>
+                    <div class="dropdown">
+
+                        <a href="#">Online</a>
+                        <div class="dropdown-content">
+                            <a href="#" class="ddm">Book Slot</a>
+                            <a href="#" class="ddm">Product</a>
+                            <a href="#" class="ddm">Services</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li>
+                    <div class="dropdown">
+                        <a href="#">Get In Touch</a>
+                        <div class="dropdown-content">
+                            <a href="#" class="ddm">Link 1</a>
+                            <a href="#" class="ddm">Link 2</a>
+                            <a href="#" class="ddm">Link 3</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#" class="fas fa-user-circle "></a></li>
+                <li><a href="#" class="fa fa-shopping-cart"></a></li>
+            </ol>
+            <label for="" class="bar">
+                <span class="fa fa-bars" id="bars"></span>
+                <span class="fa fa-times" id="times"></span>
+            </label>
+        </nav>
+</div>
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+
+        <h6 style="color:darkblue" text-align="center"> © 2020 Copyright  :Aditi Beauty Care</h6>
+    </div>
+
+</body>
+</html>
