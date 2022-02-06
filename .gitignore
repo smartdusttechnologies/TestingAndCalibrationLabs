@@ -21,3 +21,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/TestingAndCalibrationLabs/.vs/TestingAndCalibrationLabs/v16
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/bin/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/obj/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/bin/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/TestingAndCalibrationLabs.Web.UI.csproj.nuget.g.targets
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/TestingAndCalibrationLabs.Web.UI.csproj.nuget.g.props
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/TestingAndCalibrationLabs.Web.UI.csproj.nuget.dgspec.json
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/project.nuget.cache
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/project.assets.json
