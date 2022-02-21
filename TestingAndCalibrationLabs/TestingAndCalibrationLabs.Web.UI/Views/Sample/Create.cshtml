@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Sample.SampleModel
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Sample.SampleModelDTO
 
 @{
     ViewData["Title"] = "Create";
@@ -29,6 +29,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

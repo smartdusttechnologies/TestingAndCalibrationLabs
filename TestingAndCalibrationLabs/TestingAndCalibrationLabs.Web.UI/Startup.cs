@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using AutoMapper;
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -24,7 +24,8 @@ namespace TestingAndCalibrationLabs.Web.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllers();
             //Services
             services.AddScoped<ISampleService, SampleService>();
 

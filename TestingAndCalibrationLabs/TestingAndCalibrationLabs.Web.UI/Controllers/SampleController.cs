@@ -4,28 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using Microsoft.AspNetCore.Hosting;
-
+using AutoMapper;
+using TestingAndCalibrationLabs.Business.Core;
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     /// <summary>
     /// a base class for view
     /// </summary>
+
     public class SampleController : Controller
     {
         private readonly ILogger<SampleController> _logger;
         private readonly ISampleService _sampleService;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="sampleService"></param>
         /// <param name="hostingEnvironment"></param>
-        public SampleController(ILogger<SampleController> logger, ISampleService sampleService, IWebHostEnvironment hostingEnvironment)
+        public SampleController(ILogger<SampleController> logger, ISampleService sampleService, IWebHostEnvironment hostingEnvironment,IMapper mapper)
         {
             _logger = logger;
             _sampleService = sampleService;
             _hostingEnvironment = hostingEnvironment;
+            _mapper = mapper;   
         }
        /// <summary>
        /// for getting old page index
@@ -34,15 +38,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var samples = _sampleService.GetPages(1);
-            List<UI.Models.Sample.SampleModel> sampless = new List<UI.Models.Sample.SampleModel>();
-            foreach (var item in samples)
-            {
-                sampless.Add(new Models.Sample.SampleModel { Id = item.Id, Name = item.Name, Description = item.Description });
-            }
-            ViewBag.nextPage = 2;
-            ViewBag.PreviousPage = 0;
-            return View(sampless.AsEnumerable());
+            List<Business.Core.Model.SampleModel> samplelists = _sampleService.GetPages(1);
+            var samples = _mapper.Map<List<Business.Core.Model.SampleModel>, List<Models.Sample.SampleModelDTO>>(samplelists);
+            //var samples = _sampleService.GetPages(1);
+            //List<UI.Models.Sample.SampleModel> sampless = new List<UI.Models.Sample.SampleModel>();
+            //foreach (var item in samples)
+            //{
+            //    sampless.Add(new Models.Sample.SampleModel { Id = item.Id, Name = item.Name, Description = item.Description });
+            //}
+            //ViewBag.nextPage = 2;
+            //ViewBag.PreviousPage = 0;
+           return View(samples);
         }
        /// <summary>
        /// for getting current  page index
@@ -50,17 +56,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
        /// <param name="pageIndex"></param>
        /// <returns></returns>
         [HttpPost]
-        public ActionResult Index(int pageIndex)
+        public ActionResult Index(UI.Models.Sample.SampleModelDTO sample)
         {
-            var samples = _sampleService.GetPages(pageIndex);
-            List<UI.Models.Sample.SampleModel> sampless = new List<UI.Models.Sample.SampleModel>();
-            foreach (var item in samples)
-            {
-                sampless.Add(new Models.Sample.SampleModel { Id = item.Id, Name = item.Name, Description = item.Description });
-            }
-            ViewBag.nextPage = pageIndex + 1;
-            ViewBag.PreviousPage = pageIndex == 1 ? 1 : pageIndex - 1;
-            return View(sampless.AsEnumerable());
+
+           
+            var samples = _mapper.Map<UI.Models.Sample.SampleModelDTO , Business.Core.Model.SampleModel>(sample);
+            var sampleresult = _sampleService.Add(samples);
+            //var samples = _sampleService.GetPages(pageIndex);
+            //List<UI.Models.Sample.SampleModel> sampless = new List<UI.Models.Sample.SampleModel>();
+            //foreach (var item in samples)
+            //{
+            //    sampless.Add(new Models.Sample.SampleModel { Id = item.Id, Name = item.Name, Description = item.Description });
+            //}
+            //ViewBag.nextPage = pageIndex + 1;
+            //ViewBag.PreviousPage = pageIndex == 1 ? 1 : pageIndex - 1;
+            return View(sample);
         }
 
         /// <summary>
@@ -80,7 +90,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var sampleUIModel = new Models.Sample.SampleModel
+            var sampleUIModel = new Models.Sample.SampleModelDTO
             {
                 Id = sample.Id,
                 Name = sample.Name,
@@ -97,7 +107,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            return base.View(new Models.Sample.SampleModel { Id = id });
+            return base.View(new Models.Sample.SampleModelDTO { Id = id });
         }
         /// <summary>
         /// for creating data
@@ -106,7 +116,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind] Models.Sample.SampleModel sample)
+        public ActionResult Create([Bind] Models.Sample.SampleModelDTO sample)
         {
             if (ModelState.IsValid)
             {
@@ -139,7 +149,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var sampleUIModel = new Models.Sample.SampleModel
+            var sampleUIModel = new Models.Sample.SampleModelDTO
             {
                 Id = sample.Id,
                 Name = sample.Name,
@@ -155,7 +165,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind] Models.Sample.SampleModel sample)
+        public ActionResult Edit(int id, [Bind] Models.Sample.SampleModelDTO sample)
         {
             if (id != sample.Id)
             {
@@ -191,7 +201,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var sampleUIModel = new Models.Sample.SampleModel
+            var sampleUIModel = new Models.Sample.SampleModelDTO
             {
                 Id = sample.Id,
                 Name = sample.Name,

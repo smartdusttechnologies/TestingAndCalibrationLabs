@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models.Sample
     /// <summary>
     /// Declaring Public Properties
     /// </summary>
-    public class SampleModel
+    public class SampleModelDTO
     {
         #region Public Properties
         public int Id { get; set; }
