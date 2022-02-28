@@ -16,7 +16,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly ILogger<SampleController> _logger;
         private readonly ISampleService _sampleService;
-        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
@@ -24,11 +23,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="logger"></param>
         /// <param name="sampleService"></param>
         /// <param name="hostingEnvironment"></param>
-        public SampleController(ILogger<SampleController> logger, ISampleService sampleService, IWebHostEnvironment hostingEnvironment,IMapper mapper)
+        public SampleController(ILogger<SampleController> logger, ISampleService sampleService,IMapper mapper)
         {
             _logger = logger;
             _sampleService = sampleService;
-            _hostingEnvironment = hostingEnvironment;
             _mapper = mapper;   
         }
        /// <summary>
@@ -38,41 +36,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<Business.Core.Model.SampleModel> samplelists = _sampleService.GetPages(1);
+            List<Business.Core.Model.SampleModel> samplelists = _sampleService.Get();
             var samples = _mapper.Map<List<Business.Core.Model.SampleModel>, List<Models.Sample.SampleModelDTO>>(samplelists);
-            //var samples = _sampleService.GetPages(1);
-            //List<UI.Models.Sample.SampleModel> sampless = new List<UI.Models.Sample.SampleModel>();
-            //foreach (var item in samples)
-            //{
-            //    sampless.Add(new Models.Sample.SampleModel { Id = item.Id, Name = item.Name, Description = item.Description });
-            //}
-            //ViewBag.nextPage = 2;
-            //ViewBag.PreviousPage = 0;
            return View(samples);
         }
-       /// <summary>
-       /// for getting current  page index
-        /// </summary>
-       /// <param name="pageIndex"></param>
-       /// <returns></returns>
-        [HttpPost]
-        public ActionResult Index(UI.Models.Sample.SampleModelDTO sample)
-        {
-
-           
-            var samples = _mapper.Map<UI.Models.Sample.SampleModelDTO , Business.Core.Model.SampleModel>(sample);
-            var sampleresult = _sampleService.Add(samples);
-            //var samples = _sampleService.GetPages(pageIndex);
-            //List<UI.Models.Sample.SampleModel> sampless = new List<UI.Models.Sample.SampleModel>();
-            //foreach (var item in samples)
-            //{
-            //    sampless.Add(new Models.Sample.SampleModel { Id = item.Id, Name = item.Name, Description = item.Description });
-            //}
-            //ViewBag.nextPage = pageIndex + 1;
-            //ViewBag.PreviousPage = pageIndex == 1 ? 1 : pageIndex - 1;
-            return View(sample);
-        }
-
+ 
         /// <summary>
         /// Shows Details for Sample
         /// </summary>
@@ -120,13 +88,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var samplebussinessModel = new TestingAndCalibrationLabs.Business.Core.Model.SampleModel
-                {
-                    Id = sample.Id,
-                    Name = sample.Name,
-                    Description = sample.Description
-                };
-                _sampleService.Add(samplebussinessModel);
+                var samples = _mapper.Map<UI.Models.Sample.SampleModelDTO, Business.Core.Model.SampleModel>(sample);
+                _sampleService.Add(samples);
                 return RedirectToAction("Index");
             }
             return View(sample);
@@ -173,13 +136,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             if (ModelState.IsValid)
             {
-                var sampleBusinessModel = new Business.Core.Model.SampleModel
-                {
-                    Id = sample.Id,
-                    Name = sample.Name,
-                    Description = sample.Description
-                };
-                _sampleService.Update(id, sampleBusinessModel);
+                var samples = _mapper.Map<UI.Models.Sample.SampleModelDTO, Business.Core.Model.SampleModel>(sample);
+                _sampleService.Update(id, samples);
                 return RedirectToAction("Index");
             }
             return View(sample);
