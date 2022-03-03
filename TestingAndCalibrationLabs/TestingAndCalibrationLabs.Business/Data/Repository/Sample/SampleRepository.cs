@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<SampleModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<SampleModel>("Select * From [Newtable] where IsDeleted=0").ToList();
+            return db.Query<SampleModel>("Select * From [SampleTable] where IsDeleted=0").ToList();
         }
         /// <summary>
         /// adding pagination
@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public IPagedList<SampleModel> GetPages(int pageIndex = 1, int pageSize = 10)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var query = db.QueryMultiple("SELECT COUNT(*) FROM [Newtable] where IsDeleted=0;SELECT* FROM [Newtable] where IsDeleted=0 ORDER BY Id desc OFFSET ((@PageNumber - 1) * @Rows) ROWS FETCH NEXT @Rows ROWS ONLY", new { PageNumber = pageIndex, Rows = pageSize }, commandType: CommandType.Text);
+            var query = db.QueryMultiple("SELECT COUNT(*) FROM [SampleTable] where IsDeleted=0;SELECT* FROM [SampleTable] where IsDeleted=0 ORDER BY Id desc OFFSET ((@PageNumber - 1) * @Rows) ROWS FETCH NEXT @Rows ROWS ONLY", new { PageNumber = pageIndex, Rows = pageSize }, commandType: CommandType.Text);
             var row = query.Read<int>().First();
             var pageResult = query.Read<SampleModel>().ToList();
             return new StaticPagedList<SampleModel>(pageResult, pageIndex, pageSize, row);
@@ -52,7 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public SampleModel Get(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<SampleModel>("Select top 1 * From [Newtable] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
+            return db.Query<SampleModel>("Select top 1 * From [SampleTable] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int Insert(SampleModel sample)
         {
-            string query = @"Insert into [Newtable](Name, Description) 
+            string query = @"Insert into [SampleTable](Name, Description) 
                 values (@Name, @Description)";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, sample);
@@ -74,7 +74,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int InsertCollection(List<SampleModel> expenses)
         {
-            string query = @"Insert into [Newtable](Name, Description) 
+            string query = @"Insert into [SampleTable](Name, Description) 
                 values (@Name, @Description)";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, expenses);
@@ -87,7 +87,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int Update(SampleModel sample)
         {
-            string query = @"update [Newtable] Set 
+            string query = @"update [SampleTable] Set 
                               Name = @Name,
                               Description = @Description
                             Where Id = @Id";
@@ -102,7 +102,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public bool Delete(int id)
         {
-            string query = @"update [Newtable] Set 
+            string query = @"update [SampleTable] Set 
                                 IsDeleted = @IsDeleted
                             Where Id = @Id and  Id=@id ";
             using IDbConnection db = _connectionFactory.GetConnection;
