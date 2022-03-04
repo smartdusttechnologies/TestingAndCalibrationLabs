@@ -31,20 +31,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<SampleModel>("Select * From [SampleTable] where IsDeleted=0").ToList();
         }
         /// <summary>
-        /// adding pagination
-        /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        public IPagedList<SampleModel> GetPages(int pageIndex = 1, int pageSize = 10)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            var query = db.QueryMultiple("SELECT COUNT(*) FROM [SampleTable] where IsDeleted=0;SELECT* FROM [SampleTable] where IsDeleted=0 ORDER BY Id desc OFFSET ((@PageNumber - 1) * @Rows) ROWS FETCH NEXT @Rows ROWS ONLY", new { PageNumber = pageIndex, Rows = pageSize }, commandType: CommandType.Text);
-            var row = query.Read<int>().First();
-            var pageResult = query.Read<SampleModel>().ToList();
-            return new StaticPagedList<SampleModel>(pageResult, pageIndex, pageSize, row);
-        }
-        /// <summary>
         /// Connecting with database Via connectionfactory for displaying data
         /// </summary>
         /// <param name="id"></param>

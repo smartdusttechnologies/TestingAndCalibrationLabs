@@ -5,12 +5,11 @@ using TestingAndCalibrationLabs.Business.Common;
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     /// <summary>
-    /// these ISampleService is implementing interface for SampleService
+    /// these SampleService is implementing interface for ISampleService
     /// </summary>
     public interface ISampleService
     {
         List<SampleModel> Get();
-        List<SampleModel> GetPages(int pageIndex);
         SampleModel Get(int id);
         RequestResult<int> Add(SampleModel sample);
         RequestResult<int> Update(int id, SampleModel sample);

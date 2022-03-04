@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Tests
     /// <summary>
     /// Decaring Class
     /// </summary>
-    #region
+    #region public
     public class SampleTests
     {
         /// <summary>
