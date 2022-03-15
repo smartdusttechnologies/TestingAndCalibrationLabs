@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;   
         }
        /// <summary>
-       /// for getting old page index
+       /// Mapping the Bussiness and ui model for getting List of data
        /// </summary>
        /// <returns></returns>
         [HttpGet]
@@ -144,7 +144,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         /// <summary>
-        ///  Delete Details of Sample
+        ///  Delete sample details
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

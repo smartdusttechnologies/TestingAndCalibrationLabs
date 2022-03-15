@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Tests
         }
 
         /// <summary>
-        /// Creating atest For getting all Details from Database
+        /// testing For getting all Details from Database
         /// </summary>
         [Test]
         public void SampleTestGetAllDetails()
@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Tests
         }
 
         /// <summary>
-        /// creating a test for adding a details
+        /// testing for adding a details
         /// </summary>
         [Test]
         public void SampleTestAddDetails()
@@ -94,7 +94,7 @@ namespace TestingAndCalibrationLabs.Tests
         }
 
         /// <summary>
-        /// creating a test for updating details
+        ///testing  for updating details
         /// </summary>
         [Test]
         public void SampleTestUpdateDetails()
@@ -108,7 +108,7 @@ namespace TestingAndCalibrationLabs.Tests
         }
 
         /// <summary>
-        /// created a test for Deleting Details
+        /// testing for Deleting Details
         /// </summary>
         [Test]
         public void SampleTestDeleteDetails()
