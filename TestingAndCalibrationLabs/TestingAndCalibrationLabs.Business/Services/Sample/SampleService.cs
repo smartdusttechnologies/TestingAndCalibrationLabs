@@ -8,7 +8,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 namespace TestingAndCalibrationLabs.Business.Services
 {
     /// <summary>
-    /// IsampleService is implimenting the services for SampleService
+    /// sampleService is implimenting the services from ISampleService
     /// </summary>
     public class SampleService : ISampleService
     {
@@ -40,10 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _sampleRepository.Get();
         }
-        public List<SampleModel> GetPages(int pageIndex)
-        {
-            return _sampleRepository.GetPages(pageIndex).ToNonNullList();
-        }
+     
         public SampleModel Get(int id)
         {
             return _sampleRepository.Get(id);
