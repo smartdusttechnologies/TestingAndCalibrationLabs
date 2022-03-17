@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>@ViewData["Title"] - Login</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Login.css"  />
+    <link rel="stylesheet" href="~/css/style.css"  />
+    <link rel="stylesheet" href="~/NABL.styles.css"  />
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+     
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>   
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <script src="https://kit.fontawesome.com/d7a877bb0f.js" crossorigin="anonymous"></script> 
+ </head>
+ <style>
+    </style>
+<body class="bg">
+    <div class="container">
+        <div class="">
+            <span class="close">×</span>
+        </div>
+        <div class="padding-login">
+            <div class="login-border">
+                <div class="">
+                    <ul class="nav nav-tabs topnav" style="width:100%;">
+                        <li class="active nav-item border-0 " style="width:50%;padding:0;">
+                            <a data-toggle="tab" class="text-center tablink login-tab-click" href="#signInBoot">Sign-In</a>
+                        </li>
+                        <li class="nav-item border-0 " style="width:50%;padding:0;">
+                            <a data-toggle="tab" class="text-center tablink login-tab-click" href="#signUpBoot">Sign-Up</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="padding-login white-bg tab-content">
+                    @*For Sign-Up*@
+                    <div id="signUpBoot" class="tab-pane fade">
+            
+                        <div class="inputWithIcon">
+                            <input class="inputForSignIn" type="text" placeholder="Enter Username">
+                            <i class="fa-solid fa-user iconForSignIn"></i>
+                        </div>
+                        <div class="inputWithIcon">
+                            <input class="inputForSignIn" type="text" placeholder="Enter Email">
+                            <i class="fa-solid fa-envelope iconForSignIn"></i>
+                        </div>
+                        <div class="inputWithIcon">
+                            <input class="inputForSignIn" type="password" placeholder="Enter Password">
+                            <i class="fa-solid fa-key iconForSignIn"></i>
+                        </div>
+                        <div class="inputWithIcon">
+                            <input class="inputForSignIn" type="password" placeholder="Re-Enter Password">
+                            <i class="fa-solid fa-key iconForSignIn"></i>
+                        </div>
+                        <button type="submit" class="btn btn-success text-center btn-block">Sign-Up</button>
+            
+                        <div class="row">
+                            <div class="col login-padding-left"><hr></div>
+                            <div class="col-auto" style="margin-top:10px;">or</div>
+                            <div class="col login-padding-right"><hr></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 " style="align-content:center;justify-content:center;">
+                                <button class="btn btn-primary btn-block" style=" " >
+                                    <i class="fab fa-twitter me-2"></i>Twitter
+                                </button>
+                            </div>
+                            <div class="col-xs-6" style="">
+                                <button class="btn btn-primary btn-block" >
+                                    <i class="fa-brands fa-facebook me-2"></i>Facebook
+                                </button>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-xs-6 " style="align-content:center;justify-content:center;">
+                                <button class="btn btn-danger btn-block" style="">
+                                    <i class="fa-brands fa-google me-2"></i>Google
+                                </button>
+                            </div>
+                            <div class="col-xs-6" style="">
+                                <button class="btn btn-primary btn-block">
+                                    <i class="fa-brands fa-linkedin me-2"></i>Linked-In
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @*For Sign-In*@
+                    <div id="signInBoot" class="tab-pane fade in active">
+                        <div class="inputWithIcon">
+                            <input class="inputForSignIn" type="text" placeholder="Username or Email ID">
+                            <i class="fa fa-user fa-lg fa-fw iconForSignIn" style="top:15px;" aria-hidden="true"></i>
+                        </div>
+                        <div class="inputWithIcon">
+                            <input class="inputForSignIn" type="password" placeholder="Password" />
+                            <i class="fa-solid fa-lock iconForSignIn"></i>
+                        </div>
+                        <div class="form-floating mt-3 mb-3">
+                            <input id="RememberMe" class="" type="checkbox" name="rememberMe" />
+                            <span>
+                                <label for="RememberMe">Remember me</label>
+                            </span>
+                            <a class="align-content-end" style="float:right;">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-success text-center btn-block">Sign-In</button>
+
+                        <div class="row">
+                            <div class="col login-padding-left"><hr></div>
+                            <div class="col-auto" style="margin-top:10px;">or</div>
+                            <div class="col login-padding-right"><hr></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 " style="align-content:center;justify-content:center;">
+                                <button class="btn btn-primary btn-block" style=" " >
+                                <i class="fab fa-twitter me-2"></i>Twitter
+                                </button>
+                            </div>
+                            <div class="col-xs-6" style="">
+                                <button class="btn btn-primary btn-block" >
+                                <i class="fa-brands fa-facebook me-2"></i>Facebook
+                                </button>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-xs-6 " style="align-content:center;justify-content:center;">
+                                <button class="btn btn-danger btn-block" style="">
+                                    <i class="fa-brands fa-google me-2"></i>Google
+                                </button>
+                            </div>
+                            <div class="col-xs-6" style="">
+                                <button class="btn btn-primary btn-block">
+                                    <i class="fa-brands fa-linkedin me-2"></i>Linked-In
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>  <!---tab contenets will end Here---->
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,128 @@
+﻿
+/* Add styles to the form container */
+.container {
+    position: center;
+    right: 10px;
+    margin: 10px;
+    max-width: 450px;
+    padding-top: 20px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+    .container .close-div {
+        padding: 20px;
+    }
+
+.close-div {
+    margin: 0;
+    background-color: white;
+}
+
+.white-bg {
+    background-color: white;
+}
+
+.padding-login {
+    padding: 20px;
+}
+
+.login-padding-left {
+    padding-left: 20px;
+    padding-right: 0;
+}
+
+.login-padding-right {
+    padding-left: 0;
+    padding-right: 20px;
+}
+/*
+.bg {
+    background-image: url("/Images/LoginPagebackgroundImage.jpg");
+    height: 6500px;
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+*/
+.inputForSignIn {
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 6px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+    .inputForSignIn:focus {
+        border-color: dodgerblue;
+        box-shadow: 0 0 8px 0 dodgerblue;
+    }
+
+.inputWithIcon .inputForSignIn {
+    padding-left: 30px;
+}
+
+.inputWithIcon {
+    position: relative;
+}
+
+    .inputWithIcon .iconForSignIn {
+        position: absolute;
+        left: 0;
+        top: 7px;
+        padding: 9px 8px;
+        color: #aaa;
+        transition: 0.3s;
+    }
+
+    .inputWithIcon .inputForSignIn:focus + .iconForSignIn {
+        color: dodgerblue;
+    }
+
+    .inputWithIcon.inputIconBg .iconForSignIn {
+        background-color: #aaa;
+        color: #fff;
+        padding: 9px 4px;
+        border-radius: 4px 0 0 4px;
+    }
+
+    .inputWithIcon.inputIconBg .inputForSignIn:focus + .iconForSignIn {
+        color: #fff;
+        background-color: dodgerblue;
+    }
+
+.login-border {
+    border: 1px solid;
+}
+
+.loginClick {
+    font: bold;
+    background-color: #dfdfdf;
+}
+
+.login-tab-click {
+    font: bold;
+    background-color: #dfdfdf;
+}
+
+.tablink {
+    float: left;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 100%;
+    border-radius: 0;
+}
+
+.signIn-signUp-background:active {
+    background-color: green;
+}
+
+.btn:hover {
+    opacity: 1;
+}
