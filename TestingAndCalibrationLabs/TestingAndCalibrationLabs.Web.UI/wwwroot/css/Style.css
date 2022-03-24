@@ -1,5 +1,4 @@
 ﻿
-
 body {
     font-family: 'Times New Roman';
 }
@@ -10,26 +9,6 @@ body {
     box-sizing: border-box;
 }
 
-.bg {
-    background-image: url("/Image/HomePageImage.jpg");
-    height: 750px;
-    position: relative;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.text {
-    text-align: center;
-    padding: 50px;
-    margin-top: 0px;
-    width: 500px;
-    color: #111;
-    background: transparent;
-    background-color: rgba(255, 255, 255, .2);
-    transform: translate(20%, 50%);
-}
-
 nav {
     display: flex;
     width: 100%;
@@ -37,7 +16,7 @@ nav {
     position: relative;
     justify-content: space-between;
     text-align: center;
-    padding: 15px 30px;
+    padding: 15px 0px;
 }
 
     nav .icon {
@@ -75,16 +54,15 @@ nav {
     nav .search_box {
         display: flex;
         margin: auto;
-        height: 35px;
-        line-height: 35px;
+        height:40px;
+        line-height: 75px;
     }
-
         nav .search_box input {
             border: none;
             outline: none;
             background-color: white;
             height: 100%;
-            padding: 0 10px;
+            
             font-size: 20px;
             width: 350px;
         }
@@ -133,12 +111,15 @@ nav {
             font-size: 35px;
         }
 
-input[type="checkbox"] {
-    -webkit-appearance: none;
-    display: none;
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
 }
 
-@media screen and (max-width:1250px) {
+@media screen and (max-width:1140px) {
     nav {
         display: block;
         padding: 0;
@@ -151,17 +132,22 @@ input[type="checkbox"] {
 
         nav .search_box {
             width: 100%;
+            align-content:center;
             display: inline-flex;
             justify-content: center;
             margin-bottom: 15px;
+            padding:0;
         }
 
             nav .search_box input {
-                width: 90%;
+                width: 100%;
             }
 
         nav ol {
             display: flex;
             flex-direction: column;
         }
+    .navbar-brand-a{
+        font-size:14px;
+    }
 }

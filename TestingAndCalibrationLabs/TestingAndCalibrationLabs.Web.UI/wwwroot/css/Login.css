@@ -1,22 +1,7 @@
 ﻿
 /* Add styles to the form container */
-.container {
-    position: center;
-    right: 10px;
-    margin: 10px;
+.container-Login {
     max-width: 450px;
-    padding-top: 20px;
-    border-radius: 5px;
-    background-color: white;
-}
-
-    .container .close-div {
-        padding: 20px;
-    }
-
-.close-div {
-    margin: 0;
-    background-color: white;
 }
 
 .white-bg {
@@ -36,16 +21,16 @@
     padding-left: 0;
     padding-right: 20px;
 }
-/*
-.bg {
-    background-image: url("/Images/LoginPagebackgroundImage.jpg");
-    height: 6500px;
+
+.bg-login {
+    background-image: url("/Image/LoginPagebackgroundImage.jpg");
+    height: 650px;
     position: relative;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
-*/
+
 .inputForSignIn {
     width: 100%;
     border: 2px solid #aaa;
@@ -99,28 +84,9 @@
     border: 1px solid;
 }
 
-.loginClick {
-    font: bold;
-    background-color: #dfdfdf;
-}
-
 .login-tab-click {
     font: bold;
     background-color: #dfdfdf;
-}
-
-.tablink {
-    float: left;
-    border: none;
-    outline: none;
-    padding: 14px 16px;
-    font-size: 17px;
-    width: 100%;
-    border-radius: 0;
-}
-
-.signIn-signUp-background:active {
-    background-color: green;
 }
 
 .btn:hover {
