@@ -24,7 +24,8 @@
 
 .bg-login {
     background-image: url("/Image/LoginPagebackgroundImage.jpg");
-    height: 650px;
+    height: 100%;
+    width: 100%;
     position: relative;
     background-position: center;
     background-repeat: no-repeat;

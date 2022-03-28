@@ -54,15 +54,15 @@ nav {
     nav .search_box {
         display: flex;
         margin: auto;
-        height:40px;
+        height: 40px;
         line-height: 75px;
     }
+
         nav .search_box input {
             border: none;
             outline: none;
             background-color: white;
             height: 100%;
-            
             font-size: 20px;
             width: 350px;
         }
@@ -111,15 +111,14 @@ nav {
             font-size: 35px;
         }
 
-.footer {
+#footer {
     position: absolute;
     bottom: 0;
+    height: 60px;
     width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
 }
 
-@media screen and (max-width:1140px) {
+@media screen and (max-width:1250px) {
     nav {
         display: block;
         padding: 0;
@@ -129,25 +128,28 @@ nav {
             display: inline-block;
             padding: 15px 30px;
         }
+}
 
-        nav .search_box {
-            width: 100%;
-            align-content:center;
-            display: inline-flex;
-            justify-content: center;
-            margin-bottom: 15px;
-            padding:0;
-        }
+nav .search_box {
+    width: 100%;
+    align-content: center;
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 0;
+    margin-top: 30px;
+}
 
-            nav .search_box input {
-                width: 100%;
-            }
-
-        nav ol {
-            display: flex;
-            flex-direction: column;
-        }
-    .navbar-brand-a{
-        font-size:14px;
+    nav .search_box input {
+        width: 100%;
     }
+
+nav ol {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-brand-a {
+    font-size: 14px;
+}
 }
