@@ -1,0 +1,91 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+.width-full {
+    width: 100%;
+}
+
+body {
+    font-family: 'Roboto';
+}
+/*
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    display: flex;
+}
+*/
+.form-element {
+    height: 50px;
+    position: relative;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.form-element .form-input {
+        width: 100%;
+        height: 100%;
+        background: white;
+        border: 1px solid black;
+        border-radius: 5px;
+        outline: none;
+        padding: 0;
+        padding-left: 15px;
+        font-size: 20px;
+ }
+
+.form-element .form-label {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        color: black;
+        text-transform: capitalize;
+        font-size: 18px;
+        transition: top 0.3s;
+        padding: 0;
+        padding-left: 15px;
+ }
+
+.form-element .form-input:focus ~ .form-label {
+        top: -6px;
+        padding-left:5px;
+        padding-right:5px;
+        background-color: white;
+        font-size:12px;
+ }
+
+    .form-element .form-input:not(:focus) ~ .form-label {
+        top: 15px;
+        background-color:white;
+        padding-left: 5px;
+        padding-right:5px;
+        font-size:18px;
+    }
+
+    .form-element .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
+        top: -6px;
+        background-color: white;
+        padding-left: 5px;
+        font-size: 12px;
+    }
+
+.left-pd-frm-input {
+    padding-left: 2px;
+}
+
+.right-pd-frm-input {
+    padding-right: 2px;
+}
+
+        /*.form-element .form-input:not([value=""]) {
+    border-width: 1px;
+}
+
+    .form-element .form-input:not([value=""]) + .form-label {
+        border-width: 1px;
+    }
+*/
