@@ -22,59 +22,69 @@
     </style>
 </head>
 <body style="font-family:'Roboto';">
-    <form class="mt-2 ms-1 me-1 ">
-        <div class="row my-2" >
-            <div class="col-6 form-element right-pd-frm-input" >
+    <form class="mb-2 ">
+        <div class="row ms-1 me-1" >
+            
+            <div class="col-lg-6 @*col-md-6*@ col-sm-5 mt-2 form-element left-pd-input d-block d-sm-none" style="text-align:right;">
+                <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;">SUBMIT AND PRINT RECEPT</button>
+            </div>
+            <div class="col-lg-6 @*col-md-6*@ col-sm-7 mt-2 form-element right-pd-input" >
                 <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="jobSerialNumber">Job Serial NO</label>
             </div>
-            <div class="col-6 form-element left-pd-frm-input" style="text-align:right;">
-                <button class="btn btn-primary" type="button">SUBMIT AND PRINT RECEPT</button>
+            <div class="col-lg-6 @*col-md-6*@ col-sm-5 mt-2 form-element left-pd-input 	d-none d-sm-block" style="text-align:right;">
+                <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;">SUBMIT AND PRINT RECEPT</button>
             </div>
-        </div>
-        <div class="row my-2">
-            <div class="col-3 form-element right-pd-frm-input">
+        
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="departMentName" >Department Name</label>
             </div>
-            <div class="col-3 form-element right-pd-frm-input left-pd-frm-input">
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="customerName" >Customer Name</label>
             </div>
-            <div class="col-6 form-element left-pd-frm-input">
+            <div class="col-lg-6 @*col-md-6*@ col-sm-12 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="issueTo" >Issue To</label>
             </div>
-        </div>
-        <div class="row my-2">
-            <div class="col-3 form-element right-pd-frm-input">
+
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
                 <label class="form-label" for="receivedOn">Received On</label>
             </div>
-            <div class="col-3 form-element right-pd-frm-input left-pd-frm-input">
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
                 <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO</label>
             </div>
-            <div class="col-3 form-element right-pd-frm-input left-pd-frm-input">
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
                 <label class="form-label" for="contactPersonName">Contact Person Name</label>
             </div>
-            <div class="col-3 form-element left-pd-frm-input">
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
                 <label class="form-label" for="mobileNumber">Mobile Number</label>
             </div>
-        </div>
-        <div class="row my-2 ">
-            <div class="col-3 form-element right-pd-frm-input">
+
+            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
                 <label class="form-label" for="testReportReleaseDate">Test Report Release Date</label>
             </div>
-            <div class="col-9 form-element left-pd-frm-input">
+            <div class="col-lg-9 @*col-md-9*@ col-sm-6 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
-                <label class="form-label" for="anyOtherSpecificRequirement">Mobile Number</label>
+                <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement</label>
             </div>
         </div>
     </form>
+
+    <div class="mb-2 ms-1 me-1 form-element">
+        <input class="form-input width-full" type="text" id="testingMeterial" placeholder=" " required>
+        <label class="form-label" for="testingMeterial">Testing Meterial:</label>
+    </div>
+    <div class="mb-2 ms-1 me-1 form-element">
+        <input class="form-input width-full" type="file" id="attachedFiles" placeholder=" " required>
+        <label class="form-label" for="attachedFiles">Attachments:</label>
+    </div>
 
 </body>
 
