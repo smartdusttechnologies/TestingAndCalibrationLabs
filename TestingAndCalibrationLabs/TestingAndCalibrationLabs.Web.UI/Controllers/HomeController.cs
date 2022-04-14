@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// UI Shows the Various Plans and respective Prices
         /// </summary>
         /// <returns></returns>
-        public IActionResult PlanPricing()
+        public IActionResult Login()
         {
             return View();
         }
