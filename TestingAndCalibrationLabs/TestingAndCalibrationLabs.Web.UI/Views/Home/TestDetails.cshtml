@@ -10,74 +10,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TestDetails</title>
 
-    <!--Importing the CSS FileS-->
+    <!--Importing the Bootsrap5 link-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    @*<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />*@
+
+    <!--Importng the CSS Files-->
     <link rel="stylesheet" href="~/css/TestDetails.css" />
 
-    <!---Importing the Scripts--->
+
+    <!---Importing the Bootsrap5 Scripts--->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    @*<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>*@
+
     <style>
-        
-       
+        /* .box__dragndrop,
+        .box__uploading,
+        .box__success,
+        .box__error {
+          display: none;
+        }*/
+        /*.container-file-upload{
+                    height:40px;
+                    height:100%;
+                    width:100%;
+                    background:red;
+                }
+                .input-bg{
+                    background:yellow;
+                    width:100%;
+                }*/
+        /*
+                .wrapper {
+                width:100%;
+          height:100%;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+            }
+
+            .wrapper .file-upload{
+
+            height:200px;
+            width:200px;
+            border-radius: 100px;
+            position:relative;
+
+            display:flex;
+            justify-content:center;
+            align-items: center;
+
+            border:4px solid #FFFFFF;
+            overflow:hidden;
+            background-image: linear-gradient(to bottom, #2590EB 50%, #FFFFFF 50%);
+            background-size: 100% 200%;
+            transition: all 1s;
+            color: #FFFFFF;
+            font-size:100px;
+
+
+
+            }
+            .wrapper .file-upload input[type='file']{
+
+              height:200px;
+              width:200px;
+              position:absolute;
+              top:0;
+              left:0;
+              opacity:0;
+              cursor:pointer;
+
+            }
+        */
     </style>
 </head>
 <body style="font-family:'Roboto';">
     <form class="mb-2 ">
-        <div class="row ms-1 me-1" >
-            
-            <div class="col-lg-6 @*col-md-6*@ col-sm-5 mt-2 form-element left-pd-input d-block d-sm-none" style="text-align:right;">
-                <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;">SUBMIT AND PRINT RECEPT</button>
+        <div class="row ms-1 me-1">
+
+            <div class="col-lg-6 col-sm-5 mt-2 form-element left-pd-input d-block d-sm-none" style="text-align:right;">
+                <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
-            <div class="col-lg-6 @*col-md-6*@ col-sm-7 mt-2 form-element right-pd-input" >
+            <div class="col-lg-6 col-sm-7 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="jobSerialNumber">Job Serial NO</label>
             </div>
-            <div class="col-lg-6 @*col-md-6*@ col-sm-5 mt-2 form-element left-pd-input 	d-none d-sm-block" style="text-align:right;">
-                <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;">SUBMIT AND PRINT RECEPT</button>
-            </div>
-        
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input">
-                <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="departMentName" >Department Name</label>
-            </div>
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input left-pd-input">
-                <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="customerName" >Customer Name</label>
-            </div>
-            <div class="col-lg-6 @*col-md-6*@ col-sm-12 mt-2 form-element left-pd-input">
-                <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="issueTo" >Issue To</label>
+            <div class="col-lg-6 col-sm-5 mt-2 form-element left-pd-input d-none d-sm-block" style="text-align:right;">
+                <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
 
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input">
+            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input">
+                <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="departMentName">Department Name</label>
+            </div>
+            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
+                <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="customerName">Customer Name</label>
+            </div>
+            <div class="col-lg-6 col-sm-12 mt-2 form-element left-pd-input">
+                <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="issueTo">Issue To</label>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
                 <label class="form-label" for="receivedOn">Received On</label>
             </div>
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input left-pd-input">
+            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
                 <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO</label>
             </div>
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input left-pd-input">
+            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
                 <label class="form-label" for="contactPersonName">Contact Person Name</label>
             </div>
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element left-pd-input">
+            <div class="col-lg-3 col-sm-6 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
                 <label class="form-label" for="mobileNumber">Mobile Number</label>
             </div>
 
-            <div class="col-lg-3 @*col-md-3*@ col-sm-6 mt-2 form-element right-pd-input">
+            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
                 <label class="form-label" for="testReportReleaseDate">Test Report Release Date</label>
             </div>
-            <div class="col-lg-9 @*col-md-9*@ col-sm-6 mt-2 form-element left-pd-input">
+            <div class="col-lg-9 col-sm-6 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
                 <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement</label>
             </div>
+
         </div>
     </form>
-    
+    <form class="mb-2 me-1 ms-1 row">
+        <div class="col-12 mb-2">
+            <label style="padding-left:20px;">Testing Material</label>
+        </div>
+        <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="">
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label>hello</label>
+                    <label></label>
+                </div>
+            </div>
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label draggable="true">hello world</label>
+                    <label></label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class="mb-2 me-1 ms-1 row" id="myform" method="post" >
+        <div class="col-12 " style="background: #ced4da;">
+        <input class="input-file input-hide"  type="file" id="files" multiple name="files[]" />
+        <label for="files text-center" class="filename " style="width:100%;text-align: center;height:60px;">
+            Drag & Drop your files or Browse
+        </label>
+        </div>
+    </form>
+@*
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+
+    <script>
+        $("input:file").change(function () {
+            var filenames = $.map(this.files, function (file) {
+                return file.name;
+            });
+            $(".filename").html(filenames.join(' , '));
+        });
+    </script>
+
 </body>
 
 </html>
