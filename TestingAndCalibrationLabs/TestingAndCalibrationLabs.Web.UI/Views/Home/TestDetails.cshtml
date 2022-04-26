@@ -76,7 +76,7 @@
             </div>
         </div>
     </form>
-    <form class="mb-2 me-1 ms-1 row">
+  @*  <form class="mb-2 me-1 ms-1 row">
         <div class="col-12 mb-2">
             <label style="padding-left:20px;">Testing Material:</label>
         </div>
@@ -95,29 +95,120 @@
             </div>
         </div>
     </form>
-    <form class="mb-2 me-1 ms-1 row" id="myform" method="post" >
+*@
+
+    @*
+        <div class="col-12 mb-2">
+        <label style="padding-left:20px;">Attachments</label>
+        </div>
+        <div class="container container-testing-material col-12" id="fileDragAndDrop" style="border:1px solid red;">
+        <form action="" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        </form>
+        </div>*@
+
+   @* <form class="mb-2 me-1 ms-1 row">
+        <div class="col-12 mb-2">
+            <label style="padding-left:20px;">Testing Material:</label>
+        </div>
+        <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="">
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label>hello
+                        <span class="cross-for-chip">×</span>
+                    </label>
+                    <label></label>
+                </div>
+            </div>
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label draggable="true">hello world</label>
+                    <label></label>
+                </div>
+            </div>
+        </div>
+    </form>*@
+
+
+   @* <form class="mb-2 me-1 ms-1 row" id="myform" method="post">
         <div class="col-12 mb-2">
             <label style="padding-left:20px;">Attachments:</label>
         </div>
         <div class="col-12 " style="background: #ced4da;">
-        <input class="input-file input-hide"  type="file" id="files" multiple name="files[]" />
-        <label for="files text-center" class="filename " style="width:100%;text-align: center;height:60px;">
-            Drag & Drop your files or Browse
-        </label>
+            <input class="input-file input-hide" type="file" id="files" multiple name="files[]" />
+            <label for="files text-center" class="filename " style="width:100%;text-align: center;height:60px;">
+                Drag & Drop your files or Browse
+            </label>
+            <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="" id="chipInTheFileUpload"></div>
         </div>
-    </form>
-    <div class="" style="margin-bottom:80px;">
-             
-    </div>
-    <script>
-        $("input:file").change(function () {
-            var filenames = $.map(this.files, function (file) {
-                return file.name;
-            });
-            $(".filename").html(filenames.join(' , '));
-        });
-    </script>
+    </form>*@
 
+
+
+    @*<div class="" style="margin-bottom:80px;">
+    </div>*@
+
+   @* <script>
+
+        var filenames = []
+        $("input:file").change(function () {
+            var temp=[]
+             temp = $.map(this.files, function (file) {
+                if(filenames.includes(file.name)){
+                }
+                else{
+                    return file.name;
+                }
+            })
+            filenames = filenames.concat(temp)
+            temp.map(function (file) {
+                var txt1 = $(`<div class="testing-material-chips inline-block m-1"></div>`)
+            var txt2 = $(`<div class="container container-chip"></div>`).append(`<label></label>`).append(file)
+            txt1.append(txt2)
+            $("#chipInTheFileUpload").append(txt1);
+            })
+            //$(".filename").html(filenames.join(' , '));
+        });
+
+
+
+
+                //$('.input-hide').on("Change",function () {
+                //    var fileName=$(this).val().split("\\").pop();
+
+                //    $(this).next('.upload-label').html(fileName);
+
+                //    var fileLabel =$(this).next
+                //    var files=$(this).files;
+                //    if(files.length > 1){
+                //        fileLabel.html(files.length+'files selected');
+                //    }
+                //    else if(files.length ==1){
+                //        fileLabel.html(files[0].name);
+                //    }
+                //});
+
+
+        //        document.getElementById('files').addEventListener('change', function(e) {
+        //  var list = document.getElementById('filelist');
+        //  list.innerHTML = '';
+        //  for (var i = 0; i < this.files.length; i++) {
+        //    list.innerHTML += (i + 1) + '. ' + this.files[i].name + '\n';
+        //  }
+        //  if (list.innerHTML == '') list.style.display = 'none';
+        //  else list.style.display = 'block';
+        //});
+
+        
+        //$("input:file").change(function () {
+        //    var filenames = $.map(this.files, function (file) {
+        //        return file.name;
+        //    });
+        //    $(".filename").html(filenames.join(', '));
+        //});
+
+    </script>
+*@
 </body>
 
 </html>
