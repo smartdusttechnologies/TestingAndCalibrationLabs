@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -20,14 +21,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View();
         }
         
-        /// <summary>
-        /// UI Shows the Various Plans and respective Prices
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult PlanPricing()
-        {
-            return View();
-        }
-
+        
     }
 }

@@ -1,0 +1,233 @@
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.MeterialTests.TestingCategoryLookupModelDTO>
+
+@{
+    ViewData["Title"] = "TestPlana";
+}
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="Src/css/style.css">
+
+</head>
+<body>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Multiselect #09</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-5 d-flex justify-content-center align-items-center">
+                    <select class="js-select2" multiple="multiple">
+                        @foreach (var item in Model)
+                        {
+                            <optgroup class="group-" label="@item.Name" value="@item.Id">
+                                @foreach(var child in Model.Where(n => n.Id == item.ParentId))
+                                {
+                                      <option value="@item.ParentId-@child.Id">@child..Name</option>
+                                }
+                              
+                            </optgroup>
+
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="m-3">
+        <p class="float-left">Showing 9 results of 54</p>
+        <button type="button" class="btn btn-primary float-right">Next</button>
+    </div>
+    </div>
+
+    <div class="container" style="margin-top: 60px;">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class=" d-flex justify-content-end ">
+                            <button type="button" class="btn-close d-grid gap-2 " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-sm-4">
+                <div class="container mt-3 p-lg-2">
+                    <div class="card container shadow   bg-body rounded">
+                        <div class="m-3">
+                            <h3>UI UX Designer</h3>
+                            <h5>AAA</h5>
+                            <h5>Home | Remote</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script src="Src/js/jquery.min.js"></script>
+    <script src="Src/js/popper.js"></script>
+    <script src="Src/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+    <script src="Src/js/main.js"></script>
+
+</body>
+</html>

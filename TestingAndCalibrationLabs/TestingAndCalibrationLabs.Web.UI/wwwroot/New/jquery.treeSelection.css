@@ -1,0 +1,41 @@
+.treeSelection {
+    position: absolute;
+    background-color: #fff;
+    overflow: auto;
+    height: auto;
+    max-height: 350px;
+}
+.treeSelection label {
+    cursor: default;
+}
+.treeSelection .no-sign {
+    list-style-type: none;
+}
+.treeSelector {
+    white-space: nowrap;
+    overflow: hidden;
+}
+.treeSelector b {
+    font-weight: normal;
+    display:inline-block;
+    border: 1px #999 solid;
+    background-color: #ddd;
+    padding-left: 5px;
+    margin-right:5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.treeSelector b span {
+    font-size:12px;
+    background-color: #bbb;
+    margin-left:5px;
+    border-left:1px #999 solid;
+    padding: 6px 5px;
+    color:#333
+}
+.treeSelector b span:hover {
+    color:#fff;
+}
+.treeSelector b:hover {
+    background-color: #eee;
+}

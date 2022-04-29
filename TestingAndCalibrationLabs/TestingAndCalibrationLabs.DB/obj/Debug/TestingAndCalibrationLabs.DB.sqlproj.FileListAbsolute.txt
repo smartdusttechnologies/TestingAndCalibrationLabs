@@ -1,0 +1,10 @@
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\bin\Debug\TestingAndCalibrationLabs.DB.dacpac
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\bin\Debug\TestingAndCalibrationLabs.DB.dll
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\bin\Debug\TestingAndCalibrationLabs.DB.pdb
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\TestingAndCalibrationLabs.DB.sqlproj.AssemblyReference.cache
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\Model.xml
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\refactor.xml
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\postdeploy.sql
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\predeploy.sql
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\TestingAndCalibrationLabs.DB.dll
+C:\Users\pramo\Desktop\TestingAndCalibrationLabs\TestingAndCalibrationLabs\TestingAndCalibrationLabs.DB\obj\Debug\TestingAndCalibrationLabs.DB.pdb

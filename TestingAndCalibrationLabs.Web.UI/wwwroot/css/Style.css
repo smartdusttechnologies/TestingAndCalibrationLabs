@@ -1,0 +1,159 @@
+﻿
+
+body {
+    font-family: 'Times New Roman';
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/*text {
+    background: transparent;
+    text-align: center;
+    position: static;
+    display: grid;
+    height: auto;
+    width: 50%;
+    min-height: 580px;F
+    grid-template-rows: min-content 1fr;
+    grid-template-columns: 100%;
+    align-content: space-evenly;
+}*/
+
+nav {
+    display: flex;
+    width: 100%;
+    background-color: whitesmoke;
+    position: relative;
+    justify-content: space-between;
+    text-align: center;
+    padding: 15px 30px;
+}
+
+    nav .icon {
+        color: darkblue;
+        cursor: pointer;
+    }
+
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: auto 0;
+    }
+
+        nav ul li {
+            margin: 0 2px;
+        }
+
+
+            nav ul li a {
+                color: darkslategray;
+                font-size: 20px;
+                text-decoration: none;
+                text-transform: capitalize;
+                letter-spacing: 1px;
+                padding: 5px 10px;
+            }
+
+            nav ul li:hover a {
+                background-color: whitesmoke;
+                color: black;
+            }
+
+    nav .search_box {
+        display: flex;
+        margin: auto;
+        height: 35px;
+        line-height: 35px;
+    }
+
+        nav .search_box input {
+            border: none;
+            outline: none;
+            background-color: white;
+            height: 100%;
+            padding: 0 10px;
+            font-size: 20px;
+            width: 350px;
+        }
+
+        nav .search_box span {
+            color: red;
+            font-size: 20px;
+            background-color: white;
+            height: 100%;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+            zoom: 1;
+        }
+
+            nav .search_box span:hover {
+                color: aqua;
+            }
+
+            nav .search_box span::after {
+                height: 100%;
+                width: 100%;
+                content: '';
+                background-color: rosybrown;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: -1;
+                transition: 0.3s;
+            }
+
+            nav .search_box span:hover::after {
+                width: 100%;
+            }
+
+    nav .bar {
+        position: relative;
+        margin: auto;
+        display: none;
+    }
+
+        nav .bar span {
+            position: absolute;
+            color: white;
+            font-size: 35px;
+        }
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    display: none;
+}
+
+@media screen and (max-width:1250px) {
+    nav {
+        display: block;
+        padding: 0;
+    }
+
+        /*nav .icon {
+            display: inline-block;
+            padding: 15px 30px;
+        }*/
+
+        nav .search_box {
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+            nav .search_box input {
+                width: 90%;
+            }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+        }
+}

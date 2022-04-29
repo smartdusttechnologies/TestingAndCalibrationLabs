@@ -3,7 +3,7 @@ dotnet test  /p:CollectCoverage=true  ^
 /p:CoverletOutput="./coverage/Data.opencover.xml"  ^
  /p:Exclude=\"[nunit.*]*,[TestingAndCalibrationLabs.Web.UI.*]*\"
 
-dotnet %userprofile%\.nuget\packages\reportgenerator\4.4.7\tools\netcoreapp3.0\ReportGenerator.dll ^ 
+dotnet %userprofile%\.nuget\packages\reportgenerator\5.1.2\tools\netcoreapp3.1\ReportGenerator.dll ^ 
 reportgenerator "-reports:coverage/Data.opencover.xml" "-targetdir:coverage-report" -reporttypes:HTML;
 	
 
