@@ -42,8 +42,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.EmailTemplate = _configuration["TestingAndCalibration:AdminMail"];
             surveymodel.LogoImage = _configuration["TestingAndCalibration:LogoImage"];
             surveymodel.BodyImage = _configuration["TestingAndCalibration:BodyImage"];
-            surveymodel.EmailContact = _configuration["TestingAndCalibation:emailId"];
-            surveymodel.MobileNumber = _configuration["TestingAndCalibation:Mobile"];
+            surveymodel.EmailContact = _configuration["TestingAndCalibration:emailID"];
+            surveymodel.MobileNumber = _configuration["TestingAndCalibration:Mobile"];
 
             //Create User Mail
             surveymodel.HtmlMsg = CreateBody(surveymodel.EmailTemplate);

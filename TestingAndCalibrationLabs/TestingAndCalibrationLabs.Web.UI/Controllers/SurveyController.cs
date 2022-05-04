@@ -37,7 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
         public IActionResult Survey()
         {
-            
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
         }
 
@@ -45,15 +45,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Survey([Bind] SurveyModel data)
         {
+            System.Threading.Thread.Sleep(1000);
             if (ModelState.IsValid)
             {
                 var emailId = new List<string>();
                 emailId.Add(data.Email);
-                
-
-                //testingid.Add(data.TestingType);
-                
-                //stateid.Add(data.State);
                 var getbusinessModel = new Business.Core.Model.SurveyModel
                 {
                     Name = data.Name,
@@ -66,11 +62,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     Comments = data.Comments,
                     Email = emailId
                 };
-                //System.Threading.Thread.Sleep(3000);
+                
                 _surveyService.Add(getbusinessModel);
                 TempData["IsTrue"] = true;
                 //System.Threading.Thread.Sleep(3000);
-                return RedirectToAction("Index");
+                return RedirectToAction("Survey");
             }
             return View(data);
         }

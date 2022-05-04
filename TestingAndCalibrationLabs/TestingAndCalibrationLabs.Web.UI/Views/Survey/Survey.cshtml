@@ -1,228 +1,269 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.SurveyModel
 @{
     ViewData["Title"] = "Services";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TestDetails</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-          rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          rel="stylesheet" />
-    <style>
-       .btn {
-            background-color: blue;
-            width: 200px;
-            font-size: 20px;
-            padding: 20px;
-            border-radius: 15px;
-            border: 3px solid yellow;
-            color: magenta;
-            text-align: center;
+
+<style>
+    #snackbar {
+        background-color: lightgreen;
+        color: black;
+        font-size: larger;
+        padding: 30px;
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        left: 0cm;
+        transform: translateY(200);
+        transition: all 300ms;
+    }
+
+        #snackbar.show {
+            transform: translateY();
         }
 
-        form-group > label {
-            top: 12px;
-            left: 6px;
-            position: relative;
-            background-color: white;
-            padding: 0px 0px 0px 0px;
-        }
+    .btn {
+        background-color: blue;
+        width: 200px;
+        font-size: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        border: 3px solid yellow;
+        color: magenta;
+        text-align: center;
+    }
 
-        .field-validation-error.form-input.width-full {
-            color: orangered;
-            font-weight: bold;
-        }
+    form-group > label {
+        top: 12px;
+        left: 6px;
+        position: relative;
+        background-color: white;
+        padding: 0px 0px 0px 0px;
+    }
 
-        .field-validation-valid .form-input.width-full {
-            display: none;
-        }
+    .field-validation-error.form-input.width-full {
+        color: orangered;
+        font-weight: bold;
+    }
 
-        input.input-validation-error.form-input.width-full {
-            border: 2px solid #f00;
-        }
-        input.input-validation-error#Comments.form-input.width-full {
-            border: 2px solid #f00;
-        }
+    .field-validation-valid .form-input.width-full {
+        display: none;
+    }
 
-        .validation-summary-errors {
-            color: red;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
+    input.input-validation-error.form-input.width-full {
+        border: 2px solid #f00;
+    }
 
-        .validation-summary-valid {
-            display: none;
-        }
-        .submit-progress-bg {
-            background-color: lightgray;
-            opacity: .5;
-        }
+    input.input-validation-error#Comments.form-input.width-full {
+        border: 2px solid #f00;
+    }
 
-        .submit-progress {
-            position: fixed;
-            top: 03%;
-            left: 50%;
-            height: 6em;
-            padding-top: 2.3em;
-            /* The following rules are the
-    ones most likely to change */
-            width: 20em;
-            /* Set 'margin-left' to a negative number
-    that is 1/2 of 'width' */
-            margin-left: -10em;
-            padding-left: 2.1em;
-            background-color: black;
-            color: white;
-            -webkit-border-radius: 0.4em;
-            -moz-border-radius: 0.4em;
-            border-radius: 0.4em;
-            box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
-            -webkit-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
-            -moz-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
-        }
-    </style>
+    .validation-summary-errors {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
 
-</head>
-<body style="font-family:'Bookman Old Style'">
-   
-        <div class="submit-progress hidden" onclick="processSubmitLoader">
-            <label>Please wait while Saving Data...</label>
+    .validation-summary-valid {
+        display: none;
+    }
+
+    .submit-progress-bg {
+        background-color: lightgray;
+        opacity: .5;
+    }
+
+    .submit-progress {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        height: 6em;
+        padding-top: 2.3em;
+        z-index: 1;
+        /* The following properties are the ones most likely to change */
+        width: 20em;
+        /* Set 'margin-left' to a negative number that is 1/2 of 'width' */
+        margin-left: -10em;
+        padding-left: 2.1em;
+        background-color: black;
+        color: white;
+        -webkit-border-radius: 0.4em;
+        -moz-border-radius: 0.4em;
+        border-radius: 0.4em;
+        box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+        -webkit-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+        -moz-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+    }
+
+    /* Changing style for spinner */
+    .submit-progress {
+        padding-top: 2em;
+        width: 23em;
+        margin-left: -11.5em; /* Set to a negative number that is 1/2 of the width */
+    }
+
+        .submit-progress i {
+            margin-right: 0.5em;
+        }
+</style>
+
+@if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+{
+    <div class="alert alert-success d-flex align-items-center" id="snackbar" role="alert">
+        <div>
+            <strong>Submit successful!!</strong>
         </div>
-    
+    </div>
 
-    <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
-        <h2 style="color:darkviolet; text-align:center">Survey Form</h2>
-        <div asp-validation-summary="All"></div>
+}
+<!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+<div class="submit-progress hidden">
+    <i class="fa fa-2x fa-spinner fa-spin"></i>
+    <label>Please wait while Saving Data...</label>
+</div>
+<!-- ** END POP-UP MESSAGE AREA ** -->
+<!--***Survey From Begins-->
+<form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
+    <h2 style="color:darkviolet; text-align:center">Survey Form</h2>
+    <div asp-validation-summary="All"></div>
 
-        <div class="row ms-1 me-1">
-            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
-                <label class="form-label" for="Name">Name</label>
-            </div>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+            <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+            <label class="form-label" for="Name">Name</label>
         </div>
+    </div>
 
-        <div class="row ms-1 me-1">
-            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-                <input class="form-input width-full" type="email" placeholder=" " id="Email" name="Email" onchange="this.setAttribute('value',this.value)" asp-for="Email">
-                <label class="form-label" for="Email">Email ID</label>
-            </div>
-
-            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-                <input class="form-input width-full" type="tel" id="Mobile" placeholder=" " name="Mobile" onchange="this.setAttribute('value',this.value)" asp-for="Mobile" maxlength="10">
-                <label class="form-label" for="mobile">Mobile Number</label>
-            </div>
-        </div>
-
-        <div class="row ms-1 me-1">
-            <div class="col-lg-12 col-xs-12 col-sm-12 mt-3 form-element right-pd-input">
-                <input class="form-input width-full" type="text" name="Address" id="Address" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Address">
-                <label class="form-label" for="Address">Address</label>
-            </div>
-        </div>
-
-        <div class="row ms-1 me-1">
-            <div class="col-lg-4 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                <input class="form-input width-full" type="text" name="City" id="City" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="City">
-                <label class="form-label" for="City">City</label>
-            </div>
-
-            <div class="col-lg-4 col-xs-12 col-sm-12 mt-3 form-element right-pd-input" asp-for="State">
-                <label for="inputState" class="form-label"></label>
-                <select class="form-input width-full" name="State" id="State" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="State">
-                    <option value="SelectState">Select State</option>
-                    <option value="Andra Pradesh">Andra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Madya Pradesh">Madya Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Orissa">Orissa</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttaranchal">Uttaranchal</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="West Bengal">West Bengal</option>
-                    <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
-                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                    <option value="Chandigarh">Chandigarh</option>
-                    <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                    <option value="Daman and Diu">Daman and Diu</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Lakshadeep">Lakshadeep</option>
-                    <option value="Pondicherry">Pondicherry</option>
-                </select>
-            </div>
-
-            <div class="col-lg-4  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-                <input class="form-input width-full" name="PinCode" type="tel" onchange="this.setAttribute('value',this.value)" id="PinCode" placeholder=" " asp-for="PinCode" maxlength="6">
-                <label class="form-label" for="PinCode">Pin-Code</label>
-            </div>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+            <input class="form-input width-full" type="email" placeholder=" " id="Email" name="Email" onchange="this.setAttribute('value',this.value)" asp-for="Email">
+            <label class="form-label" for="Email">Email ID</label>
         </div>
 
-        <div class="row ms-1 me-1">
-            <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                <label for="testing" class="form-label"></label>
-                <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType">
-                    <option value="SelectState">Testing Type</option>
-                    <option value="Testing">Testing</option>
-                    <option value="Calibration">Calibration</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
+        <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+            <input class="form-input width-full" type="tel" id="Mobile" placeholder=" " name="Mobile" onchange="this.setAttribute('value',this.value)" asp-for="Mobile" maxlength="10">
+            <label class="form-label" for="mobile">Mobile Number</label>
+        </div>
+    </div>
 
-            <div class="col-lg-9 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                <textarea class="form-input width-full" style="height:110px" id="Comments" name="Comments" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Comments"></textarea>
-                <label for="Comments" class="form-label">Comments</label>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-12 col-xs-12 col-sm-12 mt-3 form-element right-pd-input">
+            <input class="form-input width-full" type="text" name="Address" id="Address" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Address">
+            <label class="form-label" for="Address">Address</label>
+        </div>
+    </div>
+
+    <div class="row ms-1 me-1">
+        <div class="col-lg-4 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+            <input class="form-input width-full" type="text" name="City" id="City" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="City">
+            <label class="form-label" for="City">City</label>
+        </div>
+
+        <div class="col-lg-4 col-xs-12 col-sm-12 mt-3 form-element right-pd-input" asp-for="State">
+            <label for="inputState" class="form-label"></label>
+            <select class="form-input width-full" name="State" id="State" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="State">
+                <option value="SelectState">Select State</option>
+                <option value="Andra Pradesh">Andra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madya Pradesh">Madya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Orissa">Orissa</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttaranchal">Uttaranchal</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="West Bengal">West Bengal</option>
+                <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Lakshadeep">Lakshadeep</option>
+                <option value="Pondicherry">Pondicherry</option>
+            </select>
+        </div>
+
+        <div class="col-lg-4  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+            <input class="form-input width-full" name="PinCode" type="tel" onchange="this.setAttribute('value',this.value)" id="PinCode" placeholder=" " asp-for="PinCode" maxlength="6">
+            <label class="form-label" for="PinCode">Pin-Code</label>
+        </div>
+    </div>
+
+    <div class="row ms-1 me-1">
+        <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+            <label for="testing" class="form-label"></label>
+            <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType">
+                <option value="SelectState">Testing Type</option>
+                <option value="Testing">Testing</option>
+                <option value="Calibration">Calibration</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="col-lg-9 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+            <textarea class="form-input width-full" style="height:110px; padding:5px;" id="Comments" name="Comments" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Comments"></textarea>
+            <label for="Comments" class="form-label">Comments</label>
+        </div>
+    </div>
+    <br /><br />
+
+    <div class="row ms-1 me-1">
+        <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+            <label for="testing" class="form-label"></label>
+            <div class="mt-4 d-block" style="text-align:initial">
+                <button class="btn btn-lg btn-submit-print text-white" type="submit" style="background-color:#4250b5" onclick="return DisplayProgressMessage(this, 'Saving...');"> SUBMIT</button>
             </div>
         </div>
-        <br /><br />
-
-        <div class="row ms-1 me-1">
-            <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                <label for="testing" class="form-label"></label>
-                <div class="mt-4 d-block" style="text-align:initial">
-                    <button class="btn btn-lg btn-submit-print text-white" type="submit" style="background-color:#4250b5" onclick="return DisplayProgressMessage(this, 'Saving...');"> SUBMIT</button>
-                </div>
-            </div>
-        </div>>
+    </div>>
 
 
-    </form>
-    <script>
-            function DisplayProgressMessage(ctl, msg) {
-                $(ctl).prop("disabled", true).text(msg);
-                $(".submit-progress").removeClass("hidden");
-                $("body").addClass("submit-progress-bg");
-                $('#surevyForm').submit();
-            
-                return true;
-            }
-        </script>   
-</body>
-</html>
+</form>
 
+<!--*****Survey Forms Ends*****-->
+
+<script>
+    function DisplayProgressMessage(ctl, msg) {
+        // Turn off the "Save" button and change text
+        $(ctl).prop("disabled", true).text(msg);
+        // Gray out background on page
+        $("body").addClass("submit-progress-bg");
+
+
+        // Wrap in setTimeout so the UI can update the spinners
+        setTimeout(function () {
+            $(".submit-progress").removeClass("hidden");
+        }, 1);
+        $('#surevyForm').submit();
+
+        return true;
+    }
+</script>
+@*<script>
+        function DisplayProgressMessage(ctl, msg) {
+            $(ctl).prop("disabled", true).text(msg);
+            $(".submit-progress").removeClass("hidden");
+            $("body").addClass("submit-progress-bg");
+            $('#surevyForm').submit();
+
+            return true;
+        }
+    </script>*@
