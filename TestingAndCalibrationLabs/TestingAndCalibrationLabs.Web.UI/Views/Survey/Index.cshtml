@@ -1,0 +1,28 @@
+﻿@if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+{
+    <div class="alert alert-success d-flex align-items-center" id="snackbar" role="alert">
+        <div>
+            <strong>Submit successful!!</strong>
+        </div>
+    </div>
+
+}
+<h3>Testing andCalibration</h3>
+<style>
+    #snackbar {
+        background-color: green;
+        color: white;
+        padding: 10px;
+        display: inline-block;
+        position:absolute;
+        bottom: 40px;
+        left: 18cm;
+        transform: translateY(200);
+        transition: all 300ms;
+    }
+
+        #snackbar.show {
+            transform: translateY(0);
+        }
+    
+</style>
