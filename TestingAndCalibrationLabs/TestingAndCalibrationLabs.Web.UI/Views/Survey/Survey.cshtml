@@ -8,11 +8,11 @@
         background-color: lightgreen;
         color: black;
         font-size: larger;
-        padding: 30px;
+        padding: 20px;
         display: inline-block;
         position: absolute;
-        top: 6px;
-        left: 0cm;
+        bottom: 1cm;
+        left: 15cm;
         transform: translateY(200);
         transition: all 300ms;
     }
@@ -110,17 +110,18 @@
 {
     <div class="alert alert-success d-flex align-items-center" id="snackbar" role="alert">
         <div>
-            <strong>Submit successful!!</strong>
+            <strong>Submitted Successfully!! Thank You</strong>
         </div>
     </div>
-
 }
+
 <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
 <div class="submit-progress hidden">
     <i class="fa fa-2x fa-spinner fa-spin"></i>
     <label>Please wait while Saving Data...</label>
 </div>
 <!-- ** END POP-UP MESSAGE AREA ** -->
+
 <!--***Survey From Begins-->
 <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
     <h2 style="color:darkviolet; text-align:center">Survey Form</h2>
