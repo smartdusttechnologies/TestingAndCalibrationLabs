@@ -10,6 +10,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     public class UserRepository : IUserRepository
     {
+        /// <summary>
+        /// using the userRespository
+        /// </summary>
         private readonly IConnectionFactory _connectionFactory;
 
         public List<string> Get()
@@ -21,7 +24,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
+        /// <summary>
+        ///get the data of the required user with specified role[Admin]
+        /// </summary>
+        /// <returns></returns>
         List<string> Interfaces.IUserRepository.Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;

@@ -17,8 +17,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
         private readonly ISurveyService _surveyService;
+       
         /// <summary>
-        /// Default Action of the Home Cotroller
+        /// Default Action of the Survey Controller
         /// </summary>
         /// <returns></returns>
         /// 
@@ -31,21 +32,28 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            return View();
+             return View();
         }
 
+        /// <summary>
+        /// Survey view page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Survey()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
         }
 
+        /// <summary>
+        /// Data of the Person participated in suvey to be saved.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Survey([Bind] SurveyModel data)
         {
-            System.Threading.Thread.Sleep(1000);
+           // System.Threading.Thread.Sleep(1000);
             if (ModelState.IsValid)
             {
                 var emailId = new List<string>();
@@ -56,9 +64,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     Address = data.Address,
                     City = data.City,
                     Mobile = data.Mobile,
-                    State=data.State,
+                    State= data.State,
                     PinCode = data.PinCode,
-                    TestingType = data.TestingType,
+                    TestingType = data.TestingType.ToString(),
                     Comments = data.Comments,
                     Email = emailId
                 };

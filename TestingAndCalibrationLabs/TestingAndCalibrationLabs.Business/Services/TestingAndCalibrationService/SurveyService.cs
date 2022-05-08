@@ -15,6 +15,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// using the SurverInterface
+    /// </summary>
     public class SurveyService : ISurveyService
     {
         private readonly ISurveyRepository _surveyRepository;
@@ -53,7 +56,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*LogoLink*", surveymodel.LogoImage);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*BodyImageLink*", surveymodel.BodyImage);
             var isemailsendsuccessfully = _emailService.Sendemail(surveymodel);
-
+            
+            //Saving the data to data base
             _surveyRepository.Insert(surveymodel);
 
             //create msg for admins
@@ -71,9 +75,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*Mob*", surveymodel.MobileNumber);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*LogoLink*", surveymodel.LogoImage);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*BodyImageLink*", surveymodel.BodyImage);
-
+            
+            //Remove users mail id and add the List of mail addresss of users[Admin] in Database. 
             surveymodel.Email.RemoveAt(0);
-
             foreach (var item in emailsendTo)
             {
                 surveymodel.Email.Add(item);
@@ -86,6 +90,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<int>(0);
         }
+
+        /// <summary>
+        /// To use the email Template to send mail to the User participated.
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        /// <returns></returns>
         private string CreateBody(string emailTemplate)
         {
             string body = string.Empty;
@@ -95,6 +105,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return body;
         }
+
+        /// <summary>
+        /// To use the email Template to send mail to the Users in database.
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        /// <returns></returns>
         private string CreateBodyAdmin(string emailTemplate)
         {
             string body = string.Empty;

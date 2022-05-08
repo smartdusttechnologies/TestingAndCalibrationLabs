@@ -12,7 +12,7 @@ using PagedList;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// Connection between Database using ISample
+    /// Connection between Database using IsSurveyRepository we establish a connection
     /// </summary>
     public class SurveyRepository : ISurveyRepository
     {

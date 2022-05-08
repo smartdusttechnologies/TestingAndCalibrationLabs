@@ -19,8 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ISurveyRepository _surveyRepository;
 
-        
-
         public EmailService(IConfiguration configuration, IWebHostEnvironment hostingEnvironment, ISurveyRepository surveyRepository)
         {
             _configuration = configuration;
@@ -28,6 +26,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             _surveyRepository = surveyRepository;
         }
 
+        /// <summary>
+        /// Sends mail using the Survey model.
+        /// </summary>
+        /// <param name="surveyModel"></param>
+        /// <returns></returns>
         public bool Sendemail(SurveyModel surveyModel)
         {
             //Read SMTP settings from AppSettings.json.
@@ -37,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             string userName = _configuration["Smtp:UserName"];
             string password = _configuration["Smtp:Password"];
             string emailto = string.Join(",", surveyModel.Email);
-            //string emailto = "sushil8916@gmail.com";
+            
             using (MailMessage mm = new MailMessage(fromAddress, emailto))
             {
                 mm.Subject = "Survey";

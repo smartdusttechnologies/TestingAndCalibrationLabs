@@ -2,118 +2,19 @@
 @{
     ViewData["Title"] = "Services";
 }
-
-<style>
-    #snackbar {
-        background-color: lightgreen;
-        color: black;
-        font-size: larger;
-        padding: 20px;
-        display: inline-block;
-        position: absolute;
-        bottom: 1cm;
-        left: 15cm;
-        transform: translateY(200);
-        transition: all 300ms;
-    }
-
-        #snackbar.show {
-            transform: translateY();
-        }
-
-    .btn {
-        background-color: blue;
-        width: 200px;
-        font-size: 20px;
-        padding: 20px;
-        border-radius: 15px;
-        border: 3px solid yellow;
-        color: magenta;
-        text-align: center;
-    }
-
-    form-group > label {
-        top: 12px;
-        left: 6px;
-        position: relative;
-        background-color: white;
-        padding: 0px 0px 0px 0px;
-    }
-
-    .field-validation-error.form-input.width-full {
-        color: orangered;
-        font-weight: bold;
-    }
-
-    .field-validation-valid .form-input.width-full {
-        display: none;
-    }
-
-    input.input-validation-error.form-input.width-full {
-        border: 2px solid #f00;
-    }
-
-    input.input-validation-error#Comments.form-input.width-full {
-        border: 2px solid #f00;
-    }
-
-    .validation-summary-errors {
-        color: red;
-        font-weight: bold;
-        font-size: 1.1em;
-    }
-
-    .validation-summary-valid {
-        display: none;
-    }
-
-    .submit-progress-bg {
-        background-color: lightgray;
-        opacity: .5;
-    }
-
-    .submit-progress {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        height: 6em;
-        padding-top: 2.3em;
-        z-index: 1;
-        /* The following properties are the ones most likely to change */
-        width: 20em;
-        /* Set 'margin-left' to a negative number that is 1/2 of 'width' */
-        margin-left: -10em;
-        padding-left: 2.1em;
-        background-color: black;
-        color: white;
-        -webkit-border-radius: 0.4em;
-        -moz-border-radius: 0.4em;
-        border-radius: 0.4em;
-        box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
-        -webkit-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
-        -moz-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
-    }
-
-    /* Changing style for spinner */
-    .submit-progress {
-        padding-top: 2em;
-        width: 23em;
-        margin-left: -11.5em; /* Set to a negative number that is 1/2 of the width */
-    }
-
-        .submit-progress i {
-            margin-right: 0.5em;
-        }
-</style>
-
+<!--***** Shows the success message for data store*****-->
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
-{
-    <div class="alert alert-success d-flex align-items-center" id="snackbar" role="alert">
-        <div>
-            <strong>Submitted Successfully!! Thank You</strong>
-        </div>
+{    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+     </svg>
+
+    <div class="alert alert-success" role="alert" id="snackbar">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+         <strong>Submitted Successfully!! Thank You</strong>
     </div>
-}
+ }
 
 <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
 <div class="submit-progress hidden">
@@ -121,6 +22,7 @@
     <label>Please wait while Saving Data...</label>
 </div>
 <!-- ** END POP-UP MESSAGE AREA ** -->
+
 
 <!--***Survey From Begins-->
 <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
@@ -159,48 +61,10 @@
             <label class="form-label" for="City">City</label>
         </div>
 
-        <div class="col-lg-4 col-xs-12 col-sm-12 mt-3 form-element right-pd-input" asp-for="State">
+        <div class="col-lg-4 col-xs-12 col-sm-12 mt-3 form-element right-pd-input">
             <label for="inputState" class="form-label"></label>
-            <select class="form-input width-full" name="State" id="State" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="State">
-                <option value="SelectState">Select State</option>
-                <option value="Andra Pradesh">Andra Pradesh</option>
-                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                <option value="Assam">Assam</option>
-                <option value="Bihar">Bihar</option>
-                <option value="Chhattisgarh">Chhattisgarh</option>
-                <option value="Goa">Goa</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Pradesh">Himachal Pradesh</option>
-                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Madya Pradesh">Madya Pradesh</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Orissa">Orissa</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Sikkim">Sikkim</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Telangana">Telangana</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Uttaranchal">Uttaranchal</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="West Bengal">West Bengal</option>
-                <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
-                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                <option value="Chandigarh">Chandigarh</option>
-                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                <option value="Daman and Diu">Daman and Diu</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Lakshadeep">Lakshadeep</option>
-                <option value="Pondicherry">Pondicherry</option>
-            </select>
+            <input type="text" class="form-input width-full" name="State" id="State" placeholder=" " asp-for="State">
+            <label class="form-label" for="PinCode">State</label>
         </div>
 
         <div class="col-lg-4  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
@@ -212,11 +76,9 @@
     <div class="row ms-1 me-1">
         <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
             <label for="testing" class="form-label"></label>
-            <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType">
-                <option value="SelectState">Testing Type</option>
-                <option value="Testing">Testing</option>
-                <option value="Calibration">Calibration</option>
-                <option value="Other">Other</option>
+            <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType" asp-items="Html.GetEnumSelectList<Testing>()">
+                <option value=" ">Testing Type</option>
+
             </select>
         </div>
 
@@ -227,18 +89,16 @@
     </div>
     <br /><br />
 
-    <div class="row ms-1 me-1">
+    <div class="row ms-1 me-1" id="submitBox">
         <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
             <label for="testing" class="form-label"></label>
-            <div class="mt-4 d-block" style="text-align:initial">
-                <button class="btn btn-lg btn-submit-print text-white" type="submit" style="background-color:#4250b5" onclick="return DisplayProgressMessage(this, 'Saving...');"> SUBMIT</button>
+            <div class="mt-3 d-block" style="text-align:initial">
+                <span><button class="btn btn-lg btn-submit-print text-white" type="submit" style="background-color:#4250b5" onclick="return DisplayProgressMessage(this, 'Saving...');">SUBMIT</button></span>
+                <span style="float:right;" id="surevyForm"></span>
             </div>
         </div>
     </div>>
-
-
 </form>
-
 <!--*****Survey Forms Ends*****-->
 
 <script>
@@ -247,8 +107,6 @@
         $(ctl).prop("disabled", true).text(msg);
         // Gray out background on page
         $("body").addClass("submit-progress-bg");
-
-
         // Wrap in setTimeout so the UI can update the spinners
         setTimeout(function () {
             $(".submit-progress").removeClass("hidden");
@@ -258,13 +116,3 @@
         return true;
     }
 </script>
-@*<script>
-        function DisplayProgressMessage(ctl, msg) {
-            $(ctl).prop("disabled", true).text(msg);
-            $(".submit-progress").removeClass("hidden");
-            $("body").addClass("submit-progress-bg");
-            $('#surevyForm').submit();
-
-            return true;
-        }
-    </script>*@
