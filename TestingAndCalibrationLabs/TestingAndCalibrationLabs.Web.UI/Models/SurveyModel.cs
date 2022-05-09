@@ -15,45 +15,53 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Name of the Person
         /// </summary>
-        [Required(ErrorMessage ="Name required")]
+        [Required(ErrorMessage ="Please enter your name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Mobile Number
         /// </summary>
-        [Required,MaxLength(10, ErrorMessage = "Mobile no. is required")]
-        [RegularExpression(@"^([6-9]{1}[0-9]{9})$", ErrorMessage = "Mobile no. required")]
+        [Required(ErrorMessage = "Please enter 10 digit Mobile number")]
+        [MaxLength(10, ErrorMessage = "Please enter 10 digit Mobile number")]
+        [RegularExpression(@"^([6-9]{1}[0-9]{9})$", ErrorMessage = "Please enter valid Mobile number")]
         public string Mobile { get; set; }
 
         /// <summary>
         /// Email address
         /// </summary>
-        [Required, EmailAddress]
+        [Required(ErrorMessage = "Please enter your email address")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email address")]
+        [MaxLength(50)]
+        [RegularExpression("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
+
+        //[Required, EmailAddress(ErrorMessage ="Please enter correct email id"]
         public string Email { get; set; }
 
         /// <summary>
         /// Communication address
         /// </summary>    
-        [Required(ErrorMessage = "Address required")]
+        [Required(ErrorMessage = "Please enter your address")]
         public string Address { get; set; }
 
         /// <summary>
         /// City
         /// </summary>
-        [Required(ErrorMessage = "City required")]
+        [Required(ErrorMessage = "City name is required")]
         public string City { get; set; }
         
         /// <summary>
         /// State to which Person belongs
         /// </summary>
-        [Required(ErrorMessage = "State required")]
+        [Required(ErrorMessage = "State name is required")]
         public string State { get; set; }
         
         /// <summary>
         /// Pin code
         /// </summary>
-        [Required,MaxLength(6, ErrorMessage = "Pin code is required")]
-        [RegularExpression(@"^([1-9]{1}[0-9]{5})$", ErrorMessage = "Fill 6 digit pin code ")]
+        [Required(ErrorMessage = "Please fill 6 digit pin code")]
+        [MaxLength(6, ErrorMessage ="Please enter 6 digit Pin code")] 
+        [RegularExpression(@"^([1-9]{1}[0-9]{5})$", ErrorMessage = "Please fill valid pin code")]
         public string PinCode { get; set; }
         
         /// <summary>
@@ -65,7 +73,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Test type selected
         /// </summary>
-        [Required(ErrorMessage = "Testing Type required")]
+        [Required(ErrorMessage = "Testing Type is required")]
         public Testing? TestingType { get; set; }
     }
     

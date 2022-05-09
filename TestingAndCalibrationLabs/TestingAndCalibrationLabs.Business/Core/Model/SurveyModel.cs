@@ -6,8 +6,7 @@ using System.Text;
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class SurveyModel:Entity
-    {
-        
+    {   
         public string Name { get; set; }
         public string MobileNumber { get; set; }
         public string HtmlMsg { get; set; }
@@ -23,6 +22,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string State { get; set; }
         public string PinCode { get; set; }
         public string Comments { get; set; }
-      
     }
 }

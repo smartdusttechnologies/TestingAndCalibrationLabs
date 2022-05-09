@@ -8,60 +8,10 @@ body {
     font-family: 'Roboto';
 }
 
-.btn {
-    background-color: blue;
-    width: 200px;
-    font-size: 20px;
-    padding: 20px;
-    border-radius: 15px;
-    border: 3px solid yellow;
-    color: magenta;
-    text-align: center;
-}
 
-form-group > label {
-    top: 12px;
-    left: 6px;
-    position: relative;
-    background-color: white;
-    padding: 0px 0px 0px 0px;
-}
 
-.field-validation-error.form-input.width-full {
-    color: orangered;
-    font-weight: bold;
-}
+ 
 
-.field-validation-valid .form-input.width-full {
-    display: none;
-}
-
-input.input-validation-error.form-input.width-full {
-    border: 2px solid #f00;
-}
-
-.validation-summary-errors {
-    color: red;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-.validation-summary-valid {
-    display: none;
-}  
-/*
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: white;
-    display: flex;
-}
-*/
 .form-element {
     height: 50px;
     position: relative;
@@ -129,23 +79,6 @@ body {
     box-shadow: 0 0 3px 0 dodgerblue;
 }
 
-/*#snackbar {
-    background-color: lightgreen;
-    color: black;
-    font-size: larger;
-    padding: 20px;
-    display: inline-block;
-    position: center;
-    bottom: 18cm;
-    left: 10cm;
-    transform: translateY(200);
-    transition: all 300ms;
-}*/
-/*
-    #snackbar.show {
-        transform: translateY();
-    }
-*/
 .btn {
     background-color: blue;
     width: 200px;
@@ -155,6 +88,7 @@ body {
     border: 3px solid yellow;
     color: magenta;
     text-align: center;
+    position:relative;
 }
 
 form-group > label {
@@ -189,6 +123,7 @@ input.input-validation-error#TestingType.form-input.width-full {
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
+
 .validation-summary-errors {
     color: red;
     font-weight: bold;
@@ -200,7 +135,7 @@ input.input-validation-error#State.form-input.width-full {
 }
 
 .submit-progress-bg {
-    background-color: lightgray;
+    background-color: lightcoral;
     opacity: .5;
 }
 
@@ -248,7 +183,7 @@ input.input-validation-error#State.form-input.width-full {
     padding: 16px;
     position: fixed;
     z-index: 1;
-    left: 50%;
+    left: 40%;
     bottom: 30px;
     font-size: 17px;
 }
@@ -307,24 +242,19 @@ input.input-validation-error#State.form-input.width-full {
     }
 }
 
-    /*#snackbar.show {
-        transform: translateY();
-    }
-*/
-
-@media screen and (max-width:480px) {
+ @media screen and (max-width:480px) {
     #snackbar {
         visibility: visible;
         min-width: 250px;
         margin-left: -125px;
-        background-color: lightgreen;
+        background-color: green;
         color: white;
         text-align: center;
         border-radius: 2px;
         padding: 16px;
         position: fixed;
-        z-index: 1;
-        left: 50%;
+        z-index: -1;
+        left: 5%;
         bottom: 30px;
         font-size: 17px;
     }

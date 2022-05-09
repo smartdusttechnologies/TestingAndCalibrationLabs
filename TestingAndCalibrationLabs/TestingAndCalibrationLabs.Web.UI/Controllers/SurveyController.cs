@@ -39,8 +39,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Survey view page
         /// </summary>
         /// <returns></returns>
+       
         public IActionResult Survey()
         {
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
         }
 
@@ -50,10 +52,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Survey([Bind] SurveyModel data)
         {
-           // System.Threading.Thread.Sleep(1000);
             if (ModelState.IsValid)
             {
                 var emailId = new List<string>();
@@ -70,10 +71,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     Comments = data.Comments,
                     Email = emailId
                 };
-                
                 _surveyService.Add(getbusinessModel);
                 TempData["IsTrue"] = true;
-                //System.Threading.Thread.Sleep(3000);
                 return RedirectToAction("Survey");
             }
             return View(data);
