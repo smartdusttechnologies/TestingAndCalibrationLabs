@@ -8,10 +8,6 @@ body {
     font-family: 'Roboto';
 }
 
-
-
- 
-
 .form-element {
     height: 50px;
     position: relative;
@@ -122,6 +118,19 @@ input.input-validation-error#TestingType.form-input.width-full {
 
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
+}
+
+textarea.input-validation-error#Comments {
+    border: 2px solid red;
+}
+
+select.input-validation-error#TestingType {
+    border: 2px solid red;
+}
+
+#select{
+    margin:0;
+    padding:0;
 }
 
 .validation-summary-errors {
@@ -242,12 +251,12 @@ input.input-validation-error#State.form-input.width-full {
     }
 }
 
- @media screen and (max-width:480px) {
+ @media (max-width:480px) {
     #snackbar {
         visibility: visible;
         min-width: 250px;
         margin-left: -125px;
-        background-color: green;
+        background-color: deeppink;
         color: white;
         text-align: center;
         border-radius: 2px;
