@@ -88,7 +88,7 @@
         });
 
         function createCards(selectedTitle,selectedID){
-            var flag=0,i=ids.length;//console.log(selectedTitle);
+            var flag=0,i=ids.length;
             var rowId=0;
             
             for(var j=0;j<ids.length;j++){
@@ -164,20 +164,20 @@
                 h.innerText="";
                 b.appendChild(h);
 
-                var i=document.createElement("input");
-                i.setAttribute("type","hidden");
-                i.setAttribute("name","categoryId[]");
-                i.setAttribute("value",selectedID);
-                a.appendChild(i);
+                var ij=document.createElement("input");
+                ij.setAttribute("type","hidden");
+                ij.setAttribute("name","categoryId[]");
+                ij.setAttribute("value",selectedID);
+                a.appendChild(ij);
 
-                var j=document.createElement("input");
-                j.setAttribute("type","hidden");
-                j.setAttribute("name","categoryName[]");
-                j.setAttribute("value",selectedTitle);
-                a.appendChild(j);
+                var jk=document.createElement("input");
+                jk.setAttribute("type","hidden");
+                jk.setAttribute("name","categoryName[]");
+                jk.setAttribute("value",selectedTitle);
+                a.appendChild(jk);
 
                 i++;
-                document.getElementById("selectedCount").innerText=i;
+                document.getElementById("selectedCount").innerText=i; console.log(ids.length);
                 document.getElementById("addDataHere").appendChild(a);
              }
         }
