@@ -9,6 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.MetirialTest;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.MetirialTest;
+using TestingAndCalibrationLabs.Business.Services.MetirialTest;
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -28,10 +32,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllers();
             //Services
             services.AddScoped<ISampleService, SampleService>();
-
+            services.AddScoped<ITestingCategoryLookupService, TestingCategoryLookupService>();
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped<ITestingCategoryLookupRepository, Business.Data.Repository.MetirialTest.TestingCategoryLookupRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +63,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=login}/{id?}");
+                    pattern: "{controller=TestingCategoryLookup}/{action=TestingCategoryLookup}/{id?}");
             });
         }
     }
