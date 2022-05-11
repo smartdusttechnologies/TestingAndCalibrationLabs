@@ -11,6 +11,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model.MetirialTest
         public int ParentId { get; set; }
         public int Position { get; set; }
         public string Icon { get; set; }    
-        public string Discription { get; set; }
+        public string Descrpition { get; set; }
     }
 }

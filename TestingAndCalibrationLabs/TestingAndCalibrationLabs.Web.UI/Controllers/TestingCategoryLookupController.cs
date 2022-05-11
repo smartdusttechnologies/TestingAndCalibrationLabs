@@ -51,7 +51,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             string tempArray="[";
             for(var j = 0; j < tests.ToArray().Length; j++)
             {
-                tempArray += "[`" + tests.ToArray()[j].Id+"`,`"+tests.ToArray()[j].Icon+"`,`" +tests.ToArray()[j].Discription +"`]";
+                tempArray += "[`" + tests.ToArray()[j].Id+"`,`"+tests.ToArray()[j].Icon+"`,`" +tests.ToArray()[j].Descrpition + "`]";
                 if (j < tests.ToArray().Length - 1)
                     tempArray += ",";
             }
