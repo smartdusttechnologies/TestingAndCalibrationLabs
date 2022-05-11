@@ -25,58 +25,59 @@
     <form class="mb-2 ">
         <div class="row ms-1 me-1">
 
-            <div class="col-lg-6 col-sm-5 mt-2 form-element left-pd-input d-block d-sm-none" style="text-align:right;">
+            <div class="col-lg-12 col-sm-6 mt-2 form-element left-pd-input d-block d-sm-none" style="text-align:right;">
                 <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
-            <div class="col-lg-6 col-sm-7 mt-2 form-element right-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
             </div>
-            <div class="col-lg-6 col-sm-5 mt-2 form-element left-pd-input d-none d-sm-block" style="text-align:right;">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element left-pd-input d-none d-sm-block" style="text-align:right;">
                 <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
 
-            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="departMentName">Department Name:</label>
             </div>
-            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="customerName">Customer Name:</label>
             </div>
-            <div class="col-lg-6 col-sm-12 mt-2 form-element left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="issueTo">Issue To:</label>
             </div>
 
-            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
                 <label class="form-label" for="receivedOn">Received On:</label>
             </div>
-            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
                 <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO:</label>
             </div>
-            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
                 <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
                 <label class="form-label" for="contactPersonName">Contact Person Name:</label>
             </div>
-            <div class="col-lg-3 col-sm-6 mt-2 form-element left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
                 <label class="form-label" for="mobileNumber">Mobile Number:</label>
             </div>
 
-            <div class="col-lg-3 col-sm-6 mt-2 form-element right-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
                 <label class="form-label" for="testReportReleaseDate">Test Report Release Date:</label>
             </div>
-            <div class="col-lg-9 col-sm-6 mt-2 form-element left-pd-input">
+            <div class="col-lg-12 col-sm-12 mt-2 form-element left-pd-input">
                 <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
                 <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement:</label>
             </div>
         </div>
     </form>
-  @*  <form class="mb-2 me-1 ms-1 row">
+
+    <form class="mb-2 me-1 ms-1 row">
         <div class="col-12 mb-2">
             <label style="padding-left:20px;">Testing Material:</label>
         </div>
@@ -95,7 +96,14 @@
             </div>
         </div>
     </form>
-*@
+
+    <form class="mb-2 me-1 m-sm-1 row">
+        <div class="col-12">
+            <input type="file" multiple required />
+
+        </div>
+    </form>
+
 
     @*
         <div class="col-12 mb-2">
@@ -105,9 +113,10 @@
         <form action="" method="post" enctype="multipart/form-data">
         <input type="file" name="file" />
         </form>
-        </div>*@
+        \
+        </div>
 
-   @* <form class="mb-2 me-1 ms-1 row">
+    <form class="mb-2 me-1 ms-1 row">
         <div class="col-12 mb-2">
             <label style="padding-left:20px;">Testing Material:</label>
         </div>
@@ -130,45 +139,94 @@
     </form>*@
 
 
-   @* <form class="mb-2 me-1 ms-1 row" id="myform" method="post">
+  @*  <form class="mb-2 me-1 ms-1 row" id="myform" method="post">
         <div class="col-12 mb-2">
             <label style="padding-left:20px;">Attachments:</label>
         </div>
         <div class="col-12 " style="background: #ced4da;">
             <input class="input-file input-hide" type="file" id="files" multiple name="files[]" />
-            <label for="files text-center" class="filename " style="width:100%;text-align: center;height:60px;">
+            <label for="files" class="filename " style="width:100%;text-align: center;height:60px;">
                 Drag & Drop your files or Browse
             </label>
-            <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="" id="chipInTheFileUpload"></div>
+            
         </div>
     </form>*@
 
-
-
-    @*<div class="" style="margin-bottom:80px;">
+   @* <div class="">
+        <input multiple class="width-full input-file input-hide" type="file"onclick="readfile()" onchange="readURL(this);" />
+        <div class="text-center width-full filename before-file-upload">
+            <h2>Drag and drop your files</h2>
+        </div>
+        <div class="width-full filename after-file-upload" style="background: #ced4da;">
+            <!--code for the chips-->
+            <div class="container container-testing-material width-full d-flex col-12 mb-2 text-center" onclick="">
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label>hello</label>
+                     <span onclick="removefile()">
+                        ×
+                    </span>
+                </div>
+            </div>
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label draggable="true">hello world</label>
+                    <span onclick="removefile()">
+                        ×
+                    </span>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>*@
 
-   @* <script>
+    @*<div class="" style="margin-bottom:80px;">
+    <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="" id="chipInTheFileUpload"></div>
+    </div>*@
 
-        var filenames = []
-        $("input:file").change(function () {
-            var temp=[]
-             temp = $.map(this.files, function (file) {
-                if(filenames.includes(file.name)){
-                }
-                else{
-                    return file.name;
-                }
-            })
-            filenames = filenames.concat(temp)
-            temp.map(function (file) {
-                var txt1 = $(`<div class="testing-material-chips inline-block m-1"></div>`)
-            var txt2 = $(`<div class="container container-chip"></div>`).append(`<label></label>`).append(file)
-            txt1.append(txt2)
-            $("#chipInTheFileUpload").append(txt1);
-            })
-            //$(".filename").html(filenames.join(' , '));
-        });
+    @*<script>
+        function readfile(){
+        $('.before-file-upload').hide();
+        $('.after-file-upload').show();
+        }
+        //var filenyames=[]
+        //function readURL(input) {
+        //    $('.before-file-upload').hide();
+        //    $('.after-file-upload').show();
+        //     var filenames = []
+        //    $("input:file").change(function () {
+        //    var temp=[]
+        //     temp = $.map(this.files, function (file) {
+        //        if(filenames.includes(file.name)){
+        //        }
+        //        else{
+        //            return file.name;
+        //        }
+        //    })
+        //    filenames = filenames.concat(temp)
+        //    console.log(filenames)
+        //}
+
+        //var filenames = []
+        //$("input:file").change(function () {
+        //    var temp=[]
+        //     temp = $.map(this.files, function (file) {
+        //        if(filenames.includes(file.name)){
+        //        }
+        //        else{
+        //            return file.name;
+        //        }
+        //    })
+        //    filenames = filenames.concat(temp)
+        //    temp.map(function (file) {
+        //        var txt1 = $(`<div class="testing-material-chips inline-block m-1"></div>`)
+        //    var txt2 = $(`<div class="container container-chip"></div>`).append(`<label></label>`).append(file)
+        //    txt1.append(txt2)
+        //    $("#chipInTheFileUpload").append(txt1);
+        //    })
+        //        console.log(filenames)
+        //    //$(".filename").html(filenames.join(' , '));
+        //});
 
 
 
@@ -207,8 +265,8 @@
         //    $(".filename").html(filenames.join(', '));
         //});
 
-    </script>
-*@
+    </script>*@
+
 </body>
 
 </html>
