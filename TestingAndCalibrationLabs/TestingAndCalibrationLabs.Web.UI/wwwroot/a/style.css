@@ -32,7 +32,7 @@
 .comboTreeArrowBtn {
 	position: absolute;
     right: 0px;
-    bottom: 0px;
+    
     top: 0px;
     box-sizing: border-box;
     border: 1px solid var(--ct-border-color);
@@ -57,9 +57,7 @@
     border-bottom: 1px solid var(--ct-selection);
 }
 
-.comboTreeArrowBtnImg{
-    font-size: 1.25rem;
-}
+
 
 .comboTreeDropDownContainer {
 	display: none;
@@ -127,12 +125,13 @@ span.comboTreeItemTitle{
 
 
 .comboTreeInputBox {
-	padding: var(--ct-padding);
-    border-radius: var(--ct-border-radius);
+    padding: var(--ct-padding);
+    /*  border-radius: var(--ct-border-radius);*/
     border: 1px solid var(--ct-border-color);
     width: 100%;
     box-sizing: border-box;
     padding-right: 24px;
+   
 }
 .comboTreeInputBox:focus {
     border: 1px solid var(--ct-selection);

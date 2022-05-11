@@ -1,2 +1,5 @@
-INSERT INTO TestingCategoryLookup(Name,Discription,ParentId,Position,IsDeleted) values ('Rishi','rishikumarsmartdusttech','0','1','0')
-INSERT INTO TestingCategoryLookup(Name,Discription,ParentId,Position,IsDeleted) values ('shree','shreesmartdusttech','1','1','0')
+insert into TestingCategoryLookup1(Name,Descrpition,Position,IsDeleted) values ('SOMEONE','shreesmartdusttech','1','0');
+
+insert into TestingCategoryLookup1(Name,Descrpition,ParentId,Position,IsDeleted) values ('SOMEONE2','shreesmartdusttech',(Select SCOPE_IDENTITY()),'1','0');
+
+insert into TestingCategoryLookup1(Name,Descrpition,ParentId,Position,IsDeleted) values ('SOMEONE3','shreesmartdusttech',(Select SCOPE_IDENTITY()),'1','0');
