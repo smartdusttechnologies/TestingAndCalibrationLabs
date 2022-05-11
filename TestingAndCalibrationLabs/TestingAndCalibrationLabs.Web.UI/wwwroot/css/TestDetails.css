@@ -115,7 +115,7 @@ input.input-validation-error#Comments.form-input.width-full {
 input.input-validation-error#TestingType.form-input.width-full {
     border: 2px solid red;
 }
-
+/**/
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
@@ -127,6 +127,7 @@ textarea.input-validation-error#Comments {
 select.input-validation-error#TestingType {
     border: 2px solid red;
 }
+
 
 #select{
     margin:0;
@@ -192,7 +193,7 @@ select.input-validation-error#TestingType {
     padding: 16px;
     position: fixed;
     z-index: 1;
-    left: 40%;
+    left: 42%;
     bottom: 30px;
     font-size: 17px;
 }
@@ -251,8 +252,8 @@ select.input-validation-error#TestingType {
     }
 }
 
- @media (max-width:480px) {
-    #snackbar {
+@media only screen and (max-width:480px) {
+        #snackbar {
         visibility: visible;
         min-width: 250px;
         margin-left: -125px;
