@@ -183,19 +183,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility: visible;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: green;
-    color: white;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    left: 42%;
-    bottom: 30px;
-    font-size: 17px;
+    visibility:visible;
+    border-radius:12px;
+    background-color:green;
+    color:white;
+    margin-bottom:70px;
+    width:370px;
+    padding:14px;
+    text-align:center;
+    font-size:16px;
 }
 
     #snackbar.show {
@@ -249,77 +245,5 @@ select.input-validation-error#TestingType {
     to {
         bottom: 0;
         opacity: 0;
-    }
-}
-
-@media only screen and (max-width:480px) {
-        #snackbar {
-        visibility: visible;
-        min-width: 250px;
-        margin-left: -125px;
-        background-color: deeppink;
-        color: white;
-        text-align: center;
-        border-radius: 2px;
-        padding: 16px;
-        position: fixed;
-        z-index: -1;
-        left: 5%;
-        bottom: 30px;
-        font-size: 17px;
-    }
-
-        #snackbar.show {
-            visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-    @-webkit-keyframes fadein {
-        from {
-            bottom: 0;
-            opacity: 0;
-        }
-
-        to {
-            bottom: 30px;
-            opacity: 1;
-        }
-    }
-
-    @keyframes fadein {
-        from {
-            bottom: 0;
-            opacity: 0;
-        }
-
-        to {
-            bottom: 30px;
-            opacity: 1;
-        }
-    }
-
-    @-webkit-keyframes fadeout {
-        from {
-            bottom: 30px;
-            opacity: 1;
-        }
-
-        to {
-            bottom: 0;
-            opacity: 0;
-        }
-    }
-
-    @keyframes fadeout {
-        from {
-            bottom: 30px;
-            opacity: 1;
-        }
-
-        to {
-            bottom: 0;
-            opacity: 0;
-        }
     }
 }
