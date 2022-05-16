@@ -117,12 +117,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Views()
         {
-
-            return View();
+            
+                return View();
+            
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TestingCategoryLookup([Bind] Models.MeterialTests.TestingCategoryLookupModelDTO sample)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var samples = _mapper.Map<Web.UI.Models.MeterialTests.TestingCategoryLookupModelDTO,Business.Core.Model.MetirialTest.TestingCategoryLookupModel>(sample);
+
+                
+                ViewBag.Samples = samples;  
+                return RedirectToAction("Views");
+               
+              
+            }
+            
+          return View();
+        }
 
     }
 
