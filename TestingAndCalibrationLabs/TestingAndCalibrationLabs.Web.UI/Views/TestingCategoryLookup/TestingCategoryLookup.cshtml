@@ -3,43 +3,32 @@
 @model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.MeterialTests.TestingCategoryLookupModelDTO>
 @{
     ViewData["Title"] = "TestingCategoryLookup";
-   
+
 }
 <link rel="stylesheet" href="a/snackbar.css">
-
-
-
-
-<script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="a/style.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js">
 
 </script>
-  
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-     
-    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="a/style.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js">   
-</script>  
- <body style="background-color: ghostwhite">
+<body style="background-color: ghostwhite">
     <div class="container mt-5">
         <div class="row">
             <div class="">
-                <input type="text"  id="justAnInputBox2" placeholder="Select" autocomplete="on" style="overflow-y:auto;height: 60px;border-radius: 30px;"  />
+                <input type="text" id="justAnInputBox2" placeholder="Select" autocomplete="on" style="overflow-y:auto;height: 60px;border-radius: 30px;" />
             </div>
         </div>
         <div class="mt-3 d-flex justify-content-between mb-3">
-         <div class="p-2">Showing <span id="selectedCount">0</span> results of <span id="totalCount">0</span></div>
-    <button type="button" class="btn-lg btn-primary" onclick="submitForm()">NEXT</button>
-  </div>
+            <div class="p-2">Showing <span id="selectedCount">0</span> results of <span id="totalCount">0</span></div>
+            <button type="button" class="btn-lg btn-primary" onclick="submitForm()">NEXT</button>
+        </div>
     </div>
-  
-   <form id="selectedMembersForm"  asp-action="TestingCategoryLookup">
+
+    <form id="selectedMembersForm" asp-action="TestingCategoryLookup">
         <div class="container mt-3">
             <div class="row" id="addDataHere">
-            
             </div>
         </div>
     </form>
@@ -55,174 +44,170 @@
 
     <script type="text/javascript">
 
-        var SampleJSONData =@ViewBag.jsonData;
-        var tempArray=[];
-        tempArray=@ViewBag.tempArray;
-        var comboTree3;
-        var selectedTitles=[];
-        var getIDs=[];
-        var ids=[];
-        //Calculate number of employees
-        document.getElementById("totalCount").innerText=tempArray.length;
+                var SampleJSONData =@ViewBag.jsonData;
+                var tempArray=[];
+                tempArray=@ViewBag.tempArray;
+                var comboTree3;
+                var selectedTitles=[];
+                var getIDs=[];
+                var ids=[];
+                //Calculate number of employees
+                document.getElementById("totalCount").innerText=tempArray.length;
 
-        jQuery(document).ready(function($) {
+                jQuery(document).ready(function($) {
 
-                comboTree3 = $('#justAnInputBox2').comboTree({
-                    source : SampleJSONData,
-                    isMultiple: true,
-                    cascadeSelect: true,
-                    collapse: false
+                        comboTree3 = $('#justAnInputBox2').comboTree({
+                            source : SampleJSONData,
+                            isMultiple: true,
+                            cascadeSelect: true,
+                            collapse: false
+                        });
+                        comboTree3.onChange(function(){
+                            const myNode = document.getElementById("addDataHere");
+                            ids=[];
+                            document.getElementById("selectedCount").innerText=0;
+                            if(myNode.innerHTML!="")
+                                  while (myNode.firstChild) {
+                                    myNode.removeChild(myNode.lastChild);
+                                  }
+                            selectedTitles=comboTree3.getSelectedNames();
+                            getIDs=comboTree3.getSelectedIds();
+                            var selectedTilelsLength=0;
+                            if(selectedTitles!=undefined)
+                                selectedTilelsLength=selectedTitles.length;
+
+                            for(var i=0;i<selectedTilelsLength;i++)
+                                createCards(selectedTitles[i],getIDs[i]);
+                        });
                 });
-                comboTree3.onChange(function(){
-                    const myNode = document.getElementById("addDataHere");
-                    ids=[];
-                    document.getElementById("selectedCount").innerText=0;
-                    if(myNode.innerHTML!="")
-                          while (myNode.firstChild) {
-                            myNode.removeChild(myNode.lastChild);
-                          }
-                    selectedTitles=comboTree3.getSelectedNames();
-                    getIDs=comboTree3.getSelectedIds();
-                    var selectedTilelsLength=0;
-                    if(selectedTitles!=undefined)
-                        selectedTilelsLength=selectedTitles.length;
-                    
-                    for(var i=0;i<selectedTilelsLength;i++)
-                        createCards(selectedTitles[i],getIDs[i]);
-                });
-        });
 
-        function createCards(selectedTitle,selectedID){
-            var flag=0,i=ids.length;
-            var rowId=0;
-            
-            for(var j=0;j<ids.length;j++){
-                if(ids[j]==selectedID){
-                    flag=1;
+                function createCards(selectedTitle,selectedID){
+                    var flag=0,i=ids.length;
+                    var rowId=0;
+
+                    for(var j=0;j<ids.length;j++){
+                        if(ids[j]==selectedID){
+                            flag=1;
+                        }
+                    }
+
+                    if(flag==0){
+                        ids[i]=selectedID;
+                        var rowId=0;
+                        //Get row of selectedID
+                        for(var m=0;m<tempArray.length;m++)
+                        {
+                            if(tempArray[m][0]==selectedID)
+                            {
+                                rowId=m;
+                                break;
+                            }
+                        }
+
+                        var a=document.createElement("div");
+                        a.setAttribute("id",ids[i]);
+                        a.classList.add("col-sm-4");
+
+                        var b=document.createElement("div");
+                        b.classList.add("card");
+                        b.classList.add("p-3");
+                        b.classList.add("mb-4");
+                         b.classList.add("shadow-sm");
+                        a.appendChild(b);
+
+                        var c=document.createElement("div");
+                        c.classList.add("d-flex");
+                        c.classList.add("justify-content-between");
+                        b.appendChild(c);
+
+                        var d=document.createElement("i");
+                        d.classList.add("material-icons");
+                        d.style.color="red";
+                        d.style.fontSize="60px";
+                        d.innerText=tempArray[rowId][1];
+                        c.appendChild(d);
+
+                        var e=document.createElement("button");
+                        e.classList.add("btn-close");
+                        e.classList.add("d-grid");
+                        e.classList.add("gap-2");
+                        e.style.color="black";
+                        e.setAttribute("data-bs-dismiss","modal");
+                        e.setAttribute("aria-label","Close");
+                        e.addEventListener('click',function(){
+                            var tempArray=[];
+                            var tempArrayIndex=0;
+                            for(var l=0;l<ids.length;l++)
+                                if(a.id!=ids[l])
+                                {
+                                    tempArray[tempArrayIndex]=ids[l];
+                                    tempArrayIndex++;
+                                }
+                            comboTree3.clearSelection();
+                            comboTree3.setSelection(tempArray);
+                        });
+                        c.appendChild(e);
+
+                        var f=document.createElement("h3");
+                        f.innerText=selectedTitle;
+                        b.appendChild(f);
+
+                        var g=document.createElement("p");
+                        g.innerText=tempArray[rowId][2];
+                        b.appendChild(g);
+
+                        var h=document.createElement("p");
+                        h.innerText="";
+                        b.appendChild(h);
+
+                        var ij=document.createElement("input");
+                        ij.setAttribute("type","hidden");
+                        ij.setAttribute("name","Id[]");
+                        ij.setAttribute("value",selectedID);
+                        a.appendChild(ij);
+
+                        var jk=document.createElement("input");
+                        jk.setAttribute("type","hidden");
+                        jk.setAttribute("name","Name[]");
+                        jk.setAttribute("value",selectedTitle);
+                        a.appendChild(jk);
+
+                        i++;
+                        document.getElementById("selectedCount").innerText=i;
+
+
+                        document.getElementById("addDataHere").appendChild(a);
+
+                     }
                 }
-            }
 
-            if(flag==0){
-                ids[i]=selectedID;
-                var rowId=0;
-                //Get row of selectedID
-                for(var m=0;m<tempArray.length;m++)
-                {
-                    if(tempArray[m][0]==selectedID)
-                    {
-                        rowId=m;
-                        break;
+                function setVal(){
+                    document.getElementsByClassName("sendVals")[0].value=document.getElementById("justAnInputBox3").value;
+                }
+
+                function submitForm(){
+                    if(document.getElementsByClassName("col-sm-4").length>0){
+                        document.getElementById('selectedMembersForm').submit();
+                    }
+                    else{
+                       myFunction();
                     }
                 }
-                
-                var a=document.createElement("div");
-                a.setAttribute("id",ids[i]);
-                a.classList.add("col-sm-4");
-
-                var b=document.createElement("div");
-                b.classList.add("card");
-                b.classList.add("p-3");
-                b.classList.add("mb-4");
-                 b.classList.add("shadow-sm");
-                a.appendChild(b);
-
-                var c=document.createElement("div");
-                c.classList.add("d-flex");
-                c.classList.add("justify-content-between");
-                b.appendChild(c);
-
-                var d=document.createElement("i");
-                d.classList.add("material-icons");
-                d.style.color="red";
-                d.style.fontSize="60px";
-                d.innerText=tempArray[rowId][1];
-                c.appendChild(d);
-
-                var e=document.createElement("button");
-                e.classList.add("btn-close");
-                e.classList.add("d-grid");
-                e.classList.add("gap-2");
-                e.style.color="black";
-                e.setAttribute("data-bs-dismiss","modal");
-                e.setAttribute("aria-label","Close");
-                e.addEventListener('click',function(){
-                    var tempArray=[];
-                    var tempArrayIndex=0;
-                    for(var l=0;l<ids.length;l++)
-                        if(a.id!=ids[l])
-                        {
-                            tempArray[tempArrayIndex]=ids[l];
-                            tempArrayIndex++;
-                        }
-                    comboTree3.clearSelection();
-                    comboTree3.setSelection(tempArray);
-                });
-                c.appendChild(e);
-                
-                var f=document.createElement("h3");
-                f.innerText=selectedTitle;
-                b.appendChild(f);
-
-                var g=document.createElement("p");
-                g.innerText=tempArray[rowId][2];
-                b.appendChild(g);
-            
-                var h=document.createElement("p");
-                h.innerText="";
-                b.appendChild(h);
-
-                var ij=document.createElement("input");
-                ij.setAttribute("type","hidden");
-                ij.setAttribute("name","Id[]");
-                ij.setAttribute("value",selectedID);
-                a.appendChild(ij);
-
-                var jk=document.createElement("input");
-                jk.setAttribute("type","hidden");
-                jk.setAttribute("name","Name[]");
-                jk.setAttribute("value",selectedTitle); 
-                a.appendChild(jk);
-
-                i++;
-                document.getElementById("selectedCount").innerText=i; 
-
-             
-                document.getElementById("addDataHere").appendChild(a);
-               
-             }
+                function myFunction() {
+          var x = document.getElementById("snackbar");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
-        
-        function setVal(){
-            document.getElementsByClassName("sendVals")[0].value=document.getElementById("justAnInputBox3").value;
-        }
-
-        function submitForm(){
-            if(document.getElementsByClassName("col-sm-4").length>0){
-                document.getElementById('selectedMembersForm').submit();
-            }
-            else{
-               myFunction();
-            }
-        }
-        function myFunction() {
-  var x = document.getElementById("snackbar");
-  x.className = "show";
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
     </script>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-       <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-  </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </symbol>
     </svg>
 
-    <div class="d-flex justify-content-center fixed-bottom" >
-  <div class="alert alert-danger " id="snackbar">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#exclamation-triangle-fill" /></svg> <strong>Success!</strong>Select items
-  </div>
-  </div>
-  @* <div id="snackbar" class="alert alert-danger" role="alert">  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-        <strong>Submitted Successfully!! Thank You</strong></div>*@
-       
-  
-    </body>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-danger " id="snackbar">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#exclamation-triangle-fill" /></svg> <strong>Please select at least one item to continue</strong>
+        </div>
+    </div>
+</body>
