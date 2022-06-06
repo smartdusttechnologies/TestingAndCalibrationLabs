@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Sample.SampleModelDTO
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordDTO
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,25 +7,21 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+       <form id="sampleForm" asp-controller="Sample" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UiPageId" />
+            @foreach (var item in Model.Fields)
+            {
+                var Controlvalue = Model.FieldValues.Where(x => x.UiControlId == item.Id).FirstOrDefault().Value;
+                <div class="form-group">
+                    <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                    <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" value="@Controlvalue" />
+                    <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="button" value="Save" class="btn btn-primary" onclick="AjaxFormSubmit()" />
             </div>
         </form>
     </div>
@@ -34,3 +30,39 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<script type="text/javascript">
+    function AjaxFormSubmit() {
+        //Set the URL.
+        var url = $("#sampleForm").attr("action");
+        var uiPageMetaData = JSON.parse('@Json.Serialize(Model.Fields)');
+        //var uiPageMetaData = modelData.uiPageMetadata;
+        var fieldValues = [];
+
+        for (let i = 0; i < uiPageMetaData.length; i++) {
+            var fieldId = uiPageMetaData[i].id;
+            var fieldValue = $('#' + fieldId).val();
+            var keyValuepair = {};
+            keyValuepair.UiControlId = fieldId;
+            keyValuepair.Value = fieldValue;
+            fieldValues.push(keyValuepair)
+        }
+
+        var uiPageId = parseInt($("#UiPageId").val())
+        var id = parseInt($("#Id").val())
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { "Id" : id, "UiPageId" : uiPageId, "FieldValues" : fieldValues},
+            success: function (response) {
+                    window.location.href = "/";
+                },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

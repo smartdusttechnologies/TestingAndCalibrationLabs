@@ -6,6 +6,8 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core;
+using TestingAndCalibrationLabs.Business.Common;
+
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     /// <summary>
@@ -36,35 +38,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<Business.Core.Model.SampleModel> samplelists = _sampleService.Get();
-            var samples = _mapper.Map<List<Business.Core.Model.SampleModel>, List<Models.Sample.SampleModelDTO>>(samplelists);
-           return View(samples);
-        }
- 
-        /// <summary>
-        /// Shows Details for Sample
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var sample = _sampleService.Get((int)id);
-            if (sample == null)
-            {
-                return NotFound();
-            }
-            var sampleUIModel = new Models.Sample.SampleModelDTO
-            {
-                Id = sample.Id,
-                Name = sample.Name,
-                Description = sample.Description,
-            };
-            return View(sampleUIModel);
+            var pageMetadata = _sampleService.GetRecords();
+            var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
+            records.Fields = records.Fields.Take(10).ToList();
+            return View(records);
         }
 
         /// <summary>
@@ -75,7 +52,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            return base.View(new Models.Sample.SampleModelDTO { Id = id });
+            var uiPageId = id;
+            var pageMetadata = _sampleService.GetUiPageMetadata(uiPageId);
+            var result = _mapper.Map<Business.Core.Model.RecordModel,Models.RecordDTO>(pageMetadata);
+            return base.View(result);
         }
         /// <summary>
         /// for creating data
@@ -83,16 +63,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="sample"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind] Models.Sample.SampleModelDTO sample)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create(Models.RecordDTO record)
         {
-            if (ModelState.IsValid)
-            {
-                var samples = _mapper.Map<UI.Models.Sample.SampleModelDTO, Business.Core.Model.SampleModel>(sample);
-                _sampleService.Add(samples);
-                return RedirectToAction("Index");
-            }
-            return View(sample);
+            var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
+            _sampleService.Add(records);
+
+            var pageMetadata = _sampleService.GetUiPageMetadata(record.UiPageId);
+            var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            return base.View(result);
         }
 
         /// <summary>
@@ -101,24 +80,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var sample = _sampleService.Get((int)id);
-            if (sample == null)
-            {
-                return NotFound();
-            }
-            var sampleUIModel = new Models.Sample.SampleModelDTO
-            {
-                Id = sample.Id,
-                Name = sample.Name,
-                Description = sample.Description,
-            };
-            return View(sampleUIModel);
+            var pageMetadata = _sampleService.GetRecordById(id);
+            Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            return View(record);
         }
        /// <summary>
        /// Edit and binding with business project
@@ -127,20 +93,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
        /// <param name="sample"></param>
        /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind] Models.Sample.SampleModelDTO sample)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(Models.RecordDTO record)
         {
-            if (id != sample.Id)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                var samples = _mapper.Map<UI.Models.Sample.SampleModelDTO, Business.Core.Model.SampleModel>(sample);
-                _sampleService.Update(id, samples);
-                return RedirectToAction("Index");
-            }
-            return View(sample);
+            var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
+            _sampleService.Update(records);
+
+            var pageMetadata = _sampleService.GetRecordById(record.Id);
+            Models.RecordDTO recordModel = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+
+            return View(recordModel);
         }
 
         /// <summary>
@@ -148,24 +110,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var sample = _sampleService.Get((int)id);
-            if (sample == null)
-            {
-                return NotFound();
-            }
-            var sampleUIModel = new Models.Sample.SampleModelDTO
-            {
-                Id = sample.Id,
-                Name = sample.Name,
-                Description = sample.Description,
-            };
-            return View(sampleUIModel);
+            var pageMetadata = _sampleService.GetRecordById(id);
+            Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            return View(record);
         }
 
         [HttpPost, ActionName("Delete")]

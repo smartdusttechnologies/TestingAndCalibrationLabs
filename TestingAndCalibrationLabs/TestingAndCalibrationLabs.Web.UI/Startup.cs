@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Core.Model;
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -25,12 +27,20 @@ namespace TestingAndCalibrationLabs.Web.UI
         {
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            //services.AddControllers().AddNewtonsoftJson(options =>
+            //{
+            //    // Use the default property (Pascal) casing
+            //    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            //});
             //Services
             services.AddScoped<ISampleService, SampleService>();
 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            //services.AddScoped<IGenericRepository<SampleModel>, GenericRepository<SampleModel>>();
+            services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
+            services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
         }
 

@@ -134,8 +134,8 @@ nav {
         }
 
 input[type="checkbox"] {
-    -webkit-appearance: none;
-    display: none;
+   /* -webkit-appearance: none;
+    display: none;*/
 }
 
 @media screen and (max-width:1250px) {

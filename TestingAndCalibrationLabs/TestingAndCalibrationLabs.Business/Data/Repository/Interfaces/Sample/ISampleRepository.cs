@@ -9,11 +9,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface ISampleRepository
     {
-        int Insert(SampleModel sample);
-        int Update(SampleModel sample);
-        List<SampleModel> Get();
-        SampleModel Get(int id);
-        bool Delete(int id);
-        int InsertCollection(List<SampleModel> sample);
+        int Insert(RecordModel record);
+        List<UiPageDataModel> GetUiPageDataByUiPageId(int uiPageId);
+        RecordModel GetUiPageMetadata(int uiPageId);
+        List<UiPageValidation> GetUiPageValidations(int uiPageId);
     }
 }
