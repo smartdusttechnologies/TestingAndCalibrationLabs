@@ -4,23 +4,18 @@
 }
 
 <div class="">
-
     <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
-
         <div class="row ms-1 me-1">
             <div class="col-lg-12 col-sm-6 mt-3 form-element left-pd-input d-block d-sm-none">
                 <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;width:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
-
             <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input">
                 <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
             </div>
-
             <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input d-none d-sm-block" style="text-align:right;">
                 <button class="btn btn-submit-print text-white width-full" id="TestDetailsSubmit" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
-
             <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
                 <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="departMentName">Department Name:</label>
@@ -33,7 +28,6 @@
                 <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="issueTo">Issue To:</label>
             </div>
-
             <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
                 <label class="form-label" for="receivedOn">Received On:</label>
@@ -59,65 +53,6 @@
                 <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
                 <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement:</label>
             </div>
-
         </div>
-
     </form>
-
 </div>
-
-@*
-<form class="mb-2 ">
-        <div class="row ms-1 me-1">
-
-            <div class="col-lg-12 col-sm-6 mt-2 form-element left-pd-input d-block d-sm-none" style="text-align:right;">
-                <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
-                <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element left-pd-input d-none d-sm-block" style="text-align:right;">
-                <button class="btn btn-submit-print text-white" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
-            </div>
-
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
-                <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="departMentName">Department Name:</label>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
-                <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="customerName">Customer Name:</label>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element left-pd-input">
-                <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" for="issueTo">Issue To:</label>
-            </div>
-
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
-                <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
-                <label class="form-label" for="receivedOn">Received On:</label>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
-                <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
-                <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO:</label>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input left-pd-input">
-                <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
-                <label class="form-label" for="contactPersonName">Contact Person Name:</label>
-            </div>
-            <div class="col-lg-6 col-sm-6 mt-2 form-element left-pd-input">
-                <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
-                <label class="form-label" for="mobileNumber">Mobile Number:</label>
-            </div>
-
-            <div class="col-lg-6 col-sm-6 mt-2 form-element right-pd-input">
-                <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
-                <label class="form-label" for="testReportReleaseDate">Test Report Release Date:</label>
-            </div>
-            <div class="col-lg-12 col-sm-12 mt-2 form-element left-pd-input">
-                <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
-                <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement:</label>
-            </div>
-        </div>
-    </form>*@
