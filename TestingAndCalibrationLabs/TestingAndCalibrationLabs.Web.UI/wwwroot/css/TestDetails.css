@@ -90,6 +90,23 @@ body {
     width:260px;
 }
 
+.container-testing-material {
+    margin: 0;
+    height: 40px;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid black;
+    display: inline-block;
+}
+
+    .container-testing-material .container-chip {
+        background-color: #e5ebee;
+        border-radius: 15px;
+        display: inline-block;
+        top: -6px;
+    }
+
+
 form-group > label {
     top: 12px;
     left: 6px;
@@ -130,7 +147,6 @@ textarea.input-validation-error#Comments {
 select.input-validation-error#TestingType {
     border: 2px solid red;
 }
-
 
 #select{
     margin:0;
