@@ -47,6 +47,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.BodyImage = _configuration["TestingAndCalibration:BodyImage"];
             surveymodel.EmailContact = _configuration["TestingAndCalibration:emailID"];
             surveymodel.MobileNumber = _configuration["TestingAndCalibration:Mobile"];
+            surveymodel.Subject = _configuration["TestingAndCalibration:Subject"];
 
             //Create User Mail
             surveymodel.HtmlMsg = CreateBody(surveymodel.EmailTemplate);
@@ -55,6 +56,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*mob*", surveymodel.MobileNumber);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*LogoLink*", surveymodel.LogoImage);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*BodyImageLink*", surveymodel.BodyImage);
+            surveymodel.Subject = surveymodel.Subject;
+
             var isemailsendsuccessfully = _emailService.Sendemail(surveymodel);
             
             //Saving the data to data base
@@ -75,7 +78,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*Mob*", surveymodel.MobileNumber);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*LogoLink*", surveymodel.LogoImage);
             surveymodel.HtmlMsg = surveymodel.HtmlMsg.Replace("*BodyImageLink*", surveymodel.BodyImage);
-            
+            surveymodel.Subject = surveymodel.Subject;
+
             //Remove users mail id and add the List of mail addresss of users[Admin] in Database. 
             surveymodel.Email.RemoveAt(0);
             foreach (var item in emailsendTo)

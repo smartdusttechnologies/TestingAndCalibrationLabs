@@ -22,5 +22,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string State { get; set; }
         public string PinCode { get; set; }
         public string Comments { get; set; }
+        public string Subject { get; set; } 
     }
 }

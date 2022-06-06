@@ -43,7 +43,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             
             using (MailMessage mm = new MailMessage(fromAddress, emailto))
             {
-                mm.Subject = "Survey";
+                mm.Subject = surveyModel.Subject;
                 mm.Body = surveyModel.HtmlMsg;
                 mm.IsBodyHtml = true;
                 using (SmtpClient smtp = new SmtpClient())

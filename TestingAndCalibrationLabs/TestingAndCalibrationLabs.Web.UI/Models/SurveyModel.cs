@@ -73,14 +73,4 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [Required(ErrorMessage = "Testing Type is required")]
         public Testing? TestingType { get; set; }
     }
-    
-    /// <summary>
-    /// Types of Test
-    /// </summary>
-    public enum Testing
-    {
-        Testing, 
-        Calibration, 
-        Other
-    }
 }
