@@ -9,9 +9,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class SurveyModel
     {
-        internal string Testing;
-
-        //public int Id { get; set; }
         /// <summary>
         /// Name of the Person
         /// </summary>

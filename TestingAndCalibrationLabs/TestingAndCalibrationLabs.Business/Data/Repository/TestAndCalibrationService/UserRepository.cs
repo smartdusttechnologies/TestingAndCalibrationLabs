@@ -15,11 +15,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         private readonly IConnectionFactory _connectionFactory;
 
-        public List<string> Get()
-        {
-            throw new NotImplementedException();
-        }
-
         public UserRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
