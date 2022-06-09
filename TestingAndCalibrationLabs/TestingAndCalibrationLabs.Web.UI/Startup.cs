@@ -26,12 +26,12 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
-            services.AddScoped<ISurveyService, SurveyService>();
-            //services.AddScoped<IUserService, IUserService>();
-            services.AddScoped<IEmailService, EmailService>();
+            
             //Services
+            services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
-
+            
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();

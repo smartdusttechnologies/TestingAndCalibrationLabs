@@ -1,16 +1,12 @@
-﻿using MailKit;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -25,7 +21,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-
+        
         #region public methods
 
         public SurveyService(ISurveyRepository surveyRepository, IWebHostEnvironment hostingEnvironment, IEmailService emailservice, IUserRepository userRepository, IConfiguration configuration)
@@ -41,13 +37,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             var emailsendTo = _userRepository.Get();
 
             //Read other values from Appsetting .Json 
-            surveymodel.EmailTemplate = _configuration["TestingAndCalibration:UserTeplet"];
-            surveymodel.EmailTemplate = _configuration["TestingAndCalibration:AdminMail"];
-            surveymodel.LogoImage = _configuration["TestingAndCalibration:LogoImage"];
-            surveymodel.BodyImage = _configuration["TestingAndCalibration:BodyImage"];
-            surveymodel.EmailContact = _configuration["TestingAndCalibration:emailID"];
-            surveymodel.MobileNumber = _configuration["TestingAndCalibration:Mobile"];
-            surveymodel.Subject = _configuration["TestingAndCalibration:Subject"];
+            surveymodel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:UserTeplet"];
+            surveymodel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:AdminMail"];
+            surveymodel.LogoImage = _configuration["TestingAndCalibrationSurvey:LogoImage"];
+            surveymodel.BodyImage = _configuration["TestingAndCalibrationSurvey:BodyImage"];
+            surveymodel.EmailContact = _configuration["TestingAndCalibrationSurvey:emailID"];
+            surveymodel.MobileNumber = _configuration["TestingAndCalibrationSurvey:Mobile"];
+            surveymodel.Subject = _configuration["TestingAndCalibrationSurvey:Subject"];
 
             //Create User Mail
             surveymodel.HtmlMsg = CreateBody(surveymodel.EmailTemplate);
@@ -59,7 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.Subject = surveymodel.Subject;
 
             var isemailsendsuccessfully = _emailService.Sendemail(surveymodel);
-            
+
             //Saving the data to data base
             _surveyRepository.Insert(surveymodel);
 
@@ -88,7 +84,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
 
             var isemailsendsuccessfully1 = _emailService.Sendemail(surveymodel);
-            if (isemailsendsuccessfully)
+            if ((bool)isemailsendsuccessfully)
             {
                 return new RequestResult<int>(1);
             }
@@ -103,7 +99,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private string CreateBody(string emailTemplate)
         {
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibration:UserTemplet"])))
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:UserTemplet"])))
             {
                 body = reader.ReadToEnd();
             }
@@ -118,12 +114,37 @@ namespace TestingAndCalibrationLabs.Business.Services
         private string CreateBodyAdmin(string emailTemplate)
         {
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibration:AdminMail"])))
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:AdminMail"])))
             {
                 body = reader.ReadToEnd();
             }
             return body;
         }
+
+        bool ISurveyService.Sendemail(EmailModel emailModel)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        //public bool sendmail ([Bind]SurveyModel surveyModel, EmailModel emailModel)
+        //{
+        //    //Read SMTP settings from AppSettings.json.
+        //    string host = _configuration["Smtp:Server"];
+        //    int port = int.Parse(_configuration["Smtp:Port"]);
+        //    string fromAddress = _configuration["Smtp:FromAddress"];
+        //    string userName = _configuration["Smtp:UserName"];
+        //    string password = _configuration["Smtp:Password"];
+        //    string emailto = string.Join(",", surveyModel.Email);
+
+        //    using (MailMessage mm = new MailMessage(fromAddress, emailto))
+        //    {
+        //        mm.Subject = surveyModel.Subject;
+        //        mm.Body = surveyModel.HtmlMsg;
+        //        mm.IsBodyHtml = true;
+        //    }
+        //    return true;
+        //}
+
     }
 }
 #endregion
