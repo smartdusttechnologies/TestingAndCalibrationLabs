@@ -91,6 +91,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(0);
         }
 
+        public bool Sendemail(EmailModel emailModel)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// To use the email Template to send mail to the User participated.
         /// </summary>
@@ -121,10 +126,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             return body;
         }
 
-        bool ISurveyService.Sendemail(EmailModel emailModel)
-        {
-            throw new System.NotImplementedException();
-        }
+        //bool ISurveyService.Sendemail(EmailModel emailModel)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
 
         //public bool sendmail ([Bind]SurveyModel surveyModel, EmailModel emailModel)
         //{

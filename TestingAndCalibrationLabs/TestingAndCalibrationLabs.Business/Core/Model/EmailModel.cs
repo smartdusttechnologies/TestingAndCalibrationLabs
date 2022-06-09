@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    public class EmailModel
+    public class EmailModel 
     {
         /// <summary>
         /// Declaring EmailTo property

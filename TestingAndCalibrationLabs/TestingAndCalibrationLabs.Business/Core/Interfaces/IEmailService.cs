@@ -13,6 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="surveyModel"></param>
         /// <returns></returns>
         bool Sendemail(EmailModel emailModel);
-        //object Sendemail(SurveyModel surveymodel);
+        
+        
     }
 }

@@ -9,14 +9,11 @@ namespace TestingAndCalibrationLabs.Business.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
-
-    
-        public EmailService(IConfiguration configuration, IEmailService emailService)
+            
+        public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _emailService = emailService;
         }
         
         /// <summary>
@@ -52,11 +49,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 }
             }
             return true;
-        }
-
-        public object Sendemail(SurveyModel surveymodel)
-        {
-            return _emailService.Sendemail(surveymodel);
-        }
+        }   
     }
 }    
