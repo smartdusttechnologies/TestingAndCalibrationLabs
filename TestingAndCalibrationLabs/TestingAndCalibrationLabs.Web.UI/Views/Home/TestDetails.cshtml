@@ -44,7 +44,6 @@
                 <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
                 <label class="form-label" for="mobileNumber">Mobile Number:</label>
             </div>
-
             <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
                 <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
                 <label class="form-label" for="testReportReleaseDate">Test Report Release Date:</label>
@@ -78,10 +77,52 @@
         </div>
         <div class="col-12">
             <input type="file" multiple required />
-
         </div>
     </form>
+    <!--From here Grid will starts-->
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Actions</th>
+                    <th>Sample Type</th>
+                    <th>Sample Details</th>
+                    <th>Date of TP</th>
+                    <th>Job Code No</th>
+                    <th>Sample Id</th>
+                    <th>Number of Sample Quantity</th>
+                    <th>Test Name</th>
+                    <th>Test Method</th>
+                    <th>Person Authorized</th>
+                    <th>Received On</th>
+                    <th>Targeted On</th>
+                    <th>Completed On</th>
+                    <th>Remarks</th>
+                </tr>
+                @foreach (var temp in Model)
+                {
+                    <tr>
+                        <td class="row justify-content-center"><i class="fa fa-solid fa-pen col"></i><i class="fa fa-solid fa-trash col"></i></td>
+                        <td>@temp.SampleType</td>
+                        <td>@temp.SampleDetails</td>
+                        <td>@temp.DateOfTP</td>
+                        <td>@temp.JobCode</td>
+                        <td>@temp.SampleId</td>
+                        <td>@temp.NumberOfSampleQuantity</td>
+                        <td>@temp.TestName</td>
+                        <td>@temp.TestMethod</td>
+                        <td>@temp.PersonAuthorized</td>
+                        <td>@temp.ReceivedOn</td>
+                        <td>@temp.TargedOn</td>
+                        <td>@temp.CompletedOn</td>
+                        <td>@temp.Remarks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <!----This lower margin bottom for temporary sorting of the footer-->
     <div style="margin-bottom:100px;">
     </div>
-</div>
+
+</div>  
