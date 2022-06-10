@@ -15,7 +15,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         //public string EmailContact { get; set; }
         //public string BodyImage { get; set; }
         public string Mobile { get; set; }
-        public List<string> Email { get; set; }
+        //public List<string> Email { get; set; }
         public string TestingType { get; set; }
         public string Address { get; set; }
         public string City { get; set; }

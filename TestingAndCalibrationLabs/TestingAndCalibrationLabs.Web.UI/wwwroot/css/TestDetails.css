@@ -145,7 +145,7 @@ select.input-validation-error#TestingType {
 }
 
 .submit-progress-bg {
-    background-color: lightcoral;
+    background-color: lightgrey;
     opacity: .5;
 }
 

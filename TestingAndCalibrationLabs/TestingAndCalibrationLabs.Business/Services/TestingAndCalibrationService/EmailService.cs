@@ -29,9 +29,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             string fromAddress = _configuration["Smtp:FromAddress"];
             string userName = _configuration["Smtp:UserName"];
             string password = _configuration["Smtp:Password"];
-            string emailto = string.Join(",", emailModel.EmailTo);
+            string emailTo = string.Join(",", emailModel.Email);
 
-            using (MailMessage mm = new MailMessage(fromAddress, emailto))
+            using (MailMessage mm = new MailMessage(fromAddress, emailTo))
             {
                 mm.Subject = emailModel.Subject;
                 mm.Body = emailModel.HtmlMsg;

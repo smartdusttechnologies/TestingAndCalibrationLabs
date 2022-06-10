@@ -55,6 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             surveymodel.Subject = surveymodel.Subject;
 
             var isemailsendsuccessfully = _emailService.Sendemail(surveymodel);
+            
 
             //Saving the data to data base
             _surveyRepository.Insert(surveymodel);
@@ -125,31 +126,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return body;
         }
-
-        //bool ISurveyService.Sendemail(EmailModel emailModel)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public bool sendmail ([Bind]SurveyModel surveyModel, EmailModel emailModel)
-        //{
-        //    //Read SMTP settings from AppSettings.json.
-        //    string host = _configuration["Smtp:Server"];
-        //    int port = int.Parse(_configuration["Smtp:Port"]);
-        //    string fromAddress = _configuration["Smtp:FromAddress"];
-        //    string userName = _configuration["Smtp:UserName"];
-        //    string password = _configuration["Smtp:Password"];
-        //    string emailto = string.Join(",", surveyModel.Email);
-
-        //    using (MailMessage mm = new MailMessage(fromAddress, emailto))
-        //    {
-        //        mm.Subject = surveyModel.Subject;
-        //        mm.Body = surveyModel.HtmlMsg;
-        //        mm.IsBodyHtml = true;
-        //    }
-        //    return true;
-        //}
-
     }
 }
 #endregion
