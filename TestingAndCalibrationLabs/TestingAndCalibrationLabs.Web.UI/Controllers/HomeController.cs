@@ -36,7 +36,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult TestDetails()
         {
-            //here hardcoding the values instread of accessing from the DB
+            // here hardcoding the Grid heddings values instead of accessing from the DB
+            List<string> TableHeadding = new List<string>();
+            TableHeadding.Add("Actions");
+            TableHeadding.Add("Sample Type");
+            TableHeadding.Add("Sample Details");
+            TableHeadding.Add("Date Of TP");
+            TableHeadding.Add("Job Code");
+            TableHeadding.Add("Sample ID");
+            TableHeadding.Add("Number Of Sample Quality");
+            TableHeadding.Add("Test Name");
+            TableHeadding.Add("Test Method");
+            TableHeadding.Add("Person Authorized");
+            TableHeadding.Add("Received On");
+            TableHeadding.Add("Targeted On");
+            TableHeadding.Add("Completed On");
+            TableHeadding.Add("Remarks");
+            //here hardcoding the values of Grid instead of accessing from the DB
             List<TestDetailsModel> TestDetailsOfUsers = new List<TestDetailsModel>();
             for(var i = 0; i < 5; i++)
             {
@@ -71,6 +87,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 tempDetailss.Remarks = "Some Guidance";
                 TestDetailsOfUsers.Add(tempDetailss);
             }
+            ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
     }

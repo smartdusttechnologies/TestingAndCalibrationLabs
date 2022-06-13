@@ -75,6 +75,12 @@ body {
     box-shadow: 0 0 3px 0 dodgerblue;
 }
 
+.form-element input:hover {
+    border-color: dodgerblue;
+    box-shadow: 0 0 1px 0 dodgerblue;
+}
+
+
 .btn-submit-print {
     background-color: blue;
     font-size: 20px;

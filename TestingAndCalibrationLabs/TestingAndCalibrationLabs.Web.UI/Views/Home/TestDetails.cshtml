@@ -2,13 +2,9 @@
     ViewData["Title"] = "TestDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="">
     <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
         <div class="row ms-1 me-1">
-            <div class="col-lg-12 col-sm-6 mt-3 form-element left-pd-input d-block d-sm-none">
-                <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;width:100%;">SUBMIT AND PRINT RECEPT</button>
-            </div>
             <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input">
                 <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
@@ -71,7 +67,7 @@
             </div>
         </div>
     </form>
-    <form class="mb-2 me-1 m-sm-1 row">
+    <form class="mb-2 me-1 m-sm-1 row ms-1 me-1">
         <div class="col-12 mb-2">
             <label style="padding-left:20px;">Attachments:</label>
         </div>
@@ -79,25 +75,19 @@
             <input type="file" multiple required />
         </div>
     </form>
+    <div class="mt-3 mb-3 form-element left-pd-input d-block d-sm-none ms-1 me-1">
+        <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;width:100%;">SUBMIT AND PRINT RECEPT</button>
+    </div>
     <!--From here Grid will starts-->
-    <div class="table-responsive">
+    <div class="table-responsive ms-1 me-1">
+        <h2>Test Details</h2>
         <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <th>Actions</th>
-                    <th>Sample Type</th>
-                    <th>Sample Details</th>
-                    <th>Date of TP</th>
-                    <th>Job Code No</th>
-                    <th>Sample Id</th>
-                    <th>Number of Sample Quantity</th>
-                    <th>Test Name</th>
-                    <th>Test Method</th>
-                    <th>Person Authorized</th>
-                    <th>Received On</th>
-                    <th>Targeted On</th>
-                    <th>Completed On</th>
-                    <th>Remarks</th>
+                    @foreach (var teamName in @ViewBag.TableHeaddings)
+                    {
+                        <th>@teamName</th>
+                    }
                 </tr>
                 @foreach (var temp in Model)
                 {
@@ -124,5 +114,4 @@
     <!----This lower margin bottom for temporary sorting of the footer-->
     <div style="margin-bottom:100px;">
     </div>
-
 </div>  
