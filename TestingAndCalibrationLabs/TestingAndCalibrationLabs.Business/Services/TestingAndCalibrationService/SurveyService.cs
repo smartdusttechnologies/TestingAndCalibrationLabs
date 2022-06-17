@@ -56,7 +56,6 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             var isemailsendsuccessfully = _emailService.Sendemail(surveymodel);
             
-
             //Saving the data to data base
             _surveyRepository.Insert(surveymodel);
 
@@ -85,23 +84,18 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
 
             var isemailsendsuccessfully1 = _emailService.Sendemail(surveymodel);
-            if ((bool)isemailsendsuccessfully)
+            if ((bool)isemailsendsuccessfully1)
             {
                 return new RequestResult<int>(1);
             }
             return new RequestResult<int>(0);
         }
 
-        public bool Sendemail(EmailModel emailModel)
-        {
-            throw new System.NotImplementedException();
-        }
-
         /// <summary>
         /// To use the email Template to send mail to the User participated.
         /// </summary>
         /// <param name="emailTemplate"></param>
-        /// <returns></returns>
+        ///returns></returns>
         private string CreateBody(string emailTemplate)
         {
             string body = string.Empty;
