@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
 {
-    public class MappingProfile :Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {

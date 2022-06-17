@@ -31,8 +31,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [Display(Name = "Email address")]
         [MaxLength(50)]
         [RegularExpression("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
-
-        //[Required, EmailAddress(ErrorMessage ="Please enter correct email id"]
         public string Email { get; set; }
 
         /// <summary>
@@ -71,6 +69,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// Test type selected
         /// </summary>
         [Required(ErrorMessage = "Testing Type is required")]
-        public Testing? TestingType { get; set; }
+        public TestingType? TestingType { get; set; }
     }
 }

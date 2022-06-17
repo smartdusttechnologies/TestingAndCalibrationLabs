@@ -23,7 +23,7 @@ body {
         border-radius: 5px;
         outline: none;
         padding: 0;
-        padding-left: 15px;
+        padding-left: 3px;
         font-size: 20px;
     }
 
@@ -127,7 +127,6 @@ textarea.input-validation-error#Comments {
 select.input-validation-error#TestingType {
     border: 2px solid red;
 }
-
 
 #select{
     margin:0;

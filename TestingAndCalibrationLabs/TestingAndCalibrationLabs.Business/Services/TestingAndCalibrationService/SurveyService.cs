@@ -37,11 +37,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             var emailsendTo = _userRepository.Get();
 
             //Read other values from Appsetting .Json 
-            surveymodel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:UserTeplet"];
-            surveymodel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:AdminMail"];
+            surveymodel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:UserTemplate"];
+            surveymodel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:AdminMailTemplate"];
             surveymodel.LogoImage = _configuration["TestingAndCalibrationSurvey:LogoImage"];
             surveymodel.BodyImage = _configuration["TestingAndCalibrationSurvey:BodyImage"];
-            surveymodel.EmailContact = _configuration["TestingAndCalibrationSurvey:emailID"];
+            surveymodel.EmailContact = _configuration["TestingAndCalibrationSurvey:EmailID"];
             surveymodel.MobileNumber = _configuration["TestingAndCalibrationSurvey:Mobile"];
             surveymodel.Subject = _configuration["TestingAndCalibrationSurvey:Subject"];
 
@@ -56,7 +56,6 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             var isemailsendsuccessfully = _emailService.Sendemail(surveymodel);
             
-
             //Saving the data to data base
             _surveyRepository.Insert(surveymodel);
 
@@ -92,10 +91,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(0);
         }
 
-        public bool Sendemail(EmailModel emailModel)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public bool Sendemail(EmailModel emailModel)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
 
         /// <summary>
         /// To use the email Template to send mail to the User participated.
@@ -105,7 +104,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private string CreateBody(string emailTemplate)
         {
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:UserTemplet"])))
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:UserTemplate"])))
             {
                 body = reader.ReadToEnd();
             }
@@ -120,7 +119,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private string CreateBodyAdmin(string emailTemplate)
         {
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:AdminMail"])))
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:AdminMailTemplate"])))
             {
                 body = reader.ReadToEnd();
             }
