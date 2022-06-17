@@ -9,5 +9,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ISurveyService
     {
         RequestResult<int> Add(SurveyModel mailsend);
+        bool Sendemail(EmailModel emailModel);
     }
 }

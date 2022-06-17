@@ -8,7 +8,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     /// <summary>
     /// Types of Test
     /// </summary>
-    public enum TestingType
+    public enum Testing
     {
         Testing,
         Calibration,
