@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -31,6 +34,10 @@ namespace TestingAndCalibrationLabs.Web.UI
 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            //services.AddScoped<IGenericRepository<SampleModel>, GenericRepository<SampleModel>>();
+            services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
+            services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
         }
 
@@ -58,7 +65,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=login}/{id?}");
+                    pattern: "{controller=Sample}/{action=Index}/{id?}");
             });
         }
     }

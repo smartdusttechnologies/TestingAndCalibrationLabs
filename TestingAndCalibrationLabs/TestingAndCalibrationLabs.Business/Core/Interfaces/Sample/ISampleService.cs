@@ -9,11 +9,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// </summary>
     public interface ISampleService
     {
-        List<SampleModel> Get();
-        SampleModel Get(int id);
-        RequestResult<int> Add(SampleModel sample);
-        RequestResult<int> Update(int id, SampleModel sample);
+        RequestResult<int> Add(RecordModel record);
+        RequestResult<int> Update(RecordModel record);
         bool Delete(int id);
-        RequestResult<int> AddCollection(List<SampleModel> sample);
+        RecordModel GetUiPageMetadata(int uiPageId);
+        RecordsModel GetRecords();
+        RecordModel GetRecordById(int recordId);
     }
 }
