@@ -1,0 +1,67 @@
+﻿@using TestingAndCalibrationLabs.Web.UI.Models;
+
+<div class="container">
+    <!--***Test Report From Begins-->
+    <form _lpchecked="1" class="mb-2" id="TestReport" method="post" asp-action="Index" asp-controller="NewUI" novalidate enctype="multipart/form-data">
+        <h2 style="color:darkviolet; text-align:center">Test Report Form</h2>
+        <div asp-validation-summary="All"></div>
+
+        <div class="row ms-1 me-1">
+            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)">
+                <label class="form-label" for="Name">Name</label>
+            </div>
+        </div>
+
+        <div class="row ms-1 me-1">
+            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+                <input class="form-input width-full" type="number" placeholder=" " id="JobId" name="JobId" onchange="this.setAttribute('value',this.value)">
+                <label class="form-label" for="JobId">Job ID</label>
+            </div>
+
+            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+                <input class="form-input width-full" type="text" id="client" placeholder=" " name="client" onchange="this.setAttribute('value',this.value)">
+                <label class="form-label" for="client">Client Name</label>
+            </div>
+        </div>
+
+        <div class="row ms-1 me-1">
+            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+                <input class="form-input width-full" type="email" placeholder=" " id="Email" name="Email" onchange="this.setAttribute('value',this.value)">
+                <label class="form-label" for="Email">Email ID</label>
+            </div>
+        </div>
+
+        <div class="row ms-1 me-1">
+            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="file" name="DataUrl" id="DataUrl" placeholder=" " onchange="this.setAttribute('value',this.value)">
+                <label class="form-label" for="DataUrl">File Upload</label>
+            </div>
+        </div>
+
+        <div class="row ms-1 me-1">
+            <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <label for="testing" class="form-label"></label>
+                <div class="mt-3 d-block" style="text-align:initial">
+
+                    @*<button class="btn btn-lg btn-submit-print text-white"  id="one" type="submit" style="background-color:#4250b5">UPLOAD REPORT</button><br /><br />*@
+                    <span style="float:left;" id="TestReport">
+                        <button class="btn btn-lg btn-submit-print text-white" id="two" type="submit" style="background-color: #4250b5">SEND</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div><!--*****Survey Forms Ends*****-->
+
+@*<script>
+    function show() {
+        document.getElementById('two').removeAttribute('disabled');
+    }
+    // And Same For Second Button Click
+    function show1() {
+        document.getElementById('three').removeAttribute('disabled');
+    }
+    //onclick="show1()" disabled="disabled"
+</script>*@

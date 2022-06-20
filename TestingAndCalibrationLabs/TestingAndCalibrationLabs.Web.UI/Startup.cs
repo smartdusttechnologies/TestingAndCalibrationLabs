@@ -9,6 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
+using Microsoft.Extensions.Hosting.Internal;
+
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -28,10 +34,15 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllers();
             //Services
             services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<INewUIService, NewUIService>();
+            services.AddScoped<IGoogleUploadService, GoogleUploadService>();
+            
 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped< INewUIRepository, NewUIRepository >();
+            services.AddScoped< IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
