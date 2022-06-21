@@ -14,6 +14,6 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         NewUIModel Get(int id);
         bool Delete(int id);
         int InsertCollection(List<NewUIModel> newUI);
-
+        //object Insert(imageVal imageVal);
     }
 }

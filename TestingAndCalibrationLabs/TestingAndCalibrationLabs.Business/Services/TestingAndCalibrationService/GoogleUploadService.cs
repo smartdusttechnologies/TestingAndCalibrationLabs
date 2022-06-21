@@ -32,9 +32,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
         private object request;
+        private object uploadData;
 
         public string ResponseBody { get; private set; }
         public object Get { get; private set; }
+        public string FilePath { get; private set; }
 
         //private object listRequest;
         //private string ApplicationName;
@@ -135,7 +137,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             //driveFile.MimeType = fileMime;
             driveFile.Parents = new string[] { uploadsFolder };
             
-
             using (var abc = data.DataUrl.OpenReadStream())
             {
                 var request = service.Files.Create(driveFile, abc, fileMime);
@@ -147,9 +148,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                     throw response.Exception;
                 }
                 var imageVal = request.ResponseBody.Id;
-                //return imageVal;
+                data.FilePath = imageVal;
+                   
+                //Saving the data to the database
+                _newUIRepository.Insert(data);
             }
-
         }
 
         public void UploadFile(IFormFile dataUrl, NewUIModel getbusinessModel)
@@ -160,4 +163,3 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
        
     }
 }
-
