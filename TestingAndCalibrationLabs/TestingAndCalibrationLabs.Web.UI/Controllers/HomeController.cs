@@ -54,7 +54,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TableHeadding.Add("Remarks");
             //here hardcoding the values of Grid instead of accessing from the DB
             List<TestDetailsModel> TestDetailsOfUsers = new List<TestDetailsModel>();
-            for(var i = 0; i < 5; i++)
+            for(var i = 0; i < 20; i++)
             {
                 var tempDetails=new TestDetailsModel();
                 tempDetails.SampleType = "Testing Tools";
@@ -63,13 +63,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 tempDetails.JobCode = 1122;
                 tempDetails.SampleId = 5566;
                 tempDetails.NumberOfSampleQuantity = 10;
-                tempDetails.TestName = "Testing Meterial";
+                tempDetails.TestName = "Testing Solutions";
                 tempDetails.TestMethod = "Meterial Strenght";
                 tempDetails.PersonAuthorized = "Sumanth";
                 tempDetails.ReceivedOn= DateTime.Now;
                 tempDetails.TargedOn = DateTime.Now;
                 tempDetails.CompletedOn= DateTime.Now;
-                tempDetails.Remarks = "Some Comments";
+                tempDetails.Remarks = "Some needed Comments";
                 TestDetailsOfUsers.Add(tempDetails);
                 var tempDetailss = new TestDetailsModel();
                 tempDetailss.SampleType = "Testing Meterials";

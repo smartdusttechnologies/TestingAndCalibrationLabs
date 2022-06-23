@@ -79,20 +79,25 @@
         <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;width:100%;">SUBMIT AND PRINT RECEPT</button>
     </div>
     <!--From here Grid will starts-->
+    <h2>Test Details</h2>
+    <div class="mb-2 ms-1 me-1 row inputWithIconSearch">
+        <input type="search" id="myInputTextField" onkeyup="function()" class="light-table-filter col-lg-4 col-md-4 col-sm-12 inputSearchGrid" data-table="table-info" placeholder="Search">
+    </div>
     <div class="table-responsive ms-1 me-1">
-        <h2>Test Details</h2>
-        <table class="table table-bordered">
-            <tbody>
+        <table id="example" class="table table-bordered table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
                 <tr>
                     @foreach (var teamName in @ViewBag.TableHeaddings)
                     {
                         <th>@teamName</th>
                     }
                 </tr>
+            </thead>
+            <tbody>
                 @foreach (var temp in Model)
                 {
                     <tr>
-                        <td><i class="fa fa-solid fa-pen col" style="margin:5px;"></i><i class="fa fa-solid fa-trash col" style="margin:5px;"></i></td>
+                        <td><i class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;"></i><i class="fa fa-solid fa-trash col" style="margin:5px;margin-left:10px;"></i></td>
                         <td>@temp.SampleType</td>
                         <td>@temp.SampleDetails</td>
                         <td>@temp.DateOfTP</td>
@@ -114,4 +119,12 @@
     <!----This lower margin bottom for temporary sorting of the footer-->
     <div style="margin-bottom:100px;">
     </div>
-</div>  
+</div>
+<script>
+    oTable = $('#example').DataTable({
+        pageLength: 5
+    });
+    $('#myInputTextField').keyup(function() {
+        oTable.search($(this).val()).draw();
+    })
+</script>

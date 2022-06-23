@@ -273,3 +273,42 @@ select.input-validation-error#TestingType {
         opacity: 0;
     }
 }
+
+
+#example_filter {
+    display: none;
+}
+
+#example_length {
+    display: none;
+}
+
+#example_info {
+    display: none;
+}
+
+#example_filter {
+    display: none;
+}
+
+#myInputTextField:focus {
+    border-color: dodgerblue;
+    box-shadow: none;
+}
+
+.inputSearchGrid {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+    .inputSearchGrid:hover {
+        border-color: dodgerblue;
+        box-shadow: none;
+    }
+
+    .inputSearchGrid:focus {
+        border-color: dodgerblue;
+        box-shadow: none;
+        border:none;
+    }
