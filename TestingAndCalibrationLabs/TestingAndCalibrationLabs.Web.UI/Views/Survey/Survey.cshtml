@@ -1,6 +1,6 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.SurveyModel
 @{
-    ViewData["Title"] = "Services";
+    ViewData["Title"] = "Survey";
 }
 
 <!--***Survey From Begins-->
@@ -55,7 +55,7 @@
     <div class="row ms-1 me-1">
         <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
             <label for="testing" class="form-label"></label>
-            <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType" asp-items="Html.GetEnumSelectList<Testing>()">
+            <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType" asp-items="Html.GetEnumSelectList<TestingType>()">
                 <option value=" ">Testing Type</option>
             </select>
         </div>
