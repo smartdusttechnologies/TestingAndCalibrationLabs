@@ -90,9 +90,9 @@
     <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">Test Details</h2>
     <div class="mb-2 ms-1 me-1 row ">
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 inputSearchGrid">
-            <input type="text" id="myInputTextField" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+            <input type="text" id="TestDetailsGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
             <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
-            <i class="fa fa-solid fa-xmark iconForSearchRight"></i>
+            <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
         </div>
     </div>
     <div class="table-responsive ms-1 me-1">
@@ -136,7 +136,11 @@
     oTable = $('#testDetailsGrid').DataTable({
         pageLength: 5
     });
-    $('#myInputTextField').keyup(function() {
+    $('#TestDetailsGridSearch').keyup(function() {
         oTable.search($(this).val()).draw();
     })
+const clearText = () => {
+    const inputID = document.querySelector("#TestDetailsGridSearch");
+    inputID.value = "";
+}
 </script>
