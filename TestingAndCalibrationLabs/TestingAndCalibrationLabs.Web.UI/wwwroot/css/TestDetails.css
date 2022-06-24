@@ -93,8 +93,8 @@ body {
     position: relative;
 }
 
-#TestDetailsSubmit{
-    width:260px;
+#TestDetailsSubmit {
+    width: 260px;
 }
 
 .container-testing-material {
@@ -112,7 +112,6 @@ body {
         display: inline-block;
         top: -6px;
     }
-
 
 form-group > label {
     top: 12px;
@@ -142,7 +141,7 @@ input.input-validation-error#Comments.form-input.width-full {
 input.input-validation-error#TestingType.form-input.width-full {
     border: 2px solid red;
 }
-/**/
+
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
@@ -155,9 +154,9 @@ select.input-validation-error#TestingType {
     border: 2px solid red;
 }
 
-#select{
-    margin:0;
-    padding:0;
+#select {
+    margin: 0;
+    padding: 0;
 }
 
 .validation-summary-errors {
@@ -209,15 +208,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility:visible;
-    border-radius:12px;
-    background-color:green;
-    color:white;
-    margin-bottom:70px;
-    width:370px;
-    padding:14px;
-    text-align:center;
-    font-size:16px;
+    visibility: visible;
+    border-radius: 12px;
+    background-color: green;
+    color: white;
+    margin-bottom: 70px;
+    width: 370px;
+    padding: 14px;
+    text-align: center;
+    font-size: 16px;
 }
 
     #snackbar.show {
@@ -274,41 +273,59 @@ select.input-validation-error#TestingType {
     }
 }
 
-
-#example_filter {
+/*The following few were display hidden bcs of using the datatable things*/
+#testDetailsGrid_length {
     display: none;
 }
 
-#example_length {
+#testDetailsGrid_info {
     display: none;
 }
 
-#example_info {
+#testDetailsGrid_filter {
     display: none;
 }
 
-#example_filter {
-    display: none;
+.inputWithIconSearch {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    transition: 0.3s;
 }
 
-#myInputTextField:focus {
-    border-color: dodgerblue;
-    box-shadow: none;
+    .inputWithIconSearch:focus {
+        border-color: dodgerblue;
+    }
+
+.inputSearchGrid .inputWithIconSearch {
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .inputSearchGrid {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid;
+    position: relative;
 }
 
-    .inputSearchGrid:hover {
-        border-color: dodgerblue;
-        box-shadow: none;
+    .inputSearchGrid .iconForSearchLeft {
+        position: absolute;
+        left: 20px;
+        top: 4px;
+        color: #aaa;
+        transition: 0.3s;
     }
 
-    .inputSearchGrid:focus {
-        border-color: dodgerblue;
-        box-shadow: none;
-        border:none;
+    .inputSearchGrid .iconForSearchRight {
+        position: absolute;
+        right: 20px;
+        top: 4px;
+        color: #aaa;
+        transition: 0.3s;
     }
+
+.inputWithIcon.inputIconBg .iconForSignIn {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}

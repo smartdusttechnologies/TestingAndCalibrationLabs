@@ -2,25 +2,36 @@
     ViewData["Title"] = "TestDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+
+        .jss304 {
+        flex: 1 0 auto;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: auto;
+        display: flex;
+    }
+
+</style>
 <div class="">
-    <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
+    <form _lpchecked="1" class="mb-2" id="testForm">
         <div class="row ms-1 me-1">
-            <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
                 <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
             </div>
-            <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input d-none d-sm-block" style="text-align:right;">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element  d-none d-sm-block" style="text-align:right;">
                 <button class="btn btn-submit-print text-white width-full" id="TestDetailsSubmit" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
             </div>
             <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
                 <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="departMentName">Department Name:</label>
             </div>
-            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
                 <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="customerName">Customer Name:</label>
             </div>
-            <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
                 <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
                 <label class="form-label" for="issueTo">Issue To:</label>
             </div>
@@ -28,15 +39,15 @@
                 <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
                 <label class="form-label" for="receivedOn">Received On:</label>
             </div>
-            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input ">
                 <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
                 <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO:</label>
             </div>
-            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input ">
                 <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
                 <label class="form-label" for="contactPersonName">Contact Person Name:</label>
             </div>
-            <div class="col-lg-6 col-sm-6 mt-3 form-element left-pd-input">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
                 <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
                 <label class="form-label" for="mobileNumber">Mobile Number:</label>
             </div>
@@ -44,7 +55,7 @@
                 <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
                 <label class="form-label" for="testReportReleaseDate">Test Report Release Date:</label>
             </div>
-            <div class="col-lg-12 col-sm-12 mt-3 form-element left-pd-input">
+            <div class="col-lg-12 col-sm-12 mt-3 form-element ">
                 <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
                 <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement:</label>
             </div>
@@ -75,16 +86,17 @@
             <input type="file" multiple required />
         </div>
     </form>
-    <div class="mt-3 mb-3 form-element left-pd-input d-block d-sm-none ms-1 me-1">
-        <button class="btn btn-submit-print text-white width-full" type="button" style="background-color:#4250b5;height:100%;width:100%;">SUBMIT AND PRINT RECEPT</button>
-    </div>
     <!--From here Grid will starts-->
-    <h2>Test Details</h2>
-    <div class="mb-2 ms-1 me-1 row inputWithIconSearch">
-        <input type="search" id="myInputTextField" onkeyup="function()" class="light-table-filter col-lg-4 col-md-4 col-sm-12 inputSearchGrid" data-table="table-info" placeholder="Search">
+    <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">Test Details</h2>
+    <div class="mb-2 ms-1 me-1 row ">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 inputSearchGrid">
+            <input type="text" id="myInputTextField" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+            <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
+            <i class="fa fa-solid fa-xmark iconForSearchRight"></i>
+        </div>
     </div>
     <div class="table-responsive ms-1 me-1">
-        <table id="example" class="table table-bordered table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+        <table id="testDetailsGrid" class="table table-bordered table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     @foreach (var teamName in @ViewBag.TableHeaddings)
@@ -121,7 +133,7 @@
     </div>
 </div>
 <script>
-    oTable = $('#example').DataTable({
+    oTable = $('#testDetailsGrid').DataTable({
         pageLength: 5
     });
     $('#myInputTextField').keyup(function() {
