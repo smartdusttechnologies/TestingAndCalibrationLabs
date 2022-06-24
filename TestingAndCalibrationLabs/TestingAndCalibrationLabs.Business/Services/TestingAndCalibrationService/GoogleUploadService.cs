@@ -27,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IUserRepository _userRepository;
-        private readonly INewUIRepository _newUIRepository;
+        private readonly ITestReportRepository _newUIRepository;
         private readonly IConnectionFactory _connectionFactory;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
@@ -42,7 +42,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         //private string ApplicationName;
         //private string imageVal;
 
-        public GoogleUploadService(IUserRepository userRepository, IWebHostEnvironment hostingEnvironment,INewUIRepository newUIRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
+        public GoogleUploadService(IUserRepository userRepository, IWebHostEnvironment hostingEnvironment,ITestReportRepository newUIRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
         {
             _userRepository = userRepository;
             _configuration = configuration;
@@ -123,7 +123,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             return (string)ResponseBody;
         }
 
-        public void UploadFile(NewUIModel data)
+        public void UploadFile(TestReportModel data)
         {
             string uploadsFolder = CreateFolder("Test", "new");
             var xyz = new FileExtensionContentTypeProvider();
@@ -147,15 +147,14 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 {
                     throw response.Exception;
                 }
-                var imageVal = request.ResponseBody.Id;
-                data.FilePath = imageVal;
-                   
+                data.FilePath = request.ResponseBody.Id;
+                                   
                 //Saving the data to the database
                 _newUIRepository.Insert(data);
             }
         }
 
-        public void UploadFile(IFormFile dataUrl, NewUIModel getbusinessModel)
+        public void UploadFile(IFormFile dataUrl, TestReportModel getbusinessModel)
         {
             throw new NotImplementedException();
         }

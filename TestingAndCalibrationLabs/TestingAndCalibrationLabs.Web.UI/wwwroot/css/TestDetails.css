@@ -115,6 +115,26 @@ input.input-validation-error#Comments.form-input.width-full {
 input.input-validation-error#TestingType.form-input.width-full {
     border: 2px solid red;
 }
+
+input.input-validation-error#Name.form-input.width-full{
+    border: 2px solid red;
+}
+
+input.input-validation-error#TRJobId.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TRClient.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TREmail.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TRDataUrl.form-input.width-full {
+    border: 2px solid red;
+}
 /**/
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;

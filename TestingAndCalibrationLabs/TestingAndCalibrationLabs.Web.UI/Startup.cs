@@ -34,14 +34,14 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllers();
             //Services
             services.AddScoped<ISampleService, SampleService>();
-            services.AddScoped<INewUIService, NewUIService>();
+            services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleUploadService, GoogleUploadService>();
             
 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();
-            services.AddScoped< INewUIRepository, NewUIRepository >();
+            services.AddScoped< ITestReportRepository, TestReportRepository >();
             services.AddScoped< IUserRepository, UserRepository>();
         }
 

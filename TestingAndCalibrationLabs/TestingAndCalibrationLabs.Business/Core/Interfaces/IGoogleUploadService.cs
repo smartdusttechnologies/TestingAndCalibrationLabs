@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     {
         //void UploadFile(IFormFile dataUrl, NewUIModel getbusinessModel);
         string CreateFolder(string v1, string v2);
-        void UploadFile(NewUIModel getbusinessModel);
+        void UploadFile(TestReportModel getbusinessModel);
         
     }
 }
