@@ -295,7 +295,7 @@ select.input-validation-error#TestingType {
 }
 
     .inputWithIconSearch:focus {
-        border-color: dodgerblue;
+        border-bottom: 2px solid black;
     }
 
 .inputSearchGrid .inputWithIconSearch {
@@ -311,7 +311,7 @@ select.input-validation-error#TestingType {
         position: absolute;
         left: 20px;
         top: 4px;
-        color: #aaa;
+        color: black;
         transition: 0.3s;
     }
 
