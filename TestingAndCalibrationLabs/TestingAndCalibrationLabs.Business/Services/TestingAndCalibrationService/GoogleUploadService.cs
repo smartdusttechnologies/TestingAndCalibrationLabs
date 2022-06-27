@@ -51,8 +51,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _connectionFactory = connectionFactory;
         }
 
-        
-
        // public int Insert(NewUIModel uploadData);
 
         public DriveService GetService()
@@ -158,7 +156,5 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             throw new NotImplementedException();
         }
-
-       
     }
 }

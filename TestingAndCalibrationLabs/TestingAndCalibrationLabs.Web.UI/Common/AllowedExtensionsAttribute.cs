@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
         }
         public string GetErrorMessage()
         {
-            return $"Only jpg,jpeg, png type of Files allowed.";
+            return $"Only jpg, jpeg, png, pdf - type of files allowed.";
         }
     }
 }

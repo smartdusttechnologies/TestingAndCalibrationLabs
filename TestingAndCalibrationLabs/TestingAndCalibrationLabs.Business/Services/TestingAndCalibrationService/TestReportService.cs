@@ -21,7 +21,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         public TestReportService(ITestReportRepository newUIRepository)
         {
             _newUIRepository = newUIRepository;
-        
         }
 
         public RequestResult<int> Add(TestReportModel newUIModel)
@@ -32,10 +31,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         public bool servives(TestReportModel newUIModel)
         {
-
             return true;
         }
-
     }
 }
-

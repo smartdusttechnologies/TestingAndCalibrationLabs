@@ -59,6 +59,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     Email = data.Email
                 };
                 _googleUploadService.UploadFile(getbusinessModel);
+                
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
