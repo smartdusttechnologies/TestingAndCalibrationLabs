@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "TestDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="">
+    <form class="mb-2" id="testForm">
+        <div class="row ms-1 me-1">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element  d-none d-sm-block" style="text-align:right;">
+                <button class="btn btn-submit-print text-white width-full" id="TestDetailsSubmit" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="departMentName">Department Name:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="customerName">Customer Name:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="issueTo">Issue To:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
+                <label class="form-label" for="receivedOn">Received On:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input ">
+                <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
+                <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input ">
+                <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
+                <label class="form-label" for="contactPersonName">Contact Person Name:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
+                <label class="form-label" for="mobileNumber">Mobile Number:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
+                <label class="form-label" for="testReportReleaseDate">Test Report Release Date:</label>
+            </div>
+            <div class="col-lg-12 col-sm-12 mt-3 form-element ">
+                <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
+                <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement:</label>
+            </div>
+        </div>
+    </form>
+    <form class="mb-2 me-1 ms-1 row" style="padding-left:12px;padding-right:12px;">
+        <div class="col-12 mb-2">
+            <label>Testing Material:</label>
+        </div>
+        <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="">
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label>hello</label>
+                </div>
+            </div>
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label draggable="true">hello world</label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class="mb-2 me-1 m-sm-1 row ms-1 me-1">
+        <div class="col-12 mb-2">
+            <label style="padding-left:20px;">Attachments:</label>
+        </div>
+        <div class="col-12">
+            <input type="file" multiple required />
+        </div>
+    </form>
+    <!--From here Grid will starts-->
+    <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">Test Details</h2>
+    <div class="mb-2 ms-1 me-1 row ">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 inputSearchGrid">
+            <input type="text" id="TestDetailsGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+            <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
+            <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
+        </div>
+    </div>
+    <div class="table-responsive ms-1 me-1">
+        <table id="testDetailsGrid" class="table table-bordered table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    @foreach (var teamName in @ViewBag.TableHeaddings)
+                    {
+                        <th>@teamName</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var temp in Model)
+                {
+                    <tr>
+                        <td><i class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;"></i><i class="fa fa-solid fa-trash col" style="margin:5px;margin-left:10px;"></i></td>
+                        <td>@temp.SampleType</td>
+                        <td>@temp.SampleDetails</td>
+                        <td>@temp.DateOfTP</td>
+                        <td>@temp.JobCode</td>
+                        <td>@temp.SampleId</td>
+                        <td>@temp.NumberOfSampleQuantity</td>
+                        <td>@temp.TestName</td>
+                        <td>@temp.TestMethod</td>
+                        <td>@temp.PersonAuthorized</td>
+                        <td>@temp.ReceivedOn</td>
+                        <td>@temp.TargedOn</td>
+                        <td>@temp.CompletedOn</td>
+                        <td>@temp.Remarks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!----This lower margin bottom for temporary sorting of the footer-->
+    <div style="margin-bottom:100px;">
+    </div>
+</div>
+<script>
+    oTable = $('#testDetailsGrid').DataTable({
+        pageLength: 5
+    });
+    $('#TestDetailsGridSearch').keyup(function() {
+        oTable.search($(this).val()).draw();
+    })
+    const clearText = () => {
+        const inputID = document.querySelector("#TestDetailsGridSearch");
+        inputID.value = "";
+    }
+</script>
