@@ -19,15 +19,17 @@ using System.Data;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using Dapper;
 
+
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
 
     public class GoogleUploadService : IGoogleUploadService
     {
+
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IUserRepository _userRepository;
-        private readonly ITestReportRepository _newUIRepository;
+        private readonly ITestReportRepository _testReportRepository;
         private readonly IConnectionFactory _connectionFactory;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
@@ -42,16 +44,17 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         //private string ApplicationName;
         //private string imageVal;
 
-        public GoogleUploadService(IUserRepository userRepository, IWebHostEnvironment hostingEnvironment,ITestReportRepository newUIRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
+        public GoogleUploadService(IUserRepository userRepository, IWebHostEnvironment hostingEnvironment,ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
         {
             _userRepository = userRepository;
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
-            _newUIRepository = newUIRepository;
+            _testReportRepository = testReportRepository;
             _connectionFactory = connectionFactory;
+            
         }
 
-       // public int Insert(NewUIModel uploadData);
+       //Creating Services 
 
         public DriveService GetService()
         {
@@ -146,9 +149,12 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                     throw response.Exception;
                 }
                 data.FilePath = request.ResponseBody.Id;
-                                   
+
+                //Sending mail
+                //var isSendMail = _emailService.Sendemail(data.FilePath);
+
                 //Saving the data to the database
-                _newUIRepository.Insert(data);
+                _testReportRepository.Insert(data);
             }
         }
 

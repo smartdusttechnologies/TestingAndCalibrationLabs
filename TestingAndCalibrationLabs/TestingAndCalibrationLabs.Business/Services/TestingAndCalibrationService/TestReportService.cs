@@ -6,30 +6,27 @@ using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class TestReportService : ITestReportService
     {
-        private readonly ITestReportRepository _newUIRepository;
-        private readonly IEmailService _emailService;
-        private readonly IConfiguration _configuration;
-        //private readonly IWebHostEnvironment _hostingEnvironment;
-        //private readonly IUserRepository _userRepository;
+        private readonly ITestReportRepository _testReportRepository;
 
-        public TestReportService(ITestReportRepository newUIRepository)
+        public TestReportService(ITestReportRepository testReportRepository)
         {
-            _newUIRepository = newUIRepository;
+            _testReportRepository = testReportRepository;
         }
-
-        public RequestResult<int> Add(TestReportModel newUIModel)
+        
+        public RequestResult<int> Add(TestReportModel testReportModel)
         {
-            _newUIRepository.Insert(newUIModel);
+            _testReportRepository.Insert(testReportModel);
             return new RequestResult<int>(1);
         }
 
-        public bool servives(TestReportModel newUIModel)
+        public bool servives(TestReportModel testReportModel)
         {
             return true;
         }

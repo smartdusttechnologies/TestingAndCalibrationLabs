@@ -8,19 +8,19 @@
 
         <div class="row ms-1 me-1">
             <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                <input class="form-input width-full" type="text" id="Name" name="Name" onkeypress="return allowOnlyLetters(event,this);" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                <input class="form-input width-full" type="text" id="Name" name="Name"  placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                 <label class="form-label" for="Name">Name</label>
             </div>
         </div>
 
         <div class="row ms-1 me-1">
             <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-                <input class="form-input width-full" type="tel" placeholder=" " onkeypress="return isNumber(event,this);"  id="TRJobId" name="JobId" onchange="this.setAttribute('value',this.value)" asp-for="JobId">
+                <input class="form-input width-full" type="tel" placeholder=" " id="TRJobId" name="JobId"  onchange="this.setAttribute('value',this.value)" asp-for="JobId">
                 <label class="form-label" for="JobId">Job ID</label>
             </div>
 
             <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-                <input class="form-input width-full" type="text" id="TRClient" placeholder=" " name="Client" onkeypress="return allowOnlyLetters(event,this);" onchange="this.setAttribute('value',this.value)" asp-for="Client">
+                <input class="form-input width-full" type="text" id="TRClient" placeholder=" " name="Client"  onchange="this.setAttribute('value',this.value)" asp-for="Client">
                 <label class="form-label" for="Client">Client Name</label>
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="row ms-1 me-1">
             <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element ">
                 <!--Left blank t fit in all Views-->
-            </div>   
+            </div>
         </div>
     </form>
 </div>
@@ -92,36 +92,8 @@
         return true;
     }
 </script>
-<script language="Javascript" type="text/javascript">
 
-    function allowOnlyLetters(e, t) {
-        if (window.event) {
-            var charCode = window.event.keyCode;
-        }
-        else if (e) {
-            var charCode = e.which;
-        }
-        else { return true; }
-        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
-            return true;
-        else {
-            alert("Please enter only alphabets");
-            return false;
-        }
-    }
-</script>
 
-<script>
-    function isNumber(evt) {
-        evt = (evt) ? evt : window.event;
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            alert("Please enter the numbers")
-            return false;
-        }
-        return true;
-    }
-</script>
 
 <style>
     .hidden {

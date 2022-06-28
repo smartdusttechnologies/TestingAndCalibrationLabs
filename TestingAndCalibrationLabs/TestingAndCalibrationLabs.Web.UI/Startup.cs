@@ -37,7 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleUploadService, GoogleUploadService>();
             
-
+ 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();

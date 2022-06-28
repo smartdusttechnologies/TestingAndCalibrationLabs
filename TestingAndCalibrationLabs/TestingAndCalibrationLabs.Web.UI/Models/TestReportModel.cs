@@ -12,8 +12,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 
         [Required(ErrorMessage = "Please enter JobId")]
         [DataType(DataType.PhoneNumber)]
-        //[MaxLength(10, ErrorMessage = "Please enter 10 digit JobId")]
-        //[RegularExpression(@"^([1-9]{1}[0-9]{9})$", ErrorMessage = "Please enter valid JobId")]
         public string JobId { get; set; }
 
         [Required(ErrorMessage = "Please enter client name")]

@@ -6,10 +6,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class UserModel : Entity
     {
-        //public UserModel(string emailId)
-        //{
-        //    Email = emailId;
-        //}
+        public UserModel(string emailId)
+        {
+            Email = emailId;
+        }
 
         public string Name { get; set; }
         public string Role { get; set; }
