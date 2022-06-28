@@ -60,5 +60,14 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\TestingANdCalibrationLabs\SampleTable.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\User.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\Role.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\PasswordPolicy.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\PasswordLogin.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\Orgnization.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\LoginTokenLog.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\LoginToken.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\LoginLog.sql" />
+    <Build Include="dbo\Tables\TestingANdCalibrationLabs\UserRole.sql" />
   </ItemGroup>
 </Project>
