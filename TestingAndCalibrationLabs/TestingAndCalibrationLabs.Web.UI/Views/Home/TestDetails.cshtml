@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "TestDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="">
+    <form class="mb-2" id="testForm">
+        <div class="row ms-1 me-1">
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="number" id="jobSerialNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="jobSerialNumber">Job Serial NO:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element  d-none d-sm-block" style="text-align:right;">
+                <button class="btn btn-submit-print text-white width-full" id="TestDetailsSubmit" type="button" style="background-color:#4250b5;height:100%;">SUBMIT AND PRINT RECEPT</button>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="text" id="departMentName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="departMentName">Department Name:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="text" id="customerName" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="customerName">Customer Name:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="text" id="issueTo" placeholder=" " onchange="this.setAttribute('value',this.value)" required>
+                <label class="form-label" for="issueTo">Issue To:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="date" id="receivedOn" placeholder=" " required>
+                <label class="form-label" for="receivedOn">Received On:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input ">
+                <input class="form-input width-full" type="number" id="jobOrderNoOrRefNo" placeholder=" " required>
+                <label class="form-label" for="jobOrderNoOrRefNo">Job Order No/Ref NO:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input ">
+                <input class="form-input width-full" type="text" id="contactPersonName" placeholder=" " required>
+                <label class="form-label" for="contactPersonName">Contact Person Name:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element ">
+                <input class="form-input width-full" type="number" id="mobileNumber" placeholder=" " required>
+                <label class="form-label" for="mobileNumber">Mobile Number:</label>
+            </div>
+            <div class="col-lg-6 col-sm-6 mt-3 form-element right-pd-input">
+                <input class="form-input width-full" type="date" id="testReportReleaseDate" placeholder=" " required>
+                <label class="form-label" for="testReportReleaseDate">Test Report Release Date:</label>
+            </div>
+            <div class="col-lg-12 col-sm-12 mt-3 form-element ">
+                <input class="form-input width-full" type="text" id="anyOtherSpecificRequirement" placeholder=" " required>
+                <label class="form-label" for="anyOtherSpecificRequirement">Any Other Specific Requirement:</label>
+            </div>
+        </div>
+    </form>
+    <form class="mb-2 me-1 ms-1 row" style="padding-left:12px;padding-right:12px;">
+        <div class="col-12 mb-2">
+            <label>Testing Material:</label>
+        </div>
+        <div class="container container-testing-material width-full d-flex col-12 mb-2" onclick="">
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label>hello</label>
+                </div>
+            </div>
+            <div class="testing-material-chips inline-block m-1">
+                <div class="container container-chip">
+                    <label draggable="true">hello world</label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class="mb-2 me-1 m-sm-1 row ms-1 me-1">
+        <div class="col-12 mb-2">
+            <label style="padding-left:20px;">Attachments:</label>
+        </div>
+        <div class="col-12">
+            <input type="file" multiple required />
+        </div>
+    </form>
+</div>
+<!----This lower margin bottom for temporary sorting of the footer-->
+<div style="margin-bottom:100px;">
+</div>
