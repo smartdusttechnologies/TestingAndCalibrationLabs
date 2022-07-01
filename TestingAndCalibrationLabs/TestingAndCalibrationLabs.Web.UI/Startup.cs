@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -38,7 +39,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
-            services.AddScoped<ISampleRepository, SampleRepository>();
+           // services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped<ICommonCrudRepository, CommonCrudRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

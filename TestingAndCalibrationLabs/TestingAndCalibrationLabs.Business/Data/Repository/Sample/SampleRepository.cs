@@ -35,7 +35,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<UiPageValidation> GetUiPageValidations(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageValidation>(@"Select upv.Id, upv.UiPageId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId
+            return db.Query<UiPageValidation>(@"Select upv.Id, upv.UiPageId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
                                             From [UiPageValidation] upv 
                                             INNER JOIN  [UiPageValidationType] upvt ON upv.UiPageValidationTypeId = upvt.Id 
                                                 AND upv.IsDeleted = 0 

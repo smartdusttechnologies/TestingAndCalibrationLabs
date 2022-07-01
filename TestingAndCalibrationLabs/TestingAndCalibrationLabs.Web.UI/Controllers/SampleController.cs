@@ -53,6 +53,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var uiPageId = id;
             var pageMetadata = _sampleService.GetUiPageMetadata(uiPageId);
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+           
             return base.View(result);
         }
         /// <summary>
@@ -65,11 +66,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Create(Models.RecordDTO record)
         {
             var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
-            _sampleService.Add(records);
-
+            var abc = _sampleService.Add(records);
             var pageMetadata = _sampleService.GetUiPageMetadata(record.UiPageId);
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            return base.View(result);
+            result.FieldValues = record.FieldValues;
+            if (abc.IsSuccessful)
+            {
+                return View(result);
+            }
+
+           // string message=abc.ValidationMessages.FirstOrDefault()?.Reason;
+           
+            result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(abc.ValidationMessages.FirstOrDefault());
+            return View(result);
+            
         }
 
         /// <summary>

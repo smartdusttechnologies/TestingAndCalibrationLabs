@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class UiPageMetadataDTO
     {
@@ -8,6 +10,8 @@
         public int UiControlTypeId { get; set; }
         public string UiControlType { get; set; }
         public bool IsRequired { get; set; }
+        
+      
         public string UiControlDisplayName { get; set; }
     }
 }

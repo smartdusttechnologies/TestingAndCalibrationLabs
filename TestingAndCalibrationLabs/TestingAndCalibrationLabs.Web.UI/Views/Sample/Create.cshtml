@@ -3,32 +3,42 @@
     ViewData["Title"] = "Create";
 }
 <h1>Create</h1>
-<div class="row">
-    <div class="col-md-4">
+<div class="container-fluid">
+    <div>
         <form id="sampleForm" asp-controller="Sample" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UiPageId" />
-            @foreach (var item in Model.Fields)
-            {
-                if (item.UiControlType == "textarea")
+             <div class="row">
+                @foreach (var item in Model.Fields)
                 {
-                    <div class="form-group" style="margin-left:40px">
-                        <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                        <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
-                        <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                    </div>
+                    if (item.UiControlType == "textarea")
+                    {
+                            <div class="form-group" style="margin-left:40px">
+                                <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
+                                <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                            </div>
+                    }
+                    else
+                    {
+                     
+
+                                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                                      <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                                       <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                        <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                    </div>
+
+                        @*  <div class="form-group" style="margin-left:40px">
+                            <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" />
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                            </div>*@
+                    }
                 }
-                else
-                {
-                    <div class="form-group" style="margin-left:40px">
-                        <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                    <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" />
-                    <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                </div>
-                }
-            }
+            </div>
             <div class="form-group">
-                <input type="button" value="Create" class="btn btn-primary" onclick="AjaxFormSubmit()" />
+                <input type="button" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
             </div>
         </form>
     </div>
@@ -37,11 +47,32 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+@*@if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+ {
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+    </svg>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-success" role="alert" id="snackbar">
+            <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <span><strong>Submitted Successfully!!! Thank You</strong></span>
+        </div>
+    </div>
+}
+*@
+
+
+
+
 <script type="text/javascript">
     function AjaxFormSubmit() {
         //Set the URL.
         var url = $("#sampleForm").attr("action");
-        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var modelData = JSON.parse('@Json.Serialize(Model)');   
         var uiPageMetaData = modelData.fields;
         var fieldValues = [];
 
@@ -61,7 +92,22 @@
             url: url,
             data: { "UiPageId" : uiPageId, "FieldValues" : fieldValues},
             success: function (response) {
-                    window.location.href = "/";
+            //      var newuiPageMetaData = resonse.fields;
+            //       var newfieldValues = [];
+            //for (let i = 0; i < newuiPageMetaData.length; i++) {
+            //var newfieldId = newuiPageMetaData[i].id;
+            //var newfieldValue = $('#' + newfieldId).val();
+            //var newkeyValuepair = {};
+            //newkeyValuepair.UiControlId = newfieldId;
+            //newkeyValuepair.Value = newfieldValue;
+            //newfieldValues.push(newkeyValuepair)
+      //  }
+          
+        
+
+         window.location.href = "/";
+
+
                 },
             failure: function (response) {
                 alert(response.responseText);

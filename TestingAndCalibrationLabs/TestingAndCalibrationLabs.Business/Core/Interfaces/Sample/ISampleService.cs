@@ -9,8 +9,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// </summary>
     public interface ISampleService
     {
-        RequestResult<int> Add(RecordModel record);
-        RequestResult<int> Update(RecordModel record);
+        RequestResult<bool> Add(RecordModel record);
+        RequestResult<bool> Update(RecordModel record);
         bool Delete(int id);
         RecordModel GetUiPageMetadata(int uiPageId);
         RecordsModel GetRecords();
