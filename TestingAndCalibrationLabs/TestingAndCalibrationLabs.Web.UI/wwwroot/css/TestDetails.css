@@ -75,17 +75,41 @@ body {
     box-shadow: 0 0 3px 0 dodgerblue;
 }
 
-.btn {
+.form-element input:hover {
+    border-color: dodgerblue;
+    box-shadow: 0 0 1px 0 dodgerblue;
+}
+
+.btn-submit-print {
     background-color: blue;
-    width: 200px;
     font-size: 20px;
     padding: 20px;
     border-radius: 15px;
     border: 3px solid yellow;
     color: magenta;
     text-align: center;
-    position:relative;
+    position: relative;
 }
+
+#TestDetailsSubmit {
+    width: 260px;
+}
+
+.container-testing-material {
+    margin: 0;
+    height: 40px;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid black;
+    display: inline-block;
+}
+
+    .container-testing-material .container-chip {
+        background-color: #e5ebee;
+        border-radius: 15px;
+        display: inline-block;
+        top: -6px;
+    }
 
 form-group > label {
     top: 12px;
@@ -115,7 +139,7 @@ input.input-validation-error#Comments.form-input.width-full {
 input.input-validation-error#TestingType.form-input.width-full {
     border: 2px solid red;
 }
-/**/
+
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
@@ -128,10 +152,9 @@ select.input-validation-error#TestingType {
     border: 2px solid red;
 }
 
-
-#select{
-    margin:0;
-    padding:0;
+#select {
+    margin: 0;
+    padding: 0;
 }
 
 .validation-summary-errors {
@@ -145,7 +168,7 @@ select.input-validation-error#TestingType {
 }
 
 .submit-progress-bg {
-    background-color: lightgrey;
+    background-color: lightcoral;
     opacity: .5;
 }
 
@@ -183,15 +206,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility:visible;
-    border-radius:12px;
-    background-color:green;
-    color:white;
-    margin-bottom:70px;
-    width:370px;
-    padding:14px;
-    text-align:center;
-    font-size:16px;
+    visibility: visible;
+    border-radius: 12px;
+    background-color: green;
+    color: white;
+    margin-bottom: 70px;
+    width: 370px;
+    padding: 14px;
+    text-align: center;
+    font-size: 16px;
 }
 
     #snackbar.show {
@@ -246,4 +269,91 @@ select.input-validation-error#TestingType {
         bottom: 0;
         opacity: 0;
     }
+}
+
+/*The following few were display hidden bcs of using the datatable things*/
+#testDetailsGrid_length {
+    display: none;
+}
+
+#testDetailsGrid_info {
+    display: none;
+}
+
+#testDetailsGrid_filter {
+    display: none;
+}
+
+#testDetailsGrid_paginate{
+    margin:7px;
+}
+
+.inputWithIconSearch {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    transition: 0.3s;
+}
+
+    .inputWithIconSearch:focus {
+        border-bottom: 2px solid black;
+    }
+
+.inputSearchGrid .inputWithIconSearch {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.inputSearchGrid {
+    position: relative;
+}
+
+    .inputSearchGrid .iconForSearchLeft {
+        position: absolute;
+        left: 10px;
+        top: 4px;
+        color: black;
+        transition: 0.3s;
+    }
+
+    .inputSearchGrid .iconForSearchRight {
+        position: absolute;
+        right: 20px;
+        top: 4px;
+        color: #aaa;
+        transition: 0.3s;
+    }
+
+        .inputSearchGrid .iconForSearchRight:hover {
+            position: absolute;
+            right: 20px;
+            top: 4px;
+            color: black;
+            transition: 0.3s;
+        }
+
+.inputWithIcon.inputIconBg .iconForSignIn {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+
+
+/*#testDetailsGrid_paginate {
+    position: absolute;
+    left: 0;
+    bottom:50px;
+    margin-left:20px;
+}*/
+
+#testDetailsGrid_paginate {
+    /*display:none;*/
+    align-items: flex-start;
+}
+
+.simple-pagination testDetailsGrid_paginate {
+    display: inline-block;
 }
