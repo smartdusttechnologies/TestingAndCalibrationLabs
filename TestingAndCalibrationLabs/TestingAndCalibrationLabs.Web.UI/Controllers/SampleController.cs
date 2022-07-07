@@ -72,13 +72,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             result.FieldValues = record.FieldValues;
             if (abc.IsSuccessful)
             {
-                return View(result);
-            }
+                
+                return Json(result);
 
-           // string message=abc.ValidationMessages.FirstOrDefault()?.Reason;
+            }
            
+            // string message=abc.ValidationMessages.FirstOrDefault()?.Reason;
+
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(abc.ValidationMessages.FirstOrDefault());
-            return View(result);
+            return Json(result);
             
         }
 

@@ -132,14 +132,20 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 break;
                             case ValidationType.MinAdharLength:
                                 int minAdharLength = int.Parse(item.Value);
-                                if(field.Value.Length < minAdharLength)
+                                if(field.Value.Length != minAdharLength)
                                  validationMessages.Add(new ValidationMessage { Reason = "Length of the Aadhar should be equal to" + minAdharLength + "characters long", Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.MobileNumberLenth:
                                 int minMobilelength = int.Parse(item.Value);
-                                if (field.Value.Length < minMobilelength)
+                                if (field.Value.Length != minMobilelength)
                                     validationMessages.Add(new ValidationMessage { Reason = "length of the Mobile Number  should be equal to " + minMobilelength + "characters long", Severity = ValidationSeverity.Error });
                                 break;
+                            case ValidationType.YearLenth:
+                                int minyearlength = int.Parse(item.Value);
+                                if (field.Value.Length != minyearlength)
+                                    validationMessages.Add(new ValidationMessage { Reason = "length of the Mobile Number  should be equal to " + minyearlength + "characters long", Severity = ValidationSeverity.Error });
+                                break;
+
                         }
                     }
                 }

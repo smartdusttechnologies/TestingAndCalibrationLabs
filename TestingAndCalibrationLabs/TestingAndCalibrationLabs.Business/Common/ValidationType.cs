@@ -10,6 +10,7 @@ namespace TestingAndCalibrationLabs.Business.Common
 
         MinAdharLength = 3,
 
-        MobileNumberLenth =1003
+        MobileNumberLenth =1003,
+        YearLenth =1004
     }
 }
