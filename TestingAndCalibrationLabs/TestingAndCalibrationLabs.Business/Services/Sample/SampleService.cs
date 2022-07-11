@@ -52,31 +52,26 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         public RequestResult<bool> Update(RecordModel record)
         {
-            var uiPageData = _uiPageDataGenericRepository.Get("RecordId", record.Id);
-            foreach (var item in record.FieldValues)
+            RequestResult<bool> requestResult = Validate(record);
+            if (requestResult.IsSuccessful)
             {
-                var data = uiPageData.Where(i => i.UiControlId == item.UiControlId).FirstOrDefault();
-                if (data != null)
+                var uiPageData = _uiPageDataGenericRepository.Get("RecordId", record.Id);
+                foreach (var item in record.FieldValues)
                 {
-                    data.Value = item.Value;
-                    RequestResult<bool> requestResult = Validate(record);
-                    if (requestResult.IsSuccessful)
+                    var data = uiPageData.Where(i => i.UiControlId == item.UiControlId).FirstOrDefault();
+                    if (data != null)
                     {
+                        data.Value = item.Value;
                         _uiPageDataGenericRepository.Update(data);
                     }
-                       
-                }
-                else
-                {
-                    RequestResult<bool> requestResult = Validate(record);
-                    if (requestResult.IsSuccessful)
+                    else
                     {
                         _uiPageDataGenericRepository.Insert(new UiPageDataModel { RecordId = record.Id, UiControlId = item.UiControlId, UiPageId = record.UiPageId, Value = item.Value });
                     }
-                    return requestResult;
-                }
-            };
-            return new RequestResult<bool>(true);
+                };
+                return new RequestResult<bool>(true);
+            }
+            return requestResult;
         }
 
         public RecordModel GetUiPageMetadata(int uiPageId)
@@ -133,7 +128,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             case ValidationType.MinAdharLength:
                                 int minAdharLength = int.Parse(item.Value);
                                 if(field.Value.Length != minAdharLength)
-                                 validationMessages.Add(new ValidationMessage { Reason = "Length of the Aadhar should be equal to" + minAdharLength + "characters long", Severity = ValidationSeverity.Error });
+                                 validationMessages.Add(new ValidationMessage { Reason = "Length of the Adhar card should be equal to" + minAdharLength + "characters long", Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.MobileNumberLenth:
                                 int minMobilelength = int.Parse(item.Value);
@@ -143,7 +138,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             case ValidationType.YearLenth:
                                 int minyearlength = int.Parse(item.Value);
                                 if (field.Value.Length != minyearlength)
-                                    validationMessages.Add(new ValidationMessage { Reason = "length of the Mobile Number  should be equal to " + minyearlength + "characters long", Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = "length of the  Year should be equal to " + minyearlength + "characters long", Severity = ValidationSeverity.Error });
                                 break;
 
                         }

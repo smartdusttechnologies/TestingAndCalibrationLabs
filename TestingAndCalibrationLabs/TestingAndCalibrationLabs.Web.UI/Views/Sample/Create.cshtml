@@ -13,19 +13,19 @@
                 {
                     if (item.UiControlType == "textarea")
                     {
-                                            <div class="form-group" style="margin-left:40px">
-                                                <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                                                <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
-                                                <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                                            </div>
+                                                    <div class="form-group" style="margin-left:40px">
+                                                        <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                                        <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
+                                                        <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                                    </div>
                     }
                     else
                     {
-                                                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                                                      <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
-                                                       <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                                                        <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                                                    </div>
+                                                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                                                              <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                                                               <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                                                <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                                            </div>
 
                         @*  <div class="form-group" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
@@ -49,11 +49,7 @@
 
 
 <div>
-    <svg xmlns="http://www.w3.org/2000/svg" >
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-        </symbol>
-    </svg>
+   
     <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbarsuccess">
             <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
@@ -63,11 +59,7 @@
     </div>
 
 <div>
-    <svg xmlns="http://www.w3.org/2000/svg" >
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-        </symbol>
-    </svg>
+   
     <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbarerror">
             <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Alert:"><use xlink:href="#check-circle-fill" /></svg>
@@ -78,58 +70,45 @@
 
 
     <script>
+     //This function will display the success snackbar
       function myFunction() {
-            var x = document.getElementById("snackbarsuccess");
-          x.className = "show";
-          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
-          $("#sampleForm").find(':input').each(function() {
-            switch(this.type) {
-                case 'password':
-                case 'text':
-                case 'textarea':
-                case 'file':
-                case 'select-one':
-                case 'select-multiple':
-                case 'date':
-                case 'number':
-                case 'tel':
-                case 'email':
-                    jQuery(this).val('');
-                    break;
-                case 'checkbox':
-                case 'radio':
-                    this.checked = false;
-                    break;
-    }
-  });
-  }
-
-
-
-           //$("#sampleForm").find('input:text, input:password, input:file, select, textarea' ).val('');
-           //  $("#sampleForm").find('input:number').val();
-           // $("#sampleForm").find('input:radio, input:checkbox').prop('checked', false).prop('selected', false);
-          //document.forms['sampleForm'].reset();
-        //  $("#sampleForm").find('input:text, input:password, input:number,input:file').val('');
-        //  $("#sampleForm").trigger("reset");
-
-    //    }
-
-           function myFunctionError() {
-          var x = document.getElementById("snackbarerror");
+          var x = document.getElementById("snackbarsuccess");
           x.className = "show";
           setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
        }
 
-   //let redirect_Page = () => {
-   //     let tID = setTimeout(function () {
-   //         window.location.href = "/";
-   //         window.clearTimeout(tID);		// clear time out.
-   //     }, 4000);
-   // }
+      //From this code our form willl be reset 
+          //#region 
+     //       $("#sampleForm").find(':input').each(function() {
+     //        switch(this.type) {
+     //                 case 'password':
+     //                 case 'text':
+     //                 case 'textarea':
+     //                 case 'file':
+     //                 case 'select-one':
+     //                 case 'select-multiple':
+     //                 case 'date':
+     //                 case 'number':
+     //                 case 'tel':
+     //                 case 'email':
+     //                       jQuery(this).val('');
+     //                       break;
+     //                 case 'checkbox':
+     //                 case 'radio':
+     //                      this.checked = false;
+     //                      break;
+     //  }
+     //         });
 
-
-
+     //}
+         //#endregion
+ 
+         //This function will display the Failure snackbar
+          function myFunctionError() {
+          var x = document.getElementById("snackbarerror");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+       }
    </script>
 
 <script type="text/javascript">
@@ -158,49 +137,45 @@
             url: url,
             data: { "UiPageId" : uiPageId, "FieldValues" : fieldValues},
             success: function (response) {
-             var c = response.errorMessage;
-             if(c.reason == null){
-
-               //$("#sampleForm")[0].reset();
-            //  document.getElementById("sampleForm").reset();
-         
-                 myFunction();
-                   //redirect_Page();
-
-             }
-
-             else
-             {
-                 myFunctionError();
-                  document.getElementById("errormessage").innerHTML = c.reason;
-                 var nuiPageMetaData= response.fields;
+                myFunction();                      //Calling myFunction javascript function 
+                var nuiPageMetaData= response.fields;
                 var a = response.fieldValues;
-                 for (let i = 0; i < nuiPageMetaData.length; i++) {
-                 var nfieldId = nuiPageMetaData[i].id;
-               var result = a.find(obj => {
-                 // Returns the object where
-               //   the given property has some value 
-                 return obj.uiControlId === nfieldId
-                })
+                for (let i = 0; i < nuiPageMetaData.length; i++) {
+                var nfieldId = nuiPageMetaData[i].id;
+                $('#' + nfieldId).val('');         //Assigning a empty values to input fields
+               }
 
-             //   if(result != )
-                 $('#' + nfieldId).val(result.value);
-                 }
-             }
+                // Putting data back when the form failed to sumbit
+                //var c = response.errorMessage;
+                //if(c.reason == null){
+                //var nuiPageMetaData= response.fields;
+                //var a = response.fieldValues;
+                //for (let i = 0; i < nuiPageMetaData.length; i++) 
+                // {
+                        //var nfieldId = nuiPageMetaData[i].id;
+                        //var result = a.find(obj => {
+                        // // Returns the object where
+                        //// the given property has some value 
+                        //return obj.uiControlId === nfieldId
+                        //})
 
-
+                        //if(result == undefined)
+                        // {
+                             // $('#' + nfieldId).val('');
+                        // }
+                 //}
 
                 },
             failure: function (response) {
-
-                 
-
                 alert(response.responseText);
             },
             error: function (response) {
-                alert(response.responseText);
+                var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+                var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                myFunctionError();                                              //Calling myFunctionError javacript function
+                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;         //Sending the reason to html 
+                //alert(response.responseText);
             }
         });
     }
-
 </script>

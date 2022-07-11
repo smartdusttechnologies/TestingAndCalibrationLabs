@@ -66,24 +66,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Create(Models.RecordDTO record)
         {
             var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
-            var abc = _sampleService.Add(records);
+            var adddata = _sampleService.Add(records);
             var pageMetadata = _sampleService.GetUiPageMetadata(record.UiPageId);
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            result.FieldValues = record.FieldValues;
-            if (abc.IsSuccessful)
+            if (adddata.IsSuccessful)
             {
-                
-                return Json(result);
+                return Ok(result);  
+              //  return Json(result);
 
             }
-           
-            // string message=abc.ValidationMessages.FirstOrDefault()?.Reason;
 
-            result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(abc.ValidationMessages.FirstOrDefault());
-            return Json(result);
+            // string message=abc.ValidationMessages.FirstOrDefault()?.Reason;
+            result.FieldValues = record.FieldValues;
+
+            result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
+            return BadRequest(result);
+           // return Json(result);
             
         }
-
+        
         /// <summary>
         /// Edit deatils of Sample
         /// </summary>
@@ -107,12 +108,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(Models.RecordDTO record)
         {
             var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
-            _sampleService.Update(records);
-
+            var adddata= _sampleService.Update(records);
             var pageMetadata = _sampleService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            if (adddata.IsSuccessful)
+            {
+                return Ok(recordModel);
+                //  return Json(result);
 
-            return View(recordModel);
+            }
+            recordModel.FieldValues = record.FieldValues;
+
+            recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
+            return BadRequest(recordModel);
         }
 
         /// <summary>

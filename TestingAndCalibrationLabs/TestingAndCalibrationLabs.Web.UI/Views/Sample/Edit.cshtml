@@ -40,6 +40,49 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<div>
+    <svg xmlns="http://www.w3.org/2000/svg" >
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+    </svg>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-success" role="alert" id="snackbarsuccess">
+            <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <span><strong>Submitted Successfully!!! Thank You</strong></span>
+        </div>
+    </div>
+    </div>
+
+<div>
+    <svg xmlns="http://www.w3.org/2000/svg" >
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+    </svg>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-success" role="alert" id="snackbarerror">
+            <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Alert:"><use xlink:href="#check-circle-fill" /></svg>
+            <span><strong><p id="errormessage"></p></strong></span>
+        </div>
+    </div>
+    </div>
+
+
+ <script>
+      function myFunction() {
+            var x = document.getElementById("snackbarsuccess");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+      }
+        function myFunctionError() {
+          var x = document.getElementById("snackbarerror");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+       }
+   </script>
+
+
 <script type="text/javascript">
     function AjaxFormSubmit() {
         //Set the URL.
@@ -65,13 +108,19 @@
             url: url,
             data: { "Id" : id, "UiPageId" : uiPageId, "FieldValues" : fieldValues},
             success: function (response) {
-                    window.location.href = "/";
+            
+                  window.location.href = "/";
+
+                
                 },
             failure: function (response) {
                 alert(response.responseText);
             },
             error: function (response) {
-                alert(response.responseText);
+                var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+                var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                myFunctionError();                                               //Calling myFunctionError javacript function
+                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;         //Sending the reason to html 
             }
         });
     }
