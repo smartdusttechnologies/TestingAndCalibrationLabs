@@ -65,5 +65,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return View();
         }
+        public IActionResult PlanPricing()
+        {
+            return View();
+        }
+
     }
 }
