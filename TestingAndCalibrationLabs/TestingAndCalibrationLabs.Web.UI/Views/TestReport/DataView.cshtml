@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.TestReportModel>
+    
 <div class="table-responsive">
     <input type="search" id="inputData" onkeyup="function" class="light-table-filter" data-table="table-info" placeholder="Filter/Search">
     
@@ -12,13 +13,9 @@
 
                     <th>@Html.DisplayNameFor(model => model.Client)</th>
 
-
                     <th>@Html.DisplayNameFor(model => model.JobId)</th>
 
-
                     <th>@Html.DisplayNameFor(model => model.Email)</th>
-
-
 
                     <th></th>
                 </tr>
@@ -35,10 +32,10 @@
                         <td> @Html.DisplayFor(modelItem => item.JobId)</td>
                         <td> @Html.DisplayFor(modelItem => item.Email)</td>
                         <td> @Html.HiddenFor(modelItem => item.FilePath)</td>
-
                         <td>
-                            <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class="fa-solid fa-cloud-arrow-down"></i></a>||
-                            <a asp-action="TestReportMailSend" asp-route-id="@item.Id"><i class="fa-regular fa-envelope" alt="Send Mail"></i></a>
+                            <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class='fa fa-cloud-download'></i></a>||
+                            <a asp-action="TestReportMailSend" asp-route-id="@item.Id"><i class="fa-regular fa-envelope"></i></a>
+
                         </td>
                     </tr>
                 }
@@ -55,7 +52,6 @@
         </div>
     
 </div>
-
 
 <script>
     $(document).ready(function () {
