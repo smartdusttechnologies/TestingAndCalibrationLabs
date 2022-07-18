@@ -150,3 +150,7 @@ nav ol {
     font-size: 14px;
 }
 }
+input.input-validation-error.UiControlDisplayName.form-input.width-full {
+    border: 2px solid red;
+}
+

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
+
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
@@ -14,6 +15,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public List<UiPageMetadataDTO> Fields { get; set; }
         public List<UI.Models.UiPageDataDTO> FieldValues { get; set; }
         public ValidationMessage ErrorMessage { get; set; } = new ValidationMessage();
+      
         #endregion
     }
 }

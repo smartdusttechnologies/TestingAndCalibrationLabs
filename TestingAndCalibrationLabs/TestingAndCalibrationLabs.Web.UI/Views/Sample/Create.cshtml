@@ -13,33 +13,71 @@
                 {
                     if (item.UiControlType == "textarea")
                     {
-                                                    <div class="form-group" style="margin-left:40px">
-                                                        <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                                                        <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
-                                                        <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                                                    </div>
+                        <div class="form-group" style="margin-left:40px">
+                            <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>
+                    }
+                    else if (item.UiControlType == "file")
+                    {
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>
+                    }
+                    else if (item.UiControlType == "card")
+                    {
+                           <div class="@item.UiControlType" style="width: 18rem;">
+                              <img src="..." class="card-img-top" alt="...">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                              </div>
+                        </div>
+                    }
+                    else if (item.UiControlType == "search")
+                    {
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                            <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>
+                    }
+                     else if (item.UiControlType == "Calender")
+                    {
+                         @* <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                            <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>*@
                     }
                     else
                     {
-                                                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                                                              <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
-                                                               <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                                                                <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                                                            </div>
-
-                        @*  <div class="form-group" style="margin-left:40px">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>
+                        @*
+                            <div class="form-group" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" />
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                             </div>*@
                     }
-                }
+
+               }
+            
             </div>
             <div class="form-group">
                 <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" 
-
-            </div>
+			</div>
         </form>
+
+        <input type="hidden" value="" name="lefid" id="lefid"/>
     </div>
 </div>
 
@@ -48,25 +86,26 @@
 </div>
 
 
-<div>
-   
-    <div class="d-flex justify-content-center fixed-bottom">
-        <div class="alert alert-success" role="alert" id="snackbarsuccess">
-            <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <span><strong>Submitted Successfully!!! Thank You</strong></span>
-        </div>
-    </div>
+    <div>
+        <div class="d-flex justify-content-center fixed-bottom">
+            <div class="alert alert-success" role="alert" id="snackbarsuccess">
+               
+             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert"><div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SuccessOutlinedIcon"><path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path></svg></div><div class="MuiAlert-message css-1xsto0d">This is a success message!</div></div>
+            </div>
+       </div>
     </div>
 
-<div>
-   
-    <div class="d-flex justify-content-center fixed-bottom">
-        <div class="alert alert-success" role="alert" id="snackbarerror">
-            <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Alert:"><use xlink:href="#check-circle-fill" /></svg>
-            <span><strong><p id="errormessage"></p></strong></span>
+    <div>
+        <div class="d-flex justify-content-center fixed-bottom">
+            <div role="alert" id="snackbarerror">
+              <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledError MuiAlert-filled css-1ufabz4" role="alert">
+                  <div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false"  viewBox="0 0 24 24">
+                      <path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></svg></div>
+              <div class="MuiAlert-message css-1xsto0d" id="errormessage">!</div></div>
+         
+            </div>
         </div>
-    </div>
-    </div>
+     </div>
 
 
     <script>
@@ -102,19 +141,24 @@
 
      //}
          //#endregion
- 
+
          //This function will display the Failure snackbar
           function myFunctionError() {
           var x = document.getElementById("snackbarerror");
           x.className = "show";
           setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+          
        }
    </script>
 
 <script type="text/javascript">
     function AjaxFormSubmit() {
         //Set the URL.
-
+         var x = document.getElementById("lefid").value;
+         if( document.getElementById(x) !=null && document.getElementById(x) !=undefined){
+          document.getElementById(x).style.border = "1px solid black ";
+         }
+       
         var url = $("#sampleForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');   
         var uiPageMetaData = modelData.fields;
@@ -127,9 +171,7 @@
             keyValuepair.UiControlId = fieldId;
             keyValuepair.Value = fieldValue;
             fieldValues.push(keyValuepair)
-
         }
-
         var uiPageId = parseInt($("#UiPageId").val())
 
         $.ajax({
@@ -163,7 +205,7 @@
                         // {
                              // $('#' + nfieldId).val('');
                         // }
-                 //}
+                //}
 
                 },
             failure: function (response) {
@@ -172,8 +214,31 @@
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;         //Sending the reason to html 
+                //console.log(response.fieldId);
+                
+                 myFunctionError();                                              //Calling myFunctionError javacript function
+                document.getElementById("errormessage").innerHTML = newErrorMessage.reason; 
+            //    var s = newErrorMessage.fid//Sending the reason to html 
+               
+                  document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
+                  document.getElementById("lefid").value = newErrorMessage.fid;
+                
+
+
+              
+         //        } 
+         //        else{
+         //document.getElementByClassName("form-input").style.border = "1px solid black";
+         //        }
+              //document.getElementById(newErrorMessage.fid).classList.add("border"); 
+
+              //document.getElementById(newErrorMessage.fid).classList.add("border-danger"); 
+               
+             //  newErrorMessage.fid.style.border = "1px solid red";
+             
+           
+                //var i =result;
+                //collection[i].style.border = "1px solid red";
                 //alert(response.responseText);
             }
         });

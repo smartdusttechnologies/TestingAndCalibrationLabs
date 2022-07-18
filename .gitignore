@@ -32,3 +32,8 @@ hs_err_pid*
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/TestingAndCalibrationLabs.Web.UI.csproj.nuget.dgspec.json
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/project.nuget.cache
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/project.assets.json
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/bin
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs/bin
+/TestingAndCalibrationLabs/.vs

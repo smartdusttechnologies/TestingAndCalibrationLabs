@@ -95,7 +95,7 @@ form-group > label {
     padding: 0px 0px 0px 0px;
 }
 
-.field-validation-error.form-input.width-full {
+./*field-validation-error.form-input.width-full {
     color: orangered;
     font-weight: bold;
 }
@@ -115,7 +115,7 @@ input.input-validation-error#Comments.form-input.width-full {
 input.input-validation-error#TestingType.form-input.width-full {
     border: 2px solid red;
 }
-/**/
+
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
@@ -127,7 +127,7 @@ textarea.input-validation-error#Comments {
 select.input-validation-error#TestingType {
     border: 2px solid red;
 }
-
+*/
 
 #select {
     margin: 0;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -15,5 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RecordModel GetUiPageMetadata(int uiPageId);
         RecordsModel GetRecords();
         RecordModel GetRecordById(int recordId);
+
+        UiPageValidationTypes GetValidationTypeById(int validationtypeId);
     }
 }

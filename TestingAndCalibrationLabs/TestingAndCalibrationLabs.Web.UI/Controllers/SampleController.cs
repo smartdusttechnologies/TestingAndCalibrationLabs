@@ -115,10 +115,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return Ok(recordModel);
                 //  return Json(result);
-
             }
             recordModel.FieldValues = record.FieldValues;
-
             recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(recordModel);
         }

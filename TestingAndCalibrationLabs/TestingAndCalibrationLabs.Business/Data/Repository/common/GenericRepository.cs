@@ -50,7 +50,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return db.Query<T>(string.Format("Select top 1 * From [{0}] where Id=@id and IsDeleted=0", _tableName), new { id }).FirstOrDefault();
         }
 
-
         public T Get(string name)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

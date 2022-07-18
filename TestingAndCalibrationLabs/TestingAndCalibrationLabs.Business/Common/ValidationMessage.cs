@@ -11,7 +11,7 @@
 
         public virtual ValidationSeverity Severity { get; set; }
         public string MessageKey { get; set; }
-
+        public int Fid { get; set; }
         public string Description { get; set; }
         #endregion
     }

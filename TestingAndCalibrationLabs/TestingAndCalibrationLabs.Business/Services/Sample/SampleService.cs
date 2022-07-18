@@ -5,6 +5,7 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -19,24 +20,27 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
         private readonly IGenericRepository<UiPageDataModel> _uiPageDataGenericRepository;
+        private readonly IGenericRepository<UiPageValidationTypes> _uiPageValidationTypesGenericRepository;
 
         public SampleService(ICommonCrudRepository genericCrudRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
             IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
-            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository)
+            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
+            IGenericRepository<UiPageValidationTypes> uiPageValidationTypesGenericRepository)
         {
             _genericCrudRepository = genericCrudRepository;
             _recordGenericRepository = recordGenericRepository;
             _uiPageTypeGenericRepository = uiPageTypeGenericRepository;
             _uiPageDataGenericRepository = uiPageDataGenericRepository;
+            _uiPageValidationTypesGenericRepository = uiPageValidationTypesGenericRepository;
         }
 
         #region public methods
 
         public RequestResult<bool> Add(RecordModel record)
         {
-           RequestResult<bool> requestResult = Validate(record);
-           if(requestResult.IsSuccessful)
+            RequestResult<bool> requestResult = Validate(record);
+            if (requestResult.IsSuccessful)
             {
                 _genericCrudRepository.Insert(record);
                 return new RequestResult<bool>(true);
@@ -85,7 +89,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var uiPage = _uiPageTypeGenericRepository.Get(SAMPLE_UI_PAGE_NAME);
             var uiMetadata = _genericCrudRepository.GetUiPageMetadata(uiPage.Id);
             var uiPageData = _genericCrudRepository.GetUiPageDataByUiPageId(uiPage.Id);
-
+            // var validationtypes = _uiPageValidationTypesGenericRepository.Get();
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
 
             uiPageData.GroupBy(x => x.RecordId).ToList()
@@ -103,50 +107,42 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             return new RecordModel { Id = recordId, UiPageId = uiPage.Id, Fields = uiMetadata.Fields, FieldValues = uiPageData };
         }
-
+        public UiPageValidationTypes GetValidationTypeById(int validationtypeId)
+        {
+            var validationtypes = _uiPageValidationTypesGenericRepository.Get(validationtypeId);
+            return new UiPageValidationTypes { Id = validationtypeId, Value = validationtypes.Value, Name = validationtypes.Name };
+        }
         #endregion
 
 
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidation> validations = _genericCrudRepository.GetUiPageValidations(record.UiPageId);
+            List<UiPageValidationTypes> validationtypes = _uiPageValidationTypesGenericRepository.Get();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
             foreach (var field in record.FieldValues)
             {
                 foreach (var item in validations)
                 {
+                    var validationlist = validationtypes.Where(x => x.Id == item.UiPageValidationTypeId).SingleOrDefault();
                     if (item.UiPageMetadataId == field.UiControlId)
                     {
-                        switch ((ValidationType)item.UiPageValidationTypeId)
-                        {
-                            case ValidationType.MinPasswordLength:
-                                int minLength = int.Parse(item.Value);
-                                if (field.Value.Length < minLength)
-                                    validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + minLength + "characters long", Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.MinAdharLength:
-                                int minAdharLength = int.Parse(item.Value);
-                                if(field.Value.Length != minAdharLength)
-                                 validationMessages.Add(new ValidationMessage { Reason = "Length of the Adhar card should be equal to" + minAdharLength + "characters long", Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.MobileNumberLenth:
-                                int minMobilelength = int.Parse(item.Value);
-                                if (field.Value.Length != minMobilelength)
-                                    validationMessages.Add(new ValidationMessage { Reason = "length of the Mobile Number  should be equal to " + minMobilelength + "characters long", Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.YearLenth:
-                                int minyearlength = int.Parse(item.Value);
-                                if (field.Value.Length != minyearlength)
-                                    validationMessages.Add(new ValidationMessage { Reason = "length of the  Year should be equal to " + minyearlength + "characters long", Severity = ValidationSeverity.Error });
-                                break;
-
+                        
+                       // var validationlistList = validationtypes.Where(x => x.Id ==item.UiPageValidationTypeId).ToList();
+                           
+                               if (item.UiPageValidationTypeId == validationlist.Id)
+                               {
+                                  if (field.Value.Length < int.Parse(validationlist.Value))
+                                     {
+                                        validationMessages.Add(new ValidationMessage { Reason = " " + validationlist.Message + " ", Fid=item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                      }
+                            
                         }
                     }
                 }
             }
             return new RequestResult<bool>(validationMessages);
         }
-
     }
 }
