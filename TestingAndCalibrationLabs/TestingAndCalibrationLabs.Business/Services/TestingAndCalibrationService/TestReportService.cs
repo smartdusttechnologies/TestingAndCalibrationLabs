@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using NETCore.MailKit.Core;
+﻿using Dapper;
+using Microsoft.AspNetCore.Connections;
+using Microsoft.Extensions.Configuration;
+//using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -26,9 +29,30 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
 
+        public List<TestReportModel> Get()
+        {
+            return _testReportRepository.Get();
+        }
+
+        public RequestResult<int> Update(int id, TestReportModel testReportModel)
+        {
+            _testReportRepository.Update(id, testReportModel);
+            return new RequestResult<int>(1);
+        }
+
+        public TestReportModel GetTestReport(int id)
+        {
+            return _testReportRepository.GetTestReport(id);
+        }
+
         public bool servives(TestReportModel testReportModel)
         {
             return true;
+        }
+
+        public TestReportModel GetTestReport(TestReportModel testReportModel, int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

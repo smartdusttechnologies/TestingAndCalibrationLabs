@@ -18,25 +18,31 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
         {
             _connectionFactory = connectionFactory;
         }
-        public int Insert(TestReportModel uploadData)
+        public int Insert(TestReportModel testReportModel)
         {
             string query = @"Insert into[TestReport](Client, FilePath, JobId, Name, DateTime, Email)
                             values (@Client, @FilePath, @JobId, @Name, @DateTime, @Email)";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uploadData);
+            return db.Execute(query, testReportModel);
         }
 
-        public int InsertCollection(List<TestReportModel> uploadData)
+        public int InsertCollection(List<TestReportModel> testReportModel)
         {
             string query = @"Insert into [TestReport](Client, FilePath, JobId, Name, DateTime, Email)
                             values (@Client, @FilePath, @JobId, @Name, @DateTime, @Email)";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uploadData);
+            return db.Execute(query, testReportModel);
         }
 
-        public int Get(TestReportModel uploadData)
+        public TestReportModel GetTestReport(int id)
         {
-            string query = @"Select * From [TestReport] ";
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<TestReportModel>("Select top 1 * From [TestReport] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
+        }
+
+        public int Get(TestReportModel testReportModel)
+        {
+            string query = @"Select * From [TestReport] ORDER BY Id DESC";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query);
         }
@@ -44,7 +50,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
         public List<TestReportModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<TestReportModel>("Select * From [TestReport] where IsDeleted=0").ToList();
+            var result = db.Query<TestReportModel>("Select * From [TestReport] where IsDeleted=0 ORDER BY Id DESC");
+            return result.ToList();
         }
 
         public TestReportModel Get(int id)
@@ -53,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
             return db.Query<TestReportModel>("Select top 1 * From [TestReport] where Id=id and and IsDeleted = 0", new { id }).FirstOrDefault();
         }
 
-        public int Update(TestReportModel uploadData)
+        public int Update(int id, TestReportModel testReportModel)
         {
             string query = @"update [TestReport] Set 
                               Name = @Name,
@@ -64,8 +71,20 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
                               JobId = @JobId
                             Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uploadData);
+            return db.Execute(query, testReportModel);
         }
+
+        //public int Update(TestReportModel testReportModel)
+        //{
+        //    string query = @"update [TestReportModel] Set 
+        //                      JobId = @JobId,
+        //                      Email = @Email,
+        //                      Client = @Client,
+        //                      Name = @Name                                
+        //                      Where Id = @Id";
+        //    using IDbConnection db = IConnectionFactory.GetConnection;
+        //    return db.Execute(query, testReportModel);
+        //}
 
         public bool Delete(int id)
         {
@@ -76,5 +95,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
             db.Execute(query, new { IsDeleted = true, Id = id });
             return true;
         }
+
+        
     }
 }

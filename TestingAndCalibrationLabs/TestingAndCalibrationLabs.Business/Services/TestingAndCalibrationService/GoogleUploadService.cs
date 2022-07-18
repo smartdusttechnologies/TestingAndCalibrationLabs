@@ -18,52 +18,61 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using Dapper;
-
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using TestingAndCalibrationLabs.Business.Common;
+using AutoMapper;
+using System.Data.SqlClient;
+using System.Web;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Net;
+using System.Threading.Tasks;
+using Google.Apis.Download;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
 
-    public class GoogleUploadService : IGoogleUploadService
+    public class GoogleUploadService : DriveDownloadFile
     {
 
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IEmailService _emailService;
         private readonly IUserRepository _userRepository;
         private readonly ITestReportRepository _testReportRepository;
         private readonly IConnectionFactory _connectionFactory;
+        private readonly IMapper _mapper;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
         private object request;
         private object uploadData;
 
+
         public string ResponseBody { get; private set; }
         public object Get { get; private set; }
         public string FilePath { get; private set; }
 
-        //private object listRequest;
-        //private string ApplicationName;
-        //private string imageVal;
-
-        public GoogleUploadService(IUserRepository userRepository, IWebHostEnvironment hostingEnvironment,ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
+        public GoogleUploadService(IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment,ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
         {
             _userRepository = userRepository;
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
             _testReportRepository = testReportRepository;
             _connectionFactory = connectionFactory;
-            
+            _emailService = emailService;
+            _mapper = mapper;
         }
 
        //Creating Services 
-
-        public DriveService GetService()
+       public DriveService GetService()
         {
             //get Credentials from client_secret.json file 
             UserCredential credential;
 
             //Root Folder of project
             var CSPath = _hostingEnvironment.WebRootPath;
-            using (var stream = new FileStream(Path.Combine((string)CSPath, "client_secret_28519194760-d787urlai0g2vp9r9t232rnjtnqql9ao.apps.googleusercontent.com.json"),
+            using (var stream = new FileStream(Path.Combine((string)CSPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
                 FileMode.Open, FileAccess.Read))
             {
                 String FolderPath = (string)_hostingEnvironment.WebRootPath;
@@ -124,43 +133,154 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             return (string)ResponseBody;
         }
 
-        public void UploadFile(TestReportModel data)
+        public void UploadFile(TestReportModel testReportModel)
         {
-            string uploadsFolder = CreateFolder("Test", "new");
-            var xyz = new FileExtensionContentTypeProvider();
-            xyz.TryGetContentType(data.FilePath, out string fileMime);
-            DriveService service = GetService();
-            var driveFile = new Google.Apis.Drive.v3.Data.File();
-            var uniqueFileName = Guid.NewGuid().ToString();
-            driveFile.Name = uniqueFileName + Path.GetFileName(data.FilePath);
-
-            driveFile.Description = "";
-            //driveFile.MimeType = fileMime;
-            driveFile.Parents = new string[] { uploadsFolder };
-            
-            using (var abc = data.DataUrl.OpenReadStream())
-            {
-                var request = service.Files.Create(driveFile, abc, fileMime);
-                request.Fields = "id";
-
-                var response = request.Upload();
-                if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
-                {
-                    throw response.Exception;
-                }
-                data.FilePath = request.ResponseBody.Id;
-
-                //Sending mail
-                //var isSendMail = _emailService.Sendemail(data.FilePath);
-
-                //Saving the data to the database
-                _testReportRepository.Insert(data);
-            }
+            UploadFileInternal(testReportModel);
         }
 
-        public void UploadFile(IFormFile dataUrl, TestReportModel getbusinessModel)
+       
+        private string DataLinkMail(string emailTemplate)
         {
-            throw new NotImplementedException();
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:SendDataMailLink"])))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
+        }
+
+        private void UploadFileInternal(TestReportModel testReportModel)
+        {
+        //Read other values from Appsetting .Json 
+        
+        string uploadsFolder = CreateFolder("Test", "new");
+        var xyz = new FileExtensionContentTypeProvider();
+        xyz.TryGetContentType(testReportModel.FilePath, out string fileMime);
+        DriveService service = GetService();
+        var driveFile = new Google.Apis.Drive.v3.Data.File();
+        var uniqueFileName = Guid.NewGuid().ToString();
+        driveFile.Name = uniqueFileName + Path.GetFileName(testReportModel.FilePath);
+
+        driveFile.Description = "";
+        //driveFile.MimeType = fileMime;
+        driveFile.Parents = new string[] { uploadsFolder };
+
+        using (var abc = testReportModel.DataUrl.OpenReadStream())
+        {
+            var request = service.Files.Create(driveFile, abc, fileMime);
+            request.Fields = "id";
+
+            var response = request.Upload();
+            if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+            {
+                throw response.Exception;
+            }
+            testReportModel.FilePath = request.ResponseBody.Id;
+
+                //Saving the data to the database
+                _testReportRepository.Insert(testReportModel);
+        }
+
+        }
+
+        public void UploadFileAndSendMail(TestReportModel testReportModel)
+        {
+            UploadFileInternal(testReportModel);
+
+            //Reading the appsetting.json 
+            testReportModel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:SendDataMailLink"];
+
+            //mail creation
+            testReportModel.HtmlMsg = DataLinkMail(testReportModel.EmailTemplate);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**name**", testReportModel.Name);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**client**", testReportModel.Client);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**data**", testReportModel.FilePath);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**jobId**", testReportModel.JobId);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**email**", testReportModel.Email);
+            testReportModel.Subject = "DataLink";
+
+            //sending mail (Mapping the emailmodel and testreportmodel)
+            var emailId = new List<string>();
+            emailId.Add(testReportModel.Email);
+
+            var getExchangeModel = new Business.Core.Model.EmailModel
+            {
+                
+                Cc = testReportModel.Cc,
+                Bcc = testReportModel.Bcc,
+                
+                Email = emailId,
+                Subject = testReportModel.Subject,
+
+                HtmlMsg = testReportModel.HtmlMsg,
+                LogoImage = testReportModel.LogoImage,
+                Message = testReportModel.Message,
+                Name = testReportModel.Name,
+                EmailTemplate = testReportModel.EmailTemplate,
+                EmailContact = testReportModel.EmailContact,
+                MobileNumber = testReportModel.MobileNumber
+
+            };
+           _emailService.Sendemail(getExchangeModel);
+        }
+
+        private string DataLinkWebMail(string emailTemplate)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:WebPageLinkMail"])))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
+        }
+
+        public void WebLinkMail(TestReportModel testReportModel, int Id)
+        {
+            //Reading Data from Appsetting.Json
+            var BodyImg = _configuration["TestingAndCalibrationSurvey:BodyImage"];
+            var LogoImg = _configuration["TestingAndCalibrationSurvey:LogoImage"];
+            var MobNo = _configuration["TestingAndCalibrationSurvey:Mobile"];
+            var EmailContact = _configuration["TestingAndCalibrationSurvey:emailID"];
+
+            //Int( value of Id to string conversion
+            string myString = testReportModel.Id.ToString();
+            
+            //mail creation
+            testReportModel.HtmlMsg = DataLinkWebMail(testReportModel.EmailTemplate);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**name**", testReportModel.Name);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**client**", testReportModel.Client);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**data**", testReportModel.FilePath);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**jobId**", testReportModel.JobId);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**email**", testReportModel.Email);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**id**", myString);
+            testReportModel.EmailContact = testReportModel.HtmlMsg.Replace("*contactmail*", EmailContact);
+            testReportModel.MobileNumber = testReportModel.HtmlMsg.Replace("*mob*", MobNo);
+            testReportModel.BodyImage = testReportModel.HtmlMsg.Replace("**LogoLink**", LogoImg);
+            testReportModel.BodyImage = testReportModel.HtmlMsg.Replace("**BodyImageLink**", BodyImg);
+
+            testReportModel.Subject = "Web Page DataLink";
+
+            //sending mail (Mapping the emailmodel and testreportmodel)
+            var emailId = new List<string>();
+            emailId.Add(testReportModel.Email);
+
+            var getExchangeModel = new Business.Core.Model.EmailModel
+            {
+
+                Cc = testReportModel.Cc,
+                Bcc = testReportModel.Bcc,
+                Email = emailId,
+                Subject = testReportModel.Subject,
+                HtmlMsg = testReportModel.HtmlMsg,
+                LogoImage = testReportModel.LogoImage,
+                Message = testReportModel.Message,
+                Name = testReportModel.Name,
+                EmailTemplate = testReportModel.EmailTemplate,
+                EmailContact = testReportModel.EmailContact,
+                MobileNumber = testReportModel.MobileNumber
+
+            };
+            _emailService.Sendemail(getExchangeModel);
         }
     }
 }

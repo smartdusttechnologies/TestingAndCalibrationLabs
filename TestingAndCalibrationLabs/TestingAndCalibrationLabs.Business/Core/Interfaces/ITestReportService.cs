@@ -1,4 +1,5 @@
-﻿using TestingAndCalibrationLabs.Business.Common;
+﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
@@ -7,5 +8,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     {
         RequestResult<int> Add(TestReportModel testReportModel);
         bool servives(TestReportModel testReportModel);
+        List<TestReportModel> Get();
+        RequestResult<int> Update(int id, TestReportModel testReportModel);
+
+        TestReportModel GetTestReport(int id);
+
     }
 }

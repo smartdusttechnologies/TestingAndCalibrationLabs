@@ -16,14 +16,14 @@
 
     <!---Importing the Scripts--->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    @*<script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>*@
+    <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
-    @*<style>
-    .hidden {
-        display: none;
-    }
-</style>*@
+    <style>
+            .hidden {
+                display: none;
+            }
+        </style>
 </head>
 
 <body>
@@ -50,7 +50,7 @@
                         <a class="nav-link text-dark" asp-area="index" asp-controller="Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="">Dashboard</a>
+                        <a class="nav-link text-dark" asp-action="DataView" asp-controller="TestReport">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="">Create</a>

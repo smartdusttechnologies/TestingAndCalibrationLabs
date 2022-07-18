@@ -6,7 +6,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
         public MappingProfile()
         {
             CreateMap<UI.Models.Sample.SampleModelDTO,Business.Core.Model.SampleModel>().ReverseMap();
-            
+        
         }
     }
 }

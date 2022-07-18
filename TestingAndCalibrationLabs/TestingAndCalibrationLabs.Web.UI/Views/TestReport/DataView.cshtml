@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.TestReportModel>
+<div class="table-responsive">
+    <input type="search" id="inputData" onkeyup="function" class="light-table-filter" data-table="table-info" placeholder="Filter/Search">
+    
+            
+        <table id="dataTable" class="table table-striped display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Id)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.Client)</th>
+
+
+                    <th>@Html.DisplayNameFor(model => model.JobId)</th>
+
+
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td> @Html.DisplayFor(modelItem => item.Id)</td>
+                        <td> @Html.DisplayFor(modelItem => item.Name)</td>
+                        <td> @Html.DisplayFor(modelItem => item.Client)</td>
+                        <td> @Html.DisplayFor(modelItem => item.JobId)</td>
+                        <td> @Html.DisplayFor(modelItem => item.Email)</td>
+                        <td> @Html.HiddenFor(modelItem => item.FilePath)</td>
+
+                        <td>
+                            <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class="fa-solid fa-cloud-arrow-down"></i></a>||
+                            <a asp-action="TestReportMailSend" asp-route-id="@item.Id"><i class="fa-regular fa-envelope" alt="Send Mail"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        <div class="container">
+            <ul class="pagination justify-content-end">
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+            </ul>
+        </div>
+    
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#inputData").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#dataTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
