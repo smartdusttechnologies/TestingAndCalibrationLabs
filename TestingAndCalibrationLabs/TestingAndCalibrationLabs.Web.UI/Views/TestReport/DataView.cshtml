@@ -33,8 +33,8 @@
                         <td> @Html.DisplayFor(modelItem => item.Email)</td>
                         <td> @Html.HiddenFor(modelItem => item.FilePath)</td>
                         <td>
-                            <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class='fa fa-cloud-download'></i></a>||
-                            <a asp-action="TestReportMailSend" asp-route-id="@item.Id"><i class="fa-regular fa-envelope"></i></a>
+                            <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class='fa fa-cloud-download'></i></a><b>||</b>
+                            <a asp-action="TestReportMailSend" asp-route-id="@item.Id" ><i class="fa fa-envelope" aria-hidden="true"></i></a>
 
                         </td>
                     </tr>
@@ -42,6 +42,7 @@
             </tbody>
 
         </table>
+
         <div class="container">
             <ul class="pagination justify-content-end">
                 <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>

@@ -151,77 +151,42 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
 
         private void UploadFileInternal(TestReportModel testReportModel)
         {
-        //Read other values from Appsetting .Json 
-        
-        string uploadsFolder = CreateFolder("Test", "new");
-        var xyz = new FileExtensionContentTypeProvider();
-        xyz.TryGetContentType(testReportModel.FilePath, out string fileMime);
-        DriveService service = GetService();
-        var driveFile = new Google.Apis.Drive.v3.Data.File();
-        var uniqueFileName = Guid.NewGuid().ToString();
-        driveFile.Name = uniqueFileName + Path.GetFileName(testReportModel.FilePath);
+            //Read other values from Appsetting .Json 
 
-        driveFile.Description = "";
-        //driveFile.MimeType = fileMime;
-        driveFile.Parents = new string[] { uploadsFolder };
+            string uploadsFolder = CreateFolder("Test", "new");
+            var xyz = new FileExtensionContentTypeProvider();
+            xyz.TryGetContentType(testReportModel.FilePath, out string fileMime);
+            DriveService service = GetService();
+            var driveFile = new Google.Apis.Drive.v3.Data.File();
+            var uniqueFileName = Guid.NewGuid().ToString();
+            driveFile.Name = uniqueFileName + Path.GetFileName(testReportModel.FilePath);
 
-        using (var abc = testReportModel.DataUrl.OpenReadStream())
-        {
-            var request = service.Files.Create(driveFile, abc, fileMime);
-            request.Fields = "id";
+            driveFile.Description = "";
+            //driveFile.MimeType = fileMime;
+            driveFile.Parents = new string[] { uploadsFolder };
 
-            var response = request.Upload();
-            if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+            using (var abc = testReportModel.DataUrl.OpenReadStream())
             {
-                throw response.Exception;
-            }
-            testReportModel.FilePath = request.ResponseBody.Id;
+                var request = service.Files.Create(driveFile, abc, fileMime);
+                request.Fields = "id";
+
+                var response = request.Upload();
+                if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+                {
+                    throw response.Exception;
+                }
+                testReportModel.FilePath = request.ResponseBody.Id;
 
                 //Saving the data to the database
                 _testReportRepository.Insert(testReportModel);
-        }
+            }
 
         }
 
         public void UploadFileAndSendMail(TestReportModel testReportModel)
         {
             UploadFileInternal(testReportModel);
-
-            //Reading the appsetting.json 
-            testReportModel.EmailTemplate = _configuration["TestingAndCalibrationSurvey:SendDataMailLink"];
-
-            //mail creation
-            testReportModel.HtmlMsg = DataLinkMail(testReportModel.EmailTemplate);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**name**", testReportModel.Name);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**client**", testReportModel.Client);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**data**", testReportModel.FilePath);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**jobId**", testReportModel.JobId);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**email**", testReportModel.Email);
-            testReportModel.Subject = "DataLink";
-
-            //sending mail (Mapping the emailmodel and testreportmodel)
-            var emailId = new List<string>();
-            emailId.Add(testReportModel.Email);
-
-            var getExchangeModel = new Business.Core.Model.EmailModel
-            {
-                
-                Cc = testReportModel.Cc,
-                Bcc = testReportModel.Bcc,
-                
-                Email = emailId,
-                Subject = testReportModel.Subject,
-
-                HtmlMsg = testReportModel.HtmlMsg,
-                LogoImage = testReportModel.LogoImage,
-                Message = testReportModel.Message,
-                Name = testReportModel.Name,
-                EmailTemplate = testReportModel.EmailTemplate,
-                EmailContact = testReportModel.EmailContact,
-                MobileNumber = testReportModel.MobileNumber
-
-            };
-           _emailService.Sendemail(getExchangeModel);
+            WebLinkMail(testReportModel, testReportModel.Id);
         }
 
         private string DataLinkWebMail(string emailTemplate)

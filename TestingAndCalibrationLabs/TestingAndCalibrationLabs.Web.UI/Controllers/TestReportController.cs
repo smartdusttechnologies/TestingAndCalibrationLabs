@@ -79,7 +79,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 }
                 else if (IsSendAndUpload == true)
                 {
-                    _googleUploadService.UploadFileAndSendMail(getbusinessModel);
+
+                   _googleUploadService.UploadFileAndSendMail(getbusinessModel);
+
                 }
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -156,7 +158,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 Id = data.Id,
                 Client = data.Client,
-                //DataUrl = testReportModel.DataUrl,
                 FilePath = data.FilePath,
                 JobId = data.JobId,
                 Name = data.Name,
