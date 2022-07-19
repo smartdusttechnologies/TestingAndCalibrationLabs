@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             return View();
         }
-      
+
         public IActionResult Login()
         {
             List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
@@ -43,7 +43,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View();
         }
 
-       
+
 
         [HttpPost]
         public IActionResult Login(LoginDTO loginRequest)
