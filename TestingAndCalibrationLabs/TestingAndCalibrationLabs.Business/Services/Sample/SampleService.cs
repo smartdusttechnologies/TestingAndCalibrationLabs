@@ -114,7 +114,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
         #endregion
 
-
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidation> validations = _genericCrudRepository.GetUiPageValidations(record.UiPageId);
@@ -128,16 +127,16 @@ namespace TestingAndCalibrationLabs.Business.Services
                     var validationlist = validationtypes.Where(x => x.Id == item.UiPageValidationTypeId).SingleOrDefault();
                     if (item.UiPageMetadataId == field.UiControlId)
                     {
-                        
-                       // var validationlistList = validationtypes.Where(x => x.Id ==item.UiPageValidationTypeId).ToList();
-                           
-                               if (item.UiPageValidationTypeId == validationlist.Id)
-                               {
-                                  if (field.Value.Length < int.Parse(validationlist.Value))
-                                     {
-                                        validationMessages.Add(new ValidationMessage { Reason = " " + validationlist.Message + " ", Fid=item.UiPageMetadataId, Severity = ValidationSeverity.Error });
-                                      }
-                            
+                        if (item.UiPageValidationTypeId == validationlist.Id)
+                        {
+                            if (field.Value.Length < int.Parse(validationlist.Value))
+                            {
+                                validationMessages.Add(new ValidationMessage { Reason = " " + validationlist.Message + " ", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                            }
+                            //else if (string.IsNullOrEmpty(validationlist.Value))
+                            //{
+                            //      validationMessages.Add(new ValidationMessage { Reason = " " +item.Name+ "" +validationlist.Message + " ", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                            //}
                         }
                     }
                 }

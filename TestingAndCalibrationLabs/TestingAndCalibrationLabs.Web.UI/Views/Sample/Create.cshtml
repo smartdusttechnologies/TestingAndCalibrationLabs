@@ -15,14 +15,14 @@
                     {
                         <div class="form-group" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                            <textarea  id="@item.Id" title="@item.UiControlDisplayName" rows="4" cols="50"></textarea>
+                            <textarea  id="@item.Id" title="@item.UiControlDisplayName"  @item.IsRequired rows="4" cols="50"></textarea>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
                     else if (item.UiControlType == "file")
                     {
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
@@ -41,7 +41,7 @@
                     else if (item.UiControlType == "search")
                     {
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                            <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
@@ -57,7 +57,7 @@
                     else
                     {
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
+                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
@@ -84,8 +84,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-
     <div>
         <div class="d-flex justify-content-center fixed-bottom">
             <div class="alert alert-success" role="alert" id="snackbarsuccess">
@@ -106,7 +104,6 @@
             </div>
         </div>
      </div>
-
 
     <script>
      //This function will display the success snackbar
@@ -215,17 +212,13 @@
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 //console.log(response.fieldId);
-                
-                 myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason; 
-            //    var s = newErrorMessage.fid//Sending the reason to html 
-               
-                  document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
                   document.getElementById("lefid").value = newErrorMessage.fid;
-                
-
-
-              
+                    var namea = document.getElementById(newErrorMessage.fid);
+                var txtname= namea.name;
+                 myFunctionError();                                              //Calling myFunctionError javacript function
+                document.getElementById("errormessage").innerHTML = txtname + newErrorMessage.reason; 
+            //    var s = newErrorMessage.fid//Sending the reason to html 
+                  document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
          //        } 
          //        else{
          //document.getElementByClassName("form-input").style.border = "1px solid black";
