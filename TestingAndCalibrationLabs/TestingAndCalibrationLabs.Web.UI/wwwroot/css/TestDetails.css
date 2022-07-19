@@ -271,23 +271,6 @@ select.input-validation-error#TestingType {
     }
 }
 
-/*The following few were display hidden bcs of using the datatable things*/
-#testDetailsGrid_length {
-    display: none;
-}
-
-#testDetailsGrid_info {
-    display: none;
-}
-
-#testDetailsGrid_filter {
-    display: none;
-}
-
-#testDetailsGrid_paginate{
-    margin:7px;
-}
-
 .inputWithIconSearch {
     width: 100%;
     border: none;
@@ -340,20 +323,55 @@ select.input-validation-error#TestingType {
     border-radius: 4px 0 0 4px;
 }
 
+/*The following few were display hidden bcs of using the datatable things*/
+#testDetailsGrid_length {
+    display: none;
+    border: 1px solid black;
+}
 
+#testDetailsGrid_wrapper {
+    border: 1px solid black;
+}
 
-/*#testDetailsGrid_paginate {
-    position: absolute;
-    left: 0;
-    bottom:50px;
-    margin-left:20px;
-}*/
+#testDetailsGrid_filter {
+    display: none;
+}
 
 #testDetailsGrid_paginate {
-    /*display:none;*/
+    margin: 7px;
+}
+
+#testDetailsGrid_paginate {
     align-items: flex-start;
 }
 
 .simple-pagination testDetailsGrid_paginate {
     display: inline-block;
+}
+
+.border-radius-grid {
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+@media (max-width:768px) {
+    #testDetailsGrid_paginate {
+        padding: 0;
+        float: left;
+    }
+
+    #testDetailsGrid_info {
+        padding-left: 20px;
+        float: left;
+    }
+}
+
+@media (min-width:769px) {
+    #testDetailsGrid_paginate {
+        float: right;
+    }
+
+    #testDetailsGrid_info {
+        padding-left: 20px;
+    }
 }

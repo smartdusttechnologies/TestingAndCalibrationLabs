@@ -17,8 +17,8 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive simple-pagination">
-        <table id="testDetailsGrid" class="table table-bordered table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+    <div class="table-responsive simple-pagination card shadow border-radius-grid">
+        <table id="testDetailsGrid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     @foreach (var teamName in @ViewBag.TableHeaddings)
@@ -51,13 +51,10 @@
         </table>
     </div>
 </div>
-
 <script>
-    oTable = $('#testDetailsGrid').DataTable({
+ oTable = $('#testDetailsGrid').DataTable({
         pageLength: 5,
-        bInfo: false,
         scrollX: true,
-        "dom": '<"top"lf>rt<"bottom"p><"clear">'
     });
     $('#TestDetailsGridSearch').keyup(function() {
         oTable.search($(this).val()).draw();
