@@ -41,6 +41,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
             services.AddScoped<IGenericRepository<UiPageValidationTypes>, GenericRepository<UiPageValidationTypes>>();
+            services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             // services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<ICommonCrudRepository, CommonCrudRepository>();
         }
