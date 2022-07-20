@@ -111,11 +111,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             return new RecordModel { Id = recordId, UiPageId = uiPage.Id, Fields = uiMetadata.Fields, FieldValues = uiPageData };
         }
-        public UiPageValidationTypes GetValidationTypeById(int validationtypeId)
-        {
-            var validationtypes = _uiPageValidationTypesGenericRepository.Get(validationtypeId);
-            return new UiPageValidationTypes { Id = validationtypeId, Value = validationtypes.Value, Name = validationtypes.Name };
-        }
+       
 
         #endregion
 
@@ -132,7 +128,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     if (item.UiPageMetadataId == field.UiControlId)
                     {
-                        var validationlist = validationtypes.Where(x => x.Id == item.UiPageValidationTypeId).FirstOrDefault();
+                        var validationlist = _uiPageValidationTypesGenericRepository.Get(item.UiPageValidationTypeId);
                         var  uipagedata = _uiPageMetaDataGenericRepository.Get(item.UiPageMetadataId);
                      
                         switch ((ValidationType)item.UiPageValidationTypeId)
