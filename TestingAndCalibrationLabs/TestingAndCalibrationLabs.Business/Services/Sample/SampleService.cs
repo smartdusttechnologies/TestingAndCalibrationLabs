@@ -117,27 +117,65 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidation> validations = _genericCrudRepository.GetUiPageValidations(record.UiPageId);
-            List<UiPageValidationTypes> validationtypes = _uiPageValidationTypesGenericRepository.Get();
+         //   List<UiPageValidationTypes> validationtypes = _uiPageValidationTypesGenericRepository.Get();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+           // var validationlist = validationtypes.SingleOrDefault();
 
             foreach (var field in record.FieldValues)
             {
                 foreach (var item in validations)
                 {
-                    var validationlist = validationtypes.Where(x => x.Id == item.UiPageValidationTypeId).SingleOrDefault();
                     if (item.UiPageMetadataId == field.UiControlId)
                     {
-                        if (item.UiPageValidationTypeId == validationlist.Id)
-                        {
-                            if (field.Value.Length < int.Parse(validationlist.Value))
+                       
+                        switch ((ValidationType)item.UiPageValidationTypeId)
                             {
-                                validationMessages.Add(new ValidationMessage { Reason = " " + validationlist.Message + " ", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
-                            }
-                            //else if (string.IsNullOrEmpty(validationlist.Value))
-                            //{
-                            //      validationMessages.Add(new ValidationMessage { Reason = " " +item.Name+ "" +validationlist.Message + " ", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
-                            //}
+                            case ValidationType.IsRequired:
+                                if (string.IsNullOrEmpty(field.Value))
+                                    validationMessages.Add(new ValidationMessage { Reason = "The  " + item.Name + " Is Required", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                break;
+                            case ValidationType.MinPasswordLength:
+                                int minLength = int.Parse(item.Value);
+                                if (field.Value.Length < minLength)
+                                    validationMessages.Add(new ValidationMessage { Reason = " Minimum length of" + item.Name + "is " +item.Value + ".", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                break;
+                            case ValidationType.Email:
+                                int minLengthEmail = int.Parse(item.Value);
+                                if (field.Value.Length < minLengthEmail)
+                                    validationMessages.Add(new ValidationMessage { Reason = " Minimum length of" + item.Name + "is " + item.Value + ".", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                break;
+                            case ValidationType.AdharLength:
+                                int minLengthAdhar = int.Parse(item.Value);
+                                if (field.Value.Length != minLengthAdhar)
+                                    validationMessages.Add(new ValidationMessage { Reason = " The length of" + item.Name + "is equal  " + item.Value + ".", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                break;
+                            case ValidationType.MobileNumberLength:
+                                int minLengtMobileNumberLength = int.Parse(item.Value);
+                                if (field.Value.Length != minLengtMobileNumberLength)
+                                    validationMessages.Add(new ValidationMessage { Reason = " The length of" + item.Name + "is equal  " + item.Value + ".", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                break;
+                            case ValidationType.Name:
+                                int minLengtName = int.Parse(item.Value);
+                                if (field.Value.Length != minLengtName)
+                                    validationMessages.Add(new ValidationMessage { Reason = "  Minimum length of" + item.Name + " is" + item.Value + ".", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                break;
+                           
                         }
+                        //if (string.IsNullOrEmpty(field.Value))
+                        //{
+                        //    validationMessages.Add(new ValidationMessage { Reason = " " + item.Name + "" + validationlist.Message + " ", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+
+                        //}
+                        //else
+                        //{
+                        //    if (field.Value.Length < int.Parse(validationlist.Value))
+                        //    {
+                        //        validationMessages.Add(new ValidationMessage { Reason = " " + validationlist.Message + " ", Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                        //    }
+
+                        //}
+
                     }
                 }
             }
