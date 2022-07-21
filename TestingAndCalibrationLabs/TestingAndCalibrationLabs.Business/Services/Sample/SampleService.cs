@@ -132,8 +132,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                         var  uipagedata = _uiPageMetaDataGenericRepository.Get(item.UiPageMetadataId);
                      
                         switch ((ValidationType)item.UiPageValidationTypeId)
-                            {
-                              
+                            {    
                             case ValidationType.IsRequired:
                                 if (string.IsNullOrEmpty(field.Value))
                                 {
@@ -163,7 +162,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 break;
                             case ValidationType.Name:
                                 int minLengtName = int.Parse(item.Value);
-                                if (field.Value.Length != minLengtName)
+                                if (field.Value.Length < minLengtName)
                                     validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.Year:
@@ -171,7 +170,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 if (field.Value.Length != minLengtYear)
                                     validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, Fid = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
                                 break;
-
                         }
                        
                     }
