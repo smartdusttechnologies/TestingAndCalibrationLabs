@@ -154,7 +154,7 @@
          if( document.getElementById(x) !=null && document.getElementById(x) !=undefined){
           document.getElementById(x).style.border = "1px solid black ";
          }
-       
+         
         var url = $("#sampleForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');   
         var uiPageMetaData = modelData.fields;
@@ -182,7 +182,6 @@
                 var nfieldId = nuiPageMetaData[i].id;
                 $('#' + nfieldId).val('');         //Assigning a empty values to input fields
                }
-
                 // Putting data back when the form failed to sumbit
                 //var c = response.errorMessage;
                 //if(c.reason == null){
@@ -202,7 +201,6 @@
                              // $('#' + nfieldId).val('');
                         // }
                 //}
-
                 },
             failure: function (response) {
                 alert(response.responseText);

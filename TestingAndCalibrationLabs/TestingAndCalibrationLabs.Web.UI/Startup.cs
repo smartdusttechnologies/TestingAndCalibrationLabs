@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             //Services
-            services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<ICommonService, SampleService>();
 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();

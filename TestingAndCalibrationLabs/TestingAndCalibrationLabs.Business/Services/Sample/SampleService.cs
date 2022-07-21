@@ -4,15 +4,16 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Linq;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
+
 using TestingAndCalibrationLabs.Business.Core.Model.Common;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
     /// <summary>
     /// sampleService is implimenting the services from ISampleService
     /// </summary>
-    public class SampleService : ISampleService
+    public class SampleService : ICommonService
     {
         private const string SAMPLE_UI_PAGE_NAME = "SamplePage";
 

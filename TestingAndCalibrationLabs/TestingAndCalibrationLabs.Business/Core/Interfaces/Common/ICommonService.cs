@@ -8,7 +8,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// <summary>
     /// these SampleService is implementing interface for ISampleService
     /// </summary>
-    public interface ISampleService
+    public interface ICommonService
     {
         RequestResult<bool> Add(RecordModel record);
         RequestResult<bool> Update(RecordModel record);
@@ -16,7 +16,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RecordModel GetUiPageMetadata(int uiPageId);
         RecordsModel GetRecords();
         RecordModel GetRecordById(int recordId);
-
-    
     }
 }

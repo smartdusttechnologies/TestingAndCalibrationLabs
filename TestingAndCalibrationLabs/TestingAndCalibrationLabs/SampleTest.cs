@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Tests
         /// <summary>
         /// creating services 
         /// </summary>
-        ISampleService _sampleService;
+        ICommonService _sampleService;
         ISampleRepository _sampleRepository;
         IMapper _mapper;
         ILogger<SampleController> _logger;

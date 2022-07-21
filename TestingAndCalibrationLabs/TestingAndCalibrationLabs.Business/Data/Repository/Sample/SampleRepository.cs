@@ -6,13 +6,14 @@ using System.Data;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using System.Linq;
 using PagedList;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
     /// Connection between Database using ISampleRepository we Establing a connection
     /// </summary>
-    public class SampleRepository : ISampleRepository
+    public class SampleRepository : ICommonCrudRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         #region Public Methods

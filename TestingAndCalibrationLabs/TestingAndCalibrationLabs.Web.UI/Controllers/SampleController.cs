@@ -15,7 +15,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class SampleController : Controller
     {
         private readonly ILogger<SampleController> _logger;
-        private readonly ISampleService _sampleService;
+        private readonly ICommonService _sampleService;
         private readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
@@ -23,7 +23,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="logger"></param>
         /// <param name="sampleService"></param>
         /// <param name="hostingEnvironment"></param>
-        public SampleController(ILogger<SampleController> logger, ISampleService sampleService, IMapper mapper)
+        public SampleController(ILogger<SampleController> logger, ICommonService sampleService, IMapper mapper)
         {
             _logger = logger;
             _sampleService = sampleService;
