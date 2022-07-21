@@ -17,13 +17,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
         public PasswordLogin GetLoginPassword(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<PasswordLogin>("Select top 1  pl.* From [User] u inner join [PasswordLogin] pl on u.id=pl.userId where u.userName=@userName and (u.IsDeleted=0 AND u.Locked=0 AND u.IsActive=1)", new { userName }).FirstOrDefault();
         }
-
+        /// <summary>
+        /// Save Login Token in DB
+        /// </summary>
         public int SaveLoginToken(LoginToken loginToken)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

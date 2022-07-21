@@ -38,7 +38,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             _roleRepository = roleRepository;
 
         }
-
+        /// <summary>
+        /// Method to Authenticate for Login
+        /// </summary>
         public RequestResult<LoginToken> Login(LoginRequest loginRequest)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -97,7 +99,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<LoginToken>(validationMessages);
             }
         }
-
+        /// <summary>
+        /// Method to Generate Token
+        /// </summary>
         private LoginToken GenerateTokens(string userName)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
@@ -134,15 +138,14 @@ namespace TestingAndCalibrationLabs.Business.Services
                 RefreshToken = encodedRefreshJwt,
                 RefreshTokenExpiry = DateTime.Now.AddDays(30),
             };
-
             _authenticationRepository.SaveLoginToken(loginToken);
-
             //TODO: this should be a async operation and can be made more cross-cutting design feature rather than calling inside the actual feature.
             _loggerRepository.LoginTokenLog(loginToken);
-
             return loginToken;
         }
-
+        /// <summary>
+        ///Method to Get Token Cliams
+        /// </summary>
         private List<Claim> GetTokenClaims(string sub, DateTime dateTime)
         {
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
@@ -168,6 +171,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return claims;
         }
 
+        /// <summary>
+        /// Method to Add new and validate existing user for Registration
+        /// </summary>
         public RequestResult<bool> Add(User user, string password)
         {
             try
@@ -186,9 +192,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false);
             }
         }
+        /// <summary>
+        /// Method to Validate the New User Registation
+        /// </summary>
         private RequestResult<bool> ValidateNewUserRegistration(User user, string password)
         {
-
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             User existingUser = _userRepository.Get(user.UserName);
             if (existingUser != null) 
@@ -197,9 +205,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
-
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-
             return validatePasswordResult;
         }
     }

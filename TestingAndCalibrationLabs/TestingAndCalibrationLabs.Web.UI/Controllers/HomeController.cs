@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -10,20 +9,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Services;
-using TestingAndCalibrationLabs.Web.UI.Models;
 using LoginDTO = TestingAndCalibrationLabs.Web.UI.Models.LoginDTO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
-    
     public class HomeController : Controller
     {
-        
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
-
         public HomeController(IAuthenticationService authenticationService, IOrganizationService orgnizationService,IMapper mapper)
         {
             _authenticationService = authenticationService;
@@ -32,12 +26,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
         public IActionResult Index()
         {
-            
             return View();
         }
-
         /// <summary>
-        /// UI Shows the Various Plans and respective Prices
+        /// UI Shows the Orgnizations names in dropdown list
         /// </summary>
         /// <returns></returns>
         public IActionResult Login()
@@ -48,12 +40,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// Method to get the Login details from UI and Process Login.
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         public IActionResult Login(LoginDTO loginRequest)
-        {
-            
+        {   
             var loginReq = new LoginRequest { UserName = loginRequest.UserName, Password = loginRequest.Password };
             RequestResult<LoginToken> result = _authenticationService.Login(loginReq);
 
@@ -65,7 +59,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
-
         /// <summary>
         /// UI will get the information from the User
         /// </summary>

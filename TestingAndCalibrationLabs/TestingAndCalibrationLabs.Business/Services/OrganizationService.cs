@@ -18,6 +18,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Method to Get Orgnization Details from DB
+        /// </summary>
         public List<Organization> Get()
         {
             try

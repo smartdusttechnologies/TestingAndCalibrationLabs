@@ -21,6 +21,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         }
 
+        /// <summary>
+        /// Method to validate Password Policy
+        /// </summary>
         public RequestResult<bool> ValidatePasswordPolicy( int orgId, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -36,9 +39,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages); ;
 
             }
-
         }
-
+        /// <summary>
+        /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
+        /// </summary>
         private RequestResult<bool> ValidatePassword(string password, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -47,14 +51,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
-
             if (!Helpers.ValidateMinimumSmallChars(password, securityParameter.MinSmallChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of small characters the password should have is " + securityParameter.MinSmallChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
 
             if (!Helpers.ValidateMinimumCapsChars(password, securityParameter.MinCaps))

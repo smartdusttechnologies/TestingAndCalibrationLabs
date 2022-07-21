@@ -6,9 +6,11 @@ namespace TestingAndCalibrationLabs.Business.Common
 {
     public static class Helpers
     {
+       public static long ToUnixEpochDate(DateTime date) => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 
-        public static long ToUnixEpochDate(DateTime date) => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
-
+        /// <summary>
+        /// Method to Validate Minimum Small char based on password Policy Set
+        /// </summary>
         public static bool ValidateMinimumSmallChars(string password, int expectedCount)
         {
             int smallCharCount = 0;
@@ -23,7 +25,9 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return false;
         }
-
+        /// <summary>
+        /// Method to Validate the Minimum Caps Chars in Passoord Based on password Policy Set
+        /// </summary>
         public static bool ValidateMinimumCapsChars(string password, int expectedCount)
         {
             int capsCharCount = 0;
@@ -38,7 +42,9 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return false;
         }
-
+        /// <summary>
+        /// Method to Validate Minimum Digits for password
+        /// </summary>
         public static bool ValidateMinimumDigits(string password, int expectedCount)
         {
             int minDigitCount = 0;
@@ -53,7 +59,9 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return false;
         }
-
+        /// <summary>
+        /// Method to validate Special charcs in password
+        /// </summary>
         public static bool ValidateMinimumSpecialChars(string password, int expectedCount)
         {
             int minSpecialCharCount = 0;
@@ -69,7 +77,9 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return false;
         }
-
+        /// <summary>
+        /// Method to Validate Disallowed Chars
+        /// </summary>
         public static bool ValidateDisallowedChars(string password, string disallowedChars)
         {
             if (string.IsNullOrEmpty(disallowedChars))

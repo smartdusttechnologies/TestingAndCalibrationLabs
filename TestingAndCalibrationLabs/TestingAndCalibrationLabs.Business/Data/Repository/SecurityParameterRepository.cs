@@ -11,6 +11,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Base Class for Security Parameter 
+    /// </summary>
     public class SecurityParameterRepository : ISecurityParameterRepository
     {
 
@@ -20,6 +23,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
 
+        /// <summary>
+        /// Get Password Policy bases on OrgnizationId
+        /// </summary>
         public SecurityParameter Get(int orgId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -38,6 +44,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<SecurityParameter>("Select top 1 * From [PasswordPolicy] where OrgId=@orgId  and IsDeleted=0", new { orgId, sessionContext.OrganizationId }).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Insert Information in DB related to Password Policy
+        /// </summary>
         public int Insert(SecurityParameter securityParameter)
         {
             string query = @"Insert into [PasswordPolicy](MinCaps, MinSmallChars, MinSpecialChars, MinNumber, MinLength, AllowUserName, DisAllPastPassword, DisAllowedChars, ChangeIntervalDays, OrgId) 

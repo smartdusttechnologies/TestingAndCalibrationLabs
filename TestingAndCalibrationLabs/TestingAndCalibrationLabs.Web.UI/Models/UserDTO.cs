@@ -4,23 +4,36 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class UserDTO
     {
+        /// <summary>
+        /// UserName for Registration
+        /// </summary>
         public string UserName { get; set; }
-
+        /// <summary>
+        /// Email for Registration
+        /// </summary>
         public string Email { get; set; }
-
+        /// <summary>
+        /// Password for Registration
+        /// </summary>
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        /// <summary>
+        /// Reenter Password for Registration
+        /// </summary>
         [DataType(DataType.Password)]
         public string ReEnterPassword { get; set; }
 
+        /// <summary>
+        /// FirstName for Registration
+        /// </summary>
         public string FirstName { get; set; }
         /// <summary>
         /// Last Name.
         /// </summary>
         public string LastName { get; set; }
         /// <summary>
-        /// Email Address.
+        /// Mobile Number.
         /// </summary>
         public string Mobile { get; set; }
         /// <summary>

@@ -17,11 +17,16 @@ namespace TestingAndCalibrationLabs.Business.Infrastructure
         {
             _loggerRepository = loggerRepository;
         }
+        /// <summary>
+        /// Login Token Log for Login request
+        /// </summary>
         public async Task<int> LoginTokenLog(LoginToken loginToken)
         {
             return await Task.Run(() => _loggerRepository.LoginTokenLog(loginToken));
         }
-
+        /// <summary>
+        /// LoginLog for Login request
+        /// </summary>
         public async Task<int> LoginLog(LoginRequest loginRequest)
         {
             return await Task.Run(() => _loggerRepository.LoginLog(loginRequest));

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -9,6 +8,9 @@ namespace TestingAndCalibrationLabs.Business.Common
 {
     public class Hasher
     {
+        /// <summary>
+        /// Password Hashing method
+        /// </summary>
         public static PasswordLogin HashPassword(string password)
         {
             var salt = CreateSalt();
@@ -21,6 +23,10 @@ namespace TestingAndCalibrationLabs.Business.Common
 
             return new PasswordLogin { PasswordHash = Convert.ToBase64String(valueBytes), PasswordSalt = salt };
         }
+
+        /// <summary>
+        /// Validate Hashing
+        /// </summary>
         public static bool ValidateHash(string value, string salt, string hash, out string valueHash)
         {
             valueHash = CreateHash(value, salt);

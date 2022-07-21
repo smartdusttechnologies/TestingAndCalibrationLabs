@@ -16,6 +16,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+        /// <summary>
+        /// Get Role with Orgnization based on UserName
+        /// </summary>
         public List<(int, string)> GetRoleWithOrg(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

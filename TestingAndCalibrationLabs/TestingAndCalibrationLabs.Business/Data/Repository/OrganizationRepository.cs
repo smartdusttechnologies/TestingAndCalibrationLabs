@@ -18,7 +18,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
+        /// <summary>
+        /// Method to get Orgnization Name
+        /// </summary>
         public List<Organization> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -29,6 +31,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<Organization>("Select * From [Organization] where (Id=@OrganizationId OR @OrganizationId = 0) and IsDeleted=0", new { sessionContext.OrganizationId }).ToList();
         }
+
+        /// <summary>
+        /// Method to get Orgnzation name Based on OrgId
+        /// </summary>
         public Organization Get(SessionContext sessionContext, int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

@@ -18,7 +18,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
            
         }
-
+        /// <summary>
+        /// LoginRequest Method
+        /// </summary>
         public int LoginLog(LoginRequest loginRequest)
         {
             string query = @"Insert into [LoginLog](UserId, LoginDate, Status, UserName, PasswordHash, IPAddress, Browser, DeviceCode, DeviceName) 
@@ -27,7 +29,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, loginRequest);
         }
-
+        /// <summary>
+        /// LoginTokeLog Method
+        /// </summary>
         public int LoginTokenLog(LoginToken loginToken)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

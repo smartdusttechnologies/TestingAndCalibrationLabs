@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class User : Entity
     {
-
         /// <summary>
         /// User Name.
         /// </summary>
