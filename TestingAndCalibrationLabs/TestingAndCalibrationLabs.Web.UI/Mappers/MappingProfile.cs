@@ -11,6 +11,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<Models.UiPageDataDTO, Business.Core.Model.UiPageDataModel>().ReverseMap();
             CreateMap<Web.UI.Models.ValidationMessage, Business.Common.ValidationMessage>().ReverseMap();
 
+            CreateMap<UI.Models.Sample.SampleModelDTO,Business.Core.Model.SampleModel>().ReverseMap();
         }
     }
 }

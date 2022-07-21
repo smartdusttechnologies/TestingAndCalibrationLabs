@@ -31,9 +31,13 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            
             //Services
             services.AddScoped<ICommonService, SampleService>();
-
+            services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ISampleService, SampleService>();
+            
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             //services.AddScoped<IGenericRepository<SampleModel>, GenericRepository<SampleModel>>();
@@ -44,6 +48,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             // services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<ICommonCrudRepository, CommonCrudRepository>();
+            services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,13 +72,15 @@ namespace TestingAndCalibrationLabs.Web.UI
             app.UseRouting();
 
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Sample}/{action=Index}/{id?}");
             });
+           
         }
     }
 }
+
+
