@@ -110,8 +110,9 @@ nav {
         }
 
 #footer {
-    position: absolute;
+    position: ;
     bottom: 0;
+    margin-top: 200px;
     height: 60px;
     width: 100%;
 }

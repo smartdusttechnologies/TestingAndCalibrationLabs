@@ -17,6 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RecordsModel GetRecords();
         RecordModel GetRecordById(int recordId);
 
-        UiPageValidationTypes GetValidationTypeById(int validationtypeId);
+    
     }
 }
