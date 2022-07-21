@@ -15,8 +15,5 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         bool Delete(int id);
         int InsertCollection(List<TestReportModel> testReportModels);
         TestReportModel GetTestReport(int id);
-
-
-        //object Insert(imageVal imageVal);
     }
 }

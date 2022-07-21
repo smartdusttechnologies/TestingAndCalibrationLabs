@@ -34,7 +34,7 @@
                         <td> @Html.HiddenFor(modelItem => item.FilePath)</td>
                         <td>
                             <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class='fa fa-cloud-download'></i></a><b>||</b>
-                            <a asp-action="TestReportMailSend" asp-route-id="@item.Id" ><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                            <a asp-action="sendEmail" asp-route-id="@item.Id" ><i class="fa fa-envelope" aria-hidden="true"></i></a>
 
                         </td>
                     </tr>

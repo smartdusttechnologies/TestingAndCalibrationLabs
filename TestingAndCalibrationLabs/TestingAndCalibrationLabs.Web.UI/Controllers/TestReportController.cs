@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
 
         /// <summary>
-        /// Default Action of the NewUIController
+        /// Default Action of the Index
         /// </summary>
         /// <returns></returns>
 
@@ -90,15 +90,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult DataView(TestReportModel testReportModel)
+        public ActionResult TestReportView(TestReportModel testReportModel)
         {
-            var emailId = string.Join(",", testReportModel.Email);
             var services = _testReportRepository.Get();
-            List<UI.Models.TestReportModel> data = new List<UI.Models.TestReportModel>();
-
+            List<UI.Models.TestReportModel> testReportData = new List<UI.Models.TestReportModel>();
             foreach (var item in services)
             {
-                data.Add(new Models.TestReportModel
+                testReportData.Add(new Models.TestReportModel
                 {
                     Id = item.Id,
                     Client = item.Client,
@@ -110,10 +108,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     Email = item.Email 
                 });
             }
-            return View(data);
+            return View(testReportData);
         }
 
-        
         [HttpGet]
         public ActionResult TestReportDownload(int? Id)
         {
@@ -135,13 +132,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 DateTime = DateTime.Now.Date,       //Accept the Current Date only
                 Email = data.Email
             };
-            // Downloads File from Google Drive on fileId
-
             return RedirectToAction("DataView");
         }
 
         [HttpGet]
-        public ActionResult TestReportMailSend( TestReportModel testReportModel, int? Id)
+        public ActionResult sendEmail( TestReportModel testReportModel, int? Id)
         {
             if (Id == null)
             {
@@ -167,7 +162,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             //Sends link
             _googleUploadService.WebLinkMail(getbusinessModel, data.Id);
-            //return View(data);
+            //Redirect to Page "DataView"
             return RedirectToAction("DataView");
         }
     } 

@@ -44,15 +44,5 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _testReportRepository.GetTestReport(id);
         }
-
-        public bool servives(TestReportModel testReportModel)
-        {
-            return true;
-        }
-
-        public TestReportModel GetTestReport(TestReportModel testReportModel, int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

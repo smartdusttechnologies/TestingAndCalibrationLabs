@@ -74,18 +74,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
             return db.Execute(query, testReportModel);
         }
 
-        //public int Update(TestReportModel testReportModel)
-        //{
-        //    string query = @"update [TestReportModel] Set 
-        //                      JobId = @JobId,
-        //                      Email = @Email,
-        //                      Client = @Client,
-        //                      Name = @Name                                
-        //                      Where Id = @Id";
-        //    using IDbConnection db = IConnectionFactory.GetConnection;
-        //    return db.Execute(query, testReportModel);
-        //}
-
         public bool Delete(int id)
         {
             string query = @"update [TestReport] Set 
@@ -95,7 +83,5 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
             db.Execute(query, new { IsDeleted = true, Id = id });
             return true;
         }
-
-        
     }
 }

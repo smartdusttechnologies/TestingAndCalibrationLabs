@@ -124,10 +124,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             {
                 var request = service.Files.Create(fileMetadata);
                 request.Fields = "id";
-                //var uniqueFileName = Guid.NewGuid().ToString();
                 var file = request.Execute();
-                //var result = uniqueFileName + service.Files.Create(newFile).Execute();
-                //Console.WriteLine("Folder ID: " + uniqueFileName + file.Id);
                 return file.Id;
             }
             return (string)ResponseBody;
@@ -162,7 +159,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             driveFile.Name = uniqueFileName + Path.GetFileName(testReportModel.FilePath);
 
             driveFile.Description = "";
-            //driveFile.MimeType = fileMime;
             driveFile.Parents = new string[] { uploadsFolder };
 
             using (var abc = testReportModel.DataUrl.OpenReadStream())

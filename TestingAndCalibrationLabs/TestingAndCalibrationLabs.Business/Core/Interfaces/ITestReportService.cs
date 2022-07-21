@@ -7,11 +7,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ITestReportService
     {
         RequestResult<int> Add(TestReportModel testReportModel);
-        bool servives(TestReportModel testReportModel);
         List<TestReportModel> Get();
         RequestResult<int> Update(int id, TestReportModel testReportModel);
-
         TestReportModel GetTestReport(int id);
-
     }
 }
