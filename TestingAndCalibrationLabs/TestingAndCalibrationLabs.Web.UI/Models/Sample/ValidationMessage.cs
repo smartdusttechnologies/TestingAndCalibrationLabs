@@ -1,4 +1,4 @@
-﻿namespace TestingAndCalibrationLabs.Business.Common
+﻿namespace TestingAndCalibrationLabs.Web.UI.Models
 {
 
     public class ValidationMessage
@@ -11,7 +11,7 @@
 
         public virtual ValidationSeverity Severity { get; set; }
         public string MessageKey { get; set; }
-        public int Fid { get; set; }
+        public int Fid { get; set; }       //sourceId
         public string Description { get; set; }
         #endregion
     }

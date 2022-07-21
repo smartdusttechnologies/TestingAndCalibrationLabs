@@ -1,30 +1,27 @@
-﻿using System.Collections.Generic;
-using Dapper;
-using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+﻿using Dapper;
+using System;
+using System.Collections.Generic;
 using System.Data;
-using TestingAndCalibrationLabs.Business.Infrastructure;
 using System.Linq;
-using PagedList;
+using System.Text;
+using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
+using TestingAndCalibrationLabs.Business.Infrastructure;
 
-namespace TestingAndCalibrationLabs.Business.Data.Repository
+namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 {
-    /// <summary>
-    /// Connection between Database using ISampleRepository we Establing a connection
-    /// </summary>
-    public class SampleRepository : ICommonCrudRepository
+    public class CommonCrudRepository: ICommonCrudRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         #region Public Methods
-        public SampleRepository(IConnectionFactory connectionFactory)
+        public CommonCrudRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
 
         /// <summary>
         /// Connecting with database Via connectionfactory for displaying data
-        /// </summary>
+        /// </summary>  
         /// <param name="id"></param>
         /// <returns></returns>
         public List<UiPageDataModel> GetUiPageDataByUiPageId(int uiPageId)
@@ -94,3 +91,4 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         #endregion
     }
 }
+

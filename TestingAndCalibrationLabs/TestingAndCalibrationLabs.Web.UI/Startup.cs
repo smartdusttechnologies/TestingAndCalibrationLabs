@@ -9,6 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -28,12 +33,21 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllers();
             
             //Services
+            services.AddScoped<ICommonService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
             
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            //services.AddScoped<IGenericRepository<SampleModel>, GenericRepository<SampleModel>>();
+            services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
+            services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
+            services.AddScoped<IGenericRepository<UiPageValidationTypes>, GenericRepository<UiPageValidationTypes>>();
+            services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
+            // services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped<ICommonCrudRepository, CommonCrudRepository>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -62,7 +76,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=login}/{id?}");
+                    pattern: "{controller=Sample}/{action=Index}/{id?}");
             });
            
         }
