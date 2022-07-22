@@ -9,6 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
+using Microsoft.Extensions.Hosting.Internal;
+
+
 using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Web.UI
@@ -34,6 +40,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<ITestReportService, TestReportService>();
+            services.AddScoped<DriveDownloadFile, GoogleUploadService>();
+            services.AddScoped<IEmailService, EmailService >();
+            
+ 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
@@ -49,8 +60,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISecurityParameterRepository, SecurityParameterRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped< ITestReportRepository, TestReportRepository >();
+            services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,5 +105,3 @@ namespace TestingAndCalibrationLabs.Web.UI
         }
     }
 }
-
-

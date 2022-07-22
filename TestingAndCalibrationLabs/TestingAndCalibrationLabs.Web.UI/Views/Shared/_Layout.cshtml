@@ -8,6 +8,7 @@
 
     <!--Importing the CSS FileS-->
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/TestDetails.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Style.css" />
     <link rel="stylesheet" href="~/css/Login.css" />
     <link href="~/css/TestDetails.css" rel="stylesheet" />
@@ -21,6 +22,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
+    <style>
+            .hidden {
+                display: none;
+            }
+        </style>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -51,10 +58,10 @@
                     </ul>*@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-area="Login">Home</a>
+                        <a class="nav-link text-dark" asp-area="index" asp-controller="Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="TestDetails">TestDetails</a>
+                        <a class="nav-link text-dark" asp-action="TestReportView" asp-controller="TestReport">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
@@ -63,10 +70,10 @@
                         <a class="nav-link text-dark" asp-area="">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="">Get In Touch</a>
+                        <a class="nav-link text-dark" asp-action="Index" asp-controller="TestReport">Get In Touch</a>
                     </li>
                     <li class="nav-item justify-content-center">
-                        <a href="#" class="nav-link fas fa-user-circle" style="height:40px;"></a>
+                        <a href="#" class="nav-link fa-solid fa-circle-user" style="height:40px;"></a>
                     </li>
                 </ul>
             </div>
@@ -80,7 +87,7 @@
         </main>
     </div>
 
-                        <!---Footer--->
+    <!---Footer--->
     <footer class="border-top  text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
             © 2022 Copyright :
@@ -94,7 +101,7 @@
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
     <script src="~/js/CustomJS.js"></script>
-    @RenderSection("scripts", required: false)
 </body>
 </html>
