@@ -132,7 +132,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 DateTime = DateTime.Now.Date,       //Accept the Current Date only
                 Email = data.Email
             };
-            return RedirectToAction("TestReportView");
+            return RedirectToAction("DataView");
         }
 
         [HttpGet]
