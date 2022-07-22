@@ -76,6 +76,12 @@ body {
 }
 
 .btn {
+.form-element input:hover {
+    border-color: dodgerblue;
+    box-shadow: 0 0 1px 0 dodgerblue;
+}
+
+.btn-submit-print {
     background-color: blue;
     width: 200px;
     font-size: 20px;
@@ -86,6 +92,26 @@ body {
     text-align: center;
     position:relative;
 }
+
+#TestDetailsSubmit {
+    width: 260px;
+}
+
+.container-testing-material {
+    margin: 0;
+    height: 40px;
+    width: 100%;
+    background-color: white;
+    border-bottom: 1px solid black;
+    display: inline-block;
+}
+
+    .container-testing-material .container-chip {
+        background-color: #e5ebee;
+        border-radius: 15px;
+        display: inline-block;
+        top: -6px;
+    }
 
 form-group > label {
     top: 12px;
@@ -264,5 +290,110 @@ select.input-validation-error#TestingType {
     to {
         bottom: 0;
         opacity: 0;
+    }
+}
+
+.inputWithIconSearch {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    transition: 0.3s;
+}
+
+    .inputWithIconSearch:focus {
+        border-bottom: 2px solid black;
+    }
+
+.inputSearchGrid .inputWithIconSearch {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.inputSearchGrid {
+    position: relative;
+}
+
+    .inputSearchGrid .iconForSearchLeft {
+        position: absolute;
+        left: 10px;
+        top: 4px;
+        color: black;
+        transition: 0.3s;
+    }
+
+    .inputSearchGrid .iconForSearchRight {
+        position: absolute;
+        right: 20px;
+        top: 4px;
+        color: #aaa;
+        transition: 0.3s;
+    }
+
+        .inputSearchGrid .iconForSearchRight:hover {
+            position: absolute;
+            right: 20px;
+            top: 4px;
+            color: black;
+            transition: 0.3s;
+        }
+
+.inputWithIcon.inputIconBg .iconForSignIn {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+/*The following few were display hidden bcs of using the datatable things*/
+#testDetailsGrid_length {
+    display: none;
+    border: 1px solid black;
+}
+
+#testDetailsGrid_wrapper {
+    border: 1px solid black;
+}
+
+#testDetailsGrid_filter {
+    display: none;
+}
+
+#testDetailsGrid_paginate {
+    margin: 7px;
+}
+
+#testDetailsGrid_paginate {
+    align-items: flex-start;
+}
+
+.simple-pagination testDetailsGrid_paginate {
+    display: inline-block;
+}
+
+.border-radius-grid {
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+@media (max-width:768px) {
+    #testDetailsGrid_paginate {
+        padding: 0;
+        float: left;
+    }
+
+    #testDetailsGrid_info {
+        padding-left: 20px;
+        float: left;
+    }
+}
+
+@media (min-width:769px) {
+    #testDetailsGrid_paginate {
+        float: right;
+    }
+
+    #testDetailsGrid_info {
+        padding-left: 20px;
     }
 }

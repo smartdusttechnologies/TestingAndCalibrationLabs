@@ -111,25 +111,12 @@ nav {
             font-size: 35px;
         }
 
+
 #footer {
+    margin-top: 30px;
     position: absolute;
-    bottom: 0;
-    height: 60px;
-    width: 100%;
-}
-
-@media screen and (max-width:1250px) {
-    nav {
-        display: block;
-        padding: 0;
-    }
-
-        nav .icon {
-            display: inline-block;
-            padding: 15px 30px;
-        }
-
-nav .search_box {
+    column-gap: 40px;
+    row-gap: 80px;
     width: 100%;
     align-content: center;
     display: inline-flex;

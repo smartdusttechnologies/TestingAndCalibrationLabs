@@ -62,3 +62,44 @@ html {
 
 body {
 }
+.btn {
+    background-color: blue;
+    width: 200px;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid yellow;
+    color: magenta;
+    text-align: center;
+}
+
+form-group > label {
+    top: 12px;
+    left: 6px;
+    position: relative;
+    background-color: white;
+    padding: 0px 0px 0px 0px;
+}
+
+.field-validation-error.form-input.width-full {
+    color: orangered;
+    font-weight: bold;
+}
+
+.field-validation-valid .form-input.width-full {
+    display: none;
+}
+
+input.input-validation-error.form-input.width-full {
+    border: 2px solid #f00;
+}
+
+.validation-summary-errors {
+    color: red;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}  

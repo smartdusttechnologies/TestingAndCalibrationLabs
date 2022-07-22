@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -18,7 +19,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _configuration = configuration;
             _testReportService = testReportService;
         }
-
+        
         /// <summary>
         /// Sends mail using the Survey model.
         /// </summary>
@@ -53,6 +54,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 }
             }
             return true;
-        }
+        }   
     }
-}
+}    
