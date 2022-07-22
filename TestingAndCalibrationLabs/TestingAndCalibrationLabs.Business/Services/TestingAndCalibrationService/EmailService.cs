@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
-namespace TestingAndCalibrationLabs.Business.Services
+namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _configuration;
-            
-        public EmailService(IConfiguration configuration)
+        private readonly ITestReportService _testReportService;
+        public EmailService(IConfiguration configuration, ITestReportService testReportService)
         {
             _configuration = configuration;
+            _testReportService = testReportService;
         }
         
         /// <summary>
@@ -28,13 +32,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             int port = int.Parse(_configuration["Smtp:Port"]);
             string fromAddress = _configuration["Smtp:FromAddress"];
             string userName = _configuration["Smtp:UserName"];
+            string linkpre = _configuration["GoogleCloudStorage:PrefixLink"];
             string password = _configuration["Smtp:Password"];
             string emailTo = string.Join(",", emailModel.Email);
 
             using (MailMessage mm = new MailMessage(fromAddress, emailTo))
             {
-                mm.Subject = emailModel.Subject;
-                mm.Body = emailModel.HtmlMsg;
+                mm.Subject =emailModel.Subject;
+                mm.Body =  emailModel.HtmlMsg;
                 mm.IsBodyHtml = true;
 
                 using (SmtpClient smtp = new SmtpClient())

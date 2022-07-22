@@ -9,6 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
+using Microsoft.Extensions.Hosting.Internal;
+
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -31,10 +37,16 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<ITestReportService, TestReportService>();
+            services.AddScoped<DriveDownloadFile, GoogleUploadService>();
+            services.AddScoped<IEmailService, EmailService >();
             
+ 
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped< ITestReportRepository, TestReportRepository >();
+            services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
@@ -68,5 +80,3 @@ namespace TestingAndCalibrationLabs.Web.UI
         }
     }
 }
-
-

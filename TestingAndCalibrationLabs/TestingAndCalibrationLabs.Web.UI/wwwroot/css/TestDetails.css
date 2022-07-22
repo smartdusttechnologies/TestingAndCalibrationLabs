@@ -23,7 +23,7 @@ body {
         border-radius: 5px;
         outline: none;
         padding: 0;
-        padding-left: 15px;
+        padding-left: 3px;
         font-size: 20px;
     }
 
@@ -75,6 +75,7 @@ body {
     box-shadow: 0 0 3px 0 dodgerblue;
 }
 
+.btn {
 .form-element input:hover {
     border-color: dodgerblue;
     box-shadow: 0 0 1px 0 dodgerblue;
@@ -82,13 +83,14 @@ body {
 
 .btn-submit-print {
     background-color: blue;
+    width: 200px;
     font-size: 20px;
     padding: 20px;
     border-radius: 15px;
     border: 3px solid yellow;
     color: magenta;
     text-align: center;
-    position: relative;
+    position:relative;
 }
 
 #TestDetailsSubmit {
@@ -140,6 +142,26 @@ input.input-validation-error#TestingType.form-input.width-full {
     border: 2px solid red;
 }
 
+input.input-validation-error#Name.form-input.width-full{
+    border: 2px solid red;
+}
+
+input.input-validation-error#TRJobId.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TRClient.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TREmail.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TRDataUrl.form-input.width-full {
+    border: 2px solid red;
+}
+/**/
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
@@ -152,9 +174,9 @@ select.input-validation-error#TestingType {
     border: 2px solid red;
 }
 
-#select {
-    margin: 0;
-    padding: 0;
+#select{
+    margin:0;
+    padding:0;
 }
 
 .validation-summary-errors {
@@ -168,7 +190,7 @@ select.input-validation-error#TestingType {
 }
 
 .submit-progress-bg {
-    background-color: lightcoral;
+    background-color: lightgrey;
     opacity: .5;
 }
 
@@ -206,15 +228,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility: visible;
-    border-radius: 12px;
-    background-color: green;
-    color: white;
-    margin-bottom: 70px;
-    width: 370px;
-    padding: 14px;
-    text-align: center;
-    font-size: 16px;
+    visibility:visible;
+    border-radius:12px;
+    background-color:green;
+    color:white;
+    margin-bottom:70px;
+    width:370px;
+    padding:14px;
+    text-align:center;
+    font-size:16px;
 }
 
     #snackbar.show {
