@@ -1,7 +1,0 @@
-
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “alt-php56” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-alt-php56___lsphp .php .php5 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit

@@ -11,7 +11,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     /// <summary>
     /// a base class for view
     /// </summary>
-
     public class SampleController : Controller
     {
         private readonly ILogger<SampleController> _logger;
