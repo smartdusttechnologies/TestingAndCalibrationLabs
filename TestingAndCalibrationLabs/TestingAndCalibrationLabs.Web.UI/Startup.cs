@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+
 namespace TestingAndCalibrationLabs.Web.UI
 {
     public class Startup
@@ -23,6 +25,7 @@ namespace TestingAndCalibrationLabs.Web.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
@@ -31,10 +34,21 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ISecurityParameterService, SecurityParameterService>();
+            services.AddScoped<ILogger, Logger>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
+
             
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+            services.AddScoped<ILoggerRepository, LoggerRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ISecurityParameterRepository, SecurityParameterRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
@@ -53,16 +67,27 @@ namespace TestingAndCalibrationLabs.Web.UI
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseSession();
+
+            app.Use(async (context, next) =>
+            {
+                var token = context.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                }
+                await next();
+            });
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=login}/{id?}");
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
             });
            
         }

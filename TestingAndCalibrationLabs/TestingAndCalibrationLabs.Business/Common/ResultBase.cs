@@ -7,9 +7,7 @@ namespace TestingAndCalibrationLabs.Business.Common
     /// </summary>
     public class ResultBase
     {
-
         #region Public Properties
-
         /// <summary>
         /// Gets or sets the validation messages.
         /// </summary>
@@ -19,7 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Common
         #endregion
 
         #region Protected Methods
-
         /// <summary>
         /// Determines whether this instance has any failure Validation Messages
         /// </summary>
