@@ -2,7 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-
+    /// <summary>
+    /// Declaring properties  here
+    /// </summary>
     [DbTable("UiPageMetadata")]
     public class UiPageMetadataModel : Entity
     {

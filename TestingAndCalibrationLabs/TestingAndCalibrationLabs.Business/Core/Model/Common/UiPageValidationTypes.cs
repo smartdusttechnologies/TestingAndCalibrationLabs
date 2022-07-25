@@ -5,6 +5,9 @@ using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model.Common
 {
+    /// <summary>
+    /// Declaring properties  here
+    /// </summary>
     [DbTable("UiPageValidationType")]
     public class UiPageValidationTypes: Entity
     {

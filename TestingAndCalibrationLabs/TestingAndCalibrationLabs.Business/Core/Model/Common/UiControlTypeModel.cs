@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    /// <summary>
+    /// Declaring properties  here
+    /// </summary>
     [DbTableAttribute("UiControlType")]
     public class UiControlTypeModel : Entity
     {
