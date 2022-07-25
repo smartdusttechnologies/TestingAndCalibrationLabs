@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using TestingAndCalibrationLabs.Business.Core.Model;
+﻿using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -14,7 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RequestResult<bool> Update(RecordModel record);
         bool Delete(int id);
         RecordModel GetUiPageMetadata(int uiPageId);
-        RecordsModel GetRecords();
+        RecordsModel GetRecords(int uiPageId);
         RecordModel GetRecordById(int recordId);
     }
 }

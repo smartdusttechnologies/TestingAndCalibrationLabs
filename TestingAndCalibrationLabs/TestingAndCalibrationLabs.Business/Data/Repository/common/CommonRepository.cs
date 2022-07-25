@@ -5,16 +5,16 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 {
-    public class CommonCrudRepository: ICommonCrudRepository
+    public class CommonRepository: ICommonRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         #region Public Methods
-        public CommonCrudRepository(IConnectionFactory connectionFactory)
+        public CommonRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }

@@ -12,21 +12,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     /// a base class for view
     /// </summary>
 
-    public class SampleController : Controller
+    public class CommonController : Controller
     {
-        private readonly ILogger<SampleController> _logger;
-        private readonly ICommonService _sampleService;
+        private readonly ILogger<CommonController> _logger;
+        private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
-        /// <param name="sampleService"></param>
+        /// <param name="commonService"></param>
         /// <param name="hostingEnvironment"></param>
-        public SampleController(ILogger<SampleController> logger, ICommonService sampleService, IMapper mapper)
+        public CommonController(ILogger<CommonController> logger, ICommonService commonService, IMapper mapper)
         {
             _logger = logger;
-            _sampleService = sampleService;
+            _commonService = commonService;
             _mapper = mapper;
         }
         /// <summary>
@@ -34,16 +34,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int? id = 0)
         {
-            var pageMetadata = _sampleService.GetRecords();
+            var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
         }
 
         /// <summary>
-        /// Inseting details for Sample
+        /// Inseting details for common
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -51,7 +51,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Create(int id)
         {
             var uiPageId = id;
-            var pageMetadata = _sampleService.GetUiPageMetadata(uiPageId);
+            var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
            
             return base.View(result);
@@ -59,41 +59,37 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// for creating data
         /// </summary>
-        /// <param name="sample"></param>
+        /// <param name="common"></param>
         /// <returns></returns>
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Models.RecordDTO record)
         {
             var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
-            var adddata = _sampleService.Add(records);
-            var pageMetadata = _sampleService.GetUiPageMetadata(record.UiPageId);
+            var adddata = _commonService.Add(records);
+            var pageMetadata = _commonService.GetUiPageMetadata(record.UiPageId);
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(result);  
-              //  return Json(result);
 
             }
-
-            // string message=abc.ValidationMessages.FirstOrDefault()?.Reason;
             result.FieldValues = record.FieldValues;
 
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(result);
-           // return Json(result);
             
         }
         
         /// <summary>
-        /// Edit deatils of Sample
+        /// Edit deatils of common
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var pageMetadata = _sampleService.GetRecordById(id);
+            var pageMetadata = _commonService.GetRecordById(id);
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
@@ -101,15 +97,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Edit and binding with business project
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="sample"></param>
+        /// <param name="common"></param>
         /// <returns></returns>
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Models.RecordDTO record)
         {
             var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
-            var adddata= _sampleService.Update(records);
-            var pageMetadata = _sampleService.GetRecordById(record.Id);
+            var adddata= _commonService.Update(records);
+            var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
@@ -122,13 +118,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         /// <summary>
-        ///  Delete Details of Sample
+        ///  Delete Details of common
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            var pageMetadata = _sampleService.GetRecordById(id);
+            var pageMetadata = _commonService.GetRecordById(id);
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
@@ -141,7 +137,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            _sampleService.Delete((int)id);
+            _commonService.Delete((int)id);
             return RedirectToAction("Index");
         }
     }

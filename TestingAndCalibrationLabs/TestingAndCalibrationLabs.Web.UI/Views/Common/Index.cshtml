@@ -1,7 +1,7 @@
 ﻿@{
 }
 @model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
-<h1>Sample</h1>
+<h1>Common</h1>
 <p>
     <a asp-action="Create" asp-route-id="@Model.UiPageId">Create New</a>
 </p>
@@ -33,14 +33,6 @@
                 </td>
             </tr>
         }
-     @*   @using (Html.BeginForm("Index", "Home", new { pageIndex = @ViewBag.PreviousPage }, FormMethod.Post))
-        {
-            <button class="btn-primary">Previous</button>
-        }
-        @using (Html.BeginForm("Index", "Home", new { pageIndex = @ViewBag.nextPage }, FormMethod.Post))
-        {
-            <button class="btn-primary">Next</button>
-        }*@
     </tbody>
 </table>
 </div>

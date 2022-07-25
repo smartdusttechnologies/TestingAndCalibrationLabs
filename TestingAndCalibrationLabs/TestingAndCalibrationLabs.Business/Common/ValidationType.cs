@@ -9,9 +9,9 @@ namespace TestingAndCalibrationLabs.Business.Common
         MinPasswordLength =1,
         Email=2,
         AdharLength=3,
-        MobileNumberLength=1003,
-        Year=1004,
-        Name=1005,
-        IsRequired=1006
+        MobileNumberLength,
+        Year,
+        Name,
+        IsRequired
     }
 }

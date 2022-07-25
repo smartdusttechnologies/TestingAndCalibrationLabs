@@ -4,6 +4,10 @@ using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
+    /// <summary>
+    /// Generic repository interface.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IGenericRepository<T> where T : class
     {
         int Insert(T lookupTypeModel);

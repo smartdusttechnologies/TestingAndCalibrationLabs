@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
-namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common
+namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
     /// <summary>
-    /// Creating Interface for Generic Crud Operations
+    /// Repository interface for common Operations of configurable UI pages.
     /// </summary>
-    public interface ICommonCrudRepository
+    public interface ICommonRepository
     {
         int Insert(RecordModel record);
         List<UiPageDataModel> GetUiPageDataByUiPageId(int uiPageId);

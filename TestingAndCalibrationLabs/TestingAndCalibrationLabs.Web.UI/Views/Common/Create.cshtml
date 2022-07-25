@@ -5,7 +5,7 @@
 <h1>Create</h1>
 <div class="container-fluid">
     <div>
-        <form id="sampleForm" asp-controller="Sample" asp-action="Create">
+        <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UiPageId" />
              <div class="row">
@@ -155,7 +155,7 @@
           document.getElementById(x).style.border = "1px solid black ";
          }
          
-        var url = $("#sampleForm").attr("action");
+        var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');   
         var uiPageMetaData = modelData.fields;
         var fieldValues = [];
