@@ -13,15 +13,16 @@
 
 //namespace TestingAndCalibrationLabs.Tests
 //{
-//    /// <summary>
-//    /// Decaring Class
-//    /// </summary>
+
+//    / <summary>
+//    / Decaring Class
+//    / </summary>
 //    #region public
 //    public class SampleTests
 //    {
-//        /// <summary>
-//        /// creating services 
-//        /// </summary>
+//        / <summary>
+//        / creating services 
+//        / </summary>
 //        ICommonService _sampleService;
 //        ISampleRepository _sampleRepository;
 //        IMapper _mapper;
@@ -40,19 +41,22 @@
 //                }
 //            };
 
-//        /// <summary>
-//        /// Setuping Mock
-//        /// </summary>
+
+//        / <summary>
+//        / Setuping Mock
+//        / </summary>
 //        [SetUp]
 //        public void Setup()
 //        {
-//            //mock mapper.
+//            mock mapper.
+
 //            Mock<IMapper> mapper = new Mock<IMapper>();
 //            mapper.Setup(m => m.Map<List<SampleModel>, List<Web.UI.Models.Sample.SampleModelDTO>>(details)).Returns(MapDetails(details));
 //            mapper.Setup(m => m.Map<SampleModel, Web.UI.Models.Sample.SampleModelDTO>(details[0])).Returns(MapDetails(details[0]));
 //            mapper.Setup(m => m.Map<Web.UI.Models.Sample.SampleModelDTO, SampleModel>(detailToadd)).Returns(details[0]);
 
-//            // mock repository\DB calls.
+
+//            mock repository\DB calls.
 //            Mock<ISampleRepository> sampleRepo = new Mock<ISampleRepository>();
 //            sampleRepo.Setup(mock => mock.Get()).Returns(details);
 //            sampleRepo.Setup(mock => mock.Get(1)).Returns(details[0]);
@@ -60,15 +64,17 @@
 //            sampleRepo.Setup(mock => mock.Delete(1)).Returns(true);
 //            sampleRepo.Setup(mock => mock.Update(details[0])).Returns(details[0].Id);
 
-//            // resolve dependencies.
+
+//            resolve dependencies.
 //            _mapper = mapper.Object;
 //            _sampleRepository = sampleRepo.Object;
 //            _sampleService = new SampleService(_sampleRepository);
 //        }
 
-//        /// <summary>
-//        /// testing For getting all Details from Database
-//        /// </summary>
+
+//        / <summary>
+//        / testing For getting all Details from Database
+//        / </summary>
 //        [Test]
 //        public void SampleTestGetAllDetails()
 //        {
@@ -78,9 +84,10 @@
 //            Assert.AreEqual(1, (data.Model as List<Web.UI.Models.Sample.SampleModelDTO>).Count);
 //        }
 
-//        /// <summary>
-//        /// testing for adding a details
-//        /// </summary>
+
+//        / <summary>
+//        / testing for adding a details
+//        / </summary>
 //        [Test]
 //        public void SampleTestAddDetails()
 //        {
@@ -93,9 +100,9 @@
 
 //        }
 
-//        /// <summary>
-//        ///testing  for updating details
-//        /// </summary>
+//        / <summary>
+//        /testing  for updating details
+//        / </summary>
 //        [Test]
 //        public void SampleTestUpdateDetails()
 //        {
@@ -107,9 +114,10 @@
 //            Assert.IsTrue(string.IsNullOrEmpty(data.ViewName) || data.ViewName == "Index");
 //        }
 
-//        /// <summary>
-//        /// testing for Deleting Details
-//        /// </summary>
+
+//        / <summary>
+//        / testing for Deleting Details
+//        / </summary>
 //        [Test]
 //        public void SampleTestDeleteDetails()
 //        {
