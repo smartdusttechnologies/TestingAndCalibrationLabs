@@ -36,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ICommonService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<ISampleService, SampleService>();
+         
             
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
@@ -48,7 +48,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             // services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<ICommonCrudRepository, CommonCrudRepository>();
-            services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
