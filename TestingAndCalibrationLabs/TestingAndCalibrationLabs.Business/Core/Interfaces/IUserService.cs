@@ -5,6 +5,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface IUserService
     {
-        List<UserModel> Get();
+       List<UserModel> Get();
     }
 }
