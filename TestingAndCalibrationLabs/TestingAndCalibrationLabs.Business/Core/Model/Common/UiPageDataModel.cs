@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    /// <summary>
+    /// Declaring properties for operations
+    /// </summary>
     [DbTable("UiPageData")]
     public class UiPageDataModel : Entity
     {

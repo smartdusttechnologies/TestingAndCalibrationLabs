@@ -1,5 +1,8 @@
 ﻿namespace TestingAndCalibrationLabs.Web.UI.Models
 {
+    /// <summary>
+    /// Declaring properties 
+    /// </summary>
     public class UiPageDataDTO
     {
         public int UiPageId { get; set; }

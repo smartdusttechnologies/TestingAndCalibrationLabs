@@ -5,6 +5,10 @@ using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+
+    /// <summary>
+    /// Declaring properties for operations
+    /// </summary>
     [DbTable("Record")]
     public class RecordModel : Entity
     {

@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
+    /// <summary>
+    /// Declaring properties 
+    /// </summary>
     public class RecordsDTO
     {
         public int Id { get; set; }

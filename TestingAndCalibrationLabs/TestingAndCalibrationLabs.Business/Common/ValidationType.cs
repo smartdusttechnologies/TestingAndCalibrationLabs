@@ -7,8 +7,8 @@ namespace TestingAndCalibrationLabs.Business.Common
     public enum ValidationType
     {
         MinPasswordLength =1,
-        Email=2,
-        AdharLength=3,
+        Email,
+        AdharLength,
         MobileNumberLength,
         Year,
         Name,
