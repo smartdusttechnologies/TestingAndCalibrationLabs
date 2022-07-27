@@ -39,7 +39,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Survey view page
         /// </summary>
         /// <returns></returns>
-       
         public IActionResult Survey()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;

@@ -207,9 +207,8 @@
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                //console.log(response.fieldId);
-                  document.getElementById("lefid").value = newErrorMessage.fid;
-                    var namea = document.getElementById(newErrorMessage.fid);
+                  document.getElementById("lefid").value = newErrorMessage.sourceId;
+                    var namea = document.getElementById(newErrorMessage.sourceId);
                 var txtname= namea.name;
                  myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML =  newErrorMessage.reason; 

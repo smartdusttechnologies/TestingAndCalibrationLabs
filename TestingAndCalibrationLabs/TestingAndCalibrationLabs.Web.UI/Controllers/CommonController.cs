@@ -72,13 +72,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (adddata.IsSuccessful)
             {
                 return Ok(result);  
-
             }
             result.FieldValues = record.FieldValues;
 
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
-            return BadRequest(result);
-            
+            return BadRequest(result);    
         }
         
         /// <summary>
