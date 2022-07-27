@@ -100,21 +100,41 @@ SET IDENTITY_INSERT [dbo].[UiPageValidation] ON
 GO
 INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (1, 1, 1, 1, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (2, 1, 2, 3, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (2, 1, 6, 3, 0)
 GO
 INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (3, 1, 3, 4, 0)
 GO
 INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (4, 1, 4, 5, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (5, 1, 5, 6, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (5, 1, 2, 7, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (6, 1, 6, 7, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (6, 1, 3, 7, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (7, 1, 2, 7, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (7, 1, 1, 7, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (8, 1, 3, 7, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (8, 1, 2, 7, 0)
 GO
 SET IDENTITY_INSERT [dbo].[UiPageValidation] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Record] ON 
+GO
+INSERT [dbo].[Record] ([Id], [UiPageId], [IsDeleted]) VALUES (4286, 1, 0)
+GO
+SET IDENTITY_INSERT [dbo].[Record] OFF
+GO
+SET IDENTITY_INSERT [dbo].[UiPageData] ON 
+GO
+INSERT [dbo].[UiPageData] ([Id], [UiControlId], [Value], [UiPageId], [IsDeleted], [RecordId]) VALUES (5200, 1, N'Sushil Smartdust', 1, 0, 4286)
+GO
+INSERT [dbo].[UiPageData] ([Id], [UiControlId], [Value], [UiPageId], [IsDeleted], [RecordId]) VALUES (5201, 2, N'123456789', 1, 0, 4286)
+GO
+INSERT [dbo].[UiPageData] ([Id], [UiControlId], [Value], [UiPageId], [IsDeleted], [RecordId]) VALUES (5202, 3, N'123456789012', 1, 0, 4286)
+GO
+INSERT [dbo].[UiPageData] ([Id], [UiControlId], [Value], [UiPageId], [IsDeleted], [RecordId]) VALUES (5203, 4, N'9480914324', 1, 0, 4286)
+GO
+INSERT [dbo].[UiPageData] ([Id], [UiControlId], [Value], [UiPageId], [IsDeleted], [RecordId]) VALUES (5204, 5, N'1024', 1, 0, 4286)
+GO
+SET IDENTITY_INSERT [dbo].[UiPageData] OFF
 GO
 INSERT [dbo].[Sample] ([Id], [Name], [Description], [IsDeleted]) VALUES (1, N'Rishi', N'Asdfg', 0)
 GO
