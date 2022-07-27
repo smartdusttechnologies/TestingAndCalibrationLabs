@@ -98,21 +98,15 @@ SET IDENTITY_INSERT [dbo].[UiPageValidationType] OFF
 GO
 SET IDENTITY_INSERT [dbo].[UiPageValidation] ON 
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (1, 1, 1, 1, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (1, 1, 1, 7, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (2, 1, 6, 3, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (2, 1, 3, 3, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (3, 1, 3, 4, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (3, 1, 1, 6, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (4, 1, 4, 5, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (4, 1, 4, 4, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (5, 1, 2, 7, 0)
-GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (6, 1, 3, 7, 0)
-GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (7, 1, 1, 7, 0)
-GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (8, 1, 2, 7, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (5, 1, 5, 5, 0)
 GO
 SET IDENTITY_INSERT [dbo].[UiPageValidation] OFF
 GO
