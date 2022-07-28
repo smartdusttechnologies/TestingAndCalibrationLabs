@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model
+namespace TestingAndCalibrationLabs.Business.Core.Model.Common
 {
     [DbTable("Record")]
     public class RecordModel : Entity

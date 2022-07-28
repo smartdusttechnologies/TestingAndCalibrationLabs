@@ -13,6 +13,10 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
 using TestingAndCalibrationLabs.Business.Core.Model.Common;
+using TestingAndCalibrationLabs.Business.Data.Repository.Cui;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Cui;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui;
+using TestingAndCalibrationLabs.Business.Services.Cui;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -32,9 +36,18 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             //Services
+            services.AddScoped<IUiControlService, UiControlService>();
+            services.AddScoped<IUiPageService, UiPageService>();
+            services.AddScoped<IUiPageValidationService, UiPageValidationService>();
+            services.AddScoped<IUiPageControlService, UiPageControlService>();
             services.AddScoped<ICommonService, SampleService>();
 
+
             //Repository
+            services.AddScoped<IUiControlRepo, UiControlRepo>();
+            services.AddScoped<IUiPageRepo, UiPageRepo>();
+            services.AddScoped<IUiPageValidationRepo, UiPageValidationRepo>();
+            services.AddScoped<IUiPageControlRepo, UiPageControlRepo>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             //services.AddScoped<IGenericRepository<SampleModel>, GenericRepository<SampleModel>>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();

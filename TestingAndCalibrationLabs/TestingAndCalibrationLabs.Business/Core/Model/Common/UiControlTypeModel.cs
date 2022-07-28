@@ -1,6 +1,6 @@
 ﻿using TestingAndCalibrationLabs.Business.Common;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model
+namespace TestingAndCalibrationLabs.Business.Core.Model.Common
 {
     [DbTableAttribute("UiControlType")]
     public class UiControlTypeModel : Entity

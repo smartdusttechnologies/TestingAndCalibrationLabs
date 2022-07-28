@@ -37,7 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Index()
         {
             var pageMetadata = _sampleService.GetRecords();
-            var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
+            var records = _mapper.Map<Business.Core.Model.Common.RecordsModel, Models.RecordsDTO>(pageMetadata);
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
         }
@@ -52,7 +52,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var uiPageId = id;
             var pageMetadata = _sampleService.GetUiPageMetadata(uiPageId);
-            var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            var result = _mapper.Map<Business.Core.Model.Common.RecordModel, Models.RecordDTO>(pageMetadata);
            
             return base.View(result);
         }
@@ -65,10 +65,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Models.RecordDTO record)
         {
-            var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
+            var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.Common.RecordModel>(record);
             var adddata = _sampleService.Add(records);
             var pageMetadata = _sampleService.GetUiPageMetadata(record.UiPageId);
-            var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            var result = _mapper.Map<Business.Core.Model.Common.RecordModel, Models.RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(result);  
@@ -94,7 +94,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(int id)
         {
             var pageMetadata = _sampleService.GetRecordById(id);
-            Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            Models.RecordDTO record = _mapper.Map<Business.Core.Model.Common.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
         /// <summary>
@@ -107,10 +107,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Models.RecordDTO record)
         {
-            var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
+            var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.Common.RecordModel>(record);
             var adddata= _sampleService.Update(records);
             var pageMetadata = _sampleService.GetRecordById(record.Id);
-            Models.RecordDTO recordModel = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            Models.RecordDTO recordModel = _mapper.Map<Business.Core.Model.Common.RecordModel, Models.RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(recordModel);
@@ -129,7 +129,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Delete(int id)
         {
             var pageMetadata = _sampleService.GetRecordById(id);
-            Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            Models.RecordDTO record = _mapper.Map<Business.Core.Model.Common.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
 

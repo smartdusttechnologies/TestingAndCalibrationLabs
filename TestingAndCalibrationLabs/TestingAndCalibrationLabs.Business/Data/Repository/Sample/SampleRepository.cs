@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Dapper;
-using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Data;
 using TestingAndCalibrationLabs.Business.Infrastructure;

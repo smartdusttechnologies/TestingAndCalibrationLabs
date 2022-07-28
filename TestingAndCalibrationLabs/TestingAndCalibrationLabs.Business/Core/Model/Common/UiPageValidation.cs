@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model
+namespace TestingAndCalibrationLabs.Business.Core.Model.Common
 {
     public class UiPageValidation : Entity
     {
