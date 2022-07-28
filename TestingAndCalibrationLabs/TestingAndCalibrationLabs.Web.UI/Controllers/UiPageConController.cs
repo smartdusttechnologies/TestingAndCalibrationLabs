@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Cui;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -10,9 +11,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             _uiPageControlService = uiPageControlService;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
+            var pageCon = _uiPageControlService.GetAll();
+            //List<Models.UiPageControl.UiPageControlModel>
             return View();
         }
         public IActionResult Create()
