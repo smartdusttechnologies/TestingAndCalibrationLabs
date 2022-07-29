@@ -10,15 +10,17 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
             Email = emailId;
         }
         /// <summary>
-        /// Name
+        /// Name of the user
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
-        /// Role
+        /// Role by designation, like admin, manager etc
         /// </summary>
         public string Role { get; set; }
+
         /// <summary>
-        /// Email
+        /// Email address 
         /// </summary>
         public string Email { get; set; }
     }

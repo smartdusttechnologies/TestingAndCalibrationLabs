@@ -6,9 +6,32 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface ITestReportService
     {
+        /// <summary>
+        /// Used to add the data to Data base using model
+        /// </summary>
+        /// <param name="testReportModel"></param>
+        /// <returns></returns>
         RequestResult<int> Add(TestReportModel testReportModel);
+
+        /// <summary>
+        /// Used to get the data from the database
+        /// </summary>
+        /// <returns></returns>
         List<TestReportModel> Get();
+
+        /// <summary>
+        /// used to update the record.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="testReportModel"></param>
+        /// <returns></returns>
         RequestResult<int> Update(int id, TestReportModel testReportModel);
+
+        /// <summary>
+        /// Used to get the test report by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         TestReportModel GetTestReport(int id);
     }
 }

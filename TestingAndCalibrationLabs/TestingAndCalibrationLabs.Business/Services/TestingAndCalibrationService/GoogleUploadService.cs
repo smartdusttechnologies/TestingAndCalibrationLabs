@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.StaticFiles;
@@ -12,30 +13,18 @@ using Microsoft.Extensions.Configuration;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
 using TestingAndCalibrationLabs.Business.Infrastructure;
-using Dapper;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using TestingAndCalibrationLabs.Business.Common;
 using AutoMapper;
-using System.Data.SqlClient;
-using System.Web;
-using System.Net.Http;
-using System.Security.Policy;
-using System.Net;
-using System.Threading.Tasks;
 using Google.Apis.Download;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
 
-    public class GoogleUploadService : DriveDownloadFile
+    public class GoogleUploadService : IDriveDownloadFile
     {
-
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IEmailService _emailService;
@@ -52,8 +41,17 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         public string ResponseBody { get; private set; }
         public object Get { get; private set; }
         public string FilePath { get; private set; }
-
-        public GoogleUploadService(IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment,ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="emailService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="hostingEnvironment"></param>
+        /// <param name="testReportRepository"></param>
+        /// <param name="configuration"></param>
+        /// <param name="connectionFactory"></param>
+        public GoogleUploadService(IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment, ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
         {
             _userRepository = userRepository;
             _configuration = configuration;
@@ -64,8 +62,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _mapper = mapper;
         }
 
-       //Creating Services 
-       public DriveService GetService()
+        public DriveService GetService()
         {
             //get Credentials from client_secret.json file 
             UserCredential credential;
@@ -91,13 +88,19 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             return service;
         }
 
+        /// <summary>
+        /// This will create a Service to perform operations on Google Drive
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
         public string CreateFolder(string parent, string folderName)
         {
             var service = GetService();
             // File metadata
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
-                Name = "TnCData",
+                Name = "TnCData", //Folder name created in Google Drive
                 MimeType = "application/vnd.google-apps.folder"
             };
             FilesResource.ListRequest listRequest = service.Files.List();
@@ -130,12 +133,20 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             return (string)ResponseBody;
         }
 
+        /// <summary>
+        /// This will upload the file to the Google Drive
+        /// </summary>
+        /// <param name="testReportModel"></param>
         public void UploadFile(TestReportModel testReportModel)
         {
             UploadFileInternal(testReportModel);
         }
 
-       
+        /// <summary>
+        /// This will use a html format to send the mail containing the link of the data.
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        /// <returns></returns>
         private string DataLinkMail(string emailTemplate)
         {
             string body = string.Empty;
@@ -146,13 +157,18 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             return body;
         }
 
+        /// <summary>
+        /// This method is used to Upload the file only 
+        /// </summary>
+        /// <param name="testReportModel"></param>
         private void UploadFileInternal(TestReportModel testReportModel)
         {
-            //Read other values from Appsetting .Json 
+
+            //Read other values from Appsetting.Json
 
             string uploadsFolder = CreateFolder("Test", "new");
-            var xyz = new FileExtensionContentTypeProvider();
-            xyz.TryGetContentType(testReportModel.FilePath, out string fileMime);
+            var contentType = new FileExtensionContentTypeProvider();
+            contentType.TryGetContentType(testReportModel.FilePath, out string fileMime);
             DriveService service = GetService();
             var driveFile = new Google.Apis.Drive.v3.Data.File();
             var uniqueFileName = Guid.NewGuid().ToString();
@@ -161,9 +177,9 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
 
-            using (var abc = testReportModel.DataUrl.OpenReadStream())
+            using (var fileUpload = testReportModel.DataUrl.OpenReadStream())
             {
-                var request = service.Files.Create(driveFile, abc, fileMime);
+                var request = service.Files.Create(driveFile, fileUpload, fileMime);
                 request.Fields = "id";
 
                 var response = request.Upload();
@@ -171,6 +187,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 {
                     throw response.Exception;
                 }
+                //Unique Id from Google Drive after upload of file.
                 testReportModel.FilePath = request.ResponseBody.Id;
 
                 //Saving the data to the database
@@ -179,12 +196,21 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
 
         }
 
+        /// <summary>
+        /// This method is used to Upload the file and send mail
+        /// </summary>
+        /// <param name="testReportModel"></param>
         public void UploadFileAndSendMail(TestReportModel testReportModel)
         {
             UploadFileInternal(testReportModel);
             WebLinkMail(testReportModel, testReportModel.Id);
         }
 
+        /// <summary>
+        /// This method is to send the web page link
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        /// <returns></returns>
         private string DataLinkWebMail(string emailTemplate)
         {
             string body = string.Empty;
@@ -195,6 +221,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             return body;
         }
 
+        /// <summary>
+        /// Sends the mail by TestReport Id
+        /// </summary>
+        /// <param name="testReportModel"></param>
+        /// <param name="Id"></param>
         public void WebLinkMail(TestReportModel testReportModel, int Id)
         {
             //Reading Data from Appsetting.Json
@@ -205,7 +236,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
 
             //Int( value of Id to string conversion
             string myString = testReportModel.Id.ToString();
-            
+
             //mail creation
             testReportModel.HtmlMsg = DataLinkWebMail(testReportModel.EmailTemplate);
             testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**name**", testReportModel.Name);
@@ -239,9 +270,10 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 EmailTemplate = testReportModel.EmailTemplate,
                 EmailContact = testReportModel.EmailContact,
                 MobileNumber = testReportModel.MobileNumber
-
             };
+            //Sending mail
             _emailService.Sendemail(getExchangeModel);
         }
+
     }
 }

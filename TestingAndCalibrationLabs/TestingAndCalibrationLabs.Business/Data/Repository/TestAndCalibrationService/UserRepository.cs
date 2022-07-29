@@ -22,11 +22,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
 
-        public List<string> Get()
-        {
-            return null;
-        }
-
         /// <summary>
         ///get the data of the required user with specified role[Admin]
         /// </summary>

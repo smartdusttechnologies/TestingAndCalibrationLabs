@@ -119,11 +119,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
-
-        public IActionResult PlanPricing()
-        {
-            return View();
-        }
-
     }
 }

@@ -41,7 +41,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ITestReportService, TestReportService>();
-            services.AddScoped<DriveDownloadFile, GoogleUploadService>();
+            services.AddScoped<IDriveDownloadFile, GoogleUploadService>();
             services.AddScoped<IEmailService, EmailService >();
             
  
@@ -91,7 +91,6 @@ namespace TestingAndCalibrationLabs.Web.UI
                 await next();
             });
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -99,7 +98,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
             });
            
         }

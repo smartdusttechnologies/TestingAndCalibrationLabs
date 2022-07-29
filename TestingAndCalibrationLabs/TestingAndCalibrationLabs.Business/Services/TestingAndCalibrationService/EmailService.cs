@@ -8,7 +8,11 @@ using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
-namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
+namespace TestingAndCalibrationLabs.Business.Services
+
+
+
+
 {
     public class EmailService : IEmailService
     {
@@ -21,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         }
         
         /// <summary>
-        /// Sends mail using the Survey model.
+        /// Sends mail using the Email model.
         /// </summary>
         /// <param name="surveyModel"></param>
         /// <returns></returns>
