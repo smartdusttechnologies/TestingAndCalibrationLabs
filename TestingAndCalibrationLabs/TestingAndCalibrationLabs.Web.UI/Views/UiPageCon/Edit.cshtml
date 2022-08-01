@@ -1,0 +1,122 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageControl.UiPageControlModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>UiPageControlModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="id" class="control-label"></label>
+                <input asp-for="id" class="form-control" />
+                <span asp-validation-for="id" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="UiPageTypeId" class="control-label"></label>
+                <input asp-for="UiPageTypeId" class="form-control" />
+                <span asp-validation-for="UiPageTypeId" class="text-danger"></span>
+            </div>*@
+             <label for="UiPageType">Select Page Type:</label>
+
+            <select asp-for="UiPageTypeId">
+               @foreach (var item in ViewBag.Page)
+              {
+                  
+                      if (@item.PageId == @ViewBag.pid)
+                  {
+                      <option value=@item.PageId selected>@item.PageName</option>
+                  }
+                 
+                 
+                   <option value=@item.PageId>@item.PageName</option>
+              }
+            </select>
+            @*<div class="form-group">
+                <label asp-for="UiPageName" class="control-label"></label>
+                <input asp-for="UiPageName" class="form-control" />
+                <span asp-validation-for="UiPageName" class="text-danger"></span>
+            </div>*@
+           @* <div class="form-group">
+                <label asp-for="UiControlTypeId" class="control-label"></label>
+                <input asp-for="UiControlTypeId" class="form-control" />
+                <span asp-validation-for="UiControlTypeId" class="text-danger"></span>
+            </div>*@
+            <label for="UiControlType">Select Control Type:</label>
+
+            <select asp-for="UiControlTypeId">
+               @foreach (var item in ViewBag.Control)
+              {
+                  
+                 
+                 
+                 
+                   <option value=@item.ControlId>@item.ControlName</option>
+                   if (@item.ControlId==@ViewBag.cid)
+                   {
+                       <option value=@item.ControlId selected>@item.ControlName</option>
+                       
+                   }
+                   
+                   
+              }
+            </select>
+            @*<div class="form-group">
+                <label asp-for="UiControlType" class="control-label"></label>
+                <input asp-for="UiControlType" class="form-control" />
+                <span asp-validation-for="UiControlType" class="text-danger"></span>
+            </div>*@
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="UiControlDisplayName" class="control-label"></label>
+                <input asp-for="UiControlDisplayName" class="form-control" />
+                <span asp-validation-for="UiControlDisplayName" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label asp-for="UiDataTypeId" class="control-label"></label>
+                <input asp-for="UiDataTypeId" class="form-control" />
+                <span asp-validation-for="UiDataTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UiDataTypeName" class="control-label"></label>
+                <input asp-for="UiDataTypeName" class="form-control" />
+                <span asp-validation-for="UiDataTypeName" class="text-danger"></span>
+            </div>*@
+            <label for="UiDataType">Select Data Type:</label>
+
+            <select asp-for="UiDataTypeId">
+               @foreach (var item in ViewBag.Data)
+              {
+                  
+                      if (@item.DataId == @ViewBag.did)
+                  {
+                      <option value=@item.DataId selected>@item.DataName</option>
+                  }
+                 
+                 
+                   <option value=@item.DataId>@item.DataName</option>
+              }
+              </select>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

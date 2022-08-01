@@ -1,0 +1,72 @@
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageControl.UiPageControlModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="table-respnsive">
+<table class="table table-bordered table-condensed  table-striped table-hover sortable">
+    
+    <thead>
+        <tr>
+           
+           
+            <th>
+                @Html.DisplayNameFor(model => model.UiPageName)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UiControlType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRequired)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UiControlDisplayName)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UiDataTypeName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @Html.HiddenFor(modelItem => item.UiPageTypeId)
+            @Html.HiddenFor(modelItem => item.UiControlTypeId)
+            @Html.HiddenFor(modelItem => item.UiDataTypeId)
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UiPageName)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UiControlType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRequired)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UiControlDisplayName)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UiDataTypeName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.id ,pId =item.UiPageTypeId,cId = item.UiControlTypeId,dId =item.UiDataTypeId }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.id  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.id  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

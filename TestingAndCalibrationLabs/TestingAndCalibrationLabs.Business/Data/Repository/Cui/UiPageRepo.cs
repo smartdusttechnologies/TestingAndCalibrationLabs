@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using TestingAndCalibrationLabs.Business.Core.Model.Helper;
 using TestingAndCalibrationLabs.Business.Core.Model.UiPage;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -42,6 +43,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Cui
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageModel>("Select * From [UiPageType] where IsDeleted=0").ToList();
+        }
+        //fetch pages
+        public List<PageModel> GetPage()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<PageModel>("SELECT p.Name as PageName, p.Id as PageId from UiPageType p where IsDeleted=0").ToList();
+        }
+        
+        public List<DataModel> GetData()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<DataModel>("SELECT d.DataTypeName as DataName, d.DataTypeId as DataId from UiDataType d where IsDeleted=0").ToList();
+      }
+        
+        public List<ControlModel> GetControl()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<ControlModel>("SELECT c.Name as ControlName, c.Id as ControlId from UiControlType c where IsDeleted=0").ToList();
         }
 
         public UiPageModel GetById(int id)

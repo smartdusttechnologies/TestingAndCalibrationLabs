@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Cui;
+using TestingAndCalibrationLabs.Business.Core.Model.Helper;
 using TestingAndCalibrationLabs.Business.Core.Model.UiPage;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui;
 
@@ -36,6 +37,21 @@ namespace TestingAndCalibrationLabs.Business.Services.Cui
         public List<UiPageModel> GetAll()
         {
             return _uiPageRepo.GetAll();
+        }
+        
+        public List<PageModel> GetPage()
+        {
+            return _uiPageRepo.GetPage();
+        }
+        
+        public List<DataModel> GetData()
+        {
+            return _uiPageRepo.GetData();
+        }
+        
+        public List<ControlModel> GetControl()
+        {
+            return _uiPageRepo.GetControl();
         }
 
         public UiPageModel GetById(int id)

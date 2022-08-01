@@ -9,17 +9,18 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<div class="table-responsive">
+<div class="table-respnsive">
 <table class="table table-bordered table-condensed  table-striped table-hover sortable">
     <thead>
         <tr>
-             @Html.DropDownList("UiControlType",ViewBag.listing as SelectList,"-- select one --",new {style ="width : 180px;"});
+            
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DisplayName)
             </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -27,18 +28,17 @@
 @foreach (var item in Model) {
         <tr>
            
-                @Html.HiddenFor(modelItem => item.id)
-           
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DisplayName)
             </td>
+            
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id=item.id }) |
                 @Html.ActionLink("Details", "Details", new {  id=item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+                @Html.ActionLink("Delete", "Delete", new {  id=item.id })
             </td>
         </tr>
 }

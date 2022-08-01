@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Cui;
 using TestingAndCalibrationLabs.Business.Core.Model.UiControl;
 using TestingAndCalibrationLabs.Business.Core.Model.UiPageControl;
@@ -14,6 +15,17 @@ namespace TestingAndCalibrationLabs.Business.Services.Cui
         public UiPageControlService(IUiPageControlRepo uiPageControlRepo)
         {
             _uiPageControlRepo = uiPageControlRepo;
+        }
+
+        public RequestResult<int> Create(UiPageControlModel pageControl)
+        {
+            _uiPageControlRepo.Create(pageControl);
+            return new RequestResult<int>(1);
+        }
+
+        public bool Delete(int id)
+        {
+            return _uiPageControlRepo.Delete(id);
         }
 
         public UiPageControlModel GetById(int id)
