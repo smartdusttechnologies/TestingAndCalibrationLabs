@@ -11,6 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.Cui
         List<UiPageControlModel> GetAll();
         UiPageControlModel GetById(int id);
         RequestResult <int> Create(UiPageControlModel pageControl);
+        RequestResult <int> Update(int id , UiPageControlModel pageControl);
         bool Delete(int id);
     }
 }

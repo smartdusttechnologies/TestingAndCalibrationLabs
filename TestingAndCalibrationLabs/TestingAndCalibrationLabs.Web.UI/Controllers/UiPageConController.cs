@@ -158,6 +158,31 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             };
             return View(pageCon);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind] Models.UiPageControl.UiPageControlModel pageModel)
+        {
+            if (id != pageModel.id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                var pageBackModel = new Business.Core.Model.UiPageControl.UiPageControlModel
+                {
+                    Id = pageModel.id,
+                    UiControlTypeId = pageModel.UiControlTypeId,
+                    UiDataTypeId = pageModel.UiDataTypeId,
+                    UiPageTypeId = pageModel.UiPageTypeId,
+                    UiControlDisplayName = pageModel.UiControlDisplayName,
+                    IsRequired = pageModel.IsRequired,
+
+                };
+                _uiPageControlService.Update(id, pageBackModel);
+                return RedirectToAction("Index");
+            }
+            return View(pageModel);
+        }
         public IActionResult Delete(int id)
         {
             if(id == null)

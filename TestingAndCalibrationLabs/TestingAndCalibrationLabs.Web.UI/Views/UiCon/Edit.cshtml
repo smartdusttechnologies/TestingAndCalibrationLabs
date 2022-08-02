@@ -12,19 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="id" class="control-label"></label>
-                <input asp-for="id" class="form-control" />
-                <span asp-validation-for="id" class="text-danger"></span>
-            </div>*@
-             @*<label for="cars">Choose a car:</label>
-
-            <select name="cars" id="cars">
-               @foreach (var item in ViewBag.lists)
-              {
-                   <option value=@item.id>@item.UiPageName</option>
-              }*@
-            </select>
+            
             @Html.HiddenFor(Model => Model.id)
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>

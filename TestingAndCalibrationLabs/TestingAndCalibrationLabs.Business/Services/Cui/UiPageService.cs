@@ -53,6 +53,16 @@ namespace TestingAndCalibrationLabs.Business.Services.Cui
         {
             return _uiPageRepo.GetControl();
         }
+        
+        public List<ValModel> GetVal()
+        {
+            return _uiPageRepo.GetVal();
+        }
+        
+        public List<MetadataModel> GetMetadata()
+        {
+            return _uiPageRepo.GetMetadata();
+        }
 
         public UiPageModel GetById(int id)
         {

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageValidation.UiPageValidationModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="table-responsive">
+<table class="table table-bordered table-condensed  table-striped table-hover sortable">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UiPageName)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.UiPageMetadataName)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.UiPageValidationName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+                @Html.HiddenFor(modelItem => item.id)
+                @Html.HiddenFor(modelItem => item.UiPageMetadataId)
+                @Html.HiddenFor(modelItem => item.UiPageId)
+                @Html.HiddenFor(modelItem => item.UiPageValidationId)
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UiPageName)
+            </td>
+            
+                
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.UiPageMetadataName)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.UiPageValidationName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.id }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

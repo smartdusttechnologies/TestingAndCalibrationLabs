@@ -83,7 +83,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Sample}/{action=Index}/{id?}");
+                    pattern: "{controller=UiPageCon}/{action=Index}/{id?}");
             });
         }
     }

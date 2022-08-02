@@ -33,7 +33,13 @@ namespace TestingAndCalibrationLabs.Business.Services.Cui
             return _uiPageControlRepo.GetById(id);
         }
 
-        List<UiPageControlModel> IUiPageControlService.GetAll()
+        public RequestResult<int> Update(int id, UiPageControlModel pageControl)
+        {
+            _uiPageControlRepo.Update(pageControl);
+            return new RequestResult<int>(1);
+        }
+
+        public List<UiPageControlModel> GetAll()
         {
             return _uiPageControlRepo.GetAll();
         }

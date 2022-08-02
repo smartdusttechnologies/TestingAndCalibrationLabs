@@ -75,7 +75,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Cui
 
         public int Update(UiPageControlModel pageCon)
         {
-            throw new NotImplementedException();
+            string query = @"update [UiPageMetadata] Set  
+                                UiPageTypeId = @UiPageTypeId,
+                                UiControlTypeId = @UiControlTypeId,
+                                IsRequired = @IsRequired,
+                                UiDataTypeId = @UiDataTypeId,
+                                UiControlDisplayName = @UiControlDisplayName
+                                Where Id = @Id";
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Execute(query, pageCon);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui
         List<DataModel> GetData();
         List<PageModel> GetPage();
         List<ControlModel> GetControl();
+        List<ValModel> GetVal();
+        List<MetadataModel> GetMetadata();
         UiPageModel GetById(int id);
         int Create(UiPageModel pageModel);
         int Edit(UiPageModel pageMOdel);

@@ -13,6 +13,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.Cui
         List<PageModel> GetPage();
         List<DataModel> GetData();
         List<ControlModel> GetControl();
+        List<ValModel> GetVal();
+        List<MetadataModel> GetMetadata();
         UiPageModel GetById(int id);
         RequestResult<int> Create(UiPageModel pageModel);
         RequestResult <int> Edit(int id ,UiPageModel pageModel);

@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             var control = _uiControlServices.GetAll();
             List<Models.UiControl.UiControlModel> sampless = new List<Models.UiControl.UiControlModel>();
-            ViewBag.listing = new SelectList(control, "Id", "Name");
+           
             foreach (var item in control)
             {
                 sampless.Add(new Models.UiControl.UiControlModel { id = item.Id, Name = item.Name, DisplayName = item.DisplayName });

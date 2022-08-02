@@ -62,6 +62,18 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Cui
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<ControlModel>("SELECT c.Name as ControlName, c.Id as ControlId from UiControlType c where IsDeleted=0").ToList();
         }
+        
+        public List<ValModel> GetVal()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<ValModel>("SELECT v.Name as ValName, v.Id as ValId from UiPageValidationType v where IsDeleted=0").ToList();
+        }
+        
+        public List<MetadataModel> GetMetadata()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<MetadataModel>("SELECT m.UiControlDisplayName as MetadataName, m.Id as MetadataId from UiPageMetadata m where IsDeleted=0").ToList();
+        }
 
         public UiPageModel GetById(int id)
         {
