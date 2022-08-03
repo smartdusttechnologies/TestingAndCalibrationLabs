@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.TestReportModel>
     
-<div class="table-responsive">
-    <input type="search" id="inputData" onkeyup="function" class="light-table-filter" data-table="table-info" placeholder="Filter/Search">
-    
-            
-        <table id="dataTable" class="table table-striped display" style="width:100%">
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 mt-2">
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">Test Details</h2>
+        </div>
+    </div>
+
+    <div class="table-responsive simple-pagination card shadow border-radius-grid">
+        <table id="testDetailsGrid" class="table table-striped display" style="width:100%">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Id)</th>
@@ -17,48 +21,35 @@
 
                     <th>@Html.DisplayNameFor(model => model.Email)</th>
 
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
 
                 @foreach (var item in Model)
                 {
-
                     <tr>
                         <td> @Html.DisplayFor(modelItem => item.Id)</td>
                         <td> @Html.DisplayFor(modelItem => item.Name)</td>
                         <td> @Html.DisplayFor(modelItem => item.Client)</td>
                         <td> @Html.DisplayFor(modelItem => item.JobId)</td>
                         <td> @Html.DisplayFor(modelItem => item.Email)</td>
-                        <td> @Html.HiddenFor(modelItem => item.FilePath)</td>
                         <td>
-                            <a href="https://drive.google.com/uc?export=download&id=@item.FilePath"><i class='fa fa-cloud-download'></i></a><b>||</b>
-                            <a asp-action="sendEmail" asp-route-id="@item.Id" ><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                            <a asp-controller="TestReport" asp-action="TestReportDownload" id="downloadAction" asp-route-id="@item.Id"><i class='fa fa-cloud-download'></i></a><b>||</b>
+                            <a asp-action="sendEmail" asp-route-id="@item.Id"><i class="fa fa-envelope" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
 
-        <div class="container">
-            <ul class="pagination justify-content-end">
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-            </ul>
-        </div>
-    
-</div>
-
-<script>
-    $(document).ready(function () {
-        $("#inputData").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#dataTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+    <script>
+        oTable = $('#testDetailsGrid').DataTable({
+            pageLength: 5,
+            scrollX: true,
         });
-    });
-</script>
+        $('#TestDetailsGridSearch').keyup(function () {
+            oTable.search($(this).val()).draw();
+        })
+    </script>

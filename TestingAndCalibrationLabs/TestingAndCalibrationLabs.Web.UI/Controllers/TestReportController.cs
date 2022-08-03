@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
@@ -23,6 +25,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ITestReportRepository _testReportRepository;
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
+        private string downloadData;
 
         /// <summary>
         /// Default Action of the Index
@@ -103,7 +106,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(testReportData);
         }
 
-
         /// <summary>
         /// Action sends mail of the web page
         /// </summary>
@@ -111,7 +113,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult sendEmail( TestReportModel testReportModel, int? Id)
+        public ActionResult sendEmail(TestReportModel testReportModel, int? Id)
         {
             if (Id == null)
             {
@@ -134,11 +136,52 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 DateTime = DateTime.Now.Date,       //Accept the Current Date only
                 Email = datafForMail.Email
             };
-            
+
             //Sends link
             _googleUploadService.WebLinkMail(getbusinessModel, datafForMail.Id);
             //Redirect to Page "DataView"
             return RedirectToAction("TestReportView");
         }
-    } 
+
+        [HttpGet]
+        public ActionResult TestReportDownload(int? Id)
+        {
+            try
+            {
+                if (Id == null)
+                {
+                    return NotFound();
+                }
+
+                var testReportData = _testReportService.GetTestReport((int)Id);
+
+                var getbusinessModel = new Business.Core.Model.TestReportModel
+                {
+                    Id = testReportData.Id,
+                    Client = testReportData.Client,
+                    FilePath = testReportData.FilePath,
+                    JobId = testReportData.JobId,
+                    Name = testReportData.Name,
+                    DateTime = DateTime.Now.Date,       //Accept the Current Date only
+                    Email = testReportData.Email
+                };
+                var fileid = testReportData.FilePath;
+                var downloadData = _googleUploadService.DownloadGoogleFile(fileid);
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(downloadData, FileMode.Open))
+                {
+                    stream.CopyTo(memory);
+                }
+                memory.Position = 0;
+                
+                return File(memory, Helpers.GetContentType(downloadData), Path.GetFileName(downloadData));
+                //TempData["IsTrue"] = true;
+                //return RedirectToAction("TestReport", "TestReportView");
+                }
+            finally
+            {
+               //System.IO.File.Delete((downloadData));
+            }
+        }
+    }
 }

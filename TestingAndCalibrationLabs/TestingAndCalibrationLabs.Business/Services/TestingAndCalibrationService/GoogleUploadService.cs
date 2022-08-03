@@ -19,6 +19,8 @@ using AutoMapper;
 using Google.Apis.Download;
 using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Web;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
@@ -32,17 +34,19 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         private readonly ITestReportRepository _testReportRepository;
         private readonly IConnectionFactory _connectionFactory;
         private readonly IMapper _mapper;
+        //private readonly object file;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
-        private object request;
-        private object uploadData;
+        private string uploadsFolder;
 
+        //private object request;
+        //private object uploadData;
 
         public string ResponseBody { get; private set; }
         public object Get { get; private set; }
         public string FilePath { get; private set; }
+
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="userRepository"></param>
         /// <param name="emailService"></param>
@@ -51,6 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="testReportRepository"></param>
         /// <param name="configuration"></param>
         /// <param name="connectionFactory"></param>
+        
         public GoogleUploadService(IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment, ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
         {
             _userRepository = userRepository;
@@ -62,31 +67,32 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _mapper = mapper;
         }
 
-        public DriveService GetService()
+        public Google.Apis.Drive.v3.DriveService GetService()
         {
             //get Credentials from client_secret.json file 
             UserCredential credential;
-
-            //Root Folder of project
             var CSPath = _hostingEnvironment.WebRootPath;
+
+            
             using (var stream = new FileStream(Path.Combine((string)CSPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
                 FileMode.Open, FileAccess.Read))
             {
-                String FolderPath = (string)_hostingEnvironment.WebRootPath;
-                String FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                GoogleClientSecrets.FromStream(stream).Secrets, Scopes, "user",
-                CancellationToken.None,
-                new FileDataStore(FilePath, true)).Result;
-            }
+                
+                    String FolderPath = (string)_hostingEnvironment.WebRootPath;
+                    String FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
+
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
+             }
+
             //create Drive API service.
-            DriveService service = new Google.Apis.Drive.v3.DriveService(new BaseClientService.Initializer()
+            Google.Apis.Drive.v3.DriveService service = new Google.Apis.Drive.v3.DriveService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = "GoogleDriveMVCUpload",
+                ApplicationName = "GoogleDriveRestAPI-v3",
             });
             return service;
         }
+
 
         /// <summary>
         /// This will create a Service to perform operations on Google Drive
@@ -163,23 +169,22 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="testReportModel"></param>
         private void UploadFileInternal(TestReportModel testReportModel)
         {
-
-            //Read other values from Appsetting.Json
-
             string uploadsFolder = CreateFolder("Test", "new");
-            var contentType = new FileExtensionContentTypeProvider();
-            contentType.TryGetContentType(testReportModel.FilePath, out string fileMime);
+            var fileName = testReportModel.DataUrl.FileName;
+            
+            var dataOfFile = new FileExtensionContentTypeProvider();
+            
+            dataOfFile.TryGetContentType(testReportModel.FilePath, out string fileMime);
+
             DriveService service = GetService();
             var driveFile = new Google.Apis.Drive.v3.Data.File();
-            var uniqueFileName = Guid.NewGuid().ToString();
-            driveFile.Name = uniqueFileName + Path.GetFileName(testReportModel.FilePath);
-
+            driveFile.Name = Path.GetFileName(fileName);
             driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
 
-            using (var fileUpload = testReportModel.DataUrl.OpenReadStream())
+            using (var uploaddataFile = testReportModel.DataUrl.OpenReadStream())
             {
-                var request = service.Files.Create(driveFile, fileUpload, fileMime);
+                var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                 request.Fields = "id";
 
                 var response = request.Upload();
@@ -187,13 +192,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 {
                     throw response.Exception;
                 }
-                //Unique Id from Google Drive after upload of file.
                 testReportModel.FilePath = request.ResponseBody.Id;
 
                 //Saving the data to the database
                 _testReportRepository.Insert(testReportModel);
             }
-
         }
 
         /// <summary>
@@ -273,6 +276,59 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             };
             //Sending mail
             _emailService.Sendemail(getExchangeModel);
+        }
+
+        /// <summary>
+        /// Used to download the file by fileid
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        public string DownloadGoogleFile(string fileId)
+        {
+            Google.Apis.Drive.v3.DriveService service = GetService();
+            string FolderPath = (string)_hostingEnvironment.WebRootPath;
+            Google.Apis.Drive.v3.FilesResource.GetRequest request = service.Files.Get(fileId);
+            string FileName = request.Execute().Name;
+            string dataFileName = FileName;
+            string FilePath = System.IO.Path.Combine(FolderPath, dataFileName);
+            MemoryStream stream = new MemoryStream();
+
+            // Add a handler which will be notified on progress changes.
+            // It will notify on each chunk download and when the
+            // download is completed or failed.
+            request.MediaDownloader.ProgressChanged += (Google.Apis.Download.IDownloadProgress progress) =>
+            {
+                switch (progress.Status)
+                {
+                    case DownloadStatus.Downloading:
+                        {
+                            Console.WriteLine(progress.BytesDownloaded);
+                            break;
+                        }
+                    case DownloadStatus.Completed:
+                        {
+                            Console.WriteLine("Download complete.");
+                            SaveStream(stream, FilePath);
+                            break;
+                        }
+                    case DownloadStatus.Failed:
+                        {
+                            Console.WriteLine("Download failed.");
+                            break;
+                        }
+                }
+            };
+            
+            request.Download(stream);
+            return FilePath;
+        }
+
+        private static void SaveStream(MemoryStream stream, string FilePath)
+        {
+            using (System.IO.FileStream file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                stream.WriteTo(file);
+            }
         }
 
     }

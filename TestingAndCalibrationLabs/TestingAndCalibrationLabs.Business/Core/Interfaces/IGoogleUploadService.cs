@@ -33,6 +33,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="Id"></param>
         void WebLinkMail(TestReportModel testReportModel, int Id);
 
-        
+        /// <summary>
+        /// Used for downloading the data from the Google Drive
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        string DownloadGoogleFile(string fileId);
     }
 }
