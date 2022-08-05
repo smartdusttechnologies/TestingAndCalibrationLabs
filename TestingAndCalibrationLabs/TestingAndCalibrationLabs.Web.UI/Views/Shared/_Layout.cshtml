@@ -47,11 +47,9 @@
             /* STYLES HERE */
         }
 
-        #gridui_length{
-            display:none;
+        #gridui_length {
+            display: none;
         }
-
-
 
     </style>
 
@@ -92,21 +90,24 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="">Get In Touch</a>
                     </li>
-                    <div>
+
                     <li style="padding-top:8px;" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-gear"></i>
+                        <div >
+                            <i class="fa fa-gear"></i>
+
+                            <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-controller="UiCon" asp-action="Index">Ui Control Type</a>
+                                <a class="dropdown-item" asp-controller="UiPageCon" asp-action="Index">Ui Page Controls </a>
+                                <a class="dropdown-item" asp-controller="UiPage" asp-action="Index">Ui Page Type</a>
+                                <a class="dropdown-item" asp-controller="UiPageVal" asp-action="Index">Ui Page Validation</a>
+                            </div>
+                        </div>
                     </li>
-                    <div class="dropdown-menu" style="padding-left:-120px;" id="unn" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" asp-controller="UiCon" asp-action="Index">Ui Control Type</a>
-                        <a class="dropdown-item" asp-controller="UiPageCon" asp-action="Index">Ui Page Controls </a>
-                        <a class="dropdown-item" asp-controller="UiPage" asp-action="Index">Ui Page Type</a>
-                        <a class="dropdown-item" asp-controller="UiPageVal" asp-action="Index">Ui Page Validation</a>
-                   </div>
-            </div>
-            <li class="nav-item justify-content-center">
-                <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
-            </li>
-            </ul>
+                    
+                    <li class="nav-item justify-content-center">
+                        <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
