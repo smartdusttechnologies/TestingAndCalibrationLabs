@@ -28,30 +28,7 @@
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-    <style>
-        @@ media screen and (min-width: 1200px) {
-            /* STYLES HERE */
-            #unn {
-                /*padding-left: -120px;*/
-                padding-right -120px;
-                font-size: 14px;
-            }
-        }
 
-        @@ media screen and (min-device-width: 481px) and (max-device-width: 768px) {
-            /* STYLES HERE */
-            font-size: 14px;
-        }
-
-        @@ media only screen and (max-device-width: 480px) {
-            /* STYLES HERE */
-        }
-
-        #gridui_length {
-            display: none;
-        }
-
-    </style>
 
 </head>
 
@@ -90,25 +67,29 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="">Get In Touch</a>
                     </li>
-
-                    <li style="padding-top:8px;" type="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div >
-                            <i class="fa fa-gear"></i>
-
-                            <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" asp-controller="UiCon" asp-action="Index">Ui Control Type</a>
-                                <a class="dropdown-item" asp-controller="UiPageCon" asp-action="Index">Ui Page Controls </a>
-                                <a class="dropdown-item" asp-controller="UiPage" asp-action="Index">Ui Page Type</a>
-                                <a class="dropdown-item" asp-controller="UiPageVal" asp-action="Index">Ui Page Validation</a>
-                            </div>
-                        </div>
-                    </li>
                     
-                    <li class="nav-item justify-content-center">
-                        <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
-                    </li>
-                </ul>
+                   
+
+                    <li class="nav-item ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-gear"></i>
+                    </a>
+                    <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPage">Ui Page</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiCon">Ui Control</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageVal">Ui Page Validation</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageCon">Ui Page Controls</a>
+                        
+                    </div>
+                </li>
+            
+            <li class="nav-item justify-content-center">
+                <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
+            </li>
+            
+            </ul>
             </div>
+            
         </nav>
     </header>
 
