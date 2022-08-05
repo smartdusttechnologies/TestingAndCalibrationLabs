@@ -19,6 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var pageReq = _uiPageValidationService.GetAll();
             List<Models.UiPageValidation.UiPageValidationModel> pageMod = new List<Models.UiPageValidation.UiPageValidationModel>();
             foreach (var item in pageReq)
@@ -72,32 +73,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 };
                 _uiPageValidationService.Create(backVal);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(pagVal);
-        }
-        [HttpGet]
-        public IActionResult Details (int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var edt = _uiPageValidationService.GetById((int)id);
-            if(edt == null)
-            {
-                return NotFound();
-            }
-            var pagVal = new Models.UiPageValidation.UiPageValidationModel
-            {
-                id =edt.Id,
-                UiPageId = edt.UiPageId, 
-                UiPageName = edt.UiPageName,
-                UiPageMetadataId = edt.UiPageMetadataId,
-                UiPageMetadataName = edt.UiPageMetadataName,
-                UiPageValidationId=edt.UiPageValidationId,
-                UiPageValidationName=edt.UiPageValidationName,
-            };
             return View(pagVal);
         }
         [HttpGet]

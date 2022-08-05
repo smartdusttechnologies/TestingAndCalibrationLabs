@@ -15,6 +15,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var page = _uiPageService.GetAll();
             List<Models.UiPage.UiPageModel> Pages = new List<Models.UiPage.UiPageModel>();
             foreach (var item in page)
@@ -69,6 +70,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
+            var page = _uiPageService.GetAll();
+            List<Models.UiPage.UiPageModel> Pages = new List<Models.UiPage.UiPageModel>();
+            foreach (var item in page)
+            {
+                Pages.Add(new Models.UiPage.UiPageModel { id = item.Id, Name = item.Name });
+            }
+            ViewBag.page = Pages.ToList();
             return base.View(new Models.UiPage.UiPageModel { id = id });
         }
 
@@ -85,33 +93,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 };
                 _uiPageService.Create(userbackModel);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(pageModel);
         }
-
-        [HttpGet]
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var con = _uiPageService.GetById((int)id);
-            if (con == null)
-            {
-                return NotFound();
-            }
-            var UIModel = new Models.UiPage.UiPageModel
-            {
-                id = con.Id,
-                Name = con.Name,
-
-            };
-            return View(UIModel);
-        }
-
-
         public IActionResult Delete(int? id)
         {
             if (id == null)

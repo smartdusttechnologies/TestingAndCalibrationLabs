@@ -4,58 +4,66 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Ui Page Controls</h1>
 
-<h4>UiPageControlModel</h4>
+<h4>Create</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-             <label for="UiPageName">Select Page:</label>
-
-            <select asp-for="UiPageTypeId">
-               @foreach (var item in ViewBag.Page)
-              {
-                  
-                   <option value=@item.PageId>@item.PageName</option>
-              }
-            </select>
-          
-             <label for="UiControlType">Select Control:</label>
-
-            <select asp-for="UiControlTypeId">
-               @foreach (var item in ViewBag.Control)
-              {
-                   <option value=@item.ControlId>@item.ControlName</option>
-              }
-            </select>
-            <br/>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
-                </label>
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageCon" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiPageTypeId" class="form-label"></label>
+                    <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+                        <option disabled="disabled" selected>Select Pages ...</option>
+                        @foreach (var item in ViewBag.Page)
+                        {
+                            <option value=@item.PageId>@item.PageName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiControlTypeId" class="form-label"></label>
+                    <select class="form-input " name="UiControlTypeId" id="uiconType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
+                        <option disabled="disabled" selected>Select Control ...</option>
+                        @foreach (var item in ViewBag.Control)
+                        {
+                            <option value=@item.ControlId>@item.ControlName</option>
+                        }
+                    </select>
+                </div>
             </div>
-            <br/>
-            <div class="form-group">
-                <label asp-for="UiControlDisplayName" class="control-label"></label>
-                <input asp-for="UiControlDisplayName" class="form-control" />
-                <span asp-validation-for="UiControlDisplayName" class="text-danger"></span>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiDataType" class="form-label"></label>
+                    <select class="form-input" name="UiDataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="UiDataTypeId">
+                        <option disabled="disabled" selected>Select Data Type ...</option>
+                        @foreach (var item in ViewBag.Data)
+                        {
+                            <option value=@item.DataId>@item.DataName</option>
+                        }
+                    </select>
+                </div>
             </div>
-           
-            <br/>
-            <label for="UiDataType">Select Data Type:</label>
-
-            <select asp-for="UiDataTypeId">
-               @foreach (var item in ViewBag.Data)
-              {
-                   <option value=@item.DataId>@item.DataName</option>
-              }
-            </select>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row ms-1 me-1">
+                <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsRequired" />
+                            @Html.DisplayNameFor(model => model.IsRequired)
+                        </label>
+                </div>
+            </div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                    <input class="form-input width-full" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
+                    <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
+                </div>
+            </div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                </div>
             </div>
         </form>
     </div>
@@ -66,5 +74,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

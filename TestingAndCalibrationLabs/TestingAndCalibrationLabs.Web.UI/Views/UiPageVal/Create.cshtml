@@ -4,46 +4,53 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Ui Page Validation </h1>
 
-<h4>UiPageValidationModel</h4>
+<h4>Create</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageVal" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiPageId" class="form-label"></label>
+                    <select class="form-input " name="UiPageId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageId">
+                        <option disabled="disabled" selected>Select Pages ...</option>
+                        @foreach (var item in ViewBag.Page)
+                        {
+                            <option value=@item.PageId>@item.PageName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiControlDisplayName" class="form-label"></label>
+                    <select class="form-input " name="UiPageMetadataId" id="uimetadataType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
+                        <option disabled="disabled" selected>Select Metadata ...</option>
+                        @foreach (var item in ViewBag.Metadata)
+                        {
+                            <option value=@item.MetadataId>@item.MetadataName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiPageValidationId" class="form-label">:</label>
+                    <select class="form-input" name="UiPageValidationId" id="uivalType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationId">
+                        <option disabled="disabled" selected>Select Validation Type ...</option>
+                        @foreach (var item in ViewBag.Val)
+                        {
+                            <option value=@item.ValId>@item.ValName</option>
+                        }
+                    </select>
+                </div>
+            </div>
            
-            <label for="UiPageName">Select Page:</label>
-
-            <select asp-for="UiPageId">
-               @foreach (var item in ViewBag.Page)
-              {
-                  
-                   <option value=@item.PageId>@item.PageName</option>
-              }
-            </select>
-           
-            <label for="UiMetadataName">Select Metadata:</label>
-
-            <select asp-for="UiPageMetadataId">
-               @foreach (var item in ViewBag.Metadata)
-              {
-                  
-                   <option value=@item.MetadataId>@item.MetadataName</option>
-              }
-            </select>
-           
-            <label for="UiPageValidationName">Select Validation Type:</label>
-
-            <select asp-for="UiPageValidationId">
-               @foreach (var item in ViewBag.Val)
-              {
-                  
-                   <option value=@item.ValId>@item.ValName</option>
-              }
-            </select>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                </div>
             </div>
         </form>
     </div>

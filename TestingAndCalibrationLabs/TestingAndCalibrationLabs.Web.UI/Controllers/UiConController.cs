@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var control = _uiControlServices.GetAll();
             List<Models.UiControl.UiControlModel> sampless = new List<Models.UiControl.UiControlModel>();
            
@@ -75,6 +75,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
+
             return base.View(new Models.UiControl.UiControlModel { id = id });
         }
 
@@ -92,34 +93,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     
                 };
                 _uiControlServices.Create(userbackModel);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(conModel);
         }
 
-        [HttpGet]
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var con = _uiControlServices.Get((int)id);
-            if (con == null)
-            {
-                return NotFound();
-            }
-            var UIModel = new Models.UiControl.UiControlModel
-            {
-                id = con.Id,
-                Name = con.Name,
-                DisplayName = con.DisplayName,
-            
-            };
-            return View(UIModel);
-        }
-
-
+        
         public IActionResult Delete(int? id)
         {
             if (id == null)

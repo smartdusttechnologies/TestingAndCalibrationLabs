@@ -23,6 +23,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var pageCon = _uiPageControlService.GetAll();
             List<Models.UiPageControl.UiPageControlModel> pageCons = new List<Models.UiPageControl.UiPageControlModel>();
             foreach (var item in pageCon)
@@ -81,39 +82,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 };
                 _uiPageControlService.Create(userbackModel);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(pageModel);
         }
-
-        [HttpGet]
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var con = _uiPageControlService.GetById((int)id);
-            if (con == null)
-            {
-                return NotFound();
-            }
-            var UIModel = new Models.UiPageControl.UiPageControlModel
-            {
-                id = con.Id,
-                UiControlTypeId = con.UiControlTypeId,
-                UiControlType = con.UiControlType,
-                UiPageTypeId = con.UiPageTypeId,
-                UiPageName =con.UiPageName,
-                IsRequired = con.IsRequired,
-                UiControlDisplayName = con.UiControlDisplayName,
-                UiDataTypeId=con.UiDataTypeId,
-                UiDataTypeName=con.UiDataTypeName,
-                
-
-            };
-            return View(UIModel);
-        }
+        
         [HttpGet]
         public IActionResult Edit(int? id,int pId,int cId,int dId)
         {
