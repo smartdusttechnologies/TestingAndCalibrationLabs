@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TestingAndCalibrationLabs.Business.Common
@@ -19,7 +20,21 @@ namespace TestingAndCalibrationLabs.Business.Common
         {
             return obj == null ? new List<T>() : obj.ToList();
         }
-        #endregion
-    }
 
+        public static string GetDbTableName<T>()
+        {
+            var tableAttribute = typeof(T).GetCustomAttributes(
+                typeof(DbTableAttribute), true
+            ).FirstOrDefault() as DbTableAttribute;
+            if (tableAttribute != null)
+            {
+                return tableAttribute.Name;
+            }
+            return null;
+        }
+
+        #endregion
+
+    }
 }
+

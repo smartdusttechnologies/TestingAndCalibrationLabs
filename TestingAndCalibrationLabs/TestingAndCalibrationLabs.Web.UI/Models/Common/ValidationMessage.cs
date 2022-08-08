@@ -1,5 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Business.Common
+﻿namespace TestingAndCalibrationLabs.Web.UI.Models
 {
+
     public class ValidationMessage
     {
         /// <summary>
@@ -10,7 +11,7 @@
 
         public virtual ValidationSeverity Severity { get; set; }
         public string MessageKey { get; set; }
-        public int SourceId { get; set; }
+        public int SourceId { get; set; }       //sourceId
         public string Description { get; set; }
         #endregion
     }

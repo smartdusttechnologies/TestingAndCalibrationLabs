@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 
@@ -29,8 +32,10 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
-            
+
             //Services
+            services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
@@ -42,6 +47,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             
             //Repository
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
+            services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
+            services.AddScoped<IGenericRepository<UiPageValidationTypes>, GenericRepository<UiPageValidationTypes>>();
+            services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<ILoggerRepository, LoggerRepository>();
@@ -49,6 +59,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISecurityParameterRepository, SecurityParameterRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
