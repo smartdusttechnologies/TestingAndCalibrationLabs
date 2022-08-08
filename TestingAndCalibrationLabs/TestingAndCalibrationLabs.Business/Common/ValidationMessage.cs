@@ -1,6 +1,5 @@
 ﻿namespace TestingAndCalibrationLabs.Business.Common
 {
-
     public class ValidationMessage
     {
         /// <summary>

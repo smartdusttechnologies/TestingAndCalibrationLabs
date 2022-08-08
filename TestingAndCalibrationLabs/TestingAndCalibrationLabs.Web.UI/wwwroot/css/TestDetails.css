@@ -73,6 +73,7 @@ body {
 .form-element input:focus {
     border-color: dodgerblue;
     box-shadow: 0 0 3px 0 dodgerblue;
+    transition: 0.3s all;
 }
 
 .form-element input:hover {
