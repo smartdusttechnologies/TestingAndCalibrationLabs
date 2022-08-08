@@ -7,10 +7,10 @@
 <hr />
 <div class="container-fluid">
     <div>
-       <form id="commonForm" asp-controller="Sample" asp-action="Edit">
+       <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="UiPageId" />
+            <input type="hidden" asp-for="Id"  id="Id" name="Id"/>
+               <input type="hidden" asp-for="UiPageId" id="UiPageId" name="UiPageId"/>
             <div class="row">
             @foreach (var item in Model.Fields)
             {
@@ -93,7 +93,7 @@
         }
         var uiPageId = parseInt($("#UiPageId").val())
         var id = parseInt($("#Id").val())
-
+       
         $.ajax({
             type: 'POST',
             url: url,
@@ -115,7 +115,7 @@
             //    var s = newErrorMessage.fid//Sending the reason to html 
                
                   document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
-                  document.getElementById("lefid").value = newErrorMessage.fid;
+                  document.getElementById("lefid").value = newErrorMessage.sourceId;
             }
         });
     }

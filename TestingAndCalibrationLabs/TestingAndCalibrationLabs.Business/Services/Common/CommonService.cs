@@ -99,11 +99,13 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         public RecordModel GetRecordById(int recordId)
         {
-            var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
-            var uiMetadata = _commonRepository.GetUiPageMetadata(uiPage.Id);
+
+            //   var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
+            var recordMdel = _recordGenericRepository.Get(recordId);
+            var uiMetadata = _commonRepository.GetUiPageMetadata(recordMdel.UiPageId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
 
-            return new RecordModel { Id = recordId, UiPageId = uiPage.Id, Fields = uiMetadata.Fields, FieldValues = uiPageData };
+            return new RecordModel { Id = recordId, UiPageId = recordMdel.UiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageData };
         }
 
 

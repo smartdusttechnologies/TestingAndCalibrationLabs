@@ -41,18 +41,18 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                             WHERE upv.UiPageId=@uiPageId", new { uiPageId }).ToList();
         }
 
-        public RecordModel GetUiPageMetadata(int uiPageTypeId)
+        public RecordModel GetUiPageMetadata(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageTypeId, upt.[Name] as UiPageName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlType, upm.UiControlDisplayName
+            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageId, upt.[Name] as UiPageName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlType, upm.UiControlDisplayName
                                                     From [UiPageMetadata] upm
-                                                    inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
+                                                    inner join [UiPageType] upt on upm.UiPageId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id 
-                                                where upm.UiPageTypeId=@uiPageTypeId 
+                                                where upm.UiPageId=@uiPageId 
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
-                                                    and uct.IsDeleted = 0", new { uiPageTypeId }).ToList();
-            return new RecordModel { UiPageId = uiPageTypeId, Fields = metadata };
+                                                    and uct.IsDeleted = 0", new { uiPageId }).ToList();
+            return new RecordModel { UiPageId = uiPageId, Fields = metadata };
         }
 
         /// <summary>
