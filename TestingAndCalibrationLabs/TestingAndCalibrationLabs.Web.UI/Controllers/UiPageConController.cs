@@ -71,7 +71,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userbackModel = new TestingAndCalibrationLabs.Business.Core.Model.UiPageControl.UiPageControlModel
+                var userbackModel = new Business.Core.Model.UiPageControl.UiPageControlModel
                 {
                     Id = pageModel.id,
                     UiPageTypeId = pageModel.UiPageTypeId,

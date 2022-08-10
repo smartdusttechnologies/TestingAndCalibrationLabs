@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageVal" novalidate>
+        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageVal" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
@@ -61,7 +61,7 @@
            
             <div class="row ms-1 me-1">
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                    <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
             </div>
         </form>

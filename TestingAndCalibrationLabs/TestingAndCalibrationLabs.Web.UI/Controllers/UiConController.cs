@@ -85,7 +85,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userbackModel = new TestingAndCalibrationLabs.Business.Core.Model.UiControl.UiControlModel
+                var userbackModel = new Business.Core.Model.UiControl.UiControlModel
                 {
                     Id = conModel.id,
                     Name = conModel.Name,
