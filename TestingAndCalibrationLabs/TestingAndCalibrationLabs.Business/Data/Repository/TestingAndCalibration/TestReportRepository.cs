@@ -1,8 +1,6 @@
-﻿using System;
-using Dapper;
+﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -13,7 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
     public class TestReportRepository : ITestReportRepository
     {
         private readonly IConnectionFactory _connectionFactory;
-
+        
         public TestReportRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
@@ -83,5 +81,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
             db.Execute(query, new { IsDeleted = true, Id = id });
             return true;
         }
+
+        
     }
 }

@@ -10,18 +10,13 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Services
 
-
-
-
 {
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _configuration;
-        private readonly ITestReportService _testReportService;
-        public EmailService(IConfiguration configuration, ITestReportService testReportService)
+        public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _testReportService = testReportService;
         }
         
         /// <summary>

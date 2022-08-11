@@ -33,5 +33,18 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         TestReportModel GetTestReport(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="testReportModel"></param>
+        /// <param name="Id"></param>
+        //void WebLinkMail(TestReportModel testReportModel, int Id);
+
+        void UploadFileAndSendMail(TestReportModel testReportModel);
+
+        void UploadFile(TestReportModel getbusinessModel);
+
+        AttachmentModel DownLoadAttachment(string fileId);
     }
 }

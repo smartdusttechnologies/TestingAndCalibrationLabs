@@ -6,6 +6,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class EmailModel 
     {
+        internal object myString;
+
         /// <summary>
         /// It will be used as Email address, where the mail will be sent
         /// </summary>

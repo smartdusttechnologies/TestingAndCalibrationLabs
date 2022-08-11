@@ -20,6 +20,12 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         /// <param name="testReportModel"></param>
         /// <returns></returns>
         int Get(TestReportModel testReportModel);
+        
+        /// <summary>
+        /// To insert record into database the values from UI
+        /// </summary>
+        /// <param name="testReportModel"></param>
+        //void Insert(TestReportModel testReportModel);
 
         /// <summary>
         /// To update the Record

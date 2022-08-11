@@ -10,6 +10,7 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using TestReportModel = TestingAndCalibrationLabs.Web.UI.Models.TestReportModel;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -19,10 +20,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
-        private readonly ITestReportService _newUIService;
-        private readonly IDriveDownloadFile _googleUploadService;
+        //private readonly IGoogleUploadDownloadService _googleUploadDownloadService;
         private readonly IEmailService _emailService;
-        private readonly ITestReportRepository _testReportRepository;
+       // private readonly ITestReportRepository _testReportRepository;
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
         private string downloadData;
@@ -32,15 +32,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
 
-        public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, ITestReportService newUIService, IDriveDownloadFile googleUploadService)
+        public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleUploadDownloadService googleUploadDownloadService)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
-            _newUIService = newUIService;
-            _googleUploadService = googleUploadService;
+           // _googleUploadDownloadService = googleUploadDownloadService;
             _emailService = emailService;
-            _testReportRepository = testReportRepository;
+           // _testReportRepository = testReportRepository;
             _testReportService = testReportService;
             _mapper = mapper;
         }
@@ -55,6 +54,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
         }
+
         /// <summary>
         /// To Upload or Upload and Send Mail 
         /// </summary>
@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind] EmailModel emailModel, TestReportModel testReportModel, bool IsSendAndUpload)
+        public ActionResult Index([Bind] TestReportModel testReportModel, bool IsSendAndUpload)
         {
             if (ModelState.IsValid)
             {
@@ -81,11 +81,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 };
                 if (IsSendAndUpload == false)
                 {
-                    _googleUploadService.UploadFile(getbusinessModel);
+                    _testReportService.UploadFile(getbusinessModel);
                 }
                 else if (IsSendAndUpload == true)
                 {
-                    _googleUploadService.UploadFileAndSendMail(getbusinessModel);
+                     _testReportService.UploadFileAndSendMail(getbusinessModel);
                 }
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -138,7 +138,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             };
 
             //Sends link
-            _googleUploadService.WebLinkMail(getbusinessModel, datafForMail.Id);
+               // _testReportService.WebLinkMail(getbusinessModel, datafForMail.Id);
             //Redirect to Page "DataView"
             return RedirectToAction("TestReportView");
         }
@@ -146,6 +146,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult TestReportDownload(int? Id)
         {
+            
             try
             {
                 if (Id == null)
@@ -154,34 +155,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 }
 
                 var testReportData = _testReportService.GetTestReport((int)Id);
-
-                var getbusinessModel = new Business.Core.Model.TestReportModel
-                {
-                    Id = testReportData.Id,
-                    Client = testReportData.Client,
-                    FilePath = testReportData.FilePath,
-                    JobId = testReportData.JobId,
-                    Name = testReportData.Name,
-                    DateTime = DateTime.Now.Date,       //Accept the Current Date only
-                    Email = testReportData.Email
-                };
+                List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
+                var testReportValue = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
                 var fileid = testReportData.FilePath;
-                var downloadData = _googleUploadService.DownloadGoogleFile(fileid);
-                var memory = new MemoryStream();
-                using (var stream = new FileStream(downloadData, FileMode.Open))
-                {
-                    stream.CopyTo(memory);
-                }
-                memory.Position = 0;
-                
-                return File(memory, Helpers.GetContentType(downloadData), Path.GetFileName(downloadData));
-                //TempData["IsTrue"] = true;
-                //return RedirectToAction("TestReport", "TestReportView");
-                }
+                AttachmentModel attachment = _testReportService.DownLoadAttachment(fileid);
+                return File(attachment.FileStream, attachment.ContentType, attachment.FileName);
+            }
             finally
             {
-               //System.IO.File.Delete((downloadData));
+                //System.IO.File.Delete(attachment);
             }
         }
+
     }
 }

@@ -16,10 +16,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         public string Client { get; set; }
 
+        
         /// <summary>
         /// It is the location where the uploded file can be accessed.
         /// </summary>
-        public string FilePath { get; set; }
+        public string FilePath { get; set; } 
 
         /// <summary>
         /// Interface that represents transmitted file, used here to upload the file
