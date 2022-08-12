@@ -1,6 +1,6 @@
 ﻿using TestingAndCalibrationLabs.Business.Common;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model.Common
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
 
     [DbTable("UiPageMetadata")]

@@ -1,5 +1,4 @@
-﻿using System.Data;
-namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public abstract class Entity
     {

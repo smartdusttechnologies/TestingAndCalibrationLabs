@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 

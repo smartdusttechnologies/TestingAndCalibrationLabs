@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using TestingAndCalibrationLabs.Business.Core.Model.UiPageValidation;
+using TestingAndCalibrationLabs.Business.Core.Model.UiPageVal;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 

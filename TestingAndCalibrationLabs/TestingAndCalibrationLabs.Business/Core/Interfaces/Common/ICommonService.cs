@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
