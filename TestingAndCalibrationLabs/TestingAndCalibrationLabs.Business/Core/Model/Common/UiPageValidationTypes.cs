@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model.Common
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    /// <summary>
+    /// Declaring properties for operations
+    /// </summary>
     [DbTable("UiPageValidationType")]
     public class UiPageValidationTypes: Entity
     {

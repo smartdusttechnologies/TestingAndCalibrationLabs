@@ -4,6 +4,9 @@ using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model.Common
 {
+    /// <summary>
+    /// Declaring properties for operations
+    /// </summary>
     public class UiPageValidation : Entity
     {
         public int UiPageId { get; set; }

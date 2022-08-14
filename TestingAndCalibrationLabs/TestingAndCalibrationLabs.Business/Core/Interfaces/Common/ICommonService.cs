@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using TestingAndCalibrationLabs.Business.Core.Model;
+﻿using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -10,11 +8,46 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// </summary>
     public interface ICommonService
     {
+        /// <summary>
+        /// Implimenting interface for Add Class, It is used for Insertion.
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         RequestResult<bool> Add(RecordModel record);
+
+        /// <summary>
+        /// Implimenting interface for  Update Class
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         RequestResult<bool> Update(RecordModel record);
+
+        /// <summary>
+        /// Implimenting Delete for Class.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         bool Delete(int id);
+        
+        /// <summary>
+        /// Implimenting for  GetUiPageMetadata
+        /// </summary>
+        /// <param name="uiPageId"></param>
+        /// <returns></returns>
         RecordModel GetUiPageMetadata(int uiPageId);
-        RecordsModel GetRecords();
+
+        /// <summary>
+        /// Implimenting interface dor GetRecords
+        /// </summary>
+        /// <param name="uiPageId"></param>
+        /// <returns></returns>
+        RecordsModel GetRecords(int uiPageId);
+
+        /// <summary>
+        /// Implimenting interface for GetRecordById
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
         RecordModel GetRecordById(int recordId);
     }
 }

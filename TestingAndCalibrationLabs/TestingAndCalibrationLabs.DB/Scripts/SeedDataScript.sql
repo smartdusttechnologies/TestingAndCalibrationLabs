@@ -1146,17 +1146,17 @@ INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageVa
 GO
 INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (2, 1, 7, 3, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (3, 1, 1035, 1003, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (3, 1, 1035, 4, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (4, 1, 1036, 1004, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (4, 1, 1036, 5, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (5, 1, 2, 1005, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (5, 1, 2, 6, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (6, 1, 3, 1006, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (6, 1, 3, 7, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (7, 1, 2, 1006, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (7, 1, 2, 7, 0)
 GO
-INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (8, 1, 3, 1006, 0)
+INSERT [dbo].[UiPageValidation] ([Id], [UiPageId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted]) VALUES (8, 1, 3, 7, 0)
 GO
 SET IDENTITY_INSERT [dbo].[UiPageValidation] OFF
 GO
@@ -1168,13 +1168,13 @@ INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Messag
 GO
 INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (3, N'AdharLength', 0, N'12', N'AdharLength should be equal to 12')
 GO
-INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (1003, N'MobileNumberLength', 0, N'10', N'Mobile Number length is equal to 10')
+INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (4, N'MobileNumberLength', 0, N'10', N'Mobile Number length is equal to 10')
 GO
-INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (1004, N'Year', 0, N'4', N'Year length is equal to 4')
+INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (5, N'Year', 0, N'4', N'Year length is equal to 4')
 GO
-INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (1005, N'Name', 1, N'3', N'Name should have more than 3 letters')
+INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (6, N'Name', 1, N'3', N'Name should have more than 3 letters')
 GO
-INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (1006, N'IsRequired', 0, N'', N'{0} Field is rquired')
+INSERT [dbo].[UiPageValidationType] ([Id], [Name], [IsDeleted], [Value], [Message]) VALUES (7, N'IsRequired', 0, N'', N'{0} Field is rquired')
 GO
 SET IDENTITY_INSERT [dbo].[UiPageValidationType] OFF
 GO
