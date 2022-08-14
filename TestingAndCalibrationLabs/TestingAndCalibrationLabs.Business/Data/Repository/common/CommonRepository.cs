@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.common

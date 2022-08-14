@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Cui;
-using TestingAndCalibrationLabs.Business.Core.Model.UiPageValidation;
+using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui;
 
 namespace TestingAndCalibrationLabs.Business.Services.Cui

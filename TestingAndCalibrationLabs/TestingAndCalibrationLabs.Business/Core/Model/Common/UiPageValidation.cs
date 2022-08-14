@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model.Common
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
     /// Declaring properties for operations

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestingAndCalibrationLabs.Business.Core.Model.Common
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
     /// Declaring properties for operations
@@ -11,6 +11,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model.Common
     {
         public int UiPageId { get; set; }
         public List<UiPageMetadataModel> Fields { get; set; }
-        public Dictionary<int, List<Core.Model.Common.UiPageDataModel>> FieldValues { get; set; }
+        public Dictionary<int, List<Core.Model.UiPageDataModel>> FieldValues { get; set; }
     }
 }

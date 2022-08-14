@@ -10,8 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.common;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Cui;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Cui;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.Cui;
@@ -112,7 +110,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=UiCon}/{action=Index}/{id?}");
             });
            
         }

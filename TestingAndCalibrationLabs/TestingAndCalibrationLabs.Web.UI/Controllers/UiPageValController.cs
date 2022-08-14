@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var backVal = new Business.Core.Model.UiPageValidation.UiPageValidationModel
+                var backVal = new Business.Core.Model.UiPageValidationModel
                 {
                     Id=pagVal.id,
                     UiPageId = pagVal.UiPageId,
@@ -137,7 +137,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             if (ModelState.IsValid)
             {
-                var backVal = new Business.Core.Model.UiPageValidation.UiPageValidationModel
+                var backVal = new Business.Core.Model.UiPageValidationModel
                 {
                     Id= pageVal.id,
                     UiPageName = pageVal.UiPageName,
