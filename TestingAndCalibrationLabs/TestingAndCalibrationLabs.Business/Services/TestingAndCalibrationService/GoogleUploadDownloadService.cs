@@ -35,15 +35,9 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         private readonly ITestReportRepository _testReportRepository;
         private readonly IConnectionFactory _connectionFactory;
         private readonly IMapper _mapper;
-       // private readonly ITestReportService _testReportService;
-
-        //private readonly object file;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
         private string uploadsFolder;
-
-        //private object request;
-        //private object uploadData;
 
         public string ResponseBody { get; private set; }
         public object Get { get; private set; }
@@ -70,20 +64,20 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// To initiate the Google Drive Service of Google
+        /// </summary>
+        /// <returns></returns>
         public Google.Apis.Drive.v3.DriveService GetService()
         {
             //get Credentials from client_secret.json file 
             UserCredential credential;
             var CSPath = _hostingEnvironment.WebRootPath;
-
-
             using (var stream = new FileStream(Path.Combine((string)CSPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
                 FileMode.Open, FileAccess.Read))
             {
-
                 String FolderPath = (string)_hostingEnvironment.WebRootPath;
                 String FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
-
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
             }
 
@@ -156,21 +150,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         }
 
         /// <summary>
-        /// This will use a html format to send the mail containing the link of the data.
-        /// </summary>
-        /// <param name="emailTemplate"></param>
-        /// <returns></returns>
-        private string DataLinkMail(string emailTemplate)
-        {
-            string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:SendDataMailLink"])))
-            {
-                body = reader.ReadToEnd();
-            }
-            return body;
-        }
-
-        /// <summary>
         /// This method is used to Upload the file only 
         /// </summary>
         /// <param name="testReportModel"></param>
@@ -178,62 +157,32 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             string uploadsFolder = CreateFolder("Test", "new");
             var fileName = attachmentModel.DataUrl.FileName;
-
             var dataOfFile = new FileExtensionContentTypeProvider();
-
             dataOfFile.TryGetContentType(attachmentModel.FilePath, out string fileMime);
-
             DriveService service = GetService();
             var driveFile = new Google.Apis.Drive.v3.Data.File();
             driveFile.Name = Path.GetFileName(fileName);
             driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
-
-            using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())
-            {
+            using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())            {
                 var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                 request.Fields = "id";
-
                 var response = request.Upload();
                 if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
                 {
                     throw response.Exception;
                 }
                 attachmentModel.FilePath = request.ResponseBody.Id;
-
                 //returning the ResponseBody Id received from Google drive after upload
                 return attachmentModel.FilePath;
             }
         }
 
         /// <summary>
-        /// This method is used to Upload the file and send mail
-        /// </summary>
-        /// <param name="testReportModel"></param>
-        //public void UploadFileAndSendMail(AttachmentModel attachmentModel) 
-        //{
-        //    UploadFileInternal(attachmentModel);
-        //    var exchangeModel = new Business.Core.Model.TestReportModel
-        //    {
-        //        Id = attachmentModel.Id,
-        //        Name = attachmentModel.Name,
-        //        JobId = attachmentModel.JobId,
-        //        Client = attachmentModel.Client,
-        //        Email = attachmentModel.Email,
-        //        DataUrl = attachmentModel.DataUrl,
-        //        FilePath = attachmentModel.FilePath,
-        //        DateTime = attachmentModel.DateTime,
-        //    };
-        //    //TestReportModel.ReferenceEquals(exchangeModel, null);   
-        //    _testReportService.WebLinkMail(exchangeModel, attachmentModel.Id);
-        //}
-                
-        ///// <summary> // To resolve
-        /// Used to download the file by fileid
+        /// Private function to download the file.
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        /// 
         private string DownloadGoogleFile(string fileId)
         {
             Google.Apis.Drive.v3.DriveService service = GetService();
@@ -270,29 +219,43 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                         }
                 }
             };
-
             request.Download(stream);
             return FilePath;
-
         }
 
+        /// <summary>
+        /// To Download file from Google Drive using unique Response Body Id
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
         public AttachmentModel DownLoadAttachment(string fileId)
         {
             string filepath = DownloadGoogleFile(fileId);
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(filepath, FileMode.Open))
+            try
             {
-                stream.CopyTo(memory);
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filepath, FileMode.Open))
+                {
+                    stream.CopyTo(memory);
+                }
+                memory.Position = 0;
+                AttachmentModel attachment = new AttachmentModel();
+                attachment.FileStream = memory;
+                attachment.FileName = Path.GetFileName(filepath);
+                attachment.ContentType = Helpers.GetContentType(filepath);
+                return attachment;  
             }
-            memory.Position = 0;
-
-            AttachmentModel attachment = new AttachmentModel();
-            attachment.FileStream = memory;
-            attachment.FileName = Path.GetFileName(filepath);
-            attachment.ContentType = Helpers.GetContentType(filepath);
-            return attachment;
+            finally
+            {
+                System.IO.File.Delete(filepath);
+            }
         }
 
+        /// <summary>
+        /// Private function to save the file downloaded.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="FilePath"></param>
         private static void SaveStream(MemoryStream stream, string FilePath)
         {
             using (System.IO.FileStream file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite))
