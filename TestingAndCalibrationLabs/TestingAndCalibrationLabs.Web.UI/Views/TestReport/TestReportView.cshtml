@@ -35,8 +35,8 @@
                         <td> @Html.DisplayFor(modelItem => item.JobId)</td>
                         <td> @Html.DisplayFor(modelItem => item.Email)</td>
                         <td>
-                            <a asp-controller="TestReport" asp-action="TestReportDownload" id="downloadAction" asp-route-id="@item.Id"><i class='fa fa-cloud-download'></i></a><b>||</b>
-                            <a asp-action="sendEmail" id="sendMail" asp-route-id="@item.Id"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                            <a asp-controller="TestReport" asp-action="TestReportDownload" id="downloadAction" asp-route-id="@item.Id" onclick="return downloadAction(this, 'Pls Wait!!!');"><i class='fa fa-cloud-download'></i></a><b>||</b>
+                            <a asp-action="sendEmail" id="sendMail" asp-route-id="@item.Id"onclick="return sendMail(this, 'Pls Wait!!!');"><i class="fa fa-envelope" aria-hidden="true" ></i></a>
                         </td>
                     </tr>
                 }
@@ -59,6 +59,21 @@
             </div>
         </div>
     }
+    else 
+    @if (ViewBag.FileDownloaded != null && ViewBag.FileDownloaded)
+    {
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+            </symbol>
+        </svg>
+        <div class="d-flex justify-content-center fixed-bottom">
+            <div class="alert alert-success" role="alert" id="snackbar">
+                <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+                <span><strong>File downloaded successfully!!! Thank You</strong></span>
+            </div>
+        </div>
+    }
 </div>
 
 <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
@@ -66,7 +81,7 @@
     <i class="fa fa-2x fa-spinner fa-spin"></i>
     <label>Please wait while Saving Data...</label>
 </div>
-<!-- ** END POP-UP MESSAGE AREA ** -->
+<!-- ** END POP-UP MESSAGE AREA ** --> 
    
     <script>
         oTable = $('#testDetailsGrid').DataTable({
@@ -81,8 +96,7 @@
             oTable.search($(this).val()).draw();
         })
     </script>
-
-                
+      
 <script>
     function downloadAction(ctl, msg) {
         
@@ -98,12 +112,11 @@
         $('#testDetailsGrid').click();
         return true;
     }
-</scrpit>
-<script>
+
     function sendMail(ctl, msg) {
         
         // Turn off the "Save" button and change text
-        $(ctl).prop("disabled", true).text(msg);
+        $(ctl).prop("disabled", true).text(msg); 
         // Gray out background on page
         $("body").addClass("submit-progress-bg");
         // Wrap in setTimeout so the UI can update the spinners

@@ -99,6 +99,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             //ViewBag.data;
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+            ViewBag.fileDownloaded = TempData["FileDownloaded"] != null ? TempData["FileDownloaded"] : false;
             List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
             var testReportData = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
             return View(testReportData);
@@ -145,6 +146,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult TestReportDownload(int? Id)
         {
+            {
                 if (Id == null)
                 {
                     return NotFound();
@@ -154,7 +156,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var testReportValue = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
                 var fileid = testReportData.FilePath;
                 AttachmentModel attachment = _testReportService.DownLoadAttachment(fileid);
-                return File(attachment.FileStream, attachment.ContentType, attachment.FileName);
+                TempData["FileDownloaded"] = true;
+                return File(attachment.FileStream, attachment.ContentType, attachment.FileName); 
+            }
+            // return RedirectToAction("TestReportView");
         }
     }
 }
