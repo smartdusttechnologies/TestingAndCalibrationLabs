@@ -16,7 +16,7 @@
             {
                 var Controlvalue = Model.FieldValues.Where(x => x.UiControlId == item.Id).FirstOrDefault()?.Value;
                  <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                  <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)" value="@Controlvalue">
+                  <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)" value="@Controlvalue">
                   <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                </div>
 

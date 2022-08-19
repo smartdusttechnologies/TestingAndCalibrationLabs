@@ -17,7 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
         private readonly IGenericRepository<UiPageDataModel> _uiPageDataGenericRepository;
         private readonly IGenericRepository<UiPageMetadataModel> _uiPageMetaDataGenericRepository;
-        private readonly IGenericRepository<UiPageValidationTypes> _uiPageValidationTypesGenericRepository;
+        private readonly IGenericRepository<UiPageValidationTypeModel> _uiPageValidationTypesGenericRepository;
 
 
         public CommonService(ICommonRepository commonRepository,
@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
             IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
             IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
-            IGenericRepository<UiPageValidationTypes> uiPageValidationTypesGenericRepository)
+            IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository)
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
@@ -115,8 +115,8 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         private RequestResult<bool> Validate(RecordModel record)
         {
-            List<UiPageValidation> validations = _commonRepository.GetUiPageValidations(record.UiPageId);
-            List<UiPageValidationTypes> validationtypes = _uiPageValidationTypesGenericRepository.Get();
+            List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageId);
+            List<UiPageValidationTypeModel> validationtypes = _uiPageValidationTypesGenericRepository.Get();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
 
@@ -124,10 +124,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 foreach (var item in validations)
                 {
-                    if (item.UiPageMetadataId == field.UiControlId)
+                    if (item.UiPageMetadataTypeId == field.UiControlId)
                     {
                         var validationlist = _uiPageValidationTypesGenericRepository.Get(item.UiPageValidationTypeId);
-                        var uipagedata = _uiPageMetaDataGenericRepository.Get(item.UiPageMetadataId);
+                        var uipagedata = _uiPageMetaDataGenericRepository.Get(item.UiPageMetadataTypeId);
 
                         switch ((ValidationType)item.UiPageValidationTypeId)
                         {
@@ -135,38 +135,38 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 if (string.IsNullOrEmpty(field.Value))
                                 {
                                     string errorMessage = string.Format(validationlist.Message, uipagedata.UiControlDisplayName);
-                                    validationMessages.Add(new ValidationMessage { Reason = errorMessage, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = errorMessage, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 }
                                 break;
                             case ValidationType.MinPasswordLength:
                                 int minLength = int.Parse(item.Value);
                                 if (field.Value.Length < minLength)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.Email:
                                 int minLengthEmail = int.Parse(item.Value);
                                 if (field.Value.Length < minLengthEmail)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.AdharLength:
                                 int minLengthAdhar = int.Parse(item.Value);
                                 if (field.Value.Length != minLengthAdhar)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.MobileNumberLength:
                                 int minLengtMobileNumberLength = int.Parse(item.Value);
                                 if (field.Value.Length != minLengtMobileNumberLength)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.Name:
                                 int minLengtName = int.Parse(item.Value);
                                 if (field.Value.Length < minLengtName)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.Year:
                                 int minLengtYear = int.Parse(item.Value);
                                 if (field.Value.Length != minLengtYear)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = item.UiPageMetadataTypeId, Severity = ValidationSeverity.Error });
                                 break;
                         }
 

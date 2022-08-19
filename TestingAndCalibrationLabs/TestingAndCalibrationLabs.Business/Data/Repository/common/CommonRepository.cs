@@ -30,10 +30,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return db.Query<UiPageDataModel>("Select upd.* From [UiPageData] upd INNER JOIN  [Record] r ON upd.RecordId = r.Id and r.IsDeleted = 0 where upd.UiPageId=@uiPageId and upd.IsDeleted=0", new { uiPageId }).ToList();
         }
 
-        public List<UiPageValidation> GetUiPageValidations(int uiPageId)
+        public List<UiPageValidationModel> GetUiPageValidations(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageValidation>(@"Select upv.Id, upv.UiPageId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
+            return db.Query<UiPageValidationModel>(@"Select upv.Id, upv.UiPageId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
                                             From [UiPageValidation] upv 
                                             INNER JOIN  [UiPageValidationType] upvt ON upv.UiPageValidationTypeId = upvt.Id 
                                                 AND upv.IsDeleted = 0 
