@@ -6,6 +6,9 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
+    /// <summary>
+    /// Service interface for Ui Page Metadata Type
+    /// </summary>
     public interface IUiPageMetadataTypeService
     {
         List<UiPageMetadataModel> GetAll();

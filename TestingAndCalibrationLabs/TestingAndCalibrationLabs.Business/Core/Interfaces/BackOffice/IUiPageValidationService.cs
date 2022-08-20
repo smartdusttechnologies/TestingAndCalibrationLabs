@@ -6,7 +6,10 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-    public interface IUiPageValidationTypeService
+    /// <summary>
+    /// Service Interface for Ui Page Validation
+    /// </summary>
+    public interface IUiPageValidationService
     {
         List<UiPageValidationModel> GetAll();
         UiPageValidationModel GetById(int id);

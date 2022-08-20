@@ -7,38 +7,15 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IUiPageTypeService
     {
         /// <summary>
-        /// To
+        /// Service Interface For Ui Page Type
         /// </summary>
         /// <returns></returns>
         List<UiPageTypeModel> GetAll();
         List<DataTypeModel> GetDataType();
-        List<UiControlTypeModel> GetUiControlType();
-        List<UiPageValidationTypeModel> GetUiPageValType();
-        List<UiPageMetadataModel> GetUiPageMetadataType();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        List<UiPageValidationTypeModel> GetUiPageValidationType();
         UiPageTypeModel GetById(int id);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pageModel"></param>
-        /// <returns></returns>
         RequestResult<int> Create(UiPageTypeModel uiPageTypeModel);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pageModel"></param>
-        /// <returns></returns>
         RequestResult <int> Edit(int id ,UiPageTypeModel uiPageTypeModel);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         bool Delete(int id);
 
     }

@@ -10,11 +10,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiControlTypeService _uiControlTypeServices;
         public readonly IMapper _mapper;
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="uiControlTypeServices"></param>
+        /// <param name="mapper"></param>
         public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper)
         {
             _uiControlTypeServices = uiControlTypeServices;
             _mapper = mapper;
         }
+        /// <summary>
+        /// For Showing All Records Of Ui Control Type
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,6 +33,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(controlTypeList.AsEnumerable());
 
         }
+        /// <summary>
+        /// For Showing Choosen Record For Edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -39,7 +53,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var conEdit = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(conModel);
             return View(conEdit);
         }
-
+        /// <summary>
+        /// To Edit Record From Ui Control Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="conModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] Models.UiControlTypeModel conModel)
@@ -56,15 +75,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(conModel);
         }
-
-
+        /// <summary>
+        /// For Create View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int id)
         {
 
             return base.View(new Models.UiControlTypeModel { Id = id });
         }
-
+        /// <summary>
+        /// To Insert Record
+        /// </summary>
+        /// <param name="conModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] Models.UiControlTypeModel conModel)
@@ -78,8 +104,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(conModel);
         }
-
-        
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -94,7 +123,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var conEdit = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(con);
             return View(conEdit);
         }
-
+        /// <summary>
+        /// To Delete Record From Ui Control Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

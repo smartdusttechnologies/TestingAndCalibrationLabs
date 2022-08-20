@@ -11,6 +11,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="uiPageTypeService"></param>
+        /// <param name="mapper"></param>
         public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper)
         {
             _uiPageTypeService = uiPageTypeService;
@@ -29,7 +34,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             return View(pageData.AsEnumerable());
         }
-
+        /// <summary>
+        /// For Edit Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -46,7 +55,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return View(pageData);
         }
-
+        /// <summary>
+        /// To Edit Record In Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] Models.UiPageTypeModel pageModel)
@@ -63,13 +77,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(pageModel);
         }
-
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int id)
         {
             return base.View(new Models.UiPageTypeModel { Id = id });
         }
-
+        /// <summary>
+        /// To Create Record In Ui Page Type
+        /// </summary>
+        /// <param name="pageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] Models.UiPageTypeModel pageModel)
@@ -84,6 +106,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(pageModel);
         }
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -98,7 +125,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageDel = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(con);
             return View(pageDel);
         }
-
+        /// <summary>
+        /// To Delete Record From Ui Control Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

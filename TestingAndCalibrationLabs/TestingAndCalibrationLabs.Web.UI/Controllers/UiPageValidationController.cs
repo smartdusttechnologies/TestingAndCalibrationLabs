@@ -6,19 +6,30 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
-    public class UiPageValidationTypeController : Controller
+    public class UiPageValidationController : Controller
     {
-        public readonly IUiPageValidationTypeService _uiPageValidationTypeService;
+        public readonly IUiPageValidationService _uiPageValidationTypeService;
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
-
-        public UiPageValidationTypeController(IUiPageValidationTypeService uiPageValidationTypeService, IUiPageTypeService uiPageTypeService,IMapper mapper)
+        public readonly IUiPageMetadataTypeService _uiPageMetadataTypeService;
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="uiPageMetadataTypeService"></param>
+        /// <param name="uiPageValidationTypeService"></param>
+        /// <param name="uiPageTypeService"></param>
+        /// <param name="mapper"></param>
+        public UiPageValidationController(IUiPageMetadataTypeService uiPageMetadataTypeService, IUiPageValidationService uiPageValidationTypeService, IUiPageTypeService uiPageTypeService,IMapper mapper)
         {
             _uiPageValidationTypeService = uiPageValidationTypeService;
             _uiPageTypeService = uiPageTypeService;
-            _mapper = mapper;   
+            _mapper = mapper; 
+            _uiPageMetadataTypeService = uiPageMetadataTypeService;
         }
-
+        /// <summary>
+        /// Get All The Pages From Database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -27,12 +38,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pvList = _mapper.Map<List<Business.Core.Model.UiPageValidationModel>, List<Models.UiPageValidationModel>>(pageReq);
             return View(pvList.AsEnumerable());
         }
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create(int id)
         {
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageTypeService.GetUiPageMetadataType();
-            List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValType();
+            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataTypeService.GetAll();
+            List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValidationType();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
             var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(val);
@@ -42,6 +58,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return base.View(new Models.UiPageValidationModel { Id = id });
         }
+        /// <summary>
+        /// To Create Record In Ui Page Validation
+        /// </summary>
+        /// <param name="pagVal"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] Models.UiPageValidationModel pagVal)
@@ -55,6 +76,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(pagVal);
         }
+        /// <summary>
+        /// For Edit Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pId"></param>
+        /// <param name="vId"></param>
+        /// <param name="mId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id, int pId, int vId, int mId)
         {
@@ -66,8 +95,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.vid = vId;
             ViewBag.mid=mId;
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageTypeService.GetUiPageMetadataType();
-            List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValType();
+            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataTypeService.GetAll();
+            List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValidationType();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
             var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(val);
@@ -83,6 +112,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pvList = _mapper.Map<Business.Core.Model.UiPageValidationModel, Models.UiPageValidationModel>(gbiValidation);
             return View(pvList);
         }
+        /// <summary>
+        /// To Edit Record In Ui Page Validation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageVal"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] Models.UiPageValidationModel pageVal)
@@ -99,6 +134,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(pageVal);
         }
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int id)
         {
             if (id == null)
@@ -109,6 +149,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pvList = _mapper.Map<Business.Core.Model.UiPageValidationModel, Models.UiPageValidationModel>(gbiValidation);
             return View(pvList);
         }
+        /// <summary>
+        /// To Delete Record From Ui Page Validation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

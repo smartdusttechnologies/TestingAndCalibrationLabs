@@ -2,11 +2,12 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
+    /// <summary>
+    /// Declaring properties 
+    /// </summary>
     public class UiPageMetadataDTO
     {
-        /// <summary>
-        /// Declaring properties 
-        /// </summary>
+
         public int Id { get; set; }
         [Required(ErrorMessage = "Testing Type is required")]
         public int UiPageTypeId { get; set; }

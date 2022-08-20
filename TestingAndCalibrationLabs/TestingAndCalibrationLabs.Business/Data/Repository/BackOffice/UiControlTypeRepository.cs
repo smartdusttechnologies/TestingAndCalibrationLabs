@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
         /// <summary>
-        /// Connecting with database Via connectionfactory for displaying data by Id
+        /// Geting Record By Id For Ui Control Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UiControlTypeModel>("Select top 1 * From [UiControlType] where id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
         /// <summary>
-        /// Editing Data for Ui Control Type columns 
+        /// Edit Record for Ui Control Type  
         /// </summary>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiControlTypeModel);
         }
         /// <summary>
-        /// inserting Data in Ui Control Type Table 
+        /// Create Record For Ui Control Type  
         /// </summary>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
@@ -52,7 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiControlTypeModel);
         }
         /// <summary>
-        /// Deleting Data From Ui Control Type Table
+        /// Delete Record For Ui Control Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         }
         /// <summary>
-        /// Getting All The Data Of Ui Control Type Table
+        /// Get All Records Of Ui Control Type 
         /// </summary>
         /// <returns></returns>
         public List<UiControlTypeModel> GetAll()

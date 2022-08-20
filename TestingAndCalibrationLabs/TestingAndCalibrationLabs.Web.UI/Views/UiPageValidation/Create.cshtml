@@ -1,48 +1,35 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageValidationModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Ui Page Validation Type</h1>
+<h1>Ui Page Validation </h1>
 
-<h4>Edit</h4>
+<h4>Create</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageValidationType" novalidate>
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageValidation" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-                        
+                        <option disabled="disabled" selected>Select Pages ...</option>
                         @foreach (var item in ViewBag.Page)
                         {
-                            if (@item.Id == @ViewBag.pid)
-                        {
-                            <option value=@item.Id selected>@item.Name</option>
-                        }
-                        else{
-                                <option value=@item.Id>@item.Name</option>
-                        }
-                            
+                            <option value=@item.Id>@item.Name</option>
                         }
                     </select>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                    <label for="UiPageMetadataId" class="form-label"></label>
+                    <label for="UiPageMetadataTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageMetadataTypeId" id="uimetadataType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataTypeId">
-                       
-                        @foreach (var item in ViewBag.Meta)
+                        <option disabled="disabled" selected>Select Metadata ...</option>
+                        @foreach (var item in ViewBag.Metadata)
                         {
-                            if (@item.Id == @ViewBag.mid)
-                        {
-                                <option value=@item.Id selected>@item.UiControlDisplayName</option>
-                        }
-                        else{
                             <option value=@item.Id>@item.UiControlDisplayName</option>
-                        }
                         }
                     </select>
                 </div>
@@ -51,16 +38,10 @@
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiPageValidationTypeId" class="form-label"></label>
                     <select class="form-input" name="UiPageValidationTypeId" id="uivalType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
-                        
+                        <option disabled="disabled" selected>Select Validation Type ...</option>
                         @foreach (var item in ViewBag.Val)
                         {
-                            if (@item.Id == @ViewBag.vid)
-                        {
-                            <option value=@item.Id selected>@item.Name</option>
-                        }
-                        else{
                             <option value=@item.Id>@item.Name</option>
-                        }
                         }
                     </select>
                 </div>
@@ -68,7 +49,7 @@
            
             <div class="row ms-1 me-1">
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                    <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
             </div>
         </form>
@@ -80,7 +61,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

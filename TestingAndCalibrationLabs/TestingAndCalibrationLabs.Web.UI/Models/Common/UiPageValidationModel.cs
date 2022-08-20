@@ -2,7 +2,9 @@
 {
     public class UiPageValidationModel
     {
-       
+        /// <summary>
+        /// Declaring Public Properties
+        /// </summary>
         public int Id { get; set; }
         public int UiPageTypeId { get; set; }
         public string UiPageTypeName { get; set; }

@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
-{
+{    
+    /// <summary>
+    /// Declaring Public Properties
+    /// </summary>
     public class UiControlTypeModel
     {
         public int Id { get; set; }

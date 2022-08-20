@@ -1,23 +1,25 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
-    public class UiPageValidationTypeRepository : IUiPageValidationTypeRepository
+    public class UiPageValidationRepository : IUiPageValidationRepository
     {
         public readonly IConnectionFactory _connectionFactory;
-        public UiPageValidationTypeRepository(IConnectionFactory connectionFactory)
+        public UiPageValidationRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
-
+        /// <summary>
+        /// Insert Record In Ui Page Validation 
+        /// </summary>
+        /// <param name="uiPageValidationModel"></param>
+        /// <returns></returns>
         public int Create(UiPageValidationModel uiPageValidationModel)
         {
             string query = @"Insert into [UiPageValidation] (UiPageId,UiPageMetadataId,UiPageValidationTypeId)
@@ -25,7 +27,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiPageValidationModel);
         }
-
+        /// <summary>
+        /// Delete Record From Ui Page Validation  
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             string query = @"Update [UiPageValidation] set
@@ -35,7 +41,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             db.Execute(query, new { isDeleted = true, Id = id });
             return true;
         }
-
+        /// <summary>
+        /// Getting All Record From Ui Page Validation 
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageValidationModel> GetAll()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -52,7 +61,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upm.IsDeleted = 0
                                                     and upvt.isDeleted = 0").ToList();
         }
-
+        /// <summary>
+        /// Getting Record By Id For Ui Page Validation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public UiPageValidationModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -70,7 +83,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upm.IsDeleted = 0
                                                     and upvt.isDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
         }
-
+        /// <summary>
+        /// Edit Record From Ui Page Validation 
+        /// </summary>
+        /// <param name="uiPageValidationModel"></param>
+        /// <returns></returns>
         public int Update(UiPageValidationModel uiPageValidationModel)
         {
             string query = @"update [UiPageValidation] Set  

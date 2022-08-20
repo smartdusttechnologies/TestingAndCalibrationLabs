@@ -6,9 +6,9 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
     /// <summary>
-    /// Repository interface for Ui Page Validation Type
+    /// Repository interface for Ui Page Validation 
     /// </summary>
-    public interface IUiPageValidationTypeRepository
+    public interface IUiPageValidationRepository
     {
         List<UiPageValidationModel> GetAll();
         UiPageValidationModel GetById(int id);

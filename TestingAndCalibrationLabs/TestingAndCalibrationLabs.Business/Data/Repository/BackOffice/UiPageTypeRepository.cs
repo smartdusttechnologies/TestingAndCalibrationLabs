@@ -1,6 +1,5 @@
 ﻿
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,7 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
         /// <summary>
-        /// Inserting Data in Ui Page Type Table
+        /// Insert Record in Ui Page Type
         /// </summary>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
@@ -31,7 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         }
         /// <summary>
-        /// Deleting Data From Ui Page Type
+        /// Delete Record From Ui Page Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -45,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return true;
         }
         /// <summary>
-        /// Getting All List Of Data From Ui Page Type Table 
+        /// Getting All Record For Ui Page Type 
         /// </summary>
         /// <returns></returns>
         public List<UiPageTypeModel> GetAll()
@@ -54,40 +53,42 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UiPageTypeModel>("Select * From [UiPageType] where IsDeleted=0").ToList();
         }
         /// <summary>
-        /// Fetching List data Of Data Type Table
+        /// Getting All Record Data Type 
         /// </summary>
         /// <returns></returns>
-        
+
         public List<DataTypeModel> GetDataType()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<DataTypeModel>("SELECT d.Name as Name, d.Id as Id from DataType d where IsDeleted=0").ToList();
       }
         
-        public List<UiControlTypeModel> GetUiControlType()
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiControlTypeModel>("SELECT c.Name as Name, c.Id as Id from UiControlType c where IsDeleted=0").ToList();
-        }
-        
-        public List<UiPageValidationTypeModel> GetUiPageValType()
+        /// <summary>
+        /// Getting All Record Ui Page Validation Type 
+        /// </summary>
+        /// <returns></returns>
+
+        public List<UiPageValidationTypeModel> GetUiPageValidationType()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageValidationTypeModel>("SELECT v.Name as Name, v.Id as Id from UiPageValidationType v where IsDeleted=0").ToList();
         }
         
-        public List<UiPageMetadataModel> GetUiPageMetadataType()
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageMetadataModel>("SELECT m.UiControlDisplayName as UiControlDisplayName, m.Id as Id from UiPageMetadata m where IsDeleted=0").ToList();
-        }
-
+        /// <summary>
+        /// Get Record By Id For Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageTypeModel>("Select top 1 * From [UiPageType] where id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
-
+        /// <summary>
+        /// Edit Record For Ui Page Type
+        /// </summary>
+        /// <param name="uiPageTypeModel"></param>
+        /// <returns></returns>
         public int Edit(UiPageTypeModel uiPageTypeModel)
         {
             string query = @"update [UiPageType] Set  

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -11,16 +12,26 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageMetadataTypeService _uiPageMetadataTypeService;
         public readonly IUiPageTypeService _uiPageTypeService;
+        public readonly IUiControlTypeService _uiControlTypeService;
         public readonly IMapper _mapper;
-        public UiPageMetadataTypeController(IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataTypeService uiPageMetadataTypeService)
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="uiControlTypeService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="uiPageTypeService"></param>
+        /// <param name="uiPageMetadataTypeService"></param>
+        public UiPageMetadataTypeController(IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataTypeService uiPageMetadataTypeService)
         {
             _uiPageMetadataTypeService = uiPageMetadataTypeService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
+            _uiControlTypeService = uiControlTypeService;
         }
-
-        
-
+        /// <summary>
+        /// To List All Record
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -30,13 +41,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             return View(pageCons.AsEnumerable());
         }
-
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create(int id)
         {
             
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List < Business.Core.Model.UiControlTypeModel>control = _uiPageTypeService.GetUiControlType();
+            List < Business.Core.Model.UiControlTypeModel>control = _uiControlTypeService.GetAll();
             List<Business.Core.Model.DataTypeModel> data = _uiPageTypeService.GetDataType();
             var pagess = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var controless = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(control);
@@ -47,7 +62,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             return base.View(new Models.UiPageMetadataDTO { Id = id });
         }
-
+        /// <summary>
+        /// To Create Record In Ui Page Metadata Type
+        /// </summary>
+        /// <param name="pageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] Models.UiPageMetadataDTO pageModel)
@@ -61,7 +80,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(pageModel);
         }
-        
+        /// <summary>
+        /// For Edit Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pId"></param>
+        /// <param name="cId"></param>
+        /// <param name="dId"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id,int pId,int cId,int dId)
         {
@@ -73,7 +99,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.did = dId;
             ViewBag.pid = pId;
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiControlTypeModel> control = _uiPageTypeService.GetUiControlType();
+            List<Business.Core.Model.UiControlTypeModel> control = _uiControlTypeService.GetAll();
             List<Business.Core.Model.DataTypeModel> data = _uiPageTypeService.GetDataType();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(control);
@@ -85,6 +111,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageCons = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pMeta);
             return View(pageCons);
         }
+        /// <summary>
+        /// To Edit Record In Ui Page Metadata Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] Models.UiPageMetadataDTO pageModel)
@@ -101,6 +133,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(pageModel);
         }
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int id)
         {
             if(id == null)
@@ -111,6 +148,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var deleteM = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pcon);
             return View(deleteM);
         }
+        /// <summary>
+        /// To Delete Record In Ui Page Metadata Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

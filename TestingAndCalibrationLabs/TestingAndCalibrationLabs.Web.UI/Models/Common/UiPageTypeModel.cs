@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
+    /// <summary>
+    /// Declaring Public Properties
+    /// </summary>
     public class UiPageTypeModel
     {
         #region Public Properties

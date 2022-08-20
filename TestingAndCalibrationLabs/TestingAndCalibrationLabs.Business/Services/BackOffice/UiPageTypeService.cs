@@ -13,49 +13,65 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _uiPageTypeRepository = uiPageTypeRepository;
         }
-
+        /// <summary>
+        /// To Create Record For Ui Page Type
+        /// </summary>
+        /// <param name="uiPageTypeModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
             _uiPageTypeRepository.Create(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
-
+        /// <summary>
+        /// To Delete Record From Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             return _uiPageTypeRepository.Delete(id);
         }
-
+        /// <summary>
+        /// To Edit Record For Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="uiPageTypeModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Edit(int id, UiPageTypeModel uiPageTypeModel)
         {
             _uiPageTypeRepository.Edit(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
-
+        /// <summary>
+        /// To Get All Record From Ui Page Type
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageTypeModel> GetAll()
         {
             return _uiPageTypeRepository.GetAll();
         }
-        
+        /// <summary>
+        /// To Get All Record From Data Type
+        /// </summary>
+        /// <returns></returns>
         public List<DataTypeModel> GetDataType()
         {
             return _uiPageTypeRepository.GetDataType();
         }
-        
-        public List<UiControlTypeModel> GetUiControlType()
+        /// <summary>
+        /// To Get All Records From Ui Page Validation Type
+        /// </summary>
+        /// <returns></returns>
+        public List<UiPageValidationTypeModel> GetUiPageValidationType()
         {
-            return _uiPageTypeRepository.GetUiControlType();
+            return _uiPageTypeRepository.GetUiPageValidationType();
         }
-        
-        public List<UiPageValidationTypeModel> GetUiPageValType()
-        {
-            return _uiPageTypeRepository.GetUiPageValType();
-        }
-        
-        public List<UiPageMetadataModel> GetUiPageMetadataType()
-        {
-            return _uiPageTypeRepository.GetUiPageMetadataType();
-        }
-
+        /// <summary>
+        /// To Get Record By Id From Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
             return _uiPageTypeRepository.GetById(id);

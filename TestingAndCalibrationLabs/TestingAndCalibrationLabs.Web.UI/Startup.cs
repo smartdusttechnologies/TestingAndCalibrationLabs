@@ -45,14 +45,14 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUiControlTypeService, UiControlTypeService>();
             services.AddScoped<IUiPageTypeService, UiPageTypeService>();
-            services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
+            services.AddScoped<IUiPageValidationService, UiPageValidationService>();
             services.AddScoped<IUiPageMetadataTypeService, UiPageMetadataTypeService>();
 
             
             //Repository
             services.AddScoped<IUiControlTypeRepository, UiControlTypeRepository>();
             services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
-            services.AddScoped<IUiPageValidationTypeRepository, UiPageValidationTypeRepository>();
+            services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataTypeRepository, UiPageMetadataRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();

@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
         /// <summary>
-        /// Inserting data in Ui Page Metadata Type Table
+        /// Insert Record in Ui Page Metadata Type
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiPageMetadataModel);
         }
         /// <summary>
-        /// Deleting Data From Ui Page Metadata Type Table
+        /// Delete Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -42,7 +42,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return true;
         }
         /// <summary>
-        /// Getting All Data From Ui Page Metadata Type Table
+        /// Getting All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
         public List<UiPageMetadataModel> GetAll()
@@ -62,7 +62,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and udt.isDeleted = 0").ToList();
         }
         /// <summary>
-        /// Getting Data By Id
+        /// Getting Record By Id For Ui Page Metadata
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -85,7 +85,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and udt.isDeleted = @isDeleted", new { isDeleted = 0, Id = id }).FirstOrDefault();
         }
         /// <summary>
-        /// Editing / Updating Data From Ui Page Metadata Type Table
+        /// Edit Record For Ui Page Metadata Type
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>

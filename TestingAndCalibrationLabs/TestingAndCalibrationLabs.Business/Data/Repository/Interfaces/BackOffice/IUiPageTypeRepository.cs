@@ -12,9 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     {
         List<UiPageTypeModel> GetAll();
         List<DataTypeModel> GetDataType();
-        List<UiControlTypeModel> GetUiControlType();
-        List<UiPageValidationTypeModel> GetUiPageValType();
-        List<UiPageMetadataModel> GetUiPageMetadataType();
+        List<UiPageValidationTypeModel> GetUiPageValidationType();
         UiPageTypeModel GetById(int id);
         int Create(UiPageTypeModel uiPageTypeModel);
         int Edit(UiPageTypeModel uiPageTypeModel);
