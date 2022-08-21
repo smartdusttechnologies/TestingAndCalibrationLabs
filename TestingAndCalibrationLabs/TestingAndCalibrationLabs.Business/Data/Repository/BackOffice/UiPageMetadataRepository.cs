@@ -8,7 +8,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
-    public class UiPageMetadataRepository : IUiPageMetadataTypeRepository
+    public class UiPageMetadataRepository : IUiPageMetadataRepository
     {
         public readonly IConnectionFactory _connectionFactory;
         public UiPageMetadataRepository(IConnectionFactory connectionFactory)
@@ -50,7 +50,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
            return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
                                                     udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
-                                                    uct.[Name] as UiControlType, upm.UiControlDisplayName
+                                                    uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                 From[UiPageMetadata] upm
                                                     inner join[UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id
@@ -71,7 +71,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
                                                     udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
-                                                    uct.[Name] as UiControlType, upm.UiControlDisplayName
+                                                    uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                 From[UiPageMetadata] upm
                                                     inner join[UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id

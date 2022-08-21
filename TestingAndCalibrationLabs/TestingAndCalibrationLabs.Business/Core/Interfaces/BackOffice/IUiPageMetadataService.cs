@@ -9,7 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// <summary>
     /// Service interface for Ui Page Metadata Type
     /// </summary>
-    public interface IUiPageMetadataTypeService
+    public interface IUiPageMetadataService
     {
         List<UiPageMetadataModel> GetAll();
         UiPageMetadataModel GetById(int id);

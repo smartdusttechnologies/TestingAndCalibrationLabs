@@ -6,12 +6,12 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    public class UiPageMetadataTypeService : IUiPageMetadataTypeService
+    public class UiPageMetadataService : IUiPageMetadataService
     {
-        public readonly IUiPageMetadataTypeRepository _uiPageMetadataTypeRepository;
-        public UiPageMetadataTypeService(IUiPageMetadataTypeRepository uiPageMetadataTypeRepository)
+        public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
+        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository)
         {
-            _uiPageMetadataTypeRepository = uiPageMetadataTypeRepository;
+            _uiPageMetadataRepository = uiPageMetadataRepository;
         }
         /// <summary>
         ///  To Insert Record In Ui Page Metadata Type
@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageMetadataModel pageControl)
         {
-            _uiPageMetadataTypeRepository.Create(pageControl);
+            _uiPageMetadataRepository.Create(pageControl);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _uiPageMetadataTypeRepository.Delete(id);
+            return _uiPageMetadataRepository.Delete(id);
         }
         /// <summary>
         /// To Get Record by Id For Ui Page Metadata Type
@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageMetadataModel GetById(int id)
         {
-            return _uiPageMetadataTypeRepository.GetById(id);
+            return _uiPageMetadataRepository.GetById(id);
         }
         /// <summary>
         /// To Edit Record From Ui Page Metadata Type
@@ -49,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(int id, UiPageMetadataModel pageControl)
         {
-            _uiPageMetadataTypeRepository.Update(pageControl);
+            _uiPageMetadataRepository.Update(pageControl);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<UiPageMetadataModel> GetAll()
         {
-            return _uiPageMetadataTypeRepository.GetAll();
+            return _uiPageMetadataRepository.GetAll();
         }
     }
 }

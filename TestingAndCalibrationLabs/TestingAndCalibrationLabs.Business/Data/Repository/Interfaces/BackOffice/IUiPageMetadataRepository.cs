@@ -6,7 +6,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// <summary>
     /// Repository interface for Ui Page Metadata Type
     /// </summary>
-    public interface IUiPageMetadataTypeRepository
+    public interface IUiPageMetadataRepository
     {
         List <UiPageMetadataModel> GetAll();
         UiPageMetadataModel GetById(int id);

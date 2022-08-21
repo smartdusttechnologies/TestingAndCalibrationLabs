@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IUiPageValidationService _uiPageValidationTypeService;
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
-        public readonly IUiPageMetadataTypeService _uiPageMetadataTypeService;
+        public readonly IUiPageMetadataService _uiPageMetadataService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -19,12 +19,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageValidationTypeService"></param>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
-        public UiPageValidationController(IUiPageMetadataTypeService uiPageMetadataTypeService, IUiPageValidationService uiPageValidationTypeService, IUiPageTypeService uiPageTypeService,IMapper mapper)
+        public UiPageValidationController(IUiPageMetadataService uiPageMetadataService, IUiPageValidationService uiPageValidationTypeService, IUiPageTypeService uiPageTypeService,IMapper mapper)
         {
             _uiPageValidationTypeService = uiPageValidationTypeService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper; 
-            _uiPageMetadataTypeService = uiPageMetadataTypeService;
+            _uiPageMetadataService = uiPageMetadataService;
         }
         /// <summary>
         /// Get All The Pages From Database
@@ -47,7 +47,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Create(int id)
         {
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataTypeService.GetAll();
+            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.GetAll();
             List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValidationType();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
@@ -95,7 +95,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.vid = vId;
             ViewBag.mid=mId;
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataTypeService.GetAll();
+            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.GetAll();
             List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValidationType();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);

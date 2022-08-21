@@ -8,9 +8,9 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
-    public class UiPageMetadataTypeController : Controller
+    public class UiPageMetadataController : Controller
     {
-        public readonly IUiPageMetadataTypeService _uiPageMetadataTypeService;
+        public readonly IUiPageMetadataService _uiPageMetadataService;
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IUiControlTypeService _uiControlTypeService;
         public readonly IMapper _mapper;
@@ -21,9 +21,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="mapper"></param>
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataTypeService"></param>
-        public UiPageMetadataTypeController(IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataTypeService uiPageMetadataTypeService)
+        public UiPageMetadataController(IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
-            _uiPageMetadataTypeService = uiPageMetadataTypeService;
+            _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _uiControlTypeService = uiControlTypeService;
@@ -36,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiPageMetadataModel>pageCon = _uiPageMetadataTypeService.GetAll();
+            List<Business.Core.Model.UiPageMetadataModel>pageCon = _uiPageMetadataService.GetAll();
             var pageCons = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageCon);
             
             return View(pageCons.AsEnumerable());
@@ -74,7 +74,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var createMeta = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(pageModel);
-                _uiPageMetadataTypeService.Create(createMeta);
+                _uiPageMetadataService.Create(createMeta);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -107,7 +107,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.Control = controlList.ToList();
             ViewBag.Data = dataList.ToList();
             ViewBag.page = pageList.ToList();
-            Business.Core.Model.UiPageMetadataModel pMeta = _uiPageMetadataTypeService.GetById((int)id);
+            Business.Core.Model.UiPageMetadataModel pMeta = _uiPageMetadataService.GetById((int)id);
             var pageCons = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pMeta);
             return View(pageCons);
         }
@@ -128,7 +128,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var editMeta = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(pageModel);
-                _uiPageMetadataTypeService.Update(id, editMeta);
+                _uiPageMetadataService.Update(id, editMeta);
                 return RedirectToAction("Index");
             }
             return View(pageModel);
@@ -144,7 +144,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiPageMetadataModel pcon = _uiPageMetadataTypeService.GetById((int)id);
+            Business.Core.Model.UiPageMetadataModel pcon = _uiPageMetadataService.GetById((int)id);
             var deleteM = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pcon);
             return View(deleteM);
         }
@@ -161,7 +161,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            _uiPageMetadataTypeService.Delete((int)id);
+            _uiPageMetadataService.Delete((int)id);
             return RedirectToAction("Index");
         }
 
