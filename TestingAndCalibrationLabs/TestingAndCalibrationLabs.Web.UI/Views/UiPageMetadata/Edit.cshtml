@@ -17,9 +17,9 @@
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
 
-                        @foreach (var item in ViewBag.Page)
+                        @foreach (var item in ViewBag.UiPageTypes)
                         {
-                            if (@item.Id == @ViewBag.pid)
+                            if (@item.Id == @ViewBag.UiPageTypeId)
                             {
                                 <option value=@item.Id selected>@item.Name</option>
                             }
@@ -34,9 +34,9 @@
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="uiconType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
 
-                        @foreach (var item in ViewBag.Control)
+                        @foreach (var item in ViewBag.UiControlTypes)
                         {
-                            if (@item.Id == @ViewBag.cid)
+                            if (@item.Id == @ViewBag.UiControlTypeId)
                             {
                                 <option value=@item.Id selected>@item.Name</option>
                             }
@@ -53,9 +53,9 @@
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
 
-                        @foreach (var item in ViewBag.Data)
+                        @foreach (var item in ViewBag.DataTypes)
                         {
-                            if (@item.Id == @ViewBag.did)
+                            if (@item.Id == @ViewBag.DataTypeId)
                             {
                                 <option value=@item.Id selected>@item.Name</option>
                             }

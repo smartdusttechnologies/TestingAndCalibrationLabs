@@ -45,13 +45,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiControlTypeModel conModel = _uiControlTypeServices.Get((int)id);
-            if (conModel == null)
+            Business.Core.Model.UiControlTypeModel controlTypeModel = _uiControlTypeServices.Get((int)id);
+            if (controlTypeModel == null)
             {
                 return NotFound();
             }
-            var conEdit = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(conModel);
-            return View(conEdit);
+            var controlTypeEditModel = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(controlTypeModel);
+            return View(controlTypeEditModel);
         }
         /// <summary>
         /// To Edit Record From Ui Control Type
@@ -61,19 +61,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] Models.UiControlTypeModel conModel)
+        public IActionResult Edit(int id, [Bind] Models.UiControlTypeModel uiControlTypeModel)
         {
-            if (id != conModel.Id)
+            if (id != uiControlTypeModel.Id)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                var conEdit = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(conModel);
-                _uiControlTypeServices.Edit(id, conEdit);
+                var controlTypeEditModel = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
+                _uiControlTypeServices.Edit(id, controlTypeEditModel);
                 return RedirectToAction("Index");
             }
-            return View(conModel);
+            return View(uiControlTypeModel);
         }
         /// <summary>
         /// For Create View
@@ -93,16 +93,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiControlTypeModel conModel)
+        public IActionResult Create([Bind] Models.UiControlTypeModel uiControlTypeModel)
         {
             if (ModelState.IsValid)
             {
-                var conCreate = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(conModel);
-                _uiControlTypeServices.Create(conCreate);
+                var controlTypeCreateModel = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
+                _uiControlTypeServices.Create(controlTypeCreateModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(conModel);
+            return View(uiControlTypeModel);
         }
         /// <summary>
         /// For Delete Record View
@@ -115,13 +115,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiControlTypeModel con = _uiControlTypeServices.Get((int)id);
-            if (con == null)
+            Business.Core.Model.UiControlTypeModel getByIdControlType = _uiControlTypeServices.Get((int)id);
+            if (getByIdControlType == null)
             {
                 return NotFound();
             }
-            var conEdit = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(con);
-            return View(conEdit);
+            var controlTypeEditModel = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(getByIdControlType);
+            return View(controlTypeEditModel);
         }
         /// <summary>
         /// To Delete Record From Ui Control Type

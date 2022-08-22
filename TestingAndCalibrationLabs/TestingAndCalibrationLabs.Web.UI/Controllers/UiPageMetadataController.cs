@@ -36,10 +36,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiPageMetadataModel>pageCon = _uiPageMetadataService.GetAll();
-            var pageCons = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageCon);
+            List<Business.Core.Model.UiPageMetadataModel>pageMetadata = _uiPageMetadataService.GetAll();
+            var pageMetadatas = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadata);
             
-            return View(pageCons.AsEnumerable());
+            return View(pageMetadatas.AsEnumerable());
         }
         /// <summary>
         /// For Create Record View
@@ -50,88 +50,88 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Create(int id)
         {
             
-            List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List < Business.Core.Model.UiControlTypeModel>control = _uiControlTypeService.GetAll();
-            List<Business.Core.Model.DataTypeModel> data = _uiPageTypeService.GetDataType();
-            var pagess = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
-            var controless = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(control);
-            var datass = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.UiDataTypeModel>>(data);
-            ViewBag.Control = controless.ToList();
-            ViewBag.Data= datass.ToList();
-            ViewBag.Page = pagess.ToList();
+            List<Business.Core.Model.UiPageTypeModel> pageList = _uiPageTypeService.GetAll();
+            List < Business.Core.Model.UiControlTypeModel>controlList = _uiControlTypeService.GetAll();
+            List<Business.Core.Model.DataTypeModel> dataList = _uiPageTypeService.GetDataType();
+            var pages = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageList);
+            var controles = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controlList);
+            var datas = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.UiDataTypeModel>>(dataList);
+            ViewBag.UiControlTypes = controles;
+            ViewBag.DataTypes = datas;
+            ViewBag.UiPageTypes = pages;
             
             return base.View(new Models.UiPageMetadataDTO { Id = id });
         }
         /// <summary>
         /// To Create Record In Ui Page Metadata Type
         /// </summary>
-        /// <param name="pageModel"></param>
+        /// <param name="uiPageMetadataDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiPageMetadataDTO pageModel)
+        public IActionResult Create([Bind] Models.UiPageMetadataDTO uiPageMetadataDTO)
         {
             if (ModelState.IsValid)
             {
-                var createMeta = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(pageModel);
-                _uiPageMetadataService.Create(createMeta);
+                var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
+                _uiPageMetadataService.Create(createMetadataModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(pageModel);
+            return View(uiPageMetadataDTO);
         }
         /// <summary>
-        /// For Edit Record View
+        /// For Edit Records View
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pId"></param>
-        /// <param name="cId"></param>
-        /// <param name="dId"></param>
+        /// <param name="uiPageTypeId"></param>
+        /// <param name="uiControlTypeId"></param>
+        /// <param name="dataTypeId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id,int pId,int cId,int dId)
+        public IActionResult Edit(int? id,int uiPageTypeId,int uiControlTypeId,int dataTypeId)
         {
             if(id == null)
             {
                 return NotFound();
             }
-            ViewBag.cid = cId;
-            ViewBag.did = dId;
-            ViewBag.pid = pId;
-            List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiControlTypeModel> control = _uiControlTypeService.GetAll();
-            List<Business.Core.Model.DataTypeModel> data = _uiPageTypeService.GetDataType();
-            var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
-            var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(control);
-            var dataList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.UiDataTypeModel>>(data);
-            ViewBag.Control = controlList.ToList();
-            ViewBag.Data = dataList.ToList();
-            ViewBag.page = pageList.ToList();
-            Business.Core.Model.UiPageMetadataModel pMeta = _uiPageMetadataService.GetById((int)id);
-            var pageCons = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pMeta);
-            return View(pageCons);
+            ViewBag.UiControlTypeId = uiControlTypeId;
+            ViewBag.DataTypeId = dataTypeId;
+            ViewBag.UiPageTypeId = uiPageTypeId;
+            List<Business.Core.Model.UiPageTypeModel> pages = _uiPageTypeService.GetAll();
+            List<Business.Core.Model.UiControlTypeModel> controls = _uiControlTypeService.GetAll();
+            List<Business.Core.Model.DataTypeModel> datas = _uiPageTypeService.GetDataType();
+            var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pages);
+            var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controls);
+            var dataList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.UiDataTypeModel>>(datas);
+            ViewBag.UiControlTypes = controlList;
+            ViewBag.DataTypes = dataList;
+            ViewBag.UiPageTypes = pageList;
+            Business.Core.Model.UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
+            var pageMetadata = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pageMetadataModel);
+            return View(pageMetadata);
         }
         /// <summary>
         /// To Edit Record In Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pageModel"></param>
+        /// <param name="uiPageMetadataDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] Models.UiPageMetadataDTO pageModel)
+        public IActionResult Edit(int id, [Bind] Models.UiPageMetadataDTO uiPageMetadataDTO)
         {
-            if (id != pageModel.Id)
+            if (id != uiPageMetadataDTO.Id)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                var editMeta = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(pageModel);
-                _uiPageMetadataService.Update(id, editMeta);
+                var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
+                _uiPageMetadataService.Update(id, editMetadata);
                 return RedirectToAction("Index");
             }
-            return View(pageModel);
+            return View(uiPageMetadataDTO);
         }
         /// <summary>
         /// For Delete Record View
@@ -144,9 +144,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiPageMetadataModel pcon = _uiPageMetadataService.GetById((int)id);
-            var deleteM = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(pcon);
-            return View(deleteM);
+            Business.Core.Model.UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetById((int)id);
+            var deleteMetadata = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(uiPageMetadataModel);
+            return View(deleteMetadata);
         }
         /// <summary>
         /// To Delete Record In Ui Page Metadata Type

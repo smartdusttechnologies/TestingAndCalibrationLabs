@@ -17,7 +17,7 @@
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         <option disabled="disabled" selected>Select Pages ...</option>
-                        @foreach (var item in ViewBag.Page)
+                        @foreach (var item in ViewBag.UiPageTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
@@ -27,7 +27,7 @@
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="uiconType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
                         <option disabled="disabled" selected>Select Control ...</option>
-                        @foreach (var item in ViewBag.Control)
+                        @foreach (var item in ViewBag.UiControlTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
@@ -39,7 +39,7 @@
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         <option disabled="disabled" selected>Select Data Type ...</option>
-                        @foreach (var item in ViewBag.Data)
+                        @foreach (var item in ViewBag.DataTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }

@@ -46,12 +46,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var pageModel = _uiPageTypeService.GetById((int)id);
-            if (pageModel == null)
+            var getByIdPageModel = _uiPageTypeService.GetById((int)id);
+            if (getByIdPageModel == null)
             {
                 return NotFound();
             }
-            var pageData = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(pageModel);
+            var pageData = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(getByIdPageModel);
 
             return View(pageData);
         }
@@ -63,19 +63,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] Models.UiPageTypeModel pageModel)
+        public IActionResult Edit(int id, [Bind] Models.UiPageTypeModel uiPageTypeModel)
         {
-            if (id != pageModel.Id)
+            if (id != uiPageTypeModel.Id)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                var pageData = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(pageModel);
-                _uiPageTypeService.Edit(id, pageData);
+                var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
+                _uiPageTypeService.Edit(id, pageModel);
                 return RedirectToAction("Index");
             }
-            return View(pageModel);
+            return View(uiPageTypeModel);
         }
         /// <summary>
         /// For Create Record View
@@ -94,17 +94,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiPageTypeModel pageModel)
+        public IActionResult Create([Bind] Models.UiPageTypeModel uiPageTypeModel)
         {
             if (ModelState.IsValid)
             {
                
-                var pageCreate = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(pageModel);
-                _uiPageTypeService.Create(pageCreate);
+                var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
+                _uiPageTypeService.Create(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(pageModel);
+            return View(uiPageTypeModel);
         }
         /// <summary>
         /// For Delete Record View
@@ -117,13 +117,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiPageTypeModel con = _uiPageTypeService.GetById((int)id);
-            if (con == null)
+            Business.Core.Model.UiPageTypeModel getByIdPageModel = _uiPageTypeService.GetById((int)id);
+            if (getByIdPageModel == null)
             {
                 return NotFound();
             }
-            var pageDel = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(con);
-            return View(pageDel);
+            var pageModel = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(getByIdPageModel);
+            return View(pageModel);
         }
         /// <summary>
         /// To Delete Record From Ui Control Type
