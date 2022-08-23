@@ -47,18 +47,21 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageTypeService, UiPageTypeService>();
             services.AddScoped<IUiPageValidationService, UiPageValidationService>();
             services.AddScoped<IUiPageMetadataService, UiPageMetadataService>();
+            services.AddScoped<IDataTypeService, DataTypeService>();
+            services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
 
             
             //Repository
-            services.AddScoped<IUiControlTypeRepository, UiControlTypeRepository>();
-            services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
+           
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
-            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository<UiPageValidationTypeModel>>();
+            services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository < DataTypeModel >> ();
+            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository < UiPageValidationTypeModel >> ();
+            services.AddScoped<IGenericRepository<UiControlTypeModel>, GenericRepository<UiControlTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();

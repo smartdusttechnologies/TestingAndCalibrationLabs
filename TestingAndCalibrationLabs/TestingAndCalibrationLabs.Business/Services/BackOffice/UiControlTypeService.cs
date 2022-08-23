@@ -8,10 +8,10 @@ namespace TestingAndCalibrationLabs.Business.Services
 {
     public class UiControlTypeService : IUiControlTypeService
     {
-        public readonly IUiControlTypeRepository _uiControlTypeRepository;
-        public UiControlTypeService(IUiControlTypeRepository uiControlTypeRepository)
+        public readonly IGenericRepository<UiControlTypeModel> _genericRepository;
+        public UiControlTypeService( IGenericRepository<UiControlTypeModel> genericRepository)
         {
-            _uiControlTypeRepository = uiControlTypeRepository;
+            _genericRepository = genericRepository;
         }
         /// <summary>
         /// To Get Record By Id For Ui Control Type
@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiControlTypeModel Get(int id)
         {
-            return _uiControlTypeRepository.Get(id);
+            return _genericRepository.Get(id);
         }
         /// <summary>
         /// To Get All Record For Ui Control Type
@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<UiControlTypeModel> GetAll()
         {
-            return _uiControlTypeRepository.GetAll();
+            return _genericRepository.Get();
         }
         /// <summary>
         /// To Edit Record From Ui Control Type
@@ -36,9 +36,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Edit(int id, UiControlTypeModel uiControlTypeModel)
+        public RequestResult<int> Edit( UiControlTypeModel uiControlTypeModel)
         {
-            _uiControlTypeRepository.Edit(uiControlTypeModel);
+            _genericRepository.Update(uiControlTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -49,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         public RequestResult<int> Create(UiControlTypeModel uiControlTypeModel)
         {
-            _uiControlTypeRepository.Create(uiControlTypeModel);
+            _genericRepository.Insert(uiControlTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -59,7 +59,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _uiControlTypeRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
     }
 }

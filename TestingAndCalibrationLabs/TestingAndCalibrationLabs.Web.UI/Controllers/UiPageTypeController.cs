@@ -63,16 +63,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] Models.UiPageTypeModel uiPageTypeModel)
+        public IActionResult Edit( [Bind] Models.UiPageTypeModel uiPageTypeModel)
         {
-            if (id != uiPageTypeModel.Id)
-            {
-                return NotFound();
-            }
+            
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
-                _uiPageTypeService.Edit(id, pageModel);
+                _uiPageTypeService.Edit( pageModel);
                 return RedirectToAction("Index");
             }
             return View(uiPageTypeModel);

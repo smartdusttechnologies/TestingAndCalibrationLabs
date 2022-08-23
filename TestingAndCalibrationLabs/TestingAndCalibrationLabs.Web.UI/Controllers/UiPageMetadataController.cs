@@ -10,10 +10,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class UiPageMetadataController : Controller
     {
-        public readonly IUiPageMetadataService _uiPageMetadataService;
-        public readonly IUiPageTypeService _uiPageTypeService;
-        public readonly IUiControlTypeService _uiControlTypeService;
-        public readonly IMapper _mapper;
+        private readonly IUiPageMetadataService _uiPageMetadataService;
+        private readonly IUiPageTypeService _uiPageTypeService;
+        private readonly IUiControlTypeService _uiControlTypeService;
+        private readonly IMapper _mapper;
+        private readonly IDataTypeService _dataTypeService;
+        
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -21,12 +23,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="mapper"></param>
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataTypeService"></param>
-        public UiPageMetadataController(IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
+        public UiPageMetadataController(IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _uiControlTypeService = uiControlTypeService;
+            _dataTypeService = dataTypeService;
         }
         /// <summary>
         /// To List All Record
@@ -52,10 +55,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             List<Business.Core.Model.UiPageTypeModel> pageList = _uiPageTypeService.GetAll();
             List < Business.Core.Model.UiControlTypeModel>controlList = _uiControlTypeService.GetAll();
-            List<Business.Core.Model.DataTypeModel> dataList = _uiPageTypeService.GetDataType();
+            List<Business.Core.Model.DataTypeModel> dataList = _dataTypeService.Get();
             var pages = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageList);
             var controles = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controlList);
-            var datas = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.UiDataTypeModel>>(dataList);
+            var datas = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeModel>>(dataList);
             ViewBag.UiControlTypes = controles;
             ViewBag.DataTypes = datas;
             ViewBag.UiPageTypes = pages;
@@ -100,10 +103,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageTypeId = uiPageTypeId;
             List<Business.Core.Model.UiPageTypeModel> pages = _uiPageTypeService.GetAll();
             List<Business.Core.Model.UiControlTypeModel> controls = _uiControlTypeService.GetAll();
-            List<Business.Core.Model.DataTypeModel> datas = _uiPageTypeService.GetDataType();
+            List<Business.Core.Model.DataTypeModel> datas = _dataTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pages);
             var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controls);
-            var dataList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.UiDataTypeModel>>(datas);
+            var dataList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeModel>>(datas);
             ViewBag.UiControlTypes = controlList;
             ViewBag.DataTypes = dataList;
             ViewBag.UiPageTypes = pageList;

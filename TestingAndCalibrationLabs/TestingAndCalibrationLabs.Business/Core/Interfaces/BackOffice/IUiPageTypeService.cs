@@ -11,11 +11,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <returns></returns>
         List<UiPageTypeModel> GetAll();
-        List<DataTypeModel> GetDataType();
-        List<UiPageValidationTypeModel> GetUiPageValidationType();
+        
         UiPageTypeModel GetById(int id);
         RequestResult<int> Create(UiPageTypeModel uiPageTypeModel);
-        RequestResult <int> Edit(int id ,UiPageTypeModel uiPageTypeModel);
+        RequestResult <int> Edit(UiPageTypeModel uiPageTypeModel);
         bool Delete(int id);
 
     }

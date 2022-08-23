@@ -57,7 +57,7 @@
             </td>
             <td>
                 @Html.ActionLink("", "Edit", new {  id=item.Id,uiPageTypeId = item.UiPageTypeId,uiPageMetadataTypeId=item.UiPageMetadataTypeId,uiPageValidationTypeId=item.UiPageValidationTypeId }, new{@class="fas fa-edit"}) |
-                @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
+                @Html.ActionLink("", "Delete",new { id=item.Id}, new{@class="fa fa-trash"})
             </td>
         </tr>
 }

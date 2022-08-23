@@ -3,7 +3,7 @@
     /// <summary>
     /// Declaring Public Properties
     /// </summary>
-    public class UiDataTypeModel
+    public class DataTypeModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -2,7 +2,7 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    [DbTable("Record")]
+    [DbTable("DataType")]
     public class DataTypeModel : Entity
     {
         /// <summary>

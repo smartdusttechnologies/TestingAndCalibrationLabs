@@ -8,10 +8,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class UiPageValidationController : Controller
     {
-        public readonly IUiPageValidationService _uiPageValidationTypeService;
-        public readonly IUiPageTypeService _uiPageTypeService;
-        public readonly IMapper _mapper;
-        public readonly IUiPageMetadataService _uiPageMetadataService;
+        private readonly IUiPageValidationService _uiPageValidationService;
+        private readonly IUiPageTypeService _uiPageTypeService;
+        private readonly IMapper _mapper;
+        private readonly IUiPageMetadataService _uiPageMetadataService;
+        private readonly IUiPageValidationTypeService _uiPageValidationTypeService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -19,12 +20,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageValidationTypeService"></param>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
-        public UiPageValidationController(IUiPageMetadataService uiPageMetadataService, IUiPageValidationService uiPageValidationTypeService, IUiPageTypeService uiPageTypeService,IMapper mapper)
+        public UiPageValidationController(IUiPageValidationTypeService uiPageValidationTypeService, IUiPageMetadataService uiPageMetadataService, IUiPageValidationService uiPageValidationService, IUiPageTypeService uiPageTypeService,IMapper mapper)
         {
-            _uiPageValidationTypeService = uiPageValidationTypeService;
+            _uiPageValidationService = uiPageValidationService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper; 
             _uiPageMetadataService = uiPageMetadataService;
+            _uiPageValidationTypeService = uiPageValidationTypeService;
         }
         /// <summary>
         /// Get All The Pages From Database
@@ -34,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiPageValidationModel> pageValidationList = _uiPageValidationTypeService.GetAll();
+            List<Business.Core.Model.UiPageValidationModel> pageValidationList = _uiPageValidationService.GetAll();
             var pageValidationModel = _mapper.Map<List<Business.Core.Model.UiPageValidationModel>, List<Models.UiPageValidationModel>>(pageValidationList);
             return View(pageValidationModel.AsEnumerable());
         }
@@ -48,7 +50,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             List<Business.Core.Model.UiPageTypeModel> pageType = _uiPageTypeService.GetAll();
             List<Business.Core.Model.UiPageMetadataModel> pageMetadataType = _uiPageMetadataService.GetAll();
-            List<Business.Core.Model.UiPageValidationTypeModel> pageValidationType = _uiPageTypeService.GetUiPageValidationType();
+            List<Business.Core.Model.UiPageValidationTypeModel> pageValidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageType);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadataType);
             var validationList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(pageValidationType);
@@ -70,7 +72,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var createPageValidation = _mapper.Map<Models.UiPageValidationModel, Business.Core.Model.UiPageValidationModel>(uiPageValidationModel);
-                _uiPageValidationTypeService.Create(createPageValidation);
+                _uiPageValidationService.Create(createPageValidation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -96,15 +98,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageMetadataTypeId=uiPageMetadataTypeId;
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
             List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.GetAll();
-            List<Business.Core.Model.UiPageValidationTypeModel> val = _uiPageTypeService.GetUiPageValidationType();
+            List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
-            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(val);
+            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(uiPagevalidationType);
             ViewBag.UiPageTypes=pageList;
             ViewBag.UiPageValidationTypes=valList;
             ViewBag.UiPageMetadataTypes=metadataList;
 
-            var getByIdPageValidationType = _uiPageValidationTypeService.GetById((int)id);
+            var getByIdPageValidationType = _uiPageValidationService.GetById((int)id);
             if (getByIdPageValidationType == null)
             {
                 return NotFound();
@@ -129,7 +131,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var pageValidationEdit = _mapper.Map<Models.UiPageValidationModel, Business.Core.Model.UiPageValidationModel>(uiPageValidationModel);
-                _uiPageValidationTypeService.Update(id ,pageValidationEdit);
+                _uiPageValidationService.Update(id ,pageValidationEdit);
                 return RedirectToAction("Index");
             }
             return View(uiPageValidationModel);
@@ -145,7 +147,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var getByIdPageValidationType = _uiPageValidationTypeService.GetById(id);
+            var getByIdPageValidationType = _uiPageValidationService.GetById(id);
             var pageValidationModel = _mapper.Map<Business.Core.Model.UiPageValidationModel, Models.UiPageValidationModel>(getByIdPageValidationType);
             return View(pageValidationModel);
         }
@@ -162,7 +164,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            _uiPageValidationTypeService.Delete((int)id);
+            _uiPageValidationService.Delete((int)id);
             return RedirectToAction("Index");
         }
     }

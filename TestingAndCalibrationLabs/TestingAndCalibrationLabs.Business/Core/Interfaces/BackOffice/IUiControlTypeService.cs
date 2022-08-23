@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         UiControlTypeModel Get(int id);
 
         List<UiControlTypeModel> GetAll();
-        RequestResult<int> Edit(int id, UiControlTypeModel uiControlTypeModel);
+        RequestResult<int> Edit( UiControlTypeModel uiControlTypeModel);
         RequestResult<int> Create(UiControlTypeModel uiControlTypeModel);
         bool Delete(int id);
     }

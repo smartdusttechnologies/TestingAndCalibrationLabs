@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int Create(UiPageValidationModel uiPageValidationModel)
         {
-            string query = @"Insert into [UiPageValidation] (UiPageId,UiPageMetadataId,UiPageValidationTypeId)
+            string query = @"Insert into [UiPageValidation] (UiPageTypeId,UiPageMetadataId,UiPageValidationTypeId)
                                 values (@UiPageTypeId,@UiPageMetadataTypeId,@UiPageValidationTypeId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiPageValidationModel);
@@ -52,7 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     upm.[UiControlDisplayName] as UiPageMetadataTypeName,
                                                     upvt.[Id] as UiPageValidationTypeId, upvt.[Name] as UiPageValidationTypeName
                                                 From[UiPageValidation] upv
-                                                    inner join[UiPageType] upt on upv.UiPageId = upt.Id
+                                                    inner join[UiPageType] upt on upv.UiPageTypeId = upt.Id
                                                     inner join[UiPageMetadata] upm on upv.UiPageMetadataId = upm.Id
                                                     inner join[UiPageValidationType] upvt on upv.UiPageValidationTypeId = upvt.Id
                                                 Where    
@@ -73,7 +73,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     upm.[UiControlDisplayName] as UiPageMetadataTypeName,
                                                     upvt.[Id] as UiPageValidationTypeId, upvt.[Name] as UiPageValidationTypeName
                                                 From[UiPageValidation] upv
-                                                    inner join[UiPageType] upt on upv.UiPageId = upt.Id
+                                                    inner join[UiPageType] upt on upv.UiPageTypeId = upt.Id
                                                     inner join[UiPageMetadata] upm on upv.UiPageMetadataId = upm.Id
                                                     inner join[UiPageValidationType] upvt on upv.UiPageValidationTypeId = upvt.Id
                                                 Where   
@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public int Update(UiPageValidationModel uiPageValidationModel)
         {
             string query = @"update [UiPageValidation] Set  
-                                UiPageId = @UiPageTypeId,
+                                UiPageTypeId = @UiPageTypeId,
                                 UiPageMetadataId = @UiPageMetadataTypeId,
                                 UiPageValidationTypeId = @UiPageValidationTypeId
                                 Where Id = @Id";
