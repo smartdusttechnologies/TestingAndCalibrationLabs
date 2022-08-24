@@ -4,10 +4,6 @@
     max-width: 450px;
 }
 
-.white-bg {
-    background-color: white;
-}
-
 .padding-login {
     padding: 20px;
 }
@@ -90,6 +86,6 @@
     background-color: #dfdfdf;
 }
 
-.btn:hover {
+/*.btn:hover {
     opacity: 1;
-}
+}*/

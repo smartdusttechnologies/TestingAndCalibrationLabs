@@ -1,28 +1,30 @@
 *{ 
 padding:0px;
 margin:0px;
-
 }
-body {
- font-family: Arial, Helvetica, sans-serif;
- color: #565656;
+
+/*body {*/
+ /*font-family: Arial, Helvetica, sans-serif;*/
+ /*color: #565656;
  font-size:12px;
  line-height:18px;
  background:url(./images/bg.jpg) repeat-x left top;
-}
+}*/
   
-a {
+/*a {
  text-decoration: none;
  color: #00803E;
-}
-a:hover {
- text-decoration: underline;}
+}*/
+
+/*a:hover {
+ text-decoration: underline;}*/
  
-form {
+/*form {
  margin: 0px;
  padding: 0px;
-}
-.clear{
+}*/
+
+.clearBoth{
 clear:both;
 }
 
@@ -249,7 +251,6 @@ behavior: url(PIE.htc);
 padding:5px 0;
 margin:0 10px 0 0;
 }
-
 
 .heading{
 float:left;
@@ -516,8 +517,6 @@ filter: alpha(opacity = 80);
   left:25px;
 }
 
- 
-
 .infiniteCarousel .wrapper ul {
   width: 9999px;
   list-style-image:none;
@@ -533,7 +532,6 @@ filter: alpha(opacity = 80);
 .infiniteCarousel ul li {
   display:block;
   float:left;
-  
 }
 
 .infiniteCarousel ul li a img {
@@ -550,8 +548,6 @@ filter: alpha(opacity = 80);
   cursor: pointer;
 }
 
- 
-
 .infiniteCarousel .forward {
   background: url(./images/right-arrow.jpg) no-repeat right center;
   right: 0px;
@@ -564,7 +560,6 @@ filter: alpha(opacity = 80);
     top:25px
 	 
 }
-
 
 #footer {
 	float:left;
@@ -583,17 +578,16 @@ filter: alpha(opacity = 80);
 	margin:0 0 10px 0;
 }
 
-#footer a{
+/*#footer a{
 color:#fff;
+}*/
 
-}
-
-.copyright{
+/*.copyright{
 font-size:11px;
 color:#999999;
-}
+}*/
 
- 
+ /*
 #enquiry{
 width:400px;
 float:right;
@@ -659,22 +653,19 @@ margin:10px 20px 10px 0;
 	-moz-box-shadow:#666 0px 1px 5px;
 	box-shadow:#666 0px 1px 5px;
 
-}
+}*/
 
- .right {
+ /*.right {
  float:right;
- }
+ }*/
  
- #toplinks {
+ /*#toplinks {
  margin: 5px 0 0 0;
- 
- }
- 
- 
+ }*/
  
  /************************** menu *****************************************/
 
-#webx99_menu {
+/*#webx99_menu {
 	float: left;
 	width: 880px;
 	height: 20px;
@@ -682,28 +673,28 @@ margin:10px 20px 10px 0;
 	background:transparent;
 	margin-top: 6px;
 	
-}
+}*/
 	
-#nav a {
+/*#nav a {
 	text-decoration:none;
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	
-}
+}*/
 
 
-#nav{margin:0px; padding:0px; list-style-type:none;  z-index:9; position:relative; }
+/*#nav{margin:0px; padding:0px; list-style-type:none;  z-index:9; position:relative; }*/
 
-#nav ul{margin:t-style-type:none; z-in0px; padding:0px; lisdex:10; position:relative}
+/*#nav ul{margin:t-style-type:none; z-in0px; padding:0px; lisdex:10; position:relative}*/
 
-#nav li{list-style-type:none; padding:0px; margin:0px; float:left; position:relative;}
+/*#nav li{list-style-type:none; padding:0px; margin:0px; float:left; position:relative;}*/
 
-#nav li a{color:#fff; text-transform:uppercase; font-weight:bold; font-size:13px; height:20px; display:block; float:left; padding:10px 19px 10px 19px; position:static; z-index:1; margin-top:-10px; border-right:1px solid #ccc; }
+/*#nav li a{color:#fff; text-transform:uppercase; font-weight:bold; font-size:13px; height:20px; display:block; float:left; padding:10px 19px 10px 19px; position:static; z-index:1; margin-top:-10px; border-right:1px solid #ccc; }*/
 
-* html #nav li a{margin-right:1px;} /* ie6 only */
+/** html #nav li a{margin-right:1px;}*/ /* ie6 only */
 
-#nav li a:hover{color:#444; text-decoration:none; background:#fff;}
+/*#nav li a:hover{color:#444; text-decoration:none; background:#fff;}*/
 
-#nav li li{
+/*#nav li li{
  border:none;
 margin-top:0;
 background-image:none;
@@ -714,18 +705,18 @@ background-image:none;
 position:relative;
 z-index:10
 
-}
+}*/
 
-#nav ul {
+/*#nav ul {
 display:none;
 left:-1px;
 position:absolute;
 top:30px;
 width:172px;
 z-index:10
-}
+}*/
 
-#nav li ul a{
+/*#nav li ul a{
 text-decoration:none;
 width:150px;
 height:auto;
@@ -738,13 +729,13 @@ font-size:12px;
 font-weight:bold;
 line-height:20px;
 z-index:10
-}
+}*/
 
-#nav ul ul{top:auto;border-top:none;}	
+/*#nav ul ul{top:auto;border-top:none;}	
 #nav li ul ul {left:153px; top:0px;}
 #nav li:hover ul ul, #nav li:hover ul ul ul, #nav li:hover ul ul ul ul{display:none;}
 #nav li:hover ul, #nav li li:hover ul, #nav li li li:hover ul, #nav li li li li:hover ul{display:block;}
-#nav li ul a{border-top:none;}
+#nav li ul a{border-top:none;}*/
 
 
 /****************** end of menu *****************************************/
