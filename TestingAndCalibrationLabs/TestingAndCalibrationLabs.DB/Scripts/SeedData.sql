@@ -185,3 +185,20 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[Role]  ON
+
+    INSERT INTO [dbo].[DataType]
+               ([Id]
+		       ,[Name]
+			   ,[IsDeleted])
+         VALUES
+               (1, 'int', 0),
+		       (2, 'string', 0),
+		       (3, 'bit', 0)
+			   
+
+    SET IDENTITY_INSERT [dbo].[DataType]  OFF
+END
+GO
