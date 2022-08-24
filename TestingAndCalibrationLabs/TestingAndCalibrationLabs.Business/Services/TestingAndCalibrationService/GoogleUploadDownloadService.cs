@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
-using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.StaticFiles;
@@ -17,10 +16,6 @@ using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using AutoMapper;
 using Google.Apis.Download;
-using static System.Net.WebRequestMethods;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
-using System.Web;
 using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
@@ -35,6 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         private readonly ITestReportRepository _testReportRepository;
         private readonly IConnectionFactory _connectionFactory;
         private readonly IMapper _mapper;
+        private readonly IImageCompressService _imageCompressService;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
         private string uploadsFolder;
@@ -53,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="configuration"></param>
         /// <param name="connectionFactory"></param>
 
-        public GoogleUploadDownloadService(IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment, ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
+        public GoogleUploadDownloadService(IImageCompressService imageCompressService, IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment, ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
         {
             _userRepository = userRepository;
             _configuration = configuration;
@@ -62,6 +58,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _connectionFactory = connectionFactory;
             _emailService = emailService;
             _mapper = mapper;
+            _imageCompressService = imageCompressService;
         }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         public string UploadFile(AttachmentModel attachmentModel)
         {
             var exchangeModel = new Business.Core.Model.TestReportModel
-            { 
+            {
                 FilePath = attachmentModel.FilePath,
             };
             UploadFileInternal(attachmentModel);
@@ -155,26 +152,35 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="testReportModel"></param>
         private string UploadFileInternal(AttachmentModel attachmentModel)
         {
+            var compressedImage = _imageCompressService.ImageCompress(attachmentModel.DataUrl);
             string uploadsFolder = CreateFolder("Test", "new");
-            var fileName = attachmentModel.DataUrl.FileName;
-            var dataOfFile = new FileExtensionContentTypeProvider();
-            dataOfFile.TryGetContentType(attachmentModel.FilePath, out string fileMime);
+            var fileName = compressedImage.FileName;
+            string fileMime = compressedImage.ContentType;
             DriveService service = GetService();
             var driveFile = new Google.Apis.Drive.v3.Data.File();
             driveFile.Name = Path.GetFileName(fileName);
             driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
-            using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())            {
-                var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
-                request.Fields = "id";
-                var response = request.Upload();
-                if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+            try
+            {
+                using (var uploaddataFile = new FileStream(compressedImage.FilePath, FileMode.Open))
                 {
-                    throw response.Exception;
+                    var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
+                    request.Fields = "id";
+                    var response = request.Upload();
+                    if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+                    {
+                        throw response.Exception;
+                    }
+                    attachmentModel.FilePath = request.ResponseBody.Id;
+
+                    //returning the ResponseBody Id received from Google drive after upload
+                    return compressedImage.FilePath;
                 }
-                attachmentModel.FilePath = request.ResponseBody.Id;
-                //returning the ResponseBody Id received from Google drive after upload
-                return attachmentModel.FilePath;
+            }
+            finally
+            {
+                File.Delete(compressedImage.FilePath);
             }
         }
 
@@ -187,11 +193,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             Google.Apis.Drive.v3.DriveService service = GetService();
             string FolderPath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"]);
-           // string FolderPath = (string)_hostingEnvironment.WebRootPath;
+            // string FolderPath = (string)_hostingEnvironment.WebRootPath;
             Google.Apis.Drive.v3.FilesResource.GetRequest request = service.Files.Get(fileId);
             string FileName = request.Execute().Name;
             string dataFileName = FileName;
-            string FilePath = System.IO.Path.Combine(FolderPath, dataFileName);
+            string FilePath = Path.Combine(FolderPath, dataFileName);
             MemoryStream stream = new MemoryStream();
 
             // Add a handler which will be notified on progress changes.
@@ -243,7 +249,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 attachment.FileStream = memory;
                 attachment.FileName = Path.GetFileName(filepath);
                 attachment.ContentType = Helpers.GetContentType(filepath);
-                return attachment;  
+                return attachment;
             }
             finally
             {
@@ -258,10 +264,10 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="FilePath"></param>
         private static void SaveStream(MemoryStream stream, string FilePath)
         {
-            using (System.IO.FileStream file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite))
+            using (FileStream file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite))
             {
                 stream.WriteTo(file);
             }
-        }              
-    } 
+        }
+    }
 }

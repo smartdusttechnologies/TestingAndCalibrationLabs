@@ -46,7 +46,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         [Required(ErrorMessage = "Please select data to upload")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png",".pdf" })]
-        [MaxFileSize(100000)]
+        [MaxFileSize(30000000)]
+        
         public IFormFile DataUrl { get; set; }
         
         /// <summary>

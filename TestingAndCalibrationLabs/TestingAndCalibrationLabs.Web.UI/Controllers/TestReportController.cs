@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IEmailService _emailService;
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
+        public readonly IImageCompressService _imageCompressService;
 
         public object TempData1 { get; private set; }
 
@@ -30,7 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Default Action of the Index
         /// </summary>
         /// <returns></returns>
-        public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleUploadDownloadService googleUploadDownloadService)
+        public TestReportController(IImageCompressService imageCompressService, ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleUploadDownloadService googleUploadDownloadService)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
@@ -38,6 +40,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _emailService = emailService;
             _testReportService = testReportService;
             _mapper = mapper;
+            _imageCompressService = imageCompressService;
         }
 
         /// <summary>
