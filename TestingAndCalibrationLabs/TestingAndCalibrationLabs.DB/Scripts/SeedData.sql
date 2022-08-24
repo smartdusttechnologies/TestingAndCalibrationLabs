@@ -28,8 +28,8 @@ BEGIN
                (0, 'Sysadmin', 0 , 0),
 		       (1, 'Admin', 1 , 0),
 		       (2, 'ApplicationAdmin', 2 , 0),
-		       (2, 'Manager', 3 , 0),
-		       (3, 'GeneralUser', 6 , 0)
+		       (3, 'Manager', 3 , 0),
+		       (4, 'GeneralUser', 6 , 0)
 			   
 
     SET IDENTITY_INSERT [dbo].[Role]  OFF
