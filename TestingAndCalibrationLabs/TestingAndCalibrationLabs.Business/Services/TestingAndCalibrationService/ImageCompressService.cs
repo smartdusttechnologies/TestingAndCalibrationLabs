@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 string extensionName = Path.GetExtension(file.FileName);
                 var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
-                string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["UploadData:FolderName"], fileName);
+                string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
                 try
                 {
                     using (var imgData = new FileStream(filePath, FileMode.Create))
@@ -55,7 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (file != null && file.Length > 100000 && file.Length < 30000000)
             {
                 ImageUrl = file.FileName;
-                string FilePathDelete = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["UploadData:FolderName"], file.FileName);
+                string FilePathDelete = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["DownloadData:FolderName"], file.FileName);
                 if (File.Exists(FilePathDelete))
                 {
                     File.Delete(FilePathDelete);
@@ -63,7 +63,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["UploadData:FolderName"], ImageUrl);
                 string extensionName = Path.GetExtension(file.FileName);
                 var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
-                string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["UploadData:FolderName"], fileName);
+                string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
                 try
                 {
                     using (var imgData = new FileStream(filePath, FileMode.Create))
