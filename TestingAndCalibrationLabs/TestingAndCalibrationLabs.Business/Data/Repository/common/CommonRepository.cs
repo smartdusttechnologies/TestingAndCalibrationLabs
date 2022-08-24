@@ -33,12 +33,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<UiPageValidationModel> GetUiPageValidations(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageValidationModel>(@"Select upv.Id, upv.UiPageId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
+            return db.Query<UiPageValidationModel>(@"Select upv.Id, upv.UiPageTypeId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
                                             From [UiPageValidation] upv 
                                             INNER JOIN  [UiPageValidationType] upvt ON upv.UiPageValidationTypeId = upvt.Id 
                                                 AND upv.IsDeleted = 0 
                                                 AND upvt.IsDeleted = 0 
-                                            WHERE upv.UiPageId=@uiPageId", new { uiPageId }).ToList();
+                                            WHERE upv.UiPageTypeId=@uiPageId", new { uiPageId }).ToList();
         }
 
         public RecordModel GetUiPageMetadata(int uiPageId)
