@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     {
         public int UiPageTypeId { get; set; }
         public string UiPageTypeName { get; set; }
-        public int UiPageMetadataTypeId { get; set; }
+        public int UiPageMetadataId { get; set; }
         public string UiPageMetadataTypeName { get; set; }
         public int UiPageValidationTypeId { get; set; }
         public string UiPageValidationTypeName { get; set; }

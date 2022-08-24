@@ -157,7 +157,7 @@ BEGIN
 			   (23, N'color', N'Color', 0),
 			   (24, N'card', N'Card', 0)
 
-    SET IDENTITY_INSERT [dbo].[UiPageValidationType]  OFF
+    SET IDENTITY_INSERT [dbo].[UiControlType]  OFF
 END
 GO
 
@@ -187,7 +187,7 @@ GO
 
 IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id = 0)
 BEGIN
-    SET IDENTITY_INSERT [dbo].[Role]  ON
+    SET IDENTITY_INSERT [dbo].[DataType]  ON
 
     INSERT INTO [dbo].[DataType]
                ([Id]
