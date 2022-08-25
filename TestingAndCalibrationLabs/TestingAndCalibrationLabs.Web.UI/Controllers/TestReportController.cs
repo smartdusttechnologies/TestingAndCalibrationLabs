@@ -50,7 +50,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+            ViewBag.Resp = TempData["Resp"];
             return View();
         }
 
@@ -80,11 +82,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 };
                 if (IsSendAndUpload == false)
                 {
-                    _testReportService.UploadFile(getbusinessModel);
+                    var messege = _testReportService.UploadFile(getbusinessModel);
+
+                    TempData["Resp"] = messege;
                 }
                 else if (IsSendAndUpload == true)
                 {
-                     _testReportService.UploadFileAndSendMail(getbusinessModel);
+                    var messege = _testReportService.UploadFileAndSendMail(getbusinessModel);
+                    TempData["Resp"] = messege;
                 }
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -140,8 +145,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             };
 
             //Sends link
-                _testReportService.EmailLinkMail(getbusinessModel, datafForMail.Id);
-                 TempData["IsTrue"] = true;
+            _testReportService.EmailLinkMail(getbusinessModel, datafForMail.Id);
+            TempData["IsTrue"] = true;
             //Redirect to Page "DataView"
             return RedirectToAction("TestReportView");
         }
@@ -160,7 +165,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var fileid = testReportData.FilePath;
                 AttachmentModel attachment = _testReportService.DownLoadAttachment(fileid);
                 TempData["FileDownloaded"] = true;
-                return File(attachment.FileStream, attachment.ContentType, attachment.FileName); 
+                return File(attachment.FileStream, attachment.ContentType, attachment.FileName);
             }
             // return RedirectToAction("TestReportView");
         }

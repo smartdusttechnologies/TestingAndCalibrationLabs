@@ -28,6 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string Message { get; set; }
         public List<string> Bcc { get; set; }
         public List<string> Cc { get; set; }
+        public bool IsSuccess { get; set; }
         public Stream ImageData { get; set; }
         public IFormFile DataUrl { get; set; }
     }

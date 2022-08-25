@@ -114,10 +114,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// To upload the Test Report to google Drive and send the mail
         /// </summary>
         /// <param name="testReportModel"></param>
-        public void UploadFileAndSendMail(TestReportModel testReportModel)
+        public string UploadFileAndSendMail(TestReportModel testReportModel)
         {
-            UploadFile(testReportModel);
+           var messege = UploadFile(testReportModel);
             WebLinkMail(testReportModel);
+            return messege;
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public void UploadFile(TestReportModel testReportModel)
+        public string UploadFile(TestReportModel testReportModel)
         {
             
             var attachmentModel = new Business.Core.Model.AttachmentModel
@@ -153,11 +154,15 @@ namespace TestingAndCalibrationLabs.Business.Services
                 DateTime = testReportModel.DateTime
             };
             var dataFilePath = _googleUploadDownloadService.UploadFile(attachmentModel);
+            if(dataFilePath.IsSuccess == false)
+            {
+                return dataFilePath.Message;
+            }
 
             //Passing the FilePath value received after upload
             var dataSaveModel = new Business.Core.Model.TestReportModel
             {
-                FilePath = dataFilePath,
+                FilePath = dataFilePath.FilePath,
                 Name = testReportModel.Name,
                 Client = testReportModel.Client,
                 JobId  = testReportModel.JobId,
@@ -167,6 +172,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             //Saving File to the repository
             _testReportRepository.Insert(dataSaveModel);
+            return null;
         }
 
         /// <summary>
