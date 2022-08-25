@@ -136,23 +136,24 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// This will upload the file to the Google Drive
         /// </summary>
         /// <param name="testReportModel"></param>
-        public string UploadFile(AttachmentModel attachmentModel)
+        public AttachmentModel UploadFile(AttachmentModel attachmentModel)
         {
             var exchangeModel = new Business.Core.Model.TestReportModel
             {
                 FilePath = attachmentModel.FilePath,
             };
-            UploadFileInternal(attachmentModel);
-            return attachmentModel.FilePath;
+            var xyz = UploadFileInternal(attachmentModel);
+            return xyz;
         }
 
         /// <summary>
         /// This method is used to Upload the file only 
         /// </summary>
         /// <param name="testReportModel"></param>
-        private string UploadFileInternal(AttachmentModel attachmentModel)
+        private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
         {
             var compressedImage = _imageCompressService.ImageCompress(attachmentModel.DataUrl);
+            attachmentModel.FilePath = compressedImage.FilePath;
             string uploadsFolder = CreateFolder("Test", "new");
             var fileName = compressedImage.FileName;
             string fileMime = compressedImage.ContentType;
@@ -165,6 +166,14 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             {
                 using (var uploaddataFile = new FileStream(compressedImage.FilePath, FileMode.Open))
                 {
+                    if (uploaddataFile.Length > 200000)
+                    {
+                        compressedImage.Message = "File Size Is Much Bigger";
+                        //Console.WriteLine("File Size Is Too Long: ");
+                        compressedImage.IsSuccess = false;
+                        return compressedImage;
+
+                    }
                     var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                     request.Fields = "id";
                     var response = request.Upload();
@@ -172,16 +181,19 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                     {
                         throw response.Exception;
                     }
-                    attachmentModel.FilePath = request.ResponseBody.Id;
-
+                    compressedImage.FilePath = request.ResponseBody.Id;
+                    compressedImage.IsSuccess = true;
                     //returning the ResponseBody Id received from Google drive after upload
-                    return compressedImage.FilePath;
+                    return compressedImage;
                 }
             }
             finally
             {
-                File.Delete(compressedImage.FilePath);
+
+                File.Delete(attachmentModel.FilePath);
             }
+
+
         }
 
         /// <summary>
