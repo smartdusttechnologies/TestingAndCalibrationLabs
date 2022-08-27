@@ -70,6 +70,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
                 _uiPageTypeService.Edit( pageModel);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(uiPageTypeModel);

@@ -68,6 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var controlTypeEditModel = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
                 _uiControlTypeServices.Edit(controlTypeEditModel);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(uiControlTypeModel);

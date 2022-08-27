@@ -35,17 +35,17 @@
             </th>
             
             <th>
-                <h6><b>Ui Data Type</h6>
+                <h6><b>Ui Data Type</b></h6>
             </th>
-            <th></th>
+            <th>
+                    <h6><b>Actions</b></h6>
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @Html.HiddenFor(modelItem => item.UiPageTypeId)
-            @Html.HiddenFor(modelItem => item.UiControlTypeId)
-            @Html.HiddenFor(modelItem => item.DataTypeId)
+            
             
             <td>
                 @Html.DisplayFor(modelItem => item.UiPageTypeName)
@@ -84,7 +84,7 @@
     <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbar">
             <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <span><strong>Submitted Successfully!!! Thank You</strong></span>
+            <span><strong style="font-size:14px;">Changes saved successfully!! Thank you.</strong></span>
         </div>
     </div>
 }

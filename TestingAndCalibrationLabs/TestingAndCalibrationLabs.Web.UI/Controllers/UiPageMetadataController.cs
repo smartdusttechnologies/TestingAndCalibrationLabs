@@ -132,6 +132,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 _uiPageMetadataService.Update(id, editMetadata);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(uiPageMetadataDTO);

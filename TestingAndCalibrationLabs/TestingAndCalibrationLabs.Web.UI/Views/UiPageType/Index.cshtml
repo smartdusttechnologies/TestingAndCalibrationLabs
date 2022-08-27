@@ -18,21 +18,18 @@
         <thead>
             <tr>
                 <th>
-
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
-                <th></th>
+                <th>
+                    Actions
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.HiddenFor(modelItem => item.Id)
-                    </td>
+                    
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -58,7 +55,7 @@
     <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbar">
             <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <span><strong>Submitted Successfully!!! Thank You</strong></span>
+            <span><strong style="font-size:14px;">Changes saved successfully!! Thank you.</strong></span>
         </div>
     </div>
 }

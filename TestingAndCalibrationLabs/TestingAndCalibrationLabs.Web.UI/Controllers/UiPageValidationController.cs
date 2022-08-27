@@ -132,6 +132,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var pageValidationEdit = _mapper.Map<Models.UiPageValidationModel, Business.Core.Model.UiPageValidationModel>(uiPageValidationModel);
                 _uiPageValidationService.Update(id ,pageValidationEdit);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(uiPageValidationModel);
