@@ -55,7 +55,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadataType);
             var validationList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(pageValidationType);
             ViewBag.UiPageTypes = pageList;
-            ViewBag.UiPageMetadataTypes = metadataList;
+            ViewBag.UiPageMetadata = metadataList;
             ViewBag.UiPageValidationTypes = validationList;
 
             return base.View(new Models.UiPageValidationModel { Id = id });
@@ -87,7 +87,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageValidationTypeId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id, int uiPageTypeId, int uiPageValidationTypeId, int uiPageMetadataTypeId)
+        public IActionResult Edit(int? id, int uiPageTypeId, int uiPageValidationTypeId, int uiPageMetadataId)
         {
             if (id == null)
             {
@@ -95,7 +95,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             ViewBag.UiPageTypeId = uiPageTypeId;
             ViewBag.UiPageValidaitonTypeId = uiPageValidationTypeId;
-            ViewBag.UiPageMetadataTypeId=uiPageMetadataTypeId;
+            ViewBag.UiPageMetadataId=uiPageMetadataId;
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
             List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.GetAll();
             List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
@@ -104,7 +104,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(uiPagevalidationType);
             ViewBag.UiPageTypes=pageList;
             ViewBag.UiPageValidationTypes=valList;
-            ViewBag.UiPageMetadataTypes=metadataList;
+            ViewBag.UiPageMetadata=metadataList;
 
             var getByIdPageValidationType = _uiPageValidationService.GetById((int)id);
             if (getByIdPageValidationType == null)

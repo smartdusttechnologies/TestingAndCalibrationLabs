@@ -37,10 +37,6 @@
 @foreach (var item in Model) {
         <tr>
             
-                @Html.HiddenFor(modelItem => item.Id)
-                @Html.HiddenFor(modelItem => item.UiPageMetadataTypeId)
-                @Html.HiddenFor(modelItem => item.UiPageTypeId)
-                @Html.HiddenFor(modelItem => item.UiPageValidationTypeId)
             
             <td>
                 @Html.DisplayFor(modelItem => item.UiPageTypeName)
@@ -49,14 +45,14 @@
                 
            
             <td>
-                @Html.DisplayFor(modelItem => item.UiPageMetadataTypeName)
+                @Html.DisplayFor(modelItem => item.UiPageMetadataName)
             </td>
             
             <td>
                 @Html.DisplayFor(modelItem => item.UiPageValidationTypeName)
             </td>
             <td>
-                @Html.ActionLink("", "Edit", new {  id=item.Id,uiPageTypeId = item.UiPageTypeId,uiPageMetadataTypeId=item.UiPageMetadataTypeId,uiPageValidationTypeId=item.UiPageValidationTypeId }, new{@class="fas fa-edit"}) |
+                @Html.ActionLink("", "Edit", new {  id=item.Id,uiPageTypeId = item.UiPageTypeId,uiPageMetadataId=item.UiPageMetadataId,uiPageValidationTypeId=item.UiPageValidationTypeId }, new{@class="fas fa-edit"}) |
                 @Html.ActionLink("", "Delete",new { id=item.Id}, new{@class="fa fa-trash"})
             </td>
         </tr>

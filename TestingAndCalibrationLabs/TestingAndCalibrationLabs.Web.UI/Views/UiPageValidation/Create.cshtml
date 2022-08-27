@@ -24,10 +24,10 @@
                     </select>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                    <label for="UiPageMetadataTypeId" class="form-label"></label>
-                    <select class="form-input " name="UiPageMetadataTypeId" id="uimetadataType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataTypeId">
+                    <label for="UiPageMetadataId" class="form-label"></label>
+                    <select class="form-input " name="UiPageMetadataId" id="uimetadataType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
                         <option disabled="disabled" selected>Select Metadata ...</option>
-                        @foreach (var item in ViewBag.UiPageMetadataTypes)
+                        @foreach (var item in ViewBag.UiPageMetadata)
                         {
                             <option value=@item.Id>@item.UiControlDisplayName</option>
                         }
