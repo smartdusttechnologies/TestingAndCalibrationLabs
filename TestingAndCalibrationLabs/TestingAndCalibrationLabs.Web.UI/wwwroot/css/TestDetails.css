@@ -119,7 +119,7 @@ form-group > label {
     background-color: white;
     padding: 0px 0px 0px 0px;
 }
-
+/*
 .field-validation-error.form-input.width-full {
     color: orangered;
     font-weight: bold;
@@ -144,29 +144,21 @@ input.input-validation-error#TestingType.form-input.width-full {
 input.input-validation-error#State.form-input.width-full {
     border: 2px solid red;
 }
-
-textarea.input-validation-error#Comments {
+*/
+/*textarea.input-validation-error#Comments {
     border: 2px solid red;
 }
 
 select.input-validation-error#TestingType {
     border: 2px solid red;
-}
+}*/
+
 
 #select {
     margin: 0;
     padding: 0;
 }
 
-.validation-summary-errors {
-    color: red;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-.validation-summary-valid {
-    display: none;
-}
 
 .submit-progress-bg {
     background-color: lightcoral;

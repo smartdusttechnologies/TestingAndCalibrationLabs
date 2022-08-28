@@ -166,6 +166,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _uiPageMetadataService.Delete((int)id);
+            TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
 

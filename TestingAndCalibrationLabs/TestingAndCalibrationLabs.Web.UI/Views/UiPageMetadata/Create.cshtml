@@ -15,7 +15,7 @@
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
-                    <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+                    <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         <option disabled="disabled" selected>Select Pages ...</option>
                         @foreach (var item in ViewBag.UiPageTypes)
                         {
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
-                    <select class="form-input " name="UiControlTypeId" id="uiconType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
+                    <select class="form-input " name="UiControlTypeId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
                         <option disabled="disabled" selected>Select Control ...</option>
                         @foreach (var item in ViewBag.UiControlTypes)
                         {
@@ -37,7 +37,7 @@
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="DataType" class="form-label"></label>
-                    <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
+                    <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         <option disabled="disabled" selected>Select Data Type ...</option>
                         @foreach (var item in ViewBag.DataTypes)
                         {

@@ -4,17 +4,40 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
+    /// <summary>
+    /// Service Interface For Ui Page Type
+    /// </summary>
+    /// <returns></returns>
     public interface IUiPageTypeService
     {
         /// <summary>
-        /// Service Interface For Ui Page Type
+        /// Get All Records From Ui Page Type
         /// </summary>
         /// <returns></returns>
         List<UiPageTypeModel> GetAll();
-        
+        /// <summary>
+        /// Get Record By Id From Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         UiPageTypeModel GetById(int id);
+        /// <summary>
+        /// Insert Record In Ui Page Type
+        /// </summary>
+        /// <param name="uiPageTypeModel"></param>
+        /// <returns></returns>
         RequestResult<int> Create(UiPageTypeModel uiPageTypeModel);
-        RequestResult <int> Edit(UiPageTypeModel uiPageTypeModel);
+        /// <summary>
+        /// Edit Record From Ui Page Type
+        /// </summary>
+        /// <param name="uiPageTypeModel"></param>
+        /// <returns></returns>
+        RequestResult<int> Edit(UiPageTypeModel uiPageTypeModel);
+        /// <summary>
+        /// Delete Record From Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         bool Delete(int id);
 
     }
