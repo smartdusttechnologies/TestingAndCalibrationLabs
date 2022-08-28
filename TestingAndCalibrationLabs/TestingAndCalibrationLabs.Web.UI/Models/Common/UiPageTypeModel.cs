@@ -13,10 +13,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Id of The Ui Page Type
         /// </summary>
         public int Id { get; set; }
-        [Required(ErrorMessage = "Please Enter Page Name")]
+       
         /// <summary>
         /// It Contains The Name Of The Ui Page Type
-        /// </summary>
+        /// </summary> 
+        [Required(ErrorMessage = "Please Enter Page Name")]
         public string Name { get; set; }
         #endregion
     }
