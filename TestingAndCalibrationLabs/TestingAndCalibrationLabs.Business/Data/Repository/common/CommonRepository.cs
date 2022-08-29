@@ -44,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public RecordModel GetUiPageMetadata(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageTypeId, upt.[Name] as UiPageName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlType, upm.UiControlDisplayName
+            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageTypeId, upt.[Name] as UiPageName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                     From [UiPageMetadata] upm
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id 
