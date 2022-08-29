@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -25,7 +27,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
         public readonly IImageCompressService _imageCompressService;
-
         public object TempData1 { get; private set; }
 
         /// <summary>
@@ -49,13 +50,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
+        
         {
-
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            ViewBag.Resp = TempData["Resp"];
+            ViewBag.Response = TempData["Reason"] as string[]; 
             return View();
         }
-
         /// <summary>
         /// To Upload or Upload and Send Mail 
         /// </summary>
@@ -82,14 +82,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 };
                 if (IsSendAndUpload == false)
                 {
-                    var messege = _testReportService.UploadFile(getbusinessModel);
-
-                    TempData["Resp"] = messege;
+                    var result = _testReportService.UploadFile(getbusinessModel);
+                    //List<string> TempDataError = new List<string>();
+                    //foreach (var item in messege.ValidationMessages)
+                    //{
+                    //    TempDataError.Add(item.Reason);
+                    ////TempData["Resp"] = messege.ValidationMessages as List<string>;
+                    //    //TempData["Resp"] = item.Reason;
+                    //}
+                    TempData["Reason"] = result.ValidationMessages.Select(x => x.Reason).ToList();
                 }
                 else if (IsSendAndUpload == true)
                 {
-                    var messege = _testReportService.UploadFileAndSendMail(getbusinessModel);
-                    TempData["Resp"] = messege;
+                    var result = _testReportService.UploadFileAndSendMail(getbusinessModel);
+                    TempData["Reason"] = result.ValidationMessages.Select(x=>x.Reason).ToList();
                 }
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");

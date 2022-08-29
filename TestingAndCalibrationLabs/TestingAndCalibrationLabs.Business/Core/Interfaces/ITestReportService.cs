@@ -41,9 +41,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="Id"></param>
         //void WebLinkMail(TestReportModel testReportModel, int Id);
 
-        string UploadFileAndSendMail(TestReportModel testReportModel);
+        RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel);
 
-        string UploadFile(TestReportModel getbusinessModel);
+        RequestResult<AttachmentModel> UploadFile(TestReportModel getbusinessModel);
 
         AttachmentModel DownLoadAttachment(string fileId);
 

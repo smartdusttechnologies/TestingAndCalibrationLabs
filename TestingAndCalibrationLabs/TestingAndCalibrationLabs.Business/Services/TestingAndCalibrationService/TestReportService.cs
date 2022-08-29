@@ -114,7 +114,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// To upload the Test Report to google Drive and send the mail
         /// </summary>
         /// <param name="testReportModel"></param>
-        public string UploadFileAndSendMail(TestReportModel testReportModel)
+        public RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel)
         {
            var messege = UploadFile(testReportModel);
             WebLinkMail(testReportModel);
@@ -140,7 +140,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public string UploadFile(TestReportModel testReportModel)
+        public RequestResult<AttachmentModel> UploadFile(TestReportModel testReportModel)
         {
             
             var attachmentModel = new Business.Core.Model.AttachmentModel
@@ -153,10 +153,12 @@ namespace TestingAndCalibrationLabs.Business.Services
                 JobId = testReportModel.JobId,
                 DateTime = testReportModel.DateTime
             };
-            var dataFilePath = _googleUploadDownloadService.UploadFile(attachmentModel);
+            AttachmentModel dataFilePath = _googleUploadDownloadService.UploadFile(attachmentModel);
             if(dataFilePath.IsSuccess == false)
             {
-                return dataFilePath.Message;
+                List<ValidationMessage> errors = new List<ValidationMessage>();
+                errors.Add(new ValidationMessage { Reason = "Please Select Less Image Size", Severity = ValidationSeverity.Error });
+                return new RequestResult<AttachmentModel>(errors);
             }
 
             //Passing the FilePath value received after upload

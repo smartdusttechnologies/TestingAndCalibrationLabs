@@ -6,7 +6,6 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -150,7 +149,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// This method is used to Upload the file only 
         /// </summary>
         /// <param name="testReportModel"></param>
-        private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
+        private AttachmentModel UploadFileInternal (AttachmentModel attachmentModel)
         {
             var compressedImage = _imageCompressService.ImageCompress(attachmentModel.DataUrl);
             attachmentModel.FilePath = compressedImage.FilePath;
@@ -158,7 +157,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             var fileName = compressedImage.FileName;
             string fileMime = compressedImage.ContentType;
             DriveService service = GetService();
-            var driveFile = new Google.Apis.Drive.v3.Data.File();
+            var driveFile = new Google.Apis.Drive.v3.Data.File(); 
             driveFile.Name = Path.GetFileName(fileName);
             driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
@@ -166,13 +165,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             {
                 using (var uploaddataFile = new FileStream(compressedImage.FilePath, FileMode.Open))
                 {
+                    
                     if (uploaddataFile.Length > 200000)
                     {
-                        compressedImage.Message = "File Size Is Much Bigger";
-                        //Console.WriteLine("File Size Is Too Long: ");
                         compressedImage.IsSuccess = false;
                         return compressedImage;
-
                     }
                     var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                     request.Fields = "id";
@@ -183,17 +180,13 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                     }
                     compressedImage.FilePath = request.ResponseBody.Id;
                     compressedImage.IsSuccess = true;
-                    //returning the ResponseBody Id received from Google drive after upload
                     return compressedImage;
                 }
             }
             finally
             {
-
                 File.Delete(attachmentModel.FilePath);
             }
-
-
         }
 
         /// <summary>

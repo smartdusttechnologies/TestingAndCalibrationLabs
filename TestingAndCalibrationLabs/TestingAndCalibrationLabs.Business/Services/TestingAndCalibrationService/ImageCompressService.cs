@@ -39,7 +39,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 ContentType = file.ContentType,
                                 FilePath = filePath,
                                 FileName = fileName,
-
                             };
                             return imgDatas;
                         }
@@ -47,9 +46,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 }
                 finally
                 {
-
                 }
-
             }
             string ImageUrl;
             if (file != null && file.Length > 100000 && file.Length < 30000000)
@@ -60,7 +57,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     File.Delete(FilePathDelete);
                 }
-                //string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["UploadData:FolderName"], ImageUrl);
                 string extensionName = Path.GetExtension(file.FileName);
                 var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
                 string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
@@ -84,13 +80,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                             return imageDatas;
                         }
                     }
-
                 }
                 finally
                 {
-                    
                 }
-                
             }
             return null;
         }
