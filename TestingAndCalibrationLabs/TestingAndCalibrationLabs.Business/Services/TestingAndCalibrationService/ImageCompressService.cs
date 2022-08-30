@@ -10,6 +10,9 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Image Compress
+    /// </summary>
     public class ImageCompressService : IImageCompressService
     {
         public readonly IWebHostEnvironment _WebHostingEnviroment;
@@ -19,6 +22,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             _WebHostingEnviroment = webHostEnvironment;
             _configuration = configuration;
         }
+        /// <summary>
+        /// Method To Compress Image 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public AttachmentModel ImageCompress(IFormFile file)
         {
             if (file.Length < 100000)
