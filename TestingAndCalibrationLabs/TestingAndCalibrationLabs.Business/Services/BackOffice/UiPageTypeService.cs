@@ -6,6 +6,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Page Type
+    /// </summary>
     public class UiPageTypeService : IUiPageTypeService
     {
        
@@ -15,7 +18,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
         }
         /// <summary>
-        /// To Create Record For Ui Page Type
+        /// Create Record For Ui Page Type
         /// </summary>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
@@ -25,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Delete Record From Ui Page Type
+        /// Delete Record From Ui Page Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -34,7 +37,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _genericRepository.Delete(id);
         }
         /// <summary>
-        /// To Edit Record For Ui Page Type
+        /// Edit Record For Ui Page Type
         /// </summary>
         /// <param name="id"></param>
         /// <param name="uiPageTypeModel"></param>
@@ -51,7 +54,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         
         
         /// <summary>
-        /// To Get Record By Id From Ui Page Type
+        /// Get Record By Id From Ui Page Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

@@ -8,6 +8,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repository Class For Ui Page Metadata
+    /// </summary>
     public class UiPageMetadataRepository : IUiPageMetadataRepository
     {
         public readonly IConnectionFactory _connectionFactory;

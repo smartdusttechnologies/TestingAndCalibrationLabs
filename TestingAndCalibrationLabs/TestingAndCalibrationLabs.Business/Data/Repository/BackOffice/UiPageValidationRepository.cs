@@ -8,6 +8,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repository Class For Ui Page Validation 
+    /// </summary>
     public class UiPageValidationRepository : IUiPageValidationRepository
     {
         public readonly IConnectionFactory _connectionFactory;

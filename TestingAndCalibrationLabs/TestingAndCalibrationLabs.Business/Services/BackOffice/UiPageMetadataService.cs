@@ -6,6 +6,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Page Metadata
+    /// </summary>
     public class UiPageMetadataService : IUiPageMetadataService
     {
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
@@ -14,7 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageMetadataRepository = uiPageMetadataRepository;
         }
         /// <summary>
-        ///  To Insert Record In Ui Page Metadata Type
+        /// Insert Record In Ui Page Metadata Type
         /// </summary>
         /// <param name="pageControl"></param>
         /// <returns></returns>
@@ -24,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        ///  To Delete Record From Ui Page Metadata Type
+        /// Delete Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -33,7 +36,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageMetadataRepository.Delete(id);
         }
         /// <summary>
-        /// To Get Record by Id For Ui Page Metadata Type
+        /// Get Record by Id For Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -42,7 +45,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageMetadataRepository.GetById(id);
         }
         /// <summary>
-        /// To Edit Record From Ui Page Metadata Type
+        /// Edit Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <param name="pageControl"></param>
@@ -53,7 +56,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Get All Records From Ui Page Metadata Type
+        /// Get All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
         public List<UiPageMetadataModel> GetAll()

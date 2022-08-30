@@ -8,6 +8,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Page Validation
+    /// </summary>
     public class UiPageValidationService : IUiPageValidationService
     {
         public readonly IUiPageValidationRepository _uiPageValidationTypeRepository;
@@ -16,7 +19,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageValidationTypeRepository = uiPageValidationTypeRepository;
         }
         /// <summary>
-        /// To Insert Record In Ui Page Validation 
+        /// Insert Record In Ui Page Validation 
         /// </summary>
         /// <param name="pageControl"></param>
         /// <returns></returns>
@@ -26,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Delete Record From Ui Page Validation
+        /// Delete Record From Ui Page Validation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -35,7 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageValidationTypeRepository.Delete(id);
         }
         /// <summary>
-        /// To Get All Record From Ui Page Validation 
+        /// Get All Record From Ui Page Validation 
         /// </summary>
         /// <returns></returns>
         public List<UiPageValidationModel> GetAll()
@@ -43,7 +46,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageValidationTypeRepository.GetAll();
         }
         /// <summary>
-        /// To Get Record By Id From Ui Page Valdation 
+        /// Get Record By Id From Ui Page Valdation 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -52,7 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageValidationTypeRepository.GetById(id);
         }
         /// <summary>
-        /// To Edit Record By Ui Page Validation
+        /// Edit Record By Ui Page Validation
         /// </summary>
         /// <param name="id"></param>
         /// <param name="pageControl"></param>
