@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.GetAll();
+            List<Business.Core.Model.UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
             var controlTypeList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controlTypeListModel);
             return View(controlTypeList.AsEnumerable());
 
@@ -45,7 +45,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiControlTypeModel controlTypeModel = _uiControlTypeServices.Get((int)id);
+            Business.Core.Model.UiControlTypeModel controlTypeModel = _uiControlTypeServices.GetById((int)id);
             if (controlTypeModel == null)
             {
                 return NotFound();
@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var controlTypeEditModel = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
-                _uiControlTypeServices.Edit(controlTypeEditModel);
+                _uiControlTypeServices.Update(controlTypeEditModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -113,7 +113,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiControlTypeModel getByIdControlType = _uiControlTypeServices.Get((int)id);
+            Business.Core.Model.UiControlTypeModel getByIdControlType = _uiControlTypeServices.GetById((int)id);
             if (getByIdControlType == null)
             {
                 return NotFound();

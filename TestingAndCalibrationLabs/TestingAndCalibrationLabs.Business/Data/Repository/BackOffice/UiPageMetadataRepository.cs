@@ -48,7 +48,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Getting All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetAll()
+        public List<UiPageMetadataModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
            return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,

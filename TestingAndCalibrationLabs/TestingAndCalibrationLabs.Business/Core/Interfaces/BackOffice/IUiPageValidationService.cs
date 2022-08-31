@@ -13,7 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Records From Ui Page Validation
         /// </summary>
         /// <returns></returns>
-        List<UiPageValidationModel> GetAll();
+        List<UiPageValidationModel> Get();
         /// <summary>
         /// Get Record By Id From Ui Page Validation
         /// </summary>

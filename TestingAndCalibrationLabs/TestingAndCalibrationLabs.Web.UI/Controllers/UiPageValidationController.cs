@@ -36,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiPageValidationModel> pageValidationList = _uiPageValidationService.GetAll();
+            List<Business.Core.Model.UiPageValidationModel> pageValidationList = _uiPageValidationService.Get();
             var pageValidationModel = _mapper.Map<List<Business.Core.Model.UiPageValidationModel>, List<Models.UiPageValidationModel>>(pageValidationList);
             return View(pageValidationModel.AsEnumerable());
         }
@@ -48,8 +48,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-            List<Business.Core.Model.UiPageTypeModel> pageType = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiPageMetadataModel> pageMetadataType = _uiPageMetadataService.GetAll();
+            List<Business.Core.Model.UiPageTypeModel> pageType = _uiPageTypeService.Get();
+            List<Business.Core.Model.UiPageMetadataModel> pageMetadataType = _uiPageMetadataService.Get();
             List<Business.Core.Model.UiPageValidationTypeModel> pageValidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageType);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadataType);
@@ -96,8 +96,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageTypeId = uiPageTypeId;
             ViewBag.UiPageValidaitonTypeId = uiPageValidationTypeId;
             ViewBag.UiPageMetadataId=uiPageMetadataId;
-            List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.GetAll();
+            List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.Get();
+            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.Get();
             List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);

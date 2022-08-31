@@ -41,9 +41,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Record From Ui Page Validation 
         /// </summary>
         /// <returns></returns>
-        public List<UiPageValidationModel> GetAll()
+        public List<UiPageValidationModel> Get()
         {
-            return _uiPageValidationTypeRepository.GetAll();
+            return _uiPageValidationTypeRepository.Get();
         }
         /// <summary>
         /// Get Record By Id From Ui Page Valdation 

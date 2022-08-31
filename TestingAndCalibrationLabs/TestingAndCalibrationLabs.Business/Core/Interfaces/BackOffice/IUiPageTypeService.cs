@@ -14,7 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Records From Ui Page Type
         /// </summary>
         /// <returns></returns>
-        List<UiPageTypeModel> GetAll();
+        List<UiPageTypeModel> Get();
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>
@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        RequestResult<int> Edit(UiPageTypeModel uiPageTypeModel);
+        RequestResult<int> Update(UiPageTypeModel uiPageTypeModel);
         /// <summary>
         /// Delete Record From Ui Page Type
         /// </summary>

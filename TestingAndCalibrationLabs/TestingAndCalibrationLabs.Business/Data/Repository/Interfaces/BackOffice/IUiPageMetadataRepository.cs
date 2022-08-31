@@ -12,7 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Get All Records From Ui Page Metadata
         /// </summary>
         /// <returns></returns>
-        List <UiPageMetadataModel> GetAll();
+        List <UiPageMetadataModel> Get();
         /// <summary>
         /// Get Record By Id From Ui Page Metadata
         /// </summary>

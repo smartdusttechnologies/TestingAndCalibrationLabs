@@ -21,7 +21,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public UiControlTypeModel Get(int id)
+        public UiControlTypeModel GetById(int id)
         {
             return _genericRepository.Get(id);
         }
@@ -29,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Record For Ui Control Type
         /// </summary>
         /// <returns></returns>
-        public List<UiControlTypeModel> GetAll()
+        public List<UiControlTypeModel> Get()
         {
             return _genericRepository.Get();
         }
@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Edit( UiControlTypeModel uiControlTypeModel)
+        public RequestResult<int> Update( UiControlTypeModel uiControlTypeModel)
         {
             _genericRepository.Update(uiControlTypeModel);
             return new RequestResult<int>(1);

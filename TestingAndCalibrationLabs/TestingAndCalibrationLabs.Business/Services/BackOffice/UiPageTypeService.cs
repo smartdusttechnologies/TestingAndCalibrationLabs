@@ -42,12 +42,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Edit( UiPageTypeModel uiPageTypeModel)
+        public RequestResult<int> Update( UiPageTypeModel uiPageTypeModel)
         {
             _genericRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
-       public List<UiPageTypeModel> GetAll()
+       public List<UiPageTypeModel> Get()
         {
             return _genericRepository.Get();
         }

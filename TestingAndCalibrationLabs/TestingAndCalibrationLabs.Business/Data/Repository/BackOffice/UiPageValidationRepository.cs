@@ -48,7 +48,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Getting All Record From Ui Page Validation 
         /// </summary>
         /// <returns></returns>
-        public List<UiPageValidationModel> GetAll()
+        public List<UiPageValidationModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageValidationModel>(@"Select upv.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.[Id] as UiPageMetadataId,

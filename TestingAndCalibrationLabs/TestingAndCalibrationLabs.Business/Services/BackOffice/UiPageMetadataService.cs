@@ -59,9 +59,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetAll()
+        public List<UiPageMetadataModel> Get()
         {
-            return _uiPageMetadataRepository.GetAll();
+            return _uiPageMetadataRepository.Get();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiPageMetadataModel>pageMetadata = _uiPageMetadataService.GetAll();
+            List<Business.Core.Model.UiPageMetadataModel>pageMetadata = _uiPageMetadataService.Get();
             var pageMetadatas = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadata);
             
             return View(pageMetadatas.AsEnumerable());
@@ -53,8 +53,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Create(int id)
         {
             
-            List<Business.Core.Model.UiPageTypeModel> pageList = _uiPageTypeService.GetAll();
-            List < Business.Core.Model.UiControlTypeModel>controlList = _uiControlTypeService.GetAll();
+            List<Business.Core.Model.UiPageTypeModel> pageList = _uiPageTypeService.Get();
+            List < Business.Core.Model.UiControlTypeModel>controlList = _uiControlTypeService.Get();
             List<Business.Core.Model.DataTypeModel> dataList = _dataTypeService.Get();
             var pages = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageList);
             var controles = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controlList);
@@ -101,8 +101,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiControlTypeId = uiControlTypeId;
             ViewBag.DataTypeId = dataTypeId;
             ViewBag.UiPageTypeId = uiPageTypeId;
-            List<Business.Core.Model.UiPageTypeModel> pages = _uiPageTypeService.GetAll();
-            List<Business.Core.Model.UiControlTypeModel> controls = _uiControlTypeService.GetAll();
+            List<Business.Core.Model.UiPageTypeModel> pages = _uiPageTypeService.Get();
+            List<Business.Core.Model.UiControlTypeModel> controls = _uiControlTypeService.Get();
             List<Business.Core.Model.DataTypeModel> datas = _dataTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pages);
             var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controls);

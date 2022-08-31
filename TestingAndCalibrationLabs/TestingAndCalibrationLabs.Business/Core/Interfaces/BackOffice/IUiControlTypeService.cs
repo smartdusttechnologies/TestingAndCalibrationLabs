@@ -14,19 +14,19 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        UiControlTypeModel Get(int id);
+        UiControlTypeModel GetById(int id);
         /// <summary>
         /// Get All Records From Ui Control Type
         /// </summary>
         /// <returns></returns>
 
-        List<UiControlTypeModel> GetAll();
+        List<UiControlTypeModel> Get();
         /// <summary>
         /// Edit Record In Ui Control Type
         /// </summary>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
-        RequestResult<int> Edit( UiControlTypeModel uiControlTypeModel);
+        RequestResult<int> Update( UiControlTypeModel uiControlTypeModel);
         /// <summary>
         /// Insert Record In Ui Control Type
         /// </summary>
