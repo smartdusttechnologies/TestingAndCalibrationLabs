@@ -31,21 +31,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiPageMetadataModel);
         }
         /// <summary>
-        /// Delete Record From Ui Page Metadata Type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// 
-        public bool Delete(int id)
-        {
-            string query = @"Update [UiPageMetaData] set
-                                IsDeleted = @isDeleted
-                                where id = @Id ";
-            using IDbConnection db = _connectionFactory.GetConnection;
-            db.Execute(query, new { isDeleted = true, Id = id });
-            return true;
-        }
-        /// <summary>
         /// Getting All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
