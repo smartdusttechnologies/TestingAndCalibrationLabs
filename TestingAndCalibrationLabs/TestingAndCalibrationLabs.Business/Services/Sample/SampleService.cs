@@ -14,7 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
             IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
               IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
-            IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository) 
+            IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository)
             : base(commonRepository,
                   recordGenericRepository,
                   uiPageTypeGenericRepository,

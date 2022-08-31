@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiControlTypeService : IUiControlTypeService
     {
-        public readonly IGenericRepository<UiControlTypeModel> _genericRepository;
+        private readonly IGenericRepository<UiControlTypeModel> _genericRepository;
         public UiControlTypeService( IGenericRepository<UiControlTypeModel> genericRepository)
         {
             _genericRepository = genericRepository;

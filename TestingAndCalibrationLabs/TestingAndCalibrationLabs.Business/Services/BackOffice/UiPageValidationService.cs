@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -13,10 +11,12 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageValidationService : IUiPageValidationService
     {
-        public readonly IUiPageValidationRepository _uiPageValidationTypeRepository;
-        public UiPageValidationService(IUiPageValidationRepository uiPageValidationTypeRepository)
+        private readonly IGenericRepository<UiPageValidationModel> _genericRepository;
+        private readonly IUiPageValidationRepository _uiPageValidationTypeRepository;
+        public UiPageValidationService(IUiPageValidationRepository uiPageValidationTypeRepository,IGenericRepository<UiPageValidationModel> genericRepository )
         {
             _uiPageValidationTypeRepository = uiPageValidationTypeRepository;
+            _genericRepository = genericRepository;
         }
         /// <summary>
         /// Insert Record In Ui Page Validation 
@@ -35,7 +35,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _uiPageValidationTypeRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
         /// <summary>
         /// Get All Record From Ui Page Validation 

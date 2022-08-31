@@ -12,7 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class UiPageTypeService : IUiPageTypeService
     {
        
-        public readonly IGenericRepository<UiPageTypeModel> _genericRepository;
+        private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
         public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository)
         {
             _genericRepository = genericRepository;

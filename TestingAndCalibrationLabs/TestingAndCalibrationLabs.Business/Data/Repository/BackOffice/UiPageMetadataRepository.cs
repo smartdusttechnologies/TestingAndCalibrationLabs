@@ -35,6 +35,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
         public bool Delete(int id)
         {
             string query = @"Update [UiPageMetaData] set

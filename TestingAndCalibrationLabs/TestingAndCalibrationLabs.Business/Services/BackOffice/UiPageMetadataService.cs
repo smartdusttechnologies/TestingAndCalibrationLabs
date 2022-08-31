@@ -11,10 +11,12 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageMetadataService : IUiPageMetadataService
     {
+        private readonly IGenericRepository<UiPageMetadataModel> _genericRepository;
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
-        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository)
+        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository)
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
+            _genericRepository = genericRepository;
         }
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
@@ -33,7 +35,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _uiPageMetadataRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
