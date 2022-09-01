@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
       /// <summary>
       /// It Conatains The Properties for Ui Control Type 
       /// </summary>
-    [DbTableAttribute("UiControlType")]
+    [DbTable("UiControlType")]
     public class UiControlTypeModel : Entity
     {
         /// <summary>
