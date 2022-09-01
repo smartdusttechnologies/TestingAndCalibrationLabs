@@ -31,20 +31,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiPageValidationModel);
         }
         /// <summary>
-        /// Delete Record From Ui Page Validation  
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool Delete(int id)
-        {
-            string query = @"Update [UiPageValidation] set
-                                IsDeleted = @isDeleted
-                                where id = @Id ";
-            using IDbConnection db = _connectionFactory.GetConnection;
-            db.Execute(query, new { isDeleted = true, Id = id });
-            return true;
-        }
-        /// <summary>
         /// Getting All Record From Ui Page Validation 
         /// </summary>
         /// <returns></returns>

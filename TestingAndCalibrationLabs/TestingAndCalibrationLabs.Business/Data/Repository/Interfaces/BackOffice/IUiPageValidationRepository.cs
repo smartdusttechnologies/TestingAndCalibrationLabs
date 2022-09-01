@@ -31,11 +31,5 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="uiPageValidationModel"></param>
         /// <returns></returns>
         int Update(UiPageValidationModel uiPageValidationModel);
-        /// <summary>
-        /// Delete Record From Ui Page Validation
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool Delete(int id);
     }
 }
