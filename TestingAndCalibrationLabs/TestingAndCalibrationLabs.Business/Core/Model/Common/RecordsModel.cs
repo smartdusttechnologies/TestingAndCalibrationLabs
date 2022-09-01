@@ -5,7 +5,7 @@ using System.Text;
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
-    /// Declaring properties for operations
+    /// It Conatains The Properties for Records
     /// </summary>
     public class RecordsModel : Entity
     {
