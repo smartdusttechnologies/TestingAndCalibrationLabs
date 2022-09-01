@@ -23,13 +23,12 @@
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
     <!---Importing the Scripts--->
-
     <!---Importing the Scripts--->
     <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <style>
@@ -41,7 +40,7 @@
 
 <body>
     <header>
-                        <!---Using the Bootsrap 5 NavBar--->
+        <!---Using the Bootsrap 5 NavBar--->
         <nav class="navbar navbar-expand-xl navbar-light">
             <a class="m-1 text-dark">LOGO</a>
             <a class="navbar-brand navbar-brand-a text-dark" style="font-size:14px;">TESTING AND CALIBRATION LABS</a>
@@ -52,69 +51,71 @@
 
                 <!--- Seach-Box code--->
                 @*<ul class="navbar-nav ">
-                        <li class="nav-item search_box">
-                            <input type="search" placeholder="Search" />
-                            <span class="fa fa-search"></span>
-                        </li>
-                    </ul>*@
+                <li class="nav-item search_box">
+                <input type="search" placeholder="Search" />
+                <span class="fa fa-search"></span>
+                </li>
+                </ul>*@
                 <ul class="navbar-nav ms-auto">
+                    <div id="navid"> </div>
+                    @*
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-area="Login">Home</a>
+                    <a class="nav-link text-dark" asp-controller="Home" asp-area="Login">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="TestDetails">TestDetails</a>
+                    <a class="nav-link text-dark" asp-controller="Home" asp-action="TestDetails">TestDetails</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
-                    </li>
-                    @*<li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="">About Us</a>
-                    </li>*@
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Common" asp-action="Index" asp-route-id="1">Sample Feature</a>
+                    <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="">Get In Touch</a>
+                    <a class="nav-link text-dark" asp-area="">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Common" asp-action="Index" asp-route-id="1">Sample Feature</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="">Get In Touch</a>
                     </li>
 
-                    @*Dropdown For Pages*@
+                    Dropdown For Pages
                     <a class="nav-link dropdown-toggle" href="#" id="navbrr" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-gear"></i>
+                    <i class="fa fa-gear"></i>
                     </a>
                     <div id="rajdiv" class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbrr"></div>
 
 
                     <li class="nav-item ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-gear"></i>
+                    <i class="fa fa-gear"></i>
                     </a>
                     <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageType">Ui Page Type</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiControlType">Ui Control Type</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageMetadata">Ui Page Metadata</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageValidation">Ui Page Validation</a>
-                        
+                    <a class="dropdown-item" asp-action="Index" asp-controller="UiPageType">Ui Page Type</a>
+                    <a class="dropdown-item" asp-action="Index" asp-controller="UiControlType">Ui Control Type</a>
+                    <a class="dropdown-item" asp-action="Index" asp-controller="UiPageMetadata">Ui Page Metadata</a>
+                    <a class="dropdown-item" asp-action="Index" asp-controller="UiPageValidation">Ui Page Validation</a>
+
                     </div>
-                </li>
-            
-            <li class="nav-item justify-content-center">
-                <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
-            </li>
-            
-            </ul>
+                    </li>
+
+                    <li class="nav-item justify-content-center">
+                    <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
+                    </li>
+                    *@
+                </ul>
             </div>
-            
+
         </nav>
     </header>
 
-                        <!---Rendering the Body Here--->
+    <!---Rendering the Body Here--->
     <div class="">
         <main role="main" class="">
             @RenderBody()
         </main>
     </div>
 
-                        <!---Footer--->
+    <!---Footer--->
     <footer class="border-top  text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
             © 2022 Copyright :
@@ -136,18 +137,49 @@
 
     $(document).ready(function () {
 
-
         $.ajax({
             type: "POST",
-            url: "@Url.Action("Updex","UiPageType")",
+            url: "@Url.Action("Updex","UiNavigationCategory")",
             success: function (response) {
-                console.log(response.length);
+                console.log(response);
                 for (let i = 0; i < response.length; i++) {
                     var ifieldId = response[i].id;
                     var nfieldId = response[i].name;
-                    var htmlAdd = "<a class='dropdown-item' href='/Common/Index/" + ifieldId + "'>" + nfieldId + "</a>";
-                    $('#rajdiv').append(htmlAdd);
+                    var idf = "#topdiv" + ifieldId;
+
+                    $('#navid').append("<div class='dropdown' id='topdiv"+ifieldId+"'>");
+
+                    var htmlAdd = "<button class='dropbtn'>" + nfieldId + "</button>";
+                     $(idf).append(htmlAdd);
+                    $(idf).append("<div class='dropdown-content' id='dropdiv" + ifieldId + "'>");
+
+                    $('#navid').append("</div>");
+
                 }
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Updex","UiPageType")",
+                    success: function (response) {
+                        console.log(response);
+                        console.log(response[1].uiNavigationCategoryName);
+                        for (let i = 0; i < response.length; i++) {
+                            var ifieldId = response[i].id;
+                            var nfieldId = response[i].name;
+                            var navId = response[i].uiNavigationCategoryId;
+                            var ids = "#dropdiv" + navId;
+                            
+                            var htmlAdd = "<a class='dropdown-item' href='/Common/Index/" + ifieldId + "'>" + nfieldId + "</a>";
+                            
+                            $(ids).append(htmlAdd);
+                        }
+                        
+
+                    },
+                    error: function (req, status, error) {
+                        console.log(response);
+                    }
+                });
             },
             error: function (req, status, error) {
                 console.log(response);

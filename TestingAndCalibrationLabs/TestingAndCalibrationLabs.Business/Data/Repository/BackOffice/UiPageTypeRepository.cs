@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public int Insert(UiPageTypeModel uiPageTypeModel)
         {
             string query = @"Insert into [UiPageType] (Name,UiNavigationCategoryId)
-                                values (@UiPageTypeId,@Name,@UiNavigationCategoryId)";
+                                values (@Name,@UiNavigationCategoryId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiPageTypeModel);
         }
