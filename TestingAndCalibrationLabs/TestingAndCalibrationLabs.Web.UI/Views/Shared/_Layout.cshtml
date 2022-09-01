@@ -76,8 +76,13 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="">Get In Touch</a>
                     </li>
-                    
-                   
+
+                    @*Dropdown For Pages*@
+                    <a class="nav-link dropdown-toggle" href="#" id="navbrr" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-gear"></i>
+                    </a>
+                    <div id="rajdiv" class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbrr"></div>
+
 
                     <li class="nav-item ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -126,4 +131,32 @@
     <script src="~/js/CustomJS.js"></script>
     @RenderSection("scripts", required: false)
 </body>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Updex","UiPageType")",
+            success: function (response) {
+                console.log(response.length);
+                for (let i = 0; i < response.length; i++) {
+                    var ifieldId = response[i].id;
+                    var nfieldId = response[i].name;
+                    //console.log(ifieldId);
+                    //console.log(nfieldId);
+                    var htmlAdd = "<a class='dropdown-item' href='/Common/Index/" + ifieldId + "'>" + nfieldId + "</a>";
+                    $('#rajdiv').append(htmlAdd);
+                }
+                //console.log(response);
+                //console.log(response);
+            },
+            error: function (req, status, error) {
+                console.log(response);
+            }
+        });
+    });
+</script>
 </html>

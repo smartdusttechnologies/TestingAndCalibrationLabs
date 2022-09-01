@@ -76,6 +76,7 @@
     <Build Include="dbo\Tables\PasswordPolicy.sql" />
     <Build Include="dbo\Tables\Role.sql" />
     <Build Include="dbo\Tables\User.sql" />
+    <Build Include="dbo\Tables\UiNavigationCategory.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

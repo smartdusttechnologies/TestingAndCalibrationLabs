@@ -13,9 +13,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
        
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
-        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository)
+        private readonly IUiPageTypeRepository _uiPageTypeRepository;
+        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository)
         {
             _genericRepository = genericRepository;
+            _uiPageTypeRepository = uiPageTypeRepository;
         }
         /// <summary>
         /// Create Record For Ui Page Type
@@ -49,7 +51,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
        public List<UiPageTypeModel> Get()
         {
-            return _genericRepository.Get();
+            return _uiPageTypeRepository.Get();
         }
         
         
