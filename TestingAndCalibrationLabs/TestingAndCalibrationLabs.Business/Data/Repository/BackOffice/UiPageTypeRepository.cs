@@ -27,5 +27,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                      upt.IsDeleted = 0
                                                     and unc.IsDeleted = 0 ").ToList();
         }
+        public int Insert(UiPageTypeModel uiPageTypeModel)
+        {
+            string query = @"Insert into [UiPageType] (Name,UiNavigationCategoryId)
+                                values (@UiPageTypeId,@Name,@UiNavigationCategoryId)";
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Execute(query, uiPageTypeModel);
+        }
     }
 }

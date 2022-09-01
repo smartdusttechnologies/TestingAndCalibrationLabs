@@ -11,15 +11,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
+        private readonly IUiNavigationCategoryService _uiNavigationCategoryService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
-        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper)
+        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiNavigationCategoryService uiNavigationCategoryService)
         {
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
+            _uiNavigationCategoryService = uiNavigationCategoryService;
         }
 
         /// <summary>
@@ -95,6 +97,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
+            var navigationCategory = _uiNavigationCategoryService.Get();
+            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>,List<Models.UiNavigationCategoryModel>>(navigationCategory);
+            ViewBag.UiNavigationCategory = navigationCategoryList;
+
             return base.View(new Models.UiPageTypeModel { Id = id });
         }
         /// <summary>

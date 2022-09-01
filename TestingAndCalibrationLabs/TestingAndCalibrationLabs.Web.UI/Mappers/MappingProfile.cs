@@ -18,6 +18,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<UI.Models.DataTypeModel, Business.Core.Model.DataTypeModel>().ReverseMap();
             CreateMap<UI.Models.UiPageValidationModel, Business.Core.Model.UiPageValidationModel>().ReverseMap();
             CreateMap<UI.Models.UiPageValidationType, Business.Core.Model.UiPageValidationTypeModel>().ReverseMap();
+            CreateMap<UI.Models.UiNavigationCategoryModel, Business.Core.Model.UiNavigationCategoryModel>().ReverseMap();
 
         }
     }

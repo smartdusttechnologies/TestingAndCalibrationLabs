@@ -6,5 +6,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IUiPageTypeRepository
     {
         List<UiPageTypeModel> Get();
+        int Insert(UiPageTypeModel uiPageTypeModel);
     }
 }

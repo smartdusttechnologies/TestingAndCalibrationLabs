@@ -145,13 +145,9 @@
                 for (let i = 0; i < response.length; i++) {
                     var ifieldId = response[i].id;
                     var nfieldId = response[i].name;
-                    //console.log(ifieldId);
-                    //console.log(nfieldId);
                     var htmlAdd = "<a class='dropdown-item' href='/Common/Index/" + ifieldId + "'>" + nfieldId + "</a>";
                     $('#rajdiv').append(htmlAdd);
                 }
-                //console.log(response);
-                //console.log(response);
             },
             error: function (req, status, error) {
                 console.log(response);
@@ -159,4 +155,5 @@
         });
     });
 </script>
+
 </html>

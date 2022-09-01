@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            _genericRepository.Insert(uiPageTypeModel);
+            _uiPageTypeRepository.Insert(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
