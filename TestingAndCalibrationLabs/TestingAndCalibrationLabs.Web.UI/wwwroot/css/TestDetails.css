@@ -315,10 +315,10 @@ form-group > label {
 }
 
 .dropbtn {
-    background-color: #04AA6D;
+    /*background-color: #04AA6D;
     color: white;
     padding: 16px;
-    font-size: 16px;
+    font-size: 16px;*/
     border: none;
 }
 

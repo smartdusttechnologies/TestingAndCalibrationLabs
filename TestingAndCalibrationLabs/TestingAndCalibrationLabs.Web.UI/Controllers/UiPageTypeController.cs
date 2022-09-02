@@ -33,13 +33,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
+            List<Models.UiPageTypeModel> raj = new List<Models.UiPageTypeModel>();
+
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             return View(pageData.AsEnumerable());
         }
         [HttpPost]
         public IActionResult Updex()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+           
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             if (pageData != null)

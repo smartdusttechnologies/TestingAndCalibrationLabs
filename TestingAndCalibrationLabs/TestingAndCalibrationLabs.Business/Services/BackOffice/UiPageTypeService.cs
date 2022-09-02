@@ -51,10 +51,17 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
        public List<UiPageTypeModel> Get()
         {
-            return _uiPageTypeRepository.Get();
+
+            var raj = _uiPageTypeRepository.Get();
+            List<UiPageTypeModel> list = new List<UiPageTypeModel>();
+            foreach (var item in raj)
+            {
+
+                list.Add(new UiPageTypeModel { Name = item.Name,UiNavigationCategoryName = item.UiNavigationCategoryName,UiNavigationCategoryId =item.UiNavigationCategoryId, Url = string.Format(item.Url,item.Id)});
+            }
+            return list;
         }
-        
-        
+       
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>

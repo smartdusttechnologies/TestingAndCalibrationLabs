@@ -84,7 +84,8 @@
                     </a>
                     <div id="rajdiv" class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbrr"></div>
 
-
+                    *@
+                    
                     <li class="nav-item ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-gear"></i>
@@ -97,11 +98,12 @@
 
                     </div>
                     </li>
-
+                    
+                    
                     <li class="nav-item justify-content-center">
                     <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
                     </li>
-                    *@
+                    
                 </ul>
             </div>
 
@@ -149,37 +151,48 @@
 
                     $('#navid').append("<div class='dropdown' id='topdiv"+ifieldId+"'>");
 
-                    var htmlAdd = "<button class='dropbtn'>" + nfieldId + "</button>";
+                    var htmlAdd = "<button class='dropbtn nav-link text-dark'>" + nfieldId + "</button>";
                      $(idf).append(htmlAdd);
                     $(idf).append("<div class='dropdown-content' id='dropdiv" + ifieldId + "'>");
 
                     $('#navid').append("</div>");
+                    
+                    for (let j = 0; j < response[i].uiPageTypeModels.length; j++) {
+                        var ifieldId = response[i].uiPageTypeModels[j].id;
+                        var userrel = response[i].uiPageTypeModels[j].url;
+                        var nfieldId = response[i].uiPageTypeModels[j].name;
+                        var navId = response[i].uiPageTypeModels[j].uiNavigationCategoryId;
+                        var ids = "#dropdiv" + navId;
+                        
+                        var htmlAdd = "<a class='dropdown-item' href='" + userrel + "'>" + nfieldId + "</a>";
+                        $(ids).append(htmlAdd);
+                    }
 
                 }
 
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("Updex","UiPageType")",
-                    success: function (response) {
-                        console.log(response);
-                        console.log(response[1].uiNavigationCategoryName);
-                        for (let i = 0; i < response.length; i++) {
-                            var ifieldId = response[i].id;
-                            var nfieldId = response[i].name;
-                            var navId = response[i].uiNavigationCategoryId;
-                            var ids = "#dropdiv" + navId;
+                //$.ajax({
+                //    type: "POST",
+                //    url: "@Url.Action("Updex","UiPageType")",
+                //    success: function (response) {
+                //        console.log(response);
+                //        console.log(response[1].uiNavigationCategoryName);
+                //        for (let i = 0; i < response.length; i++) {
+                //            var ifieldId = response[i].id;
+                //            var userrel = response[i].url;
+                //            var nfieldId = response[i].name;
+                //            var navId = response[i].uiNavigationCategoryId;
+                //            var ids = "#dropdiv" + navId;
                             
-                            var htmlAdd = "<a class='dropdown-item' href='/Common/Index/" + ifieldId + "'>" + nfieldId + "</a>";
-                            
-                            $(ids).append(htmlAdd);
-                        }
+                //            var htmlAdd = "<a class='dropdown-item' href='" + userrel + "'>" + nfieldId + "</a>";
+                //            $(ids).append(htmlAdd);
+                //        }
                         
 
-                    },
-                    error: function (req, status, error) {
-                        console.log(response);
-                    }
-                });
+                //    },
+                //    error: function (req, status, error) {
+                //        console.log(response);
+                //    }
+                //});
             },
             error: function (req, status, error) {
                 console.log(response);

@@ -2,10 +2,10 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
-    public class UiNavigationCategoryModel
+    public class UiPageNavigationDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; } 
+        public string Name { get; set; }
         public List<UiPageTypeModel> UiPageTypeModels { get; set; }
     }
 }

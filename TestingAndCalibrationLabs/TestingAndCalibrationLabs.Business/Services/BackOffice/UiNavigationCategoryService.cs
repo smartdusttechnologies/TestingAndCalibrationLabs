@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -11,9 +12,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class UiNavigationCategoryService : IUiNavigationCategoryService
     {
         private readonly IGenericRepository<UiNavigationCategoryModel> _genericRepository;
-        public UiNavigationCategoryService(IGenericRepository<UiNavigationCategoryModel> genericRepository)
+        private readonly IUiPageTypeRepository _uiPageTypeRepository;
+        public UiNavigationCategoryService(IGenericRepository<UiNavigationCategoryModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository)
         {
-            _genericRepository = genericRepository; 
+            _genericRepository = genericRepository;
+            _uiPageTypeRepository = uiPageTypeRepository;
         }
         /// <summary>
         /// Get All Records From Data Type
@@ -23,5 +26,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
+        public List<UiPageNavigationModel> GetNavigationCategoryWithPageTypes()
+        {
+            var pageTypeList = _uiPageTypeRepository.Get();
+            var navigationCategoryList = _genericRepository.Get();
+            List<UiPageNavigationModel> result = new List<UiPageNavigationModel>();
+            foreach (var item in navigationCategoryList)
+            {
+                var pageType = pageTypeList.Where(x => x.UiNavigationCategoryId == item.Id);
+                result.Add(new UiPageNavigationModel { Id = item.Id, Name = item.Name, UiPageTypeModels = pageType.ToList() });
+            }
+            return result;
+        }
+
     }
 }
