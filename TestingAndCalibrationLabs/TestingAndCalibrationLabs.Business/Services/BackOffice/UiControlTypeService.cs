@@ -6,43 +6,46 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Control Type
+    /// </summary>
     public class UiControlTypeService : IUiControlTypeService
     {
-        public readonly IGenericRepository<UiControlTypeModel> _genericRepository;
+        private readonly IGenericRepository<UiControlTypeModel> _genericRepository;
         public UiControlTypeService( IGenericRepository<UiControlTypeModel> genericRepository)
         {
             _genericRepository = genericRepository;
         }
         /// <summary>
-        /// To Get Record By Id For Ui Control Type
+        /// Get Record By Id For Ui Control Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public UiControlTypeModel Get(int id)
+        public UiControlTypeModel GetById(int id)
         {
             return _genericRepository.Get(id);
         }
         /// <summary>
-        /// To Get All Record For Ui Control Type
+        /// Get All Record For Ui Control Type
         /// </summary>
         /// <returns></returns>
-        public List<UiControlTypeModel> GetAll()
+        public List<UiControlTypeModel> Get()
         {
             return _genericRepository.Get();
         }
         /// <summary>
-        /// To Edit Record From Ui Control Type
+        /// Edit Record From Ui Control Type
         /// </summary>
         /// <param name="id"></param>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Edit( UiControlTypeModel uiControlTypeModel)
+        public RequestResult<int> Update( UiControlTypeModel uiControlTypeModel)
         {
             _genericRepository.Update(uiControlTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Insert Record In Ui Control Type
+        /// Insert Record In Ui Control Type
         /// </summary>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
@@ -53,7 +56,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Delete Record From Ui Control 
+        /// Delete Record From Ui Control 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

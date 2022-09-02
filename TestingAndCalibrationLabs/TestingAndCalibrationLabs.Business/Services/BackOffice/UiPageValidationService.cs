@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -8,15 +6,20 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Page Validation
+    /// </summary>
     public class UiPageValidationService : IUiPageValidationService
     {
-        public readonly IUiPageValidationRepository _uiPageValidationTypeRepository;
-        public UiPageValidationService(IUiPageValidationRepository uiPageValidationTypeRepository)
+        private readonly IGenericRepository<UiPageValidationModel> _genericRepository;
+        private readonly IUiPageValidationRepository _uiPageValidationTypeRepository;
+        public UiPageValidationService(IUiPageValidationRepository uiPageValidationTypeRepository,IGenericRepository<UiPageValidationModel> genericRepository )
         {
             _uiPageValidationTypeRepository = uiPageValidationTypeRepository;
+            _genericRepository = genericRepository;
         }
         /// <summary>
-        /// To Insert Record In Ui Page Validation 
+        /// Insert Record In Ui Page Validation 
         /// </summary>
         /// <param name="pageControl"></param>
         /// <returns></returns>
@@ -26,24 +29,24 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Delete Record From Ui Page Validation
+        /// Delete Record From Ui Page Validation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _uiPageValidationTypeRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
         /// <summary>
-        /// To Get All Record From Ui Page Validation 
+        /// Get All Record From Ui Page Validation 
         /// </summary>
         /// <returns></returns>
-        public List<UiPageValidationModel> GetAll()
+        public List<UiPageValidationModel> Get()
         {
-            return _uiPageValidationTypeRepository.GetAll();
+            return _uiPageValidationTypeRepository.Get();
         }
         /// <summary>
-        /// To Get Record By Id From Ui Page Valdation 
+        /// Get Record By Id From Ui Page Valdation 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -52,7 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageValidationTypeRepository.GetById(id);
         }
         /// <summary>
-        /// To Edit Record By Ui Page Validation
+        /// Edit Record By Ui Page Validation
         /// </summary>
         /// <param name="id"></param>
         /// <param name="pageControl"></param>

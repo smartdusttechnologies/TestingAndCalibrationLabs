@@ -7,7 +7,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 {
 
     /// <summary>
-    /// Declaring properties for operations
+    /// It Conatains The Properties for Record
     /// </summary>
     [DbTable("Record")]
     public class RecordModel : Entity

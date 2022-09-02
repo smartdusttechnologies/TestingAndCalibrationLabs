@@ -8,6 +8,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repository Class For Ui Page Metadata
+    /// </summary>
     public class UiPageMetadataRepository : IUiPageMetadataRepository
     {
         public readonly IConnectionFactory _connectionFactory;
@@ -28,24 +31,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiPageMetadataModel);
         }
         /// <summary>
-        /// Delete Record From Ui Page Metadata Type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool Delete(int id)
-        {
-            string query = @"Update [UiPageMetaData] set
-                                IsDeleted = @isDeleted
-                                where id = @Id ";
-            using IDbConnection db = _connectionFactory.GetConnection;
-            db.Execute(query, new { isDeleted = true, Id = id });
-            return true;
-        }
-        /// <summary>
         /// Getting All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetAll()
+        public List<UiPageMetadataModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
            return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,

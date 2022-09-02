@@ -5,6 +5,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Page Validation Type
+    /// </summary>
     public class UiPageValidationTypeService : IUiPageValidationTypeService
     {
         private readonly IGenericRepository<UiPageValidationTypeModel> _genericRepository;
@@ -13,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
         }
         /// <summary>
-        /// To Get All Records From Ui Page Validation Type
+        /// Get All Records From Ui Page Validation Type
         /// </summary>
         /// <returns></returns>
         public List<UiPageValidationTypeModel> Get()

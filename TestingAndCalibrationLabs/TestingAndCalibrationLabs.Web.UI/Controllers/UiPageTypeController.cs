@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<UiPageTypeModel> page = _uiPageTypeService.GetAll();
+            List<UiPageTypeModel> page = _uiPageTypeService.Get();
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             return View(pageData.AsEnumerable());
         }
@@ -69,7 +69,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
-                _uiPageTypeService.Edit( pageModel);
+                _uiPageTypeService.Update( pageModel);
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(uiPageTypeModel);
@@ -136,6 +137,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _uiPageTypeService.Delete((int)id);
+            TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
 

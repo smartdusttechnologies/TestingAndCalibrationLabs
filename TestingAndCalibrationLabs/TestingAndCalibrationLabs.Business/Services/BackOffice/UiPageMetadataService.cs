@@ -6,15 +6,20 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Class For Ui Page Metadata
+    /// </summary>
     public class UiPageMetadataService : IUiPageMetadataService
     {
+        private readonly IGenericRepository<UiPageMetadataModel> _genericRepository;
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
-        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository)
+        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository)
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
+            _genericRepository = genericRepository;
         }
         /// <summary>
-        ///  To Insert Record In Ui Page Metadata Type
+        /// Insert Record In Ui Page Metadata Type
         /// </summary>
         /// <param name="pageControl"></param>
         /// <returns></returns>
@@ -24,16 +29,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        ///  To Delete Record From Ui Page Metadata Type
+        /// Delete Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _uiPageMetadataRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
         /// <summary>
-        /// To Get Record by Id For Ui Page Metadata Type
+        /// Get Record by Id For Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -42,7 +47,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiPageMetadataRepository.GetById(id);
         }
         /// <summary>
-        /// To Edit Record From Ui Page Metadata Type
+        /// Edit Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <param name="pageControl"></param>
@@ -53,12 +58,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// To Get All Records From Ui Page Metadata Type
+        /// Get All Records From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetAll()
+        public List<UiPageMetadataModel> Get()
         {
-            return _uiPageMetadataRepository.GetAll();
+            return _uiPageMetadataRepository.Get();
         }
     }
 }

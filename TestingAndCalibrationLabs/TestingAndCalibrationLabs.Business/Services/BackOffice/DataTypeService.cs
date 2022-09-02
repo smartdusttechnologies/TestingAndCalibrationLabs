@@ -6,7 +6,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    
+    /// <summary>
+    /// Service Class For Data Type
+    /// </summary>
     public class DataTypeService : IDataTypeService
     {
         private readonly IGenericRepository<DataTypeModel> _genericRepository;
@@ -32,6 +34,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
 
+        /// <summary>
+        /// Get All Records From Data Type
+        /// </summary>
+        /// <returns></returns>
         public List<DataTypeModel> Get()
         {
             return _genericRepository.Get();

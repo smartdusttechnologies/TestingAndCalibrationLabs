@@ -3,12 +3,18 @@
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
-    /// Declaring Public Properties
+    /// It Conatains The Properties for  Data Type
     /// </summary>
     public class DataTypeModel
     {
+        /// <summary>
+        /// It Contains The Id of The Data Type
+        /// </summary>
         public int Id { get; set; }
-        [Required(ErrorMessage = "Please enter DataType name")]
+        /// <summary>
+        /// It Contains The Name of The Data Type
+        /// </summary>
+        [Required(ErrorMessage = "Please Enter Data Type Name")]
         public string Name { get; set; }
     }
 }

@@ -8,10 +8,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface IUiPageMetadataRepository
     {
-        List <UiPageMetadataModel> GetAll();
+        /// <summary>
+        /// Get All Records From Ui Page Metadata
+        /// </summary>
+        /// <returns></returns>
+        List <UiPageMetadataModel> Get();
+        /// <summary>
+        /// Get Record By Id From Ui Page Metadata
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         UiPageMetadataModel GetById(int id);
+        /// <summary>
+        /// Insert Record In Ui Metadata
+        /// </summary>
+        /// <param name="uiPageMetadataModel"></param>
+        /// <returns></returns>
         int Create(UiPageMetadataModel uiPageMetadataModel);
+        /// <summary>
+        /// Update Record In Ui Page Metadata
+        /// </summary>
+        /// <param name="uiPageMetadataModel"></param>
+        /// <returns></returns>
         int Update(UiPageMetadataModel uiPageMetadataModel);
-        bool Delete(int id);
     }
 }
