@@ -81,7 +81,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 }
                 else if (IsSendAndUpload == true)
                 {
-                     _testReportService.UploadFileAndSendMail(getbusinessModel);
+                    _testReportService.UploadFileAndSendMail(getbusinessModel);
                 }
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -99,7 +99,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             //ViewBag.data;
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            ViewBag.fileDownloaded = TempData["FileDownloaded"] != null ? TempData["FileDownloaded"] : false;
+            ViewBag.FileDownloaded = TempData["FileDownloaded"] != null ? TempData["FileDownloaded"] : false;
+            ViewBag.ErrorMsg = TempData["ErrorMsg"] != null ? TempData["ErrorMsg"] : false;
             List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
             var testReportData = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
             return View(testReportData);
@@ -111,8 +112,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="testReportModel"></param>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpGet]
-        public ActionResult sendEmail(TestReportModel testReportModel, int? Id)
+        [HttpPost]
+        public ActionResult sendEmail(int? Id)
         {
             if (Id == null)
             {
@@ -124,42 +125,41 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-
-            var getbusinessModel = new Business.Core.Model.TestReportModel
-            {
-                Id = datafForMail.Id,
-                Client = datafForMail.Client,
-                FilePath = datafForMail.FilePath,
-                JobId = datafForMail.JobId,
-                Name = datafForMail.Name,
-                DateTime = DateTime.Now.Date,       //Accept the Current Date only
-                Email = datafForMail.Email
-            };
+            //var sendMail = _emailService.Equals(datafForMail);
+            var result = _mapper.Map<Business.Core.Model.TestReportModel, UI.Models.TestReportModel>(datafForMail);
 
             //Sends link
-                _testReportService.EmailLinkMail(getbusinessModel, datafForMail.Id);
-                 TempData["IsTrue"] = true;
-            //Redirect to Page "DataView"
-            return RedirectToAction("TestReportView");
+            var datad = _testReportService.EmailLinkMail(datafForMail, datafForMail.Id);
+
+            if (datad)
+            {
+                return Ok(result);
+            }
+            else
+                return BadRequest(result);
         }
 
-        [HttpGet]
-        public ActionResult TestReportDownload(int? Id)
+        [HttpPost]
+        public ActionResult TestReportDownload(int Id)
         {
+            var testReportData = _testReportService.GetTestReport((int)Id);
+            List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
+            var fileid = testReportData.FilePath;
+            return Ok(fileid);
+        }
+
+        public ActionResult DownloadFile(string fileId)
+        {
+            AttachmentModel attachment = _testReportService.DownLoadAttachment(fileId);
+            var attachmentDTO = _mapper.Map<Business.Core.Model.AttachmentModel, UI.Models.AttachmentDTO>(attachment);
+            if (attachmentDTO != null)
             {
-                if (Id == null)
-                {
-                    return NotFound();
-                }
-                var testReportData = _testReportService.GetTestReport((int)Id);
-                List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
-                var testReportValue = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
-                var fileid = testReportData.FilePath;
-                AttachmentModel attachment = _testReportService.DownLoadAttachment(fileid);
-                TempData["FileDownloaded"] = true;
-                return File(attachment.FileStream, attachment.ContentType, attachment.FileName); 
+                return File(attachmentDTO.FileStream, attachmentDTO.ContentType, attachmentDTO.FileName);
             }
-            // return RedirectToAction("TestReportView");
+            else
+            {
+                return new EmptyResult();
+            }
         }
     }
 }

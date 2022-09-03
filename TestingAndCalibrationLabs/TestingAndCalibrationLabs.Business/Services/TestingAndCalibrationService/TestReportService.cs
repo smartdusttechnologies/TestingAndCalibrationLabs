@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IEmailService _emailService;
         private readonly IGoogleUploadDownloadService _googleUploadDownloadService;
-      
+
         public TestReportService(ITestReportRepository testReportRepository, IGoogleUploadDownloadService googleUploadDownloadService, IConfiguration configuration, IWebHostEnvironment hostingEnvironment, IEmailService emailService)
         {
             _testReportRepository = testReportRepository;
@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _emailService = emailService;
             _googleUploadDownloadService = googleUploadDownloadService;
         }
-        
+
         /// <summary>
         /// Inser test report data
         /// </summary>
@@ -141,13 +141,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="testReportModel"></param>
         public void UploadFile(TestReportModel testReportModel)
         {
-            
+
             var attachmentModel = new Business.Core.Model.AttachmentModel
             {
                 FilePath = testReportModel.FilePath,
                 DataUrl = testReportModel.DataUrl,
                 Name = testReportModel.Name,
-                Email= testReportModel.Email,
+                Email = testReportModel.Email,
                 Client = testReportModel.Client,
                 JobId = testReportModel.JobId,
                 DateTime = testReportModel.DateTime
@@ -160,7 +160,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 FilePath = dataFilePath,
                 Name = testReportModel.Name,
                 Client = testReportModel.Client,
-                JobId  = testReportModel.JobId,
+                JobId = testReportModel.JobId,
                 Email = testReportModel.Email,
                 DateTime = testReportModel.DateTime
             };
@@ -176,7 +176,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public AttachmentModel DownLoadAttachment(string fileId)
         {
-           var dataDownloaded = _googleUploadDownloadService.DownLoadAttachment(fileId);
+            var dataDownloaded = _googleUploadDownloadService.DownLoadAttachment(fileId);
             return dataDownloaded;
         }
 
@@ -185,7 +185,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="testReportModel"></param>
         /// <param name="Id"></param>
-        public void EmailLinkMail(TestReportModel testReportModel, int Id)
+        public bool EmailLinkMail(TestReportModel testReportModel, int Id)
         {
             //Reading Data from Appsetting.Json
             var BodyImg = _configuration["TestingAndCalibrationSurvey:BodyImage"];
@@ -221,6 +221,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             };
             //Sending mail
             _emailService.Sendemail(getExchangeModel);
+            return true;
         }
     }
 }

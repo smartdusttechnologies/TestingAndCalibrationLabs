@@ -142,7 +142,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         public string UploadFile(AttachmentModel attachmentModel)
         {
             var exchangeModel = new Business.Core.Model.TestReportModel
-            { 
+            {
                 FilePath = attachmentModel.FilePath,
             };
             UploadFileInternal(attachmentModel);
@@ -164,7 +164,8 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             driveFile.Name = Path.GetFileName(fileName);
             driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
-            using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())            {
+            using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())
+            {
                 var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                 request.Fields = "id";
                 var response = request.Upload();
@@ -187,7 +188,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             Google.Apis.Drive.v3.DriveService service = GetService();
             string FolderPath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"]);
-           // string FolderPath = (string)_hostingEnvironment.WebRootPath;
+            // string FolderPath = (string)_hostingEnvironment.WebRootPath;
             Google.Apis.Drive.v3.FilesResource.GetRequest request = service.Files.Get(fileId);
             string FileName = request.Execute().Name;
             string dataFileName = FileName;
@@ -243,7 +244,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 attachment.FileStream = memory;
                 attachment.FileName = Path.GetFileName(filepath);
                 attachment.ContentType = Helpers.GetContentType(filepath);
-                return attachment;  
+                return attachment;
             }
             finally
             {
@@ -262,6 +263,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             {
                 stream.WriteTo(file);
             }
-        }              
-    } 
+        }
+    }
 }

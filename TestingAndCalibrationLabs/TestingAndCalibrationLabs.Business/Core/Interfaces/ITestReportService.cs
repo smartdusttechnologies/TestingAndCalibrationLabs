@@ -47,6 +47,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 
         AttachmentModel DownLoadAttachment(string fileId);
 
-        void EmailLinkMail(TestReportModel testReportModel, int Id);
+        bool EmailLinkMail(TestReportModel testReportModel, int Id);
     }
 }
