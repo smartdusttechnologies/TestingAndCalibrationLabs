@@ -5,7 +5,6 @@ using TestingAndCalibrationLabs.Web.UI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -34,9 +33,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult Login()
         {
-            List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
-            List<SelectListItem> organizationNames = organizations.Select(x => new SelectListItem { Text = x.OrgName, Value = x.Id.ToString() }).ToList();
-            ViewBag.Organizations = organizationNames;
+            //List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
+            //List<SelectListItem> organizationNames = organizations.Select(x => new SelectListItem { Text = x.OrgName, Value = x.Id.ToString() }).ToList();
+            //ViewBag.Organizations = organizationNames;
             return View();
         }
 

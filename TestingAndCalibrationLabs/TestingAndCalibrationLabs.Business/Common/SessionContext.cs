@@ -1,6 +1,4 @@
-﻿
-
-namespace TestingAndCalibrationLabs.Business.Common
+﻿namespace TestingAndCalibrationLabs.Business.Common
 {
     public class SessionContext
     {
