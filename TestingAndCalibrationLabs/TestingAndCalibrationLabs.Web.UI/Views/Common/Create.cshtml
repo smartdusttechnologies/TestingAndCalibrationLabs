@@ -11,7 +11,7 @@
              <div class="row">
                 @foreach (var item in Model.Fields)
                 {
-                    if (item.UiControlType == "textarea")
+                    if (item.UiControlTypeName == "textarea")
                     {
                         <div class="form-group" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
@@ -19,17 +19,17 @@
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
-                    else if (item.UiControlType == "file")
+                    else if (item.UiControlTypeName == "file")
                     {
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
+                            <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
-                    else if (item.UiControlType == "card")
+                    else if (item.UiControlTypeName == "card")
                     {
-                           <div class="@item.UiControlType" style="width: 18rem;">
+                           <div class="@item.UiControlTypeName" style="width: 18rem;">
                               <img src="..." class="card-img-top" alt="...">
                               <div class="card-body">
                                 <h5 class="card-title">Card title</h5>
@@ -38,15 +38,15 @@
                               </div>
                         </div>
                     }
-                    else if (item.UiControlType == "search")
+                    else if (item.UiControlTypeName == "search")
                     {
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                            <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
+                            <input class="form-input width-full" style="color: red;" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
-                     else if (item.UiControlType == "Calender")
+                     else if (item.UiControlTypeName == "Calender")
                     {
                          @* <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
                             <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
@@ -57,14 +57,14 @@
                     else
                     {
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                            <input class="form-input width-full" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
+                            <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                         @*
                             <div class="form-group" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                            <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" />
+                            <input type="@item.UiControlTypeName" id="@item.Id" title="@item.UiControlDisplayName" />
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                             </div>*@
                     }

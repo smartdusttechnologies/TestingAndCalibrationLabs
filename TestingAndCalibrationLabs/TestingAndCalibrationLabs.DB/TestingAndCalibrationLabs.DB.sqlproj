@@ -56,18 +56,28 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
-    <Folder Include="dbo\Tables\TestingANdCalibrationLabs" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\SampleTable.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\User.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\Role.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\PasswordPolicy.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\PasswordLogin.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\Orgnization.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\LoginTokenLog.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\LoginToken.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\LoginLog.sql" />
-    <Build Include="dbo\Tables\TestingANdCalibrationLabs\UserRole.sql" />
+    <Build Include="dbo\Tables\Record.sql" />
+    <Build Include="dbo\Tables\Sample.sql" />
+    <Build Include="dbo\Tables\SampleTable.sql" />
+    <Build Include="dbo\Tables\UiControlType.sql" />
+    <Build Include="dbo\Tables\UiPageData.sql" />
+    <Build Include="dbo\Tables\UiPageType.sql" />
+    <Build Include="dbo\Tables\UiPageMetadata.sql" />
+    <Build Include="dbo\Tables\UiPageValidationType.sql" />
+    <Build Include="dbo\Tables\UiPageValidation.sql" />
+    <Build Include="dbo\Tables\DataType.sql" />
+    <Build Include="dbo\Tables\LoginToken.sql" />
+    <Build Include="dbo\Tables\LoginLog.sql" />
+    <Build Include="dbo\Tables\LoginTokenLog.sql" />
+    <Build Include="dbo\Tables\Orgnization.sql" />
+    <Build Include="dbo\Tables\PasswordLogin.sql" />
+    <Build Include="dbo\Tables\PasswordPolicy.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\User.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\UserRole.sql" />
   </ItemGroup>
 </Project>

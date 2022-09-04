@@ -91,13 +91,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             insertQuery.Append("(");
 
             var properties = GenerateListOfProperties(typeof(T).GetProperties());
-            properties.ForEach(prop => { insertQuery.Append($"[{prop}],"); });
+            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(") VALUES (");
-
-            properties.ForEach(prop => { insertQuery.Append($"@{prop},"); });
+            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"@{prop},"); } });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)

@@ -13,6 +13,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         int Insert(RecordModel record);
         List<UiPageDataModel> GetUiPageDataByUiPageId(int uiPageId);
         RecordModel GetUiPageMetadata(int uiPageTypeId);
-        List<UiPageValidation> GetUiPageValidations(int uiPageId);
+        List<UiPageValidationModel> GetUiPageValidations(int uiPageId);
     }
 }

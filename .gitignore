@@ -41,3 +41,4 @@ hs_err_pid*
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs/bin
 /TestingAndCalibrationLabs/.vs
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI.csproj.user
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.dbmdl
