@@ -1,6 +1,4 @@
-﻿
-
-namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class SecurityParameter : Entity
     {

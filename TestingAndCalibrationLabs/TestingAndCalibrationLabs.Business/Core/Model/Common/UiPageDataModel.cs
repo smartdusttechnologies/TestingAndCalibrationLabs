@@ -3,7 +3,7 @@
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
-    /// Declaring properties for operations
+    /// It Conatains The Properties for Ui Page Data
     /// </summary>
     [DbTable("UiPageData")]
     public class UiPageDataModel : Entity

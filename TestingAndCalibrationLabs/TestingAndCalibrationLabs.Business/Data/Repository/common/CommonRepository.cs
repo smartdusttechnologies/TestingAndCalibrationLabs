@@ -30,25 +30,25 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return db.Query<UiPageDataModel>("Select upd.* From [UiPageData] upd INNER JOIN  [Record] r ON upd.RecordId = r.Id and r.IsDeleted = 0 where upd.UiPageId=@uiPageId and upd.IsDeleted=0", new { uiPageId }).ToList();
         }
 
-        public List<UiPageValidation> GetUiPageValidations(int uiPageId)
+        public List<UiPageValidationModel> GetUiPageValidations(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageValidation>(@"Select upv.Id, upv.UiPageId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
+            return db.Query<UiPageValidationModel>(@"Select upv.Id, upv.UiPageTypeId, upv.UiPageMetadataId, upvt.Name, upv.UiPageValidationTypeId ,upvt.Value
                                             From [UiPageValidation] upv 
                                             INNER JOIN  [UiPageValidationType] upvt ON upv.UiPageValidationTypeId = upvt.Id 
                                                 AND upv.IsDeleted = 0 
                                                 AND upvt.IsDeleted = 0 
-                                            WHERE upv.UiPageId=@uiPageId", new { uiPageId }).ToList();
+                                            WHERE upv.UiPageTypeId=@uiPageId", new { uiPageId }).ToList();
         }
 
         public RecordModel GetUiPageMetadata(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageId, upt.[Name] as UiPageName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlType, upm.UiControlDisplayName
+            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                     From [UiPageMetadata] upm
-                                                    inner join [UiPageType] upt on upm.UiPageId = upt.Id
+                                                    inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id 
-                                                where upm.UiPageId=@uiPageId 
+                                                where upm.UiPageTypeId=@uiPageId 
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0", new { uiPageId }).ToList();

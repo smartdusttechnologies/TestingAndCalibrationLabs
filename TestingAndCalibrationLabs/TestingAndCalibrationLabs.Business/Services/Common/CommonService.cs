@@ -17,7 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
         private readonly IGenericRepository<UiPageDataModel> _uiPageDataGenericRepository;
         private readonly IGenericRepository<UiPageMetadataModel> _uiPageMetaDataGenericRepository;
-        private readonly IGenericRepository<UiPageValidationTypes> _uiPageValidationTypesGenericRepository;
+        private readonly IGenericRepository<UiPageValidationTypeModel> _uiPageValidationTypesGenericRepository;
 
 
         public CommonService(ICommonRepository commonRepository,
@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
             IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
             IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
-            IGenericRepository<UiPageValidationTypes> uiPageValidationTypesGenericRepository)
+            IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository)
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
@@ -115,8 +115,8 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         private RequestResult<bool> Validate(RecordModel record)
         {
-            List<UiPageValidation> validations = _commonRepository.GetUiPageValidations(record.UiPageId);
-            List<UiPageValidationTypes> validationtypes = _uiPageValidationTypesGenericRepository.Get();
+            List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageId);
+            List<UiPageValidationTypeModel> validationtypes = _uiPageValidationTypesGenericRepository.Get();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
 
