@@ -1,56 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Common;
-using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
     /// <summary>
-    /// sampleService is implimenting the services from ISampleService
+    /// Services specific to sample feature will be written here.
     /// </summary>
-    public class SampleService : ISampleService
+    public class SampleService : CommonService, ISampleService
     {
-        private readonly ISampleRepository _sampleRepository;
-
-        public SampleService(ISampleRepository sampleRepository)
+        public SampleService(ICommonRepository commonRepository,
+            IGenericRepository<RecordModel> recordGenericRepository,
+            IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
+            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
+              IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
+            IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository)
+            : base(commonRepository,
+                  recordGenericRepository,
+                  uiPageTypeGenericRepository,
+                  uiPageDataGenericRepository,
+                  uiPageMetaDataGenericRepository,
+                  uiPageValidationTypesGenericRepository)
         {
-            _sampleRepository = sampleRepository;
+            UI_PAGE_NAME = "SamplePage";
         }
 
-        #region public methods
+        #region Public Methods
 
-        public RequestResult<int> Add(SampleModel sample)
-        {
-            _sampleRepository.Insert(sample);
-            return new RequestResult<int>(1);
-        }
-        public RequestResult<int> AddCollection(List<SampleModel> expenses)
-        {
-            _sampleRepository.InsertCollection(expenses);
-            return new RequestResult<int>(1);
-        }
-        public bool Delete(int id)
-        {
-            _sampleRepository.Delete(id);
-            return true;
-        }
-        public List<SampleModel> Get()
-        {
-            return _sampleRepository.Get();
-        }
-     
-        public SampleModel Get(int id)
-        {
-            return _sampleRepository.Get(id);
-        }
-
-        public RequestResult<int> Update(int id, SampleModel sample)
-        {
-            _sampleRepository.Update(sample);
-            return new RequestResult<int>(1);
-        }
         #endregion
+        #region Private Methods
+
+        #endregion
+
+
     }
 }

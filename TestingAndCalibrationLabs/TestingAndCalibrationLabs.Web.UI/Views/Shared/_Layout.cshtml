@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TESTING AND CALIBRATION LABS</title>
 
     <!--Importing the CSS FileS-->
@@ -12,24 +12,26 @@
     <link rel="stylesheet" href="~/css/Style.css" />
     <link rel="stylesheet" href="~/css/Login.css" />
     <link rel="stylesheet" href="~/css/Snackbar.css" />
+    <link rel="stylesheet" href="~/css/Inputfields.css" />
+    <link rel="stylesheet" href="~/css/Snackbar.css" />
+    <link href="~/css/TestDetails.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/css/TestDetails.css" rel="stylesheet" />
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 
     <!---Importing the Scripts--->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!---Importing the Scripts--->
     <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <style>
-            .hidden {
-                display: none;
-            }
-        </style>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <style>
@@ -67,8 +69,11 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link text-dark" asp-area="">About Us</a>
+                    </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Common" asp-action="Index" asp-route-id="1">Sample Feature</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-action="Index" asp-controller="TestReport">Get In Touch</a>
@@ -77,7 +82,29 @@
                         <a href="#" class="nav-link fa-solid fa-circle-user" style="height:40px;"></a>
                     </li>
                 </ul>
+                    
+                   
+
+                    <li class="nav-item ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-gear"></i>
+                    </a>
+                    <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageType">Ui Page Type</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiControlType">Ui Control Type</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageMetadata">Ui Page Metadata</a>
+                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageValidation">Ui Page Validation</a>
+                        
+                    </div>
+                </li>
+            
+            <li class="nav-item justify-content-center">
+                <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
+            </li>
+            
+            </ul>
             </div>
+            
         </nav>
     </header>
 

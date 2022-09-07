@@ -1,0 +1,65 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageValidationModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Ui Page Validation </h1>
+
+<h4>Create</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageValidation" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiPageTypeId" class="form-label"></label>
+                    <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+                        <option disabled="disabled" selected>Select Pages ...</option>
+                        @foreach (var item in ViewBag.UiPageTypes)
+                        {
+                            <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiPageMetadataId" class="form-label"></label>
+                    <select class="form-input " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
+                        <option disabled="disabled" selected>Select Metadata ...</option>
+                        @foreach (var item in ViewBag.UiPageMetadata)
+                        {
+                            <option value=@item.Id>@item.UiControlDisplayName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="UiPageValidationTypeId" class="form-label"></label>
+                    <select class="form-input" name="UiPageValidationTypeId" id="UiPageValidationType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
+                        <option disabled="disabled" selected>Select Validation Type ...</option>
+                        @foreach (var item in ViewBag.UiPageValidationTypes)
+                        {
+                            <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+           
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

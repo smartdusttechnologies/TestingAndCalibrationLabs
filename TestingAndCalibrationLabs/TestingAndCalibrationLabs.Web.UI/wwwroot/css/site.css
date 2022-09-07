@@ -93,6 +93,45 @@ form-group > label {
 input.input-validation-error.form-input.width-full {
     border: 2px solid #f00;
 }
+textarea.input-validation-error#Comments {
+    border: 2px solid red;
+}
+
+input.input-validation-error#Comments.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TestingType.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#State.form-input.width-full {
+    border: 2px solid red;
+}
+
+select.form-element- {
+    border: 2px solid red;
+}
+
+
+
+.validation-summary-valid {
+    display: none;
+}
+
+select.input-validation-error#TestingType {
+    border: 2px solid red;
+}
+
+select.input-validation-error#UiControlType {
+    border: 2px solid red;
+}
+select.input-validation-error#UiPageType {
+    border: 2px solid red;
+}
+select.input-validation-error#DataType {
+    border: 2px solid red;
+}
 
 .validation-summary-errors {
     color: red;

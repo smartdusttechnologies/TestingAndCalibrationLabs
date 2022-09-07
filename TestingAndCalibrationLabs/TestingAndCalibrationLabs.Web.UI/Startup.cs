@@ -15,6 +15,8 @@ using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using Microsoft.Extensions.Hosting.Internal;
 
 
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Web.UI
@@ -35,8 +37,10 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
-            
+
             //Services
+            services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
@@ -49,10 +53,27 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
             services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IUiControlTypeService, UiControlTypeService>();
+            services.AddScoped<IUiPageTypeService, UiPageTypeService>();
+            services.AddScoped<IUiPageValidationService, UiPageValidationService>();
+            services.AddScoped<IUiPageMetadataService, UiPageMetadataService>();
+            services.AddScoped<IDataTypeService, DataTypeService>();
+            services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
 
             
             //Repository
+           
+            services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
+            services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
+            services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
+            services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository < DataTypeModel >> ();
+            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository < UiPageValidationTypeModel >> ();
+            services.AddScoped<IGenericRepository<UiPageValidationModel>, GenericRepository < UiPageValidationModel >> ();
+            services.AddScoped<IGenericRepository<UiControlTypeModel>, GenericRepository<UiControlTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<ILoggerRepository, LoggerRepository>();
@@ -62,6 +83,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped< ITestReportRepository, TestReportRepository >();
             services.AddScoped< IUserRepository, UserRepository>();
+            services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
         }
 

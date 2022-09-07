@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{51
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7EE1F4A1-D042-4AF5-A84F-9BD7A5B97EAD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingAndCalibrationLabs.Tests", "TestingAndCalibrationLabs\TestingAndCalibrationLabs.Tests.csproj", "{5782CEC0-A093-41DA-B015-09C1993841F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingAndCalibrationLabs.Tests", "TestingAndCalibrationLabs.Tests\TestingAndCalibrationLabs.Tests.csproj", "{5782CEC0-A093-41DA-B015-09C1993841F0}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TestingAndCalibrationLabs.DB", "TestingAndCalibrationLabs.DB\TestingAndCalibrationLabs.DB.sqlproj", "{7531576F-6091-474B-BC66-F1AC77D593B4}"
 EndProject
