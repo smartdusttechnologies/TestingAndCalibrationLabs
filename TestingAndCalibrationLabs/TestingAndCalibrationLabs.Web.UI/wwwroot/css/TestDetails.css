@@ -123,34 +123,6 @@ form-group > label {
 }
 
 
-.field-validation-valid .form-input.width-full {
-    display: none;
-}
-
-input.input-validation-error.form-input.width-full {
-    border: 2px solid red;
-}
-
-input.input-validation-error#Comments.form-input.width-full {
-    border: 2px solid red;
-}
-
-input.input-validation-error#TestingType.form-input.width-full {
-    border: 2px solid red;
-}
-
-input.input-validation-error#State.form-input.width-full {
-    border: 2px solid red;
-}
-
-textarea.input-validation-error#Comments {
-    border: 2px solid red;
-}
-
-select.input-validation-error#TestingType {
-    border: 2px solid red;
-}
-
 #select {
     margin: 0;
     padding: 0;
