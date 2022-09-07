@@ -47,7 +47,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
-        /// Updat the test report by id
+        /// Update the test report by id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="testReportModel"></param>

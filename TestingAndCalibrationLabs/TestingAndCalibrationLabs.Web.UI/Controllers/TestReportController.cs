@@ -24,8 +24,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
 
-        public object TempData1 { get; private set; }
-
         /// <summary>
         /// Default Action of the Index
         /// </summary>
@@ -97,10 +95,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult TestReportView()
         {
-            //ViewBag.data;
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            ViewBag.FileDownloaded = TempData["FileDownloaded"] != null ? TempData["FileDownloaded"] : false;
-            ViewBag.ErrorMsg = TempData["ErrorMsg"] != null ? TempData["ErrorMsg"] : false;
             List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
             var testReportData = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
             return View(testReportData);
@@ -125,20 +119,26 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            //var sendMail = _emailService.Equals(datafForMail);
             var result = _mapper.Map<Business.Core.Model.TestReportModel, UI.Models.TestReportModel>(datafForMail);
 
             //Sends link
-            var datad = _testReportService.EmailLinkMail(datafForMail, datafForMail.Id);
+            var mailData = _testReportService.EmailLinkMail(datafForMail, datafForMail.Id);
 
-            if (datad)
+            if (mailData)
             {
                 return Ok(result);
             }
             else
+            {
                 return BadRequest(result);
+            }
         }
 
+        /// <summary>
+        /// This is to download the Test Report Uploaded
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult TestReportDownload(int Id)
         {
@@ -148,6 +148,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return Ok(fileid);
         }
 
+        /// <summary>
+        /// This is used to download the Test Report.
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
         public ActionResult DownloadFile(string fileId)
         {
             AttachmentModel attachment = _testReportService.DownLoadAttachment(fileId);

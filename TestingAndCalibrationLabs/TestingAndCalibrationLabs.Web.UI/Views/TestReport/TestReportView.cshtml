@@ -38,11 +38,8 @@
                         <td> @Html.DisplayFor(modelItem => item.Email)</td>
                         <td>
                             <a id="dataDownload_@item.Id" onclick="DwonloadReportAjax(@item.Id)"><i class='fa fa-cloud-download'></i></a><b>||</b>
-                            @*<button id="sendMail" onclick="sendMailAjax(@item.Id)"><i class="fa fa-envelope"></i></button>*@
                             <a id="sendMail_@item.Id" onclick="sendMailAjax(@item.Id)"><i class="fa fa-envelope"></i></a>
-                            @*<a onclick="return sendMailAjax(@item.Id)(this,('Wait!!'))"><i class="fa fa-envelope"></i></a>
-                            <a onclick="return sendMailAjax(@item.Id)(this,('Wait!!'))">MailSend</a>*@
-                          </td>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -71,8 +68,6 @@
        </div>
     </div>
 
-    
-    
      <div id="snackbarerror" style="display:none">
             <div class="d-flex justify-content-center fixed-bottom">
             <div role="alert">
@@ -94,7 +89,7 @@
           x.className = "show";
           setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
       }
-      
+      //This function will display the success snackbar on mail link send.
       function myFunctionMailReport() {
           var x = document.getElementById("snackbarsuccessMail");
           x.className = "show";

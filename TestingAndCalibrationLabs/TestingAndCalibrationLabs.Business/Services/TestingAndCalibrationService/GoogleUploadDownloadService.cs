@@ -40,9 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         private string uploadsFolder;
 
         public string ResponseBody { get; private set; }
-        public object Get { get; private set; }
-        public string FilePath { get; private set; }
-
+        
         /// <summary>
         /// </summary>
         /// <param name="userRepository"></param>
@@ -188,7 +186,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             Google.Apis.Drive.v3.DriveService service = GetService();
             string FolderPath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"]);
-            // string FolderPath = (string)_hostingEnvironment.WebRootPath;
             Google.Apis.Drive.v3.FilesResource.GetRequest request = service.Files.Get(fileId);
             string FileName = request.Execute().Name;
             string dataFileName = FileName;
