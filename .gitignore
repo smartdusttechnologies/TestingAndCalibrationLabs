@@ -33,3 +33,15 @@ hs_err_pid*
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/project.nuget.cache
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj/project.assets.json
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/bin
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.jfm
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.mdbl
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.mdbl
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs/bin
+/TestingAndCalibrationLabs/.vs
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI.csproj.user
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.jfm
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.dbmdl
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj

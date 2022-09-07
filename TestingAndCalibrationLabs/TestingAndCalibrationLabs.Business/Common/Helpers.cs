@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Cryptography;
@@ -250,7 +250,8 @@ namespace TestingAndCalibrationLabs.Business.Common
             return thisHour;
         }
 
-        #endregion
+     
+
 
         public static string GetContentType(string path)
         {
@@ -277,4 +278,4 @@ namespace TestingAndCalibrationLabs.Business.Common
             };
         }
     }
-}
+}   #endregion
