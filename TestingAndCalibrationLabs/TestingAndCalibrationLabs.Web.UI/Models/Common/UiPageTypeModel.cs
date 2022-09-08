@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -18,10 +17,26 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Name Of The Ui Page Type
         /// </summary> 
         [Required(ErrorMessage = "Please Enter Page Name")]
+        
         public string Name { get; set; }
+        /// <summary>
+        /// It Contains The Url Of The Ui Page Type
+        /// </summary> 
+        [Required(ErrorMessage = "Please Enter Url")]
         public string Url { get; set; }
+        /// <summary>
+        /// It Contains The Id Of The Ui Navigation Category
+        /// </summary> 
+        [Required(ErrorMessage = "Please Select Navigation Category")]
         public int UiNavigationCategoryId { get; set; }
+        /// <summary>
+        /// It Contains The Name Of The Ui Navigation Category
+        /// </summary> 
         public string UiNavigationCategoryName { get; set; }
+        /// <summary>
+        /// It Contains The Url With Ui Page Type Id
+        /// </summary>
+        public string FormatedUrl { get; set; }
         #endregion
     }
 }

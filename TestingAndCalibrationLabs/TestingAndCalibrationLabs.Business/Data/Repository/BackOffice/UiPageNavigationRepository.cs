@@ -24,10 +24,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Getting All Records From Ui Page Navigation
         /// </summary>
         /// <returns></returns>
-        public List<UiPageNavigationModel> Get()
+        public List<UiPageTypeModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageNavigationModel>(@"Select upt.Id, unc.[Id] as UiNavigationCategoryId, unc.[Name] as UiNavigationCategoryName, 
+            return db.Query<UiPageTypeModel>(@"Select upt.Id, unc.[Id] as UiNavigationCategoryId, unc.[Name] as UiNavigationCategoryName, 
                                                     upt.Name, upt.Url
                                                 From[UiPageType] upt
                                                     inner join[UiNavigationCategory] unc on upt.UiNavigationCategoryId = unc.Id

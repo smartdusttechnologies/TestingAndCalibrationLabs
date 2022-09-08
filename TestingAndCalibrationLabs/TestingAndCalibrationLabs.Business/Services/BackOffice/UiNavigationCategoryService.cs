@@ -31,7 +31,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Records From Page Type With Formated Url
         /// </summary>
         /// <returns></returns>
-        public List<UiPageNavigationModel> GetNavigationCategoryWithPageTypes()
+        public List<UiPageTypeModel> GetNavigationCategoryWithPageTypes()
         {
             var pageNavigation = _uiPageNavigationRepository.Get();
             foreach (var item in pageNavigation)

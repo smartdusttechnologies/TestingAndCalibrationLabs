@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Updex()
         {
             var page = _navigationCategoryService.GetNavigationCategoryWithPageTypes();
-            var mapped = _mapper.Map<List<UiPageNavigationModel>, List<Models.UiPageNavigationDTO>>(page);
+            var mapped = _mapper.Map<List<UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
 
             if (mapped != null && mapped.Count > 0)
             {

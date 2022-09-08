@@ -16,6 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Pages With Navigation Category Record From Ui Page Type 
         /// </summary>
 
-        List<UiPageNavigationModel> GetNavigationCategoryWithPageTypes();
+        List<UiPageTypeModel> GetNavigationCategoryWithPageTypes();
     }
 }

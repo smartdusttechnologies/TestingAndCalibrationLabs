@@ -12,6 +12,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Get All Records From Ui Page Type
         /// </summary>
         /// <returns></returns>
-        List<UiPageNavigationModel> Get();
+        List<UiPageTypeModel> Get();
     }
 }
