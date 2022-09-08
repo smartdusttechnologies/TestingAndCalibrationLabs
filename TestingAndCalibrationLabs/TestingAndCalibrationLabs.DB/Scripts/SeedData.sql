@@ -214,8 +214,7 @@ BEGIN
          VALUES
                (1, 'Survey', 0),
 		       (2, 'Home', 0),
-		       (3, 'Settings', 0),
-			   (1002, 'Settings', 0),
+		       (1002, 'Settings', 0),
 			   (1003,'Profile',0)
 			   
 
