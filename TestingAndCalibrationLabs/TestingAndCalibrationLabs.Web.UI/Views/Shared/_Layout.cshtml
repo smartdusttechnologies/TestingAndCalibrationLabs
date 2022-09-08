@@ -56,54 +56,24 @@
                 <span class="fa fa-search"></span>
                 </li>
                 </ul>*@
-                <ul class="navbar-nav ms-auto">
-                    <div id="navid"> </div>
-                    @*
-                    <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Home" asp-area="Login">Home</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Home" asp-action="TestDetails">TestDetails</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Common" asp-action="Index" asp-route-id="1">Sample Feature</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="">Get In Touch</a>
-                    </li>
-
-                    Dropdown For Pages
-                    <a class="nav-link dropdown-toggle" href="#" id="navbrr" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-gear"></i>
-                    </a>
-                    <div id="rajdiv" class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbrr"></div>
-
-                    *@
+                <ul class="navbar-nav ms-auto" id="navbarContentAdd">
                     
-                    <li class="nav-item ">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-gear"></i>
-                    </a>
-                    <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" asp-action="Index" asp-controller="UiPageType">Ui Page Type</a>
-                    <a class="dropdown-item" asp-action="Index" asp-controller="UiControlType">Ui Control Type</a>
-                    <a class="dropdown-item" asp-action="Index" asp-controller="UiPageMetadata">Ui Page Metadata</a>
-                    <a class="dropdown-item" asp-action="Index" asp-controller="UiPageValidation">Ui Page Validation</a>
-
-                    </div>
+                    <li class="nav-item dropdown-hover" id="listParent1002">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-gear"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-right" id="dropdownContent1002" aria-labelledby="navbarDropdown">
+                        </div>
                     </li>
                     
                     
-                    <li class="nav-item justify-content-center">
-                    <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
+                    <li class="nav-item dropdown-hover" id="listParent1003">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-right" id="dropdownContent1003" aria-labelledby="navbarDropdown">
+                        </div>
                     </li>
-                    
                 </ul>
             </div>
 
@@ -145,57 +115,44 @@
             success: function (response) {
                 console.log(response);
                 for (let i = 0; i < response.length; i++) {
-                    var ifieldId = response[i].id;
-                    var nfieldId = response[i].name;
-                    var idf = "#topdiv" + ifieldId;
+                    var uiNavigationCategoryId = response[i].id;
+                    var uiNavigationCategoryName = response[i].name;
+                    var parentListDiv = "#listParent" + uiNavigationCategoryId;
+                    var parentListId = "listParent" + uiNavigationCategoryId;
+                    var divExistOrNot = document.getElementById(parentListId);
+                    if (!divExistOrNot && response[i].childrens.length > 1) {
+                        $('#navbarContentAdd').prepend("</li>");
+                        $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='listParent" + uiNavigationCategoryId + "'>");
 
-                    $('#navid').append("<div class='dropdown' id='topdiv"+ifieldId+"'>");
-
-                    var htmlAdd = "<button class='dropbtn nav-link text-dark'>" + nfieldId + "</button>";
-                     $(idf).append(htmlAdd);
-                    $(idf).append("<div class='dropdown-content' id='dropdiv" + ifieldId + "'>");
-
-                    $('#navid').append("</div>");
-                    
-                    for (let j = 0; j < response[i].uiPageTypeModels.length; j++) {
-                        var ifieldId = response[i].uiPageTypeModels[j].id;
-                        var userrel = response[i].uiPageTypeModels[j].url;
-                        var nfieldId = response[i].uiPageTypeModels[j].name;
-                        var navId = response[i].uiPageTypeModels[j].uiNavigationCategoryId;
-                        var ids = "#dropdiv" + navId;
-                        
-                        var htmlAdd = "<a class='dropdown-item' href='" + userrel + "'>" + nfieldId + "</a>";
-                        $(ids).append(htmlAdd);
+                        var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
+                        $(parentListDiv).append(buttonDropdown);
+                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryId + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("</div>");
                     }
-
+                    for (let j = 0; j < response[i].childrens.length; j++) {
+                        if (response[i].childrens.length <= 1) {
+                            var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var singleListParent = "#navigationSingle" + uiNavigationCategoryId
+                            $('#navbarContentAdd').prepend("<li class='nav-item' id='navigationSingle" + uiNavigationCategoryId + "'></li>");
+                            var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
+                            $(singleListParent).append(singleChild);
+                        }
+                        else{
+                        console.log(response[i].childrens.length);
+                        var pageTypeUrl = response[i].childrens[j].formatedUrl;
+                        var pageTypeName = response[i].childrens[j].name;
+                        var uiNavigationId = response[i].id;
+                        var dropdownContentId = "#dropdownContent" + uiNavigationId;
+                        var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
+                        $(dropdownContentId).append(script);
+                        }
+                    }
                 }
-
-                //$.ajax({
-                //    type: "POST",
-                //    url: "@Url.Action("Updex","UiPageType")",
-                //    success: function (response) {
-                //        console.log(response);
-                //        console.log(response[1].uiNavigationCategoryName);
-                //        for (let i = 0; i < response.length; i++) {
-                //            var ifieldId = response[i].id;
-                //            var userrel = response[i].url;
-                //            var nfieldId = response[i].name;
-                //            var navId = response[i].uiNavigationCategoryId;
-                //            var ids = "#dropdiv" + navId;
-                            
-                //            var htmlAdd = "<a class='dropdown-item' href='" + userrel + "'>" + nfieldId + "</a>";
-                //            $(ids).append(htmlAdd);
-                //        }
-                        
-
-                //    },
-                //    error: function (req, status, error) {
-                //        console.log(response);
-                //    }
-                //});
             },
             error: function (req, status, error) {
-                console.log(response);
+                console.log(req);
+                console.log(status);
+                console.log(error);
             }
         });
     });

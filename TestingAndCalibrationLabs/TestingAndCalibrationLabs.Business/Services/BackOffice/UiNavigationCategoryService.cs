@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -7,36 +6,39 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 namespace TestingAndCalibrationLabs.Business.Services
 {
     /// <summary>
-    /// Service Class For Data Type
+    /// Service Class For Ui Navigation Category
     /// </summary>
     public class UiNavigationCategoryService : IUiNavigationCategoryService
     {
         private readonly IGenericRepository<UiNavigationCategoryModel> _genericRepository;
         private readonly IUiPageTypeRepository _uiPageTypeRepository;
-        public UiNavigationCategoryService(IGenericRepository<UiNavigationCategoryModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository)
+        private readonly IUiPageNavigationRepository _uiPageNavigationRepository;
+        public UiNavigationCategoryService(IGenericRepository<UiNavigationCategoryModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository, IUiPageNavigationRepository uiPageNavigationRepository)
         {
             _genericRepository = genericRepository;
             _uiPageTypeRepository = uiPageTypeRepository;
+            _uiPageNavigationRepository = uiPageNavigationRepository;
         }
         /// <summary>
-        /// Get All Records From Data Type
+        /// Get All Records From Ui Navigation Category
         /// </summary>
         /// <returns></returns>
         public List<UiNavigationCategoryModel> Get()
         {
             return _genericRepository.Get();
         }
+        /// <summary>
+        /// Get All Records From Page Type With Formated Url
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageNavigationModel> GetNavigationCategoryWithPageTypes()
         {
-            var pageTypeList = _uiPageTypeRepository.Get();
-            var navigationCategoryList = _genericRepository.Get();
-            List<UiPageNavigationModel> result = new List<UiPageNavigationModel>();
-            foreach (var item in navigationCategoryList)
+            var pageNavigation = _uiPageNavigationRepository.Get();
+            foreach (var item in pageNavigation)
             {
-                var pageType = pageTypeList.Where(x => x.UiNavigationCategoryId == item.Id);
-                result.Add(new UiPageNavigationModel { Id = item.Id, Name = item.Name, UiPageTypeModels = pageType.ToList() });
+                item.FormatedUrl = string.Format(item.Url, item.Id);
             }
-            return result;
+            return pageNavigation;
         }
 
     }

@@ -31,7 +31,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddSession();
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             //Services
             services.AddScoped<ICommonService, CommonService>();
@@ -58,6 +58,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
+            services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();

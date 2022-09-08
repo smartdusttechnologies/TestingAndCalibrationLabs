@@ -21,7 +21,7 @@
                     <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiNavigationCategoryId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="UiNavigationCategoryId">
                         <option disabled="disabled" selected>Select Navigation Category ...</option>
@@ -30,6 +30,10 @@
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style="padding-left:10px; padding-bottom:5px;">
+                    <input class="form-input width-full" type="text" id="Url" name="Url" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Url">
+                    <label class="form-label" for="Url">Url</label>
                 </div>
             </div>
 

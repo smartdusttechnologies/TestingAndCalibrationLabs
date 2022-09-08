@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
         /// <summary>
-        /// Insert Record in Ui Page Metadata Type
+        /// Insert Record in Ui Page Metadata 
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
@@ -31,7 +31,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiPageMetadataModel);
         }
         /// <summary>
-        /// Getting All Records From Ui Page Metadata Type
+        /// Getting All Records From Ui Page Metadata 
         /// </summary>
         /// <returns></returns>
         public List<UiPageMetadataModel> Get()
@@ -74,7 +74,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and udt.isDeleted = @isDeleted", new { isDeleted = 0, Id = id }).FirstOrDefault();
         }
         /// <summary>
-        /// Edit Record For Ui Page Metadata Type
+        /// Edit Record For Ui Page Metadata 
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>

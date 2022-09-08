@@ -33,35 +33,27 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
-            List<Models.UiPageTypeModel> raj = new List<Models.UiPageTypeModel>();
-
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
             return View(pageData.AsEnumerable());
         }
-        [HttpPost]
-        public IActionResult Updex()
-        {
-           
-            List<UiPageTypeModel> page = _uiPageTypeService.Get();
-            var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
-            if (pageData != null)
-            {
-                return Ok(pageData);
-            }
-            return BadRequest(pageData);
-        }
+        
         /// <summary>
         /// For Edit Record View
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="NavigationCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id,int NavigationCategoryId)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var navigationCategory = _uiNavigationCategoryService.Get();
+            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>, List<Models.UiNavigationCategoryModel>>(navigationCategory);
+            ViewBag.NavigationCategoryId = NavigationCategoryId;
+            ViewBag.UiNavigationCategory = navigationCategoryList;
             var getByIdPageModel = _uiPageTypeService.GetById((int)id);
             if (getByIdPageModel == null)
             {

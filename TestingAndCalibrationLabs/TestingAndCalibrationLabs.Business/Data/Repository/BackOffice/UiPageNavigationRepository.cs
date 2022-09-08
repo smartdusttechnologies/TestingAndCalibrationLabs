@@ -10,6 +10,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repository Class For Ui Page Navigation 
+    /// </summary>
     public class UiPageNavigationRepository : IUiPageNavigationRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -17,7 +20,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
+        /// <summary>
+        /// Getting All Records From Ui Page Navigation
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageNavigationModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;

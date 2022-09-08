@@ -46,20 +46,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update( UiPageTypeModel uiPageTypeModel)
         {
-            _genericRepository.Update(uiPageTypeModel);
+            _uiPageTypeRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
        public List<UiPageTypeModel> Get()
-        {
-
-            var raj = _uiPageTypeRepository.Get();
-            List<UiPageTypeModel> list = new List<UiPageTypeModel>();
-            foreach (var item in raj)
-            {
-
-                list.Add(new UiPageTypeModel { Name = item.Name,UiNavigationCategoryName = item.UiNavigationCategoryName,UiNavigationCategoryId =item.UiNavigationCategoryId, Url = string.Format(item.Url,item.Id)});
-            }
-            return list;
+        {return  _uiPageTypeRepository.Get();;
         }
        
         /// <summary>
@@ -69,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
-            return _genericRepository.Get(id);
+            return _uiPageTypeRepository.GetById(id);
         }
     }
 }

@@ -202,3 +202,47 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[DataType]  OFF
 END
 GO
+
+IF NOT EXISTS (SELECT 1 FROM [UiNavigationCategory] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  ON
+
+    INSERT INTO [dbo].[UiNavigationCategory]
+               ([Id]
+		       ,[Name]
+			   ,[IsDeleted])
+         VALUES
+               (1, 'Survey', 0),
+		       (2, 'Home', 0),
+		       (3, 'Settings', 0),
+			   (1002, 'Settings', 0),
+			   (1003,'Profile',0)
+			   
+
+    SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [UiPageType] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiPageType]  ON
+
+    INSERT INTO [dbo].[UiPageType]
+               ([Id]
+		       ,[Name]
+			   ,[Url]
+			   ,[UiNavigationCategoryId]
+			   ,[IsDeleted])
+         VALUES
+                           (1, 'Ui Page Type','/UiPageType/Index/',1002, 0),
+		      (2, 'Ui Control Type','/UiControlType/Index/',1002, 0),
+			  (3, 'Ui Page Metadata','/UiPageMetadata/Index/',1002, 0),
+			  (4, 'Ui Page Validation','/UiPageValidation/Index/',1002, 0),
+			(5, 'Home','/',2, 0),
+			(6, 'My Activity','/Common/Index/{0}',1003, 0),
+                        (7, 'My Account','/Common/Index/{0}',1003, 0)		
+			   
+
+    SET IDENTITY_INSERT [dbo].[UiPageType]  OFF
+END
+GO
