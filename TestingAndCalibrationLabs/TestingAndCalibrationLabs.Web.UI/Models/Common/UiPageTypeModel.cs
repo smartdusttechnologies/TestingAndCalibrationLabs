@@ -37,6 +37,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Url With Ui Page Type Id
         /// </summary>
         public string FormatedUrl { get; set; }
+        /// <summary>
+        /// It Contains The Orders With Ui Navigation Category
+        /// </summary>
+        public string Orders { get; set; }
         #endregion
     }
 }

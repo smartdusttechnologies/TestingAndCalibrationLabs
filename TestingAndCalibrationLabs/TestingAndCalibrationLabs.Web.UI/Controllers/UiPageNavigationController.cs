@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             if (pageTypeList != null && pageTypeList.Count > 0)
             {
-                var dataAfterSorting = pageTypeList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Childrens = x.ToList() });
+                var dataAfterSorting = pageTypeList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName,x.Orders }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, Childrens = x.ToList() });
                 return Ok(dataAfterSorting);
             }
             return BadRequest();
