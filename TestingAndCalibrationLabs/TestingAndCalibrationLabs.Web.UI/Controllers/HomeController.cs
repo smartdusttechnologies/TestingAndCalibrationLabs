@@ -10,6 +10,8 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using LoginDTO = TestingAndCalibrationLabs.Web.UI.Models.LoginDTO;
+using TestingAndCalibrationLabs.Business.Services.Securities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -24,6 +26,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _orgnizationService = orgnizationService;
             _mapper = mapper;
         }
+
+        [HttpGet]
+        [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
             return View();
@@ -32,6 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// UI Shows the Orgnizations names in dropdown list
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult Login()
         {
             List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
@@ -63,6 +69,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// UI will get the information from the User
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
+        [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult TestDetails()
         {
             // here hardcoding the Grid heddings values instead of accessing from the DB
@@ -120,6 +128,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(TestDetailsOfUsers);
         }
 
+        [HttpGet]
+        [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult PlanPricing()
         {
             return View();
