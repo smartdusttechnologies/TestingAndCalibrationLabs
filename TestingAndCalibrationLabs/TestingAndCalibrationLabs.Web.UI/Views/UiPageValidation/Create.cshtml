@@ -1,11 +1,8 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageValidationModel
-
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageValidationDTO
 @{
     ViewData["Title"] = "Create";
 }
-
 <h1>Ui Page Validation </h1>
-
 <h4>Create</h4>
 <hr />
 <div class="row">
@@ -33,8 +30,6 @@
                         }
                     </select>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiPageValidationTypeId" class="form-label"></label>
                     <select class="form-input" name="UiPageValidationTypeId" id="UiPageValidationType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
@@ -45,9 +40,6 @@
                         }
                     </select>
                 </div>
-            </div>
-           
-            <div class="row ms-1 me-1">
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
                     <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
@@ -55,11 +47,9 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

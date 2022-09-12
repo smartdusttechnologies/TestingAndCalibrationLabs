@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     /// <summary>
     /// It Conatains The Properties for Ui Page Type 
     /// </summary>
-    public class UiPageTypeModel
+    public class UiPageTypeDTO
     {
         #region Public Properties
         /// <summary>

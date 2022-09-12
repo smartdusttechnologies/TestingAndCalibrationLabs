@@ -15,14 +15,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IUiControlTypeService _uiControlTypeService;
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
-        
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiControlTypeService"></param>
         /// <param name="mapper"></param>
         /// <param name="uiPageTypeService"></param>
-        /// <param name="uiPageMetadataTypeService"></param>
+        /// <param name="uiPageMetadataService"></param>
         public UiPageMetadataController(IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
@@ -56,9 +55,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<Business.Core.Model.UiPageTypeModel> pageList = _uiPageTypeService.Get();
             List < Business.Core.Model.UiControlTypeModel>controlList = _uiControlTypeService.Get();
             List<Business.Core.Model.DataTypeModel> dataList = _dataTypeService.Get();
-            var pages = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageList);
-            var controles = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controlList);
-            var datas = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeModel>>(dataList);
+            var pages = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(pageList);
+            var controles = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeDTO>>(controlList);
+            var datas = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeDTO>>(dataList);
             ViewBag.UiControlTypes = controles;
             ViewBag.DataTypes = datas;
             ViewBag.UiPageTypes = pages;
@@ -104,9 +103,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<Business.Core.Model.UiPageTypeModel> pages = _uiPageTypeService.Get();
             List<Business.Core.Model.UiControlTypeModel> controls = _uiControlTypeService.Get();
             List<Business.Core.Model.DataTypeModel> datas = _dataTypeService.Get();
-            var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pages);
-            var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controls);
-            var dataList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeModel>>(datas);
+            var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(pages);
+            var controlList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeDTO>>(controls);
+            var dataList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeDTO>>(datas);
             ViewBag.UiControlTypes = controlList;
             ViewBag.DataTypes = dataList;
             ViewBag.UiPageTypes = pageList;

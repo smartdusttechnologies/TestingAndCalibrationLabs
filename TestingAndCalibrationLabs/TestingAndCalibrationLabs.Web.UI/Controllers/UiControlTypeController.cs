@@ -29,9 +29,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<Business.Core.Model.UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
-            var controlTypeList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeModel>>(controlTypeListModel);
+            var controlTypeList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeDTO>>(controlTypeListModel);
             return View(controlTypeList.AsEnumerable());
-
         }
         /// <summary>
         /// For Showing Choosen Record For Edit
@@ -50,23 +49,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var controlTypeEditModel = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(controlTypeModel);
+            var controlTypeEditModel = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeDTO>(controlTypeModel);
             return View(controlTypeEditModel);
         }
         /// <summary>
         /// To Edit Record From Ui Control Type
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="conModel"></param>
+        /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] Models.UiControlTypeModel uiControlTypeModel)
+        public IActionResult Edit([Bind] Models.UiControlTypeDTO uiControlTypeModel)
         {
-            
             if (ModelState.IsValid)
             {
-                var controlTypeEditModel = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
+                var controlTypeEditModel = _mapper.Map<Models.UiControlTypeDTO, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
                 _uiControlTypeServices.Update(controlTypeEditModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -81,21 +78,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-
-            return base.View(new Models.UiControlTypeModel { Id = id });
+            return base.View(new Models.UiControlTypeDTO { Id = id });
         }
         /// <summary>
         /// To Insert Record
         /// </summary>
-        /// <param name="conModel"></param>
+        /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiControlTypeModel uiControlTypeModel)
+        public IActionResult Create([Bind] Models.UiControlTypeDTO uiControlTypeModel)
         {
             if (ModelState.IsValid)
             {
-                var controlTypeCreateModel = _mapper.Map<Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
+                var controlTypeCreateModel = _mapper.Map<Models.UiControlTypeDTO, Business.Core.Model.UiControlTypeModel>(uiControlTypeModel);
                 _uiControlTypeServices.Create(controlTypeCreateModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -118,7 +114,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var controlTypeEditModel = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeModel>(getByIdControlType);
+            var controlTypeEditModel = _mapper.Map<Business.Core.Model.UiControlTypeModel, Models.UiControlTypeDTO>(getByIdControlType);
             return View(controlTypeEditModel);
         }
         /// <summary>
@@ -138,7 +134,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
-
-
     }
 }

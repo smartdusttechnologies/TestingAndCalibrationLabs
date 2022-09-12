@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     /// <summary>
     /// It Conatains The Properties for Ui Navigation Category
     /// </summary>
-    public class UiNavigationCategoryModel
+    public class UiNavigationCategoryDTO
     {
         /// <summary>
         /// It Contains The Id of The Ui Navigation Category

@@ -11,12 +11,10 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class UiNavigationCategoryService : IUiNavigationCategoryService
     {
         private readonly IGenericRepository<UiNavigationCategoryModel> _genericRepository;
-        private readonly IUiPageTypeRepository _uiPageTypeRepository;
         private readonly IUiPageNavigationRepository _uiPageNavigationRepository;
-        public UiNavigationCategoryService(IGenericRepository<UiNavigationCategoryModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository, IUiPageNavigationRepository uiPageNavigationRepository)
+        public UiNavigationCategoryService(IGenericRepository<UiNavigationCategoryModel> genericRepository, IUiPageNavigationRepository uiPageNavigationRepository)
         {
             _genericRepository = genericRepository;
-            _uiPageTypeRepository = uiPageTypeRepository;
             _uiPageNavigationRepository = uiPageNavigationRepository;
         }
         /// <summary>
@@ -40,6 +38,5 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return pageNavigation;
         }
-
     }
 }

@@ -13,9 +13,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
-        /// <param name="navigationCategoryService"></param>
+        /// <param name="uiNavigationCategoryService"></param>
         /// <param name="mapper"></param>
-        public UiPageNavigationController(IUiNavigationCategoryService uiNavigationCategoryService, IMapper mapper, IUiPageTypeService uiPageTypeService)
+        public UiPageNavigationController(IUiNavigationCategoryService uiNavigationCategoryService, IMapper mapper)
         {
             _uiNavigationCategoryService = uiNavigationCategoryService;
             _mapper = mapper;
@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult GetAllPagesWithNavigation()
         {
             var pageWithNavigationCategoryList = _uiNavigationCategoryService.GetNavigationCategoryWithPageTypes();
-            var pageTypeList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(pageWithNavigationCategoryList);
+            var pageTypeList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(pageWithNavigationCategoryList);
 
             if (pageTypeList != null && pageTypeList.Count > 0)
             {

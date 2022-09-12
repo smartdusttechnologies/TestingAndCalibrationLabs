@@ -1,11 +1,8 @@
-﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageTypeModel>
-
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageTypeDTO>
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Ui Page Type</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -35,7 +32,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -46,9 +42,7 @@
                         @Html.DisplayFor(modelItem => item.Url)
                     </td>
                     <td>
-
                         @Html.ActionLink("", "Edit", new { id=item.Id,NavigationCategoryId = item.UiNavigationCategoryId }, new{@class="fas fa-edit"}) |
-
                         @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
                     </td>
                 </tr>
@@ -56,7 +50,6 @@
         </tbody>
     </table>
 </div>
-
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
 {
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -71,9 +64,7 @@
         </div>
     </div>
 }
-
 <script>
-
     oTable = $('#gridui').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -84,7 +75,6 @@
     $('#gridui').keyup(function () {
         oTable.search($(this).val()).draw();
     })
-
 </script>
 
 

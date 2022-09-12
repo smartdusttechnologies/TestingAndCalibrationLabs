@@ -1,11 +1,8 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO
-
 @{
     ViewData["Title"] = "Create";
 }
-
 <h1>Ui Page Metadata</h1>
-
 <h4>Create</h4>
 <hr />
 <div class="row">
@@ -33,8 +30,6 @@
                         }
                     </select>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
@@ -45,22 +40,18 @@
                         }
                     </select>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
+                <div class="row ms-1 me-1">
                 <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="IsRequired" />
-                            @Html.DisplayNameFor(model => model.IsRequired)
-                        </label>
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsRequired" />
+                        @Html.DisplayNameFor(model => model.IsRequired)
+                    </label>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
+                </div>
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
                     <input class="form-input width-full" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
                     <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
@@ -68,13 +59,11 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}
