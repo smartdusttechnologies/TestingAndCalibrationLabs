@@ -16,7 +16,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 /* Sticky footer styles
--------------------------------------------------- */
+------------------------------ */
 html {
     font-size: 14px;
     position: relative;
@@ -45,39 +45,9 @@ form-group-for-common > label {
     padding: 0px 0px 0px 0px;
 }
 
-.field-validation-error.form-input.width-full {
-    color: orangered;
-    font-weight: bold;
-}
-
-.field-validation-valid .form-input.width-full {
-    display: none;
-}
-
-input.input-validation-error.form-input.width-full {
-    border: 2px solid #f00;
-}
-textarea.input-validation-error#Comments {
+select.form-element-for-login {
     border: 2px solid red;
 }
-
-input.input-validation-error#Comments.form-input.width-full {
-    border: 2px solid red;
-}
-
-input.input-validation-error#TestingType.form-input.width-full {
-    border: 2px solid red;
-}
-
-input.input-validation-error#State.form-input.width-full {
-    border: 2px solid red;
-}
-
-select.form-element- {
-    border: 2px solid red;
-}
-
-
 
 .validation-summary-valid {
     display: none;
@@ -90,9 +60,11 @@ select.input-validation-error#TestingType {
 select.input-validation-error#UiControlType {
     border: 2px solid red;
 }
+
 select.input-validation-error#UiPageType {
     border: 2px solid red;
 }
+
 select.input-validation-error#DataType {
     border: 2px solid red;
 }
