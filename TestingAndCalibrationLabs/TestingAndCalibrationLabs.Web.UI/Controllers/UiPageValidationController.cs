@@ -54,7 +54,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<Business.Core.Model.UiPageValidationTypeModel> pageValidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(pageType);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadataType);
-            var validationList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationTypeDTO>>(pageValidationType);
+            var validationList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(pageValidationType);
             ViewBag.UiPageTypes = pageList;
             ViewBag.UiPageMetadata = metadataList;
             ViewBag.UiPageValidationTypes = validationList;
@@ -102,7 +102,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
-            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationTypeDTO>>(uiPagevalidationType);
+            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(uiPagevalidationType);
             ViewBag.UiPageTypes=pageList;
             ViewBag.UiPageValidationTypes=valList;
             ViewBag.UiPageMetadata=metadataList;
