@@ -12,22 +12,38 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class DataTypeService : IDataTypeService
     {
         private readonly IGenericRepository<DataTypeModel> _genericRepository;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="genericRepository"></param>
         public DataTypeService(IGenericRepository<DataTypeModel> genericRepository)
         {
             _genericRepository = genericRepository; 
         }
-
+        /// <summary>
+        /// To Create Record DataType
+        /// </summary>
+        /// <param name="dataTypeModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Create(DataTypeModel dataTypeModel)
         {
             _genericRepository.Insert(dataTypeModel);
             return new RequestResult<int>(1);
         }
-
+        /// <summary>
+        /// To delete Record from DataType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
           return _genericRepository.Delete(id);
         }
-
+        /// <summary>
+        /// To Edit a record Datatype
+        /// </summary>
+        /// <param name="dataTypeModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Edit(DataTypeModel dataTypeModel)
         {
             _genericRepository.Update(dataTypeModel);
@@ -42,7 +58,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-       
+       /// <summary>
+       /// Get Record of dataType By Id
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
 
         public DataTypeModel GetById(int id)
         {
