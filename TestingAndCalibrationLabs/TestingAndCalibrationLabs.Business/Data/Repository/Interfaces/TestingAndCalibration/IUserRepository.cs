@@ -3,6 +3,9 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
+    /// <summary>
+    /// It is to get data from the User Table.
+    /// </summary>
     public interface IUserRepository
     {
         /// <summary>
@@ -12,7 +15,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         List<string> Get();
 
         /// <summary>
-        /// 
+        /// Get record by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

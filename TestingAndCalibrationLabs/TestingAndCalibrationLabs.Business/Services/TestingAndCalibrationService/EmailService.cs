@@ -11,9 +11,20 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 namespace TestingAndCalibrationLabs.Business.Services
 
 {
+    /// <summary>
+    /// This service is exclusively to send the email.
+    /// </summary>
     public class EmailService : IEmailService
     {
+        /// <summary>
+        /// It is to access the Appsetting.json file.
+        /// </summary>
         private readonly IConfiguration _configuration;
+
+        /// <summary>
+        /// Constructor call.
+        /// </summary>
+        /// <param name="configuration"></param>
         public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;

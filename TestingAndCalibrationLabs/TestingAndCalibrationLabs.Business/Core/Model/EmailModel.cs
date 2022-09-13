@@ -4,6 +4,9 @@ using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    /// <summary>
+    /// This model is to send the e-mail.
+    /// </summary>
     public class EmailModel 
     {
         internal object myString;
@@ -64,7 +67,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public List<string> Bcc { get; set; }
 
         /// <summary>
-        /// List of CC mail address
+        /// Lists of CC mail-address
         /// </summary>
         public List<string> Cc { get; set; }
     }

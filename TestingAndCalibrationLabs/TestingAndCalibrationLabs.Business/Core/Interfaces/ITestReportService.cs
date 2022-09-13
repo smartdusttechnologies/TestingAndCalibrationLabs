@@ -7,20 +7,20 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ITestReportService
     {
         /// <summary>
-        /// Used to add the data to Data base using model
+        /// Used to add the record using model.
         /// </summary>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
         RequestResult<int> Add(TestReportModel testReportModel);
 
         /// <summary>
-        /// Used to get the data from the database
+        /// Used to get all the records from Test Report Table.
         /// </summary>
         /// <returns></returns>
         List<TestReportModel> Get();
 
         /// <summary>
-        /// used to update the record.
+        /// Used to update the records by Id.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="testReportModel"></param>
@@ -28,25 +28,37 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RequestResult<int> Update(int id, TestReportModel testReportModel);
 
         /// <summary>
-        /// Used to get the test report by Id
+        /// Used to get the test report record by Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         TestReportModel GetTestReport(int id);
 
         /// <summary>
-        /// 
+        /// To upload Test Report to Google Drive and send the mail.
+        /// </summary>
+        /// <param name="testReportModel"></param>
+        void UploadFileAndSendMail(TestReportModel testReportModel);
+
+        /// <summary>
+        /// To upload the Test Report to Google Drive.
+        /// </summary>
+        /// <param name="getbusinessModel"></param>
+        void UploadFile(TestReportModel getbusinessModel);
+
+        /// <summary>
+        /// Download the uploaded file from Google drive.
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        AttachmentModel DownLoadAttachment(string fileId);
+
+        /// <summary>
+        /// To send the e-mail.
         /// </summary>
         /// <param name="testReportModel"></param>
         /// <param name="Id"></param>
-        //void WebLinkMail(TestReportModel testReportModel, int Id);
-
-        void UploadFileAndSendMail(TestReportModel testReportModel);
-
-        void UploadFile(TestReportModel getbusinessModel);
-
-        AttachmentModel DownLoadAttachment(string fileId);
-
+        /// <returns></returns>
         bool EmailLinkMail(TestReportModel testReportModel, int Id);
     }
 }

@@ -5,6 +5,9 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
 {
+    /// <summary>
+    /// This interface is to perform the differnt operation for the Test Report Upload Download and view.
+    /// </summary>
     public interface ITestReportRepository
     {
         /// <summary>
@@ -22,12 +25,6 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         int Get(TestReportModel testReportModel);
         
         /// <summary>
-        /// To insert record into database the values from UI
-        /// </summary>
-        /// <param name="testReportModel"></param>
-        //void Insert(TestReportModel testReportModel);
-
-        /// <summary>
         /// To update the Record
         /// </summary>
         /// <param name="id"></param>
@@ -42,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         List<TestReportModel> Get();
 
         /// <summary>
-        /// Get the test report by id
+        /// Get the test report record by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -63,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         int InsertCollection(List<TestReportModel> testReportModels);
 
         /// <summary>
-        /// Get report by Id
+        /// Get record by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

@@ -1,5 +1,8 @@
 ﻿namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    /// <summary>
+    /// Survey inherits the property of the Email Model.
+    /// </summary>
     public class SurveyModel:EmailModel
     {
         /// <summary>
@@ -33,7 +36,7 @@
         public string PinCode { get; set; }
 
         /// <summary>
-        /// user comment in mentioned in UI
+        /// user put comment in the UI
         /// </summary>
         public string Comments { get; set; }
     }

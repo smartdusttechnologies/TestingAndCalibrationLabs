@@ -18,7 +18,7 @@
         public string Role { get; set; }
 
         /// <summary>
-        /// Email address 
+        /// Email address of the user by role.
         /// </summary>
         public string Email { get; set; }
     }

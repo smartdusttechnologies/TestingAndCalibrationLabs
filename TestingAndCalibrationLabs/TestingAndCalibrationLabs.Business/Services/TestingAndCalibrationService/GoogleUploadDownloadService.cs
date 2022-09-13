@@ -25,7 +25,9 @@ using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
-
+    /// <summary>
+    /// This service is to Upload file to Google Drive/ Download the file and get "ResponseBody" from the Google Drive.
+    /// </summary>
     public class GoogleUploadDownloadService : IGoogleUploadDownloadService
     {
         private readonly IConfiguration _configuration;
@@ -148,7 +150,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         }
 
         /// <summary>
-        /// This method is used to Upload the file only 
+        /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
         /// <param name="testReportModel"></param>
         private string UploadFileInternal(AttachmentModel attachmentModel)

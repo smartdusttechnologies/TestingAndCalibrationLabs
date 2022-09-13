@@ -9,10 +9,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ISurveyService
     {
         /// <summary>
-        /// This is used to send the mail of the survey to UI user and and dB user by Role
+        /// This is used to send the mail of the survey to UI user and and dB user records by Role
         /// </summary>
         /// <param name="mailsend"></param>
         /// <returns></returns>
-        RequestResult<int> Add(SurveyModel mailsend);
+        RequestResult<int> Add(SurveyModel mailSend);
     }
 }
