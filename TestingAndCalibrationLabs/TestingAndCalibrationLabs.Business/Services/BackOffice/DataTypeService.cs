@@ -13,7 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
         private readonly IGenericRepository<DataTypeModel> _genericRepository;
         /// <summary>
-        /// 
+        /// To initialise the constructor
         /// </summary>
         /// <param name="genericRepository"></param>
         public DataTypeService(IGenericRepository<DataTypeModel> genericRepository)
