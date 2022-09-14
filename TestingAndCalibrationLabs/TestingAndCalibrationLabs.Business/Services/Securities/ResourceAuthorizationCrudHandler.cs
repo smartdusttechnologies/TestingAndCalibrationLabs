@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
 namespace TestingAndCalibrationLabs.Business.Services.Securities
 {
@@ -8,10 +6,20 @@ namespace TestingAndCalibrationLabs.Business.Services.Securities
     {
     }
 
+
+    /// <summary>
+    /// Claims Types
+    /// </summary>
+
     public class CustomClaimTypes
     {
         public const string Permission = "Application.Permission";
     }
+
+
+    /// <summary>
+    /// Types of Permission
+    /// </summary>
 
     public static class Permissions
     {
