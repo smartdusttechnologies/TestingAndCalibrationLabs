@@ -15,7 +15,6 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Infrastructure;
-using AutoMapper;
 using Google.Apis.Download;
 using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Http;
@@ -32,36 +31,21 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IEmailService _emailService;
-        private readonly IUserRepository _userRepository;
-        private readonly ITestReportRepository _testReportRepository;
-        private readonly IConnectionFactory _connectionFactory;
-        private readonly IMapper _mapper;
         public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
-        private string uploadsFolder;
-
+        
         public string ResponseBody { get; private set; }
         
         /// <summary>
-        /// </summary>
-        /// <param name="userRepository"></param>
-        /// <param name="emailService"></param>
+        /// </summary>        
         /// <param name="mapper"></param>
-        /// <param name="hostingEnvironment"></param>
-        /// <param name="testReportRepository"></param>
         /// <param name="configuration"></param>
         /// <param name="connectionFactory"></param>
 
-        public GoogleUploadDownloadService(IUserRepository userRepository, IEmailService emailService, IMapper mapper, IWebHostEnvironment hostingEnvironment, ITestReportRepository testReportRepository, IConfiguration configuration, IConnectionFactory connectionFactory)
+        public GoogleUploadDownloadService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
-            _userRepository = userRepository;
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
-            _testReportRepository = testReportRepository;
-            _connectionFactory = connectionFactory;
-            _emailService = emailService;
-            _mapper = mapper;
         }
 
         /// <summary>

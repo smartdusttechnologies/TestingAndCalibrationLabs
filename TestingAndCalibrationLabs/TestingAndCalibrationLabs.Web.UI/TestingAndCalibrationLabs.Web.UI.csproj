@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Datas\" />
+    <Folder Include="wwwroot\DownloadedTemp\" />
   </ItemGroup>
 
 </Project>
