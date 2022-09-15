@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageTypeModel>(@"Select upt.Id, unc.[Id] as UiNavigationCategoryId, unc.[Name] as UiNavigationCategoryName, 
-                                                    upt.Name, upt.Url, unc.[Order] as Order
+                                                    upt.Name, upt.Url, unc.[Orders] as Orders
                                                 From[UiPageType] upt
                                                     inner join[UiNavigationCategory] unc on upt.UiNavigationCategoryId = unc.Id
                                                 where
