@@ -1,4 +1,5 @@
-﻿using TestingAndCalibrationLabs.Business.Common;
+﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
@@ -40,6 +41,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
+        public Dictionary<string, LookupModel> Category { get; set; }
+        public List<int> LookupId { get; set; }
 
     }
 }

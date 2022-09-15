@@ -13,6 +13,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.common;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -51,6 +52,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
 
             services.AddScoped<IUiNavigationCategoryService, UiNavigationCategoryService>();
+            services.AddScoped<ILookupService, LookupService>();
+            services.AddScoped<IListSorter, ListSorter>();
 
 
             //Repository
@@ -58,9 +61,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
+            services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();

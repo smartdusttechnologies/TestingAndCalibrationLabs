@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -49,6 +50,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
+        public string Category { get; set; }
+        public List<int> LookupId { get; set; }
 
 
     }
