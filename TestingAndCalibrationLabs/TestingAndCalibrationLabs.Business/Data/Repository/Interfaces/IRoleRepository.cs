@@ -13,6 +13,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <summary>
         /// Abstract method to get Role by Organization including claims
         /// </summary>
-        List<UserRoleWithClaim> GetRoleByOrganizationWithClaims(string userName);
+        List<UserRoleClaim> GetRoleByOrganizationWithClaims(string userName);
     }
 }

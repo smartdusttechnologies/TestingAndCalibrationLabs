@@ -16,10 +16,10 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="Sign-In" role="tabpanel" aria-labelledby="Sign-In-tab">
-                        @Html.Partial("~/Views/Home/SignIn.cshtml")
+                        @Html.Partial("~/Views/Security/SignIn.cshtml")
                     </div>
                     <div class="tab-pane fade" id="Sign-Up" role="tabpanel" aria-labelledby="Sign-Up-tab">
-                        @Html.Partial("~/Views/Home/SignUp.cshtml")
+                        @Html.Partial("~/Views/Security/SignUp.cshtml")
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
         $.ajax(
             {
                 type: "POST",
-                url: '@Url.Action("Login", "Home")',
+                url: '@Url.Action("Login", "Security")',
                 data: {
                     UserName: $('#UserName').val(),
                     Password: $('#Password').val()

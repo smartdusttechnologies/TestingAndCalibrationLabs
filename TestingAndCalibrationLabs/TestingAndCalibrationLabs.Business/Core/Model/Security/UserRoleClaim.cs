@@ -1,10 +1,9 @@
-﻿
-namespace TestingAndCalibrationLabs.Business.Core.Model.Securities
+﻿namespace TestingAndCalibrationLabs.Business.Core.Model.Securities
 {
     /// <summary>
     /// Class to get the user role with claims.
     /// </summary>
-    public class UserRoleWithClaim : Entity
+    public class UserRoleClaim : Entity
     {
         /// <summary>
         /// Orgnization Id.

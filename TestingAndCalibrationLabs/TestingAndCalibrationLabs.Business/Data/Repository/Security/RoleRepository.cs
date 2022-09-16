@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <summary>
         /// Get Role by Orgnization including Claims
         /// </summary>
-        public List<UserRoleWithClaim> GetRoleByOrganizationWithClaims(string userName)
+        public List<UserRoleClaim> GetRoleByOrganizationWithClaims(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             string query = @"Select u.OrgId, r.Name as RoleName, ur.RoleId, ur.UserId, p.Name as ClaimName 
@@ -45,7 +45,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 inner join [Permission] p on p.Id = urc.PermissionId
                             where u.UserName=@userName and u.IsDeleted=0 and r.IsDeleted=0 and ur.IsDeleted=0";
 
-            return db.Query<UserRoleWithClaim>(query, new { userName }).ToList();
+            return db.Query<UserRoleClaim>(query, new { userName }).ToList();
         }
     }
 }

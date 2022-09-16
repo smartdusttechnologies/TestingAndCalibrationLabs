@@ -1,7 +1,7 @@
 ﻿using TestingAndCalibrationLabs.Business.Common;
 
 
-namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
+namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface ISecurityParameterService
     {

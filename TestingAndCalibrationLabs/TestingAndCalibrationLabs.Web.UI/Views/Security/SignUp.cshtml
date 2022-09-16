@@ -4,23 +4,29 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div class="padding-login bg-white">
-    <form asp-action="Login" method="post">
+    <form asp-controller="User" asp-action="Add" method="post">
         <div class="inputWithIcon">
-            <input class="inputForSignIn" type="text" asp-for="UserName" placeholder="Username or Email ID">
-            <i class="fa fa-user fa-lg fa-fw iconForSignIn" style="top:12px;" aria-hidden="true"></i>
+            <input class="inputForSignIn" type="text" asp-for="UserName" placeholder="Enter Username">
+            <i class="fa-solid fa-user iconForSignIn"></i>
         </div>
         <div class="inputWithIcon">
-            <input class="inputForSignIn" type="password" asp-for="Password" placeholder="Password" />
-            <i class="fa-solid fa-lock iconForSignIn"></i>
+            <input class="inputForSignIn" type="email" asp-for="Email" placeholder="Enter Email">
+            <i class="fa-solid fa-envelope iconForSignIn"></i>
         </div>
-        <div class="form-floating mt-3 mb-3">
-            <input id="RememberMe" class="" type="checkbox" name="rememberMe" />
-            <span>
-                <label for="RememberMe">Remember me</label>
-            </span>
-            <a class="align-content-end" style="float:right;">Forgot Password?</a>
+        <div class="inputWithIcon">
+            <select name="Orgnizations" class="inputForSignIn" placeholder="Enter Email" asp-items="@ViewBag.Organizations">
+            </select>
+            <i class="fa-solid fa-sitemap iconForSignIn"></i>
         </div>
-        <input type="button" class="btn btn-success text-center btn-block" onclick="Validate()" value="Sign-In" />
+        <div class="inputWithIcon">
+            <input class="inputForSignIn" type="password" asp-for="Password" placeholder="Enter Password">
+            <i class="fa-solid fa-key iconForSignIn"></i>
+        </div>
+        <div class="inputWithIcon">
+            <input class="inputForSignIn" type="password" asp-for="ReEnterPassword" placeholder="Re-Enter Password">
+            <i class="fa-solid fa-key iconForSignIn"></i>
+        </div>
+        <button type="submit" class="btn btn-success text-center btn-block">Sign-Up</button>
     </form>
     <div class="row">
         <div class="col login-padding-left"><hr></div>
@@ -51,13 +57,5 @@
                 <i class="fa-brands fa-linkedin me-2 float-left"></i>Linked-In
             </button>
         </div>
-    </div>
-    <p class="text-center" style="color:green;">Why Create an Account?</p>
-    <div>
-        <p class=" text-center" style="font-size:12px;margin-bottom:0;">
-            By creating the account you agreed to our
-            <a style="color:green;">Privacy Policy</a>&
-            <a style="color:green;">Cookie Policy</a>
-        </p>
     </div>
 </div>

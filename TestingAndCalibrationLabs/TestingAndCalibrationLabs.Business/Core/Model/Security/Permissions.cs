@@ -1,22 +1,5 @@
-﻿
-
-namespace TestingAndCalibrationLabs.Business.Services.Securities
+﻿namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    public class ResourceAuthorizationCrudHandler
-    {
-    }
-
-
-    /// <summary>
-    /// Claims Types
-    /// </summary>
-
-    public class CustomClaimTypes
-    {
-        public const string Permission = "Application.Permission";
-    }
-
-
     /// <summary>
     /// Types of Permission
     /// </summary>
@@ -37,19 +20,6 @@ namespace TestingAndCalibrationLabs.Business.Services.Securities
             public const string AddRemove = "teams.addremove";
             public const string EditManagers = "teams.edit.managers";
             public const string Delete = "teams.delete";
-        }
-    }
-
-    /// <summary>
-    /// Policy Type User Permission
-    /// </summary>
-    
-    public static class PolicyTypes
-    {
-        public static class Users
-        {
-            public const string Manage = "users.manage.policy";
-            public const string EditRole = "users.edit.role.policy";
         }
     }
 }
