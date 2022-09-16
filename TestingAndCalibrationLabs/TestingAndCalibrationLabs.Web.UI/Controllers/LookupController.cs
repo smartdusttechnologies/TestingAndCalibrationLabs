@@ -32,7 +32,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 listSorterDTOs.Add(new ListSorterModel { Id = item.Id, Name = item.Name });
             }
             var jsonFormated = _listSorter.MethodName(listSorterDTOs);
-            return Ok(jsonFormated);
+            ViewBag.bag = jsonFormated;
+            return Json( jsonFormated );
         }
     }
 }

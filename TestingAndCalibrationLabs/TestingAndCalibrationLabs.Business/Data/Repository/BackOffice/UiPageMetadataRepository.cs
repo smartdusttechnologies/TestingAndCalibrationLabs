@@ -1,7 +1,9 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
+using System.Transactions;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -42,8 +44,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         values ";
 
             using IDbConnection db = _connectionFactory.GetConnection;
-            using var transiction = db.BeginTransaction();
-            db.Execute(query, p, transiction);
+            using var transaction = db.BeginTransaction();
+            db.Execute(query, p, transaction);
             int insertedMetadataId = p.Get<int>("@Id");
             int index = 0;
             foreach (var item in listOfLookups)
@@ -58,6 +60,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                     metadataCharacteristicsQuery += ",(" + insertedMetadataId + "," + item + ")";
                 }
             }
+            db.Execute(metadataCharacteristicsQuery,p, transaction);
+            transaction.Commit();
             return 0;
         }
         /// <summary>

@@ -77,6 +77,8 @@
     <Build Include="dbo\Tables\Role.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\UiNavigationCategory.sql" />
+    <Build Include="dbo\Tables\Lookup.sql" />
+    <Build Include="dbo\Tables\UiPageMetadataCharacteristics.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

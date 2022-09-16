@@ -51,6 +51,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public string DataTypeName { get; set; }
         public string Category { get; set; }
+        
         public List<int> LookupId { get; set; }
 
 

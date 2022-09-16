@@ -98,7 +98,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<int> listOfLookups = uiPageMetadataDTO.Category.Split(',').Select(int.Parse).ToList();
                 var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
+                createMetadataModel.LookupId = listOfLookups;
                 _uiPageMetadataService.Create(createMetadataModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");

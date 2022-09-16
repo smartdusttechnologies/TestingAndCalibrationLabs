@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -12,13 +9,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         public string jsonData;
         public string MethodName(List<ListSorterModel>  listOfModels)
         {
-
-            //var hierarchy = listOfModels.Hierarchize(
-            // 0, // The "root level" key. We're using -1 to indicate root level.
-            // f => f.Id, // The ID property on your object
-            // f => f.ParentId,// The property on your object that points to its parent
-            //f => f.Position // The property on your object that specifies the order within its parent
-            // );
             jsonData = "[";
             for (var i = 0; i < listOfModels.ToArray().Length; i++)
             {
@@ -78,7 +68,5 @@ namespace TestingAndCalibrationLabs.Business.Services
                 }
             }
         }
-
-
     }
 }
