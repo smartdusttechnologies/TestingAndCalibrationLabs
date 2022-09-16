@@ -25,10 +25,40 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int Create(UiPageMetadataModel uiPageMetadataModel)
         {
+            var rs = "1,2,3,4,5";
+            List<int> listOfLookups = rs.Split(',').Select(int.Parse).ToList();
+            var p = new DynamicParameters();
+            p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
+            p.Add("@UiPageTypeId", uiPageMetadataModel.UiPageTypeId);
+            p.Add("@UiControlTypeId", uiPageMetadataModel.UiControlTypeId);
+            p.Add("@DataTypeId", uiPageMetadataModel.DataTypeId);
+            p.Add("@IsRequired", uiPageMetadataModel.IsRequired);
+            p.Add("@UiControlDisplayName", uiPageMetadataModel.UiControlDisplayName);
             string query = @"Insert into [UiPageMetadata] (UiPageTypeId,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName)
-                                values (@UiPageTypeId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName)";
+                                values (@UiPageTypeId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName)
+                            SELECT @Id = @@IDENTITY";
+
+            string metadataCharacteristicsQuery = @"Insert into [UiPageMetadataCharacteristics](UiPageMetadataId, LookupId)
+                                                        values ";
+
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uiPageMetadataModel);
+            using var transiction = db.BeginTransaction();
+            db.Execute(query, p, transiction);
+            int insertedMetadataId = p.Get<int>("@Id");
+            int index = 0;
+            foreach (var item in listOfLookups)
+            {
+                if (index == 0)
+                {
+                    metadataCharacteristicsQuery += "(" + insertedMetadataId + "," + item + ")";
+                    index++;
+                }
+                else
+                {
+                    metadataCharacteristicsQuery += ",(" + insertedMetadataId + "," + item + ")";
+                }
+            }
+            return 0;
         }
         /// <summary>
         /// Getting All Records From Ui Page Metadata 
@@ -37,7 +67,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<UiPageMetadataModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-           return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
+            return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
                                                     udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
                                                     uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                 From[UiPageMetadata] upm

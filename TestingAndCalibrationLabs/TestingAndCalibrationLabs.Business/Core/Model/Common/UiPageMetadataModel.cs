@@ -41,7 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
-        public Dictionary<string, LookupModel> Category { get; set; }
+        public string Category { get; set; }
         public List<int> LookupId { get; set; }
 
     }
