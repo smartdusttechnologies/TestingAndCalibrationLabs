@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class PasswordLogin

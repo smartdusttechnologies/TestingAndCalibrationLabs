@@ -15,19 +15,19 @@
             @foreach (var item in Model.Fields)
             {
                 var Controlvalue = Model.FieldValues.Where(x => x.UiControlId == item.Id).FirstOrDefault()?.Value;
-                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                   <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)" value="@Controlvalue">
                   <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                </div>
 
-              @*  <div class="form-group">
+              @*  <div class="form-group-for-common">
                     <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                     <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" value="@Controlvalue" />
                     <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                 </div>*@
             }
             </div>
-            <div class="form-group">
+            <div class="form-group-for-common">
                 <input type="button" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
             </div>
 
