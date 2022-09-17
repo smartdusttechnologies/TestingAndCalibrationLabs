@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Net;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -45,6 +48,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
         }
 
@@ -121,16 +125,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _mapper.Map<Business.Core.Model.TestReportModel, UI.Models.TestReportModel>(datafForMail);
 
             //Sends link
-            var mailData = _testReportService.EmailLinkMail(datafForMail, datafForMail.Id);
+            var isMailSendSuccessfully = _testReportService.EmailLinkMail(datafForMail, datafForMail.Id);
 
-            if (mailData)
+            if (isMailSendSuccessfully)
             {
-                return Ok(result);
+                return Ok();
             }
             else
             {
-                return BadRequest(result);
-            }
+               return BadRequest();
+            }            
         }
 
         /// <summary>
@@ -142,7 +146,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult TestReportDownload(int Id)
         {
             var testReportData = _testReportService.GetTestReport((int)Id);
-            List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
             var fileid = testReportData.FilePath;
             return Ok(fileid);
         }

@@ -172,6 +172,10 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             Google.Apis.Drive.v3.DriveService service = GetService();
             string FolderPath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"]);
+            if (!Directory.Exists(FolderPath))
+            {
+                Directory.CreateDirectory(FolderPath);
+            }
             Google.Apis.Drive.v3.FilesResource.GetRequest request = service.Files.Get(fileId);
             string FileName = request.Execute().Name;
             string dataFileName = FileName;

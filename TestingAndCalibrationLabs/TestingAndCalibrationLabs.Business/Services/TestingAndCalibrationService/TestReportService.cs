@@ -72,7 +72,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// It is for uploading the content to Google Drive and sending the mail to the user
         /// </summary>
         /// <param name="testReportModel"></param>
-        public void WebLinkMail(TestReportModel testReportModel)
+        private bool WebLinkMail(TestReportModel testReportModel)
         {
             //Reading Data from Appsetting.Json
             var BodyImg = _configuration["TestingAndCalibrationSurvey:BodyImage"];
@@ -107,7 +107,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                 HtmlMsg = testReportModel.HtmlMsg
             };
             //Sending mail
-            _emailService.Sendemail(getExchangeModel);
+            bool isSuccessful = _emailService.Sendemail(getExchangeModel);
+            return isSuccessful;
         }
 
         /// <summary>
@@ -220,8 +221,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                 HtmlMsg = testReportModel.HtmlMsg
             };
             //Sending mail
-            _emailService.Sendemail(getExchangeModel);
-            return true;
+           
+            bool isSuccessful = _emailService.Sendemail(getExchangeModel);
+            return isSuccessful;
         }
     }
 }
