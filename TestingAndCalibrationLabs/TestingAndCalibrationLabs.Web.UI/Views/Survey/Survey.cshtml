@@ -2,91 +2,81 @@
 @{
     ViewData["Title"] = "Survey";
 }
-
 <!--***Survey From Begins-->
 <form _lpchecked="1" class="mb-2" id="surevyForm" method="post" asp-action="Survey" asp-controller="Survey" novalidate>
     <h2 style="color:darkviolet; text-align:center">Survey Form</h2>
     <div asp-validation-summary="All"></div>
-
     <div class="row ms-1 me-1">
-        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
             <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
             <label class="form-label" for="Name">Name</label>
         </div>
     </div>
-
     <div class="row ms-1 me-1">
-        <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+        <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login left-pd-input">
             <input class="form-input width-full" type="email" placeholder=" " id="Email" name="Email" onchange="this.setAttribute('value',this.value)" asp-for="Email">
             <label class="form-label" for="Email">Email ID</label>
         </div>
-
-        <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+        <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login left-pd-input">
             <input class="form-input width-full" type="tel" id="Mobile" placeholder=" " name="Mobile" onchange="this.setAttribute('value',this.value)" asp-for="Mobile" maxlength="10">
             <label class="form-label" for="mobile">Mobile Number</label>
         </div>
     </div>
-
     <div class="row ms-1 me-1">
-        <div class="col-lg-12 col-xs-12 col-sm-12 mt-3 form-element right-pd-input">
+        <div class="col-lg-12 col-xs-12 col-sm-12 mt-3 form-element-for-login right-pd-input">
             <input class="form-input width-full" type="text" name="Address" id="Address" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Address">
             <label class="form-label" for="Address">Address</label>
         </div>
     </div>
-
     <div class="row ms-1 me-1">
-        <div class="col-lg-4 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+        <div class="col-lg-4 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
             <input class="form-input width-full" type="text" name="City" id="City" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="City">
             <label class="form-label" for="City">City</label>
         </div>
-
-        <div class="col-lg-4 col-xs-12 col-sm-12 mt-3 form-element right-pd-input">
+        <div class="col-lg-4 col-xs-12 col-sm-12 mt-3 form-element-for-login right-pd-input">
             <label for="inputState" class="form-label"></label>
             <input type="text" class="form-input width-full" name="State" id="State" placeholder=" " asp-for="State">
             <label class="form-label" for="PinCode">State</label>
         </div>
-
-        <div class="col-lg-4  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
+        <div class="col-lg-4  col-sm-12 col-xs-12 mt-3 form-element-for-login left-pd-input">
             <input class="form-input width-full" name="PinCode" type="tel" onchange="this.setAttribute('value',this.value)" id="PinCode" placeholder=" " asp-for="PinCode" maxlength="6">
             <label class="form-label" for="PinCode">Pin-Code</label>
         </div>
     </div>
 
     <div class="row ms-1 me-1">
-        <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+        <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
             <label for="testing" class="form-label"></label>
             <select class="form-input width-full" name="TestingType" id="TestingType" onchange="this.setAttribute('value',this.value)" asp-for="TestingType" asp-items="Html.GetEnumSelectList<TestingType>()">
                 <option value=" ">Testing Type</option>
             </select>
         </div>
 
-        <div class="col-lg-9 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+        <div class="col-lg-9 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
             <textarea class="form-input width-full" style="height:110px; padding:5px;" id="Comments" name="Comments" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Comments"></textarea>
             <label for="Comments" class="form-label">Comments</label>
         </div>
     </div>
     <br /><br />
-
     <div class="row ms-1 me-1">
-        <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+        <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
             <label for="testing" class="form-label"></label>
             <div class="mt-3 d-block" style="text-align:initial">
-                <span><button class="btn btn-lg btn-submit-print text-white" type="submit" style="background-color:#4250b5" onclick="return DisplayProgressMessage(this, 'Saving...');">SUBMIT</button></span>
+                <span><button class="btn btn-primary btn-lg btn-submit-print text-white" style="background-color:#4250b5;" type="submit" onclick="return DisplayProgressMessage(this, 'Saving...');">SUBMIT</button></span>
                 <span style="float:right;" id="surevyForm"></span>
             </div>
         </div>
     </div>
     <div class="row ms-1 me-1">
-        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-           <!--Leave this section to adjust Submit button-->
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+            <!--Leave this section to adjust Submit button-->
         </div>
     </div>
 </form>
 <!--*****Survey Forms Ends*****-->
-
 <!--***** Shows the success message for data store*****-->
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
- {
+{
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -99,14 +89,12 @@
         </div>
     </div>
 }
-
 <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
 <div class="submit-progress hidden">
     <i class="fa fa-2x fa-spinner fa-spin"></i>
     <label>Please wait while Saving Data...</label>
 </div>
 <!-- ** END POP-UP MESSAGE AREA ** -->
-
 <script>
     function DisplayProgressMessage(ctl, msg) {
         // Turn off the "Save" button and change text
@@ -114,11 +102,10 @@
         // Gray out background on page
         $("body").addClass("submit-progress-bg");
         // Wrap in setTimeout so the UI can update the spinners
-        setTimeout(function () {
+        setTimeout(function() {
             $(".submit-progress").removeClass("hidden");
         }, 1);
         $('#surevyForm').submit();
-
         return true;
     }
 </script>

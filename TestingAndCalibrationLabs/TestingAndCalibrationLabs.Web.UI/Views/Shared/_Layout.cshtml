@@ -7,17 +7,17 @@
     <title>TESTING AND CALIBRATION LABS</title>
 
     <!--Importing the CSS FileS-->
+    <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="~/css/TestDetails.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Style.css" />
     <link rel="stylesheet" href="~/css/Login.css" />
-    <link rel="stylesheet" href="~/css/Inputfields.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/Snackbar.css" />
     <link rel ="stylesheet" href="~/css/TestDetails.css" />
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    @*<link href="~/css/TestDetails.css" rel="stylesheet" />
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
@@ -43,9 +43,9 @@
 <body>
     <header>
                         <!---Using the Bootsrap 5 NavBar--->
-        <nav class="navbar navbar-expand-xl navbar-light">
+        <nav class="navForNavbar navbar navbar-expand-xl navbar-light">
             <a class="m-1 text-dark">LOGO</a>
-            <a class="navbar-brand navbar-brand-a text-dark" style="font-size:14px;">TESTING AND CALIBRATION LABS</a>
+            <a class="navbar-brand navbarBrandWithATag text-dark" style="font-size:14px;">TESTING AND CALIBRATION LABS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -64,6 +64,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-action="TestReportView" asp-controller="TestReport">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Login">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
@@ -108,6 +111,8 @@
 
     <!---Footer--->
     <footer class="border-top  text-muted" id=footer style="background-color: #2a4472;">
+<!---Footer--->
+    <footer class="border-top-footer text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
             © 2022 Copyright :
             <a class="text-white" href="#">TESTING AND CALIBRATION LABS</a>
