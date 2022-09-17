@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Index()
         {
             List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
             List<SelectListItem> organizationNames = organizations.Select(x => new SelectListItem { Text = x.OrgName, Value = x.Id.ToString() }).ToList();
