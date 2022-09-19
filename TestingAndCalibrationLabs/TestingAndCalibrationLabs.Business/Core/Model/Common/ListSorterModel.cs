@@ -10,7 +10,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string Name { get; set; }
         public int ParentId { get; set; }
         public int Position { get; set; }
-        public string Category { get; set; }
 
 
 

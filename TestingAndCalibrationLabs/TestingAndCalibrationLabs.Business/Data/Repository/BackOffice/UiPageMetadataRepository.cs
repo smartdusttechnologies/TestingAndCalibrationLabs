@@ -33,8 +33,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             p.Add("@DataTypeId", uiPageMetadataModel.DataTypeId);
             p.Add("@IsRequired", uiPageMetadataModel.IsRequired);
             p.Add("@UiControlDisplayName", uiPageMetadataModel.UiControlDisplayName);
-            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName)
-                                values (@UiPageTypeId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName)
+            p.Add("@LookupCategoryId", uiPageMetadataModel.LookupCategoryId);
+            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName,LookupCategoryId)
+                                values (@UiPageTypeId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName,@LookupCategoryId)
                             SELECT @Id = @@IDENTITY";
 
             string metadataCharacteristicsQuery = @"Insert into [UiPageMetadataCharacteristics](UiPageMetadataId, LookupId)
@@ -57,13 +58,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<UiPageMetadataModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
+            return db.Query<UiPageMetadataModel>(@"Select upm.Id,lct.[Name] as LookupCategoryName,lct.[Id] as LookupCategoryId, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
                                                     udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
                                                     uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                 From[UiPageMetadata] upm
                                                     inner join[UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join[DataType] udt on upm.DataTypeId = udt.Id
+                                                    inner join[LookupCategory] lct on upm.LookupCategoryId = lct.Id
                                                 where
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
@@ -78,16 +80,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public UiPageMetadataModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var uiPageMetadataById = db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
+            var uiPageMetadataById = db.Query<UiPageMetadataModel>(@"Select upm.Id,lct.[Name] as LookupCategoryName,lct.[Id] as LookupCategoryId, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
                                                     udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
                                                     uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
                                                 From[UiPageMetadata] upm
                                                     inner join[UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join[DataType] udt on upm.DataTypeId = udt.Id
+                                                    inner join[LookupCategory] lct on upm.LookupCategoryId = lct.Id
                                                 where
-
-
                                                     upm.Id = @Id and
                                                      upm.IsDeleted = @isDeleted
                                                     and upt.IsDeleted = @isDeleted

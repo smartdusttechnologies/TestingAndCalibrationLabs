@@ -4,7 +4,7 @@
 }
 <h1>Ui Page Metadata</h1>
 <h4>Edit</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
@@ -43,6 +43,26 @@
                     </select>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <label for="LookupCategoryId" class="form-label"></label>
+                    <select class="form-input " name="LookupCategoryId" id="lookupCategoryId" onchange="category(this)" asp-for="LookupCategoryId">
+                        @foreach (var item in ViewBag.LookupCategory)
+                        {
+                            if (@item.Id == @ViewBag.LookupCategoryId)
+                            {
+                                <option value=@item.Id selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value=@item.Id>@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <select id="dropDownList" hidden name="LookupId" multiple asp-for="SelectedLookupId"></select>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                    <input type="text" class="form-input " id="multiSelectLookup" placeholder="Select Metadata Charactr.." autocomplete="off" />
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         @foreach (var item in ViewBag.DataTypes)
@@ -78,6 +98,55 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if (count == 0) {
+           var categoryId = @ViewBag.LookupCategoryId;
+            category(categoryId);
+            console.log(categoryId);
+            count++;
+        }
+    });
+    </script>
+<script type="text/javascript">
+    var firstTimeData;
+    var comboTree1;
+    var count = 0;
+    function category(categoryInput) {
+        if(count!=0){
+        var categoryInput = categoryInput.value;
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("LookupByCategory","Lookup")",
+            data: { categoryName: categoryInput },
+            success: function (response) {
+                LookupByCategory(response);
+            },
+            error: function (req, status, error) {
+            }
+        });
+    }
+    function LookupByCategory(inp) {
+        comboTree1 = $('#multiSelectLookup').comboTree({
+            source: inp,
+            isMultiple: true,
+            cascadeSelect: false,
+            collapse: true,
+            selectableLastNode: true
+        });
+        console.log(comboTree1);
+        comboTree1.onChange(function () {
+            const contentOfHiddenSelect = document.getElementById("dropDownList");
+            contentOfHiddenSelect.innerHTML = '';
+            let selectedIds = this.getSelectedIds();
+            for (i = 0; i < selectedIds.length; i++) {
+                console.log(selectedIds[i]);
+                $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
+            }
+        });
+    }
+</script>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

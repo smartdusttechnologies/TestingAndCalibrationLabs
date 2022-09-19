@@ -65,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.DataTypeName)
             </td>
             <td>
-                @Html.ActionLink("", "Edit", new {  id=item.Id ,UiPageTypeId =item.UiPageTypeId,UiControlType = item.UiControlTypeId,DataTypeId =item.DataTypeId },new {@class="fas fa-edit" }) |
+                @Html.ActionLink("", "Edit", new {  id=item.Id, LookupCategoryId = item.LookupCategoryId ,UiPageTypeId =item.UiPageTypeId,UiControlType = item.UiControlTypeId,DataTypeId =item.DataTypeId },new {@class="fas fa-edit" }) |
                 @Html.ActionLink("", "Delete", new {  id=item.Id  }, new{@class="fa fa-trash"})
             </td>
         </tr>

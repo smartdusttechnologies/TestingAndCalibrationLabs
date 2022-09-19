@@ -33,15 +33,15 @@
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label class="form-label"></label>
-                    <select class="form-input " name="CategoryList" id="catagory" onchange="category(this)" asp-for="LookupCategoryId" >
+                    <select class="form-input " name="LookupCategoryId" id="catagory" asp-for="LookupCategoryId" onchange="category(this)">
                         <option disabled="disabled" selected>Select Category ...</option>
                         @foreach (var item in ViewBag.Lookups)
                         {
-                            <option value=@item.Value>@item.Text</option>
+                            <option value=@item.Id>@item.Name</option>
                         }
                     </select>
                 </div>
-                <select id="dropDownList" hidden name="LookupId" multiple asp-for="SelectedLookupId" ></select>
+                <select id="dropDownList" hidden name="SelectedLookupId" multiple asp-for="SelectedLookupId"></select>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <input type="text" class="form-input " id="multiSelectLookup" placeholder="Select Metadata Charactr.." autocomplete="off" />
                 </div>
@@ -75,28 +75,22 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    var comboTree1;
     function category(categoryInput) {
         var categoryValue = categoryInput.value;
         $.ajax({
             type: "POST",
             url: "@Url.Action("LookupByCategory","Lookup")",
-            data: { categoryName: x },
+            data: { categoryName: categoryValue },
             success: function (response) {
-                
                 LookupByCategory(response);
-
             },
             error: function (req, status, error) {
-
             }
         });
     }
-</script>
-<script type="text/javascript">
     function LookupByCategory(inp) {
-        var comboTree1;
-        
-        var inputEvalute = inp;
         comboTree1 = $('#multiSelectLookup').comboTree({
             source: inp,
             isMultiple: true,
@@ -104,21 +98,16 @@
             collapse: true,
             selectableLastNode: true
         });
-        console.log(comboTree1);
-         comboTree1.onChange(function ()
-         {
+        comboTree1.onChange(function () {
             const contentOfHiddenSelect = document.getElementById("dropDownList");
             contentOfHiddenSelect.innerHTML = '';
-         let selectedIds = this.getSelectedIds();
-       for(i=0;i<selectedIds.length;i++){
-           console.log(selectedIds[i]);
-               $('#dropDownList').append("<option selected value='"+selectedIds[i]+"'> temp</option>");
-       }
-            
-         });
-         
+            let selectedIds = this.getSelectedIds();
+            for (i = 0; i < selectedIds.length; i++) {
+                console.log(selectedIds[i]);
+                $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
+            }
+        });
     }
-
 </script>
 
 <div>

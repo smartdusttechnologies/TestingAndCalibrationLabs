@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -67,6 +68,24 @@ namespace TestingAndCalibrationLabs.Business.Services
                     jsonData += "]";
                 }
             }
+        }
+        public string SelectedOptionSort(List<ListSorterModel> tests)
+        {
+            string jsonData = "[";
+            foreach(var item in tests)
+            {
+                if (tests.First() == item)
+                {
+                    jsonData += item.Id;
+                }
+                else
+                {
+                    jsonData += ","+item.Id;
+                }
+            }
+
+            jsonData += "]";
+            return jsonData;
         }
     }
 }
