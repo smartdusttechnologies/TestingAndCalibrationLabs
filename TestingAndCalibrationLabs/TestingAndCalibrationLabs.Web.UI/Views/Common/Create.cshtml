@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Create";
 }
+<link rel="stylesheet" href="~/css/Notification.css" />
 <h1>Create</h1>
 <div class="container-fluid">
     <div>
@@ -208,14 +209,20 @@
                 alert(response.responseText);
             },
             error: function (response) {
+                alert("Error occured");
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+               
+               
                 var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                //alert(newErrorMessage);
                 //console.log(response.fieldId);
                   document.getElementById("lefid").value = newErrorMessage.sourceId;
                     var namea = document.getElementById(newErrorMessage.sourceId);
                 var txtname= namea.name;
                  myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML =  newErrorMessage.reason; 
+                document.getElementById("errormessage").innerHTML =  newErrorMessage.reason;
+                
+                 fun2(i++,newErrorMessage.reason);
             //    var s = newErrorMessage.fid//Sending the reason to html 
                   document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
          //        } 
@@ -236,3 +243,4 @@
         });
     }
 </script>
+<script src="~/js/Notification.js"></script> @* Notification function include*@

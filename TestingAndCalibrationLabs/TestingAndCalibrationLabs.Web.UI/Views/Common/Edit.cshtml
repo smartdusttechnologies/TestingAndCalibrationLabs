@@ -112,6 +112,7 @@
                 
                  myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML = newErrorMessage.reason; 
+                fun2(i++, newErrorMessage.reason);
             //    var s = newErrorMessage.fid//Sending the reason to html 
                
                   document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
@@ -120,3 +121,4 @@
         });
     }
 </script>
+<script src="~/js/Notification.js"></script> @* Notification function include*@
