@@ -1,36 +1,33 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TESTING AND CALIBRATION LABS</title>
 
     <!--Importing the CSS FileS-->
-    <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/Style.css" />
+    <link rel="stylesheet" href="~/css/Notification.css" />
     <link rel="stylesheet" href="~/css/Login.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Inputfields.css" />
     <link rel="stylesheet" href="~/css/Snackbar.css" />
     <link href="~/css/TestDetails.css" rel="stylesheet" />
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/css/TestDetails.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-
-    <!---Importing the Scripts--->
 
     <!---Importing the Scripts--->
     <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <style>
@@ -39,88 +36,80 @@
         }
     </style>
 </head>
-
 <body>
     <header>
-                        <!---Using the Bootsrap 5 NavBar--->
-        <nav class="navForNavbar navbar navbar-expand-xl navbar-light">
+        <!---Using the Bootsrap 5 NavBar--->
+        <nav class="navbar navbar-expand-xl navbar-light">
             <a class="m-1 text-dark">LOGO</a>
-            <a class="navbar-brand navbarBrandWithATag text-dark" style="font-size:14px;">TESTING AND CALIBRATION LABS</a>
+            <a class="navbar-brand navbar-brand-a text-dark" style="font-size:14px;">TESTING AND CALIBRATION LABS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-
                 <!--- Seach-Box code--->
                 @*<ul class="navbar-nav ">
-                        <li class="nav-item search_box">
-                            <input type="search" placeholder="Search" />
-                            <span class="fa fa-search"></span>
-                        </li>
-                    </ul>*@
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-area="Login">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="TestDetails">TestDetails</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Survey" asp-action="Survey">Survey</a>
-                    </li>
-                    @*<li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="">About Us</a>
-                    </li>*@
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Common" asp-action="Index" asp-route-id="1">Sample Feature</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="">Get In Touch</a>
-                    </li>
-                    
-                   
-
-                    <li class="nav-item ">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-gear"></i>
-                    </a>
-                    <div class="dropdown-menu" style="left:88%; top:95%;" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageType">Ui Page Type</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiControlType">Ui Control Type</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageMetadata">Ui Page Metadata</a>
-                        <a class="dropdown-item" asp-action="Index" asp-controller="UiPageValidation">Ui Page Validation</a>
-                        
-                    </div>
+                <li class="nav-item search_box">
+                <input type="search" placeholder="Search" />
+                <span class="fa fa-search"></span>
                 </li>
-            
-            <li class="nav-item justify-content-center">
-                <a href="#" class="nav-link fas fa-user-circle" style="height:40px; padding-top:12px;"></a>
-            </li>
-            
-            </ul>
+                </ul>*@
+                <ul class="navbar-nav ms-auto" id="navbarContentAdd">
+                    <li class="nav-item dropdown-hover" id="listParent1002">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-gear"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-right" id="dropdownContent1002" aria-labelledby="navbarDropdown">
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown notification-ui show">
+                        <a class="nav-link dropdown-toggle notification-ui_icon" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell" onclick="fun1()" style="font-size:25px;color:grey"></i><b><i class="fa-bell__badge" id="value">0</i></b>
+                        </a>
+
+                        <div class="dropdown-menu notification-ui_dd show" id="ritesh" style="display:none" aria-labelledby="navbarDropdown">
+                            <div class="notification-ui_dd-header">
+                                <h3 class="text-center">Notification</h3>
+                                <div class="btn btn-success btn-block" style="background-color:blue; width:auto" onclick="Del()">Clear</div>
+                            </div>
+                            <div class="notification-ui_dd-content" id="content">
+
+                                <div class="notification-list_detail" id="Paragraph">
+                                    <b><p id="Name">No Notification</p></b>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown-hover" id="listParent1003">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-right" id="dropdownContent1003" aria-labelledby="navbarDropdown">
+                        </div>
+                    </li>
+
+                </ul>
             </div>
-            
         </nav>
     </header>
 
-                        <!---Rendering the Body Here--->
+
+    <!---Rendering the Body Here--->
     <div class="">
         <main role="main" class="">
             @RenderBody()
         </main>
     </div>
 
-<!---Footer--->
-    <footer class="border-top-footer text-muted" id=footer style="background-color: #2a4472;">
+    <!---Footer--->
+    <footer class="border-top  text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
             © 2022 Copyright :
             <a class="text-white" href="#">TESTING AND CALIBRATION LABS</a>
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
@@ -128,6 +117,65 @@
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/CustomJS.js"></script>
+    <script src="~/js/Notification.js"></script>
     @RenderSection("scripts", required: false)
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
+            success: function (response) {
+                response.sort(function (a, b) {
+                    if (a.orders < b.orders) { return 1; }
+                    if (a.orders > b.orders) { return -1; }
+                    return 0;
+                });
+                for (let i = 0; i < response.length; i++) {
+                    var uiNavigationCategoryId = response[i].id;
+                    var uiNavigationCategoryName = response[i].name;
+                    var parentListDiv = "#listParent" + uiNavigationCategoryId;
+                    var parentListId = "listParent" + uiNavigationCategoryId;
+                    var divExistOrNot = document.getElementById(parentListId);
+                    if (!divExistOrNot && response[i].childrens.length > 1) {
+                        $('#navbarContentAdd').prepend("</li>");
+                        $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='listParent" + uiNavigationCategoryId + "'>");
+                        var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
+                        $(parentListDiv).append(buttonDropdown);
+                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryId + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("</div>");
+                    }
+                    response[i].childrens.sort(function (a, b) {
+                        if (a.name < b.name) { return -1; }
+                        if (a.name > b.name) { return 1; }
+                        return 0;
+                    });
+                    for (let j = 0; j < response[i].childrens.length; j++) {
+                        if (response[i].childrens.length <= 1) {
+                            var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var singleListParent = "#navigationSingle" + uiNavigationCategoryId
+                            $('#navbarContentAdd').prepend("<li class='nav-item' id='navigationSingle" + uiNavigationCategoryId + "'></li>");
+                            var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
+                            $(singleListParent).append(singleChild);
+                        }
+                        else {
+                            console.log(response[i].childrens.length);
+                            var pageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var pageTypeName = response[i].childrens[j].name;
+                            var uiNavigationId = response[i].id;
+                            var dropdownContentId = "#dropdownContent" + uiNavigationId;
+                            var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
+                            $(dropdownContentId).append(script);
+                        }
+                    }
+                }
+            },
+            error: function (req, status, error) {
+                console.log(req);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
+</script>
 </html>
