@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -12,11 +13,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class UiPageMetadataService : IUiPageMetadataService
     {
         private readonly IGenericRepository<UiPageMetadataModel> _genericRepository;
+        private readonly IGenericRepository<LookupModel> _genericLookupRepository;
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
-        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository)
+        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository, IGenericRepository<LookupModel> genericLookupRepository)
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
             _genericRepository = genericRepository;
+            _genericLookupRepository = genericLookupRepository;
         }
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
@@ -25,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageMetadataModel pageControl)
         {
-            _uiPageMetadataRepository.Create(pageControl);
+            int id = _uiPageMetadataRepository.Create(pageControl);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -44,6 +47,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageMetadataModel GetById(int id)
         {
+
             return _uiPageMetadataRepository.GetById(id);
         }
         /// <summary>

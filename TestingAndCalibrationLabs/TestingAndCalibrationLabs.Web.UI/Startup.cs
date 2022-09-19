@@ -53,6 +53,7 @@ namespace TestingAndCalibrationLabs.Web.UI
 
             services.AddScoped<IUiNavigationCategoryService, UiNavigationCategoryService>();
             services.AddScoped<ILookupService, LookupService>();
+            services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorter, ListSorter>();
 
 
@@ -65,6 +66,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();

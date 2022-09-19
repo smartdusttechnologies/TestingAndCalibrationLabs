@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -22,18 +24,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult LookupByCategory(string categoryName)
+        public IActionResult LookupByCategory(int categoryName)
         {
             var lookupList = _lookupService.Get();
-            var sf = lookupList.Where(x=>x.Category == categoryName).ToList();
+            var sf = lookupList.Where(x=>x.LookupCategoryId == categoryName).ToList();
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in sf)
             {
                 listSorterDTOs.Add(new ListSorterModel { Id = item.Id, Name = item.Name });
             }
             var jsonFormated = _listSorter.MethodName(listSorterDTOs);
-            ViewBag.bag = jsonFormated;
-            return Json( jsonFormated );
+           var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
+            return Ok(jsonObjectConverted);
         }
     }
 }

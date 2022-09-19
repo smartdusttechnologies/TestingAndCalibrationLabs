@@ -2,10 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    [DbTable("Lookup")]
-    public class LookupModel : Entity
+    [DbTable("LookupCategory")]
+    public class LookupCategoryModel : Entity
     {
         public string Name { get; set; }
-        public int LookupCategoryId { get; set; }
     }
 }

@@ -212,10 +212,10 @@ BEGIN
 		       ,[Name]
 			   ,[IsDeleted])
          VALUES
-               (1, 'Survey', 0),
-		       (2, 'Home', 0),
-		       (1002, 'Settings', 0),
-			   (1003,'Profile',0)
+                (1, 'Survey','2', 0),
+		       (2, 'Home', '1',0),
+		       (1002, 'Settings', '3', 0),
+			   (1003,'Profile', '4',0)
 			   
 
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
