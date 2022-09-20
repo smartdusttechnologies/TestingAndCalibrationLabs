@@ -6,6 +6,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Implemention For Lookup
+    /// </summary>
     public class LookupService : ILookupService
     {
         private readonly IGenericRepository<LookupModel> _genericRepository;
@@ -13,7 +16,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _genericRepository = genericRepository;
         }
-
+        /// <summary>
+        /// Get All records Of Lookup 
+        /// </summary>
+        /// <returns></returns>
         public List<LookupModel> Get()
         {
             

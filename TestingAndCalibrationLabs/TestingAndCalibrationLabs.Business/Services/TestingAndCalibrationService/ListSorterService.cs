@@ -5,10 +5,18 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    public class ListSorter : IListSorter 
+    /// <summary>
+    /// Service Implementation For List Sorter
+    /// </summary>
+    public class ListSorterService : IListSorterService 
     {
         public string jsonData;
-        public string MethodName(List<ListSorterModel>  listOfModels)
+        /// <summary>
+        /// To Sort List To Json Object For Using ComboTree jquery Plugin
+        /// </summary>
+        /// <param name="listOfModels"></param>
+        /// <returns></returns>
+        public string SortListToJson(List<ListSorterModel>  listOfModels)
         {
             jsonData = "[";
             for (var i = 0; i < listOfModels.ToArray().Length; i++)
@@ -46,6 +54,12 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             return jsonData ;
         }
+        /// <summary>
+        /// Creating Child For Sorted List
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="index"></param>
+        /// <param name="tests"></param>
         public void returnChildern(int id, int index,List<ListSorterModel> tests)
         {
             for (var i = index + 1; i < tests.ToArray().Length; i++)
@@ -69,6 +83,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                 }
             }
         }
+        /// <summary>
+        /// Create A Json Object For Selected List
+        /// </summary>
+        /// <param name="tests"></param>
+        /// <returns></returns>
         public string SelectedOptionSort(List<ListSorterModel> tests)
         {
             string jsonData = "[";

@@ -8,6 +8,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UiPageMetadataCharacteristicsRepository : IUiPageMetadataCharacteristicsRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -15,6 +18,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+        /// <summary>
+        /// Get All Record From Ui Page Metadata Characteristics
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageMetadataCharacteristicsModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -26,6 +33,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upt.IsDeleted = 0
                                                     ").ToList();
         }
+        /// <summary>
+        /// Get Ui PageMetadata Characteristics Record By Ui PageMetadata Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<UiPageMetadataCharacteristicsModel> GetByMetadataId(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageMetadataCharacteristicsModel>(@"select * from [UiPageMetadataCharacteristics] where UiPageMetadataId = @Id And IsDeleted = @isDeleted", new { Id = id, isDeleted = false }).ToList();
+        }
+        /// <summary>
+        /// Get Ui Page Metadata Characteristics Record By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public UiPageMetadataCharacteristicsModel Get(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

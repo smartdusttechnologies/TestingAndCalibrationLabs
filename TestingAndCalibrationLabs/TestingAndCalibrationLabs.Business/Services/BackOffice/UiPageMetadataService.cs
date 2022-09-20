@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -12,14 +14,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageMetadataService : IUiPageMetadataService
     {
-        private readonly IGenericRepository<UiPageMetadataModel> _genericRepository;
-        private readonly IGenericRepository<LookupModel> _genericLookupRepository;
+        private readonly IUiPageMetadataCharacteristicsRepository _uiPageMetadataCharacteristicsRepository;
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
-        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository, IGenericRepository<LookupModel> genericLookupRepository)
+        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository)
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
-            _genericRepository = genericRepository;
-            _genericLookupRepository = genericLookupRepository;
+            _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
+           
         }
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
@@ -38,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _genericRepository.Delete(id);
+            return _uiPageMetadataRepository.Delete(id);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
@@ -54,11 +55,29 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Edit Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pageControl"></param>
+        /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageMetadataModel pageControl)
+        public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
         {
-            _uiPageMetadataRepository.Update(pageControl);
+            var lookupListBuild = new List<UiPageMetadataCharacteristicsModel>();
+            var lookupList = _uiPageMetadataCharacteristicsRepository.GetByMetadataId(id);
+           var existingIdsInCharacteristics = lookupList.Select(x=>x.LookupId);
+           var newSelectedIdsInCharacteristics = uiPageMetadataModel.uiPageMetadataCharacteristics.Select(x=>x.LookupId);
+            var listFinal = existingIdsInCharacteristics.Union(newSelectedIdsInCharacteristics);
+            foreach (var item in listFinal)
+            {
+                if (!existingIdsInCharacteristics.Contains(item))
+                {
+                    lookupListBuild.Add(new UiPageMetadataCharacteristicsModel { LookupId = item, UiPageMetadataId = id });
+                }
+                if (!newSelectedIdsInCharacteristics.Contains(item))
+                {
+                    lookupListBuild.Add(new UiPageMetadataCharacteristicsModel { LookupId = item });
+                }
+                
+            }
+            uiPageMetadataModel.uiPageMetadataCharacteristics = lookupListBuild;
+            _uiPageMetadataRepository.Update(uiPageMetadataModel);
             return new RequestResult<int>(1);
         }
         /// <summary>

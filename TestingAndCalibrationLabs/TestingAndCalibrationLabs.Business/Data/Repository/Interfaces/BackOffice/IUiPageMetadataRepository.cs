@@ -31,5 +31,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
         int Update(UiPageMetadataModel uiPageMetadataModel);
+        bool Delete(int id);
     }
 }

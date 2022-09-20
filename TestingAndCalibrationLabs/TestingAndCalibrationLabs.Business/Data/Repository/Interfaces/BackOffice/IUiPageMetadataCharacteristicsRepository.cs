@@ -9,5 +9,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     {
         List<UiPageMetadataCharacteristicsModel> Get();
         UiPageMetadataCharacteristicsModel Get(int id);
+        List<UiPageMetadataCharacteristicsModel> GetByMetadataId(int id);
     }
 }

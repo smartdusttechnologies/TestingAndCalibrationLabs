@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IDataTypeService _dataTypeService;
         private readonly ILookupService _lookupService;
         private readonly ILookupCategoryService _lookupCategoryService;
-        private readonly IListSorter _listSorter;
+        private readonly IListSorterService _listSorter;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -29,7 +29,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataService"></param>
         /// <param name="lookupService"></param>
-        public UiPageMetadataController(ILookupCategoryService lookupCategory,IListSorter listSorter,ILookupService lookupService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
+        public UiPageMetadataController(ILookupCategoryService lookupCategory,IListSorterService listSorter,ILookupService lookupService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;

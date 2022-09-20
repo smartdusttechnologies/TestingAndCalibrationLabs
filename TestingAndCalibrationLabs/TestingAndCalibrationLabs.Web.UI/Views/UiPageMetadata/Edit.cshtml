@@ -4,7 +4,7 @@
 }
 <h1>Ui Page Metadata</h1>
 <h4>Edit</h4>
-<hr/>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
@@ -58,7 +58,7 @@
                         }
                     </select>
                 </div>
-                <select id="dropDownList" hidden name="LookupId" multiple asp-for="SelectedLookupId"></select>
+                <select id="dropDownList" hidden name="SelectedLookupId" multiple asp-for="SelectedLookupId"></select>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <input type="text" class="form-input " id="multiSelectLookup" placeholder="Select Metadata Charactr.." autocomplete="off" />
                 </div>
@@ -99,22 +99,22 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
         if (count == 0) {
-           var categoryId = @ViewBag.LookupCategoryId;
+            var categoryId = @ViewBag.LookupCategoryId;
             category(categoryId);
             console.log(categoryId);
-            count++;
+           
         }
     });
-    </script>
+</script>
 <script type="text/javascript">
     var firstTimeData;
     var comboTree1;
     var count = 0;
     function category(categoryInput) {
-        if(count!=0){
-        var categoryInput = categoryInput.value;
+        if (count != 0) {
+            var categoryInput = categoryInput.value;
         }
         $.ajax({
             type: "POST",
@@ -122,29 +122,39 @@
             data: { categoryName: categoryInput },
             success: function (response) {
                 LookupByCategory(response);
+                count++;
             },
             error: function (req, status, error) {
             }
         });
     }
     function LookupByCategory(inp) {
-        comboTree1 = $('#multiSelectLookup').comboTree({
-            source: inp,
-            isMultiple: true,
-            cascadeSelect: false,
-            collapse: true,
-            selectableLastNode: true
-        });
-        console.log(comboTree1);
-        comboTree1.onChange(function () {
-            const contentOfHiddenSelect = document.getElementById("dropDownList");
-            contentOfHiddenSelect.innerHTML = '';
-            let selectedIds = this.getSelectedIds();
-            for (i = 0; i < selectedIds.length; i++) {
-                console.log(selectedIds[i]);
-                $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
+        if (count == 0) {
+            var selectedListId = @ViewBag.SelectedList;
+            comboTree1 = $('#multiSelectLookup').comboTree({
+                source: inp,
+                isMultiple: true,
+                cascadeSelect: false,
+                collapse: true,
+                selectableLastNode: true
+            });
+            comboTree1.setSelection(selectedListId);
+            for (i = 0; i < selectedListId.length; i++) {
+                console.log(selectedListId[i]);
+                $('#dropDownList').append("<option selected value='" + selectedListId[i] + "'> temp</option>");
             }
-        });
+            comboTree1.onChange(function () {
+                const contentOfHiddenSelect = document.getElementById("dropDownList");
+                contentOfHiddenSelect.innerHTML = '';
+                let selectedIds = this.getSelectedIds();
+                for (i = 0; i < selectedIds.length; i++) {
+                    console.log(selectedIds[i]);
+                    $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
+                }
+            });
+        } else {
+            comboTree1.setSource(inp);
+        }
     }
 </script>
 <div>

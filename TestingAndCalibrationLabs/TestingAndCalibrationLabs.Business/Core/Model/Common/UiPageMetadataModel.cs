@@ -41,9 +41,21 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int LookupCategoryId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string LookupCategoryName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<int> SelectedLookupId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
 
         public List<UiPageMetadataCharacteristicsModel> uiPageMetadataCharacteristics { get; set; }
 
