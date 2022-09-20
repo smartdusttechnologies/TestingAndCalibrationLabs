@@ -117,3 +117,35 @@ nav {
     row-gap: 80px;
     width: 100%;
 }
+
+/*.beforeLabel {
+    position: relative;
+    display: inline-block;
+    display:block;
+    border:1px solid;
+    height:100%;
+    width:100%;
+}
+
+.beforeLabel .labelLabel{
+    position:absolute;
+    height:10px;
+    left:20px;
+    display:inline-block:
+}*/
+
+.form-step{
+    display:none;
+}
+
+.form-step-active{
+    display:block;
+}
+
+.ProgressBar{
+    position:relative;
+}
+
+.ProgressBar-step{
+    
+}
