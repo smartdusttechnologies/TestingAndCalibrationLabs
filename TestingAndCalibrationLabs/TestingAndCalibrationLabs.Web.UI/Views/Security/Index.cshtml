@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-login" style="margin-bottom:60px;">
+    <div class="container bg-white" style="max-width:450px;border-radius:5px;padding:10px;">
+        <div class="login-border">
+            <div>
+                <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
+                    <li class="nav-item login-tab-click" role="presentation" style="width:50%;">
+                        <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%">Sign-In</button>
+                    </li>
+                    <li class="nav-item login-tab-click" role="presentation" style="width:50%;">
+                        <button class="nav-link login-tab-click" id="profile-tab" data-bs-toggle="tab" data-bs-target="#Sign-Up" type="button" role="tab" aria-controls="profile" aria-selected="false" href="#signUpBoot" style="width:100%">Sign-Up</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="Sign-In" role="tabpanel" aria-labelledby="Sign-In-tab">
+                        @Html.Partial("~/Views/Security/SignIn.cshtml")
+                    </div>
+                    <div class="tab-pane fade" id="Sign-Up" role="tabpanel" aria-labelledby="Sign-Up-tab">
+                        @Html.Partial("~/Views/Security/SignUp.cshtml")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function Validate() {
+        $.ajax(
+            {
+                type: "POST",
+                url: '@Url.Action("Login", "Security")',
+                data: {
+                    UserName: $('#UserName').val(),
+                    Password: $('#Password').val()
+                },
+                error: function(result) {
+                    alert("There is a Problem, Try Again!");
+                },
+                success: function(result) {
+                    console.log(result);
+                    if (result.status == true) {
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                }
+            });
+    }
+</script>

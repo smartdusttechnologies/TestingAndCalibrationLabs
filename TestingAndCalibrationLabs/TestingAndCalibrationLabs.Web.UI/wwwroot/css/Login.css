@@ -4,10 +4,6 @@
     max-width: 450px;
 }
 
-.white-bg {
-    background-color: white;
-}
-
 .padding-login {
     padding: 20px;
 }
@@ -88,8 +84,4 @@
 .login-tab-click {
     font: bold;
     background-color: #dfdfdf;
-}
-
-.btn:hover {
-    opacity: 1;
 }

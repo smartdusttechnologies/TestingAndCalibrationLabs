@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using LoginDTO = TestingAndCalibrationLabs.Web.UI.Models.LoginDTO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -23,45 +21,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _orgnizationService = orgnizationService;
             _mapper = mapper;
         }
+
+        [HttpGet]
+        [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
             return View();
         }
-        /// <summary>
-        /// UI Shows the Orgnizations names in dropdown list
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Login()
-        {
-            //List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
-            //List<SelectListItem> organizationNames = organizations.Select(x => new SelectListItem { Text = x.OrgName, Value = x.Id.ToString() }).ToList();
-            //ViewBag.Organizations = organizationNames;
-            return View();
-        }
-
-        /// <summary>
-        /// Method to get the Login details from UI and Process Login.
-        /// </summary>
-        /// <returns></returns>
-
-        [HttpPost]
-        public IActionResult Login(LoginDTO loginRequest)
-        {   
-            var loginReq = new LoginRequest { UserName = loginRequest.UserName, Password = loginRequest.Password };
-            RequestResult<LoginToken> result = _authenticationService.Login(loginReq);
-
-            if (result.IsSuccessful)
-            {
-                HttpContext.Session.SetString("Token", result.RequestedObject.AccessToken);
-
-                return Json(new { status = true, message = "Login Successfull!" });
-            }
-            return View();
-        }
+        
         /// <summary>
         /// UI will get the information from the User
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
+        //[Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult TestDetails()
         {
             // here hardcoding the Grid heddings values instead of accessing from the DB

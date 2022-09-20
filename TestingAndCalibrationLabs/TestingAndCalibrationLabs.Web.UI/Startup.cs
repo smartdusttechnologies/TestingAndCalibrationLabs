@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AutoMapper;
 using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
-using Microsoft.Extensions.Hosting.Internal;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -27,6 +29,7 @@ namespace TestingAndCalibrationLabs.Web.UI
         }
 
         public IConfiguration Configuration { get; }
+        public static TokenValidationParameters tokenValidationParameters;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,6 +39,24 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+          .AddJwtBearer(options =>
+          {
+              options.TokenValidationParameters = tokenValidationParameters;
+          });
+
+            //PolicyBases Authorization
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Add); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Edit); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Read); });
+                //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });
+                options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.EditRole); });
+            });
             //Services
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<ISampleService, SampleService>();
@@ -98,6 +119,27 @@ namespace TestingAndCalibrationLabs.Web.UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            tokenValidationParameters = new TokenValidationParameters
+            {
+                // The signing key must match!
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = Configuration["JWT:ValidIssuer"],
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = Configuration["JWT:ValidAudience"],
+
+                // Validate the token expiry
+                ValidateLifetime = true,
+
+                // If you want to allow a certain amount of clock drift, set that here:
+                ClockSkew = TimeSpan.Zero
+            };
             app.UseHttpsRedirection();
             app.UseSession();
 
