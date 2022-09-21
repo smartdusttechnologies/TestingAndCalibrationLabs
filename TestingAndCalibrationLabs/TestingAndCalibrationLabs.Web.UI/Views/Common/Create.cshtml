@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-<link rel="stylesheet" href="~/css/Notification.css" />
+
 <h1>Create</h1>
 <div class="container-fluid">
     <div>
@@ -209,7 +209,7 @@
                 alert(response.responseText);
             },
             error: function (response) {
-                alert("Error occured");
+                //alert("Error occured");
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                
                
@@ -222,7 +222,8 @@
                  myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML =  newErrorMessage.reason;
                 
-                 fun2(i++,newErrorMessage.reason);
+                 NotificationContent(i++,newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
+
             //    var s = newErrorMessage.fid//Sending the reason to html 
                   document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
          //        } 

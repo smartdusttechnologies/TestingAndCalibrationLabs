@@ -1,10 +1,11 @@
-﻿
+﻿//variables to manipulate bell Icon Content
+
 var count = 1;
 var i = 0;
 var mess = " ";
 
 //To hide or display the BellIcon
-function fun1() {
+function DisplayNotification() {
 
     var x = document.getElementById("ritesh");
     if (x.style.display == "none") {
@@ -16,8 +17,8 @@ function fun1() {
     }
 };
 
-// To Put the Notification in the Bell Icon
-function fun2(value,mess) {
+// To Put the Notification content in the Bell Icon
+function NotificationContent(value,mess) {
   
     if (value ==0) {
         var Notify = document.getElementById("value");
@@ -26,7 +27,6 @@ function fun2(value,mess) {
         document.getElementById("content").innerHTML = " ";
         
     }
-  
         count++;
         $('#content').prepend("<div class='notification-list' id='Paragraph'></div>");
         $('#Paragraph').append("<div class='notification-list_detail' id='child'></div>");
@@ -37,7 +37,7 @@ function fun2(value,mess) {
 };
 
  //To delete the Notification
-function Del() {
+function Delete() {
     var Notify = document.getElementById("value");
     Notify.innerHTML = "0";
     count = 0;

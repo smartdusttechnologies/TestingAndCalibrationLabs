@@ -34,6 +34,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var pageNavigation = _uiPageNavigationRepository.Get();
             foreach (var item in pageNavigation)
             {
+               if( item.Url != null)
                 item.FormatedUrl = string.Format(item.Url, item.Id);
             }
             return pageNavigation;

@@ -54,35 +54,35 @@
                 </li>
                 </ul>*@
                 <ul class="navbar-nav ms-auto" id="navbarContentAdd">
-                    <li class="nav-item dropdown-hover" id="listParent1002">
+                    <li class="nav-item dropdown-hover" style="display:none" id="Settings">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear"></i>
                         </a>
                         <div class="dropdown-menu dropdown-right" id="dropdownContent1002" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
-                    <li class="nav-item dropdown notification-ui show">
+                    <li class="nav-item dropdown notification-ui show" style="display:none" id="Notifications">
                         <a class="nav-link dropdown-toggle notification-ui_icon" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell" onclick="fun1()" style="font-size:25px;color:grey"></i><b><i class="fa-bell__badge" id="value">0</i></b>
+                            <i class="fa fa-bell" onclick="DisplayNotification()" style="font-size:15px;color:grey"></i><b><i class="fa-bell__badge" id="value">0</i></b>
                         </a>
 
                         <div class="dropdown-menu notification-ui_dd show" id="ritesh" style="display:none" aria-labelledby="navbarDropdown">
                             <div class="notification-ui_dd-header">
                                 <h3 class="text-center">Notification</h3>
-                                <div class="btn btn-success btn-block" style="background-color:blue; width:auto" onclick="Del()">Clear</div>
+                                <a style="color:blue; width:auto;cursor:pointer" onclick="Delete()">Clear</a>
                             </div>
                             <div class="notification-ui_dd-content" id="content">
 
                                 <div class="notification-list_detail" id="Paragraph">
-                                    <b><p id="Name">No Notification</p></b>
+                                    <b><p id="Name" >No Notification</p></b>
                                 </div>
 
 
                             </div>
-                          
+
                         </div>
                     </li>
-                    <li class="nav-item dropdown-hover" id="listParent1003">
+                    <li class="nav-item dropdown-hover" style="display:none" id="Profile">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i>
                         </a>
@@ -94,7 +94,7 @@
             </div>
         </nav>
     </header>
-   
+
 
     <!---Rendering the Body Here--->
     <div class="">
@@ -117,7 +117,7 @@
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/CustomJS.js"></script>
-    <script src="~/js/Notification.js"></script> 
+    <script src="~/js/Notification.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 <script type="text/javascript">
@@ -126,30 +126,47 @@
             type: "POST",
             url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
             success: function (response) {
+
                 response.sort(function (a, b) {
                     if (a.orders < b.orders) { return 1; }
                     if (a.orders > b.orders) { return -1; }
                     return 0;
                 });
+
                 for (let i = 0; i < response.length; i++) {
+
                     var uiNavigationCategoryId = response[i].id;
                     var uiNavigationCategoryName = response[i].name;
-                    var parentListDiv = "#listParent" + uiNavigationCategoryId;
-                    var parentListId = "listParent" + uiNavigationCategoryId;
-                    var divExistOrNot = document.getElementById(parentListId);
-                    if (!divExistOrNot && response[i].childrens.length > 1) {
+                    var parentListDiv = "#" + uiNavigationCategoryName;
+                    var parentListId = uiNavigationCategoryId;
+                    var idNameExistOrNot = uiNavigationCategoryName;
+                    var nameExistOrNot = document.getElementById(idNameExistOrNot);
+                    console.log(nameExistOrNot);
+                    if (!nameExistOrNot && response[i].childrens.length > 1) {
+
                         $('#navbarContentAdd').prepend("</li>");
-                        $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='listParent" + uiNavigationCategoryId + "'>");
+                        $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='" + uiNavigationCategoryName + "'>");
                         var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
                         $(parentListDiv).append(buttonDropdown);
                         $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryId + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
                         $(parentListDiv).append("</div>");
+
+
                     }
+                    else {
+
+                        nameExistOrNot.style.display = "block";
+
+                    }
+                    var divExistOrNot = document.getElementById(parentListId);
+
+
                     response[i].childrens.sort(function (a, b) {
                         if (a.name < b.name) { return -1; }
                         if (a.name > b.name) { return 1; }
                         return 0;
                     });
+
                     for (let j = 0; j < response[i].childrens.length; j++) {
                         if (response[i].childrens.length <= 1) {
                             var singlePageTypeUrl = response[i].childrens[j].formatedUrl;

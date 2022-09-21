@@ -111,11 +111,11 @@
                 //console.log(response.fieldId);
                 
                  myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason; 
-                fun2(i++, newErrorMessage.reason);
-            //    var s = newErrorMessage.fid//Sending the reason to html 
-               
-                  document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
+                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
+                NotificationContent(i++, newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
+                //    var s = newErrorMessage.fid//Sending the reason to html
+
+                document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
                   document.getElementById("lefid").value = newErrorMessage.sourceId;
             }
         });
