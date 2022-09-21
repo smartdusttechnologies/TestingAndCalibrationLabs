@@ -55,10 +55,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ILookupService, LookupService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorterService, ListSorterService>();
+            services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
 
 
             //Repository
-            services.AddScoped<ILookupRepository, LookupRepository>();
+            
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();

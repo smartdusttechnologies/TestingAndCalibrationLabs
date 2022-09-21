@@ -25,9 +25,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<UiPageMetadataCharacteristicsModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as Value, upt.Category 
+            return db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as Value, lc.[Name] as CategoryName 
                                                 From[UiPageMetadataCharacteristics] upm
                                                     inner join[Lookup] upt on upm.LookupId = upt.Id
+                                                    inner join[LookupCategory] lc on upm.LookupId = lc.Id
                                                 where
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
@@ -48,17 +49,18 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public UiPageMetadataCharacteristicsModel Get(int id)
+        public List<UiPageMetadataCharacteristicsModel> Get(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as Value, upt.Category 
+            var cyz = db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as LookupName, upt.Id
                                                 From[UiPageMetadataCharacteristics] upm
                                                     inner join[Lookup] upt on upm.LookupId = upt.Id
                                                 where
                                                      upm.UiPageMetadataId = @Id and
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    ", new { isDeleted = 0, Id = id }).FirstOrDefault();
+                                                    ", new { Id = id }).ToList();
+            return cyz;
         }
     }
 }

@@ -106,18 +106,29 @@
             collapse: true,
             selectableLastNode: true
         });
-            comboTree1.onChange(function () {
-                const contentOfHiddenSelect = document.getElementById("dropDownList");
-                contentOfHiddenSelect.innerHTML = '';
-                let selectedIds = this.getSelectedIds();
-                for (i = 0; i < selectedIds.length; i++) {
-                    console.log(selectedIds[i]);
-                    $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
-                }
-            });
+            //comboTree1.onChange(function () {
+            //    const contentOfHiddenSelect = document.getElementById("dropDownList");
+            //    contentOfHiddenSelect.innerHTML = '';
+            //    let selectedIds = this.getSelectedIds();
+            //    for (i = 0; i < selectedIds.length; i++) {
+            //        console.log(selectedIds[i]);
+            //        $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
+            //    }
+            //});
         console.log(comboTree1);
         }else{
         comboTree1.setSource(inp);
+            //comboTree1.onChange(function () {
+            //    const contentOfHiddenSelect = document.getElementById("dropDownList");
+            //    contentOfHiddenSelect.innerHTML = '';
+               
+            //    let selectedIds = this.getSelectedIds();
+            //    console.log(selectedIds);
+            //    for (i = 0; i < selectedIds.length; i++) {
+            //        console.log(selectedIds[i]);
+            //        $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
+            //    }
+            //});
         }
        
     }

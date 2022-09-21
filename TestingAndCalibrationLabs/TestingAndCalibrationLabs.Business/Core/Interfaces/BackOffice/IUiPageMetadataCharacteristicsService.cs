@@ -1,14 +1,14 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
-
+using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
-namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
+namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-    public interface IUiPageMetadataCharacteristicsRepository
+    public interface IUiPageMetadataCharacteristicsService
     {
-        List<UiPageMetadataCharacteristicsModel> Get();
         List<UiPageMetadataCharacteristicsModel> Get(int id);
+        List<UiPageMetadataCharacteristicsModel> Get();
         List<UiPageMetadataCharacteristicsModel> GetByMetadataId(int id);
     }
 }

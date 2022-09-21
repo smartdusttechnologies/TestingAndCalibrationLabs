@@ -16,5 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// 
         /// </summary>
         public int LookupId { get; set; }
+        public string LookupName { get; set; }
     }
 }

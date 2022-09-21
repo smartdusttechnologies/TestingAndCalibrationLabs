@@ -17,5 +17,6 @@
         /// 
         /// </summary>
         public int LookupId { get; set; }
+        public string LookupName { get; set; }
     }
 }
