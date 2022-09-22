@@ -60,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
         {
             var lookupListBuild = new List<UiPageMetadataCharacteristicsModel>();
-            var lookupList = _uiPageMetadataCharacteristicsRepository.GetByMetadataId(id);
+            var lookupList = _uiPageMetadataCharacteristicsRepository.GetByPageMetadataId(id);
            var existingIdsInCharacteristics = lookupList.Select(x=>x.LookupId);
            var newSelectedIdsInCharacteristics = uiPageMetadataModel.uiPageMetadataCharacteristics.Select(x=>x.LookupId);
             var listFinal = existingIdsInCharacteristics.Union(newSelectedIdsInCharacteristics);
