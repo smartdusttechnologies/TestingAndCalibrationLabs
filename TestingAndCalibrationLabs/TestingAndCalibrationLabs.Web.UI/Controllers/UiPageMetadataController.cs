@@ -90,9 +90,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 if (uiPageMetadataDTO.SelectedLookupId != null)
                 {
-                    var newDTO = new List<UiPageMetadataCharacteristicsModel>();
-                    uiPageMetadataDTO.SelectedLookupId.ForEach(x => newDTO.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
-                    uiPageMetadataDTO.uiPageMetadataCharacteristics = newDTO;
+                    var newCharacteristicsList = new List<UiPageMetadataCharacteristicsModel>();
+                    uiPageMetadataDTO.SelectedLookupId.ForEach(x => newCharacteristicsList.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
+                    uiPageMetadataDTO.uiPageMetadataCharacteristics = newCharacteristicsList;
                 }
                 var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 
@@ -109,6 +109,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageTypeId"></param>
         /// <param name="uiControlTypeId"></param>
         /// <param name="dataTypeId"></param>
+        /// <param name="LookupCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id,int LookupCategoryId,int uiPageTypeId,int uiControlTypeId,int dataTypeId)

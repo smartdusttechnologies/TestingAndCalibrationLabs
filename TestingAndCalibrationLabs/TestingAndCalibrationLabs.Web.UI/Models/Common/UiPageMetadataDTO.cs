@@ -52,10 +52,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
-        
-        public List<int> SelectedLookupId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public int? LookupCategoryId { get; set; }
+        /// <summary>
+        /// It Contains the Name Of The Lookup Category
+        /// </summary>
         public string LookupCategoryName { get; set; }
+        /// <summary>
+        /// It Contains The SelectedLookupId From ComboTree
+        /// </summary>
+        public List<int> SelectedLookupId { get; set; }
+        /// <summary>
+        /// It Contains The List Of UiPageMetadataCharacteristics For Ui Page Metadata
+        /// </summary>
         public List<UiPageMetadataCharacteristicsModel> uiPageMetadataCharacteristics { get; set; }
     }
 }

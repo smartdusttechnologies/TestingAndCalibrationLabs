@@ -5,10 +5,21 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
+    /// <summary>
+    /// Service Interface For UiPageMetadataCharacteristics
+    /// </summary>
     public interface IUiPageMetadataCharacteristicsService
     {
-        List<UiPageMetadataCharacteristicsModel> Get(int id);
+        /// <summary>
+        /// Get Records By UiPageMetadataId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<UiPageMetadataCharacteristicsModel> GetByPageMetadataId(int id);
+        /// <summary>
+        /// Get All Record From Ui Page Metadata Characteristics
+        /// </summary>
+        /// <returns></returns>
         List<UiPageMetadataCharacteristicsModel> Get();
-        List<UiPageMetadataCharacteristicsModel> GetByMetadataId(int id);
     }
 }

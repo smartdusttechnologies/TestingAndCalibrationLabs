@@ -9,7 +9,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// 
+    /// Repository Class For Ui Page Metadata Characteristics
     /// </summary>
     public class UiPageMetadataCharacteristicsRepository : IUiPageMetadataCharacteristicsRepository
     {
@@ -34,33 +34,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upt.IsDeleted = 0
                                                     ").ToList();
         }
+       
         /// <summary>
-        /// Get Ui PageMetadata Characteristics Record By Ui PageMetadata Id
+        /// Get Ui Page Metadata Characteristics Record By UiPageMetadataId
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<UiPageMetadataCharacteristicsModel> GetByMetadataId(int id)
+        public List<UiPageMetadataCharacteristicsModel> GetByPageMetadataId(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageMetadataCharacteristicsModel>(@"select * from [UiPageMetadataCharacteristics] where UiPageMetadataId = @Id And IsDeleted = @isDeleted", new { Id = id, isDeleted = false }).ToList();
-        }
-        /// <summary>
-        /// Get Ui Page Metadata Characteristics Record By Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public List<UiPageMetadataCharacteristicsModel> Get(int id)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            var cyz = db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as LookupName, upt.Id
+            return db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as LookupName, upt.Id
                                                 From[UiPageMetadataCharacteristics] upm
                                                     inner join[Lookup] upt on upm.LookupId = upt.Id
                                                 where
                                                      upm.UiPageMetadataId = @Id and
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    ", new { Id = id }).ToList();
-            return cyz;
+                                                    ", new { Id = id }).ToList(); 
         }
     }
 }

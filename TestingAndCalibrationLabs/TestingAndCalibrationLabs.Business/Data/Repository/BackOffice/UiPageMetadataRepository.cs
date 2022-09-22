@@ -33,6 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         values (@UiPageMetadataId, @LookupId)";
 
             using IDbConnection db = _connectionFactory.GetConnection;
+
             if (uiPageMetadataModel.uiPageMetadataCharacteristics.Count > 0)
             {
                 var p = new DynamicParameters();
@@ -164,6 +165,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             }
             else
             {
+                uiPageMetadataModel.LookupCategoryId = null;
                 db.Execute(query, uiPageMetadataModel);
             }
             return 0;
