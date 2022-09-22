@@ -99,37 +99,41 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        if (count == 0) {
-            var categoryId = @ViewBag.LookupCategoryId;
-            category(categoryId);
-            console.log(categoryId);
-           
-        }
-    });
-</script>
-<script type="text/javascript">
+    var categoryId = @ViewBag.LookupCategoryId;
     var firstTimeData;
     var comboTree1;
     var count = 0;
+    $(document).ready(function () {
+
+        if (count == 0) {
+            debugger;
+            if (categoryId != 0) {
+                category(categoryId);
+                console.log(categoryId);
+            }
+        }
+    });
+
     function category(categoryInput) {
-        if (count != 0) {
+        if (count != 0 || categoryId != 0) {
+            console.log(this);
             var categoryInput = categoryInput.value;
         }
+        count++;
         $.ajax({
             type: "POST",
             url: "@Url.Action("LookupByCategory","Lookup")",
             data: { categoryName: categoryInput },
             success: function (response) {
                 LookupByCategory(response);
-                count++;
+
             },
             error: function (req, status, error) {
             }
         });
     }
     function LookupByCategory(inp) {
-        if (count == 0) {
+        if (count == 0 || categoryId != 0) {
             var selectedListId = @ViewBag.SelectedList;
             comboTree1 = $('#multiSelectLookup').comboTree({
                 source: inp,
@@ -138,20 +142,10 @@
                 collapse: true,
                 selectableLastNode: true
             });
+            if(categoryId != 0){
             comboTree1.setSelection(selectedListId);
-            for (i = 0; i < selectedListId.length; i++) {
-                console.log(selectedListId[i]);
-                $('#dropDownList').append("<option selected value='" + selectedListId[i] + "'> temp</option>");
             }
-            comboTree1.onChange(function () {
-                const contentOfHiddenSelect = document.getElementById("dropDownList");
-                contentOfHiddenSelect.innerHTML = '';
-                let selectedIds = this.getSelectedIds();
-                for (i = 0; i < selectedIds.length; i++) {
-                    console.log(selectedIds[i]);
-                    $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
-                }
-            });
+           
         } else {
             comboTree1.setSource(inp);
         }

@@ -88,9 +88,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newDTO = new List<UiPageMetadataCharacteristicsModel>();
-                uiPageMetadataDTO.SelectedLookupId.ForEach(x => newDTO.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
-                uiPageMetadataDTO.uiPageMetadataCharacteristics = newDTO;
+                if (uiPageMetadataDTO.SelectedLookupId != null)
+                {
+                    var newDTO = new List<UiPageMetadataCharacteristicsModel>();
+                    uiPageMetadataDTO.SelectedLookupId.ForEach(x => newDTO.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
+                    uiPageMetadataDTO.uiPageMetadataCharacteristics = newDTO;
+                }
                 var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 
                 _uiPageMetadataService.Create(createMetadataModel);

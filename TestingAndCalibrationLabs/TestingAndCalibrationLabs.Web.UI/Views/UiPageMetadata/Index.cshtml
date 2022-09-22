@@ -28,6 +28,9 @@
                 <h6><b>Ui Control Type</b></h6>
             </th>
             <th>
+                <h6><b>Lookup Category</b></h6>
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.IsRequired)
             </th>
             <th>
@@ -53,6 +56,9 @@
             
             <td>
                 @Html.DisplayFor(modelItem => item.UiControlTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LookupCategoryName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsRequired)

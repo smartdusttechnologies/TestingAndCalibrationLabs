@@ -44,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// 
         /// </summary>
-        public int LookupCategoryId { get; set; }
+        public int? LookupCategoryId { get; set; }
         /// <summary>
         /// 
         /// </summary>

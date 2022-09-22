@@ -54,7 +54,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public string DataTypeName { get; set; }
         
         public List<int> SelectedLookupId { get; set; }
-        public int LookupCategoryId { get; set; }
+        public int? LookupCategoryId { get; set; }
         public string LookupCategoryName { get; set; }
         public List<UiPageMetadataCharacteristicsModel> uiPageMetadataCharacteristics { get; set; }
     }

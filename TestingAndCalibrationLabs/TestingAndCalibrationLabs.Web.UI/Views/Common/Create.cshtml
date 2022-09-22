@@ -61,10 +61,11 @@
                         </select>
                         <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                             <label for="@item.UiControlTypeName" class="form-label"></label>
-                            <select class="form-input " onclick="addContentInSelect()" name="@item.UiControlTypeName" id="DropDownList_@item.Id" onchange="this.setAttribute('value',this.value)" for="@item.UiControlTypeName">
+                            <select class="form-input " onclick="addContentInSelect()" name="@item.UiControlTypeName" id="@item.Id" onchange="this.setAttribute('value',this.value)" for="@item.UiControlTypeName">
                                 <option disabled="disabled" selected>@item.UiControlDisplayName ...</option>
 
                             </select>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
                     else
@@ -176,7 +177,7 @@
                 for(var i=0; i < response.length; i++){
                     var name = response[i].lookupName;
                     console.log(name);
-                        var divId = "#DropDownList_" + response[i].uiPageMetadataId;
+                        var divId = "#" + response[i].uiPageMetadataId;
                     console.log(divId);
                     $(divId).append("<option value='"+name+"'>"+name+"</option>");
                 }

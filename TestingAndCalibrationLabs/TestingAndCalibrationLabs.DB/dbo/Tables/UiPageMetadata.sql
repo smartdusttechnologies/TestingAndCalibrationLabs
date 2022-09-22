@@ -2,7 +2,7 @@
     [Id]                   INT           IDENTITY (1, 1) NOT NULL,
     [UiPageTypeId]         INT           NOT NULL,
     [UiControlTypeId]      INT           NOT NULL,
-    [LookupCategoryId]             INT NOT NULL,
+    [LookupCategoryId]             INT NULL,
     [IsRequired]           BIT           NOT NULL,
     [UiControlDisplayName] VARCHAR (100) NOT NULL,
     [IsDeleted]            BIT           CONSTRAINT [DF_UiPageMetadata_IsDeleted] DEFAULT ((0)) NOT NULL,
