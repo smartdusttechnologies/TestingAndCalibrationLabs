@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ITestReportService, TestReportService>();
-            services.AddScoped<IGoogleUploadDownloadService, GoogleUploadDownloadService>();
+            services.AddScoped<IGoogleDriveService, GoogleDriveService>();
             services.AddScoped<IEmailService, EmailService >();
             
  

@@ -4,19 +4,19 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-    public interface IGoogleUploadDownloadService
+    public interface IGoogleDriveService
     {
         /// <summary>
         /// It is used to upload the file to Google Drive
         /// </summary>
         /// <param name="getbusinessModel"></param>
-        string UploadFile(AttachmentModel attachmentModel);
+        string Upload(AttachmentModel attachmentModel);
 
         /// <summary>
         /// Used for downloading the data from the Google Drive
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        AttachmentModel DownLoadAttachment(string fileId);
+        AttachmentModel DownLoad(string fileId);
     }
 }

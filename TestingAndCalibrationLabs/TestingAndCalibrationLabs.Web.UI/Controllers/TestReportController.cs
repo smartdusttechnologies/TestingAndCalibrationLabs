@@ -1,19 +1,13 @@
 ﻿using AutoMapper;
-using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Net;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using TestReportModel = TestingAndCalibrationLabs.Web.UI.Models.TestReportModel;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -31,7 +25,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Default Action of the Index
         /// </summary>
         /// <returns></returns>
-        public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleUploadDownloadService googleUploadDownloadService)
+        public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleDriveService googleUploadDownloadService)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;

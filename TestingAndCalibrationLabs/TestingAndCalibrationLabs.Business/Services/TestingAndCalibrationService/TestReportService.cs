@@ -15,9 +15,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IEmailService _emailService;
-        private readonly IGoogleUploadDownloadService _googleUploadDownloadService;
+        private readonly IGoogleDriveService _googleUploadDownloadService;
 
-        public TestReportService(ITestReportRepository testReportRepository, IGoogleUploadDownloadService googleUploadDownloadService, IConfiguration configuration, IWebHostEnvironment hostingEnvironment, IEmailService emailService)
+        public TestReportService(ITestReportRepository testReportRepository, IGoogleDriveService googleUploadDownloadService, IConfiguration configuration, IWebHostEnvironment hostingEnvironment, IEmailService emailService)
         {
             _testReportRepository = testReportRepository;
             _configuration = configuration;
@@ -153,7 +153,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 JobId = testReportModel.JobId,
                 DateTime = testReportModel.DateTime
             };
-            var dataFilePath = _googleUploadDownloadService.UploadFile(attachmentModel);
+            var dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
 
             //Passing the FilePath value received after upload
             var dataSaveModel = new Business.Core.Model.TestReportModel
@@ -177,7 +177,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public AttachmentModel DownLoadAttachment(string fileId)
         {
-            var dataDownloaded = _googleUploadDownloadService.DownLoadAttachment(fileId);
+            var dataDownloaded = _googleUploadDownloadService.DownLoad(fileId);
             return dataDownloaded;
         }
 

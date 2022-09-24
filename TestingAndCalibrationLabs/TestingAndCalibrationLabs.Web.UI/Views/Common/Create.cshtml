@@ -166,7 +166,7 @@
             var fieldId = uiPageMetaData[i].id;
             var fieldValue = $('#' + fieldId).val();
             var keyValuepair = {};
-            keyValuepair.UiControlId = fieldId;
+            keyValuepair.UiPageMetadataId = fieldId;
             keyValuepair.Value = fieldValue;
             fieldValues.push(keyValuepair)
         }
@@ -195,7 +195,7 @@
                         //var result = a.find(obj => {
                         // // Returns the object where
                         //// the given property has some value 
-                        //return obj.uiControlId === nfieldId
+                        //return obj.UiPageMetadataId === nfieldId
                         //})
 
                         //if(result == undefined)

@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
-using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.StaticFiles;
@@ -12,14 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Infrastructure;
 using Google.Apis.Download;
-using static System.Net.WebRequestMethods;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
-using System.Web;
 using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
@@ -27,11 +19,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
     /// <summary>
     /// This service is to Upload file to Google Drive/ Download the file and get "ResponseBody" from the Google Drive.
     /// </summary>
-    public class GoogleUploadDownloadService : IGoogleUploadDownloadService
+    public class GoogleDriveService : IGoogleDriveService
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
+        public static string[] Scopes = { DriveService.Scope.Drive };
         private Google.Apis.Drive.v3.Data.File newFile;
         
         public string ResponseBody { get; private set; }
@@ -42,7 +34,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="configuration"></param>
         /// <param name="connectionFactory"></param>
 
-        public GoogleUploadDownloadService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
@@ -52,21 +44,21 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// To initiate the Google Drive Service of Google
         /// </summary>
         /// <returns></returns>
-        public Google.Apis.Drive.v3.DriveService GetService()
+        public DriveService GetService()
         {
             //get Credentials from client_secret.json file 
             UserCredential credential;
             var CSPath = _hostingEnvironment.WebRootPath;
-            using (var stream = new FileStream(Path.Combine((string)CSPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
+            using (var stream = new FileStream(Path.Combine(CSPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
                 FileMode.Open, FileAccess.Read))
             {
-                String FolderPath = (string)_hostingEnvironment.WebRootPath;
-                String FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
+                string FolderPath = (string)_hostingEnvironment.WebRootPath;
+                string FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.FromStream(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
             }
 
             //create Drive API service.
-            Google.Apis.Drive.v3.DriveService service = new Google.Apis.Drive.v3.DriveService(new BaseClientService.Initializer()
+            DriveService service = new DriveService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = "GoogleDriveRestAPI-v3",
@@ -123,9 +115,9 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// This will upload the file to the Google Drive
         /// </summary>
         /// <param name="testReportModel"></param>
-        public string UploadFile(AttachmentModel attachmentModel)
+        public string Upload(AttachmentModel attachmentModel)
         {
-            var exchangeModel = new Business.Core.Model.TestReportModel
+            var exchangeModel = new TestReportModel
             {
                 FilePath = attachmentModel.FilePath,
             };
@@ -170,22 +162,22 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <returns></returns>
         private string DownloadGoogleFile(string fileId)
         {
-            Google.Apis.Drive.v3.DriveService service = GetService();
+            DriveService service = GetService();
             string FolderPath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"]);
             if (!Directory.Exists(FolderPath))
             {
                 Directory.CreateDirectory(FolderPath);
             }
-            Google.Apis.Drive.v3.FilesResource.GetRequest request = service.Files.Get(fileId);
+            FilesResource.GetRequest request = service.Files.Get(fileId);
             string FileName = request.Execute().Name;
             string dataFileName = FileName;
-            string FilePath = System.IO.Path.Combine(FolderPath, dataFileName);
+            string FilePath = Path.Combine(FolderPath, dataFileName);
             MemoryStream stream = new MemoryStream();
 
             // Add a handler which will be notified on progress changes.
             // It will notify on each chunk download and when the
             // download is completed or failed.
-            request.MediaDownloader.ProgressChanged += (Google.Apis.Download.IDownloadProgress progress) =>
+            request.MediaDownloader.ProgressChanged += (IDownloadProgress progress) =>
             {
                 switch (progress.Status)
                 {
@@ -216,7 +208,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        public AttachmentModel DownLoadAttachment(string fileId)
+        public AttachmentModel DownLoad(string fileId)
         {
             string filepath = DownloadGoogleFile(fileId);
             try
@@ -235,7 +227,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             }
             finally
             {
-                System.IO.File.Delete(filepath);
+                File.Delete(filepath);
             }
         }
 
@@ -246,7 +238,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="FilePath"></param>
         private static void SaveStream(MemoryStream stream, string FilePath)
         {
-            using (System.IO.FileStream file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite))
+            using (FileStream file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite))
             {
                 stream.WriteTo(file);
             }
