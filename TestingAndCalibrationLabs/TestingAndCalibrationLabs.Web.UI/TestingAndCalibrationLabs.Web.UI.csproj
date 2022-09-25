@@ -18,8 +18,4 @@
     <ProjectReference Include="..\TestingAndCalibrationLabs.Business\TestingAndCalibrationLabs.Business.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Datas\" />
-  </ItemGroup>
-
 </Project>
