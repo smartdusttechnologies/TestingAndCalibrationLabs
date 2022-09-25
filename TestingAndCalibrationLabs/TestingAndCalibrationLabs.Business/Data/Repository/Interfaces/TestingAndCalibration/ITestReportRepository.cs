@@ -16,13 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         /// <param name="testReportModel"></param>
         /// <returns></returns>
         int Insert(TestReportModel testReportModel);
-
-        /// <summary>
-        /// To get the Test Report latest first
-        /// </summary>
-        /// <param name="testReportModel"></param>
-        /// <returns></returns>
-        int Get(TestReportModel testReportModel);
         
         /// <summary>
         /// To update the Record
@@ -30,7 +23,7 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         /// <param name="id"></param>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
-        int Update(int id, TestReportModel testReportModel);
+        int Update(TestReportModel testReportModel);
 
         /// <summary>
         /// Get the 
@@ -58,12 +51,5 @@ namespace TestingAndCalibrationLabs.Business.Data.TestingAndCalibration
         /// <param name="testReportModels"></param>
         /// <returns></returns>
         int InsertCollection(List<TestReportModel> testReportModels);
-
-        /// <summary>
-        /// Get record by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        TestReportModel GetTestReport(int id);
     }
 }

@@ -55,22 +55,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TestReportModel GetTestReport(int id)
+        public TestReportModel Get(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<TestReportModel>("Select top 1 * From [TestReport] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// To get the record from the Test Report table by Id.
-        /// </summary>
-        /// <param name="testReportModel"></param>
-        /// <returns></returns>
-        public int Get(TestReportModel testReportModel)
-        {
-            string query = @"Select * From [TestReport] ORDER BY Id DESC";
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query);
         }
 
         /// <summary>
@@ -85,23 +73,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
         }
 
         /// <summary>
-        /// To get the report by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public TestReportModel Get(int id)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<TestReportModel>("Select top 1 * From [TestReport] where Id=id and and IsDeleted = 0", new { id }).FirstOrDefault();
-        }
-
-        /// <summary>
         /// To Update the record in the table by Id.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
-        public int Update(int id, TestReportModel testReportModel)
+        public int Update(TestReportModel testReportModel)
         {
             string query = @"update [TestReport] Set 
                               Name = @Name,
@@ -124,7 +101,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibrati
         {
             string query = @"update [TestReport] Set 
                                 IsDeleted = @IsDeleted
-                            Where Id = @Id and  Id=@id ";
+                            Where Id = @Id and  Id=@id";
             using IDbConnection db = _connectionFactory.GetConnection;
             db.Execute(query, new { IsDeleted = true, Id = id });
             return true;

@@ -110,7 +110,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var datafForMail = _testReportService.GetTestReport((int)Id);
+            var datafForMail = _testReportService.Get((int)Id);
 
             if (datafForMail == null)
             {
@@ -119,7 +119,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _mapper.Map<Business.Core.Model.TestReportModel, UI.Models.TestReportModel>(datafForMail);
 
             //Sends link
-            var isMailSendSuccessfully = _testReportService.EmailLinkMail(datafForMail, datafForMail.Id);
+            var isMailSendSuccessfully = _testReportService.SendTestReportEmail(datafForMail);
 
             if (isMailSendSuccessfully)
             {
@@ -139,7 +139,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public ActionResult TestReportDownload(int Id)
         {
-            var testReportData = _testReportService.GetTestReport((int)Id);
+            var testReportData = _testReportService.Get((int)Id);
             var fileid = testReportData.FilePath;
             return Ok(fileid);
         }
@@ -152,7 +152,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult DownloadFile(string fileId)
         {
             AttachmentModel attachment = _testReportService.DownLoadAttachment(fileId);
-            var attachmentDTO = _mapper.Map<Business.Core.Model.AttachmentModel, UI.Models.AttachmentDTO>(attachment);
+            var attachmentDTO = _mapper.Map<AttachmentModel, Models.AttachmentDTO>(attachment);
             if (attachmentDTO != null)
             {
                 return File(attachmentDTO.FileStream, attachmentDTO.ContentType, attachmentDTO.FileName);

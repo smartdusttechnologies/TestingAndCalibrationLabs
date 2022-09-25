@@ -13,6 +13,7 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using Google.Apis.Download;
 using TestingAndCalibrationLabs.Business.Common;
+using System.Linq;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
@@ -23,37 +24,78 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public static string[] Scopes = { DriveService.Scope.Drive };
-        private Google.Apis.Drive.v3.Data.File newFile;
-        
-        public string ResponseBody { get; private set; }
         
         /// <summary>
-        /// </summary>        
-        /// <param name="mapper"></param>
+        /// Constructor
+        /// </summary>
+        /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
-        /// <param name="connectionFactory"></param>
-
         public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
         }
 
+        #region Public Methods
+
+        /// <summary>
+        /// This will upload the file to the Google Drive
+        /// </summary>
+        /// <param name="testReportModel"></param>
+        public string Upload(AttachmentModel attachmentModel)
+        {
+            UploadFileInternal(attachmentModel);
+            return attachmentModel.FilePath;
+        }
+
+        /// <summary>
+        /// To Download file from Google Drive using unique Response Body Id
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        public AttachmentModel Download(string fileId)
+        {
+            string filepath = DownloadGoogleFile(fileId);
+            try
+            {
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filepath, FileMode.Open))
+                {
+                    stream.CopyTo(memory);
+                }
+                memory.Position = 0;
+                AttachmentModel attachment = new AttachmentModel();
+                attachment.FileStream = memory;
+                attachment.FileName = Path.GetFileName(filepath);
+                attachment.ContentType = Helpers.GetContentType(filepath);
+                return attachment;
+            }
+            finally
+            {
+                File.Delete(filepath);
+            }
+        }
+
+        #endregion
+        #region Private Methods
+
         /// <summary>
         /// To initiate the Google Drive Service of Google
         /// </summary>
         /// <returns></returns>
-        public DriveService GetService()
+        private DriveService GetService()
         {
+            string[] Scopes = { DriveService.Scope.Drive };
+
             //get Credentials from client_secret.json file 
             UserCredential credential;
-            var CSPath = _hostingEnvironment.WebRootPath;
-            using (var stream = new FileStream(Path.Combine(CSPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
+
+            //TODO: need to see if the client secret file can be stored in some other place.
+            using (var stream = new FileStream(Path.Combine(_hostingEnvironment.WebRootPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
                 FileMode.Open, FileAccess.Read))
             {
-                string FolderPath = (string)_hostingEnvironment.WebRootPath;
-                string FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
+                string FilePath = Path.Combine(_hostingEnvironment.WebRootPath, "DriveServiceCredentials.json");
+                //TODO: What is the user string below in parameter?
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.FromStream(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
             }
 
@@ -72,12 +114,13 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="parent"></param>
         /// <param name="folderName"></param>
         /// <returns></returns>
-        private string CreateFolder(string parent, string folderName)
+        private string CreateFolder()
         {
             var service = GetService();
             // File metadata
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
+                //TODO: Why the folder name is hard coded.
                 Name = "TnCData", //Folder name created in Google Drive
                 MimeType = "application/vnd.google-apps.folder"
             };
@@ -85,64 +128,44 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             listRequest.PageSize = 100;
             listRequest.Fields = "nextPageToken, files(id, name)";
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
-            bool isFolderExist = false;
-            if (files != null && files.Count > 0)
+
+            if (files != null && files.Any())
             {
-                foreach (var file in files)
-                {
-                    newFile = new Google.Apis.Drive.v3.Data.File();
-                    newFile.Name = fileMetadata.Name;
-                    if (file.Name == newFile.Name)
-                    {
-                        isFolderExist = true;
-                        Console.WriteLine("File already existing... Skip creation");
-                        return file.Id;
-                    }
-                }
+                var folderName = files.Where(x => x.Name == fileMetadata.Name).FirstOrDefault();
+                if (folderName != null) 
+                    return folderName.Id;
             }
 
-            if (!isFolderExist)
-            {
-                var request = service.Files.Create(fileMetadata);
-                request.Fields = "id";
-                var file = request.Execute();
-                return file.Id;
-            }
-            return (string)ResponseBody;
-        }
-
-        /// <summary>
-        /// This will upload the file to the Google Drive
-        /// </summary>
-        /// <param name="testReportModel"></param>
-        public string Upload(AttachmentModel attachmentModel)
-        {
-            var exchangeModel = new TestReportModel
-            {
-                FilePath = attachmentModel.FilePath,
-            };
-            UploadFileInternal(attachmentModel);
-            return attachmentModel.FilePath;
+            var request = service.Files.Create(fileMetadata);
+            request.Fields = "id";
+            var file = request.Execute();
+            return file.Id;
         }
 
         /// <summary>
         /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
         /// <param name="testReportModel"></param>
-        private string UploadFileInternal(AttachmentModel attachmentModel)
+        private void UploadFileInternal(AttachmentModel attachmentModel)
         {
-            string uploadsFolder = CreateFolder("Test", "new");
-            var fileName = attachmentModel.DataUrl.FileName;
+            //TODO: what is this create folder?
+            string uploadsFolder = CreateFolder();
+
             var dataOfFile = new FileExtensionContentTypeProvider();
             dataOfFile.TryGetContentType(attachmentModel.FilePath, out string fileMime);
+
             DriveService service = GetService();
+
             var driveFile = new Google.Apis.Drive.v3.Data.File();
-            driveFile.Name = Path.GetFileName(fileName);
-            driveFile.Description = "";
+            driveFile.Name = Path.GetFileName(attachmentModel.DataUrl.FileName);
+            driveFile.Description = string.Empty;
             driveFile.Parents = new string[] { uploadsFolder };
+
             using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())
             {
                 var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
+
+                //TODO: what is this this hardcoded id?
                 request.Fields = "id";
                 var response = request.Upload();
                 if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
@@ -150,8 +173,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                     throw response.Exception;
                 }
                 attachmentModel.FilePath = request.ResponseBody.Id;
-                //returning the ResponseBody Id received from Google drive after upload
-                return attachmentModel.FilePath;
             }
         }
 
@@ -204,34 +225,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         }
 
         /// <summary>
-        /// To Download file from Google Drive using unique Response Body Id
-        /// </summary>
-        /// <param name="fileId"></param>
-        /// <returns></returns>
-        public AttachmentModel DownLoad(string fileId)
-        {
-            string filepath = DownloadGoogleFile(fileId);
-            try
-            {
-                var memory = new MemoryStream();
-                using (var stream = new FileStream(filepath, FileMode.Open))
-                {
-                    stream.CopyTo(memory);
-                }
-                memory.Position = 0;
-                AttachmentModel attachment = new AttachmentModel();
-                attachment.FileStream = memory;
-                attachment.FileName = Path.GetFileName(filepath);
-                attachment.ContentType = Helpers.GetContentType(filepath);
-                return attachment;
-            }
-            finally
-            {
-                File.Delete(filepath);
-            }
-        }
-
-        /// <summary>
         /// Private function to save the file downloaded.
         /// </summary>
         /// <param name="stream"></param>
@@ -243,5 +236,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 stream.WriteTo(file);
             }
         }
+
+        #endregion
     }
 }

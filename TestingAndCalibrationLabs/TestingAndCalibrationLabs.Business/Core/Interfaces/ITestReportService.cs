@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
-        RequestResult<int> Add(TestReportModel testReportModel);
+        RequestResult<bool> Add(TestReportModel testReportModel);
 
         /// <summary>
         /// Used to get all the records from Test Report Table.
@@ -25,26 +25,26 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
-        RequestResult<int> Update(int id, TestReportModel testReportModel);
+        RequestResult<bool> Update(TestReportModel testReportModel);
 
         /// <summary>
         /// Used to get the test report record by Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        TestReportModel GetTestReport(int id);
+        TestReportModel Get(int id);
 
         /// <summary>
         /// To upload Test Report to Google Drive and send the mail.
         /// </summary>
         /// <param name="testReportModel"></param>
-        void UploadFileAndSendMail(TestReportModel testReportModel);
+        bool UploadFileAndSendMail(TestReportModel testReportModel);
 
         /// <summary>
         /// To upload the Test Report to Google Drive.
         /// </summary>
         /// <param name="getbusinessModel"></param>
-        void UploadFile(TestReportModel getbusinessModel);
+        bool UploadFile(TestReportModel getbusinessModel);
 
         /// <summary>
         /// Download the uploaded file from Google drive.
@@ -59,6 +59,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="testReportModel"></param>
         /// <param name="Id"></param>
         /// <returns></returns>
-        bool EmailLinkMail(TestReportModel testReportModel, int Id);
+        bool SendTestReportEmail(TestReportModel testReportModel);
     }
 }

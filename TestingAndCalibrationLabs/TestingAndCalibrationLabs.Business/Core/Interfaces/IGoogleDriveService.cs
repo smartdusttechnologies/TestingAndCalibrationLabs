@@ -17,6 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        AttachmentModel DownLoad(string fileId);
+        AttachmentModel Download(string fileId);
     }
 }

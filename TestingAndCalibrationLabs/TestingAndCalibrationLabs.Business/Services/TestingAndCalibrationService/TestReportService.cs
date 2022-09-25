@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using TestingAndCalibrationLabs.Business.Common;
@@ -26,15 +27,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             _googleUploadDownloadService = googleUploadDownloadService;
         }
 
+        #region Public Methods
         /// <summary>
         /// Inser test report data
         /// </summary>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Add(TestReportModel testReportModel)
+        public RequestResult<bool> Add(TestReportModel testReportModel)
         {
             _testReportRepository.Insert(testReportModel);
-            return new RequestResult<int>(1);
+            return new RequestResult<bool>(true);
         }
 
         /// <summary>
@@ -52,10 +54,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="testReportModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, TestReportModel testReportModel)
+        public RequestResult<bool> Update(TestReportModel testReportModel)
         {
-            _testReportRepository.Update(id, testReportModel);
-            return new RequestResult<int>(1);
+            _testReportRepository.Update(testReportModel);
+            return new RequestResult<bool>(true);
         }
 
         /// <summary>
@@ -63,111 +65,62 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TestReportModel GetTestReport(int id)
+        public TestReportModel Get(int id)
         {
-            return _testReportRepository.GetTestReport(id);
-        }
-
-        /// <summary>
-        /// It is for uploading the content to Google Drive and sending the mail to the user
-        /// </summary>
-        /// <param name="testReportModel"></param>
-        private bool WebLinkMail(TestReportModel testReportModel)
-        {
-            //Reading Data from Appsetting.Json
-            var BodyImg = _configuration["TestingAndCalibrationSurvey:BodyImage"];
-            var LogoImg = _configuration["TestingAndCalibrationSurvey:LogoImage"];
-            var MobNo = _configuration["TestingAndCalibrationSurvey:Mobile"];
-            var EmailContact = _configuration["TestingAndCalibrationSurvey:emailID"];
-
-            //using method to 
-            //EmailLinkMail(testReportModel, int Id);
-
-            // <!----**Mail Creation************---->
-            testReportModel.HtmlMsg = DataLinkWebMail(testReportModel.EmailTemplate);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**name**", testReportModel.Name);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**client**", testReportModel.Client);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**data**", testReportModel.FilePath);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**jobId**", testReportModel.JobId);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**email**", testReportModel.Email);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**id**", testReportModel.Id.ToString());
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**contactMail**", EmailContact);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**Mob**", MobNo);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**LogoLink**", LogoImg);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**BodyImageLink**", BodyImg);
-            testReportModel.Subject = "Web Page DataLink";
-
-            //sending mail (Mapping with the emailmodel)
-            var emailId = new List<string>();
-            emailId.Add(testReportModel.Email);
-            var getExchangeModel = new Business.Core.Model.EmailModel
-            {
-                Email = emailId,
-                Subject = testReportModel.Subject,
-                HtmlMsg = testReportModel.HtmlMsg
-            };
-            //Sending mail
-            bool isSuccessful = _emailService.Sendemail(getExchangeModel);
-            return isSuccessful;
+            return _testReportRepository.Get(id);
         }
 
         /// <summary>
         /// To upload the Test Report to google Drive and send the mail
         /// </summary>
         /// <param name="testReportModel"></param>
-        public void UploadFileAndSendMail(TestReportModel testReportModel)
+        public bool UploadFileAndSendMail(TestReportModel testReportModel)
         {
-            UploadFile(testReportModel);
-            WebLinkMail(testReportModel);
-        }
-
-        /// <summary>
-        /// This method is to send the web page link
-        /// </summary>
-        /// <param name="emailTemplate"></param>
-        /// <returns></returns>
-        private string DataLinkWebMail(string emailTemplate)
-        {
-            string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:WebPageLinkMail"])))
-            {
-                body = reader.ReadToEnd();
-            }
-            return body;
+            var isUploadedSuccessfully = UploadFile(testReportModel);
+            var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
+            return isUploadedSuccessfully && isReportSentSuccessfully;
         }
 
         /// <summary>
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public void UploadFile(TestReportModel testReportModel)
+        public bool UploadFile(TestReportModel testReportModel)
         {
-
-            var attachmentModel = new Business.Core.Model.AttachmentModel
+            try
             {
-                FilePath = testReportModel.FilePath,
-                DataUrl = testReportModel.DataUrl,
-                Name = testReportModel.Name,
-                Email = testReportModel.Email,
-                Client = testReportModel.Client,
-                JobId = testReportModel.JobId,
-                DateTime = testReportModel.DateTime
-            };
-            var dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
+                var attachmentModel = new AttachmentModel
+                {
+                    FilePath = testReportModel.FilePath,
+                    DataUrl = testReportModel.DataUrl,
+                    Name = testReportModel.Name,
+                    Email = testReportModel.Email,
+                    Client = testReportModel.Client,
+                    JobId = testReportModel.JobId,
+                    DateTime = testReportModel.DateTime
+                };
+                var dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
 
-            //Passing the FilePath value received after upload
-            var dataSaveModel = new Business.Core.Model.TestReportModel
+                //Passing the FilePath value received after upload
+                testReportModel.FilePath = dataFilePath;
+
+                //Saving File to the repository
+                _testReportRepository.Insert(testReportModel);
+                return true;
+            }
+            catch(Exception ex)
             {
-                FilePath = dataFilePath,
-                Name = testReportModel.Name,
-                Client = testReportModel.Client,
-                JobId = testReportModel.JobId,
-                Email = testReportModel.Email,
-                DateTime = testReportModel.DateTime
-            };
-
-            //Saving File to the repository
-            _testReportRepository.Insert(dataSaveModel);
+                //TODO: log the error message.
+                //_logger.LogException(new ExceptionLog
+                // {
+                //   ExceptionDate = DateTime.Now,
+                //   ExceptionMsg = ex.Message,
+                //  ExceptionSource = ex.Source,
+                //   ExceptionType = "UserService",
+                //  FullException = ex.StackTrace
+                // });
+                return false;
+            }
         }
 
         /// <summary>
@@ -177,7 +130,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public AttachmentModel DownLoadAttachment(string fileId)
         {
-            var dataDownloaded = _googleUploadDownloadService.DownLoad(fileId);
+            var dataDownloaded = _googleUploadDownloadService.Download(fileId);
             return dataDownloaded;
         }
 
@@ -185,38 +138,34 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// It is to send the uploaded conntent to the user
         /// </summary>
         /// <param name="testReportModel"></param>
-        /// <param name="Id"></param>
-        public bool EmailLinkMail(TestReportModel testReportModel, int Id)
+        public bool SendTestReportEmail(TestReportModel testReportModel)
         {
             //Reading Data from Appsetting.Json
-            var BodyImg = _configuration["TestingAndCalibrationSurvey:BodyImage"];
-            var LogoImg = _configuration["TestingAndCalibrationSurvey:LogoImage"];
-            var MobNo = _configuration["TestingAndCalibrationSurvey:Mobile"];
-            var EmailContact = _configuration["TestingAndCalibrationSurvey:emailID"];
-
-            //Int( value of Id to string conversion
-            string myString = testReportModel.Id.ToString();
+            var bodyImg = _configuration["TestingAndCalibrationSurvey:BodyImage"];
+            var logoImg = _configuration["TestingAndCalibrationSurvey:LogoImage"];
+            var mobNo = _configuration["TestingAndCalibrationSurvey:Mobile"];
+            var emailContact = _configuration["TestingAndCalibrationSurvey:emailID"];
 
             //mail creation
-            testReportModel.HtmlMsg = DataLinkWebMail(testReportModel.EmailTemplate);
+            testReportModel.HtmlMsg = GetEmailTemplate();
             testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**name**", testReportModel.Name);
             testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**client**", testReportModel.Client);
             testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**data**", testReportModel.FilePath);
             testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**jobId**", testReportModel.JobId);
             testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**email**", testReportModel.Email);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**id**", myString);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**contactMail**", EmailContact);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**Mob**", MobNo);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**LogoLink**", LogoImg);
-            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**BodyImageLink**", BodyImg);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**id**", testReportModel.Id.ToString());
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**contactMail**", emailContact);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**Mob**", mobNo);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**LogoLink**", logoImg);
+            testReportModel.HtmlMsg = testReportModel.HtmlMsg.Replace("**BodyImageLink**", bodyImg);
             testReportModel.Subject = "Web Page DataLink";
 
             //sending mail (Mapping the emailmodel and testreportmodel)
-            var emailId = new List<string>();
-            emailId.Add(testReportModel.Email);
-            var getExchangeModel = new Business.Core.Model.EmailModel
+            var emailIds = new List<string>();
+            emailIds.Add(testReportModel.Email);
+            var getExchangeModel = new EmailModel
             {
-                Email = emailId,
+                Email = emailIds,
                 Subject = testReportModel.Subject,
                 HtmlMsg = testReportModel.HtmlMsg
             };
@@ -225,5 +174,24 @@ namespace TestingAndCalibrationLabs.Business.Services
             bool isSuccessful = _emailService.Sendemail(getExchangeModel);
             return isSuccessful;
         }
+        
+        #endregion
+        #region Private Methods.
+
+        /// <summary>
+        /// This method is to send the web page link
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        /// <returns></returns>
+        private string GetEmailTemplate()
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["TestingAndCalibrationSurvey:WebPageLinkMail"])))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
+        }
+        #endregion
     }
 }
