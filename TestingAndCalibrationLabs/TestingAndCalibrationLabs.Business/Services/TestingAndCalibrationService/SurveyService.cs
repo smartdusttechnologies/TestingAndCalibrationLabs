@@ -32,6 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
         }
+
         public RequestResult<int> Add(SurveyModel surveymodel)
         {
             var emailsendTo = _userRepository.Get();

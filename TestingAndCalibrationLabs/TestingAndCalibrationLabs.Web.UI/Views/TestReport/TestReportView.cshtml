@@ -1,0 +1,167 @@
+﻿@using AttachmentDTO = TestingAndCalibrationLabs.Web.UI.Models.AttachmentDTO;
+@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.TestReportModel>
+
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 mt-2">
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">Test Details</h2>
+        </div>
+    </div>
+
+    <div class="table-responsive simple-pagination card shadow border-radius-grid">
+                                 
+        <table id="testDetailsGrid" class="table table-striped display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Id)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.Client)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.JobId)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(modelItem => item.Id)</td>
+                        <td> @Html.DisplayFor(modelItem => item.Name)</td>
+                        <td> @Html.DisplayFor(modelItem => item.Client)</td>
+                        <td> @Html.DisplayFor(modelItem => item.JobId)</td>
+                        <td> @Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>
+                            <a id="dataDownload_@item.Id" onclick="DwonloadReportAjax(@item.Id)"><i class='fa fa-cloud-download'></i></a><b>||</b>
+                            <a id="sendMail_@item.Id" onclick="sendMailAjax(@item.Id)"><i class="fa fa-envelope"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    
+    <div>
+        <div class="d-flex justify-content-center fixed-bottom">
+            <div class="alert alert-success" role="alert" id="snackbarsuccess">    
+             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert">
+                 <div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+                     <path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path>
+                     </svg></div><div class="MuiAlert-message css-1xsto0d">Email sent successfully!, Thank You</div></div>
+            </div>
+       </div>
+    </div>
+
+    <div>
+        <div class="d-flex justify-content-center fixed-bottom">
+            <div class="alert alert-success" role="alert" id="snackbarsuccessMail">    
+             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert">
+                 <div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+                     <path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path>
+                     </svg></div><div class="MuiAlert-message css-1xsto0d">File downloaded successfully!, Thank You</div></div>
+            </div>
+       </div>
+    </div>
+
+    <div >
+            <div class="d-flex justify-content-center fixed-bottom">
+            <div class="alert alert-danger" role="alert" id="snackbarerror">
+              <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledError MuiAlert-filled css-1ufabz4" role="alert">
+                  <div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false"  viewBox="0 0 24 24">
+                      <path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></svg></div>
+              <div class="MuiAlert-message css-1xsto0d" id="errormessage">Request Can't be completed !! Please try again.</div></div>
+            </div>
+        </div>
+     </div>
+     
+</div>
+
+<script>
+     //This function will display the success snackbar
+      function myFunctionSuccess() {
+          var x = document.getElementById("snackbarsuccess");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
+      }
+      //This function will display the success snackbar on mail link send.
+      function myFunctionMailReport() {
+          var x = document.getElementById("snackbarsuccessMail");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
+      }
+
+       //This function will display the Failure snackbar
+          function myFunctionError() {
+          var x = document.getElementById("snackbarerror");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 4000);
+      }
+   </script>
+
+  <script>
+        oTable = $('#testDetailsGrid').DataTable({
+            pageLength: 5,
+            lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
+            scrollX: true,
+        });
+        $('#TestDetailsGridSearch').keyup(function() {
+            oTable.search($(this).val()).draw();
+        })
+  </script>
+ 
+ <script type="text/javascript">
+    function sendMailAjax(e) {
+        var spinner = '<div class="spinner-border text-primary" role="status"> <span class="visually-hidden">Loading...</span></div>';
+        var linkData = "#sendMail_" + e;
+        var originalLinkData = $(linkData).html();
+        $(linkData).html(spinner);
+        console.log(e);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("sendEmail", "TestReport")',
+            data: {Id :e},
+            success: function (response) { 
+               $(linkData).html(originalLinkData);
+               myFunctionSuccess();
+            },
+            error: function(response) {
+                $(linkData).html(originalLinkData);
+                myFunctionError();
+            },
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function DwonloadReportAjax(e) {
+         var spinner = '<div class="spinner-border text-primary" role="status"> <span class="visually-hidden">Loading...</span></div>';
+         var linkData = "#dataDownload_" + e;
+         var originalLinkData = $(linkData).html();
+         $(linkData).html(spinner);
+        console.log(e);        
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("TestReportDownload", "TestReport")',
+            data: {Id :e},
+            success: function(response) {
+                location.href = '@Url.Action("DownloadFile", "TestReport")?fileId=' + response;
+                $(linkData).html(originalLinkData);
+                myFunctionMailReport();
+            }              
+        });
+    }
+</script>
+<style>
+    .spinner-border {
+    height: 15px;
+    width: 15px;
+}
+</style>

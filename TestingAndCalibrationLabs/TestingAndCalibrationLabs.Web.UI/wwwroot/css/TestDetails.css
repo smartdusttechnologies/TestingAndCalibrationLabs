@@ -18,7 +18,7 @@
         border-radius: 5px;
         outline: none;
         padding: 0;
-        padding-left: 15px;
+        padding-left: 3px;
         font-size: 20px;
     }
 
@@ -78,14 +78,14 @@
 
 .btn-submit-print {
     background-color: blue;
+    width: 200px;
     font-size: 20px;
     padding: 20px;
     border-radius: 15px;
     border: 3px solid yellow;
     color: magenta;
     text-align: center;
-    position: relative;
-    width: 200px;
+    position:relative;
 }
 
 .container-testing-material {
@@ -138,7 +138,7 @@ select.input-validation-error#TestingType {
 }
 
 .submit-progress-bg {
-    background-color: lightcoral;
+    background-color: lightgrey;
     opacity: .5;
 }
 
@@ -176,15 +176,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility: visible;
-    border-radius: 12px;
-    background-color: green;
-    color: white;
-    margin-bottom: 70px;
-    width: 370px;
-    padding: 14px;
-    text-align: center;
-    font-size: 16px;
+    visibility:visible;
+    border-radius:12px;
+    background-color:green;
+    color:white;
+    margin-bottom:70px;
+    width:370px;
+    padding:14px;
+    text-align:center;
+    font-size:16px;
 }
 
     #snackbar.show {

@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Policy = PolicyTypes.Users.Manage)]
+        //[Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult TestDetails()
         {
             // here hardcoding the Grid heddings values instead of accessing from the DB
@@ -91,13 +91,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
-
-        [HttpGet]
-        [Authorize(Policy = PolicyTypes.Users.Manage)]
-        public IActionResult PlanPricing()
-        {
-            return View();
-        }
-
     }
 }

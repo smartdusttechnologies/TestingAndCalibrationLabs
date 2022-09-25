@@ -100,3 +100,32 @@
             color: white;
             font-size: 35px;
         }
+
+
+#footer {
+    margin-top: 30px;
+    position:page;
+    column-gap: 40px;
+    row-gap: 00px;
+    width: 100%;
+    align-content: center;
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 0;
+    margin-top: 200px;
+}
+
+    nav .search_box input {
+        width: 100%;
+    }
+
+nav ol {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-brand-a {
+    font-size: 14px;
+}
+}
