@@ -16,11 +16,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly string _tableName;
+        private readonly string _columnName;
         #region Public Methods
         public GenericRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
             _tableName = GenericUtils.GetDbTableName<T>();
+            _columnName = GenericUtils.GetDbColumnName<T>();
         }
 
         public bool Delete(int id)

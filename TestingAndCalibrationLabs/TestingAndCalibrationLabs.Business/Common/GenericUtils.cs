@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
 
 namespace TestingAndCalibrationLabs.Business.Common
 {
@@ -30,6 +33,30 @@ namespace TestingAndCalibrationLabs.Business.Common
             {
                 return tableAttribute.Name;
             }
+            return null;
+        }
+        public static string GetDbColumnName<T>()
+        {
+
+            // DbColumnAttribute MyAttribute =
+            //MemberInfo.;
+
+            //Attribute cus = info.GetCustomAttributes
+            //var tableAttribute = typeof(T).GetCustomAttributes(
+            //    typeof(DbColumnAttribute), true
+            //).FirstOrDefault() as DbColumnAttribute;
+            //if (attributes != null)
+            //{
+            //    return "dd";
+            //}
+            MemberInfo info = typeof(DbColumnAttribute);
+            object[] attributes = info.GetCustomAttributes(true);
+
+            for (int i = 0; i < attributes.Length; i++)
+            {
+                System.Console.WriteLine(attributes[i]);
+            }
+            Console.ReadKey();
             return null;
         }
 

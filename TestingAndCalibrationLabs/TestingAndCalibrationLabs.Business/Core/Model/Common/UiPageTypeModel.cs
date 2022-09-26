@@ -1,7 +1,9 @@
-﻿using TestingAndCalibrationLabs.Business.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    
     /// <summary>
     /// It Conatains The Properties for Ui Page Type
     /// </summary>
@@ -11,6 +13,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name For The Ui Page Type
         /// </summary>
+        [DbColumn("Name")]
+        
         public string Name { get; set; }
     }
 }
