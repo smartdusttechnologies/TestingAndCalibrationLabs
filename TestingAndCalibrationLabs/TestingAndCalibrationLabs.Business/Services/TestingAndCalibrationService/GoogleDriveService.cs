@@ -24,16 +24,17 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        
+        private readonly IImageCompressService _imageCompressService;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
-        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IImageCompressService imageCompressService)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
+            _imageCompressService = imageCompressService;
         }
 
         #region Public Methods
@@ -42,12 +43,16 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// This will upload the file to the Google Drive
         /// </summary>
         /// <param name="testReportModel"></param>
-        public string Upload(AttachmentModel attachmentModel)
+        //public string Upload(AttachmentModel attachmentModel)
+        //{
+        //    UploadFileInternal(attachmentModel);
+        //    return attachmentModel.FilePath;
+        //}
+        public AttachmentModel Upload(AttachmentModel attachmentModel)
         {
-            UploadFileInternal(attachmentModel);
-            return attachmentModel.FilePath;
+            var attachment = UploadFileInternal(attachmentModel);
+            return attachment;
         }
-
         /// <summary>
         /// To Download file from Google Drive using unique Response Body Id
         /// </summary>
@@ -146,33 +151,72 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
         /// <param name="testReportModel"></param>
-        private void UploadFileInternal(AttachmentModel attachmentModel)
+        //private void UploadFileInternal(AttachmentModel attachmentModel)
+        //{
+        //    //TODO: what is this create folder?
+        //    string uploadsFolder = CreateFolder();
+
+        //    var dataOfFile = new FileExtensionContentTypeProvider();
+        //    dataOfFile.TryGetContentType(attachmentModel.FilePath, out string fileMime);
+
+        //    DriveService service = GetService();
+
+        //    var driveFile = new Google.Apis.Drive.v3.Data.File();
+        //    driveFile.Name = Path.GetFileName(attachmentModel.DataUrl.FileName);
+        //    driveFile.Description = string.Empty;
+        //    driveFile.Parents = new string[] { uploadsFolder };
+
+        //    using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())
+        //    {
+        //        var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
+
+        //        //TODO: what is this this hardcoded id?
+        //        request.Fields = "id";
+        //        var response = request.Upload();
+        //        if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+        //        {
+        //            throw response.Exception;
+        //        }
+        //        attachmentModel.FilePath = request.ResponseBody.Id;
+        //    }
+        //}
+        private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
         {
-            //TODO: what is this create folder?
+            var compressedImage = _imageCompressService.ImageCompress(attachmentModel.DataUrl);
+            attachmentModel.FilePath = compressedImage.FilePath;
             string uploadsFolder = CreateFolder();
-
-            var dataOfFile = new FileExtensionContentTypeProvider();
-            dataOfFile.TryGetContentType(attachmentModel.FilePath, out string fileMime);
-
+            var fileName = compressedImage.FileName;
+            string fileMime = compressedImage.ContentType;
             DriveService service = GetService();
-
             var driveFile = new Google.Apis.Drive.v3.Data.File();
-            driveFile.Name = Path.GetFileName(attachmentModel.DataUrl.FileName);
-            driveFile.Description = string.Empty;
+            driveFile.Name = Path.GetFileName(fileName);
+            driveFile.Description = "";
             driveFile.Parents = new string[] { uploadsFolder };
-
-            using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())
+            try
             {
-                var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
-
-                //TODO: what is this this hardcoded id?
-                request.Fields = "id";
-                var response = request.Upload();
-                if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+                using (var uploaddataFile = new FileStream(compressedImage.FilePath, FileMode.Open))
                 {
-                    throw response.Exception;
+
+                    if (uploaddataFile.Length > 200000)
+                    {
+                        compressedImage.IsSuccess = false;
+                        return compressedImage;
+                    }
+                    var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
+                    request.Fields = "id";
+                    var response = request.Upload();
+                    if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
+                    {
+                        throw response.Exception;
+                    }
+                    compressedImage.FilePath = request.ResponseBody.Id;
+                    compressedImage.IsSuccess = true;
+                    return compressedImage;
                 }
-                attachmentModel.FilePath = request.ResponseBody.Id;
+            }
+            finally
+            {
+                File.Delete(attachmentModel.FilePath);
             }
         }
 

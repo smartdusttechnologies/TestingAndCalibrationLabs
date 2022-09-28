@@ -10,7 +10,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// It is used to upload the file to Google Drive
         /// </summary>
         /// <param name="getbusinessModel"></param>
-        string Upload(AttachmentModel attachmentModel);
+        AttachmentModel Upload(AttachmentModel attachmentModel);
 
         /// <summary>
         /// Used for downloading the data from the Google Drive

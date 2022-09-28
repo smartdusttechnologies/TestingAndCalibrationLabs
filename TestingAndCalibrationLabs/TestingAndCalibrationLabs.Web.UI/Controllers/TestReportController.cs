@@ -5,10 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
-using TestReportModel = TestingAndCalibrationLabs.Web.UI.Models.TestReportModel;
+using TestReportDTO = TestingAndCalibrationLabs.Web.UI.Models.TestReportDTO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -41,6 +42,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
+        
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
@@ -55,33 +57,42 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind] TestReportModel testReportModel, bool IsSendAndUpload)
+        public ActionResult Index([Bind] TestReportDTO testReportDTO, bool IsSendAndUpload)
         {
             if (ModelState.IsValid)
             {
-                var getbusinessModel = new Business.Core.Model.TestReportModel
+                var testReportModel = _mapper.Map<TestReportDTO, TestReportModel>(testReportDTO);
+                testReportModel.DateTime = DateTime.Now.Date;
+
+                if (IsSendAndUpload)
                 {
-                    Id = testReportModel.Id,
-                    Client = testReportModel.Client,
-                    DataUrl = testReportModel.DataUrl,
-                    FilePath = testReportModel.FilePath,
-                    JobId = testReportModel.JobId,
-                    Name = testReportModel.Name,
-                    DateTime = DateTime.Now.Date,       //Accept the Current Date only
-                    Email = testReportModel.Email
-                };
-                if (IsSendAndUpload == false)
-                {
-                    _testReportService.UploadFile(getbusinessModel);
+                    var result = _testReportService.UploadFileAndSendMail(testReportModel);
+                    if (result != null)
+                    {
+                        ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();
+                    }
+                    else
+                    {
+                        TempData["IsTrue"] = true;
+                        return RedirectToAction("Index");
+                    }
                 }
-                else if (IsSendAndUpload == true)
+                else
                 {
-                    _testReportService.UploadFileAndSendMail(getbusinessModel);
+                    var result = _testReportService.UploadFile(testReportModel);
+                    if (result != null)
+                    {
+                        ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();
+
+                    }
+                    else
+                    {
+                        TempData["IsTrue"] = true;
+                        return RedirectToAction("Index");
+                    }
                 }
-                TempData["IsTrue"] = true;
-                return RedirectToAction("Index");
             }
-            return View(testReportModel);
+            return View();
         }
 
         /// <summary>
@@ -93,7 +104,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult TestReportView()
         {
             List<Business.Core.Model.TestReportModel> TestReportList = _testReportService.Get();
-            var testReportData = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportModel>>(TestReportList);
+            var testReportData = _mapper.Map<List<Business.Core.Model.TestReportModel>, List<Models.TestReportDTO>>(TestReportList);
             return View(testReportData);
         }
 
@@ -116,7 +127,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var result = _mapper.Map<Business.Core.Model.TestReportModel, UI.Models.TestReportModel>(datafForMail);
+            var result = _mapper.Map<Business.Core.Model.TestReportModel, UI.Models.TestReportDTO>(datafForMail);
 
             //Sends link
             var isMailSendSuccessfully = _testReportService.SendTestReportEmail(datafForMail);
@@ -127,8 +138,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             else
             {
-               return BadRequest();
-            }            
+                return BadRequest();
+            }
         }
 
         /// <summary>

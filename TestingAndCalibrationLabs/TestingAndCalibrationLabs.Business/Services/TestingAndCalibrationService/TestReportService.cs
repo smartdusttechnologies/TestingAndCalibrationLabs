@@ -74,18 +74,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// To upload the Test Report to google Drive and send the mail
         /// </summary>
         /// <param name="testReportModel"></param>
-        public bool UploadFileAndSendMail(TestReportModel testReportModel)
+        public RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel)
         {
             var isUploadedSuccessfully = UploadFile(testReportModel);
             var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
-            return isUploadedSuccessfully && isReportSentSuccessfully;
+            return isUploadedSuccessfully;
         }
 
         /// <summary>
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public bool UploadFile(TestReportModel testReportModel)
+        public RequestResult<AttachmentModel> UploadFile(TestReportModel testReportModel)
         {
             try
             {
@@ -99,14 +99,22 @@ namespace TestingAndCalibrationLabs.Business.Services
                     JobId = testReportModel.JobId,
                     DateTime = testReportModel.DateTime
                 };
-                var dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
+                AttachmentModel dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
+
+                List<ValidationMessage> errors = new List<ValidationMessage>();
+                if (dataFilePath.IsSuccess == false)
+                {
+                    errors.Add(new ValidationMessage { Reason = "Please Select Less Image Size", Severity = ValidationSeverity.Error });
+                    return new RequestResult<AttachmentModel>(errors);
+                }
 
                 //Passing the FilePath value received after upload
-                testReportModel.FilePath = dataFilePath;
+                testReportModel.FilePath = dataFilePath.FilePath;
 
                 //Saving File to the repository
                 _testReportRepository.Insert(testReportModel);
-                return true;
+                
+                return null;
             }
             catch(Exception ex)
             {
@@ -119,7 +127,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //   ExceptionType = "UserService",
                 //  FullException = ex.StackTrace
                 // });
-                return false;
+                return null;
             }
         }
 

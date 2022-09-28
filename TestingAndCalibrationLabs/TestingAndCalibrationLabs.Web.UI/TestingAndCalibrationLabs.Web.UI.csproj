@@ -18,4 +18,8 @@
     <ProjectReference Include="..\TestingAndCalibrationLabs.Business\TestingAndCalibrationLabs.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\DownloadedTemp\" />
+  </ItemGroup>
+
 </Project>

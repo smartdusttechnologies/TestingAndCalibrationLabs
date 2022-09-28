@@ -112,5 +112,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Data/ file to be uploaded.
         /// </summary>
         public IFormFile DataUrl { get; set; }
+        public bool IsSuccess { get; set; }
+        public Stream ImageData { get; set; }
     }
 }

@@ -77,6 +77,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationService, UiPageValidationService>();
             services.AddScoped<IUiPageMetadataService, UiPageMetadataService>();
             services.AddScoped<IDataTypeService, DataTypeService>();
+            services.AddScoped<IImageCompressService, ImageCompressService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
 
             
