@@ -8,14 +8,21 @@
         <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UiPageId" />
+            <h2 style="color:darkviolet; text-align:center">@Model.UiPageTypeTitle</h2>
+            <div asp-validation-summary="All"></div>
              <div class="row">
                 @foreach (var item in Model.Fields)
                 {
                     if (item.UiControlTypeName == "textarea")
                     {
-                        <div class="form-group-for-common" style="margin-left:40px">
+                        @*<div class="form-group-for-common" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <textarea  id="@item.Id" title="@item.UiControlDisplayName"  @item.IsRequired rows="4" cols="50"></textarea>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>*@
+                        <div class="col-lg-9 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                            <textarea class="form-input width-full" style="height:110px; padding:5px;" @item.IsRequired id="@item.Id" name="@item.UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="@item.UiControlDisplayName"></textarea>
+                            <label asp-for="@item.UiControlDisplayName" class="form-label">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
@@ -24,6 +31,14 @@
                         <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                             <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                        </div>
+                    }
+                    else if (item.UiControlTypeName == "headerPage")
+                    {
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                            <h2 style="color:darkviolet; text-align:center">@item.UiControlDisplayName</h2><br>
+                            @*<label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>*@
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
@@ -45,6 +60,30 @@
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
+                    }
+                    else if (item.UiControlTypeName == "submitButton")
+                    {
+                        <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                            
+                            <div class="mt-3 d-block" style="text-align:initial">
+                                <span><button class="btn btn-primary btn-lg btn-submit-print text-white" style="background-color:#4250b5;" type="submit" onclick="AjaxFormSubmit()">@item.UiControlDisplayName</button></span>
+                                </div>
+                        </div>
+                       @* <div class="row ms-1 me-1">
+                            <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                                <label for="submit" class="form-label"></label>
+                                <div class="mt-3 d-block" style="text-align:initial">
+                                    <span>
+                                        <button class="btn btn-lg btn-submit-print text-white"
+                                        type="button" style="background-color:#4250b5"
+                                        onclick="AjaxFormSubmit()">
+                                            SUBMIT
+                                        </button>
+                                    </span>
+                                    <span style="float:right;" id="@item.Id"></span>
+                                </div>
+                            </div>
+                        </div>*@
                     }
                      else if (item.UiControlTypeName == "Calender")
                     {
@@ -72,7 +111,7 @@
             
             </div>
             <div class="form-group-for-common">
-                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" @*onclick="AjaxFormSubmit()"*@ />
 			</div>
         </form>
 
@@ -153,6 +192,7 @@
     function AjaxFormSubmit() {
         //Set the URL.
          var x = document.getElementById("lefid").value;
+         console.log(x);
          if( document.getElementById(x) !=null && document.getElementById(x) !=undefined){
           document.getElementById(x).style.border = "1px solid black ";
          }

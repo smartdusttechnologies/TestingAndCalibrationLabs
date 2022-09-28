@@ -19,6 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary> 
         [Required(ErrorMessage = "Please Enter Page Name")]
         public string Name { get; set; }
+        public string Title { get; set; }
         #endregion
     }
 }

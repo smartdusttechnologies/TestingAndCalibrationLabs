@@ -14,6 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     {
         #region Public Properties
         public int UiPageId { get; set; }
+        public string UiPageTypeTitle { get; set; }
 
         public List<UiPageMetadataModel> Fields { get; set; }
 

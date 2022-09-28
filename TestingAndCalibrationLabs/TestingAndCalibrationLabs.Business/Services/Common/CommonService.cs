@@ -18,7 +18,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IGenericRepository<UiPageDataModel> _uiPageDataGenericRepository;
         private readonly IGenericRepository<UiPageMetadataModel> _uiPageMetaDataGenericRepository;
         private readonly IGenericRepository<UiPageValidationTypeModel> _uiPageValidationTypesGenericRepository;
-
+        
 
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
@@ -79,11 +79,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RecordModel GetUiPageMetadata(int uiPageId)
         {
             var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
+            var uiPageType = _uiPageTypeGenericRepository.Get(uiPageId);
+            uiMetadata.UiPageTypeTitle = uiPageType.Title;
             return uiMetadata;
         }
 
         public RecordsModel GetRecords(int uiPageId)
         {
+            var uiPageType = _uiPageTypeGenericRepository.Get(uiPageId);
             //var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
             var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
             var uiPageData = _commonRepository.GetUiPageDataByUiPageId(uiPageId);
@@ -94,7 +97,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiControlId).ToList()));
 
 
-            return new RecordsModel { UiPageId = uiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageDataModels };
+            return new RecordsModel { UiPageId = uiPageId,UiPageTypeTitle = uiPageType.Title, Fields = uiMetadata.Fields, FieldValues = uiPageDataModels };
         }
 
         public RecordModel GetRecordById(int recordId)

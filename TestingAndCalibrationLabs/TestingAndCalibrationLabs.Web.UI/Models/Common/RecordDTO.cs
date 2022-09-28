@@ -12,6 +12,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         #region Public Properties
         public int Id { get; set; }
         public int UiPageId { get; set; }
+        public string UiPageTypeTitle { get; set; }
         public List<UiPageMetadataDTO> Fields { get; set; }
         public List<UI.Models.UiPageDataDTO> FieldValues { get; set; }
         public ValidationMessage ErrorMessage { get; set; } = new ValidationMessage();

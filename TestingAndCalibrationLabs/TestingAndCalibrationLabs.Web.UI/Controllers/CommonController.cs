@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Services;
+
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     /// <summary>
@@ -48,7 +50,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Create(int id)
         {
             var uiPageId = id;
+            //var uiPageType = _uiPageTypeService.GetById(uiPageId);
             var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
+
+            
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
            
             return base.View(result);

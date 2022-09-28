@@ -31,8 +31,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             List<Business.Core.Model.Organization> organizations = _orgnizationService.Get();
-            List<SelectListItem> organizationNames = organizations.Select(x => new SelectListItem { Text = x.OrgName, Value = x.Id.ToString() }).ToList();
-            ViewBag.Organizations = organizationNames;
+            //List<SelectListItem> organizationNames = organizations.Select(x => new SelectListItem { Text = x.OrgName, Value = x.Id.ToString() }).ToList();
+            //ViewBag.Organizations = organizationNames;
             return View();
         }
 
