@@ -6,7 +6,6 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -14,6 +13,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using Google.Apis.Download;
 using TestingAndCalibrationLabs.Business.Common;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
@@ -30,6 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// </summary>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
+        /// <param name="imageCompressService"></param>
         public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IImageCompressService imageCompressService)
         {
             _configuration = configuration;
@@ -42,15 +43,12 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <summary>
         /// This will upload the file to the Google Drive
         /// </summary>
-        /// <param name="testReportModel"></param>
-        //public string Upload(AttachmentModel attachmentModel)
-        //{
-        //    UploadFileInternal(attachmentModel);
-        //    return attachmentModel.FilePath;
-        //}
-        public AttachmentModel Upload(AttachmentModel attachmentModel)
+        /// <param name="attachmentModel"></param>
+        /// <param name="cancellationToken"></param>
+        
+        public async Task<AttachmentModel> Upload(AttachmentModel attachmentModel,CancellationToken cancellationToken)
         {
-            var attachment = UploadFileInternal(attachmentModel);
+            var attachment = await UploadFileInternal(attachmentModel,cancellationToken);
             return attachment;
         }
         /// <summary>
@@ -150,39 +148,13 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <summary>
         /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
-        /// <param name="testReportModel"></param>
-        //private void UploadFileInternal(AttachmentModel attachmentModel)
-        //{
-        //    //TODO: what is this create folder?
-        //    string uploadsFolder = CreateFolder();
-
-        //    var dataOfFile = new FileExtensionContentTypeProvider();
-        //    dataOfFile.TryGetContentType(attachmentModel.FilePath, out string fileMime);
-
-        //    DriveService service = GetService();
-
-        //    var driveFile = new Google.Apis.Drive.v3.Data.File();
-        //    driveFile.Name = Path.GetFileName(attachmentModel.DataUrl.FileName);
-        //    driveFile.Description = string.Empty;
-        //    driveFile.Parents = new string[] { uploadsFolder };
-
-        //    using (var uploaddataFile = attachmentModel.DataUrl.OpenReadStream())
-        //    {
-        //        var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
-
-        //        //TODO: what is this this hardcoded id?
-        //        request.Fields = "id";
-        //        var response = request.Upload();
-        //        if (response.Status != Google.Apis.Upload.UploadStatus.Completed)
-        //        {
-        //            throw response.Exception;
-        //        }
-        //        attachmentModel.FilePath = request.ResponseBody.Id;
-        //    }
-        //}
-        private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
+        /// <param name="attachmentModel"></param>
+        /// <param name="cancellationToken"></param>
+        
+        private async Task<AttachmentModel> UploadFileInternal(AttachmentModel attachmentModel,CancellationToken cancellationToken)
         {
-            var compressedImage = _imageCompressService.ImageCompress(attachmentModel.DataUrl);
+            //Send File to Compress Image
+            var compressedImage = await _imageCompressService.ImageCompress(attachmentModel.DataUrl,cancellationToken );
             attachmentModel.FilePath = compressedImage.FilePath;
             string uploadsFolder = CreateFolder();
             var fileName = compressedImage.FileName;

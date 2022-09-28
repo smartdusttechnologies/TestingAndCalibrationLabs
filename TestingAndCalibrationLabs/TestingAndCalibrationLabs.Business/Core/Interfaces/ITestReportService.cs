@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -38,13 +40,15 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// To upload Test Report to Google Drive and send the mail.
         /// </summary>
         /// <param name="testReportModel"></param>
-        RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel);
+        /// <param name="cancellationToken"></param>
+        Task<RequestResult<AttachmentModel>> UploadFileAndSendMail(TestReportModel testReportModel,CancellationToken cancellationToken);
 
         /// <summary>
         /// To upload the Test Report to Google Drive.
         /// </summary>
         /// <param name="getbusinessModel"></param>
-        RequestResult<AttachmentModel> UploadFile(TestReportModel getbusinessModel);
+        /// <param name="cancellationToken"></param>
+        Task<RequestResult<AttachmentModel>> UploadFile(TestReportModel getbusinessModel,CancellationToken cancellationToken);
 
         /// <summary>
         /// Download the uploaded file from Google drive.

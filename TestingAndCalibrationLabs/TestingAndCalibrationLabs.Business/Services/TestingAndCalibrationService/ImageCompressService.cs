@@ -8,8 +8,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using System.Collections.Generic;
-using MimeKit;
-using Org.BouncyCastle.Utilities.Zlib;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -27,17 +27,23 @@ namespace TestingAndCalibrationLabs.Business.Services
             };
         private readonly IWebHostEnvironment _WebHostingEnviroment;
         public readonly IConfiguration _configuration;
+        /// <summary>
+        /// Cunstructor
+        /// </summary>
+        /// <param name="webHostEnvironment"></param>
+        /// <param name="configuration"></param>
         public ImageCompressService(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _WebHostingEnviroment = webHostEnvironment;
             _configuration = configuration;
         }
         /// <summary>
-        /// Method To Compress Image 
+        /// Method To Compress Image And If File Is not Compressable Type Then Saving To DownloadedTemp And Then Returning FilePath
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public AttachmentModel ImageCompress(IFormFile file)
+        public async  Task<AttachmentModel> ImageCompress(IFormFile file, CancellationToken cancellationToken)
         {
             string ImageUrl;
 
@@ -55,49 +61,46 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 using (var imgData = new FileStream(filePath, FileMode.Create))
                 {
-                    if (!AllowedFileTypesForCompression.ContainsValue(file.ContentType) || file.Length < 100000)
+                    using (var fileStream = file.OpenReadStream())
                     {
-                        using (Stream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                        await fileStream.CopyToAsync(imgData, cancellationToken);
+
+                        if (!AllowedFileTypesForCompression.ContainsValue(file.ContentType) || file.Length < 100000)
                         {
-                            file.CopyTo(fileStream);
-                        }
-
-                        //using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
-                        //{
-                        //    imageFactory.Load(file.OpenReadStream())
-                        //            .Save(imgData);
-
-                        var imgDatas = new AttachmentModel()
+                            var imgDatas = new AttachmentModel()
                             {
                                 ContentType = file.ContentType,
                                 FilePath = filePath,
                                 FileName = fileName,
                             };
                             return imgDatas;
-                        
-                    }
-                    if (file != null && file.Length > 100000 && file.Length < 30000000)
-                    {
-                        using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
+
+                        }
+                        if (file != null && file.Length > 100000 && file.Length < 30000000)
                         {
-                            imageFactory.Load(file.OpenReadStream())
-                                    .Format(new WebPFormat())
-                                    .Quality(2)
-                                    .Save(imgData);
-                            var imageDatas = new AttachmentModel()
+                            using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
                             {
-                                FileName = fileName,
-                                FilePath = filePath,
-                                ContentType = file.ContentType
-                            };
-                            return imageDatas;
+                                imageFactory.Load(file.OpenReadStream())
+                                        .Format(new WebPFormat())
+                                        .Quality(2)
+                                        .Save(imgData);
+                                var imageDatas = new AttachmentModel()
+                                {
+                                    FileName = fileName,
+                                    FilePath = filePath,
+                                    ContentType = file.ContentType
+                                };
+                                return imageDatas;
+                            }
                         }
                     }
-
                 }
             }
-            finally
+            catch(Exception ex)
             {
+
+                Console.WriteLine(ex);
+                return null;
             }
             return null;
         }

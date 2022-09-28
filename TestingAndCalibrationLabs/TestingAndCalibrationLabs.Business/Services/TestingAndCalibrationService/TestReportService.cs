@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -74,18 +76,19 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// To upload the Test Report to google Drive and send the mail
         /// </summary>
         /// <param name="testReportModel"></param>
-        public RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel)
+        /// <param name="cancellationToken"></param>
+        public async Task<RequestResult<AttachmentModel>> UploadFileAndSendMail(TestReportModel testReportModel,CancellationToken cancellationToken)
         {
-            var isUploadedSuccessfully = UploadFile(testReportModel);
+            var attachmentModel = await UploadFile(testReportModel,cancellationToken);
             var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
-            return isUploadedSuccessfully;
+            return attachmentModel;
         }
 
         /// <summary>
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public RequestResult<AttachmentModel> UploadFile(TestReportModel testReportModel)
+        public async Task<RequestResult<AttachmentModel>> UploadFile(TestReportModel testReportModel,CancellationToken cancellationToken)
         {
             try
             {
@@ -99,7 +102,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     JobId = testReportModel.JobId,
                     DateTime = testReportModel.DateTime
                 };
-                AttachmentModel dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
+                AttachmentModel dataFilePath = await _googleUploadDownloadService.Upload(attachmentModel,cancellationToken);
 
                 List<ValidationMessage> errors = new List<ValidationMessage>();
                 if (dataFilePath.IsSuccess == false)

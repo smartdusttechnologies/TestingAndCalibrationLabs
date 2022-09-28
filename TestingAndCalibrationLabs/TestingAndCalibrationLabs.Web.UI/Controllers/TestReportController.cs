@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
@@ -51,13 +52,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// To Upload or Upload and Send Mail 
         /// </summary>
-        /// <param name="emailModel"></param>
-        /// <param name="testReportModel"></param>
+        /// <param name="testReportDTO"></param>
         /// <param name="IsSendAndUpload"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind] TestReportDTO testReportDTO, bool IsSendAndUpload)
+        public async  Task<ActionResult> Index([Bind] TestReportDTO testReportDTO, bool IsSendAndUpload)
         {
             if (ModelState.IsValid)
             {
@@ -66,10 +66,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 if (IsSendAndUpload)
                 {
-                    var result = _testReportService.UploadFileAndSendMail(testReportModel);
+                    var result = await _testReportService.UploadFileAndSendMail(testReportModel, HttpContext.RequestAborted);
                     if (result != null)
                     {
-                        ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();
+                        ViewBag.Response =  result.ValidationMessages.Select(x => x.Reason).ToList();
                     }
                     else
                     {
@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 }
                 else
                 {
-                    var result = _testReportService.UploadFile(testReportModel);
+                    var result = await _testReportService.UploadFile(testReportModel,HttpContext.RequestAborted);
                     if (result != null)
                     {
                         ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();

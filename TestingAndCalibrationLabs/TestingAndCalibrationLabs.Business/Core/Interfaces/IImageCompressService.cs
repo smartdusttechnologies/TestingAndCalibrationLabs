@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using TestingAndCalibrationLabs.Business.Common;
+using System.Threading;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
+    /// <summary>
+    /// Service Interface For Image Compress
+    /// </summary>
     public interface IImageCompressService
     {
-        AttachmentModel ImageCompress(IFormFile file);
+        /// <summary>
+        /// This Method Is Used To Compress Images 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<AttachmentModel> ImageCompress(IFormFile file,CancellationToken cancellationToken);
     }
 }
