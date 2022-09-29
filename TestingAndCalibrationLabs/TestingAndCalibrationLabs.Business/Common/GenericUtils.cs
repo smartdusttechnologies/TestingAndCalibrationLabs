@@ -38,25 +38,29 @@ namespace TestingAndCalibrationLabs.Business.Common
         public static string GetDbColumnName<T>()
         {
 
-            // DbColumnAttribute MyAttribute =
-            //MemberInfo.;
+           var _dict = new List<string>();
 
-            //Attribute cus = info.GetCustomAttributes
-            //var tableAttribute = typeof(T).GetCustomAttributes(
-            //    typeof(DbColumnAttribute), true
-            //).FirstOrDefault() as DbColumnAttribute;
-            //if (attributes != null)
-            //{
-            //    return "dd";
-            //}
-            MemberInfo info = typeof(DbColumnAttribute);
-            object[] attributes = info.GetCustomAttributes(true);
-
-            for (int i = 0; i < attributes.Length; i++)
+            PropertyInfo[] props = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in props)
             {
-                System.Console.WriteLine(attributes[i]);
+                object[] attrs = prop.GetCustomAttributes(true);
+                foreach (object attr in attrs)
+                {
+                    DbColumnAttribute authAttr = attr as DbColumnAttribute;
+                    if (authAttr.Name != "")
+                    {
+                        //string propName = prop.Name;
+                        string auth = authAttr.Name;
+
+                        _dict.Add( auth);
+                    }
+                     if(authAttr.Name == "")
+                    {
+                        string nme = prop.Name;
+                        _dict.Add(nme);
+                    }
+                }
             }
-            Console.ReadKey();
             return null;
         }
 

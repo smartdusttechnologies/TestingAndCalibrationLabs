@@ -13,8 +13,17 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name For The Ui Page Type
         /// </summary>
-        [DbColumn("Name")]
+        [DbColumn("thisiSattributetext")]
+        
+        public string fdgfd { get; set; }
+        [DbColumn("fdgdgdg")]
+        
+        public string dfgdgd { get; set; }
+        [DbColumn("dfgdgd")]
         
         public string Name { get; set; }
+        [DbColumn("")]
+        
+        public string emptyAttributeHaibhia { get; set; }
     }
 }
