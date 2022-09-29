@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly string _tableName;
-        private readonly string _columnName;
+        private readonly List<string> _columnName;
         #region Public Methods
         public GenericRepository(IConnectionFactory connectionFactory)
         {
@@ -92,13 +92,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             insertQuery.Append("(");
 
-            var properties = GenerateListOfProperties(typeof(T).GetProperties());
-            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
+            //var properties = GenerateListOfProperties(typeof(T).GetProperties());
+            _columnName.ForEach(colName => { insertQuery.Append($"[{colName}],"); });
+            //properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(") VALUES (");
-            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"@{prop},"); } });
+            _columnName.ForEach(colName => {  insertQuery.Append($"@{colName},");  });
+           // properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"@{prop},"); } });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
@@ -110,9 +112,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         private string GenerateUpdateQuery()
         {
             var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
-            var properties = GenerateListOfProperties(typeof(T).GetProperties());
+            //var properties = GenerateListOfProperties(typeof(T).GetProperties());
 
-            properties.ForEach(property =>
+            _columnName.ForEach(property =>
             {
                 if (!property.Equals("Id"))
                 {
