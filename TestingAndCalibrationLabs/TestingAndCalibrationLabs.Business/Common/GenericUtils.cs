@@ -47,14 +47,13 @@ namespace TestingAndCalibrationLabs.Business.Common
                 foreach (object attr in attrs)
                 {
                     DbColumnAttribute authAttr = attr as DbColumnAttribute;
-                    if (authAttr.Name != "")
+                    if (authAttr.Name != null)
                     {
                         //string propName = prop.Name;
                         string auth = authAttr.Name;
-
                         _dict.Add( auth);
                     }
-                     if(authAttr.Name == "")
+                     if(authAttr.Name == null)
                     {
                         string nme = prop.Name;
                         _dict.Add(nme);

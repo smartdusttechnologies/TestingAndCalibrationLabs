@@ -22,8 +22,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         [DbColumn("dfgdgd")]
         
         public string Name { get; set; }
-        [DbColumn("")]
-        
+        [DbColumn]
         public string emptyAttributeHaibhia { get; set; }
+        public string emptyAttributeHaioiouiobhia { get; set; }
     }
 }

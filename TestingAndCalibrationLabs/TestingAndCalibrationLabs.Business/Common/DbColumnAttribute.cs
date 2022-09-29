@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TestingAndCalibrationLabs.Business.Common
+﻿namespace TestingAndCalibrationLabs.Business.Common
 {
 
     [System.AttributeUsage(System.AttributeTargets.Property)]
@@ -13,6 +9,10 @@ namespace TestingAndCalibrationLabs.Business.Common
         public DbColumnAttribute(string name)
         {
             Name = name;
+        }
+        public DbColumnAttribute()
+        {
+            Name = null;
         }
     }
 }

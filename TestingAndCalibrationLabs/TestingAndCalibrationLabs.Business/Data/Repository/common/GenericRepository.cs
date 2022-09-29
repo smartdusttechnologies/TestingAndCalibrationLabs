@@ -93,7 +93,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             insertQuery.Append("(");
 
             //var properties = GenerateListOfProperties(typeof(T).GetProperties());
-            _columnName.ForEach(colName => { insertQuery.Append($"[{colName}],"); });
+            _columnName.ForEach(colName => { insertQuery.Append($"{colName},"); });
             //properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
 
             insertQuery
@@ -116,10 +116,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             _columnName.ForEach(property =>
             {
-                if (!property.Equals("Id"))
-                {
                     updateQuery.Append($"{property}=@{property},");
-                }
             });
 
             updateQuery.Remove(updateQuery.Length - 1, 1); //remove last comma
