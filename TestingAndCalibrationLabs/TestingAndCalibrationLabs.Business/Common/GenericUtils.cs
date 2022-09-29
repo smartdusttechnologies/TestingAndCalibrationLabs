@@ -35,7 +35,7 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return null;
         }
-        public static string GetDbColumnName<T>()
+        public static List<string> GetDbColumnName<T>()
         {
 
            var _dict = new List<string>();
@@ -61,7 +61,7 @@ namespace TestingAndCalibrationLabs.Business.Common
                     }
                 }
             }
-            return null;
+            return _dict;
         }
 
         #endregion
