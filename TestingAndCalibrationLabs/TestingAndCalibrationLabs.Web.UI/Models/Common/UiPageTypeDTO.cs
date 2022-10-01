@@ -38,7 +38,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public string FormatedUrl { get; set; }
         /// <summary>
-        /// It Contains The Orders With Ui Navigation Category
+        /// It Contains The Order With Ui Navigation Category
         /// </summary>
         public string Orders { get; set; }
         #endregion
