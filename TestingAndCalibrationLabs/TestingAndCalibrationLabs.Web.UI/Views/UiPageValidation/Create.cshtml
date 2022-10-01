@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageValidation" novalidate>
-            <div asp-validation-summary="All"></div>
+            <div asp-validation-summary="All" ></div>  @*id is added for notification*@
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
@@ -41,7 +41,7 @@
                     </select>
                 </div>
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return  DisplayProgressMessage(this, 'Saving...');" />
                 </div>
             </div>
         </form>
@@ -50,6 +50,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+  <script src="~/js/Notification.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
