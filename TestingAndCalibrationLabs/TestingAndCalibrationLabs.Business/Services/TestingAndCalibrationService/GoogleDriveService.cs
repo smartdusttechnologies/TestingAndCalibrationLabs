@@ -157,7 +157,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
             string filePath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
 
-            _imageCompressService.ImageCompress(attachmentModel.DataUrl,filePath );
+            _imageCompressService.ImageCompression(attachmentModel.DataUrl,filePath );
             attachmentModel.FilePath = filePath;
             string uploadsFolder = CreateFolder();
             //var fileName = compressedImage.FileName;

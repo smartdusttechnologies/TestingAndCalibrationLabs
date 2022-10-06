@@ -43,7 +43,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="file"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public void ImageCompress(IFormFile file, string filePath)
+        public void ImageCompression(IFormFile file, string filePath)
         {
             string ImageUrl;
 
@@ -81,9 +81,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             catch(Exception ex)
             {
-
-                Console.WriteLine(ex);
-                return;
             }
             return;
         }

@@ -16,6 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="file"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        void ImageCompress(IFormFile file,string filePath);
+        void ImageCompression(IFormFile file,string filePath);
     }
 }
