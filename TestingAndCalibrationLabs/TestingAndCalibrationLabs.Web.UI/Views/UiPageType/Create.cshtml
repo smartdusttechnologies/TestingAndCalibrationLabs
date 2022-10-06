@@ -10,11 +10,11 @@
          <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageType" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style="padding-left:10px; padding-bottom:5px;">
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login" style="padding-left:10px; padding-bottom:5px;">
                     <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
-                <div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiNavigationCategoryId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="UiNavigationCategoryId">
                         <option disabled="disabled" selected>Select Navigation Category ...</option>

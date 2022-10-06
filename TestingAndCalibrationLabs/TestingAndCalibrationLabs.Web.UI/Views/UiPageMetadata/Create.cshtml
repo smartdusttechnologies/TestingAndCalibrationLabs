@@ -10,7 +10,7 @@
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         <option disabled="disabled" selected>Select Pages ...</option>
@@ -20,7 +20,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
                         <option disabled="disabled" selected>Select Control ...</option>
@@ -30,7 +30,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         <option disabled="disabled" selected>Select Data Type ...</option>
@@ -41,18 +41,18 @@
                     </select>
                 </div>
                 <div class="row ms-1 me-1">
-                <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="IsRequired" />
                         @Html.DisplayNameFor(model => model.IsRequired)
                     </label>
                 </div>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                     <input class="form-input width-full" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                     <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
             </div>

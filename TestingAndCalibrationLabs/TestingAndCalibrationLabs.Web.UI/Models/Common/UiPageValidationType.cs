@@ -1,6 +1,4 @@
-﻿
-
-namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿namespace TestingAndCalibrationLabs.Web.UI.Models
 {
         /// <summary>
         /// It Conatains The Properties for Ui Page Validation Type

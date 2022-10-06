@@ -30,6 +30,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _configuration = configuration;
             _surveyService = surveyService;
         }
+
         public IActionResult Index()
         {
              return View();
