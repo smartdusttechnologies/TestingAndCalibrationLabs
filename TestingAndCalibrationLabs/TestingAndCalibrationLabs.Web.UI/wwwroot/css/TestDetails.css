@@ -42,13 +42,13 @@
         font-size: 12px;
     }
 
-.form-element-for-login .form-input:not(:focus) ~ .form-label {
-    top: 15px;
-    background-color: white;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 18px;
-}
+    .form-element-for-login .form-input:not(:focus) ~ .form-label {
+        top: 15px;
+        background-color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 18px;
+    }
 
     .form-element-for-login .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
         top: -6px;
@@ -85,7 +85,7 @@
     border: 3px solid yellow;
     color: magenta;
     text-align: center;
-    position:relative;
+    position: relative;
 }
 
 .container-testing-material {
@@ -176,15 +176,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility:visible;
-    border-radius:12px;
-    background-color:green;
-    color:white;
-    margin-bottom:70px;
-    width:370px;
-    padding:14px;
-    text-align:center;
-    font-size:16px;
+    visibility: visible;
+    border-radius: 12px;
+    background-color: green;
+    color: white;
+    margin-bottom: 70px;
+    width: 370px;
+    padding: 14px;
+    text-align: center;
+    font-size: 16px;
 }
 
     #snackbar.show {
@@ -327,9 +327,11 @@ select.input-validation-error#TestingType {
 .dropdown-hover:hover .dropdown-menu {
     display: block;
 }
+
 .dropdown-right {
     right: 0;
 }
+
 @media (max-width:768px) {
     #testDetailsGrid_paginate {
         padding: 0;
@@ -352,3 +354,11 @@ select.input-validation-error#TestingType {
     }
 }
 
+@media (min-width: 1200px) {
+    .navbar-expand-xl .navbar-nav .dropdown-menu {
+        position: absolute;
+        width: 10px;
+        left: auto;
+    }
+    
+}
