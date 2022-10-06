@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TestingAndCalibrationLabs.Business.Common;
+﻿using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    
+
     /// <summary>
     /// It Conatains The Properties for Ui Page Type
     /// </summary>
@@ -13,17 +12,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name For The Ui Page Type
         /// </summary>
-        [DbColumn("thisiSattributetext")]
-        
-        public string fdgfd { get; set; }
-        [DbColumn("fdgdgdg")]
-        
-        public string dfgdgd { get; set; }
-        [DbColumn("dfgdgd")]
+        [DbColumn("Name")]
         
         public string Name { get; set; }
-        [DbColumn]
-        public string emptyAttributeHaibhia { get; set; }
-        public string emptyAttributeHaioiouiobhia { get; set; }
+        
     }
 }
