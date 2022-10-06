@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// <summary>
     /// Service Class For Image Compress
     /// </summary>
-    public class ImageCompressService : IImageCompressService
+    public class FileCompressionService : IFileCompressionService
     {
         private readonly Dictionary<string, string> AllowedFileTypesForCompression = new Dictionary<string, string>()
             {
@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="webHostEnvironment"></param>
         /// <param name="configuration"></param>
-        public ImageCompressService(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
+        public FileCompressionService(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _WebHostingEnviroment = webHostEnvironment;
             _configuration = configuration;
@@ -41,9 +41,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method To Compress Image And If File Is not Compressable Type Then Saving To DownloadedTemp And Then Returning FilePath
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="filePath"></param>
         /// <returns></returns>
-        public async  Task<AttachmentModel> ImageCompress(IFormFile file, CancellationToken cancellationToken)
+        public void ImageCompress(IFormFile file, string filePath)
         {
             string ImageUrl;
 
@@ -54,27 +54,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 File.Delete(FilePathDelete);
             }
-            string extensionName = Path.GetExtension(file.FileName);
-            var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
-            string filePath = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["DownloadData:FolderName"], fileName); 
-            try
+             try
             {
                 using (var imgData = new FileStream(filePath, FileMode.Create))
                 {
                     using (var fileStream = file.OpenReadStream())
                     {
-                        await fileStream.CopyToAsync(imgData, cancellationToken);
-
                         if (!AllowedFileTypesForCompression.ContainsValue(file.ContentType) || file.Length < 100000)
                         {
-                            var imgDatas = new AttachmentModel()
-                            {
-                                ContentType = file.ContentType,
-                                FilePath = filePath,
-                                FileName = fileName,
-                            };
-                            return imgDatas;
-
+                            fileStream.CopyToAsync(imgData);
+                            return;
                         }
                         if (file != null && file.Length > 100000 && file.Length < 30000000)
                         {
@@ -84,13 +73,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                                         .Format(new WebPFormat())
                                         .Quality(2)
                                         .Save(imgData);
-                                var imageDatas = new AttachmentModel()
-                                {
-                                    FileName = fileName,
-                                    FilePath = filePath,
-                                    ContentType = file.ContentType
-                                };
-                                return imageDatas;
+                                return;
                             }
                         }
                     }
@@ -100,9 +83,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
 
                 Console.WriteLine(ex);
-                return null;
+                return;
             }
-            return null;
+            return;
         }
     }
 }

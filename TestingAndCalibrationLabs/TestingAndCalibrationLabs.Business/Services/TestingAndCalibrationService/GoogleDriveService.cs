@@ -24,14 +24,14 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IImageCompressService _imageCompressService;
+        private readonly IFileCompressionService _imageCompressService;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
         /// <param name="imageCompressService"></param>
-        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IImageCompressService imageCompressService)
+        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IFileCompressionService imageCompressService)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
@@ -46,9 +46,9 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="attachmentModel"></param>
         /// <param name="cancellationToken"></param>
         
-        public async Task<AttachmentModel> Upload(AttachmentModel attachmentModel,CancellationToken cancellationToken)
+        public AttachmentModel Upload(AttachmentModel attachmentModel)
         {
-            var attachment = await UploadFileInternal(attachmentModel,cancellationToken);
+            var attachment =  UploadFileInternal(attachmentModel);
             return attachment;
         }
         /// <summary>
@@ -94,7 +94,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             UserCredential credential;
 
             //TODO: need to see if the client secret file can be stored in some other place.
-            using (var stream = new FileStream(Path.Combine(_hostingEnvironment.WebRootPath, "client_secret_612092452145-21d21u1m196soc5t92j3vagr8rf7h8u7.apps.googleusercontent.com.json"),
+            using (var stream = new FileStream(Path.Combine(_hostingEnvironment.WebRootPath, "client_secret_373443832187-a5fj833jc592dm3unjuan02ekoecv67t.apps.googleusercontent.com.json"),
                 FileMode.Open, FileAccess.Read))
             {
                 string FilePath = Path.Combine(_hostingEnvironment.WebRootPath, "DriveServiceCredentials.json");
@@ -149,16 +149,19 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
         /// <param name="attachmentModel"></param>
-        /// <param name="cancellationToken"></param>
         
-        private async Task<AttachmentModel> UploadFileInternal(AttachmentModel attachmentModel,CancellationToken cancellationToken)
+        private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
         {
             //Send File to Compress Image
-            var compressedImage = await _imageCompressService.ImageCompress(attachmentModel.DataUrl,cancellationToken );
-            attachmentModel.FilePath = compressedImage.FilePath;
+            string extensionName = Path.GetExtension(attachmentModel.DataUrl.FileName);
+            var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
+            string filePath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
+
+            _imageCompressService.ImageCompress(attachmentModel.DataUrl,filePath );
+            attachmentModel.FilePath = filePath;
             string uploadsFolder = CreateFolder();
-            var fileName = compressedImage.FileName;
-            string fileMime = compressedImage.ContentType;
+            //var fileName = compressedImage.FileName;
+            string fileMime = attachmentModel.ContentType;
             DriveService service = GetService();
             var driveFile = new Google.Apis.Drive.v3.Data.File();
             driveFile.Name = Path.GetFileName(fileName);
@@ -166,13 +169,13 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             driveFile.Parents = new string[] { uploadsFolder };
             try
             {
-                using (var uploaddataFile = new FileStream(compressedImage.FilePath, FileMode.Open))
+                using (var uploaddataFile = new FileStream(filePath, FileMode.Open))
                 {
 
                     if (uploaddataFile.Length > 200000)
                     {
-                        compressedImage.IsSuccess = false;
-                        return compressedImage;
+                        attachmentModel.IsSuccess = false;
+                        return attachmentModel;
                     }
                     var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                     request.Fields = "id";
@@ -181,14 +184,14 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                     {
                         throw response.Exception;
                     }
-                    compressedImage.FilePath = request.ResponseBody.Id;
-                    compressedImage.IsSuccess = true;
-                    return compressedImage;
+                    attachmentModel.FilePath = request.ResponseBody.Id;
+                    attachmentModel.IsSuccess = true;
+                    return attachmentModel;
                 }
             }
             finally
             {
-                File.Delete(attachmentModel.FilePath);
+                File.Delete(filePath);
             }
         }
 

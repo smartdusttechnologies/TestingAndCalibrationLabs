@@ -77,9 +77,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="testReportModel"></param>
         /// <param name="cancellationToken"></param>
-        public async Task<RequestResult<AttachmentModel>> UploadFileAndSendMail(TestReportModel testReportModel,CancellationToken cancellationToken)
+        public RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel)
         {
-            var attachmentModel = await UploadFile(testReportModel,cancellationToken);
+            var attachmentModel =  UploadFile(testReportModel);
             var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
             return attachmentModel;
         }
@@ -88,7 +88,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public async Task<RequestResult<AttachmentModel>> UploadFile(TestReportModel testReportModel,CancellationToken cancellationToken)
+        public RequestResult<AttachmentModel> UploadFile(TestReportModel testReportModel)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     JobId = testReportModel.JobId,
                     DateTime = testReportModel.DateTime
                 };
-                AttachmentModel dataFilePath = await _googleUploadDownloadService.Upload(attachmentModel,cancellationToken);
+                AttachmentModel dataFilePath =  _googleUploadDownloadService.Upload(attachmentModel);
 
                 List<ValidationMessage> errors = new List<ValidationMessage>();
                 if (dataFilePath.IsSuccess == false)

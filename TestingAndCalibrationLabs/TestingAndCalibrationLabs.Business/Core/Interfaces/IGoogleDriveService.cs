@@ -11,8 +11,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// It is used to upload the file to Google Drive
         /// </summary>
-        /// <param name="getbusinessModel"></param>
-        Task<AttachmentModel> Upload(AttachmentModel attachmentModel,CancellationToken cancellationToken);
+        /// <param name="attachmentModel"></param>
+        AttachmentModel Upload(AttachmentModel attachmentModel);
 
         /// <summary>
         /// Used for downloading the data from the Google Drive

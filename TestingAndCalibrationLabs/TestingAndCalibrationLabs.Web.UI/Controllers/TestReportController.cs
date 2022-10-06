@@ -57,7 +57,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async  Task<ActionResult> Index([Bind] TestReportDTO testReportDTO, bool IsSendAndUpload)
+        public IActionResult Index([Bind] TestReportDTO testReportDTO, bool IsSendAndUpload)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 if (IsSendAndUpload)
                 {
-                    var result = await _testReportService.UploadFileAndSendMail(testReportModel, HttpContext.RequestAborted);
+                    var result = _testReportService.UploadFileAndSendMail(testReportModel);
                     if (result != null)
                     {
                         ViewBag.Response =  result.ValidationMessages.Select(x => x.Reason).ToList();
@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 }
                 else
                 {
-                    var result = await _testReportService.UploadFile(testReportModel,HttpContext.RequestAborted);
+                    var result =  _testReportService.UploadFile(testReportModel);
                     if (result != null)
                     {
                         ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();

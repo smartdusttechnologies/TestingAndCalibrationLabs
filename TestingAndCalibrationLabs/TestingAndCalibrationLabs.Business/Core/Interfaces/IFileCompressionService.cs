@@ -8,14 +8,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// <summary>
     /// Service Interface For Image Compress
     /// </summary>
-    public interface IImageCompressService
+    public interface IFileCompressionService
     {
         /// <summary>
         /// This Method Is Used To Compress Images 
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="filePath"></param>
         /// <returns></returns>
-        Task<AttachmentModel> ImageCompress(IFormFile file,CancellationToken cancellationToken);
+        void ImageCompress(IFormFile file,string filePath);
     }
 }

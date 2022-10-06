@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\DownloadedTemp\" />
+    <Folder Include="wwwroot\DownloadedTemp\" />
   </ItemGroup>
 
 </Project>
