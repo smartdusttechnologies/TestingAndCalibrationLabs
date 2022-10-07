@@ -46,6 +46,10 @@
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                     }
+                    else if (item.UiControlTypeName == "ProgressBar")
+                    {
+                        @Html.Partial("~/Views/Common/ProgressBar.cshtml")  
+                    }
                      else if (item.UiControlTypeName == "Calender")
                     {
                          @* <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
