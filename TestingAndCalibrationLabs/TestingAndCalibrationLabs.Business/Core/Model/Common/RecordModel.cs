@@ -18,6 +18,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public List<UiPageMetadataModel> Fields { get; set; }
 
         public List<UiPageDataModel> FieldValues { get; set; }
+        public Node<UiPageMetadataModel> Layout { get; set; }
         #endregion
     }
 

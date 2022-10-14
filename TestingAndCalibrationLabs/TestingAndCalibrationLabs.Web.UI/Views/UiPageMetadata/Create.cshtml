@@ -34,7 +34,7 @@
                 @*@Html.Partial("~/Views/Common/Componenets/Dropdown.cshtml")*@
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label class="form-label"></label>
-                    <select class="form-input " name="LookupCategoryId" id="catagory" asp-for="LookupCategoryId" onchange="category(this)">
+                    <select class="form-input " name="LookupCategoryId" id="catagory" asp-for="ControlCategoryId" onchange="category(this)">
                         <option disabled="disabled" selected>Select Category ...</option>
                         @foreach (var item in ViewBag.Lookups)
                         {

@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
                     <label for="LookupCategoryId" class="form-label"></label>
-                    <select class="form-input " name="LookupCategoryId" id="lookupCategoryId" onchange="category(this)" asp-for="LookupCategoryId">
+                    <select class="form-input " name="ControlCategoryId" id="lookupCategoryId" onchange="category(this)" asp-for="ControlCategoryId">
                         @foreach (var item in ViewBag.LookupCategory)
                         {
                             if (@item.Id == @ViewBag.LookupCategoryId)

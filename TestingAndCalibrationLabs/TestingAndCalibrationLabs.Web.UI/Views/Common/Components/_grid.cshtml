@@ -1,0 +1,52 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordDTO
+
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+    </div>
+</div>
+<div class="table-responsive simple-pagination card shadow border-radius-grid">
+    <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                @foreach (var item in Model.Fields)
+                {
+                    if (item.ControlCategoryName == "DataControl")
+                    {
+                        <th>
+                            @Html.DisplayFor(fieldItem => item.UiControlDisplayName)
+                        </th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FieldValuesForGrid)
+            {
+                <tr>
+                    @foreach (var itemValue in item.Value)
+                    {
+                         <td>
+                            @Html.DisplayTextFor(modelItem => itemValue.Value)
+                        </td>
+                    }
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Key">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Key">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    oTable = $('#gridui').DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
+        scrollX: true,
+    });
+    $('#gridui').keyup(function () {
+        oTable.search($(this).val()).draw();
+    })
+</script>

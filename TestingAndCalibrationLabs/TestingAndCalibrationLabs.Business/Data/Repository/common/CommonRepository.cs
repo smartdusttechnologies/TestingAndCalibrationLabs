@@ -44,14 +44,29 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public RecordModel GetUiPageMetadata(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id, upm.UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, upm.UiControlTypeId, uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
+            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id,
+                                                        upm.UiPageTypeId,
+                                                        upt.[Name] as UiPageTypeName,
+                                                         upm.IsRequired,
+                                                        upm.UiControlTypeId,
+                                                        uct.[Name] as UiControlTypeName,
+                                                        upm.UiControlDisplayName,
+                                                        upm.ParentId,
+                                                        upm.DataTypeId,
+                                                        dt.Name as DataTypeName,
+                                                        uct.ControlCategoryId,
+                                                        l.Name as ControlCategoryName
                                                     From [UiPageMetadata] upm
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
-                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id 
+                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
+                                                    inner join [DataType] dt on upm.DataTypeId = dt.Id
+                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
                                                 where upm.UiPageTypeId=@uiPageId 
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
-                                                    and uct.IsDeleted = 0", new { uiPageId }).ToList();
+                                                    and uct.IsDeleted = 0
+                                                    and dt.IsDeleted = 0
+                                                    and l.IsDeleted = 0", new { uiPageId }).ToList();
             return new RecordModel { UiPageId = uiPageId, Fields = metadata };
         }
 
@@ -70,7 +85,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 values (@UiPageId);
                 SELECT @RecordId = @@IDENTITY";
 
-            string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiControlId, Value, UiPageId, RecordId) 
+            string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, UiPageId, RecordId) 
                 values (@UiControlId, @Value, @UiPageId, @RecordId)";
 
             using IDbConnection db = _connectionFactory.GetConnection;

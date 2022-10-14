@@ -1,0 +1,101 @@
+﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+
+@*<div class="container mt-3">
+    <h2>@Model.Value.UiControlDisplayName</h2>
+    
+
+    <div id="accordion">
+        @foreach (var item in Model.Children)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <a class="btn" data-bs-toggle="collapse" href="#@item.Value.Id">
+                        @item.Value.UiControlDisplayName
+                    </a>
+                </div>
+                <div id="@item.Value.Id" class="collapse show" data-bs-parent="#accordion">
+                    <div class="card-body">
+                      @foreach(var node in item.Children){
+                            if (node.Value.ControlCategoryName == "DataControl")
+                            {
+                                @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
+                            }
+                            else if (node.Value.ControlCategoryName == "NonDataControl")
+                            {
+                                @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
+                            }
+                      }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>*@
+@*THis is another code*@
+<style>
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+
+
+    <h2>Collapsibles</h2>
+
+    <p>A Collapsible:</p>
+    @foreach (var item in Model.Children)
+        {
+    <button type="button" class="collapsible">@item.Value.UiControlDisplayName</button>
+    <div class="content">
+        @foreach (var node in item.Children)
+        {
+            if (node.Value.ControlCategoryName == "DataControl")
+            {
+                @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
+            }
+            else if (node.Value.ControlCategoryName == "NonDataControl")
+            {
+                @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
+            }
+        }
+    </div>
+        }
+    
+   
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>

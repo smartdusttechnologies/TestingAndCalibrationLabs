@@ -41,18 +41,35 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
-        /// <summary>
-        /// it Contains The Id Of Lookup Category
-        /// </summary>
-        public int? LookupCategoryId { get; set; }
-        /// <summary>
-        /// It Contains the Name Of The Lookup Category
-        /// </summary>
-        public string LookupCategoryName { get; set; }
+        ///// <summary>
+        ///// it Contains The Id Of Lookup Category
+        ///// </summary>
+        //public int? LookupCategoryId { get; set; }
+        ///// <summary>
+        ///// It Contains the Name Of The Lookup Category
+        ///// </summary>
+        //public string LookupCategoryName { get; set; }
         /// <summary>
         /// It Contains The SelectedLookupId From ComboTree
         /// </summary>
         public List<int> SelectedLookupId { get; set; }
+        /// <summary>
+        /// It Contains the Name Of The Lookup Category
+        /// </summary>
+        public string ControlCategoryName { get; set; }
+        /// <summary>
+        /// It Contains The SelectedLookupId From ComboTree
+        /// </summary>
+        public int? ControlCategoryId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ParentId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Position { get; set; }
         /// <summary>
         /// It Contains The List Of UiPageMetadataCharacteristics For Ui Page Metadata
         /// </summary>

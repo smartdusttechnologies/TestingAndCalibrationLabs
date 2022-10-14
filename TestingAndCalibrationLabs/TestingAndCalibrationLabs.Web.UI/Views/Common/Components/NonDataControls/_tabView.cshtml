@@ -1,0 +1,273 @@
+﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+@*<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        @foreach (var item in Model.Children)
+        {    
+            <button class="nav-link " id="nav-@item.Value.Id" data-bs-toggle="tab" data-bs-target="#nav-@item.Value.Id" type="button" role="tab" aria-controls="nav-@item.Value.Id" aria-selected="false">@item.Value.UiControlDisplayName</button>
+            }
+         <button class="nav-link active" id="nav-55" data-bs-toggle="tab" data-bs-target="#nav-55" type="button" role="tab" aria-controls="nav-55" aria-selected="true">Home</button>
+      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+        @* <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+        
+    </div>
+</nav>*@
+@*<div class="tab-content" id="nav-tabContent">
+    @foreach (var item in Model.Children)
+    {
+        <div class="tab-pane fade " id="nav-@item.Value.Id" role="tabpanel" aria-labelledby="nav-@item.Value.Id">
+           @foreach (var node in item.Children)
+            {
+                @if (node.Value.ControlCategoryName == "DataControl")
+                {
+                    @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
+                }
+                else if (@node.Value.ControlCategoryName == "NonDataControl")
+                {
+                    @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
+                }
+            }
+        </div>
+    }*@
+    @* <div class="tab-pane fade show active" id="nav-55" role="tabpanel" aria-labelledby="nav-55">This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">This is some placeholder content the profile tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
+   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">This is some placeholder content the Contact tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
+
+    </div> *@
+@*<style>
+   /* * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Open Sans";
+        background: #2c3e50;
+        color: #ecf0f1;
+        line-height: 1.618em;
+    }*/
+
+    .wrapper {
+        max-width: 50rem;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .tabs {
+        position: relative;
+        margin: 3rem 0;
+        background: #1abc9c;
+        height: 14.75rem;
+    }
+
+        .tabs::before,
+        .tabs::after {
+            content: "";
+            display: table;
+        }
+
+        .tabs::after {
+            clear: both;
+        }
+
+    .tab {
+        float: left;
+    }
+
+    .tab-switch {
+        display: none;
+    }
+
+    .tab-label {
+        position: relative;
+        display: block;
+        line-height: 2.75em;
+        height: 3em;
+        padding: 0 1.618em;
+        background: #1abc9c;
+        border-right: 0.125rem solid #16a085;
+        color: #fff;
+        cursor: pointer;
+        top: 0;
+        transition: all 0.25s;
+    }
+
+        .tab-label:hover {
+            top: -0.25rem;
+            transition: top 0.25s;
+        }
+
+    .tab-content {
+        height: 12rem;
+        position: absolute;
+        z-index: 1;
+        top: 2.75em;
+        left: 0;
+        padding: 1.618rem;
+        background: #fff;
+        color: #2c3e50;
+        border-bottom: 0.25rem solid #bdc3c7;
+        opacity: 0;
+        transition: all 0.35s;
+    }
+
+    .tab-switch:checked + .tab-label {
+        background: #fff;
+        color: #2c3e50;
+        border-bottom: 0;
+        border-right: 0.125rem solid #fff;
+        transition: all 0.35s;
+        z-index: 1;
+        top: -0.0625rem;
+    }
+
+    .tab-switch:checked + label + .tab-content {
+        z-index: 2;
+        opacity: 1;
+        transition: all 0.35s;
+    }
+</style>
+<div class="wrapper">
+    <div class="tabs">
+    @foreach (var item in Model.Children)
+    {
+            <div class="tab">
+                <input type="radio" name="css-tabs" id="@item.Value.Id"  class="tab-switch">
+                <label for="@item.Value.Id" class="tab-label">@item.Value.UiControlDisplayName</label>
+         
+                <div class="tab-content">
+                    @foreach (var node in item.Children)
+                    {
+                        @if (node.Value.ControlCategoryName == "DataControl")
+                        {
+                            @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
+                        }
+                        else if (@node.Value.ControlCategoryName == "NonDataControl")
+                        {
+                            @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
+                        }
+                    }
+            </div>
+            
+            </div>
+     }
+      
+    </div>
+    <p>Example line outside of tab box</p>
+</div>*@
+@*
+                            way 3rd *@
+<style>
+    .tabs {
+  display: flex;
+  flex-wrap: wrap;
+  height: 300px;
+  width: 500px;
+}
+ 
+.tabs label {
+  order: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  margin-right: 0.2rem;
+  cursor: pointer;
+  background-color: pink;
+  font-weight: bold;
+  transition: background ease 0.3s;
+}
+ 
+.tabs .tab {
+  order: 9;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  display: none;
+  padding: 1rem;
+  background: #fff;
+  padding: 20px;
+  box-shadow: -10px 10px 0px 0px black;
+}
+ 
+.tabs input[type="radio"] {
+  display: none;
+}
+ 
+.tabs input[type="radio"]:checked + label {
+  background: #fff;
+}
+ 
+.tabs input[type="radio"]:checked + label + .tab {
+  display: block;
+}
+ 
+/*media (max-width: 465px) {
+  .tabs .tab,
+  .tabs label {
+   order: initial;
+  }
+ 
+  .tabs label {
+    width: 100%;
+    margin-left: 50px;
+  }
+}
+ 
+body {
+  background: pink;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: 10vh;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  max-width: 60rem;
+  margin: 0 auto;
+  font-size: 110%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    }*/
+</style>
+    <div class="tabs">
+
+    @foreach (var item in Model.Children)
+    {
+        <input type="radio" name="tabs" id="@item.Value.Id" checked="checked">
+        <label for="@item.Value.Id">@item.Value.UiControlDisplayName</label>
+        <div class="tab">
+        @foreach (var node in item.Children)
+            {
+                @if (node.Value.ControlCategoryName == "DataControl")
+                {
+                    @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
+                }
+                else if (@node.Value.ControlCategoryName == "NonDataControl")
+                {
+                    @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
+                }
+            }
+        
+        </div>
+    }
+        
+           @* <h1>First Tab Content</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        
+
+        <input type="radio" name="tabs" id="tabtwo">
+        <label for="tabtwo">Second Tab</label>
+        <div class="tab">
+            <h1>Second Tab Content</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+
+        <input type="radio" name="tabs" id="tabthree">
+        <label for="tabthree">Third Tab</label>
+        <div class="tab">
+            <h1>Third tab content</h1>
+            <p>hfioezhogehzioghz</p>
+        </div>*@
+    </div>

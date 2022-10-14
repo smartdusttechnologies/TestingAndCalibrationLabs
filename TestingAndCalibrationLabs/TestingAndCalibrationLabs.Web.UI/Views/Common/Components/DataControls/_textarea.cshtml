@@ -1,0 +1,6 @@
+﻿@model TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel
+<div class="form-group" style="margin-left:40px">
+    <label asp-for="@Model.UiControlDisplayName">@Model.UiControlDisplayName</label>
+    <textarea id="@Model.Id" title="@Model.UiControlDisplayName" @Model.IsRequired rows="4" cols="50" ></textarea>
+    <span asp-validation-for="@Model.UiControlDisplayName" class="text-danger"></span>
+</div>

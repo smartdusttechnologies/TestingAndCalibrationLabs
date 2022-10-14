@@ -1,0 +1,34 @@
+﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+
+    @if(Model.Value.UiControlTypeName == "file"){
+        @Html.Partial("~/Views/Common/Components/DataControls/_file.cshtml",Model.Value)
+    }
+    else if(Model.Value.UiControlTypeName == "textarea"){
+    @Html.Partial("~/Views/Common/Components/DataControls/_textarea.cshtml",Model.Value)
+    }
+    else if(Model.Value.UiControlTypeName == "text"){
+        @Html.Partial("~/Views/Common/Components/DataControls/_text.cshtml",Model.Value)
+    }
+else if (Model.Value.UiControlTypeName == "checkbox")
+{
+        @Html.Partial("~/Views/Common/Components/DataControls/_checkbox.cshtml",Model.Value)
+    }
+    else if(Model.Value.UiControlTypeName == "email"){
+        @Html.Partial("~/Views/Common/Components/DataControls/_email.cshtml",Model.Value)
+    }
+    else if(Model.Value.UiControlTypeName == "button"){
+        @Html.Partial("~/Views/Common/Components/DataControls/_button.cshtml",Model.Value)
+    }
+    else if(Model.Value.UiControlTypeName == "radio"){
+        @Html.Partial("~/Views/Common/Components/DataControls/_radio.cshtml",Model.Value)
+}
+else if (Model.Value.UiControlTypeName == "dropdown")
+{
+
+    @Html.Partial("~/Views/Common/Components/DataControls/_dropdown.cshtml",Model)
+}
+
+    
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

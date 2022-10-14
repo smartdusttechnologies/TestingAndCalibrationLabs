@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
@@ -20,5 +21,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="tests"></param>
         /// <returns></returns>
         string SelectedOptionSort(List<ListSorterModel> tests);
+        IEnumerable<Node<ListSorterModel>> HirearichyCreate(List<ListSorterModel> listSorterModels);
     }
 }

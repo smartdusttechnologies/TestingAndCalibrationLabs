@@ -1,0 +1,16 @@
+﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+
+@if (@Model.Value.UiControlTypeName == "processStatus")
+{
+    @Html.Partial("~/Views/Common/Components/NonDataControls/_processStatus.cshtml",Model)
+}
+else if (@Model.Value.UiControlTypeName == "tabs")
+{
+
+    @Html.Partial("~/Views/Common/Components/NonDataControls/_tabView.cshtml",Model)
+}
+else if (@Model.Value.UiControlTypeName == "collapsableSection")
+{
+
+    @Html.Partial("~/Views/Common/Components/NonDataControls/_collapsableSection.cshtml",Model)
+}

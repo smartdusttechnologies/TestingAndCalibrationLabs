@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -59,22 +62,22 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="index"></param>
-        /// <param name="tests"></param>
-        public void returnChildern(int id, int index,List<ListSorterModel> tests)
+        /// <param name="listSorterModels"></param>
+        public void returnChildern(int id, int index,List<ListSorterModel> listSorterModels)
         {
-            for (var i = index + 1; i < tests.ToArray().Length; i++)
+            for (var i = index + 1; i < listSorterModels.ToArray().Length; i++)
             {
-                if (id == tests[i].ParentId)
+                if (id == listSorterModels[i].ParentId)
                 {
                     jsonData += ",subs:[";
-                    while (i < tests.ToArray().Length)
+                    while (i < listSorterModels.ToArray().Length)
                     {
-                        if (tests[i].ParentId == id)
+                        if (listSorterModels[i].ParentId == id)
                         {
                             if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += ",";
-                            jsonData += "{id:" + tests[i].Id + ",title:`" + tests[i].Name + "`";
+                            jsonData += "{id:" + listSorterModels[i].Id + ",title:'" + listSorterModels[i].Name + "'";
                             //Check for child
-                            returnChildern(tests[i].Id, index + 1,tests);
+                            returnChildern(listSorterModels[i].Id, index + 1, listSorterModels);
                             jsonData += "}";
                         }
                         i++;
@@ -86,14 +89,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Create A Json Object For Selected List
         /// </summary>
-        /// <param name="tests"></param>
+        /// <param name="listSorterModels"></param>
         /// <returns></returns>
-        public string SelectedOptionSort(List<ListSorterModel> tests)
+        public string SelectedOptionSort(List<ListSorterModel> listSorterModels)
         {
             string jsonData = "[";
-            foreach(var item in tests)
+            foreach(var item in listSorterModels)
             {
-                if (tests.First() == item)
+                if (listSorterModels.First() == item)
                 {
                     jsonData += item.Id;
                 }
@@ -105,6 +108,16 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             jsonData += "]";
             return jsonData;
+        }
+        public IEnumerable<Node<ListSorterModel>> HirearichyCreate (List<ListSorterModel> listSorterModels)
+        {
+            var hierarchy = listSorterModels.Hierarchize(
+             0, // The "root level" key. We're using -1 to indicate root level.
+             f => f.Id, // The ID property on your object
+             f => f.ParentId,// The property on your object that points to its parent
+            f => f.Position // The property on your object that specifies the order within its parent
+            );
+            return hierarchy;
         }
     }
 }
