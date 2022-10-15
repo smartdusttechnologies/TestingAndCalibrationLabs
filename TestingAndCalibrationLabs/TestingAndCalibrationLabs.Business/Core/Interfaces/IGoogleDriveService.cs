@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using TestingAndCalibrationLabs.Business.Core.Model;
+﻿using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {

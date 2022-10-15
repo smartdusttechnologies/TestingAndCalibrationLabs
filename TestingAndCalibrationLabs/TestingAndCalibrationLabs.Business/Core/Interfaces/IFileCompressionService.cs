@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     /// <summary>
-    /// Service Interface For Image Compress
+    /// Service Interface For file Compression
     /// </summary>
     public interface IFileCompressionService
     {
