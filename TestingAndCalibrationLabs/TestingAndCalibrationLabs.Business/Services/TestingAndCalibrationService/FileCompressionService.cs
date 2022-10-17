@@ -6,10 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
-using TestingAndCalibrationLabs.Business.Core.Model;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -19,14 +16,15 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class FileCompressionService : IFileCompressionService
     {
         private readonly Dictionary<string, string> AllowedFileTypesForCompression = new Dictionary<string, string>()
-            {
-                {".png", "image/png"},
-                {".jpg", "image/jpeg"},
-                {".jpeg", "image/jpeg"},
-                {".gif", "image/gif"}
-            };
+        {
+            {".png", "image/png"},
+            {".jpg", "image/jpeg"},
+            {".jpeg", "image/jpeg"},
+            {".gif", "image/gif"}
+        };
         private readonly IWebHostEnvironment _WebHostingEnviroment;
         public readonly IConfiguration _configuration;
+
         /// <summary>
         /// Cunstructor
         /// </summary>
@@ -75,8 +73,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                //TODO: log the error and send the original file back
             }
             return;
         }

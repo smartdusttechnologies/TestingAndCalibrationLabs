@@ -13,7 +13,6 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using Google.Apis.Download;
 using TestingAndCalibrationLabs.Business.Common;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService
 {
@@ -24,18 +23,18 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
     {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IFileCompressionService _imageCompressService;
+        private readonly IFileCompressionService _fileCompressService;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="hostingEnvironment"></param>
         /// <param name="configuration"></param>
-        /// <param name="imageCompressService"></param>
-        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IFileCompressionService imageCompressService)
+        /// <param name="fileCompressService"></param>
+        public GoogleDriveService(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IFileCompressionService fileCompressService)
         {
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
-            _imageCompressService = imageCompressService;
+            _fileCompressService = fileCompressService;
         }
 
         #region Public Methods
@@ -45,10 +44,10 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// </summary>
         /// <param name="attachmentModel"></param>
         /// <param name="cancellationToken"></param>
-        
+
         public AttachmentModel Upload(AttachmentModel attachmentModel)
         {
-            var attachment =  UploadFileInternal(attachmentModel);
+            var attachment = UploadFileInternal(attachmentModel);
             return attachment;
         }
         /// <summary>
@@ -80,6 +79,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         }
 
         #endregion
+
         #region Private Methods
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             if (files != null && files.Any())
             {
                 var folderName = files.Where(x => x.Name == fileMetadata.Name).FirstOrDefault();
-                if (folderName != null) 
+                if (folderName != null)
                     return folderName.Id;
             }
 
@@ -149,7 +149,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
         /// <param name="attachmentModel"></param>
-        
+
         private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
         {
             //Send File to Compress Image
@@ -157,7 +157,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
             string filePath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
 
-            _imageCompressService.ImageCompression(attachmentModel.DataUrl,filePath );
+            _fileCompressService.ImageCompression(attachmentModel.DataUrl, filePath);
             attachmentModel.FilePath = filePath;
             string uploadsFolder = CreateFolder();
             //var fileName = compressedImage.FileName;
