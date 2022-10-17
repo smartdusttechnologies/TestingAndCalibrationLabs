@@ -49,12 +49,8 @@ namespace TestingAndCalibrationLabs.Business.Services
 
 
             ImageUrl = file.FileName;
-            string FilePathDelete = Path.Combine(_WebHostingEnviroment.WebRootPath, _configuration["DownloadData:FolderName"], file.FileName);
-            if (File.Exists(FilePathDelete))
-            {
-                File.Delete(FilePathDelete);
-            }
-             try
+            
+            try
             {
                 using (var imgData = new FileStream(filePath, FileMode.Create))
                 {

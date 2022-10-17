@@ -94,14 +94,14 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             UserCredential credential;
 
             //TODO: need to see if the client secret file can be stored in some other place.
-            using (var stream = new FileStream(Path.Combine(_hostingEnvironment.WebRootPath, "client_secret_373443832187-a5fj833jc592dm3unjuan02ekoecv67t.apps.googleusercontent.com.json"),
+            var FolderPath = Directory.GetFiles(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["SecretFiles:FolderName"]), "*.json");
+            using (var stream = new FileStream(Path.Combine(FolderPath.FirstOrDefault()),
                 FileMode.Open, FileAccess.Read))
             {
                 string FilePath = Path.Combine(_hostingEnvironment.WebRootPath, "DriveServiceCredentials.json");
                 //TODO: What is the user string below in parameter?
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.FromStream(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
             }
-
             //create Drive API service.
             DriveService service = new DriveService(new BaseClientService.Initializer()
             {
