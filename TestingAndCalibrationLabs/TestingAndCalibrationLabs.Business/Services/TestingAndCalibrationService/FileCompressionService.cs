@@ -43,11 +43,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public void ImageCompression(IFormFile file, string filePath)
         {
-            string ImageUrl;
-
-
-            ImageUrl = file.FileName;
-            
             try
             {
                 using (var imgData = new FileStream(filePath, FileMode.Create))
