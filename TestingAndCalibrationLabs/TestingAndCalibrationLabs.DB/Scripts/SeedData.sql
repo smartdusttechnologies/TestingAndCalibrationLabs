@@ -210,13 +210,14 @@ BEGIN
     INSERT INTO [dbo].[UiNavigationCategory]
                ([Id]
 		       ,[Name],
-				[Order]
+				[Orders]
 			   ,[IsDeleted])
          VALUES
                (1, 'Survey',2, 0),
 		       (2, 'Home',1, 0),
 		       (1002, 'Settings',3, 0),
-			   (1003,'Profile',4,0)
+			   (1003,'Profile',4,0),
+			   (1004,'Notifications',5,0)
 			   
 
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
