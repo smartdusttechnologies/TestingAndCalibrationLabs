@@ -83,6 +83,35 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             result.Layout = hierarchy;
             result.FieldValuesForGrid = record.FieldValues;
             return base.View(result);
+        }[HttpGet]
+        public ActionResult SampleProgressStatus(int id)
+        {
+            string data;
+            //StreamReader r = new StreamReader(Path.Combine(_hostingEnviroment.WebRootPath, "CUIJson.json"));
+
+
+            //   data = r.ReadToEnd();
+            //source = JsonSerializer.Deserialize<List<Person>>(json);
+            var uiPageId = id;
+            var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
+
+            var hierarchy = pageMetadata.Fields.Hierarchize(
+             0, // The "root level" key. We're using -1 to indicate root level.
+             f => f.Id, // The ID property on your object
+             f => f.ParentId,// The property on your object that points to its parent
+            f => f.Position // The property on your object that specifies the order within its parent
+
+             );
+
+            var records = _commonService.GetRecords(id);
+            var record= _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(records);
+            //record.Fields = record.Fields.Take(10).ToList();
+
+            //var resultJson = JsonConvert.DeserializeObject(json);
+            var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            result.Layout = hierarchy;
+            result.FieldValuesForGrid = record.FieldValues;
+            return base.View(result);
         }
         /// <summary>
         /// Inseting details for common

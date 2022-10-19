@@ -159,8 +159,8 @@
     .tabs {
   display: flex;
   flex-wrap: wrap;
-  height: 300px;
-  width: 500px;
+  height: inherit;
+  width: inherit;
 }
  
 .tabs label {
@@ -185,7 +185,7 @@
   padding: 1rem;
   background: #fff;
   padding: 20px;
-  box-shadow: -10px 10px 0px 0px black;
+  /*box-shadow: -10px 10px 0px 0px black;*/
 }
  
 .tabs input[type="radio"] {
@@ -232,8 +232,13 @@ body {
 
     @foreach (var item in Model.Children)
     {
+        @if(Model.Children.First() == item){
         <input type="radio" name="tabs" id="@item.Value.Id" checked="checked">
         <label for="@item.Value.Id">@item.Value.UiControlDisplayName</label>
+        }else {
+            <input type="radio" name="tabs" id="@item.Value.Id" >
+            <label for="@item.Value.Id">@item.Value.UiControlDisplayName</label>
+        }
         <div class="tab">
         @foreach (var node in item.Children)
             {
