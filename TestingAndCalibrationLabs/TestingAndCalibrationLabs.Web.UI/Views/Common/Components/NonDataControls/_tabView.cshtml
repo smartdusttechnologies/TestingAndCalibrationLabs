@@ -1,21 +1,21 @@
 ﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
-@*<nav>
+<nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         @foreach (var item in Model.Children)
         {    
-            <button class="nav-link " id="nav-@item.Value.Id" data-bs-toggle="tab" data-bs-target="#nav-@item.Value.Id" type="button" role="tab" aria-controls="nav-@item.Value.Id" aria-selected="false">@item.Value.UiControlDisplayName</button>
+            <button class="nav-link " id="nav-@item.Value.Id-tab" data-bs-toggle="tab" data-bs-target="#nav-@item.Value.Id" type="button" role="tab" aria-controls="nav-@item.Value.Id" aria-selected="false">@item.Value.UiControlDisplayName</button>
             }
-         <button class="nav-link active" id="nav-55" data-bs-toggle="tab" data-bs-target="#nav-55" type="button" role="tab" aria-controls="nav-55" aria-selected="true">Home</button>
+         <button class="nav-link active" id="nav-55-tab" data-bs-toggle="tab" data-bs-target="#nav-55" type="button" role="tab" aria-controls="nav-55" aria-selected="true">Home</button>
       <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-        @* <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
         
     </div>
-</nav>*@
-@*<div class="tab-content" id="nav-tabContent">
+</nav>
+<div class="tab-content" id="nav-tabContent">
     @foreach (var item in Model.Children)
     {
-        <div class="tab-pane fade " id="nav-@item.Value.Id" role="tabpanel" aria-labelledby="nav-@item.Value.Id">
-           @foreach (var node in item.Children)
+        <div class="tab-pane fade " id="nav-@item.Value.Id" role="tabpanel" aria-labelledby="nav-@item.Value.Id-tab">
+             @foreach (var node in item.Children)
             {
                 @if (node.Value.ControlCategoryName == "DataControl")
                 {
@@ -27,12 +27,12 @@
                 }
             }
         </div>
-    }*@
-    @* <div class="tab-pane fade show active" id="nav-55" role="tabpanel" aria-labelledby="nav-55">This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
+    }
+     <div class="tab-pane fade show active" id="nav-55" role="tabpanel" aria-labelledby="nav-55-tab">This is some placeholder content the Home tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">This is some placeholder content the profile tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">This is some placeholder content the Contact tab's associated content. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling. You can use it with tabs, pills, and any other .nav-powered navigation.</div>
 
-    </div> *@
+    </div> 
 @*<style>
    /* * {
         box-sizing: border-box;
@@ -155,7 +155,7 @@
 </div>*@
 @*
                             way 3rd *@
-<style>
+@*<style>
     .tabs {
   display: flex;
   flex-wrap: wrap;
@@ -274,5 +274,5 @@ body {
         <div class="tab">
             <h1>Third tab content</h1>
             <p>hfioezhogehzioghz</p>
-        </div>*@
-    </div>
+        </div>
+    </div>*@

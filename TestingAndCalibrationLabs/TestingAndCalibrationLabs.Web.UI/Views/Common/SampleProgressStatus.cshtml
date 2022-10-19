@@ -22,7 +22,7 @@
 		}
 
 			.active, .collapsible:hover {
-				background-color: #555;
+				/*background-color: #555;*/
 			}
 
 		.content {
@@ -165,17 +165,18 @@
 				<div class="px-0 pt-4 pb-0 mt-3 mb-3">
 					<form id="form">
 						<ul id="progressbar">
-							<li class="active" id="step1">
+							<li class="active btn-step" id="step1">
+								<p class="btn-select" hidden>1</p>
 								<strong>Step 1</strong>
 							</li>
-							<li id="step2"><strong>Step 2</strong></li>
-							<li id="step3"><strong>Step 3</strong></li>
-							<li id="step4"><strong>Step 4</strong></li>
+							<li id="step2" class="btn-step"><p class="btn-select" hidden>2</p><strong>Step 2</strong></li>
+							<li id="step3" class="btn-step"><p class="btn-select" hidden>3</p><strong>Step 3</strong></li>
+							<li id="step4" class="btn-step"><p class="btn-select" hidden>4</p><strong>Step 4</strong></li>
 						</ul>
 						<div class="progress">
 							<div class="progress-bar"></div>
 						</div> <br>
-						<fieldset>
+						<fieldset class="sdt">
 							<h2>Welcome To GFG Step 1</h2>
 							<div class="row ms-1 me-1">
 								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
@@ -346,8 +347,50 @@
 		var current = 1;
 		var steps = $("fieldset").length;
 
+		
 		setProgressBar(current);
+		$(".btn-step").click(function () {
+			
+			currentGfgStep = $(this).children(".btn-select");
+			var xt = currentGfgStep[0].innerText;
+			console.log(xt);
+			//var fin = xt - current;
+			//console.log(fin);
+			currentGfgStep.css({
+				'display': 'none',
+				'position': 'relative'
+			});
+			currentGfgStep = $(".sdt");
+			
+			for(var i = 1; xt>i;i++){
 
+			
+			
+				nextGfgStep = currentGfgStep.next();
+			
+			$("#progressbar li").eq($("fieldset")
+				.index(nextGfgStep)).addClass("active");
+
+			nextGfgStep.show();
+			currentGfgStep.animate({ opacity: 0 }, {
+				step: function (now) {
+					opacity = 1 - now;
+
+					currentGfgStep.css({
+						'display': 'none',
+						'position': 'relative'
+					});
+					nextGfgStep.css({ 'opacity': opacity });
+				},
+				duration: 500
+			});
+			var sd = xt -1;
+			if(i!=sd){
+				currentGfgStep = nextGfgStep;
+			}
+			setProgressBar(xt);
+			}
+		});
 		$(".next-step").click(function () {
 
 			currentGfgStep = $(this).parent();
