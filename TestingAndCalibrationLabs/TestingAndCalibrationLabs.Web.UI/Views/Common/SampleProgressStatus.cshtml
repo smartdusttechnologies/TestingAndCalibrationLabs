@@ -1,13 +1,8 @@
 ﻿@model IEnumerable<ProgressDTO>
-<!DOCTYPE html>
-<html>
 
-<head>
-	<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
-	<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'>
-	</script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
-	</script>
+
+
+	
 	
 
 	<style>
@@ -112,9 +107,7 @@
 			background-color: #2F8D46
 		}
 	</style>
-</head>
 
-<body>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="">
@@ -174,10 +167,10 @@
 			</div>
 		</div>
 	</div>
-</body>
+
 <script>
 	$(document).ready(function () {
-		var currentGfgStep, nextGfgStep, previousGfgStep;
+		var currentGfgStep, nextGfgStep, previousGfgStep,currentStepForClick;
 		var opacity;
 		var current = 1;
 		
@@ -302,7 +295,3 @@
 		})
 	});
 </script>
-
-</html>
-
-

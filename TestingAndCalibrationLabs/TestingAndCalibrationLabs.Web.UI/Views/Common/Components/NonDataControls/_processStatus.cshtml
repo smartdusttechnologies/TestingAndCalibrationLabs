@@ -1,296 +1,307 @@
 ﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0
-    }
+	<style>
+		* {
+			margin: 0;
+			padding: 0
+		}
+		html {
+			height: 100%
+		}
+		h2 {
+			color: #2F8D46;
+		}
+		#form {
+			text-align: center;
+			position: relative;
+			margin-top: 20px
+		}
+			#form fieldset {
+				
+				background: white;
+				border: 0 none;
+				border-radius: 0.5rem;
+				box-sizing: border-box;
+				width: 100%;
+				margin: 0;
+				padding-bottom: 20px;
+				position: relative
+			
+			}
+		.finish {
+			text-align: center
+		}
+		/*#form fieldset:not(:first-of-type) {
+			display: none
+		}*/
+		#form .previous-step, .next-step {
+			width: 100px;
+			font-weight: bold;
+			color: white;
+			border: 0 none;
+			border-radius: 0px;
+			cursor: pointer;
+			padding: 10px 5px;
+			margin: 10px 5px 10px 0px;
+			float: right
+		}
+		.form, .previous-step {
+			background: #616161;
+		}
+		.form, .next-step {
+			background: #2F8D46;
+		}
+		#form .previous-step:hover,
+		#form .previous-step:focus {
+			background-color: #000000
+		}
+		#form .next-step:hover,
+		#form .next-step:focus {
+			background-color: #2F8D46
+		}
+		.text {
+			color: #2F8D46;
+			font-weight: normal
+		}
+		#progressbar {
+			margin-bottom: 30px;
+			overflow: hidden;
+			color: lightgrey
+		}
+			#progressbar .active {
+				color: #2F8D46
+			}
+			#progressbar li:before {
+			text-align: center;
+				width: 50px;
+				height: 50px;
+				line-height: 45px;
+				display: block;
+				font-size: 20px;
+				color: #ffffff;
+				background: lightgray;
+				border-radius: 50%;
+				margin: 0 auto 10px auto;
+				padding:2px
+			}
+			#progressbar li:after {
+				content: '';
+				width: 100%;
+				height: 2px;
+				background: lightgray;
+				position: absolute;
+				left: 0;
+				top: 25px;
+				z-index: -1
+			}
+			#progressbar li.active:before,
+			#progressbar li.active:after {
+				background: #2F8D46
+			}
+		.progress {
+			height: 20px
+		}
+		.progress-bar {
+			background-color: #2F8D46
+		}
+	</style>
 
-    html {
-        height: 100%
-    }
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="">
+				<div class="px-0 pt-4 pb-0 mt-3 mb-3">
+					<form id="form">
+						<ul id="progressbar">
+							@{
+								int count = 1;
+							}
+							@foreach(var item in Model.Children){
+								@if (Model.Children.First() == item)
+								{
+									<li class="active btn-step" id="step-@item.Value.Id">
+										<input class="btn-select" type="hidden" value="fieldset_@item.Value.Id" name="@count">
+										<strong>@item.Value.UiControlDisplayName</strong>
+									</li>
+									++count;
 
-    h2 {
-        color: #2F8D46;
-    }
+								}else{
+									<li id="step-@item.Value.Id" class="btn-step">
+									<input class="btn-select" type="hidden" value="fieldset_@item.Value.Id" name="@count">
+										<strong>@item.Value.UiControlDisplayName</strong>
+									</li>
+									++@count;
 
-    #form {
-        text-align: center;
-        position: relative;
-        margin-top: 20px
-    }
+								}
+							}
+							</ul>
+						<div class="progress">
+							<div class="progress-bar"></div>
+						</div> <br>
+						@foreach(var item in Model.Children){
 
-        #form fieldset {
-            background: white;
-            border: 0 none;
-            border-radius: 0.5rem;
-            box-sizing: border-box;
-            width: 100%;
-            margin: 0;
-            padding-bottom: 20px;
-            position: relative
-        }
-
-    .finish {
-        text-align: center
-    }
-
-    #form fieldset:not(:first-of-type) {
-        display: none
-    }
-
-    #form .previous-step, .next-step {
-        width: 100px;
-        font-weight: bold;
-        color: white;
-        border: 0 none;
-        border-radius: 0px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px 10px 0px;
-        float: right
-    }
-    .form, .previous-step {
-        background: #616161;
-    }
-    .form, .next-step {
-        background: #2F8D46;
-    }
-    #form .previous-step:hover,
-    #form .previous-step:focus {
-        background-color: #000000
-    }
-    #form .next-step:hover,
-    #form .next-step:focus {
-        background-color: #2F8D46
-    }
-    /*.text {
-        color: #2F8D46;
-        font-weight: normal
-    }*/
-    #progressbar {
-        margin-bottom: 30px;
-        overflow: hidden;
-        color: lightgrey
-    }
-        #progressbar .active {
-            color: #2F8D46
-        }
-        #progressbar li {
-            list-style-type: none;
-            font-size: 15px;
-            width: 25%;
-            float: left;
-            position: relative;
-            font-weight: 400
-        }
-        
-        #progressbar #step1:before {
-            content: "1"
-        }
-
-        #progressbar #step2:before {
-            content: "2"
-        }
-        
-        #progressbar #step3:before {
-            content: "3"
-        }
-
-        #progressbar #step4:before {
-            content: "4"
-        }
-
-        #progressbar li:before {
-            width: 50px;
-            height: 50px;
-            line-height: 45px;
-            display: block;
-            font-size: 20px;
-            color: #ffffff;
-            background: lightgray;
-            border-radius: 50%;
-            margin: 0 auto 10px auto;
-            padding: 2px
-        }
-
-        #progressbar li:after {
-            content: '';
-            width: 100%;
-            height: 2px;
-            background: lightgray;
-            position: absolute;
-            left: 0;
-            top: 25px;
-            z-index: -1
-        }
-
-        #progressbar li.active:before,
-        #progressbar li.active:after {
-            background: #2F8D46
-        }
-
-    .progress {
-        height: 20px
-    }
-
-    .progress-bar {
-        background-color: #2F8D46
-    }</style>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="">
-            <div class="px-0 pt-4 pb-0 mt-3 mb-3">
-                <form id="form">
-                    <ul id="progressbar">
-                        <li class="active" id="step1">
-                            <strong>Step 1</strong>
-                        </li>
-                        @foreach (var item in Model.Children)
-                        {
-                            <li id="@item.Value.Id"><strong>@item.Value.UiControlDisplayName</strong></li>
-                        }
-
-                    </ul>
-                    <div class="progress">
-                        <div class="progress-bar"></div>
-                    </div> <br>
-                    <fieldset>Welcome THis is step 1
-                        <input type="button" name="next-step"
-                               class="next-step" value="Next Step" />
-                    </fieldset>
-                    @foreach (var item in @Model.Children)
-                    {
-                        <fieldset>
-
-
-                            @foreach (var node in item.Children)
-                            {
-                                if (node.Value.ControlCategoryName == "DataControl")
-                                {
-                                    @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
-                                }
-                                else if (node.Value.ControlCategoryName == "NonDataControl")
-                                {
-                                    @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
-                                }
-                               
-                            }
-                            @if (@Model.Children.First() == item)
-                            {
-                                <input type="button" name="next-step"
-                               class="next-step" value="Next Step" />
-                            }
-                            else if(Model.Children.First() != item && Model.Children.Last() == item){
-                                <input type="button" name="next-step"
-                               class="next-step" value="Next Step" />
-                                <input type="button" name="previous-step"
-                               class="previous-step"
-                               value="Previous Step" />
-                            }
-                            else if(Model.Children.Last() == item){
-                                <input type="button" name="previous-step"
-                               class="previous-step"
-                               value="Previous Step" />
-                            }
-                        </fieldset>
-                    }
-                   
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+						<fieldset id="fieldset_@item.Value.Id">
+							 @foreach (var node in item.Children)
+            {
+                @if (node.Value.ControlCategoryName == "DataControl")
+                {
+                    @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
+                }
+                else if (@node.Value.ControlCategoryName == "NonDataControl")
+                {
+                    @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
+                }
+            }
+								@if (Model.Children.First() == item)
+								{
+									<input type="button" name="next-step"
+								   class="next-step" value="Next Step" />
+								}else if(Model.Children.Last()==item){
+									<input type="button" name="previous-step"
+								   class="previous-step"
+								   value="Previous Step" />
+								}else {
+									<input type="button" name="next-step"
+								   class="next-step" value="Next Step" />
+									<input type="button" name="previous-step"
+								   class="previous-step"
+								   value="Previous Step" />
+								}
+							</fieldset>
+						}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <script>
-    var count = 1;
-    $(document).ready(function () {
-        
-    //var modelData = JSON.parse('@Json.Serialize(Model)');
-    //    console.log(modelData);
-    //    modelData.children.forEach(myFunction);
-    //   var strings = "<style>#progressbar {margin-bottom: 30px;overflow: hidden;color: lightgrey}#progressbar.active {color: #2F8D46}#progressbar li {list-style-type: none;font-size: 15px;width: 25%;float: left;position: relative;font-weight: 400 }";
-        
-    //   function myFunction(item) {
-        
-    //    console.log(count);
-    //        var idse = item.value.id;
-    //        console.log(idse);
-    //        var sdt = "#progressbar #"+idse+":before {content: '"+count+"'} ";
-    //        strings += sdt;
-    //        console.log(strings);
-    //        count += 1;
-    //}
-    //    strings += "#progressbar li:before {width: 50px;height: 50px;line - height: 45px;display: block;font - size: 20px;color: #ffffff;background: lightgray;border - radius: 50 %;margin: 0 auto 10px auto;padding: 2px}#progressbar li: after { content: '';   width: 100 %;  height: 2px; background: lightgray; position: absolute;  left: 0;  top: 25px;  z- index: -1     } #progressbar li.active: before,#progressbar li.active: after {background: #2F8D46}.progress{height: 20px}.progress - bar {background- color: #2F8D46 }</style>";
-    
-    //    console.log(strings);
-    //    $('body').append(strings);
-        var currentGfgStep, nextGfgStep, previousGfgStep;
-        var opacity;
-        var current = 1;
-        var steps = $("fieldset").length;
+	$(document).ready(function () {
+		var currentGfgStep, nextGfgStep, previousGfgStep,currentStepForClick;
+		var opacity;
+		var current = 1;
+		
 
-        setProgressBar(current);
+		var modelData = JSON.parse('@Json.Serialize(Model)');
+		var steps = modelData.children.length;
+		var percentofWidth = parseFloat(100 / steps)  ;
+		percentofWidth = percentofWidth.toFixed();
+		var str = "#progressbar li {list-style-type:none;font-size:15px;width:" + percentofWidth + "%;float:left;position: relative;font-weight:400; text-align:center;}";
+		var utrstyle = document.createElement("style")
+		utrstyle.innerText = str;
+		document.head.appendChild(utrstyle);
+		debugger;
+		for (var i = 0; steps > i; i++) {
+			if(i==0){
+				var fieldId = "#fieldset_" + modelData.children[i].value.id;
+				currentGfgStep = $(fieldId);
+				currentGfgStep.show();
+			}
+			else{
+				var fieldId = "#fieldset_" + modelData.children[i].value.id;
+				$(fieldId).hide();
+			}
+			var stepId = "#step-" + modelData.children[i].value.id;
+			var contentCount = i + 1;
+			var styleOfStep = "#progressbar " + stepId + ":before{content:'" + contentCount + "'} ";
+			var styleSheet = document.createElement("style")
+			styleSheet.innerText = styleOfStep;
+			document.head.appendChild(styleSheet)
+		}
+		setProgressBar(current);
+		function activeCurrentStep(stepNumber){
+			for (var ind = 1; steps > ind; ind++) {
+				var addInStep = stepNumber-1;
+				if(ind<stepNumber){
+					var idOfStep = "#step-" + modelData.children[ind].value.id;
+					var stepMakeActive = $(idOfStep);
+					stepMakeActive.addClass("active");
+				} else if (ind > addInStep) {
+					var idOfStep = "#step-" + modelData.children[ind].value.id;
+					var stepMakeActive = $(idOfStep);
+					stepMakeActive.removeClass("active");
+					
+				}
+			}
+		}
+		$(".btn-step").click(function () {
+			
+			var btnOfStep = $(this).children(".btn-select");
+			var currentFieldSetId = btnOfStep[0].value;
+			debugger;
+			console.log(currentFieldSetId);
+			var stepCount = btnOfStep[0].name;
+			var x = parseInt(stepCount, 10); // you want to use radix 10
+			console.log(x);
+			var idModifiewithHash = "#"+currentFieldSetId;
+			debugger;
+			nextGfgStep = $(idModifiewithHash);
+			debugger;
+			activeCurrentStep(x);
+			currentGfgStep.hide();
+			nextGfgStep.show();
+			setProgressBar(x);
+			current= x;
+			currentGfgStep = nextGfgStep;
+		});
+		$(".next-step").click(function () {
 
-        $(".next-step").click(function () {
+			currentGfgStep = $(this).parent();
+			nextGfgStep = $(this).parent().next();
 
-            currentGfgStep = $(this).parent();
-            nextGfgStep = $(this).parent().next();
+			$("#progressbar li").eq($("fieldset")
+				.index(nextGfgStep)).addClass("active");
 
-            $("#progressbar li").eq($("fieldset")
-                .index(nextGfgStep)).addClass("active");
+			nextGfgStep.show();
+			debugger;
+			currentGfgStep.animate({ opacity: 0 }, {
+				step: function (now) {
+					opacity = 1 - now;
 
-            nextGfgStep.show();
-            currentGfgStep.animate({ opacity: 0 }, {
-                step: function (now) {
-                    opacity = 1 - now;
+					currentGfgStep.css({
+						'display': 'none',
+						'position': 'relative'
+					});
+					nextGfgStep.css({ 'opacity': opacity });
+				},
+				duration: 500
+			});
+			setProgressBar(++current);
+		});
 
-                    currentGfgStep.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    nextGfgStep.css({ 'opacity': opacity });
-                },
-                duration: 500
-            });
-            setProgressBar(++current);
-        });
+		$(".previous-step").click(function () {
 
-        $(".previous-step").click(function () {
+			currentGfgStep = $(this).parent();
+			previousGfgStep = $(this).parent().prev();
 
-            currentGfgStep = $(this).parent();
-            previousGfgStep = $(this).parent().prev();
+			$("#progressbar li").eq($("fieldset")
+				.index(currentGfgStep)).removeClass("active");
 
-            $("#progressbar li").eq($("fieldset")
-                .index(currentGfgStep)).removeClass("active");
+			previousGfgStep.show();
 
-            previousGfgStep.show();
+			currentGfgStep.animate({ opacity: 0 }, {
+				step: function (now) {
+					opacity = 1 - now;
 
-            currentGfgStep.animate({ opacity: 0 }, {
-                step: function (now) {
-                    opacity = 1 - now;
+					currentGfgStep.css({
+						'display': 'none',
+						'position': 'relative'
+					});
+					previousGfgStep.css({ 'opacity': opacity });
+				},
+				duration: 500
+			});
+			setProgressBar(--current);
+		});
 
-                    currentGfgStep.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    previousGfgStep.css({ 'opacity': opacity });
-                },
-                duration: 500
-            });
-            setProgressBar(--current);
-        });
+		function setProgressBar(currentStep) {
+			var percent = parseFloat(100 / steps) * currentStep;
+			percent = percent.toFixed();
+			$(".progress-bar")
+				.css("width", percent + "%")
+		}
 
-        function setProgressBar(currentStep) {
-            var percent = parseFloat(100 / steps) * current;
-            percent = percent.toFixed();
-            $(".progress-bar")
-                .css("width", percent + "%")
-        }
-
-        $(".submit").click(function () {
-            return false;
-        })
-    });
+		$(".submit").click(function () {
+			return false;
+		})
+	});
 </script>
