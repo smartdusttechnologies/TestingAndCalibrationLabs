@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using System;
 using TestingAndCalibrationLabs.Business.Common;
 using System.Security.Cryptography.X509Certificates;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -86,32 +87,40 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }[HttpGet]
         public ActionResult SampleProgressStatus(int id)
         {
-            string data;
-            //StreamReader r = new StreamReader(Path.Combine(_hostingEnviroment.WebRootPath, "CUIJson.json"));
+            //string data;
+            ////StreamReader r = new StreamReader(Path.Combine(_hostingEnviroment.WebRootPath, "CUIJson.json"));
 
 
-            //   data = r.ReadToEnd();
-            //source = JsonSerializer.Deserialize<List<Person>>(json);
-            var uiPageId = id;
-            var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
+            ////   data = r.ReadToEnd();
+            ////source = JsonSerializer.Deserialize<List<Person>>(json);
+            //var uiPageId = id;
+            //var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
 
-            var hierarchy = pageMetadata.Fields.Hierarchize(
-             0, // The "root level" key. We're using -1 to indicate root level.
-             f => f.Id, // The ID property on your object
-             f => f.ParentId,// The property on your object that points to its parent
-            f => f.Position // The property on your object that specifies the order within its parent
+            //var hierarchy = pageMetadata.Fields.Hierarchize(
+            // 0, // The "root level" key. We're using -1 to indicate root level.
+            // f => f.Id, // The ID property on your object
+            // f => f.ParentId,// The property on your object that points to its parent
+            //f => f.Position // The property on your object that specifies the order within its parent
 
-             );
+            // );
 
-            var records = _commonService.GetRecords(id);
-            var record= _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(records);
-            //record.Fields = record.Fields.Take(10).ToList();
+            //var records = _commonService.GetRecords(id);
+            //var record= _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(records);
+            ////record.Fields = record.Fields.Take(10).ToList();
 
-            //var resultJson = JsonConvert.DeserializeObject(json);
-            var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            result.Layout = hierarchy;
-            result.FieldValuesForGrid = record.FieldValues;
-            return base.View(result);
+            ////var resultJson = JsonConvert.DeserializeObject(json);
+            //var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            //result.Layout = hierarchy;
+            //result.FieldValuesForGrid = record.FieldValues;
+            var progressModel = new List<ProgressDTO>();
+            progressModel.Add(new ProgressDTO { Id = 1, DisplayName = "Raj 1" });
+            progressModel.Add(new ProgressDTO { Id = 2, DisplayName = "Raj 2" });
+            progressModel.Add(new ProgressDTO { Id = 3, DisplayName = "Raj 3" });
+            progressModel.Add(new ProgressDTO { Id = 4, DisplayName = "Raj 4" });
+            progressModel.Add(new ProgressDTO { Id = 10, DisplayName = "Raj 5" });
+            //progressModel.Add(new ProgressDTO { Id = 15, DisplayName = "Raj 5k" });
+            //progressModel.Add(new ProgressDTO { Id = 140, DisplayName = "Raj 5j" });
+            return base.View(progressModel);
         }
         /// <summary>
         /// Inseting details for common

@@ -1,4 +1,4 @@
-﻿@model RecordDTO
+﻿@model IEnumerable<ProgressDTO>
 <!DOCTYPE html>
 <html>
 
@@ -8,31 +8,7 @@
 	</script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
 	</script>
-	<style>
-		.collapsible {
-			background-color: #777;
-			color: white;
-			cursor: pointer;
-			padding: 18px;
-			width: 100%;
-			border: none;
-			text-align: left;
-			outline: none;
-			font-size: 15px;
-		}
-
-			.active, .collapsible:hover {
-				/*background-color: #555;*/
-			}
-
-		.content {
-			padding: 0 18px;
-			display: none;
-			overflow: hidden;
-			background-color: #f1f1f1;
-			padding-bottom: 18px;
-		}
-	</style>
+	
 
 	<style>
 		* {
@@ -103,26 +79,6 @@
 			#progressbar .active {
 				color: #2F8D46
 			}
-			#progressbar li {
-				list-style-type: none;
-				font-size: 15px;
-				width: 25%;
-				float: left;
-				position: relative;
-				font-weight: 400
-			}
-			#progressbar #step1:before {
-				content: "1"
-			}
-			#progressbar #step2:before {
-				content: "2"
-			}
-			#progressbar #step3:before {
-				content: "3"
-			}
-			#progressbar #step4:before {
-				content: "4"
-			}
 			#progressbar li:before {
 				width: 50px;
 				height: 50px;
@@ -165,175 +121,54 @@
 				<div class="px-0 pt-4 pb-0 mt-3 mb-3">
 					<form id="form">
 						<ul id="progressbar">
-							<li class="active btn-step" id="step1">
-								<p class="btn-select" hidden>1</p>
-								<strong>Step 1</strong>
-							</li>
-							<li id="step2" class="btn-step"><p class="btn-select" hidden>2</p><strong>Step 2</strong></li>
-							<li id="step3" class="btn-step"><p class="btn-select" hidden>3</p><strong>Step 3</strong></li>
-							<li id="step4" class="btn-step"><p class="btn-select" hidden>4</p><strong>Step 4</strong></li>
-						</ul>
+							@{
+								int count = 1;
+							}
+							@foreach(var item in Model){
+								@if (Model.First() == item)
+								{
+									<li class="active btn-step" id="step-@item.Id">
+										<input class="btn-select" type="hidden" value="fieldset_@item.Id" name="@count">
+										<strong>@item.DisplayName</strong>
+									</li>
+									++count;
+
+								}else{
+									<li id="step-@item.Id" class="btn-step">
+										<input class="btn-select" type="hidden" value="fieldset_@item.Id" name="@count">
+										<strong>@item.DisplayName</strong>
+									</li>
+									++@count;
+
+								}
+							}
+							</ul>
 						<div class="progress">
 							<div class="progress-bar"></div>
 						</div> <br>
-						<fieldset class="sdt">
+						@foreach(var item in Model){
+							
+							<fieldset  id="fieldset_@item.Id">
+							
 							<h2>Welcome To GFG Step 1</h2>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="text" id="fdgg" name="dg" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="username">Username</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="text" id="ffdg" name="dgd" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="password">Password</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="sd" id="fg" name="raj" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="email">Email</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="tel" id="fg" name="sf" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="phone">Phone</label>
-								</div>
-							</div>
-
-							
-
-							<p>A Collapsible:</p>
-							
-								<button type="button" class="collapsible">first Button</button>
-								<div class="content">
-
-								<div class="row ms-1 me-1">
-									<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-										<input class="form-input width-full " type="sd" id="fg" name="raj" placeholder=" " onchange="this.setAttribute('value',this.value)">
-										<label class="form-label" for="email">third</label>
-									</div>
-								</div>
-								<div class="row ms-1 me-1">
-									<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-										<input class="form-input width-full " type="tel" id="fg" name="sf" placeholder=" " onchange="this.setAttribute('value',this.value)">
-										<label class="form-label" for="phone">user</label>
-									</div>
-								</div>
-								</div>
-								<button type="button" class="collapsible">second Button</button>
-								<div class="content">
-									<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="sd" id="fg" name="raj" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="email">second</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="tel" id="fg" name="sf" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="phone">user</label>
-								</div>
-							</div>
-								</div>
-								<button type="button" class="collapsible">third Button</button>
-								<div class="content">
-								<div class="row ms-1 me-1">
-									<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-										<input class="form-input width-full " type="sd" id="fg" name="raj" placeholder=" " onchange="this.setAttribute('value',this.value)">
-										<label class="form-label" for="email">first</label>
-									</div>
-								</div>
-								<div class="row ms-1 me-1">
-									<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-										<input class="form-input width-full " type="tel" id="fg" name="sf" placeholder=" " onchange="this.setAttribute('value',this.value)">
-										<label class="form-label" for="phone">user</label>
-									</div>
-								</div>
-								</div>
-
-
-
-							<input type="button" name="next-step"
+							This Is @item.DisplayName
+								@if (Model.First() == item)
+								{
+									<input type="button" name="next-step"
 								   class="next-step" value="Next Step" />
-						</fieldset>
-						<fieldset>
-							<h2>Welcome To GFG Step 2</h2>
-							@Html.Partial("~/Views/Common/Components/_control.cshtml",Model)
-							<input type="button" name="next-step"
+								}else if(Model.Last()==item){
+									<input type="button" name="previous-step"
+								   class="previous-step"
+								   value="Previous Step" />
+								}else {
+									<input type="button" name="next-step"
 								   class="next-step" value="Next Step" />
-							<input type="button" name="previous-step"
+									<input type="button" name="previous-step"
 								   class="previous-step"
 								   value="Previous Step" />
-						</fieldset>
-						<fieldset>
-							<h2>Welcome To GFG Step 3</h2>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="text" id="fdgg" name="dg" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="username">Username</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="text" id="ffdg" name="dgd" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="password">Password</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="sd" id="fg" name="raj" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="email">Email</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="tel" id="fg" name="sf" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="phone">Phone</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="text" id="fdgg" name="dg" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="username">Username</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="text" id="ffdg" name="dgd" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="password">Password</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="sd" id="fg" name="raj" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="email">Email</label>
-								</div>
-							</div>
-							<div class="row ms-1 me-1">
-								<div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-									<input class="form-input width-full " type="tel" id="fg" name="sf" placeholder=" " onchange="this.setAttribute('value',this.value)">
-									<label class="form-label" for="phone">Phone</label>
-								</div>
-							</div>
-							<input type="button" name="next-step"
-								   class="next-step" value="Final Step" />
-							<input type="button" name="previous-step"
-								   class="previous-step"
-								   value="Previous Step" />
-						</fieldset>
-						<fieldset>
-							<div class="finish">
-								<h2 class="text text-center">
-									<strong>FINISHED</strong>
-								</h2>
-							</div>
-							<input type="button" name="previous-step"
-								   class="previous-step"
-								   value="Previous Step" />
-						</fieldset>
+								}
+							</fieldset>
+						}
 					</form>
 				</div>
 			</div>
@@ -345,51 +180,65 @@
 		var currentGfgStep, nextGfgStep, previousGfgStep;
 		var opacity;
 		var current = 1;
-		var steps = $("fieldset").length;
-
 		
+
+		var modelData = JSON.parse('@Json.Serialize(Model)');
+		var steps = modelData.length;
+		var percentofWidth = parseFloat(100 / modelData.length)  ;
+		percentofWidth = percentofWidth.toFixed();
+		var str = "#progressbar li {list-style-type:none;font-size:15px;width:"+percentofWidth+"%;float:left;position: relative;font-weight:400}";
+		var utrstyle = document.createElement("style")
+		utrstyle.innerText = str;
+		document.head.appendChild(utrstyle);
+		debugger;
+		for(var i=0; modelData.length>i;i++){
+			if(i==0){
+				var fieldId = "#fieldset_"+modelData[0].id;
+				currentGfgStep = $(fieldId);
+				currentGfgStep.show();
+			}
+			var stepId = "#step-" + modelData[i].id;
+			var contentCount = i + 1;
+			var styleOfStep = "#progressbar " + stepId + ":before{content:'" + contentCount + "'}";
+			var styleSheet = document.createElement("style")
+			styleSheet.innerText = styleOfStep;
+			document.head.appendChild(styleSheet)
+		}
 		setProgressBar(current);
+		function activeCurrentStep(stepNumber){
+			for (var ind = 1; modelData.length>ind;ind++){
+				var addInStep = stepNumber-1;
+				if(ind<stepNumber){
+					var idOfStep = "#step-"+modelData[ind].id;
+					var stepMakeActive = $(idOfStep);
+					stepMakeActive.addClass("active");
+				} else if (ind > addInStep) {
+					var idOfStep = "#step-"+modelData[ind].id;
+					var stepMakeActive = $(idOfStep);
+					stepMakeActive.removeClass("active");
+					
+				}
+			}
+		}
 		$(".btn-step").click(function () {
 			
-			currentGfgStep = $(this).children(".btn-select");
-			var xt = currentGfgStep[0].innerText;
-			console.log(xt);
-			//var fin = xt - current;
-			//console.log(fin);
-			currentGfgStep.css({
-				'display': 'none',
-				'position': 'relative'
-			});
-			currentGfgStep = $(".sdt");
-			
-			for(var i = 1; xt>i;i++){
-
-			
-			
-				nextGfgStep = currentGfgStep.next();
-			
-			$("#progressbar li").eq($("fieldset")
-				.index(nextGfgStep)).addClass("active");
-
+			var btnOfStep = $(this).children(".btn-select");
+			var currentFieldSetId = btnOfStep[0].value;
+			debugger;
+			console.log(currentFieldSetId);
+			var stepCount = btnOfStep[0].name;
+			var x = parseInt(stepCount, 10); // you want to use radix 10
+			console.log(x);
+			var idModifiewithHash = "#"+currentFieldSetId;
+			debugger;
+			nextGfgStep = $(idModifiewithHash);
+			debugger;
+			activeCurrentStep(x);
+			currentGfgStep.hide();
 			nextGfgStep.show();
-			currentGfgStep.animate({ opacity: 0 }, {
-				step: function (now) {
-					opacity = 1 - now;
-
-					currentGfgStep.css({
-						'display': 'none',
-						'position': 'relative'
-					});
-					nextGfgStep.css({ 'opacity': opacity });
-				},
-				duration: 500
-			});
-			var sd = xt -1;
-			if(i!=sd){
-				currentGfgStep = nextGfgStep;
-			}
-			setProgressBar(xt);
-			}
+			setProgressBar(x);
+			current= x;
+			currentGfgStep = nextGfgStep;
 		});
 		$(".next-step").click(function () {
 
@@ -400,6 +249,7 @@
 				.index(nextGfgStep)).addClass("active");
 
 			nextGfgStep.show();
+			debugger;
 			currentGfgStep.animate({ opacity: 0 }, {
 				step: function (now) {
 					opacity = 1 - now;
@@ -441,7 +291,7 @@
 		});
 
 		function setProgressBar(currentStep) {
-			var percent = parseFloat(100 / steps) * current;
+			var percent = parseFloat(100 / steps) * currentStep;
 			percent = percent.toFixed();
 			$(".progress-bar")
 				.css("width", percent + "%")
@@ -451,23 +301,6 @@
 			return false;
 		})
 	});
-</script>
-
-<script>
-	var coll = document.getElementsByClassName("collapsible");
-	var i;
-
-	for (i = 0; i < coll.length; i++) {
-		coll[i].addEventListener("click", function () {
-			this.classList.toggle("active");
-			var content = this.nextElementSibling;
-			if (content.style.display === "block") {
-				content.style.display = "none";
-			} else {
-				content.style.display = "block";
-			}
-		});
-	}
 </script>
 
 </html>
