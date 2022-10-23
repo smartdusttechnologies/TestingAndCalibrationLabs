@@ -107,7 +107,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             using (var stream = new FileStream(Path.Combine(FolderPath.FirstOrDefault()),
                 FileMode.Open, FileAccess.Read))
             {
-                string FilePath = Path.Combine(_hostingEnvironment.WebRootPath, "DriveServiceCredentials.json");
+                string FilePath = Path.Combine(_hostingEnvironment.WebRootPath, "DriveServiceCredentials");
                 //TODO: What is the user string below in parameter?
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.FromStream(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(FilePath, true)).Result;
             }
