@@ -55,9 +55,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Data/ file to be uploaded.
         /// </summary>
         public IFormFile DataUrl { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsSuccess { get; set; }
     }
 }

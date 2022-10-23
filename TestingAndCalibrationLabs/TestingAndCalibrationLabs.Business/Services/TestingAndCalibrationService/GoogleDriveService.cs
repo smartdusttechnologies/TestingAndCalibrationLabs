@@ -45,10 +45,19 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// <param name="attachmentModel"></param>
         /// <param name="cancellationToken"></param>
 
-        public AttachmentModel Upload(AttachmentModel attachmentModel)
+        public RequestResult<AttachmentModel> Upload(AttachmentModel attachmentModel)
         {
-            var attachment = UploadFileInternal(attachmentModel);
-            return attachment;
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            try
+            {
+                var result = UploadFileInternal(attachmentModel);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = ex.Message, Severity = ValidationSeverity.Error });
+                return new RequestResult<AttachmentModel>(validationMessages);
+            }
         }
         /// <summary>
         /// To Download file from Google Drive using unique Response Body Id
@@ -150,8 +159,9 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         /// </summary>
         /// <param name="attachmentModel"></param>
 
-        private AttachmentModel UploadFileInternal(AttachmentModel attachmentModel)
+        private RequestResult<AttachmentModel> UploadFileInternal(AttachmentModel attachmentModel)
         {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             //Send File to Compress Image
             string extensionName = Path.GetExtension(attachmentModel.DataUrl.FileName);
             var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
@@ -171,11 +181,10 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             {
                 using (var uploaddataFile = new FileStream(filePath, FileMode.Open))
                 {
-
                     if (uploaddataFile.Length > 200000)
                     {
-                        attachmentModel.IsSuccess = false;
-                        return attachmentModel;
+                        validationMessages.Add(new ValidationMessage { Reason = "Please Select Less Image Size", Severity = ValidationSeverity.Error });
+                        return new RequestResult<AttachmentModel>(validationMessages);
                     }
                     var request = service.Files.Create(driveFile, uploaddataFile, fileMime);
                     request.Fields = "id";
@@ -185,8 +194,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                         throw response.Exception;
                     }
                     attachmentModel.FilePath = request.ResponseBody.Id;
-                    attachmentModel.IsSuccess = true;
-                    return attachmentModel;
+                    return new RequestResult<AttachmentModel>(attachmentModel);
                 }
             }
             finally

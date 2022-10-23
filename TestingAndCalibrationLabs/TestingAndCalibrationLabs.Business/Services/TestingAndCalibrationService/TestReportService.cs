@@ -80,7 +80,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel)
         {
             var attachmentModel =  UploadFile(testReportModel);
-            var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
+
+            if(attachmentModel.IsSuccessful)
+            {
+                var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
+                if (!isReportSentSuccessfully)
+                {
+                    attachmentModel.ValidationMessages = new List<ValidationMessage>
+                    {
+                        new ValidationMessage { Reason = "Unable to send email. Please try again.", Severity = ValidationSeverity.Error }
+                    };
+                }
+            }
             return attachmentModel;
         }
 
@@ -102,22 +113,18 @@ namespace TestingAndCalibrationLabs.Business.Services
                     JobId = testReportModel.JobId,
                     DateTime = testReportModel.DateTime
                 };
-                AttachmentModel dataFilePath =  _googleUploadDownloadService.Upload(attachmentModel);
 
-                List<ValidationMessage> errors = new List<ValidationMessage>();
-                if (dataFilePath.IsSuccess == false)
+                var result =  _googleUploadDownloadService.Upload(attachmentModel);
+                if (result.IsSuccessful)
                 {
-                    errors.Add(new ValidationMessage { Reason = "Please Select Less Image Size", Severity = ValidationSeverity.Error });
-                    return new RequestResult<AttachmentModel>(errors);
+                    //Passing the FilePath value received after upload
+                    testReportModel.FilePath = result.RequestedObject.FilePath;
+
+                    //Saving File to the repository
+                    _testReportRepository.Insert(testReportModel);
                 }
-
-                //Passing the FilePath value received after upload
-                testReportModel.FilePath = dataFilePath.FilePath;
-
-                //Saving File to the repository
-                _testReportRepository.Insert(testReportModel);
                 
-                return null;
+                return result;
             }
             catch(Exception ex)
             {

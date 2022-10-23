@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
@@ -63,33 +64,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var testReportModel = _mapper.Map<TestReportDTO, TestReportModel>(testReportDTO);
                 testReportModel.DateTime = DateTime.Now.Date;
+                RequestResult<AttachmentModel> result = null;
 
                 if (IsSendAndUpload)
                 {
-                    var result = _testReportService.UploadFileAndSendMail(testReportModel);
-                    if (result != null)
-                    {
-                        ViewBag.Response =  result.ValidationMessages.Select(x => x.Reason).ToList();
-                    }
-                    else
-                    {
-                        TempData["IsTrue"] = true;
-                        return RedirectToAction("Index");
-                    }
+                    result = _testReportService.UploadFileAndSendMail(testReportModel);
                 }
                 else
                 {
-                    var result =  _testReportService.UploadFile(testReportModel);
-                    if (result != null)
-                    {
-                        ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();
+                    result =  _testReportService.UploadFile(testReportModel);
+                }
 
-                    }
-                    else
-                    {
-                        TempData["IsTrue"] = true;
-                        return RedirectToAction("Index");
-                    }
+                if (result.IsSuccessful)
+                {
+                    TempData["IsTrue"] = true;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Response = result.ValidationMessages.Select(x => x.Reason).ToList();
                 }
             }
             return View();
