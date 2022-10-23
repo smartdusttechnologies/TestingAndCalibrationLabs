@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -74,18 +76,30 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// To upload the Test Report to google Drive and send the mail
         /// </summary>
         /// <param name="testReportModel"></param>
-        public bool UploadFileAndSendMail(TestReportModel testReportModel)
+        /// <param name="cancellationToken"></param>
+        public RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel)
         {
-            var isUploadedSuccessfully = UploadFile(testReportModel);
-            var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
-            return isUploadedSuccessfully && isReportSentSuccessfully;
+            var attachmentModel =  UploadFile(testReportModel);
+
+            if(attachmentModel.IsSuccessful)
+            {
+                var isReportSentSuccessfully = SendTestReportEmail(testReportModel);
+                if (!isReportSentSuccessfully)
+                {
+                    attachmentModel.ValidationMessages = new List<ValidationMessage>
+                    {
+                        new ValidationMessage { Reason = "Unable to send email. Please try again.", Severity = ValidationSeverity.Error }
+                    };
+                }
+            }
+            return attachmentModel;
         }
 
         /// <summary>
         /// This is for upload only the Test Report Content to Google Drive.
         /// </summary>
         /// <param name="testReportModel"></param>
-        public bool UploadFile(TestReportModel testReportModel)
+        public RequestResult<AttachmentModel> UploadFile(TestReportModel testReportModel)
         {
             try
             {
@@ -99,14 +113,18 @@ namespace TestingAndCalibrationLabs.Business.Services
                     JobId = testReportModel.JobId,
                     DateTime = testReportModel.DateTime
                 };
-                var dataFilePath = _googleUploadDownloadService.Upload(attachmentModel);
 
-                //Passing the FilePath value received after upload
-                testReportModel.FilePath = dataFilePath;
+                var result =  _googleUploadDownloadService.Upload(attachmentModel);
+                if (result.IsSuccessful)
+                {
+                    //Passing the FilePath value received after upload
+                    testReportModel.FilePath = result.RequestedObject.FilePath;
 
-                //Saving File to the repository
-                _testReportRepository.Insert(testReportModel);
-                return true;
+                    //Saving File to the repository
+                    _testReportRepository.Insert(testReportModel);
+                }
+                
+                return result;
             }
             catch(Exception ex)
             {
@@ -119,7 +137,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //   ExceptionType = "UserService",
                 //  FullException = ex.StackTrace
                 // });
-                return false;
+                return null;
             }
         }
 

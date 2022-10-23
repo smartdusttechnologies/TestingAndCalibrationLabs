@@ -38,13 +38,13 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// To upload Test Report to Google Drive and send the mail.
         /// </summary>
         /// <param name="testReportModel"></param>
-        bool UploadFileAndSendMail(TestReportModel testReportModel);
+        RequestResult<AttachmentModel> UploadFileAndSendMail(TestReportModel testReportModel);
 
         /// <summary>
         /// To upload the Test Report to Google Drive.
         /// </summary>
         /// <param name="getbusinessModel"></param>
-        bool UploadFile(TestReportModel getbusinessModel);
+        RequestResult<AttachmentModel> UploadFile(TestReportModel getbusinessModel);
 
         /// <summary>
         /// Download the uploaded file from Google drive.

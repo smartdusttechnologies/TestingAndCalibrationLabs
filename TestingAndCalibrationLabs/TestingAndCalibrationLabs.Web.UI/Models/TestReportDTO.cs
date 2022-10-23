@@ -5,7 +5,7 @@ using TestingAndCalibrationLabs.Web.UI.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
-    public class TestReportModel 
+    public class TestReportDTO 
     {
         /// <summary>
         /// Unique Id of the data
@@ -46,7 +46,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         [Required(ErrorMessage = "Please select data to upload")]
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png",".pdf" })]
-        [MaxFileSize(100000)]
+        [MaxFileSize(333100000)]
         public IFormFile DataUrl { get; set; }
         
         /// <summary>
