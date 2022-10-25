@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.IO;
+﻿using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
@@ -9,8 +8,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// It is used to upload the file to Google Drive
         /// </summary>
-        /// <param name="getbusinessModel"></param>
-        string Upload(AttachmentModel attachmentModel);
+        /// <param name="attachmentModel"></param>
+        RequestResult<AttachmentModel> Upload(AttachmentModel attachmentModel);
 
         /// <summary>
         /// Used for downloading the data from the Google Drive
