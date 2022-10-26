@@ -54,6 +54,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
+        } 
+        /// <summary>
+        /// sending record to axaj to show grid control
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GridList(int? id = 0)
+        {
+            var pageMetadata = _commonService.GetRecords(id.Value);
+            var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
+            //records.Fields = records.Fields.Take(10).ToList();
+            if(records.Fields != null)
+            {
+                return Ok(records);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
         [HttpGet]
         public ActionResult CreateLayout(int id)

@@ -1,0 +1,95 @@
+﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+    </div>
+</div>
+<div class="table-responsive simple-pagination card shadow border-radius-grid">
+    <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <thead>
+            <tr id="field-@Model.Value.Id">
+            </tr>
+        </thead>
+        <tbody id="fieldValue-@Model.Value.Id">
+
+            @* @foreach (var item in Model.FieldValuesForGrid)
+            {
+            <tr>
+            @foreach (var itemValue in item.Value)
+            {
+            <td>
+            </td>
+            }
+            <td>
+            <a asp-action="Edit" asp-route-id="@item.Key">Edit</a> |
+            <a asp-action="Delete" asp-route-id="@item.Key">Delete</a>
+            </td>
+            </tr>
+            }*@
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var pageId = modelData.value.uiPageTypeId;
+        var fieldId = modelData.value.id;
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GridList","Common")",
+            data: { id: pageId },
+            success: function (response) {
+
+                createGridView(response);
+                console.log(response);
+            },
+            error: function (req, status, error) {
+            }
+        });
+        function createGridView(reaponseObject) {
+            var fieldControl = "#field-" + fieldId;
+            var fieldValueId = "#fieldValue-" + fieldId;
+
+            var field = reaponseObject.fields;
+            var fieldValues = reaponseObject.fieldValues;
+            for (var i = 0; field.length > i; i++) {
+
+                if (field[i].controlCategoryName == "DataControl") {
+                    var displayName = field[i].uiControlDisplayName;
+                    var stringOfHtml = "<td>" + displayName + "</td>";
+                    $(fieldControl).append(stringOfHtml);
+                }
+                //if(field.length == i){
+
+                //}
+            }
+            debugger;
+            for (var j = 0; fieldValues.length > j; j++) {
+                var metadataId = fieldValues[j];
+                $(fieldValueId).append("<tr id='tr-" + metadataId + "'>");
+                for (var x = 0; fieldVaues[j].length > x; x++) {
+                    var fieldValueList = fieldValues[j][x].value;
+                    debugger;
+                    console.log(fieldValueList);
+                    //$("#tr-" + metadataId +).append("<td>"+fieldValueList+"</td>");
+                }
+
+                $(fieldValueId).append("<td><a href='/common/edit/" + metadataId + "'> Edit </a> |< a href='/common/edit/" + metadataId + "' > Delete </a></td>");
+                $(fieldValueId).append("</tr>");
+            }
+        }
+
+        oTable = $('#gridui').DataTable({
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, 'All'],
+            ],
+            scrollX: true,
+        });
+        $('#gridui').keyup(function () {
+            oTable.search($(this).val()).draw();
+        })
+
+    });
+</script>

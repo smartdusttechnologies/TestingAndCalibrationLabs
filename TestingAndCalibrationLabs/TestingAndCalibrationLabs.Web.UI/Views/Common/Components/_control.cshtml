@@ -6,10 +6,6 @@
     {
         @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",item )
     }
-    else if (@item.Value.UiControlTypeName == "grid")
-    {
-        @Html.Partial("~/Views/Common/Components/_grid.cshtml",Model)
-    }
     else if(item.Value.ControlCategoryName == "NonDataControl"){
         @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",item)
     }

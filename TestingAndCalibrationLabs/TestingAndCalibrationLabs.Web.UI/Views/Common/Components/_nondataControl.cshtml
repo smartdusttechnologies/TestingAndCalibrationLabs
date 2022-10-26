@@ -14,3 +14,7 @@ else if (@Model.Value.UiControlTypeName == "collapsableSection")
 
     @Html.Partial("~/Views/Common/Components/NonDataControls/_collapsableSection.cshtml",Model)
 }
+else if (@Model.Value.UiControlTypeName == "grid")
+{
+    @Html.Partial("~/Views/Common/Components/NonDataControls/_grid.cshtml",Model)
+}

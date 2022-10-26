@@ -1,8 +1,11 @@
 ﻿@model TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel
 <div class="row ms-1 me-1">
     <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-        <input class="form-input width-full" type="radio" placeholder=" " id="@Model.Id" name="Email" onchange="this.setAttribute('value',this.value)"  >
-        <label class="form-label" for="@Model.UiControlDisplayName">@Model.UiControlDisplayName</label>
-        <span asp-validation-for="@Model.UiControlDisplayName" class="text-danger"></span>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="@Model.Id">
+            <label class="form-check-label" for="@Model.Id">
+                @Model.UiControlDisplayName
+            </label>
+        </div>
     </div>
 </div>

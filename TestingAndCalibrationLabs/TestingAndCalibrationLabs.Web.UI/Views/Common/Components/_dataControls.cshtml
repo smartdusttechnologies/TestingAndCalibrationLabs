@@ -27,6 +27,19 @@ else if (Model.Value.UiControlTypeName == "dropdown")
 
     @Html.Partial("~/Views/Common/Components/DataControls/_dropdown.cshtml",Model)
 }
+else if (Model.Value.UiControlTypeName == "pincode")
+{
+
+    @Html.Partial("~/Views/Common/Components/DataControls/_pincode.cshtml",Model.Value)
+}else if (Model.Value.UiControlTypeName == "tel")
+{
+
+    @Html.Partial("~/Views/Common/Components/DataControls/_mobileNumber.cshtml",Model.Value)
+}else if (Model.Value.UiControlTypeName == "date")
+{
+
+    @Html.Partial("~/Views/Common/Components/DataControls/_date.cshtml",Model.Value)
+}
 
     
 @section Scripts {

@@ -189,7 +189,7 @@
 		var utrstyle = document.createElement("style")
 		utrstyle.innerText = str;
 		document.head.appendChild(utrstyle);
-		debugger;
+		
 		for (var i = 0; steps > i; i++) {
 			if(i==0){
 				var fieldId = "#fieldset_" + modelData.children[i].value.id;
@@ -227,15 +227,15 @@
 			
 			var btnOfStep = $(this).children(".btn-select");
 			var currentFieldSetId = btnOfStep[0].value;
-			debugger;
+			
 			console.log(currentFieldSetId);
 			var stepCount = btnOfStep[0].name;
 			var x = parseInt(stepCount, 10); // you want to use radix 10
 			console.log(x);
 			var idModifiewithHash = "#"+currentFieldSetId;
-			debugger;
+		
 			nextGfgStep = $(idModifiewithHash);
-			debugger;
+		
 			activeCurrentStep(x);
 			currentGfgStep.hide();
 			nextGfgStep.show();
@@ -252,7 +252,7 @@
 				.index(nextGfgStep)).addClass("active");
 
 			nextGfgStep.show();
-			debugger;
+			
 			currentGfgStep.animate({ opacity: 0 }, {
 				step: function (now) {
 					opacity = 1 - now;
