@@ -112,7 +112,7 @@
                 
                  myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                ErrorMessage(i++, newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
+                ErrorMessage(NotificationNumbers++, newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
                 //    var s = newErrorMessage.fid//Sending the reason to html
 
                 document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
@@ -121,4 +121,3 @@
         });
     }
 </script>
-<script src="~/js/Notification.js"></script> @* Notification function include*@

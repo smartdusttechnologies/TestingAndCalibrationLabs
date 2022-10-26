@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="UiPageValidation" novalidate>
-            <div asp-validation-summary="All" ></div>  @*id is added for notification*@
+            <div asp-validation-summary="All" ></div>  
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
@@ -20,7 +20,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login">
                     <label for="UiPageMetadataId" class="form-label"></label>
                     <select class="form-input " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
                         <option disabled="disabled" selected>Select Metadata ...</option>

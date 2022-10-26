@@ -10,7 +10,7 @@
         <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login">
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         @foreach (var item in ViewBag.UiPageTypes)
@@ -26,7 +26,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="uiconType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
                         @foreach (var item in ViewBag.UiControlTypes)
@@ -42,7 +42,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login">
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         @foreach (var item in ViewBag.DataTypes)
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-login">
                     <input class="form-input width-full" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
