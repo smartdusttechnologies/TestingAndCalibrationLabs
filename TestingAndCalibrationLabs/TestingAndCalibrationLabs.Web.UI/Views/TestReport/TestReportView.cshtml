@@ -1,5 +1,5 @@
 ﻿@using AttachmentDTO = TestingAndCalibrationLabs.Web.UI.Models.AttachmentDTO;
-@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.TestReportModel>
+@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.TestReportDTO>
 
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
@@ -108,7 +108,7 @@
             pageLength: 5,
             lengthMenu: [
             [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, 'All'],
+            [5, 10, 25, 50, 'All']
         ],
             scrollX: true,
         });

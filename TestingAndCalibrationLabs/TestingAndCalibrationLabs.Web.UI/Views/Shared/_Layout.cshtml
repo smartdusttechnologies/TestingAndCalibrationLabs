@@ -145,8 +145,9 @@
                     var parentListId = uiNavigationCategoryId;
                     var idNameExistOrNot = uiNavigationCategoryName;
                     var nameExistOrNot = document.getElementById(idNameExistOrNot);
-                    console.log(nameExistOrNot);
-                    if (!nameExistOrNot && response[i].childrens.length > 1) {
+                    debugger;
+                    console.log(response[i].childrens.length);
+                    if (!nameExistOrNot && response[i].childrens.length >= 1) {
 
                         $('#navbarContentAdd').prepend("</li>");
                         $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='" + uiNavigationCategoryName + "'>");
