@@ -27,7 +27,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostingEnviroment;
-        private readonly IListSorterService _listSorterService;
         /// <summary>
         /// 
         /// passing parameter via varibales for establing connection
@@ -40,7 +39,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
-            _listSorterService = listSorterService;
             _hostingEnviroment = webHostingEnviroment;
         }
         /// <summary>
@@ -54,7 +52,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
-        } 
+        }
+
+        [HttpGet]
+        public ActionResult LoadGrid(int? id = 0)
+        {
+            var pageMetadata = _commonService.GetRecords(id.Value);
+            var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
+            return PartialView("~/Views/Common/Components/NonDataControls/_gridTemplate1.cshtml", records);
+        }
+
         /// <summary>
         /// sending record to axaj to show grid control
         /// </summary>
