@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public List<UiPageMetadataDTO> Fields { get; set; }
         public List<UiPageDataDTO> FieldValues { get; set; }
         public Dictionary<int, List<UiPageDataDTO>> FieldValuesForGrid { get; set; }
-        public IEnumerable<Node<UiPageMetadataModel>> Layout { get; set; }
+        public IEnumerable<Node<UiPageMetadataDTO>> Layout { get; set; }
         public ValidationMessage ErrorMessage { get; set; } = new ValidationMessage();
       
         #endregion

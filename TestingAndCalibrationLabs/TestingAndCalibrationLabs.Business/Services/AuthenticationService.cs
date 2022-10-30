@@ -174,7 +174,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate existing user for Registration
         /// </summary>
-        public RequestResult<bool> Add(User user, string password)
+        public RequestResult<bool> Add(UserModel user, string password)
         {
             try
             {
@@ -195,10 +195,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
-        private RequestResult<bool> ValidateNewUserRegistration(User user, string password)
+        private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            User existingUser = _userRepository.Get(user.UserName);
+            UserModel existingUser = _userRepository.Get(user.UserName);
             if (existingUser != null) 
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };

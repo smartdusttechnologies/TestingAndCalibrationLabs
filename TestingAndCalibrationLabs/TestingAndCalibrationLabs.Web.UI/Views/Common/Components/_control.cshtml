@@ -1,14 +1,10 @@
-﻿@model RecordDTO
-@foreach (var item in Model.Layout)
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+
+@if (Model.Value.ControlCategoryName == "DataControl")
 {
-    
-    @if (item.Value.ControlCategoryName == "DataControl")
-    {
-        @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",item )
-    }
-    else if(item.Value.ControlCategoryName == "NonDataControl"){
-        @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",item)
-    }
-    
-    
+    @await Html.PartialAsync("~/Views/Common/Components/_dataControls.cshtml", Model)
+}
+else if (Model.Value.ControlCategoryName == "NonDataControl")
+{
+    @await Html.PartialAsync("~/Views/Common/Components/_nondataControl.cshtml", Model)
 }

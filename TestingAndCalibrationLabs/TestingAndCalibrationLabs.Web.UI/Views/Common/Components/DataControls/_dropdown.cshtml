@@ -1,9 +1,9 @@
-﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <div class="row ms-1 me-1">
     <div class="col-lg-3  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
         <label for="testing" class="form-label"></label>
-        <select class="form-input width-full" name="@Model.Value.UiControlDisplayName" id="@Model.Value.Id" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName"  >
-           @foreach (var item in Model.Children)
+        <select class="form-input width-full" name="@Model.Value.UiControlDisplayName" id="@Model.Value.Id" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName">
+            @foreach (var item in Model.Children)
             {
                 <option value="@item.Value.UiControlDisplayName">@item.Value.UiControlDisplayName</option>
             }

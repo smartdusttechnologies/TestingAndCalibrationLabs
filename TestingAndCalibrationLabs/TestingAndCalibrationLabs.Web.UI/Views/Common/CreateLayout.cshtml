@@ -2,35 +2,16 @@
 @{
     ViewData["Title"] = "CreateLayout";
 }
-
-<h1>Create</h1>
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UiPageId" />
-            <div> @Html.Partial("~/Views/Common/Components/_control.cshtml",Model)</div>
 
-
-            <div class="form-group">
-                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-            </div>
-
-            <div class="form-group">
-                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-            </div>
-
-            <div class="form-group">
-                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-            </div>
-
-            <div class="form-group">
-                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-            </div>
-
-            <div class="form-group">
-                <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-            </div>
+            @foreach (TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO> item in Model.Layout)
+            {
+                <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
+            }
         </form>
         <input type="hidden" value="" name="lefid" id="lefid" />
     </div>
@@ -67,46 +48,13 @@
     </div>
 </div>
 <script>
-    //$(document).ready(function () {
-    //    var story = JSON.parse("@ViewBag.resultD");
-    //    var story2try = '@(ViewBag.resultD)';
 
-    //    console.log(@ViewBag.resultD);
-    //    console.log(story);
-    //    console.log(story2try);
-    //});
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
-
-    //From this code our form willl be reset
-    //#region
-    //       $("#sampleForm").find(':input').each(function() {
-    //        switch(this.type) {
-    //                 case 'password':
-    //                 case 'text':
-    //                 case 'textarea':
-    //                 case 'file':
-    //                 case 'select-one':
-    //                 case 'select-multiple':
-    //                 case 'date':
-    //                 case 'number':
-    //                 case 'tel':
-    //                 case 'email':
-    //                       jQuery(this).val('');
-    //                       break;
-    //                 case 'checkbox':
-    //                 case 'radio':
-    //                      this.checked = false;
-    //                      break;
-    //  }
-    //         });
-
-    //}
-    //#endregion
 
     //This function will display the Failure snackbar
     function myFunctionError() {
@@ -164,13 +112,13 @@
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = uiPageMetaData[i].id;
                 var fieldValue = $('#' + fieldId).val();
-               
+
                     var keyValuepair = {};
-                    
+
                     keyValuepair.UiControlId = fieldId;
                     keyValuepair.Value = fieldValue;
                     fieldValues.push(keyValuepair)
-                
+
             }
         }
         var uiPageId = parseInt($("#UiPageId").val())
@@ -187,25 +135,6 @@
                     var nfieldId = nuiPageMetaData[i].id;
                     $('#' + nfieldId).val('');         //Assigning a empty values to input fields
                 }
-                // Putting data back when the form failed to sumbit
-                //var c = response.errorMessage;
-                //if(c.reason == null){
-                //var nuiPageMetaData= response.fields;
-                //var a = response.fieldValues;
-                //for (let i = 0; i < nuiPageMetaData.length; i++)
-                // {
-                //var nfieldId = nuiPageMetaData[i].id;
-                //var result = a.find(obj => {
-                // // Returns the object where
-                //// the given property has some value
-                //return obj.uiControlId === nfieldId
-                //})
-
-                //if(result == undefined)
-                // {
-                // $('#' + nfieldId).val('');
-                // }
-                //}
             },
             failure: function (response) {
                 alert(response.responseText);
@@ -213,28 +142,12 @@
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                //console.log(response.fieldId);
                 document.getElementById("lefid").value = newErrorMessage.sourceId;
                 var namea = document.getElementById(newErrorMessage.sourceId);
                 var txtname = namea.name;
                 myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                //    var s = newErrorMessage.fid//Sending the reason to html
                 document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
-                //        }
-                //        else{
-                //document.getElementByClassName("form-input").style.border = "1px solid black";
-                //        }
-                //document.getElementById(newErrorMessage.fid).classList.add("border");
-
-                //document.getElementById(newErrorMessage.fid).classList.add("border-danger");
-
-                //  newErrorMessage.fid.style.border = "1px solid red";
-
-
-                //var i =result;
-                //collection[i].style.border = "1px solid red";
-                //alert(response.responseText);
             }
         });
     }

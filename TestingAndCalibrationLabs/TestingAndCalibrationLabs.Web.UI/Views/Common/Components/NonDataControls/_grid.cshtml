@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
@@ -13,19 +13,19 @@
         <tbody id="fieldValue-@Model.Value.Id">
 
             @* @foreach (var item in Model.FieldValuesForGrid)
-            {
-            <tr>
-            @foreach (var itemValue in item.Value)
-            {
-            <td>
-            </td>
-            }
-            <td>
-            <a asp-action="Edit" asp-route-id="@item.Key">Edit</a> |
-            <a asp-action="Delete" asp-route-id="@item.Key">Delete</a>
-            </td>
-            </tr>
-            }*@
+                {
+                <tr>
+                @foreach (var itemValue in item.Value)
+                {
+                <td>
+                </td>
+                }
+                <td>
+                <a asp-action="Edit" asp-route-id="@item.Key">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Key">Delete</a>
+                </td>
+                </tr>
+                }*@
         </tbody>
     </table>
 </div>

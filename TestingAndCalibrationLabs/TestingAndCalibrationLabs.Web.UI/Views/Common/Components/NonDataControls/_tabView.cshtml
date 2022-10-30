@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Business.Common.Node<TestingAndCalibrationLabs.Business.Core.Model.UiPageMetadataModel>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
         @foreach (var item in Model.Children)
@@ -24,14 +24,7 @@
             <div class="tab-pane fade show active " id="nav-@item.Value.Id" role="tabpanel" aria-labelledby="nav-@item.Value.Id-tab">
                 @foreach (var node in item.Children)
                 {
-                    @if (node.Value.ControlCategoryName == "DataControl")
-                    {
-                        @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
-                    }
-                    else if (@node.Value.ControlCategoryName == "NonDataControl")
-                    {
-                        @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
-                    }
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                 }
             </div>
         }
@@ -40,14 +33,7 @@
             <div class="tab-pane fade " id="nav-@item.Value.Id" role="tabpanel" aria-labelledby="nav-@item.Value.Id-tab">
                 @foreach (var node in item.Children)
                 {
-                    @if (node.Value.ControlCategoryName == "DataControl")
-                    {
-                        @Html.Partial("~/Views/Common/Components/_dataControls.cshtml",node )
-                    }
-                    else if (@node.Value.ControlCategoryName == "NonDataControl")
-                    {
-                        @Html.Partial("~/Views/Common/Components/_nondataControl.cshtml",node)
-                    }
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                 }
             </div>
         }
