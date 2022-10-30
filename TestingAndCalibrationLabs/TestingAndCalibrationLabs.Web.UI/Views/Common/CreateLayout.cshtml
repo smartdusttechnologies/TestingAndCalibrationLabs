@@ -8,7 +8,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UiPageId" />
 
-            @foreach (TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO> item in Model.Layout)
+            @foreach (var item in Model.Layout)
             {
                 <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
             }

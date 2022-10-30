@@ -1,6 +1,6 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 
-<div class="accordion" id="accordionExample">
+<div class="accordion" id="accordionExample" style="margin-top:2px;">
     @foreach (var item in Model.Children)
     {
         @if (Model.Children.First() == item)
@@ -39,7 +39,7 @@
                     <div class="card-body">
                         @foreach (var node in item.Children)
                         {
-                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
+                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                         }
                     </div>
                 </div>

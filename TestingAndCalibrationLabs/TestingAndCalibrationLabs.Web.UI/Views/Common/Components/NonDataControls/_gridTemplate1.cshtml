@@ -1,10 +1,5 @@
-﻿@{
-}
-@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
-<h1>Common</h1>
-<p>
-    <a asp-action="Create" asp-route-id="@Model.UiPageId">Create New</a>
-</p>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
+
 <div class="table-responsive">
 <table class="table table-bordered table-condensed  table-striped table-hover sortable">
     <thead>
@@ -27,10 +22,6 @@
                         @Html.DisplayFor(modelItem => itemValue.Value)
                     </td>
                 }
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Key">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Key">Delete</a>
-                </td>
             </tr>
         }
     </tbody>
