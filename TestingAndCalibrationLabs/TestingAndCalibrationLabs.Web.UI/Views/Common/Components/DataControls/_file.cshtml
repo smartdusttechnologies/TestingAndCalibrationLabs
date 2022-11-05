@@ -1,7 +1,7 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO
 
 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-    <input class="form-input width-full" type="@Model.UiControlTypeName" id="@Model.Id" placeholder=" " name="@Model.UiControlDisplayName" item.IsRequired onchange="this.setAttribute('value',this.value)">
+    <input class="form-input width-full" type="@Model.UiControlTypeName" id="@Model.UiControlTypeName@Model.Id" placeholder=" " name="@Model.UiControlTypeName@Model.Id" item.IsRequired onchange="this.setAttribute('value',this.value)"/>
     <label class="form-label" for="@Model.UiControlDisplayName">@Model.UiControlDisplayName</label>
     <span asp-validation-for="@Model.UiControlDisplayName" class="text-danger"></span>
 </div>

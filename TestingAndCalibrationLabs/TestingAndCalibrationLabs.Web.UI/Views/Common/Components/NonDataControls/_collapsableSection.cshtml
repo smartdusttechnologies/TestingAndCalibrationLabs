@@ -6,7 +6,7 @@
         @if (Model.Children.First() == item)
         {
             <div class="card">
-                <div class="card-header" id="@item.Value.Id">
+                <div class="card-header" id="@item.Value.UiControlTypeName@item.Value.Id">
                     <h2 class="mb-0">
                         <button class="btn " type="button" data-toggle="collapse" data-target="#collapse-@item.Value.Id" aria-expanded="true" aria-controls="collapse-@item.Value.Id">
                             @item.Value.UiControlDisplayName
@@ -27,7 +27,7 @@
         else
         {
             <div class="card">
-                <div class="card-header" id="@item.Value.Id">
+                <div class="card-header" id="@item.Value.UiControlTypeName@item.Value.Id">
                     <h2 class="mb-0">
                         <button class="btn  collapsed" type="button" data-toggle="collapse" data-target="#collapse-@item.Value.Id" aria-expanded="true" aria-controls="collapse-@item.Value.Id">
                             @item.Value.UiControlDisplayName
