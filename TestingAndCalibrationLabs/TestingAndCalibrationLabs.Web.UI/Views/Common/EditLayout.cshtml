@@ -4,7 +4,7 @@
 }
 <div class="container-fluid">
     <div>
-        <form id="commonForm" asp-controller="Common" asp-action="Create">
+        <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UiPageId" />
 
@@ -98,6 +98,28 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var uiPageMetaData = modelData.fields;
+        var pageData = modelData.fieldValues;
+        for (let i = 0; i < uiPageMetaData.length; i++) {
+            debugger;
+            if (uiPageMetaData[i].controlCategoryName == "DataControl") {
+                var controlId = uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
+                var metadataId = uiPageMetaData[i].id;
+                for (let j = 0; j < pageData.length; j++) {
+                    if (metadataId == pageData[j].uiPageMetadataId) {
+                        var valueS = pageData[j].value;
+                        document.getElementById(controlId).value = valueS;
+                        console.log(pageData[j].value);
+                        console.log("sdagfs");
+                    }
+                }
+
+
+            }
+        }
+    });
     function AjaxFormSubmit() {
         //Set the URL.
         var x = document.getElementById("lefid").value;
@@ -109,37 +131,46 @@
         var modelData = JSON.parse('@Json.Serialize(Model)');
         console.log(modelData);
         var uiPageMetaData = modelData.fields;
+        //var fieldValues = [];
+
+        //for (let i = 0; i < uiPageMetaData.length; i++) {
+        //    if (uiPageMetaData[i].controlCategoryName == "DataControl") {
+        //        var fieldId = "#"+ uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
+        //        var metadataId = uiPageMetaData[i].id;
+
+        //        var fieldValue = $(fieldId).val();
+
+        //            var keyValuepair = {};
+
+        //            keyValuepair.UiControlId = metadataId;
+        //            keyValuepair.Value = fieldValue;
+        //            fieldValues.push(keyValuepair)
+
+        //    }
+        //}
         var fieldValues = [];
 
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
-                var fieldId = "#"+ uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
+                var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 var metadataId = uiPageMetaData[i].id;
-                
                 var fieldValue = $(fieldId).val();
-
-                    var keyValuepair = {};
-
-                    keyValuepair.UiControlId = metadataId;
-                    keyValuepair.Value = fieldValue;
-                    fieldValues.push(keyValuepair)
-
+                var keyValuepair = {};
+                keyValuepair.UiControlId = metadataId;
+                keyValuepair.Value = fieldValue;
+                fieldValues.push(keyValuepair)
             }
         }
         var uiPageId = parseInt($("#UiPageId").val())
+        var id = parseInt($("#Id").val())
 
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "UiPageId": uiPageId, "FieldValues": fieldValues },
+            data: { "Id": id, "UiPageId": uiPageId, "FieldValues": fieldValues },
             success: function (response) {
-                myFunction();                      //Calling myFunction javascript function
-                var nuiPageMetaData = response.fields;
-                var a = response.fieldValues;
-                for (let i = 0; i < nuiPageMetaData.length; i++) {
-                    var nfieldId = nuiPageMetaData[i].id;
-                    $('#' + nfieldId).val('');         //Assigning a empty values to input fields
-                }
+
+                window.location.href = "/";
             },
             failure: function (response) {
                 alert(response.responseText);
@@ -147,13 +178,44 @@
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                document.getElementById("lefid").value = newErrorMessage.sourceId;
-                var namea = document.getElementById(newErrorMessage.sourceId);
-                var txtname = namea.name;
+                //console.log(response.fieldId);
+
                 myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
+                //    var s = newErrorMessage.fid//Sending the reason to html
+
+                document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
+                document.getElementById("lefid").value = newErrorMessage.sourceId;
             }
         });
+        //var uiPageId = parseInt($("#UiPageId").val())
+
+        //$.ajax({
+        //    type: 'POST',
+        //    url: url,
+        //    data: { "UiPageId": uiPageId, "FieldValues": fieldValues },
+        //    success: function (response) {
+        //        myFunction();                      //Calling myFunction javascript function
+        //        var nuiPageMetaData = response.fields;
+        //        var a = response.fieldValues;
+        //        for (let i = 0; i < nuiPageMetaData.length; i++) {
+        //            var nfieldId = nuiPageMetaData[i].id;
+        //            $('#' + nfieldId).val('');         //Assigning a empty values to input fields
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+        //        var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+        //        document.getElementById("lefid").value = newErrorMessage.sourceId;
+        //        var namea = document.getElementById(newErrorMessage.sourceId);
+        //        var txtname = namea.name;
+        //        myFunctionError();                                              //Calling myFunctionError javacript function
+        //        document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
+        //        document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
+        //    }
+        //});
     }
 </script>

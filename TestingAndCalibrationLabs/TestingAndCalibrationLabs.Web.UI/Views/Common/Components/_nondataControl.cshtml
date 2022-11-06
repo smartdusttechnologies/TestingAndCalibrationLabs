@@ -17,3 +17,7 @@ else if (@Model.Value.UiControlTypeName == "grid")
 {
     @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_grid.cshtml", Model)
 }
+else if (@Model.Value.UiControlTypeName == "submit")
+{
+    @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_submit.cshtml", Model.Value)
+}

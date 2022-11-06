@@ -1,11 +1,12 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 
-<div id="partial-load-grid"></div> 
+<div id="@Model.Value.UiControlTypeName@Model.Value.Id"></div> 
 
 <script>
 $(document).ready(function () {
     var modelData = JSON.parse('@Json.Serialize(Model)');
     var url = "@Url.Action("LoadGrid","Common")" + "?id=" + modelData.value.uiPageTypeId;
-    $('#partial-load-grid').load(url);
+    var idNum = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+    $(idNum).load(url);
 });
 </script>

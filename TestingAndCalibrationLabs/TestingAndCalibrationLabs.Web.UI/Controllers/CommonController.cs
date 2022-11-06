@@ -60,7 +60,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
-            return PartialView("~/Views/Common/Components/NonDataControls/_gridTemplate1.cshtml", records);
+            return PartialView("~/Views/Common/Components/NonDataControls/_gridTemplate2.cshtml", records);
         }
 
         /// <summary>
@@ -86,15 +86,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult CreateLayout(int id = 1)
         {
             var uiPageId = id;
-            var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
-            var hierarchy = pageMetadata.Fields.Hierarchize(
-             0, // The "root level" key. We're using -1 to indicate root level.
-             f => f.Id, // The ID property on your object
-             f => f.ParentId,// The property on your object that points to its parent
-            f => f.Position // The property on your object that specifies the order within its parent
+            var pageMetadata = _commonService.GetUiPageMetadataHierarchy(uiPageId);
+            //var hierarchy = pageMetadata.Fields.Hierarchize(
+            // 0, // The "root level" key. We're using -1 to indicate root level.
+            // f => f.Id, // The ID property on your object
+            // f => f.ParentId,// The property on your object that points to its parent
+            //f => f.Position // The property on your object that specifies the order within its parent
 
-             );
-            pageMetadata.Layout = hierarchy;
+            // );
+            //pageMetadata.Layout = hierarchy;
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
 
             //var records = _commonService.GetRecords(id);
@@ -105,43 +105,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //result.FieldValuesForGrid = record.FieldValues;
             return base.View(result);
         }[HttpGet]
-        public ActionResult SampleProgressStatus(int id)
-        {
-            //string data;
-            ////StreamReader r = new StreamReader(Path.Combine(_hostingEnviroment.WebRootPath, "CUIJson.json"));
-
-
-            ////   data = r.ReadToEnd();
-            ////source = JsonSerializer.Deserialize<List<Person>>(json);
-            //var uiPageId = id;
-            //var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
-
-            //var hierarchy = pageMetadata.Fields.Hierarchize(
-            // 0, // The "root level" key. We're using -1 to indicate root level.
-            // f => f.Id, // The ID property on your object
-            // f => f.ParentId,// The property on your object that points to its parent
-            //f => f.Position // The property on your object that specifies the order within its parent
-
-            // );
-
-            //var records = _commonService.GetRecords(id);
-            //var record= _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(records);
-            ////record.Fields = record.Fields.Take(10).ToList();
-
-            ////var resultJson = JsonConvert.DeserializeObject(json);
-            //var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            //result.Layout = hierarchy;
-            //result.FieldValuesForGrid = record.FieldValues;
-            var progressModel = new List<ProgressDTO>();
-            progressModel.Add(new ProgressDTO { Id = 1, DisplayName = "Raj 1" });
-            progressModel.Add(new ProgressDTO { Id = 2, DisplayName = "Raj 2" });
-            progressModel.Add(new ProgressDTO { Id = 3, DisplayName = "Raj 3" });
-            progressModel.Add(new ProgressDTO { Id = 4, DisplayName = "Raj 4" });
-            progressModel.Add(new ProgressDTO { Id = 10, DisplayName = "Raj 5" });
-            //progressModel.Add(new ProgressDTO { Id = 15, DisplayName = "Raj 5k" });
-            //progressModel.Add(new ProgressDTO { Id = 140, DisplayName = "Raj 5j" });
-            return base.View(progressModel);
-        }
+        
         /// <summary>
         /// Inseting details for common
         /// </summary>
@@ -180,9 +144,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(result);
-
         }
-
         /// <summary>
         /// Edit deatils of common
         /// </summary>
@@ -192,7 +154,24 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(int id)
         {
             var pageMetadata = _commonService.GetRecordById(id);
+            var Layout = _commonService.GetUiPageMetadataHierarchy(id);
+            pageMetadata.Layout = Layout.Layout;
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
+            return View(record);
+        }
+        /// <summary>
+        /// Edit deatils of common
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditLayout(int id)
+        {
+            var pageMetadata = _commonService.GetRecordById(id);
+            var Layout = _commonService.GetUiPageMetadataHierarchy(pageMetadata.UiPageId);
+            pageMetadata.Layout = Layout.Layout;
+            Layout.FieldValues = pageMetadata.FieldValues;
+            Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(Layout);
             return View(record);
         }
         /// <summary>
