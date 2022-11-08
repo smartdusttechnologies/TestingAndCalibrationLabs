@@ -6,6 +6,7 @@
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" id="Id" name="Id" />
             <input type="hidden" asp-for="UiPageId" />
 
             @foreach (var item in Model.Layout)
@@ -156,7 +157,7 @@
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
-                keyValuepair.UiControlId = metadataId;
+                keyValuepair.UiPageMetadataId = metadataId;
                 keyValuepair.Value = fieldValue;
                 fieldValues.push(keyValuepair)
             }

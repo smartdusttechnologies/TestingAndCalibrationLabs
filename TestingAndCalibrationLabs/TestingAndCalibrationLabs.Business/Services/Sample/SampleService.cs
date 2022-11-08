@@ -15,14 +15,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
               IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
-            IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository)
+            IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
+            IUiPageMetadataRepository uiPageMetadataRepository)
             : base(commonRepository,
                   recordGenericRepository,
                   uiPageTypeGenericRepository,
                   uiPageDataGenericRepository,
                   uiPageMetaDataGenericRepository,
                   uiPageValidationTypesGenericRepository,
-                  uiPageMetadataCharacteristicsRepository)
+                  uiPageMetadataCharacteristicsRepository,
+                  uiPageMetadataRepository)
         {
             UI_PAGE_NAME = "SamplePage";
         }

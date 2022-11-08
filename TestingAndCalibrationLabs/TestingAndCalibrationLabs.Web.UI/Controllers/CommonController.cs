@@ -59,7 +59,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
-            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
+            //TODO: this is the temporary work later we will change it confiqq
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
+            //records.FieldValues = records.FieldValues.Values.Take(5).ToList();
+            
             return PartialView("~/Views/Common/Components/NonDataControls/_gridTemplate2.cshtml", records);
         }
 
@@ -130,7 +133,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Models.RecordDTO record)
-        {
+         {
             var records = _mapper.Map<UI.Models.RecordDTO, Business.Core.Model.RecordModel>(record);
             var adddata = _commonService.Add(records);
             var pageMetadata = _commonService.GetUiPageMetadata(record.UiPageId);
@@ -171,6 +174,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var Layout = _commonService.GetUiPageMetadataHierarchy(pageMetadata.UiPageId);
             pageMetadata.Layout = Layout.Layout;
             Layout.FieldValues = pageMetadata.FieldValues;
+            Layout.Id = pageMetadata.Id;
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(Layout);
             return View(record);
         }

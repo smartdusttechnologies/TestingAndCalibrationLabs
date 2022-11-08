@@ -120,7 +120,7 @@
 
                     var keyValuepair = {};
 
-                    keyValuepair.UiControlId = metadataId;
+                keyValuepair.UiPageMetadataId = metadataId;
                     keyValuepair.Value = fieldValue;
                     fieldValues.push(keyValuepair)
 
@@ -145,6 +145,8 @@
                 alert(response.responseText);
             },
             error: function (response) {
+                console.log(response);
+                debugger;
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 document.getElementById("lefid").value = newErrorMessage.sourceId;

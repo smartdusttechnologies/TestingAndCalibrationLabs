@@ -20,21 +20,32 @@
                     {
                         <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
                     }
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.FieldValues)
                 {
+                    int count = 0;
                     <tr>
-                         @foreach (var itemValue in item.Value)
+                        @foreach (var itemValue in item.Value)
                         {
+                            
                             <td>
-                                @Html.DisplayFor(modelItem => itemValue.Value)
+                                    @Html.DisplayFor(modelItem => itemValue.Value)
                             </td>
-                        }
-                        <td><a class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key" >
+                            if (count == 4)
+                            {
+                                break;
+                            }
+                            count++;
 
-                            </a><a class="fa fa-solid fa-trash col" style="margin:5px;margin-left:10px;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>
+
+                        }
+                        <td>
+                            <a class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;" asp-controller="Common" asp-action="EditLayout" asp-route-id="@item.Key">
+
+                            </a><a class="fa fa-solid fa-trash col" style="margin:5px;margin-left:10px;" asp-controller="Common" asp-action="Delete" asp-route-id="@item.Key"></a>
                         </td>
 
                     </tr>

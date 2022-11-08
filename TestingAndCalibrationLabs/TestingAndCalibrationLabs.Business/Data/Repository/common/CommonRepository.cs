@@ -84,7 +84,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 SELECT @RecordId = @@IDENTITY";
 
             string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, UiPageId, RecordId) 
-                values (@UiControlId, @Value, @UiPageId, @RecordId)";
+                values (@UiPageMetadataId, @Value, @UiPageId, @RecordId)";
 
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
@@ -92,7 +92,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             int insertedRecordId = p.Get<int>("@RecordId");
 
-            var uiPageMetaData = record.FieldValues.Select(x => new { RecordId = insertedRecordId, UiPageId = record.UiPageId, UiControlId = x.UiControlId, Value = x.Value }).ToList();
+            var uiPageMetaData = record.FieldValues.Select(x => new { RecordId = insertedRecordId, UiPageId = record.UiPageId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
             ;
             db.Execute(uiPageMetadataInsertQuery, uiPageMetaData, transaction);
 
