@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -28,7 +30,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult GetAllPagesWithNavigation()
         {
             var pageWithNavigationCategoryList = _uiNavigationCategoryService.GetNavigationCategoryWithPageTypes();
-            var pageTypeList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(pageWithNavigationCategoryList);
+            var pageTypeList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageWithNavigationCategoryList);
 
             if (pageTypeList != null && pageTypeList.Count > 0)
             {

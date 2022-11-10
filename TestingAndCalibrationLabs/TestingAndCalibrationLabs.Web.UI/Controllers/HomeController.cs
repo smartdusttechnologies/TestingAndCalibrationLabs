@@ -21,14 +21,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _orgnizationService = orgnizationService;
             _mapper = mapper;
         }
-
         [HttpGet]
         [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
             return View();
         }
-        
         /// <summary>
         /// UI will get the information from the User
         /// </summary>

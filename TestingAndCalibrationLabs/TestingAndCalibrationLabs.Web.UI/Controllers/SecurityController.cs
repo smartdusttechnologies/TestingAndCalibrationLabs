@@ -22,7 +22,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _orgnizationService = orgnizationService;
             _mapper = mapper;
         }
-
         /// <summary>
         /// UI Shows the Orgnizations names in dropdown list
         /// </summary>
@@ -35,18 +34,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.Organizations = organizationNames;
             return View();
         }
-
         /// <summary>
         /// Method to get the Login details from UI and Process Login.
         /// </summary>
         /// <returns></returns>
-
         [HttpPost]
         public IActionResult Login(LoginDTO loginRequest)
         {
             var loginReq = new LoginRequest { UserName = loginRequest.UserName, Password = loginRequest.Password };
             RequestResult<LoginToken> result = _authenticationService.Login(loginReq);
-
             if (result.IsSuccessful)
             {
                 HttpContext.Session.SetString("Token", result.RequestedObject.AccessToken);

@@ -8,7 +8,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     /// <summary>
     /// a base class for view
     /// </summary>
-
     public class CommonController : Controller
     {
         private readonly ILogger<CommonController> _logger;
@@ -38,7 +37,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
         }
-
         /// <summary>
         /// Inseting details for common
         /// </summary>
@@ -72,12 +70,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             }
             result.FieldValues = record.FieldValues;
-
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(result);
-            
         }
-        
         /// <summary>
         /// Edit deatils of common
         /// </summary>
@@ -113,7 +108,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(recordModel);
         }
-
         /// <summary>
         ///  Delete Details of common
         /// </summary>
@@ -125,7 +119,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)
