@@ -56,14 +56,14 @@
                     </li>
                     </ul>*@
                 <ul class="navbar-nav ms-auto" id="navbarContentAdd">
-                    <li class="nav-item dropdown-hover" style="display:none" id="Settings">
+                    <li class="nav-item dropdown-hover" style="display:none" id="nav-item-Settings">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContent1002" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
-                    <li class="nav-item dropdown notification-ui show" style="display:none;padding-right:10px" id="Notifications">
+                    <li class="nav-item dropdown notification-ui show" style="display:none;padding-right:10px" id="nav-item-Notifications">
                         <a class=" notification-ui_icon" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell" onclick="DisplayNotification()" style="font-size:15px; color:grey;" id="rotate"> </i> <span class="fa-bell__badge" id="value">0</span>
                         </a>
@@ -86,11 +86,11 @@
                         </div>
 
                     </li>
-                    <li class="nav-item dropdown-hover" style="display:none" id="Profile">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item dropdown-hover" style="display:none" id="nav-item-Profile">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContent1003" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
                         </div>
                     </li>
 
@@ -143,7 +143,7 @@
                     var uiNavigationCategoryName = response[i].name;
                     var parentListDiv = "#" + uiNavigationCategoryName;
                     var parentListId = uiNavigationCategoryId;
-                    var idNameExistOrNot = uiNavigationCategoryName;
+                    var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
                     var nameExistOrNot = document.getElementById(idNameExistOrNot);
                     debugger;
                     console.log(response[i].childrens.length);
@@ -153,7 +153,7 @@
                         $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='" + uiNavigationCategoryName + "'>");
                         var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
                         $(parentListDiv).append(buttonDropdown);
-                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryId + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
                         $(parentListDiv).append("</div>");
 
 
@@ -188,7 +188,7 @@
                             var pageTypeUrl = response[i].childrens[j].formatedUrl;
                             var pageTypeName = response[i].childrens[j].name;
                             var uiNavigationId = response[i].id;
-                            var dropdownContentId = "#dropdownContent" + uiNavigationId;
+                            var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
                             var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
                             $(dropdownContentId).append(script);
                         }
