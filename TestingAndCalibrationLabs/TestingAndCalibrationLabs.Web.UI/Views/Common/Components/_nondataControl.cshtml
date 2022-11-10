@@ -1,23 +1,10 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+@if (@Model.Value.UiControlTypeName != "grid")
+{
+    @await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model)
+}
 
-@if (@Model.Value.UiControlTypeName == "processStatus")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_processStatus.cshtml", Model)
-}
-else if (@Model.Value.UiControlTypeName == "tabs")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_tabView.cshtml", Model)
-}
-else if (@Model.Value.UiControlTypeName == "collapsableSection")
-{
-
-    @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_collapsableSection.cshtml", Model)
-}
 else if (@Model.Value.UiControlTypeName == "grid")
 {
     @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_grid.cshtml", Model)
-}
-else if (@Model.Value.UiControlTypeName == "submit")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/NonDataControls/_submit.cshtml", Model.Value)
 }

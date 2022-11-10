@@ -3,16 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
-using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using System.Threading;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using TestingAndCalibrationLabs.Business.Common;
-using System.Security.Cryptography.X509Certificates;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -27,6 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostingEnviroment;
+        private readonly IUiControlCategoryTypeService _uiControlCategoryTypeService;
         /// <summary>
         /// 
         /// passing parameter via varibales for establing connection
@@ -55,15 +48,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult LoadGrid(int? id = 0)
+        public ActionResult LoadGrid(int? id, string controlCategoryTypeTemplate)
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
-            //records.FieldValues = records.FieldValues.Values.Take(5).ToList();
-            
-            return PartialView("~/Views/Common/Components/NonDataControls/_gridTemplate2.cshtml", records);
+            return PartialView(controlCategoryTypeTemplate, records);
         }
 
         /// <summary>
@@ -71,7 +62,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult GridList(int? id = 0)
+        public ActionResult GridList(int? id= 0)
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(pageMetadata);
@@ -90,22 +81,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var uiPageId = id;
             var pageMetadata = _commonService.GetUiPageMetadataHierarchy(uiPageId);
-            //var hierarchy = pageMetadata.Fields.Hierarchize(
-            // 0, // The "root level" key. We're using -1 to indicate root level.
-            // f => f.Id, // The ID property on your object
-            // f => f.ParentId,// The property on your object that points to its parent
-            //f => f.Position // The property on your object that specifies the order within its parent
-
-            // );
-            //pageMetadata.Layout = hierarchy;
             var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
 
-            //var records = _commonService.GetRecords(id);
-            //var record= _mapper.Map<Business.Core.Model.RecordsModel, Models.RecordsDTO>(records);
-
-
-            //result.Layout = hierarchy;
-            //result.FieldValuesForGrid = record.FieldValues;
             return base.View(result);
         }[HttpGet]
         
@@ -114,17 +91,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        public ActionResult Create(int id)
-        {
-            
-            var uiPageId = id;
-            var pageMetadata = _commonService.GetUiPageMetadata(uiPageId);
-            var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            
-            return base.View(result);
-        }
-       
+        
         /// <summary>
         /// for creating data
         /// </summary>
@@ -153,15 +120,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            var pageMetadata = _commonService.GetRecordById(id);
-            var Layout = _commonService.GetUiPageMetadataHierarchy(id);
-            pageMetadata.Layout = Layout.Layout;
-            Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            return View(record);
-        }
+        
         /// <summary>
         /// Edit deatils of common
         /// </summary>

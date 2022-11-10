@@ -1,5 +1,5 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-
+@*
 @if (Model.Value.UiControlTypeName == "file")
 {
     @await Html.PartialAsync("~/Views/Common/Components/DataControls/_file.cshtml", Model.Value)
@@ -10,7 +10,7 @@ else if (Model.Value.UiControlTypeName == "textarea")
 }
 else if (Model.Value.UiControlTypeName == "text")
 {
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_text.cshtml", Model.Value)
+    @await Html.PartialAsync(Model.Value.UiControlCategoryTypeUrl, Model.Value)
 }
 else if (Model.Value.UiControlTypeName == "checkbox")
 {
@@ -41,9 +41,10 @@ else if (Model.Value.UiControlTypeName == "tel")
     @await Html.PartialAsync("~/Views/Common/Components/DataControls/_mobileNumber.cshtml", Model.Value)
 }
 else if (Model.Value.UiControlTypeName == "date")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_date.cshtml", Model.Value)
-}
+{*@
+    
+    @await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model.Value)
+@*}*@
 
 
 @section Scripts {

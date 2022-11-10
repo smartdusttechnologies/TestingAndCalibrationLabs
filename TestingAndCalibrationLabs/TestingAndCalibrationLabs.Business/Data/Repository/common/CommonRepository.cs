@@ -53,13 +53,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         upm.DataTypeId,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
-                                                        l.Name as ControlCategoryName
+                                                        l.Name as ControlCategoryName,
+														ucct.Template as UiControlCategoryTypeTemplate
                                                     From [UiPageMetadata] upm
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
                                                     inner join [Lookup] l on l.Id = uct.ControlCategoryId
-                                                where upm.UiPageTypeId=@uiPageId 
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+                                                where upm.UiPageTypeId = @uiPageId
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0

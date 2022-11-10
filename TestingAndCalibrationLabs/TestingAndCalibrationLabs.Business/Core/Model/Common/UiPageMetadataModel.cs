@@ -64,6 +64,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// 
         /// </summary>
+        public int UiControlCategoryType { get; set; }
+        public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
 
         /// <summary>
