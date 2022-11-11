@@ -1,0 +1,42 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+
+<div class="accordion accordion-flush" id="accordionFlush-@Model.Value.Id">
+    @foreach (var item in Model.Children){
+        @if (Model.Children.First() == item)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-@item.Value.Id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Value.UiControlTypeName-@item.Value.Id" aria-expanded="true" aria-controls="flush-@item.Value.UiControlTypeName-@item.Value.Id">
+                        <span class="fab fa-leanpub me-2"></span>
+                        @item.Value.UiControlDisplayName
+                    </button>
+                </h2>
+                <div id="flush-@item.Value.UiControlTypeName-@item.Value.Id" class="accordion-collapse collapse show" aria-labelledby="flush-@item.Value.Id" data-bs-parent="#accordionFlush-@Model.Value.Id">
+                    <div class="accordion-body">
+                        @foreach (var node in @item.Children)
+                        {
+                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                        }
+                    </div>
+                </div>
+            </div>
+        }else{
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-@item.Value.Id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Value.UiControlTypeName-@item.Value.Id" aria-expanded="true" aria-controls="flush-@item.Value.UiControlTypeName-@item.Value.Id">
+                        <span class="fab fa-leanpub me-2"></span>
+                        @item.Value.UiControlDisplayName
+                    </button>
+                </h2>
+                <div id="flush-@item.Value.UiControlTypeName-@item.Value.Id" class="accordion-collapse collapse" aria-labelledby="flush-@item.Value.Id" data-bs-parent="#accordionFlush-@Model.Value.Id">
+                    <div class="accordion-body">
+                        @foreach (var node in @item.Children)
+                        {
+                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
