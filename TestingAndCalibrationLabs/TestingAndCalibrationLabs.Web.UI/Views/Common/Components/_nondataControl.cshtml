@@ -1,4 +1,5 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+
 @if (@Model.Value.UiControlTypeName != "grid")
 {
     @await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model)

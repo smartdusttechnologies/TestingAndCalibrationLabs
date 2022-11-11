@@ -1,8 +1,8 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <div class="row ms-1 me-1">
     <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
-        <input class="form-input width-full" type="tel" id="@Model.UiControlTypeName@Model.Id" placeholder=" " name="@Model.UiControlTypeName@Model.Id" onchange="this.setAttribute('value',this.value)" maxlength="10"/>
-        <label class="form-label" for="@Model.UiControlTypeName">@Model.UiControlDisplayName</label>
-        <span asp-validation-for="@Model.UiControlDisplayName" class="text-danger"></span>
+        <input class="form-input width-full" type="tel" id="@Model.Value.UiControlTypeName@Model.Value.Id" placeholder=" " name="@Model.Value.UiControlTypeName@Model.Value.Id" onchange="this.setAttribute('value',this.value)" maxlength="10" />
+        <label class="form-label" for="@Model.Value.UiControlTypeName">@Model.Value.UiControlDisplayName</label>
+        <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
     </div>
 </div>

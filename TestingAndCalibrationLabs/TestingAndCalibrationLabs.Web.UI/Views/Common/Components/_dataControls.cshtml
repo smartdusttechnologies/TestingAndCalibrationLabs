@@ -1,54 +1,9 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-@*
-@if (Model.Value.UiControlTypeName == "file")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_file.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "textarea")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_textarea.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "text")
-{
-    @await Html.PartialAsync(Model.Value.UiControlCategoryTypeUrl, Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "checkbox")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_checkbox.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "email")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_email.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "button")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_button.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "radio")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_radio.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "dropdown")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_dropdown.cshtml", Model)
-}
-else if (Model.Value.UiControlTypeName == "pincode")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_pincode.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "tel")
-{
-    @await Html.PartialAsync("~/Views/Common/Components/DataControls/_mobileNumber.cshtml", Model.Value)
-}
-else if (Model.Value.UiControlTypeName == "date")
-{*@
-    
-    @await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model.Value)
-@*}*@
 
+@await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model)
 
 @section Scripts {
     @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
-}
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

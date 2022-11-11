@@ -1,10 +1,10 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <div class="row ms-1 me-1">
     <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element left-pd-input">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="true" id="@Model.UiControlTypeName@Model.Id"/>
-            <label class="form-check-label" for="@Model.Id">
-                @Model.UiControlDisplayName
+            <input class="form-check-input" type="checkbox" value="true" id="@Model.Value.UiControlTypeName@Model.Value.Id" />
+            <label class="form-check-label" for="@Model.Value.Id">
+                @Model.Value.UiControlDisplayName
             </label>
         </div>
     </div>
