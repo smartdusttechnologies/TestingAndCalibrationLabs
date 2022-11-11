@@ -4,7 +4,6 @@
 {
     @await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model)
 }
-
 else if (@Model.Value.UiControlTypeName == "grid")
 {
     @await Html.PartialAsync("~/Views/Common/Components/Grid/_grid.cshtml", Model)

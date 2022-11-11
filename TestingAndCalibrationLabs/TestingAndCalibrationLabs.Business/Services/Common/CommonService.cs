@@ -11,9 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 {
     public class CommonService : ICommonService
     {
-
         internal string UI_PAGE_NAME = string.Empty;
-
         private readonly ICommonRepository _commonRepository;
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
@@ -53,13 +51,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return requestResult;
         }
-
         public bool Delete(int id)
         {
             _recordGenericRepository.Delete(id);
             return true;
         }
-
         public RequestResult<bool> Update(RecordModel record)
         {
             RequestResult<bool> requestResult = Validate(record);
@@ -83,13 +79,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return requestResult;
         }
-
         public RecordModel GetUiPageMetadata(int uiPageId)
         {
             var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
             return uiMetadata;
         }
-
         public RecordModel GetUiPageMetadataHierarchy(int uiPageId)
         {
             var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
@@ -98,13 +92,11 @@ namespace TestingAndCalibrationLabs.Business.Services
              f => f.Id, // The ID property on your object
              f => f.ParentId,// The property on your object that points to its parent
             f => f.Position // The property on your object that specifies the order within its parent
-
              );
             uiMetadata.Layout = hierarchy;
             //var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             return uiMetadata;
         }
-
         public RecordsModel GetRecords(int uiPageId)
         {
             //var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
@@ -114,41 +106,29 @@ namespace TestingAndCalibrationLabs.Business.Services
             //var maped = uiMetadataContent.GroupBy(x => new { x.UiPageMetadataId, x.Category }).Select(x => new { Id = x.Key.UiPageMetadataId, Contents = x.ToList() });
             //var validationtypes = _uiPageValidationTypesGenericRepository.Get();
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
-
             uiPageData.GroupBy(x => x.RecordId).ToList()
-                .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList())); 
+                .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             Dictionary<int, List<UiPageMetadataCharacteristicsModel>> metadataContent = new Dictionary<int, List<UiPageMetadataCharacteristicsModel>>();
-
             uiMetadataContent.GroupBy(x => x.UiPageMetadataId).ToList()
                 .ForEach(t => metadataContent.Add(t.Key, t.ToList()));
-
-
             return new RecordsModel { UiPageId = uiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageDataModels };
         }
-
         public RecordModel GetRecordById(int recordId)
         {
-
             //   var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
             var recordMdel = _recordGenericRepository.Get(recordId);
             var uiMetadata = _commonRepository.GetUiPageMetadata(recordMdel.UiPageId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
-
             return new RecordModel { Id = recordId, UiPageId = recordMdel.UiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageData };
         }
-
-
         #endregion
 
         #region Private Methods
-
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageId);
             List<UiPageValidationTypeModel> validationtypes = _uiPageValidationTypesGenericRepository.Get();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-
             foreach (var field in record.FieldValues)
             {
                 foreach (var item in validations)
@@ -157,15 +137,12 @@ namespace TestingAndCalibrationLabs.Business.Services
                     {
                         var validationlist = _uiPageValidationTypesGenericRepository.Get(item.UiPageValidationTypeId);
                         var uipagedata = _uiPageMetadataRepository.GetById(item.UiPageMetadataId);
-                        //string metadataId = item.UiPageMetadataId.ToString();
-                        //string id = uipagedata.UiControlTypeName + metadataId;
                         string metadataId = Helpers.GenerateUiControlId(uipagedata.UiControlTypeName, item.UiPageMetadataId);
                         switch ((ValidationType)item.UiPageValidationTypeId)
                         {
                             case ValidationType.IsRequired:
                                 if (string.IsNullOrEmpty(field.Value))
                                 {
-                                   
                                     string errorMessage = string.Format(validationlist.Message, uipagedata.UiControlDisplayName);
                                     validationMessages.Add(new ValidationMessage { Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 }
@@ -201,7 +178,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                                     validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
                         }
-
                     }
                 }
             }

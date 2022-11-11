@@ -1,6 +1,5 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-
-@*<div class="accordion" id="accordionExample" style="margin-top:2px;">
+<div class="accordion" id="accordionExample" style="margin-top:2px;">
     @foreach (var item in Model.Children)
     {
         @if (Model.Children.First() == item)
@@ -13,7 +12,6 @@
                         </button>
                     </h2>
                 </div>
-
                 <div id="collapse-@item.Value.Id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         @foreach (var node in item.Children)
@@ -34,7 +32,6 @@
                         </button>
                     </h2>
                 </div>
-
                 <div id="collapse-@item.Value.Id" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         @foreach (var node in item.Children)
@@ -47,10 +44,8 @@
         }
     }
 </div>
-*@
-
-             @*   sfgsdf*@
-
+ @*   This Is another Collaspible section Just For Testing *@
+@*
 <div class="accordion" id="accordionPanelsStayOpenExample">
     @foreach (var item in Model.Children)
     {
@@ -91,4 +86,4 @@
     }
     
     
-</div>
+</div>*@

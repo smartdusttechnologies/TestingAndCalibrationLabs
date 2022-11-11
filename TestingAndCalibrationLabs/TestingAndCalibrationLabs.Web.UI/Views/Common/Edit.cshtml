@@ -52,25 +52,21 @@
     </div>
 </div>
 <script>
-
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
-
     //This function will display the Failure snackbar
     function myFunctionError() {
         var x = document.getElementById("snackbarerror");
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
-
     }
     var count = 0;
     function addContentInSelect() {
         var metadataId = $('#metadataId').find(":selected").val();
-
         if (count == 0) {
             count++;
             $.ajax({
@@ -96,9 +92,7 @@
         }
     }
 </script>
-
 <script type="text/javascript">
-
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var uiPageMetaData = modelData.fields;
@@ -116,8 +110,6 @@
                         console.log("sdagfs");
                     }
                 }
-
-
             }
         }
     });
@@ -127,30 +119,23 @@
         if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
             document.getElementById(x).style.border = "1px solid black ";
         }
-
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
         console.log(modelData);
         var uiPageMetaData = modelData.fields;
         //var fieldValues = [];
-
         //for (let i = 0; i < uiPageMetaData.length; i++) {
         //    if (uiPageMetaData[i].controlCategoryName == "DataControl") {
         //        var fieldId = "#"+ uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
         //        var metadataId = uiPageMetaData[i].id;
-
         //        var fieldValue = $(fieldId).val();
-
         //            var keyValuepair = {};
-
         //            keyValuepair.UiControlId = metadataId;
         //            keyValuepair.Value = fieldValue;
         //            fieldValues.push(keyValuepair)
-
         //    }
         //}
         var fieldValues = [];
-
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
@@ -164,13 +149,11 @@
         }
         var uiPageId = parseInt($("#UiPageId").val())
         var id = parseInt($("#Id").val())
-
         $.ajax({
             type: 'POST',
             url: url,
             data: { "Id": id, "UiPageId": uiPageId, "FieldValues": fieldValues },
             success: function (response) {
-
                 window.location.href = "/";
             },
             failure: function (response) {
@@ -180,17 +163,14 @@
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 //console.log(response.fieldId);
-
                 myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
                 //    var s = newErrorMessage.fid//Sending the reason to html
-
                 document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
                 document.getElementById("lefid").value = newErrorMessage.sourceId;
             }
         });
         //var uiPageId = parseInt($("#UiPageId").val())
-
         //$.ajax({
         //    type: 'POST',
         //    url: url,
