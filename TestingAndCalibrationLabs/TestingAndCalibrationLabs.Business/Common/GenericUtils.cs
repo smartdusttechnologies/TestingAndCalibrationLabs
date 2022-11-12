@@ -1,10 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-
 namespace TestingAndCalibrationLabs.Business.Common
 {
     /// <summary>
@@ -23,7 +19,11 @@ namespace TestingAndCalibrationLabs.Business.Common
         {
             return obj == null ? new List<T>() : obj.ToList();
         }
-
+        /// <summary>
+        /// To Get Table Name Of Model With The Help Of DbTableAttributes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static string GetDbTableName<T>()
         {
             var tableAttribute = typeof(T).GetCustomAttributes(
@@ -35,36 +35,37 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return null;
         }
+        /// <summary>
+        /// To Get All ColumnNames Of A Given Model With DbColumnAttribute
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static List<string> GetDbColumnName<T>()
         {
-
-           var _dict = new List<string>();
-
-            PropertyInfo[] props = typeof(T).GetProperties();
-            foreach (PropertyInfo prop in props)
+           var _listOfColumns = new List<string>();
+            PropertyInfo[] propertieList = typeof(T).GetProperties();
+            foreach (PropertyInfo prop in propertieList)
             {
-                object[] attrs = prop.GetCustomAttributes(true);
-                foreach (object attr in attrs)
+                object[] attributeList = prop.GetCustomAttributes(true);
+                foreach (object attribute in attributeList)
                 {
-                    DbColumnAttribute authAttr = attr as DbColumnAttribute;
-                    if (authAttr.Name != null)
+                    DbColumnAttribute dbColumnAttribute = attribute as DbColumnAttribute;
+                    if (dbColumnAttribute.Name != null)
                     {
                         //string propName = prop.Name;
-                        string auth = authAttr.Name;
-                        _dict.Add( auth);
+                        string auth = dbColumnAttribute.Name;
+                        _listOfColumns.Add( auth);
                     }
-                     if(authAttr.Name == null)
+                     if(dbColumnAttribute.Name == null)
                     {
-                        string nme = prop.Name;
-                        _dict.Add(nme);
+                        string name = prop.Name;
+                        _listOfColumns.Add(name);
                     }
                 }
             }
-            return _dict;
+            return _listOfColumns;
         }
-
         #endregion
-
     }
 }
 
