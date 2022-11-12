@@ -14,7 +14,35 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[Organization]  OFF
 END
 GO
+IF NOT EXISTS (SELECT 1 FROM [Lookup] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[LookupCategory]  ON
 
+    INSERT INTO [dbo].[LookupCategory]
+               ([Id]
+		       ,[Name]
+               ,[IsDeleted])
+         VALUES
+               (4, 'UIControlCategory', 0)
+    SET IDENTITY_INSERT [dbo].[LookupCategory]  OFF
+END
+GO
+IF NOT EXISTS (SELECT 1 FROM [Lookup] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[Lookup]  ON
+
+    INSERT INTO [dbo].[Lookup]
+               ([Id]
+		       ,[Name]
+               ,[LookupCategoryId]
+               ,[IsDeleted])
+         VALUES
+               (8, 'DataControl', 4, 0),
+		       (9, 'NonDataControl', 4, 0),
+		       (10, 'SubLevel1Control', 4, 0)
+    SET IDENTITY_INSERT [dbo].[Lookup]  OFF
+END
+GO
 IF NOT EXISTS (SELECT 1 FROM [Role] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Role]  ON
@@ -34,8 +62,11 @@ BEGIN
 
     SET IDENTITY_INSERT [dbo].[Role]  OFF
 END
-GO
 
+
+
+
+GO
 IF NOT EXISTS (SELECT 1 FROM [User] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[User]  ON
@@ -130,37 +161,78 @@ BEGIN
                ([Id]
 		       ,[Name]
                ,[DisplayName]
-               ,[IsDeleted])
+               ,[IsDeleted]
+			   ,[ControlCategoryId])
          VALUES
-               (1, N'text', N'User Name', 0),
-			   (2, N'password', N'Password', 0),
-			   (3, N'checkbox', N'Checkbox', 0),
-			   (4, N'radio', N'Radio', 0),
-			   (5, N'file', N'File', 0),
-			   (6, N'submit', N'Submit', 0),
-			   (7, N'button', N'Button', 0),
-			   (8, N'textarea', N'Textarea', 0),
-			   (9, N'date', N'Date', 0),
-			   (10, N'email', N'Email', 0),
-			   (11, N'image', N'Image', 0),
-			   (12, N'number', N'Number', 0),
-			   (13, N'tel', N'Telephone', 0),
-			   (14, N'time', N'Time', 0),
-			   (15, N'url', N'Url', 0),
-			   (16, N'reset', N'Reset', 0),
-			   (17, N'week', N'Week', 0),
-			   (18, N'search', N'Search', 0),
-			   (19, N'range', N'Range', 0),
-			   (20, N'month', N'Month', 0),
-			   (21, N'hidden', N'Hidden', 0),
-			   (22, N'datetime-local', N'Datetime-local', 0),
-			   (23, N'color', N'Color', 0),
-			   (24, N'card', N'Card', 0)
+               (1, N'text', N'User Name', 0,8),
+			   (2, N'password', N'Password', 0,8),
+			   (3, N'checkbox', N'Checkbox', 0,8),
+			   (4, N'radio', N'Radio', 0,8),
+			   (5, N'file', N'File', 0,8),
+			   (6, N'submit', N'Submit', 0,9),
+			   (7, N'button', N'Button', 0,8),
+			   (8, N'textarea', N'Textarea', 0,8),
+			   (9, N'date', N'Date', 0,8),
+			   (10, N'email', N'Email', 0,8),
+			   (11, N'image', N'Image', 0,8),
+			   (12, N'number', N'Number', 0,8),
+			   (13, N'tel', N'Telephone', 0,8),
+			   (14, N'time', N'Time', 0,8),
+			   (15, N'url', N'Url', 0,8),
+			   (16, N'reset', N'Reset', 0,9),
+			   (17, N'week', N'Week', 0,8),
+			   (18, N'search', N'Search', 0,8),
+			   (19, N'range', N'Range', 0,8),
+			   (20, N'month', N'Month', 0,8),
+			   (21, N'hidden', N'Hidden', 0,8),
+			   (22, N'datetime-local', N'Datetime-local', 0,8),
+			   (23, N'color', N'Color', 0,8),
+			   (24, N'card', N'Card', 0,9),
+			   (25, N'processStatus', N'Default Process Status', 0, 9),
+               (26, N'subLevel1ProcessStatus', N'Sub Leve 1 Process status', 0, 10),
+               (28, N'tabs', N'Default Tabs', 0, 9),
+               (29, N'subLevel1Tabs', N'Sub Level 1 Tabs', 0, 10),
+               (30, N'collapsableSection', N'Default Collapsable Section', 0, 9),
+               (31, N'subLevel1CollapsableSection', N'Sub Level 1 Collapsable Section', 0, 10),
+               (32, N'dropdown', N'Dropdown', 0, 8),
+               (33, N'grid', N'Grid', 0, 9),
+               (1032, N'pincode', N'Pincode', 0, 8)
 
     SET IDENTITY_INSERT [dbo].[UiControlType]  OFF
 END
 GO
+IF NOT EXISTS (SELECT 1 FROM [UiControlCategoryType] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  ON
 
+    INSERT INTO [dbo].[UiControlCategoryType]
+               ([Id]
+		       ,[Name]
+               ,[Template]
+			  ,[IsDeleted]
+			   ,[UiControlTypeId])
+         VALUES
+               (1, N'Default', N'~/Views/Common/Components/Grid/_gridTemplate1.cshtml', 0, 33),
+		       (2, N'Test Detail Classic', N'~/Views/Common/Components/Grid/_gridTemplate2.cshtml', 0, 33),
+		       (3, N'Default', N'~/Views/Common/Components/Text/_text.cshtml', 0, 1),
+		       (5, N'Large', N'~/Views/Common/Components/Text/_text1.cshtml', 0, 1),
+		       (1003, N'Default', N'~/Views/Common/Components/Checkbox/_checkbox.cshtml', 0, 3),
+			   (1004, N'Default', N'~/Views/Common/Components/Radio/_radio.cshtml', 0, 4),
+               (1005, N'Default', N'~/Views/Common/Components/Submit/_submit.cshtml', 0, 6),
+               (1006, N'Default ', N'~/Views/Common/Components/Email/_email.cshtml', 0, 10),
+               (1007, N'Default', N'~/Views/Common/Components/Mobile/_mobileNumber.cshtml', 0, 12),
+               (1009, N'Default', N'~/Views/Common/Components/Date/_time.cshtml', 0, 14),
+               (1010, N'Default', N'~/Views/Common/Components/Url/_url.cshtml', 0, 15),
+               (1011, N'Default', N'~/Views/Common/Components/DateTime/_datetime-local.cshtml', 0, 22),
+               (1012, N'Default', N'~/Views/Common/Components/ProgressStatus/_progressStatus.cshtml', 0, 25),
+               (1013, N'Default', N'~/Views/Common/Components/Tabs/_tabs.cshtml', 0, 28),
+               (1014, N'Default', N'~/Views/Common/Components/CollapsableSection/_collapsableSection.cshtml', 0, 30),
+               (1015, N'Default', N'~/Views/Common/Components/Dropdown/_dropdown.cshtml', 0, 32),
+               (1016, N'Default', N'~/Views/Common/Components/Pincode/_pincode.cshtml', 0, 1032)
+
+    SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  OFF
+END
+GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidationType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidationType]  ON
@@ -210,6 +282,7 @@ BEGIN
     INSERT INTO [dbo].[UiNavigationCategory]
                ([Id]
 		       ,[Name]
+			   ,[Orders]
 			   ,[IsDeleted])
          VALUES
                 (1, 'Survey','2', 0),
