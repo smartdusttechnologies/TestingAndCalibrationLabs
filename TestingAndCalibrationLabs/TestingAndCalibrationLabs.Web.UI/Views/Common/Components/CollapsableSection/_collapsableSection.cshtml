@@ -13,10 +13,12 @@
                 </h2>
                 <div id="flush-@item.Value.UiControlTypeName-@item.Value.Id" class="accordion-collapse collapse show" aria-labelledby="flush-@item.Value.Id" data-bs-parent="#accordionFlush-@Model.Value.Id">
                     <div class="accordion-body">
+                        <div class="row ms-1 me-1">
                         @foreach (var node in @item.Children)
                         {
                             @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                         }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,10 +34,12 @@
                 </h2>
                 <div id="flush-@item.Value.UiControlTypeName-@item.Value.Id" class="accordion-collapse collapse" aria-labelledby="flush-@item.Value.Id" data-bs-parent="#accordionFlush-@Model.Value.Id">
                     <div class="accordion-body">
+                        <div class="row ms-1 me-1">
                         @foreach (var node in @item.Children)
                         {
                             @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                         }
+                        </div>
                     </div>
                 </div>
             </div>

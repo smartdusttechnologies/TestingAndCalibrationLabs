@@ -16,4 +16,8 @@
     <ProjectReference Include="..\TestingAndCalibrationLabs.Business\TestingAndCalibrationLabs.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Common\Components\Url\" />
+  </ItemGroup>
+
 </Project>

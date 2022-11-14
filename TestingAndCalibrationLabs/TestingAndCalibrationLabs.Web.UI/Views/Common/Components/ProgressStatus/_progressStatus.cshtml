@@ -1,13 +1,13 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 
 <style>
-    * {
+   /* * {
         margin: 0;
         padding: 0
     }
     html {
         height: 100%
-    }
+    }*/
     h2 {
         color: #2F8D46;
     }
@@ -135,10 +135,12 @@
                     @foreach (var item in Model.Children)
                     {
                         <fieldset id="fieldset_@item.Value.Id">
+                            <div class="row ms-1 me-1">
                             @foreach (var node in item.Children)
                             {
                                 @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                             }
+                            </div>
                             @if (Model.Children.First() == item)
                             {
                                 <input type="button" name="next-step" class="next-step" value="Next Step" />
@@ -167,7 +169,7 @@
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var steps = modelData.children.length;
         var percentofWidth = parseFloat(100 / steps)  ;
-        percentofWidth = percentofWidth.toFixed();
+        percentofWidth = percentofWidth;
         var str = "#progressbar li {list-style-type:none;font-size:15px;width:" + percentofWidth + "%;float:left;position: relative;font-weight:400; text-align:center;}";
         var utrstyle = document.createElement("style")
         utrstyle.innerText = str;
