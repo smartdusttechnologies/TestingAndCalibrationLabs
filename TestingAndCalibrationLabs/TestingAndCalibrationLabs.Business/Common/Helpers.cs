@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Cryptography;
+using System.IO;
 using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Common
@@ -12,6 +13,31 @@ namespace TestingAndCalibrationLabs.Business.Common
         private static char[] charSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
         #region Public Methods.
+
+        public static string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+
+        public static Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
+        }
 
         public static DateTime? ConverddmmyyyyTommddyyyy(string dateString)
         {
@@ -253,7 +279,6 @@ namespace TestingAndCalibrationLabs.Business.Common
             int thisHour = Convert.ToInt32((DateTimeOffset.Now + DateTimeOffset.Now.Offset).ToString("yyyy-MM-dd HH:mm:ss").Substring(11, 2));
             return thisHour;
         }
-
-        #endregion
     }
-}
+    #endregion
+}   

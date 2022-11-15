@@ -1,33 +1,30 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+/*Below link for the Roboto font which we area using */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 
-a.navbar-brand {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbarBrandWithATag {
     white-space: normal;
     text-align: center;
     word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-    color: #0366d6;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Roboto';
 }
 
 @media (min-width: 768px) {
@@ -36,44 +33,11 @@ html {
     }
 }
 
-.border-top {
+.border-top-footer {
     border-top: 1px solid #e5e5e5;
 }
 
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-}
-.btn {
-    background-color: blue;
-    width: 200px;
-    font-size: 20px;
-    padding: 20px;
-    border-radius: 15px;
-    border: 3px solid yellow;
-    color: magenta;
-    text-align: center;
-}
-
-form-group > label {
+form-group-for-common > label {
     top: 12px;
     left: 6px;
     position: relative;
@@ -112,8 +76,6 @@ input.input-validation-error#State.form-input.width-full {
 select.form-element- {
     border: 2px solid red;
 }
-
-
 
 .validation-summary-valid {
     display: none;

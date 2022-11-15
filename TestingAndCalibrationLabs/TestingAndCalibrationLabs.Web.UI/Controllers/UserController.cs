@@ -31,7 +31,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult UserRegistration(UserDTO userRequest)
+        public IActionResult Add(UserDTO userRequest)
         {
             var userModel = _mapper.Map<UserDTO,UserModel>(userRequest);
             var result = _authenticationService.Add(userModel, userRequest.Password);
