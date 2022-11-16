@@ -8,9 +8,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -22,6 +29,7 @@ namespace TestingAndCalibrationLabs.Web.UI
         }
 
         public IConfiguration Configuration { get; }
+        public static TokenValidationParameters tokenValidationParameters;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -30,13 +38,35 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+          .AddJwtBearer(options =>
+          {
+              options.TokenValidationParameters = tokenValidationParameters;
+          });
 
+            //PolicyBases Authorization
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Add); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Edit); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Read); });
+                //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });
+                options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.EditRole); });
+            });
             //Services
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISampleService, SampleService>();
+            services.AddScoped<ITestReportService, TestReportService>();
+            services.AddScoped<IGoogleDriveService, GoogleDriveService>();
+            services.AddScoped<IEmailService, EmailService >();
+            
+ 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
@@ -46,6 +76,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationService, UiPageValidationService>();
             services.AddScoped<IUiPageMetadataService, UiPageMetadataService>();
             services.AddScoped<IDataTypeService, DataTypeService>();
+            services.AddScoped<IFileCompressionService, FileCompressionService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
 
             
@@ -69,9 +100,10 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISecurityParameterRepository, SecurityParameterRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped< ITestReportRepository, TestReportRepository >();
+            services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +119,27 @@ namespace TestingAndCalibrationLabs.Web.UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            tokenValidationParameters = new TokenValidationParameters
+            {
+                // The signing key must match!
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = Configuration["JWT:ValidIssuer"],
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = Configuration["JWT:ValidAudience"],
+
+                // Validate the token expiry
+                ValidateLifetime = true,
+
+                // If you want to allow a certain amount of clock drift, set that here:
+                ClockSkew = TimeSpan.Zero
+            };
             app.UseHttpsRedirection();
             app.UseSession();
 
@@ -100,7 +153,6 @@ namespace TestingAndCalibrationLabs.Web.UI
                 await next();
             });
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -108,11 +160,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
             });
            
         }
     }
 }
-
-

@@ -13,7 +13,7 @@
                 {
                     if (item.UiControlTypeName == "textarea")
                     {
-                        <div class="form-group" style="margin-left:40px">
+                        <div class="form-group-for-common" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <textarea  id="@item.Id" title="@item.UiControlDisplayName"  @item.IsRequired rows="4" cols="50"></textarea>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
@@ -21,7 +21,7 @@
                     }
                     else if (item.UiControlTypeName == "file")
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                             <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
@@ -40,7 +40,7 @@
                     }
                     else if (item.UiControlTypeName == "search")
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                             <input class="form-input width-full" style="color: red;" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
@@ -56,13 +56,13 @@
                     }
                     else
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
                             <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                         </div>
                         @*
-                            <div class="form-group" style="margin-left:40px">
+                            <div class="form-group-for-common" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <input type="@item.UiControlTypeName" id="@item.Id" title="@item.UiControlDisplayName" />
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
@@ -71,7 +71,7 @@
                }
             
             </div>
-            <div class="form-group">
+            <div class="form-group-for-common">
                 <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
 			</div>
         </form>
@@ -166,7 +166,7 @@
             var fieldId = uiPageMetaData[i].id;
             var fieldValue = $('#' + fieldId).val();
             var keyValuepair = {};
-            keyValuepair.UiControlId = fieldId;
+            keyValuepair.UiPageMetadataId = fieldId;
             keyValuepair.Value = fieldValue;
             fieldValues.push(keyValuepair)
         }
@@ -195,7 +195,7 @@
                         //var result = a.find(obj => {
                         // // Returns the object where
                         //// the given property has some value 
-                        //return obj.uiControlId === nfieldId
+                        //return obj.UiPageMetadataId === nfieldId
                         //})
 
                         //if(result == undefined)

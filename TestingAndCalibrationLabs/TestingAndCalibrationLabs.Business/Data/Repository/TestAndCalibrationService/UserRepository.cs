@@ -21,6 +21,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+
         /// <summary>
         ///get the data of the required user with specified role[Admin]
         /// </summary>
@@ -28,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         List<string> Interfaces.IUserRepository.Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return (List<string>)db.Query<string>("select Email from [Users] where Role='Admin'");
+            return (List<string>)db.Query<string>("select Email from [User] where UserName='sysadmin'");
         }
         /// <summary>
         /// Get User Based on Id
