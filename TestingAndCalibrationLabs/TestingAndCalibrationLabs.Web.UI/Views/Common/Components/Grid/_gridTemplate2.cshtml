@@ -30,17 +30,14 @@
                     <tr>
                         @foreach (var itemValue in item.Value)
                         {
-                            
                             <td>
-                                    @Html.DisplayFor(modelItem => itemValue.Value)
+                             @Html.DisplayFor(modelItem => itemValue.Value)
                             </td>
                             if (count == 4)
                             {
                                 break;
                             }
                             count++;
-
-
                         }
                         <td>
                             <a class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;" asp-controller="Common" asp-action="EditLayout" asp-route-id="@item.Key">
