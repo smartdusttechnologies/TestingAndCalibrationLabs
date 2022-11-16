@@ -4,8 +4,11 @@ using Microsoft.Extensions.Logging;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using Microsoft.AspNetCore.Hosting;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using Microsoft.AspNetCore.Http;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.AspNetCore.Hosting.Server;
+using System.IO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -17,6 +20,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
+        private readonly IGoogleDriveService _googleDriveService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -24,11 +28,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
         /// <param name="listSorterService"></param>
-        public CommonController(ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IListSorterService listSorterService)
+        public CommonController(IGoogleDriveService googleDriveService,ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IListSorterService listSorterService)
         {
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
+            _googleDriveService = googleDriveService;
         }
         /// <summary>
         /// for getting old page index
@@ -42,12 +47,28 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
         }
+        [HttpPost]
+        public IActionResult FileUpload()
+        {
+            AttachmentModel attachmentModel = new AttachmentModel();
+            attachmentModel.DataUrl = Request.Form.Files.FirstOrDefault();
+            var result = _googleDriveService.Upload(attachmentModel);
+            if (result.IsSuccessful)
+            {
+                var imageId = result.RequestedObject.FilePath;
+                return Ok(imageId);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
         [HttpGet]
         public ActionResult LoadGrid(int? id, string controlCategoryTypeTemplate)
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
-            //TODO: this is the temporary work later we will change it confiqq
+            //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
             return PartialView(controlCategoryTypeTemplate, records);
         }

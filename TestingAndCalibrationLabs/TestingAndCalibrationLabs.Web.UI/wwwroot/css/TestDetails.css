@@ -104,6 +104,10 @@
         top: -6px;
     }
 
+.red-color {
+    color:red;
+}
+
 .field-validation-error.form-input.width-full {
     color: orangered;
     font-weight: bold;

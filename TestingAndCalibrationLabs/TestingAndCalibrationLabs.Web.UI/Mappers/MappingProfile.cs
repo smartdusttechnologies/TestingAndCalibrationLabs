@@ -12,8 +12,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<UiPageMetadataDTO, UiPageMetadataModel>().ReverseMap();
             CreateMap<RecordsDTO, RecordsModel>().ReverseMap();
             CreateMap<UiPageDataDTO, UiPageDataModel>().ReverseMap();
-            CreateMap<Web.UI.Models.ValidationMessage, Business.Common.ValidationMessage>().ReverseMap();  
-            CreateMap<UserDTO, Business.Core.Model.UserModel>().ReverseMap();
+            CreateMap<ValidationMessage, Business.Common.ValidationMessage>().ReverseMap();  
+            CreateMap<UserDTO,UserModel>().ReverseMap();
             CreateMap<UiPageTypeDTO, UiPageTypeModel>().ReverseMap();
             CreateMap<UiControlTypeDTO, UiControlTypeModel>().ReverseMap();
             CreateMap<DataTypeDTO, DataTypeModel>().ReverseMap();
@@ -22,16 +22,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<UiNavigationCategoryDTO, UiNavigationCategoryModel>().ReverseMap();
             CreateMap<LookupDTO, LookupModel>().ReverseMap();
             CreateMap<LookupCategoryDTO, LookupCategoryModel>().ReverseMap();
-            CreateMap<Business.Common.Node<UiPageMetadataModel>, Web.UI.Models.Node<UiPageMetadataDTO>>();
-            CreateMap<UserDTO, Business.Core.Model.User>().ReverseMap();
-            CreateMap<UI.Models.TestReportDTO, Business.Core.Model.TestReportModel>().ReverseMap();
-            CreateMap<UI.Models.AttachmentDTO, Business.Core.Model.AttachmentModel>().ReverseMap();
-            CreateMap<UI.Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>().ReverseMap();
-            CreateMap<UI.Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>().ReverseMap();
-            CreateMap<UI.Models.DataTypeModel, Business.Core.Model.DataTypeModel>().ReverseMap();
-            CreateMap<UI.Models.UiPageValidationModel, Business.Core.Model.UiPageValidationModel>().ReverseMap();
-            CreateMap<UI.Models.UiPageValidationType, Business.Core.Model.UiPageValidationTypeModel>().ReverseMap();
-
+            CreateMap<Business.Common.Node<UiPageMetadataModel>,Node<UiPageMetadataDTO>>();
+            CreateMap<TestReportDTO,TestReportModel>().ReverseMap();
+            CreateMap<AttachmentDTO,AttachmentModel>().ReverseMap();
         }
     }
 }

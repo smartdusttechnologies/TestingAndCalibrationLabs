@@ -10,7 +10,10 @@
 
             @foreach (var item in Model.Layout)
             {
-                <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
+
+                <div class="row ms-1 me-1">
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
+                </div>
             }
         </form>
         <input type="hidden" value="" name="lefid" id="lefid" />
@@ -106,13 +109,13 @@
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
-                var fieldId = "#"+ uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
+                var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
-                    var keyValuepair = {};
+                var keyValuepair = {};
                 keyValuepair.UiPageMetadataId = metadataId;
-                    keyValuepair.Value = fieldValue;
-                    fieldValues.push(keyValuepair)
+                keyValuepair.Value = fieldValue;
+                fieldValues.push(keyValuepair)
             }
         }
         var uiPageId = parseInt($("#UiPageId").val())

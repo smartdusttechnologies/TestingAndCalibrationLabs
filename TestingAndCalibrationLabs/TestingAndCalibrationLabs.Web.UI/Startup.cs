@@ -14,7 +14,9 @@ using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using Microsoft.AspNetCore.Http;
-using TestingAndCalibrationLabs.Web.UI.Models;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {

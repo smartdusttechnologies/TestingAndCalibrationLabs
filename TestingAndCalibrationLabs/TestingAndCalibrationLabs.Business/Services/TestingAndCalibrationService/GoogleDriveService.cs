@@ -36,15 +36,11 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             _hostingEnvironment = hostingEnvironment;
             _fileCompressService = fileCompressService;
         }
-
         #region Public Methods
-
         /// <summary>
         /// This will upload the file to the Google Drive
         /// </summary>
         /// <param name="attachmentModel"></param>
-        /// <param name="cancellationToken"></param>
-
         public RequestResult<AttachmentModel> Upload(AttachmentModel attachmentModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -90,7 +86,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         #endregion
 
         #region Private Methods
-
         /// <summary>
         /// To initiate the Google Drive Service of Google
         /// </summary>
@@ -119,7 +114,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             });
             return service;
         }
-
         /// <summary>
         /// This will create a Service to perform operations on Google Drive
         /// </summary>
@@ -140,25 +134,21 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             listRequest.PageSize = 100;
             listRequest.Fields = "nextPageToken, files(id, name)";
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
-
             if (files != null && files.Any())
             {
                 var folderName = files.Where(x => x.Name == fileMetadata.Name).FirstOrDefault();
                 if (folderName != null)
                     return folderName.Id;
             }
-
             var request = service.Files.Create(fileMetadata);
             request.Fields = "id";
             var file = request.Execute();
             return file.Id;
         }
-
         /// <summary>
         /// It Uploads the file only and Response BodyId is received as String.
         /// </summary>
         /// <param name="attachmentModel"></param>
-
         private RequestResult<AttachmentModel> UploadFileInternal(AttachmentModel attachmentModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -166,7 +156,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             string extensionName = Path.GetExtension(attachmentModel.DataUrl.FileName);
             var fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyymmddMMss") + extensionName;
             string filePath = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["DownloadData:FolderName"], fileName);
-
             _fileCompressService.ImageCompression(attachmentModel.DataUrl, filePath);
             attachmentModel.FilePath = filePath;
             string uploadsFolder = CreateFolder();
@@ -202,7 +191,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 File.Delete(filePath);
             }
         }
-
         /// <summary>
         /// Private function to download the file.
         /// </summary>
@@ -221,7 +209,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             string dataFileName = FileName;
             string FilePath = Path.Combine(FolderPath, dataFileName);
             MemoryStream stream = new MemoryStream();
-
             // Add a handler which will be notified on progress changes.
             // It will notify on each chunk download and when the
             // download is completed or failed.
@@ -250,7 +237,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
             request.Download(stream);
             return FilePath;
         }
-
         /// <summary>
         /// Private function to save the file downloaded.
         /// </summary>
@@ -263,7 +249,6 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
                 stream.WriteTo(file);
             }
         }
-
         #endregion
     }
 }

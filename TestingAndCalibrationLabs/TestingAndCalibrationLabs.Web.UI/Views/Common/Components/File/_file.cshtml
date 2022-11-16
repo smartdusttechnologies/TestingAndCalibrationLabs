@@ -1,7 +1,59 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 
-<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-    <input class="form-input width-full" type="@Model.Value.UiControlTypeName" id="@Model.Value.UiControlTypeName@Model.Value.Id" placeholder=" " name="@Model.Value.UiControlTypeName@Model.Value.Id" item.IsRequired onchange="this.setAttribute('value',this.value)" />
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+    <input class="form-input width-full" type="file" name="@Model.Value.UiControlDisplayName" id="image-@Model.Value.Id" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF">
     <label class="form-label" for="@Model.Value.UiControlDisplayName">@Model.Value.UiControlDisplayName</label>
     <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
 </div>
+<input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id"/>
+<script>
+    function validateForImages(input) {
+        debugger;
+        const fileSize = input.files[0].size / 1024 / 1024;
+        var fileName = input.files[0].name;
+        var fileExtension = fileName.split('.').pop();
+        switch (fileExtension) {
+            case 'jpg':
+                break;
+            case 'JPG':
+                break;
+            case 'JPEG':
+                break;
+            case 'jpeg':
+                break;
+            case 'png':
+                break;
+            case 'PNG':
+                break;
+            case 'XlSX':
+                break;
+            case 'xlsx':
+                break;
+            case 'pdf':
+                break;
+            case 'PDF':
+                break;
+            default:
+                alert('Wrong File Type!');
+                $(input).val('');
+                break;
+        }
+        if($(input)){console.log("sfssf");}else{console.log($(input));}
+        var file = new FormData();
+        file.append("raj", input.files[0]);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("FileUpload","Common")",
+            contentType: false, 
+            processData: false,
+            data: file,
+            success: function (response) {
+                var modelData = JSON.parse('@Json.Serialize(Model)');
+                var idNum = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+                $(idNum).val(response);
+            },
+            error: function (req, status, error) {
+            }
+        });
+    }
+</script>
