@@ -324,9 +324,9 @@ select.input-validation-error#TestingType {
     border: 1px solid;
 }
 
-.dropdown-hover:hover .dropdown-menu {
+/*.dropdown-hover:hover .dropdown-menu {
     display: block;
-}
+}*/
 
 .dropdown-right {
     right: 0;

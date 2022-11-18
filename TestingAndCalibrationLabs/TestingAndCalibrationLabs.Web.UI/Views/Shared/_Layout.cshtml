@@ -4,10 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TESTING AND CALIBRATION LABS</title>
-    
+
     <!--Importing the CSS FileS-->
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/TestDetails.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Style.css" />
@@ -15,11 +14,10 @@
     <link rel="stylesheet" href="~/css/Login.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/Snackbar.css" />
-    <link rel ="stylesheet" href="~/css/TestDetails.css" />
+    <link rel="stylesheet" href="~/css/TestDetails.css" />
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
@@ -50,47 +48,43 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <!--- Seach-Box code--->
                 @*<ul class="navbar-nav ">
-                    <li class="nav-item search_box">
-                    <input type="search" placeholder="Search" />
-                    <span class="fa fa-search"></span>
-                    </li>
-                    </ul>*@
+                <li class="nav-item search_box">
+                <input type="search" placeholder="Search" />
+                <span class="fa fa-search"></span>
+                </li>
+                </ul>*@
                 <ul class="navbar-nav ms-auto" id="navbarContentAdd">
-                    <li class="nav-item dropdown-hover" style="display:none" id="Settings">
+                    <li class="nav-item dropdown-hover" style="display:none" id="nav-item-Settings">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContent1002" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
-                    <li class="nav-item dropdown notification-ui show" style="display:none;padding-right:10px" id="Notifications">
+                    <li class="nav-item dropdown notification-ui show" style="display:none;padding-right:10px" id="nav-item-Notifications">
                         <a class=" notification-ui_icon" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell" onclick="DisplayNotification()" style="font-size:15px; color:grey;" id="rotate"> </i> <span class="fa-bell__badge" id="value">0</span>
                         </a>
-
                         <div class="dropdown_menu notification-ui_dd show" id="Menu" style="display:none" aria-labelledby="navbarDropdown">
                             <div class="notification-ui_dd-header">
                                 <h3 class="text-center">Notification</h3>
                                 <a style="color:royalblue; width:auto;cursor:pointer" onclick="Delete()">Clear</a>
                             </div>
                             <div class="notification-ui_dd-content" id="content">
-
                                 <div class="notification-list_detail" id="Paragraph">
                                     <p id="Name" style="color:grey"><center><b>No Notification</b></center> </p>
                                 </div>
-
                             </div>
                             <div class="notification-ui_dd-footer">
                                 <a href="#!" class="btn btn-success btn-block" style="border-radius:0.9rem;padding:10px;width:100%; display:none;" id="view" onclick="View()">View All</a>
                             </div>
                         </div>
-
                     </li>
-                    <li class="nav-item dropdown-hover" style="display:none" id="Profile">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item dropdown-hover" style="display:none" id="nav-item-Profile">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContent1003" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
                         </div>
                     </li>
 
@@ -98,15 +92,12 @@
             </div>
         </nav>
     </header>
-
-
     <!---Rendering the Body Here--->
     <div class="">
         <main role="main" class="">
             @RenderBody()
         </main>
     </div>
-
     <!---Footer--->
     <footer class="border-top-footer text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
@@ -130,65 +121,51 @@
             type: "POST",
             url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
             success: function (response) {
-
                 response.sort(function (a, b) {
                     if (a.orders < b.orders) { return 1; }
                     if (a.orders > b.orders) { return -1; }
                     return 0;
                 });
-                //debugger;
                 for (let i = 0; i < response.length; i++) {
-                   
                     var uiNavigationCategoryId = response[i].id;
                     var uiNavigationCategoryName = response[i].name;
                     var parentListDiv = "#" + uiNavigationCategoryName;
                     var parentListId = uiNavigationCategoryId;
-                    var idNameExistOrNot = uiNavigationCategoryName;
+                    var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
                     var nameExistOrNot = document.getElementById(idNameExistOrNot);
                     debugger;
                     console.log(response[i].childrens.length);
                     if (!nameExistOrNot && response[i].childrens.length >= 1) {
-
                         $('#navbarContentAdd').prepend("</li>");
                         $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='" + uiNavigationCategoryName + "'>");
                         var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
                         $(parentListDiv).append(buttonDropdown);
-                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryId + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
                         $(parentListDiv).append("</div>");
-
-
                     }
                     else {
-                       
                         nameExistOrNot.style.display = "block";
-                        
                     }
                     var divExistOrNot = document.getElementById(parentListId);//Its not being used anywhere who to take
-
-
                     response[i].childrens.sort(function (a, b) {
                         if (a.name < b.name) { return -1; }
                         if (a.name > b.name) { return 1; }
                         return 0;
                     });
-                    
-                    
-                    for (let j = 0; j < response[i].childrens.length && response[i].childrens.length>1; j++) {
-                        //debugger;
+                    for (let j = 0; j < response[i].childrens.length && response[i].childrens.length > 1; j++) {
                         if (response[i].childrens.length <= 1) {
-                            
                             var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
                             var singleListParent = "#navigationSingle" + uiNavigationCategoryId;
                             $('#navbarContentAdd').prepend("<li class='nav-item' id='navigationSingle" + uiNavigationCategoryId + "'></li>");
                             var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
                             $(singleListParent).append(singleChild);
                         }
-                        else  {
+                        else {
                             console.log(response[i].childrens.length);
                             var pageTypeUrl = response[i].childrens[j].formatedUrl;
                             var pageTypeName = response[i].childrens[j].name;
                             var uiNavigationId = response[i].id;
-                            var dropdownContentId = "#dropdownContent" + uiNavigationId;
+                            var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
                             var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
                             $(dropdownContentId).append(script);
                         }
