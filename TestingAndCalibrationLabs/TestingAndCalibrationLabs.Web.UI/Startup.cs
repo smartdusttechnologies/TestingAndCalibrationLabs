@@ -69,6 +69,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IDataTypeService, DataTypeService>();
             services.AddScoped<IFileCompressionService, FileCompressionService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
+            services.AddScoped<IUiControlCategoryTypeService, UiControlCategoryTypeService>();
 
             services.AddScoped<IUiNavigationCategoryService, UiNavigationCategoryService>();
             services.AddScoped<ILookupService, LookupService>();
@@ -85,6 +86,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            services.AddScoped<IGenericRepository<UiControlCategoryTypeModel>, GenericRepository<UiControlCategoryTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
             services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();

@@ -23,7 +23,9 @@
             <th>
                 <h6><b>Ui Page Name</b></h6>
             </th>
-            
+            <th>
+                <h6><b>Name</b></h6>
+            </th>
             <th>
                 <h6><b>Ui Control Type</b></h6>
             </th>
@@ -41,6 +43,12 @@
                 <h6><b>Ui Data Type</b></h6>
             </th>
             <th>
+                <h6><b>Parent Id</b></h6>
+            </th>
+            <th>
+                <h6><b>Template Name</b></h6>
+            </th>
+            <th>
                     <h6><b>Actions</b></h6>
             </th>
         </tr>
@@ -48,12 +56,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            
-            
             <td>
                 @Html.DisplayFor(modelItem => item.UiPageTypeName)
             </td>
-            
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UiControlTypeName)
             </td>
@@ -66,9 +74,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UiControlDisplayName)
             </td>
-            
             <td>
                 @Html.DisplayFor(modelItem => item.DataTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UiControlCategoryTypeName)
             </td>
             <td>
                 @Html.ActionLink("", "Edit", new {  id=item.Id, LookupCategoryId = item.ControlCategoryId ,UiPageTypeId =item.UiPageTypeId,UiControlType = item.UiControlTypeId,DataTypeId =item.DataTypeId },new {@class="fas fa-edit" }) |

@@ -327,11 +327,7 @@ select.input-validation-error#TestingType {
     border-radius: 10px;
     border: 1px solid;
 }
-
-.dropdown-hover:hover .dropdown-menu {
-    display: block;
-}
-.dropdown-right {
+.dropdown-right{
     right: 0;
 }
 @media (max-width:768px) {

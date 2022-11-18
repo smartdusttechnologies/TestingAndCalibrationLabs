@@ -9,6 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     [DbTable("UiPageMetadata")]
     public class UiPageMetadataModel : Entity
     {
+        public string Name { get; set; }
         /// <summary>
         /// It Contains The Id of The Ui Page Type
         /// </summary>
@@ -64,7 +65,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// 
         /// </summary>
-        public int UiControlCategoryType { get; set; }
+        public int UiControlCategoryTypeId { get; set; }
+        public string UiControlCategoryTypeName { get; set; }
         public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
 

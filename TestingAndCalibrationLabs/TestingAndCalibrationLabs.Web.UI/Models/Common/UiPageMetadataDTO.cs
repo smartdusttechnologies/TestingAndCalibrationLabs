@@ -10,6 +10,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     public class UiPageMetadataDTO
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// It Contains The Id of The Ui Page Type
         /// </summary>
@@ -65,7 +66,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// 
         /// </summary>
-        public int UiControlCategoryType { get; set; }
+        public int UiControlCategoryTypeId { get; set; }
+        public string UiControlCategoryTypeName { get; set; }
         public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
 

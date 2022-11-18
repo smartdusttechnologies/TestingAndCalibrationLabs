@@ -26,7 +26,7 @@
     <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
 </div>
 <div>
-    <div class="d-flex justify-content-center fixed-bottom">
+    @*<div class="d-flex justify-content-center fixed-bottom">*@
         <div class="alert alert-success" role="alert" id="snackbarsuccess">
             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert">
                 <div class="MuiAlert-icon css-1l54tgj">
@@ -37,10 +37,10 @@
             </div>
         </div>
     </div>
-</div>
+@*</div>*@
 @ViewBag.resultD
 <div>
-    <div class="d-flex justify-content-center fixed-bottom">
+   @* <div class="d-flex justify-content-center fixed-bottom">*@
         <div role="alert" id="snackbarerror">
             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledError MuiAlert-filled css-1ufabz4" role="alert">
                 <div class="MuiAlert-icon css-1l54tgj">
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-</div>
+@*</div>*@
 <script>
     //This function will display the success snackbar
     function myFunction() {

@@ -7,34 +7,28 @@
 
     <!--Importing the CSS FileS-->
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/TestDetails.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Style.css" />
     <link rel="stylesheet" href="~/css/Login.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/Snackbar.css" />
-    <link rel ="stylesheet" href="~/css/TestDetails.css" />
+    <link rel="stylesheet" href="~/css/TestDetails.css" />
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="~/css/TestDetails.css" rel="stylesheet" />
-    <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/comboTreeStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
-   
-    <!---Importing the Scripts--->
 
+    <!---Importing the Scripts--->
     <script src="https://kit.fontawesome.com/23b93d01d8.js" crossorigin="anonymous"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-
     <style>
         .hidden {
             display: none;
@@ -44,7 +38,7 @@
 <body>
     <header>
         <!---Using the Bootsrap 5 NavBar--->
-        <nav class="navbar navbar-expand-xl navbar-light">
+        <nav class="navForNavbar navbar navbar-expand-xl navbar-light">
             <a class="m-1 text-dark">LOGO</a>
             <a class="navbar-brand navbarBrandWithATag text-dark" style="font-size:14px;">TESTING AND CALIBRATION LABS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -59,47 +53,45 @@
                 </li>
                 </ul>*@
                 <ul class="navbar-nav ms-auto" id="navbarContentAdd">
-                    <li class="nav-item dropdown-hover" id="listParent1002">
+                    <li class="nav-item " style="display:none" id="nav-item-Settings">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContent1002" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
-                    <li class="nav-item dropdown-hover" id="profile">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item " style="display:none" id="nav-item-Profile">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContent1003" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
                         </div>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-
     <!---Rendering the Body Here--->
     <div class="">
         <main role="main" class="">
             @RenderBody()
         </main>
     </div>
-
     <!---Footer--->
-    <footer class="border-top  text-muted" id=footer style="background-color: #2a4472;">
+    <footer class="border-top-footer text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
             © 2022 Copyright :
             <a class="text-white" href="#">TESTING AND CALIBRATION LABS</a>
         </div>
     </footer>
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/comboTreePlugin.js" type="text/javascript"></script>
-   
+    <script src="~/js/CustomJS.js"></script>
+    <script src="~/js/Notification.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 <script type="text/javascript">
@@ -109,45 +101,52 @@
             url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
             success: function (response) {
                 response.sort(function (a, b) {
-                    if (a.orders < b.orders) {return 1;}
-                    if (a.orders > b.orders) {return -1;}
+                    if (a.orders < b.orders) { return 1; }
+                    if (a.orders > b.orders) { return -1; }
                     return 0;
                 });
                 for (let i = 0; i < response.length; i++) {
                     var uiNavigationCategoryId = response[i].id;
                     var uiNavigationCategoryName = response[i].name;
-                    var parentListDiv = "#listParent" + uiNavigationCategoryId;
-                    var parentListId = "listParent" + uiNavigationCategoryId;
-                    var divExistOrNot = document.getElementById(parentListId);
-                    if (!divExistOrNot && response[i].childrens.length > 1) {
+                    var parentListDiv = "#" + uiNavigationCategoryName;
+                    var parentListId = uiNavigationCategoryId;
+                    var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
+                    var nameExistOrNot = document.getElementById(idNameExistOrNot);
+                    debugger;
+                    console.log(response[i].childrens.length);
+                    if (!nameExistOrNot && response[i].childrens.length >= 1) {
                         $('#navbarContentAdd').prepend("</li>");
-                        $('#navbarContentAdd').prepend("<li class='nav-item dropdown-hover' id='listParent" + uiNavigationCategoryId + "'>");
+                        $('#navbarContentAdd').prepend("<li class='nav-item' id='" + uiNavigationCategoryName + "'>");
                         var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
                         $(parentListDiv).append(buttonDropdown);
-                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryId + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
                         $(parentListDiv).append("</div>");
                     }
+                    else {
+                        nameExistOrNot.style.display = "block";
+                    }
+                    var divExistOrNot = document.getElementById(parentListId);//Its not being used anywhere who to take
                     response[i].childrens.sort(function (a, b) {
-                        if (a.name < b.name) {return -1;}
-                        if (a.name > b.name) {return 1;}
+                        if (a.name < b.name) { return -1; }
+                        if (a.name > b.name) { return 1; }
                         return 0;
                     });
-                    for (let j = 0; j < response[i].childrens.length; j++) {
+                    for (let j = 0; j < response[i].childrens.length && response[i].childrens.length > 1; j++) {
                         if (response[i].childrens.length <= 1) {
                             var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
-                            var singleListParent = "#navigationSingle" + uiNavigationCategoryId
+                            var singleListParent = "#navigationSingle" + uiNavigationCategoryId;
                             $('#navbarContentAdd').prepend("<li class='nav-item' id='navigationSingle" + uiNavigationCategoryId + "'></li>");
                             var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
                             $(singleListParent).append(singleChild);
                         }
-                        else{
-                        console.log(response[i].childrens.length);
-                        var pageTypeUrl = response[i].childrens[j].formatedUrl;
-                        var pageTypeName = response[i].childrens[j].name;
-                        var uiNavigationId = response[i].id;
-                        var dropdownContentId = "#dropdownContent" + uiNavigationId;
-                        var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
-                        $(dropdownContentId).append(script);
+                        else {
+                            console.log(response[i].childrens.length);
+                            var pageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var pageTypeName = response[i].childrens[j].name;
+                            var uiNavigationId = response[i].id;
+                            var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
+                            var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
+                            $(dropdownContentId).append(script);
                         }
                     }
                 }
