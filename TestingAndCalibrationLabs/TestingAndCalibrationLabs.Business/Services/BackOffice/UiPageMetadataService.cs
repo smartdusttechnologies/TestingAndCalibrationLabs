@@ -59,24 +59,24 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
         {
-            var lookupListBuild = new List<UiPageMetadataCharacteristicsModel>();
-            var lookupList = _uiPageMetadataCharacteristicsRepository.GetByPageMetadataId(id);
-           var existingIdsInCharacteristics = lookupList.Select(x=>x.LookupId);
-           var newSelectedIdsInCharacteristics = uiPageMetadataModel.uiPageMetadataCharacteristics.Select(x=>x.LookupId);
-            var listFinal = existingIdsInCharacteristics.Union(newSelectedIdsInCharacteristics);
-            foreach (var item in listFinal)
-            {
-                if (!existingIdsInCharacteristics.Contains(item))
-                {
-                    lookupListBuild.Add(new UiPageMetadataCharacteristicsModel { LookupId = item, UiPageMetadataId = id });
-                }
-                if (!newSelectedIdsInCharacteristics.Contains(item))
-                {
-                    lookupListBuild.Add(new UiPageMetadataCharacteristicsModel { LookupId = item });
-                }
+           // var lookupListBuild = new List<UiPageMetadataCharacteristicsModel>();
+           // var lookupList = _uiPageMetadataCharacteristicsRepository.GetByPageMetadataId(id);
+           //var existingIdsInCharacteristics = lookupList.Select(x=>x.LookupId);
+           //var newSelectedIdsInCharacteristics = uiPageMetadataModel.uiPageMetadataCharacteristics.Select(x=>x.LookupId);
+           // var listFinal = existingIdsInCharacteristics.Union(newSelectedIdsInCharacteristics);
+           // foreach (var item in listFinal)
+           // {
+           //     if (!existingIdsInCharacteristics.Contains(item))
+           //     {
+           //         lookupListBuild.Add(new UiPageMetadataCharacteristicsModel { LookupId = item, UiPageMetadataId = id });
+           //     }
+           //     if (!newSelectedIdsInCharacteristics.Contains(item))
+           //     {
+           //         lookupListBuild.Add(new UiPageMetadataCharacteristicsModel { LookupId = item });
+           //     }
                 
-            }
-            uiPageMetadataModel.uiPageMetadataCharacteristics = lookupListBuild;
+           // }
+           // uiPageMetadataModel.uiPageMetadataCharacteristics = lookupListBuild;
             _uiPageMetadataRepository.Update(uiPageMetadataModel);
             return new RequestResult<int>(1);
         }

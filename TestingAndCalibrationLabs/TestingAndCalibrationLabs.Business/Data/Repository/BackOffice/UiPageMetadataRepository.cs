@@ -103,22 +103,25 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             var uiPageMetadataById = db.Query<UiPageMetadataModel>(@"Select upm.Id,
                                                         upm.UiPageTypeId,
                                                         upt.[Name] as UiPageTypeName,
-                                                         upm.IsRequired,
+                                                        upm.IsRequired,
                                                         upm.UiControlTypeId,
                                                         uct.[Name] as UiControlTypeName,
                                                         upm.UiControlDisplayName,
                                                         upm.ParentId,
                                                         upm.DataTypeId,
+														upm.Name,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
-                                                        l.Name as ControlCategoryName
+                                                        l.Name as ControlCategoryName,
+														ucct.Id as UiControlCategoryTypeId,ucct.Name as UiControlCategoryTypeName
                                                     From [UiPageMetadata] upm
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
                                                     inner join [Lookup] l on l.Id = uct.ControlCategoryId
-                                                where upm.Id=@Id 
-                                                    and upm.IsDeleted = 0 
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+                                                where upm.Id = @Id
+											     	and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
@@ -147,7 +150,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 UiControlTypeId = @UiControlTypeId,
                                 IsRequired = @IsRequired,
                                 DataTypeId = @DataTypeId,
-                                UiControlDisplayName = @UiControlDisplayName
+                                UiControlDisplayName = @UiControlDisplayName,
+                                Name = @Name,
+                                UiControlCategoryTypeId = @UiControlCategoryTypeId,
+                                ParentId = @ParentId
                                 Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
             if (uiPageMetadataModel.uiPageMetadataCharacteristics.Count > 0)

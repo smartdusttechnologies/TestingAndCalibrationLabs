@@ -84,7 +84,7 @@
                 @Html.DisplayFor(modelItem => item.UiControlCategoryTypeName)
             </td>
             <td>
-                @Html.ActionLink("", "Edit", new {  id=item.Id, LookupCategoryId = item.ControlCategoryId ,UiPageTypeId =item.UiPageTypeId,UiControlType = item.UiControlTypeId,DataTypeId =item.DataTypeId },new {@class="fas fa-edit" }) |
+                @Html.ActionLink("", "Edit", new {  id=item.Id,parentId = item.ParentId, LookupCategoryId = item.ControlCategoryId ,UiPageTypeId =item.UiPageTypeId,UiControlType = item.UiControlTypeId,DataTypeId =item.DataTypeId,uiControlCategoryTypeId = item.UiControlCategoryTypeId },new {@class="fas fa-edit" }) |
                 @Html.ActionLink("", "Delete", new {  id=item.Id  }, new{@class="fa fa-trash"})
             </td>
         </tr>

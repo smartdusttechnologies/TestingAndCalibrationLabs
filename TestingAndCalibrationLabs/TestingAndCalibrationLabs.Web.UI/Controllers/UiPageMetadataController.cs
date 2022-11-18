@@ -118,7 +118,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="LookupCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id,int LookupCategoryId,int uiPageTypeId,int uiControlTypeId,int dataTypeId)
+        public IActionResult Edit(int? id,int parentId, int LookupCategoryId,int uiPageTypeId,int uiControlTypeId,int dataTypeId , int uiControlCategoryTypeId)
         {
             if(id == null)
             {
@@ -128,10 +128,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.LookupCategoryId = LookupCategoryId;
             ViewBag.DataTypeId = dataTypeId;
             ViewBag.UiPageTypeId = uiPageTypeId;
+            ViewBag.UiPageMetadataId = parentId;
+            ViewBag.UiControlCategoryTypeId = uiControlCategoryTypeId;
             var lookupCategoryList = _lookupCategoryService.Get();
             var pages = _uiPageTypeService.Get();
             var controls = _uiControlTypeService.Get();
             var datas = _dataTypeService.Get();
+            var controlCategoryType = _uiControlCategoryTypeService.Get();
+            var pageMetadataList = _uiPageMetadataService.Get();
+            var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadataList);
+            var controlCategoryTypeList = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(controlCategoryType);
+
             var lookupCategory = _mapper.Map<List<LookupCategoryModel>,List<LookupCategoryDTO>>(lookupCategoryList);
             var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pages);
             var controlList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controls);
@@ -140,7 +147,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.LookupCategory = lookupCategory;
             ViewBag.DataTypes = dataList;
             ViewBag.UiPageTypes = pageList;
-            Business.Core.Model.UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
+            ViewBag.UiControlCategoryType = controlCategoryTypeList;
+            ViewBag.UiPageMetadata = pageMetadatas;
+            UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
             var pageMetadata = _mapper.Map<UiPageMetadataModel,UiPageMetadataDTO>(pageMetadataModel);
            var sorted = new List<ListSorterModel>();
             pageMetadata.uiPageMetadataCharacteristics.ForEach(x => sorted.Add(new ListSorterModel { Id = x.LookupId}));
@@ -164,9 +173,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             if (ModelState.IsValid)
             {
-                var newDTO = new List<UiPageMetadataCharacteristicsModel>();
-                uiPageMetadataDTO.SelectedLookupId.ForEach(x => newDTO.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
-                uiPageMetadataDTO.uiPageMetadataCharacteristics = newDTO;
+                //var newDTO = new List<UiPageMetadataCharacteristicsModel>();
+                //uiPageMetadataDTO.SelectedLookupId.ForEach(x => newDTO.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
+                //uiPageMetadataDTO.uiPageMetadataCharacteristics = newDTO;
                 var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 _uiPageMetadataService.Update(id, editMetadata);
                 TempData["IsTrue"] = true;
