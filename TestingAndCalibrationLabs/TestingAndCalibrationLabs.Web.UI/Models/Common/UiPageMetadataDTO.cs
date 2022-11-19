@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using TestingAndCalibrationLabs.Business.Common;
-using TestingAndCalibrationLabs.Business.Core.Model;
-
-namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
     /// It Conatains The Properties for Ui Page Metadata 
@@ -43,18 +39,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
-        ///// <summary>
-        ///// it Contains The Id Of Lookup Category
-        ///// </summary>
-        //public int? LookupCategoryId { get; set; }
-        ///// <summary>
-        ///// It Contains the Name Of The Lookup Category
-        ///// </summary>
-        //public string LookupCategoryName { get; set; }
         /// <summary>
-        /// It Contains The SelectedLookupId From ComboTree
+        /// it Contains The Id Of Lookup Category
         /// </summary>
-        public List<int> SelectedLookupId { get; set; }
+        public int? LookupCategoryId { get; set; }
+        /// <summary>
+        /// It Contains the Name Of The Lookup Category
+        /// </summary>
+        public string LookupCategoryName { get; set; }
+        
         /// <summary>
         /// It Contains the Name Of The Lookup Category
         /// </summary>
@@ -70,14 +63,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public string UiControlCategoryTypeName { get; set; }
         public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
         public int Position { get; set; }
-        /// <summary>
-        /// It Contains The List Of UiPageMetadataCharacteristics For Ui Page Metadata
-        /// </summary>
-        public List<UiPageMetadataCharacteristicsModel> uiPageMetadataCharacteristics { get; set; }
+
     }
 }

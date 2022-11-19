@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -11,10 +13,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly ILookupService _lookupService;
         private readonly IListSorterService _listSorter;
-        public LookupController(ILookupService lookupService,IListSorterService listSorter)
+        private readonly IMapper _mapper;
+        
+        public LookupController(ILookupService lookupService,IListSorterService listSorter,IMapper mapper)
         {
             _lookupService = lookupService;
             _listSorter = listSorter;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -34,6 +39,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var jsonFormated = _listSorter.SortListToJson(listSorterDTO);
            var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
             return Ok(jsonObjectConverted);
+        }
+        [HttpPost]
+        public IActionResult LookupByCategoryId(int lookupCategoryId)
+        {
+            var lookupList = _lookupService.GetByLookupCategoryId(lookupCategoryId);
+            var lookupListDTO = _mapper.Map<List<LookupModel>, List<LookupDTO>>(lookupList);
+            return Ok(lookupListDTO);
         }
     }
 }

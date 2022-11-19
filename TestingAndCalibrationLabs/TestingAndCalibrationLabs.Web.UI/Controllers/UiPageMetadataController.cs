@@ -94,12 +94,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (uiPageMetadataDTO.SelectedLookupId != null)
-                {
-                    var newCharacteristicsList = new List<UiPageMetadataCharacteristicsModel>();
-                    uiPageMetadataDTO.SelectedLookupId.ForEach(x => newCharacteristicsList.Add(new UiPageMetadataCharacteristicsModel { LookupId = x }));
-                    uiPageMetadataDTO.uiPageMetadataCharacteristics = newCharacteristicsList;
-                }
+               
                 var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 
                 _uiPageMetadataService.Create(createMetadataModel);
@@ -151,10 +146,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageMetadata = pageMetadatas;
             UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
             var pageMetadata = _mapper.Map<UiPageMetadataModel,UiPageMetadataDTO>(pageMetadataModel);
-           var sorted = new List<ListSorterModel>();
-            pageMetadata.uiPageMetadataCharacteristics.ForEach(x => sorted.Add(new ListSorterModel { Id = x.LookupId}));
-           var sortedlist = _listSorter.SelectedOptionSort(sorted);
-            ViewBag.SelectedList = _listSorter.SelectedOptionSort(sorted);
             return View(pageMetadata);
         }
         /// <summary>

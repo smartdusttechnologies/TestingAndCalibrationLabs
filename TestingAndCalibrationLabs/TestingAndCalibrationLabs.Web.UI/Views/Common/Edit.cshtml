@@ -8,7 +8,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" id="Id" name="Id" />
             <input type="hidden" asp-for="UiPageId" />
-
+            <input type="hidden" id="actionNameCommon" value="Edit" />
             @foreach (var item in Model.Layout)
             {
                 <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>

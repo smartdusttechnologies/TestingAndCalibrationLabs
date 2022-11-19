@@ -58,10 +58,7 @@
                         }
                     </select>
                 </div>
-                <select id="dropDownList" hidden name="SelectedLookupId" multiple asp-for="SelectedLookupId"></select>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                    <input type="text" class="form-input " id="multiSelectLookup" placeholder="Select Metadata Charactr.." autocomplete="off" />
-                </div>
+               
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
@@ -138,62 +135,7 @@
         </form>
     </div>
 </div>
-<script type="text/javascript">
-    var categoryId = @ViewBag.LookupCategoryId;
-    var comboTree1;
-    var count = 0;
-    $(document).ready(function () {
 
-        if (count == 0) {
-            debugger;
-                category(categoryId);
-                console.log(categoryId);
-            
-        }
-    });
-    function category(categoryInput) {
-        if (count != 0 ) {
-            console.log(this);
-            var categoryInput = categoryInput.value;
-        }
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("LookupByCategory","Lookup")",
-            data: { categoryName: categoryInput },
-            success: function (response) {
-                LookupByCategory(response);
-                count++;
-            },
-            error: function (req, status, error) {
-            }
-        });
-    }
-    function LookupByCategory(inp) {
-        if (count == 0 ) {
-            var selectedListId = @ViewBag.SelectedList;
-            comboTree1 = $('#multiSelectLookup').comboTree({
-                source: inp,
-                isMultiple: true,
-                cascadeSelect: false,
-                collapse: true,
-                selectableLastNode: true
-            });
-            comboTree1.setSelection(selectedListId);
-        } else {
-            comboTree1.setSource(inp);
-        }
-    }
-    $('#pageForm').on('submit', function () {
-
-        var selectedIds = comboTree1.getSelectedIds();
-        console.log(selectedIds);
-        for (i = 0; i < selectedIds.length; i++) {
-            console.log(selectedIds[i]);
-            $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
-        }
-        return true;
-    });
-</script>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

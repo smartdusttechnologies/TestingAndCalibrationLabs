@@ -25,38 +25,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,Name,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName,UiControlCategoryTypeId,ParentId)
-                                                  values (@UiPageTypeId,@Name,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName,@UiControlCategoryTypeId,@ParentId)
-                            SELECT @Id = @@IDENTITY";
-
-            string metadataCharacteristicsQuery = @"Insert into [UiPageMetadataCharacteristics](UiPageMetadataId, LookupId)
-                                                        values (@UiPageMetadataId, @LookupId)";
-
+            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,Name,LookupCategoryId,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName,UiControlCategoryTypeId,ParentId)
+                                                  values (@UiPageTypeId,@Name,@LookupCategoryId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName,@UiControlCategoryTypeId,@ParentId)";
             using IDbConnection db = _connectionFactory.GetConnection;
-
-            if (uiPageMetadataModel.uiPageMetadataCharacteristics.Count > 0)
-            {
-                var p = new DynamicParameters();
-                p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
-                p.Add("@UiPageTypeId", uiPageMetadataModel.UiPageTypeId);
-                p.Add("@UiControlTypeId", uiPageMetadataModel.UiControlTypeId);
-                p.Add("@DataTypeId", uiPageMetadataModel.DataTypeId);
-                p.Add("@IsRequired", uiPageMetadataModel.IsRequired);
-                p.Add("@UiControlDisplayName", uiPageMetadataModel.UiControlDisplayName);
-                p.Add("@ControlCategoryId", uiPageMetadataModel.ControlCategoryId);
-                using var transaction = db.BeginTransaction();
-                db.Execute(query, p, transaction);
-                int insertedMetadataId = p.Get<int>("@Id");
-                uiPageMetadataModel.uiPageMetadataCharacteristics.ForEach(x => x.UiPageMetadataId = insertedMetadataId);
-                db.Execute(metadataCharacteristicsQuery, uiPageMetadataModel.uiPageMetadataCharacteristics, transaction);
-                transaction.Commit();
-            }
-            else
-            {
-                uiPageMetadataModel.ControlCategoryId = null;
-                db.Execute(query, uiPageMetadataModel);
-            }
-            return 1;
+            
+            return db.Execute(query, uiPageMetadataModel);
         }
         /// <summary>
         /// Getting All Records From Ui Page Metadata And Ui Page MetadataCharacteristics
@@ -74,16 +47,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         upm.UiControlDisplayName,
                                                         upm.ParentId,
                                                         upm.DataTypeId,
+                                                        l.Name as LookupCategoryName,
+														l.Id as LookupCategoryId,
 														upm.Name,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
-                                                        l.Name as ControlCategoryName,
 														ucct.Id as UiControlCategoryTypeId,ucct.Name as UiControlCategoryTypeName
                                                     From [UiPageMetadata] upm
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
-                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
+                                                    inner join [LookupCategory] l on l.Id = upm.LookupCategoryId
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
                                                 where 
                                                     upm.IsDeleted = 0 
@@ -126,16 +100,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
                                                     and l.IsDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
-            if (uiPageMetadataById.ControlCategoryId != null)
-            {
-                var pageMetadataCharacteristicsList = db.Query<UiPageMetadataCharacteristicsModel>(@"select * from 
-                                                                                        [UiPageMetadataCharacteristics] 
-                                                                                    where
-                                                                                        UiPageMetadataId = @Id
-                                                                                    And 
-                                                                                        IsDeleted = @isDeleted", new { Id = id, isDeleted = false }).ToList();
-                uiPageMetadataById.uiPageMetadataCharacteristics = pageMetadataCharacteristicsList;
-            }
+           
             return uiPageMetadataById;
         }
         /// <summary>
@@ -156,47 +121,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 ParentId = @ParentId
                                 Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
-            if (uiPageMetadataModel.uiPageMetadataCharacteristics.Count > 0)
-            {
-                var p = new DynamicParameters();
-                p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
-                p.Add("@UiPageTypeId", uiPageMetadataModel.UiPageTypeId);
-                p.Add("@UiControlTypeId", uiPageMetadataModel.UiControlTypeId);
-                p.Add("@DataTypeId", uiPageMetadataModel.DataTypeId);
-                p.Add("@IsRequired", uiPageMetadataModel.IsRequired);
-                p.Add("@UiControlDisplayName", uiPageMetadataModel.UiControlDisplayName);
-                p.Add("@ControlCategoryId", uiPageMetadataModel.ControlCategoryId);
-
-                string characteristicsQueryInsert = @"Insert into [UiPageMetadataCharacteristics](UiPageMetadataId, LookupId)
-                                                        values (@UiPageMetadataId, @LookupId)";
-                string characteristics = @"update [UiPageMetadataCharacteristics] Set 
-                                        IsDeleted = 1
-                                    Where 
-                                        UiPageMetadataId = @UiPageMetadataId
-                                    And
-                                        LookupId = @LookupId";
-
-                using var transaction = db.BeginTransaction();
-                db.Execute(query, uiPageMetadataModel, transaction);
-                foreach (var item in uiPageMetadataModel.uiPageMetadataCharacteristics)
-                {
-                    if (item.UiPageMetadataId != 0)
-                    {
-                        db.Execute(characteristicsQueryInsert, new { UiPageMetadataId = item.UiPageMetadataId, LookupId = item.LookupId }, transaction);
-                    }
-                    if (item.UiPageMetadataId == 0)
-                    {
-                        db.Execute(characteristics, new { UiPageMetadataId = uiPageMetadataModel.Id, LookupId = item.LookupId }, transaction);
-                    }
-                }
-                transaction.Commit();
-            }
-            else
-            {
+           
                 uiPageMetadataModel.ControlCategoryId = null;
-                db.Execute(query, uiPageMetadataModel);
-            }
-            return 0;
+              return  db.Execute(query, uiPageMetadataModel);
         }
         /// <summary>
         /// Delete Record From Ui PageMetadata And UiPageMetadataCharacteristics
@@ -205,17 +132,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public bool Delete(int id)
         {
-            string query = @"update [UiPageMetadata] Set 
-                                    IsDeleted = 1
-                                    Where Id = @Id";
-            string characteristics = @"update [UiPageMetadataCharacteristics] Set 
-                                    IsDeleted = 1
-                                    Where UiPageMetadataId = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
-            using var transaction = db.BeginTransaction();
-            db.Execute(query, new { Id = id }, transaction);
-            db.Execute(characteristics, new { Id = id }, transaction);
-            transaction.Commit();
+            
+            db.Execute(@"update [UiPageMetadata] Set 
+                                    IsDeleted = 1
+                                    Where Id = @Id", new { Id = id });
             return true;
         }
     }

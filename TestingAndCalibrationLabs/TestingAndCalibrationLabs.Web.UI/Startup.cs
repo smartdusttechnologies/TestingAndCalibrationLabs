@@ -80,6 +80,7 @@ namespace TestingAndCalibrationLabs.Web.UI
 
             //Repository
             
+            services.AddScoped<ILookupRepository, LookupRepository>();
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();

@@ -12,9 +12,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class LookupService : ILookupService
     {
         private readonly IGenericRepository<LookupModel> _genericRepository;
-        public LookupService(IGenericRepository<LookupModel> genericRepository)
+        private readonly ILookupRepository _lookupRepository;
+        public LookupService(IGenericRepository<LookupModel> genericRepository, ILookupRepository lookupRepository)
         {
             _genericRepository = genericRepository;
+            _lookupRepository = lookupRepository;
         }
         /// <summary>
         /// Get All records Of Lookup 
@@ -24,6 +26,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             
             return _genericRepository.Get();
+        }
+        public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
+        {
+            return _lookupRepository.GetByLookupCategoryId(lookupCategoryId);
         }
     }
 }

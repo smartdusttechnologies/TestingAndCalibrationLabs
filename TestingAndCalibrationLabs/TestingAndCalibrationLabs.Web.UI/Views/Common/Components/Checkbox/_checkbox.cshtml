@@ -2,32 +2,40 @@
 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
     <div class="form-check form-check-inline">
         <input class="form-check-input" name="@Model.Value.UiControlDisplayName" type="checkbox" value="false" id="checkbox-@Model.Value.Id" />
-            <label  class="form-check-label" for="@Model.Value.UiControlDisplayName">@Model.Value.UiControlDisplayName@if(Model.Value.IsRequired){<span class="red-color">*</span>}</label>
-        </div>
+        <label class="form-check-label" for="@Model.Value.UiControlDisplayName">
+            @Model.Value.UiControlDisplayName@if (Model.Value.IsRequired)
+            {
+                <span class="red-color">*</span>
+            }
+        </label>
+    </div>
 </div>
-
-@*<input type="checkbox" name="acceptRules" class="inline checkbox" id="checkbox-@Model.Value.Id" value="false">*@
 
 <input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id">
 <script>
-    var modelData = JSON.parse('@Json.Serialize(Model)');
-    var checkboxVal = "#" + modelData.value.uiControlTypeName + modelData.value.id;
-    var idNum = "#checkbox-" + modelData.value.id;
-    $(checkboxVal).text($(idNum).val());
-
-    $(idNum).on('change', function () {
-        if ($(this).is(':checked')) {
-            $(this).attr('value', 'true');
-        } else {
-            $(this).attr('value', 'false');
-        }
-
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var checkboxVal = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+        var idNum = "#checkbox-" + modelData.value.id;
         $(checkboxVal).text($(idNum).val());
+        var actionName = $('#actionNameCommon').val();
+        alert(actionName);
+        if (actionName == "Edit") {
+            var checkboxValue = $(checkboxVal).val();
+            alert(checkboxValue);
+            if (checkboxValue == "true") {
+                $(idNum).prop('checked', true);
+
+            }
+        }
+        $(idNum).on('change', function () {
+            if ($(idNum).is(':checked')) {
+                $(idNum).attr('value', 'true');
+            } else {
+                $(idNum).attr('value', 'false');
+            }
+            $(checkboxVal).text($(idNum).val());
+        });
     });
-    //var modelData = JSON.parse('@Json.Serialize(Model)');
-    //function setValueToParent(elementClicked) {
-    //    var idNum = modelData.value.uiControlTypeName + modelData.value.id;
-    //    document.getElementById(idNum).value = elementClicked.value;
-    //    console.log(elementClicked);
-    //}
+          
 </script>

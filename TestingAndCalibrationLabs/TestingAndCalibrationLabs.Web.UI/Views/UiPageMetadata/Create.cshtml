@@ -20,7 +20,6 @@
                         }
                     </select>
                 </div>
-                <input hidden value=@ViewBag.LookupList id="CC_id" />
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
@@ -31,7 +30,6 @@
                         }
                     </select>
                 </div>
-                @*@Html.Partial("~/Views/Common/Componenets/Dropdown.cshtml")*@
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label class="form-label"></label>
                     <select class="form-input " name="LookupCategoryId" id="catagory" asp-for="ControlCategoryId" onchange="category(this)">
@@ -42,10 +40,7 @@
                         }
                     </select>
                 </div>
-                <select id="dropDownList" hidden name="SelectedLookupId" multiple asp-for="SelectedLookupId"></select>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
-                    <input type="text" class="form-input " id="multiSelectLookup" placeholder="Select Metadata Charactr.." autocomplete="off" />
-                </div>
+              
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
@@ -100,7 +95,7 @@
         </form>
     </div>
 </div>
-<script type="text/javascript">
+@*<script type="text/javascript">
     var count = 0;
     var comboTree1;
 
@@ -146,7 +141,7 @@
 
         return true;
     });
-</script>
+</script>*@
 
 <div>
     <a asp-action="Index">Back to List</a>
