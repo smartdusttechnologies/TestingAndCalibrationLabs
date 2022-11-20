@@ -13,6 +13,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<Models.UiPageDataDTO, Business.Core.Model.UiPageDataModel>().ReverseMap();
             CreateMap<Web.UI.Models.ValidationMessage, Business.Common.ValidationMessage>().ReverseMap();  
             CreateMap<UserDTO, Business.Core.Model.User>().ReverseMap();
+            CreateMap<UI.Models.TestReportDTO, Business.Core.Model.TestReportModel>().ReverseMap();
+            CreateMap<UI.Models.AttachmentDTO, Business.Core.Model.AttachmentModel>().ReverseMap();
             CreateMap<UI.Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>().ReverseMap();
             CreateMap<UI.Models.UiControlTypeModel, Business.Core.Model.UiControlTypeModel>().ReverseMap();
             CreateMap<UI.Models.DataTypeModel, Business.Core.Model.DataTypeModel>().ReverseMap();
