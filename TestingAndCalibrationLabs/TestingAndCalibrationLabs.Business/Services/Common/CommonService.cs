@@ -102,15 +102,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             //var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
             var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
             var uiPageData = _commonRepository.GetUiPageDataByUiPageId(uiPageId);
-            var uiMetadataContent = _uiPageMetadataCharacteristicsRepository.Get();
-            //var maped = uiMetadataContent.GroupBy(x => new { x.UiPageMetadataId, x.Category }).Select(x => new { Id = x.Key.UiPageMetadataId, Contents = x.ToList() });
+            
             //var validationtypes = _uiPageValidationTypesGenericRepository.Get();
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
             uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             Dictionary<int, List<UiPageMetadataCharacteristicsModel>> metadataContent = new Dictionary<int, List<UiPageMetadataCharacteristicsModel>>();
-            uiMetadataContent.GroupBy(x => x.UiPageMetadataId).ToList()
-                .ForEach(t => metadataContent.Add(t.Key, t.ToList()));
+          
             return new RecordsModel { UiPageId = uiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageDataModels };
         }
         public RecordModel GetRecordById(int recordId)

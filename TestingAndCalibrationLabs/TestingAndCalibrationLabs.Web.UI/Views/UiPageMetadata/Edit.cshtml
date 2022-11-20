@@ -43,23 +43,6 @@
                     </select>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
-                    <label for="LookupCategoryId" class="form-label"></label>
-                    <select class="form-input " name="ControlCategoryId" id="lookupCategoryId" onchange="category(this)" asp-for="ControlCategoryId">
-                        @foreach (var item in ViewBag.LookupCategory)
-                        {
-                            if (@item.Id == @ViewBag.LookupCategoryId)
-                            {
-                                <option value=@item.Id selected>@item.Name</option>
-                            }
-                            else
-                            {
-                                <option value=@item.Id>@item.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-               
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         @foreach (var item in ViewBag.DataTypes)

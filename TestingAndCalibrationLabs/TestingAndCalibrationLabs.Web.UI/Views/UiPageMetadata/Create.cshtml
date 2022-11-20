@@ -31,17 +31,6 @@
                     </select>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
-                    <label class="form-label"></label>
-                    <select class="form-input " name="LookupCategoryId" id="catagory" asp-for="ControlCategoryId" onchange="category(this)">
-                        <option disabled="disabled" selected>Select Category ...</option>
-                        @foreach (var item in ViewBag.Lookups)
-                        {
-                            <option value=@item.Id>@item.Name</option>
-                        }
-                    </select>
-                </div>
-              
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         <option disabled="disabled" selected>Select Data Type ...</option>

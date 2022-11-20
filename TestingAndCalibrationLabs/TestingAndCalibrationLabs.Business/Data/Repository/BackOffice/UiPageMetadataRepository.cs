@@ -25,8 +25,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <returns></returns>
         public int Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,Name,LookupCategoryId,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName,UiControlCategoryTypeId,ParentId)
-                                                  values (@UiPageTypeId,@Name,@LookupCategoryId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName,@UiControlCategoryTypeId,@ParentId)";
+            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,Name,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName,UiControlCategoryTypeId,ParentId)
+                                                  values (@UiPageTypeId,@Name,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName,@UiControlCategoryTypeId,@ParentId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             
             return db.Execute(query, uiPageMetadataModel);
@@ -84,23 +84,25 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         upm.UiControlDisplayName,
                                                         upm.ParentId,
                                                         upm.DataTypeId,
+														l.Id as LookupCategoryId,
 														upm.Name,
+														lc.Name as lookupCategoryName,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
-                                                        l.Name as ControlCategoryName,
 														ucct.Id as UiControlCategoryTypeId,ucct.Name as UiControlCategoryTypeName
                                                     From [UiPageMetadata] upm
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
-                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
+                                                    
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] l on l.UiPageMetadataId = upm.Id and l.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = l.LookupCategoryId and lc.IsDeleted = 0
                                                 where upm.Id = @Id
-											     	and upm.IsDeleted = 0 
+                                                    and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
-                                                    and dt.IsDeleted = 0
-                                                    and l.IsDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
+                                                    and dt.IsDeleted = 0", new { Id = id }).FirstOrDefault();
            
             return uiPageMetadataById;
         }
