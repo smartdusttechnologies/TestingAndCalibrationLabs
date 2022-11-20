@@ -57,14 +57,14 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-gear"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
                         </div>
                     </li>
                     <li class="nav-item " style="display:none" id="nav-item-Profile">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
+                        <div class="dropdown-menu dropdown-menu-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
                         </div>
                     </li>
                 </ul>
@@ -119,7 +119,7 @@
                         $('#navbarContentAdd').prepend("<li class='nav-item' id='" + uiNavigationCategoryName + "'>");
                         var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
                         $(parentListDiv).append(buttonDropdown);
-                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("<div class='dropdown-menu dropdown-menu-right' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
                         $(parentListDiv).append("</div>");
                     }
                     else {

@@ -47,9 +47,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         upm.UiControlDisplayName,
                                                         upm.ParentId,
                                                         upm.DataTypeId,
-                                                        l.Name as LookupCategoryName,
 														l.Id as LookupCategoryId,
 														upm.Name,
+														lc.Name as lookupCategoryName,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
 														ucct.Id as UiControlCategoryTypeId,ucct.Name as UiControlCategoryTypeName
@@ -57,14 +57,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
-                                                    inner join [LookupCategory] l on l.Id = upm.LookupCategoryId
+                                                    
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] l on l.UiPageMetadataId = upm.Id and l.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = l.LookupCategoryId and lc.IsDeleted = 0
                                                 where 
                                                     upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
-                                                    and dt.IsDeleted = 0
-                                                    and l.IsDeleted = 0").ToList();
+                                                    and dt.IsDeleted = 0").ToList();
         }
         /// <summary>
         /// Getting Record By Id For Ui Page Metadata And Ui Page MetadataCharacteristics

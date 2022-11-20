@@ -28,9 +28,6 @@
                 <h6><b>Ui ControlType</b></h6>
             </th>
             <th>
-                <h6><b>Lookup CategoryName</b></h6>
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.IsRequired)
             </th>
             <th>
@@ -45,6 +42,10 @@
             <th>
                 <h6><b>Template Name</b></h6>
             </th>
+
+                <th>
+                    <h6><b>Lookup CategoryName</b></h6>
+                </th>
             <th>
                     <h6><b>Actions</b></h6>
             </th>
@@ -63,12 +64,6 @@
                 @Html.DisplayFor(modelItem => item.UiControlTypeName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LookupCategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ControlCategoryName)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IsRequired)
             </td>
             <td>
@@ -82,6 +77,10 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UiControlCategoryTypeName)
+            </td>
+
+            <td>
+                        @Html.DisplayFor(modelItem => item.LookupCategoryName)
             </td>
             <td>
                 @Html.ActionLink("", "Edit", new {  id=item.Id,parentId = item.ParentId, LookupCategoryId = item.ControlCategoryId ,UiPageTypeId =item.UiPageTypeId,UiControlType = item.UiControlTypeId,DataTypeId =item.DataTypeId,uiControlCategoryTypeId = item.UiControlCategoryTypeId },new {@class="fas fa-edit" }) |

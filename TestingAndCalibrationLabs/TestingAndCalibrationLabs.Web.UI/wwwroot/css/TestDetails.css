@@ -327,8 +327,9 @@ select.input-validation-error#TestingType {
     border-radius: 10px;
     border: 1px solid;
 }
-.dropdown-right{
+.dropdown-right {
     right: 0;
+    /*left: revert;*/
 }
 @media (max-width:768px) {
     #testDetailsGrid_paginate {
