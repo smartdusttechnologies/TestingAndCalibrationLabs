@@ -1,5 +1,8 @@
 ﻿namespace TestingAndCalibrationLabs.Business.Common
 {
+    /// <summary>
+    /// DbColumnAttribute Is Used To Get Attribute Value From Model Properties
+    /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Property)]
     public class DbColumnAttribute : System.Attribute
     {

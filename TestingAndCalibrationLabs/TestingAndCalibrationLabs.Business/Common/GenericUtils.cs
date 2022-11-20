@@ -52,7 +52,6 @@ namespace TestingAndCalibrationLabs.Business.Common
                     DbColumnAttribute dbColumnAttribute = attribute as DbColumnAttribute;
                     if (dbColumnAttribute.Name != null)
                     {
-                        //string propName = prop.Name;
                         string auth = dbColumnAttribute.Name;
                         _listOfColumns.Add( auth);
                     }
