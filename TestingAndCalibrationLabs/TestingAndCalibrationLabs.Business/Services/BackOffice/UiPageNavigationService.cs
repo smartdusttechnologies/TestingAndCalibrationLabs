@@ -17,7 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
             _uiPageNavigationRepository = uiPageNavigationRepository;
         }
-       
         /// <summary>
         /// Get All Records From Page Type With Formated Url
         /// </summary>
@@ -26,10 +25,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             var pageNavigation = _uiPageNavigationRepository.Get();
             pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.UiPageTypeId));
-            //foreach (var item in pageNavigation)
-            //{
-            //    item.FormatedUrl = string.Format(item.Url, item.Id);
-            //}
             return pageNavigation;
         }
     }

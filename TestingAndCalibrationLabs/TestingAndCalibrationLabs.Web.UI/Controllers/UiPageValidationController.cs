@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -37,8 +39,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Business.Core.Model.UiPageValidationModel> pageValidationList = _uiPageValidationService.Get();
-            var pageValidationModel = _mapper.Map<List<Business.Core.Model.UiPageValidationModel>, List<Models.UiPageValidationDTO>>(pageValidationList);
+            List<UiPageValidationModel> pageValidationList = _uiPageValidationService.Get();
+            var pageValidationModel = _mapper.Map<List<UiPageValidationModel>, List<UiPageValidationDTO>>(pageValidationList);
             return View(pageValidationModel.AsEnumerable());
         }
         /// <summary>
@@ -49,17 +51,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-            List<Business.Core.Model.UiPageTypeModel> pageType = _uiPageTypeService.Get();
-            List<Business.Core.Model.UiPageMetadataModel> pageMetadataType = _uiPageMetadataService.Get();
-            List<Business.Core.Model.UiPageValidationTypeModel> pageValidationType = _uiPageValidationTypeService.Get();
-            var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(pageType);
-            var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(pageMetadataType);
-            var validationList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(pageValidationType);
+            List<UiPageTypeModel> pageType = _uiPageTypeService.Get();
+            List<UiPageMetadataModel> pageMetadataType = _uiPageMetadataService.Get();
+            List<UiPageValidationTypeModel> pageValidationType = _uiPageValidationTypeService.Get();
+            var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageType);
+            var metadataList = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadataType);
+            var validationList = _mapper.Map<List<UiPageValidationTypeModel>, List<UiPageValidationType>>(pageValidationType);
             ViewBag.UiPageTypes = pageList;
             ViewBag.UiPageMetadata = metadataList;
             ViewBag.UiPageValidationTypes = validationList;
 
-            return base.View(new Models.UiPageValidationDTO { Id = id });
+            return base.View(new UiPageValidationDTO { Id = id });
         }
         /// <summary>
         /// To Create Record In Ui Page Validation
@@ -68,11 +70,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiPageValidationDTO uiPageValidationDTO)
+        public IActionResult Create([Bind] UiPageValidationDTO uiPageValidationDTO)
         {
             if (ModelState.IsValid)
             {
-                var createPageValidation = _mapper.Map<Models.UiPageValidationDTO, Business.Core.Model.UiPageValidationModel>(uiPageValidationDTO);
+                var createPageValidation = _mapper.Map<UiPageValidationDTO, UiPageValidationModel>(uiPageValidationDTO);
                 _uiPageValidationService.Create(createPageValidation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -97,12 +99,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageTypeId = uiPageTypeId;
             ViewBag.UiPageValidaitonTypeId = uiPageValidationTypeId;
             ViewBag.UiPageMetadataId=uiPageMetadataId;
-            List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.Get();
-            List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.Get();
-            List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
-            var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
-            var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
-            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(uiPagevalidationType);
+            List<UiPageTypeModel> page = _uiPageTypeService.Get();
+            List<UiPageMetadataModel> metadata = _uiPageMetadataService.Get();
+            List<UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
+            var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(page);
+            var metadataList = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(metadata);
+            var valList = _mapper.Map<List<UiPageValidationTypeModel>, List<UiPageValidationType>>(uiPagevalidationType);
             ViewBag.UiPageTypes=pageList;
             ViewBag.UiPageValidationTypes=valList;
             ViewBag.UiPageMetadata=metadataList;
@@ -112,7 +114,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var pageValidationModel = _mapper.Map<Business.Core.Model.UiPageValidationModel, Models.UiPageValidationDTO>(getByIdPageValidationType);
+            var pageValidationModel = _mapper.Map<UiPageValidationModel, UiPageValidationDTO>(getByIdPageValidationType);
             return View(pageValidationModel);
         }
         /// <summary>
@@ -123,7 +125,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] Models.UiPageValidationDTO uiPageValidationDTO)
+        public IActionResult Edit(int id, [Bind] UiPageValidationDTO uiPageValidationDTO)
         {
             if (id != uiPageValidationDTO.Id)
             {
@@ -131,7 +133,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             if (ModelState.IsValid)
             {
-                var pageValidationEdit = _mapper.Map<Models.UiPageValidationDTO, Business.Core.Model.UiPageValidationModel>(uiPageValidationDTO);
+                var pageValidationEdit = _mapper.Map<UiPageValidationDTO, UiPageValidationModel>(uiPageValidationDTO);
                 _uiPageValidationService.Update(id ,pageValidationEdit);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -150,7 +152,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             var getByIdPageValidationType = _uiPageValidationService.GetById(id);
-            var pageValidationModel = _mapper.Map<Business.Core.Model.UiPageValidationModel, Models.UiPageValidationDTO>(getByIdPageValidationType);
+            var pageValidationModel = _mapper.Map<UiPageValidationModel, UiPageValidationDTO>(getByIdPageValidationType);
             return View(pageValidationModel);
         }
         /// <summary>
