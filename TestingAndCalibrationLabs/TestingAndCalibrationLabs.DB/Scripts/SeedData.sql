@@ -231,19 +231,42 @@ BEGIN
     INSERT INTO [dbo].[UiPageType]
                ([Id]
 		       ,[Name]
-			   ,[Url]
-			   ,[UiNavigationCategoryId]
 			   ,[IsDeleted])
          VALUES
-                           (1, 'Ui Page Type','/UiPageType/Index/',1002, 0),
-		      (2, 'Ui Control Type','/UiControlType/Index/',1002, 0),
-			  (3, 'Ui Page Metadata','/UiPageMetadata/Index/',1002, 0),
-			  (4, 'Ui Page Validation','/UiPageValidation/Index/',1002, 0),
-			(5, 'Home','/',2, 0),
-			(6, 'My Activity','/Common/Index/{0}',1003, 0),
-                        (7, 'My Account','/Common/Index/{0}',1003, 0)		
+                           (1, 'Ui Page Type', 0),
+		      (2, 'Ui Control Type', 0),
+			  (3, 'Ui Page Metadata', 0),
+			  (4, 'Ui Page Validation', 0),
+			(5, 'Home', 0),
+			(6, 'My Activity', 0),
+                        (7, 'My Account', 0)
+						
 			   
 
     SET IDENTITY_INSERT [dbo].[UiPageType]  OFF
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
+
+    INSERT INTO [dbo].[UiPageNavigation]
+               ([Id],
+			   [Url],
+			   [UiPageTypeId],
+			   [UiNavigationCategoryId],
+			   [IsDeleted])
+         VALUES
+                           (1, N'/UiPageType/Index/', 1, 1002, 0),
+		      (2, N'/UiControlType/Index/', 2, 1002, 0),
+			  (3, N'/UiPageMetadata/Index/', 3, 1002, 0),
+			  (4, N'/UiPageValidation/Index/', 4, 1002, 0),
+			(5, N'/', 5, 2, 0),
+			 (6, N'/Common/Create/{0}', 6, 1003, 0),
+                        (7, N'/Common/Create/{0}', 7, 1003, 0)
+			   
+
+    SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
