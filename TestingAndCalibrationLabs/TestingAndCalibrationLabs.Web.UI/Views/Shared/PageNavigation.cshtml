@@ -1,0 +1,82 @@
+﻿<ul class="navbar-nav ms-auto" id="navbarContentAdd">
+    <li class="nav-item " style="display:none" id="nav-item-Settings">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-gear"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
+        </div>
+    </li>
+    <li class="nav-item " style="display:none" id="nav-item-Profile">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
+        </div>
+    </li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
+            success: function (response) {
+                console.log(response);
+                response.sort(function (a, b) {
+                    if (a.orders < b.orders) { return 1; }
+                    if (a.orders > b.orders) { return -1; }
+                    return 0;
+                });
+                for (let i = 0; i < response.length; i++) {
+                    var uiNavigationCategoryId = response[i].id;
+                    var uiNavigationCategoryName = response[i].name;
+                    var parentListDiv = "#" + uiNavigationCategoryName;
+                    var parentListId = uiNavigationCategoryId;
+                    var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
+                    var nameExistOrNot = document.getElementById(idNameExistOrNot);
+                    debugger;
+                    console.log(response[i].childrens.length);
+                    if (!nameExistOrNot && response[i].childrens.length >= 1) {
+                        $('#navbarContentAdd').prepend("</li>");
+                        $('#navbarContentAdd').prepend("<li class='nav-item' id='" + uiNavigationCategoryName + "'>");
+                        var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
+                        $(parentListDiv).append(buttonDropdown);
+                        $(parentListDiv).append("<div class='dropdown-menu dropdown-menu-right' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("</div>");
+                    }
+                    else {
+                        nameExistOrNot.style.display = "block";
+                    }
+                    var divExistOrNot = document.getElementById(parentListId);//Its not being used anywhere who to take
+                    response[i].childrens.sort(function (a, b) {
+                        if (a.name < b.name) { return -1; }
+                        if (a.name > b.name) { return 1; }
+                        return 0;
+                    });
+                    for (let j = 0; j < response[i].childrens.length && response[i].childrens.length > 1; j++) {
+                        if (response[i].childrens.length <= 1) {
+                            var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var singleListParent = "#navigationSingle" + uiNavigationCategoryId;
+                            $('#navbarContentAdd').prepend("<li class='nav-item' id='navigationSingle" + uiNavigationCategoryId + "'></li>");
+                            var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
+                            $(singleListParent).append(singleChild);
+                        }
+                        else {
+                            console.log(response[i].childrens.length);
+                            var pageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var pageTypeName = response[i].childrens[j].uiPageTypeName;
+                            var uiNavigationId = response[i].id;
+                            var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
+                            var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
+                            $(dropdownContentId).append(script);
+                        }
+                    }
+                }
+            },
+            error: function (req, status, error) {
+                console.log(req);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
+</script>

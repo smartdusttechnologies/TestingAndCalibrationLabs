@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
@@ -7,21 +8,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<Models.RecordDTO, Business.Core.Model.RecordModel>().ReverseMap();
-            CreateMap<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>().ReverseMap();
-            CreateMap<Models.RecordsDTO, Business.Core.Model.RecordsModel>().ReverseMap();
-            CreateMap<Models.UiPageDataDTO, Business.Core.Model.UiPageDataModel>().ReverseMap();
-            CreateMap<Web.UI.Models.ValidationMessage, Business.Common.ValidationMessage>().ReverseMap();  
-            CreateMap<UserDTO, Business.Core.Model.User>().ReverseMap();
-            CreateMap<UI.Models.UiPageTypeDTO, Business.Core.Model.UiPageTypeModel>().ReverseMap();
-            CreateMap<UI.Models.UiControlTypeDTO, Business.Core.Model.UiControlTypeModel>().ReverseMap();
-            CreateMap<UI.Models.DataTypeDTO, Business.Core.Model.DataTypeModel>().ReverseMap();
-            CreateMap<UI.Models.UiPageValidationDTO, Business.Core.Model.UiPageValidationModel>().ReverseMap();
-            CreateMap<UI.Models.TestReportDTO, Business.Core.Model.TestReportModel>().ReverseMap();
-            CreateMap<UI.Models.AttachmentDTO, Business.Core.Model.AttachmentModel>().ReverseMap();
-            CreateMap<UI.Models.UiPageValidationType, Business.Core.Model.UiPageValidationTypeModel>().ReverseMap();
-            CreateMap<UI.Models.UiNavigationCategoryDTO, Business.Core.Model.UiNavigationCategoryModel>().ReverseMap();
-
+            CreateMap<RecordDTO, RecordModel>().ReverseMap();
+            CreateMap<UiPageMetadataDTO, UiPageMetadataModel>().ReverseMap();
+            CreateMap<RecordsDTO, RecordsModel>().ReverseMap();
+            CreateMap<UiPageDataDTO, UiPageDataModel>().ReverseMap();
+            CreateMap<ValidationMessage, Business.Common.ValidationMessage>().ReverseMap();  
+            CreateMap<UserDTO,UserModel>().ReverseMap();
+            CreateMap<UiPageTypeDTO, UiPageTypeModel>().ReverseMap();
+            CreateMap<UiControlTypeDTO, UiControlTypeModel>().ReverseMap();
+            CreateMap<DataTypeDTO, DataTypeModel>().ReverseMap();
+            CreateMap<UiPageValidationDTO, UiPageValidationModel>().ReverseMap();
+            CreateMap<UiPageValidationType, UiPageValidationTypeModel>().ReverseMap();
+            CreateMap<UiNavigationCategoryDTO, UiNavigationCategoryModel>().ReverseMap();
+            CreateMap<TestReportDTO,TestReportModel>().ReverseMap();
+            CreateMap<AttachmentDTO,AttachmentModel>().ReverseMap();
+            CreateMap<UiPageNavigationModel,UiPageNavigationDTO>().ReverseMap();
         }
     }
 }

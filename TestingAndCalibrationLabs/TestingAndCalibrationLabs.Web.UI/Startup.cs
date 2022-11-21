@@ -80,14 +80,13 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IFileCompressionService, FileCompressionService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
 
-            services.AddScoped<IUiNavigationCategoryService, UiNavigationCategoryService>();
+            services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
 
 
             //Repository
 
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
-            services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();

@@ -10,16 +10,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class UiPageNavigationController : Controller
     {
-        private readonly IUiNavigationCategoryService _uiNavigationCategoryService;
+        private readonly IUiPageNavigationService _uiPageNavigationService;
         private readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiNavigationCategoryService"></param>
         /// <param name="mapper"></param>
-        public UiPageNavigationController(IUiNavigationCategoryService uiNavigationCategoryService, IMapper mapper)
+        public UiPageNavigationController(IUiPageNavigationService uiPageNavigationService, IMapper mapper)
         {
-            _uiNavigationCategoryService = uiNavigationCategoryService;
+            _uiPageNavigationService = uiPageNavigationService;
             _mapper = mapper;
         }
         /// <summary>
@@ -29,8 +29,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult GetAllPagesWithNavigation()
         {
-            var pageWithNavigationCategoryList = _uiNavigationCategoryService.GetNavigationCategoryWithPageTypes();
-            var pageTypeList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageWithNavigationCategoryList);
+            var pageWithNavigationCategoryList = _uiPageNavigationService.Get();
+            var pageTypeList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageWithNavigationCategoryList);
 
             if (pageTypeList != null && pageTypeList.Count > 0)
             {
