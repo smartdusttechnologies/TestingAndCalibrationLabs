@@ -112,7 +112,6 @@
      //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
-        SuccessMessage(NotificationNumbers++, SuccessBar.textContent);
         x.className = "show";
         setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
     }
@@ -134,7 +133,7 @@
          }
 
         var url = $("#commonForm").attr("action");
-        var modelData = JSON.parse('@Json.Serialize(Model)');   
+        var modelData = JSON.parse('@Json.Serialize(Model)');
         var uiPageMetaData = modelData.fields;
         var fieldValues = [];
 
@@ -153,8 +152,9 @@
             url: url,
             data: { "UiPageId" : uiPageId, "FieldValues" : fieldValues},
             success: function (response) {
+                //debugger;
               myFunction();                      //Calling myFunction javascript function
-
+              SuccessMessage(NotificationNumbers++, "Saved successfully!"); //To pass the NotificatonContent to BellIcon
                var nuiPageMetaData= response.fields;
                var a = response.fieldValues;
 

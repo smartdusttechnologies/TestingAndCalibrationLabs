@@ -30,12 +30,12 @@ function ErrorMessage(value, message) {
         var Notify = document.getElementById("value");
         Notify.innerHTML = "0";
         count = 0;
-        document.getElementById("content").innerHTML = " ";
+        document.getElementById("dropdownContentNotifications").innerHTML = " ";
 
     }
 
     count++;
-    $('#content').prepend("<div class='notification-list' id='Paragraph'></div>");
+    $('#dropdownContentNotifications').prepend("<div class='notification-list' id='Paragraph'></div>");
     $('#Paragraph').append("<div class='notification-list_detail' id='child'></div>");
     $('#child').append(" <b><p id='Name'  > " + message + "</p></b>");
     var Notify = document.getElementById("value");
@@ -53,11 +53,11 @@ function SuccessMessage(value, message) {
         var Notify = document.getElementById("value");
         Notify.innerHTML = "0";
         count = 0;
-        document.getElementById("content").innerHTML = " ";
+        document.getElementById("dropdownContentNotifications").innerHTML = " ";
 
     }
     count++;
-    $('#content').prepend("<div class='notification-list' id='Paragraph'></div>");
+    $('#dropdownContentNotifications').prepend("<div class='notification-list' id='Paragraph'></div>");
     $('#Paragraph').append("<div class='notification-list_detail' id='child'></div>");
     $('#child').append(" <b><p id='Name' style='color:green' > " + message + "</p></b>");
     var Notify = document.getElementById("value");
@@ -66,6 +66,7 @@ function SuccessMessage(value, message) {
     NotificationItem[NotificationNumbers].style = "background-color: #E9E9E9;";
     var View = document.getElementById("view");
     View.style.display = "block";
+    NotificationItem[NotificationNumbers].id = "Paragraph" + NotificationNumbers;
 };
 
 //To delete the Notification
@@ -76,7 +77,7 @@ function Delete() {
     Notify.innerHTML = "0";
     count = 0;
     NotificationNumbers = 0;
-    document.getElementById("content").innerHTML = "<span style='font-weight:bold;'><center>No Notification </center></span>";
+    document.getElementById("dropdownContentNotifications").innerHTML = "<span style='font-weight:bold;'><center>No Notification </center></span>";
 };
 
 //To close the BellIcon on Outside Click
