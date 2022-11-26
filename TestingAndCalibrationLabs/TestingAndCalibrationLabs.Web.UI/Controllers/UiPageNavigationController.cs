@@ -12,16 +12,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly IUiPageNavigationService _uiPageNavigationService;
         private readonly IMapper _mapper;
-        /// <summary>
-        /// passing parameter via varibales for establing connection
-        /// </summary>
-        /// <param name="uiNavigationCategoryService"></param>
-        /// <param name="mapper"></param>
+
         public UiPageNavigationController(IUiPageNavigationService uiPageNavigationService, IMapper mapper)
         {
             _uiPageNavigationService = uiPageNavigationService;
             _mapper = mapper;
         }
+
         /// <summary>
         /// Get All Records From Ui Page Type With Navigation Category And Pass It TO Ajax Call
         /// </summary>

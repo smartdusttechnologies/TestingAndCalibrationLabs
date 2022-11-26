@@ -15,14 +15,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IUiPageMetadataService _uiPageMetadataService;
         private readonly IUiPageValidationTypeService _uiPageValidationTypeService;
-        /// <summary>
-        /// passing parameter via varibales for establing connection
-        /// </summary>
-        /// <param name="uiPageMetadataService"></param>
-        /// <param name="uiPageValidationTypeService"></param>
-        /// <param name="uiPageValidationService"></param>
-        /// <param name="uiPageTypeService"></param>
-        /// <param name="mapper"></param>
+        
         public UiPageValidationController(IUiPageValidationTypeService uiPageValidationTypeService, IUiPageMetadataService uiPageMetadataService, IUiPageValidationService uiPageValidationService, IUiPageTypeService uiPageTypeService,IMapper mapper)
         {
             _uiPageValidationService = uiPageValidationService;
@@ -31,6 +24,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageValidationTypeService = uiPageValidationTypeService;
         }
+
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -43,6 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageValidationModel = _mapper.Map<List<UiPageValidationModel>, List<UiPageValidationDTO>>(pageValidationList);
             return View(pageValidationModel.AsEnumerable());
         }
+
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -63,6 +58,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return base.View(new UiPageValidationDTO { Id = id });
         }
+
         /// <summary>
         /// To Create Record In Ui Page Validation
         /// </summary>
@@ -81,6 +77,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageValidationDTO);
         }
+
         /// <summary>
         /// For Edit Record View
         /// </summary>
@@ -117,6 +114,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageValidationModel = _mapper.Map<UiPageValidationModel, UiPageValidationDTO>(getByIdPageValidationType);
             return View(pageValidationModel);
         }
+
         /// <summary>
         /// To Edit Record In Ui Page Validation
         /// </summary>
@@ -140,6 +138,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageValidationDTO);
         }
+
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -155,6 +154,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageValidationModel = _mapper.Map<UiPageValidationModel, UiPageValidationDTO>(getByIdPageValidationType);
             return View(pageValidationModel);
         }
+
         /// <summary>
         /// To Delete Record From Ui Page Validation
         /// </summary>

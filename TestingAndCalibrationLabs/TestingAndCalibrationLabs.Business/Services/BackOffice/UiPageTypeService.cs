@@ -11,12 +11,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageTypeService : IUiPageTypeService
     {
-       
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
-        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository)
+        public UiPageTypeService(IGenericRepository<UiPageTypeModel> genericRepository)
         {
             _genericRepository = genericRepository;
         }
+
+        #region Public methods
         /// <summary>
         /// Create Record For Ui Page Type
         /// </summary>
@@ -27,6 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Insert(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
+
         /// <summary>
         /// Delete Record From Ui Page Type
         /// </summary>
@@ -36,21 +38,28 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
+
         /// <summary>
         /// Edit Record For Ui Page Type
         /// </summary>
         /// <param name="id"></param>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update( UiPageTypeModel uiPageTypeModel)
+        public RequestResult<int> Update(UiPageTypeModel uiPageTypeModel)
         {
             _genericRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
-       public List<UiPageTypeModel> Get()
-        {return  _genericRepository.Get();;
+
+        /// <summary>
+        /// Get All Records From Ui Page Type
+        /// </summary>
+        /// <returns></returns>
+        public List<UiPageTypeModel> Get()
+        {
+            return _genericRepository.Get();
         }
-       
+
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>
@@ -60,5 +69,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get(id);
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }

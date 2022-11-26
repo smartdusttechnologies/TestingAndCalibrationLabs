@@ -14,54 +14,54 @@
                 {
                     if (item.UiControlTypeName == "textarea")
                     {
-                        <div class="form-group-for-common" style="margin-left:40px">
-                            <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                            <textarea  id="@item.Id" title="@item.UiControlDisplayName"  @item.IsRequired rows="4" cols="50"></textarea>
-                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                        </div>
+                                <div class="form-group-for-common" style="margin-left:40px">
+                                    <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                    <textarea  id="@item.Id" title="@item.UiControlDisplayName"  @item.IsRequired rows="4" cols="50"></textarea>
+                                    <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                </div>
                     }
                     else if (item.UiControlTypeName == "file")
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
-                            <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
-                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                        </div>
+                                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                                    <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
+                                    <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                    <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                </div>
                     }
                     else if (item.UiControlTypeName == "card")
                     {
-                           <div class="@item.UiControlTypeName" style="width: 18rem;">
-                              <img src="..." class="card-img-top" alt="...">
-                              <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                              </div>
-                        </div>
+                                   <div class="@item.UiControlTypeName" style="width: 18rem;">
+                                      <img src="..." class="card-img-top" alt="...">
+                                      <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                      </div>
+                                </div>
                     }
                     else if (item.UiControlTypeName == "search")
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
-                            <input class="form-input width-full" style="color: red;" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
-                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                        </div>
+                                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                                    <input class="form-input width-full" style="color: red;" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
+                                    <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                    <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                </div>
                     }
-                     else if (item.UiControlTypeName == "Calender")
+                    else if (item.UiControlTypeName == "Calender")
                     {
-                         @* <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                        @* <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
                             <input class="form-input width-full" style="color: red;" type="@item.UiControlType" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                        </div>*@
+                            </div>*@
                     }
                     else
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
-                            <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
-                            <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                            <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                        </div>
+                                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                                    <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
+                                    <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
+                                    <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
+                                </div>
                         @*
                             <div class="form-group-for-common" style="margin-left:40px">
                             <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
@@ -69,12 +69,12 @@
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
                             </div>*@
                     }
-               }
-            
+                }
+
             </div>
             <div class="form-group-for-common">
                 <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-			</div>
+            </div>
         </form>
 
         <input type="hidden" value="" name="lefid" id="lefid"/>
@@ -102,56 +102,28 @@
                   <div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false"  viewBox="0 0 24 24">
                       <path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path></svg></div>
               <div class="MuiAlert-message css-1xsto0d" id="errormessage">!</div></div>
-         
+
             </div>
         </div>
      </div>
 
-    <script>
+<script>
+
      //This function will display the success snackbar
-      function myFunction() {
-          var x = document.getElementById("snackbarsuccess");
-        
+    function myFunction() {
+        var x = document.getElementById("snackbarsuccess");
         SuccessMessage(NotificationNumbers++, SuccessBar.textContent);
-          x.className = "show";
-         
-          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-       }
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
 
-      //From this code our form willl be reset 
-          //#region 
-     //       $("#sampleForm").find(':input').each(function() {
-     //        switch(this.type) {
-     //                 case 'password':
-     //                 case 'text':
-     //                 case 'textarea':
-     //                 case 'file':
-     //                 case 'select-one':
-     //                 case 'select-multiple':
-     //                 case 'date':
-     //                 case 'number':
-     //                 case 'tel':
-     //                 case 'email':
-     //                       jQuery(this).val('');
-     //                       break;
-     //                 case 'checkbox':
-     //                 case 'radio':
-     //                      this.checked = false;
-     //                      break;
-     //  }
-     //         });
-
-     //}
-         //#endregion
-
-         //This function will display the Failure snackbar
-          function myFunctionError() {
-          var x = document.getElementById("snackbarerror");
-          x.className = "show";
-          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-          
-       }
-   </script>
+    //This function will display the Failure snackbar
+    function myFunctionError() {
+        var x = document.getElementById("snackbarerror");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+</script>
 
 <script type="text/javascript">
     function AjaxFormSubmit() {
@@ -160,7 +132,7 @@
          if( document.getElementById(x) !=null && document.getElementById(x) !=undefined){
           document.getElementById(x).style.border = "1px solid black ";
          }
-         
+
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');   
         var uiPageMetaData = modelData.fields;
@@ -181,70 +153,29 @@
             url: url,
             data: { "UiPageId" : uiPageId, "FieldValues" : fieldValues},
             success: function (response) {
-              myFunction();                      //Calling myFunction javascript function 
-               
+              myFunction();                      //Calling myFunction javascript function
+
                var nuiPageMetaData= response.fields;
-                var a = response.fieldValues;
-                
+               var a = response.fieldValues;
+
                 for (let i = 0; i < nuiPageMetaData.length; i++) {
                 var nfieldId = nuiPageMetaData[i].id;
                 $('#' + nfieldId).val('');         //Assigning a empty values to input fields
-               } 
-                // Putting data back when the form failed to sumbit
-                //var c = response.errorMessage;
-                //if(c.reason == null){
-                //var nuiPageMetaData= response.fields;
-                //var a = response.fieldValues;
-                //for (let i = 0; i < nuiPageMetaData.length; i++) 
-                // {
-                        //var nfieldId = nuiPageMetaData[i].id;
-                        //var result = a.find(obj => {
-                        // // Returns the object where
-                        //// the given property has some value 
-                        //return obj.UiPageMetadataId === nfieldId
-                        //})
-
-                        //if(result == undefined)
-                        // {
-                             // $('#' + nfieldId).val('');
-                        // }
-                //}
-                },
+               }
+            },
             failure: function (response) {
                 alert(response.responseText);
             },
             error: function (response) {
-                //alert("Error occured");
-                var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
-               
-               
-                var newErrorMessage=newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                //alert(newErrorMessage);
-                //console.log(response.fieldId);
-                  document.getElementById("lefid").value = newErrorMessage.sourceId;
-                    var namea = document.getElementById(newErrorMessage.sourceId);
+                var newresponseJSON = response.responseJSON;
+                var newErrorMessage=newresponseJSON.errorMessage;
+                document.getElementById("lefid").value = newErrorMessage.sourceId;
+                var namea = document.getElementById(newErrorMessage.sourceId);
                 var txtname= namea.name;
-                 myFunctionError();                                              //Calling myFunctionError javacript function
+                myFunctionError();
                 document.getElementById("errormessage").innerHTML =  newErrorMessage.reason;
-                
-                 ErrorMessage(NotificationNumbers++,newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
-
-            //    var s = newErrorMessage.fid//Sending the reason to html 
-                  document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
-         //        } 
-         //        else{
-         //document.getElementByClassName("form-input").style.border = "1px solid black";
-         //        }
-              //document.getElementById(newErrorMessage.fid).classList.add("border"); 
-
-              //document.getElementById(newErrorMessage.fid).classList.add("border-danger"); 
-               
-             //  newErrorMessage.fid.style.border = "1px solid red";
-             
-           
-                //var i =result;
-                //collection[i].style.border = "1px solid red";
-                //alert(response.responseText);
+                ErrorMessage(NotificationNumbers++,newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
+                document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
             }
         });
     }

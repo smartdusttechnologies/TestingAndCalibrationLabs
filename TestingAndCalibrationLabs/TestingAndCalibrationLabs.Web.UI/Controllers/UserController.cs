@@ -12,20 +12,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
 
-        /// <summary>
-        /// Default Action of the USer Controller
-        /// </summary>
-        /// <returns></returns>
-        /// 
         public UserController(IAuthenticationService authenticationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
         }
+
+        /// <summary>
+        /// Default Action of the User Controller
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
+
         /// <summary>
         /// Method for User Registration
         /// </summary>

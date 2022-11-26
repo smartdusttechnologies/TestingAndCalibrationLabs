@@ -6,7 +6,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 namespace TestingAndCalibrationLabs.Business.Services
 {
     /// <summary>
-    /// Service Class For Ui Navigation Category
+    /// Service Class For Ui Page Navigation.
     /// </summary>
     public class UiPageNavigationService : IUiPageNavigationService
     {
@@ -17,8 +17,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
             _uiPageNavigationRepository = uiPageNavigationRepository;
         }
+
+        #region Public methods
         /// <summary>
-        /// Get All Records From Page Type With Formated Url
+        /// Get All Records From Ui Page Navigation With Formated Url.
         /// </summary>
         /// <returns></returns>
         public List<UiPageNavigationModel> Get()
@@ -27,5 +29,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.UiPageTypeId));
             return pageNavigation;
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }

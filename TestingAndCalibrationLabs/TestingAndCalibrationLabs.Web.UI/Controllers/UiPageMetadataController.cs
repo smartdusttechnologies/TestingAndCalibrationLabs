@@ -16,13 +16,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IUiControlTypeService _uiControlTypeService;
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
-        /// <summary>
-        /// passing parameter via varibales for establing connection
-        /// </summary>
-        /// <param name="uiControlTypeService"></param>
-        /// <param name="mapper"></param>
-        /// <param name="uiPageTypeService"></param>
-        /// <param name="uiPageMetadataService"></param>
+        
         public UiPageMetadataController(IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
@@ -31,6 +25,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiControlTypeService = uiControlTypeService;
             _dataTypeService = dataTypeService;
         }
+
         /// <summary>
         /// To List All Record
         /// </summary>
@@ -44,6 +39,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             return View(pageMetadatas.AsEnumerable());
         }
+
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -65,6 +61,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             return base.View(new UiPageMetadataDTO { Id = id });
         }
+
         /// <summary>
         /// To Create Record In Ui Page Metadata Type
         /// </summary>
@@ -83,6 +80,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageMetadataDTO);
         }
+
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -114,6 +112,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(pageMetadataModel);
             return View(pageMetadata);
         }
+
         /// <summary>
         /// To Edit Record In Ui Page Metadata Type
         /// </summary>
@@ -137,6 +136,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageMetadataDTO);
         }
+
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -152,6 +152,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var deleteMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(uiPageMetadataModel);
             return View(deleteMetadata);
         }
+
         /// <summary>
         /// To Delete Record In Ui Page Metadata Type
         /// </summary>
@@ -169,6 +170,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
-
     }
 }

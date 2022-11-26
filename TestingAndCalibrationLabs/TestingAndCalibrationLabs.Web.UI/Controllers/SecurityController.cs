@@ -16,12 +16,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+
         public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _mapper = mapper;
         }
+
         /// <summary>
         /// UI Shows the Orgnizations names in dropdown list
         /// </summary>
@@ -34,6 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.Organizations = organizationNames;
             return View();
         }
+
         /// <summary>
         /// Method to get the Login details from UI and Process Login.
         /// </summary>

@@ -13,12 +13,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
         private readonly IUiPageNavigationService _uiNavigationCategoryService;
-        /// <summary>
-        /// passing parameter via varibales for establing connection
-        /// </summary>
-        /// <param name="uiPageTypeService"></param>
-        /// <param name="mapper"></param>
-        /// <param name="uiNavigationCategoryService"></param>
+        
         public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _uiPageTypeService = uiPageTypeService;
@@ -61,6 +56,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return View(pageData);
         }
+
         /// <summary>
         /// To Edit Record In Ui Page Type
         /// </summary>
@@ -80,6 +76,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageTypeDTO);
         }
+
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -90,6 +87,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new Models.UiPageTypeDTO { Id = id });
         }
+
         /// <summary>
         /// To Create Record In Ui Page Type
         /// </summary>
@@ -109,6 +107,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageTypeDTO);
         }
+
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -128,6 +127,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageModel = _mapper.Map<UiPageTypeModel, UiPageTypeDTO>(getByIdPageModel);
             return View(pageModel);
         }
+
         /// <summary>
         /// To Delete Record From Ui Control Type
         /// </summary>
@@ -145,7 +145,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
-
-
     }
 }

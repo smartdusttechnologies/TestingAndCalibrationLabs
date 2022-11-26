@@ -12,7 +12,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Name For The Ui Page Type
         /// </summary>
         public string Name { get; set; }
-        
     }
 
 }

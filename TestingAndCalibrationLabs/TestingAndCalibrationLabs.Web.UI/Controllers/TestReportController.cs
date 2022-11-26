@@ -24,10 +24,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
 
-        /// <summary>
-        /// Default Action of the Index
-        /// </summary>
-        /// <returns></returns>
         public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleDriveService googleUploadDownloadService)
         {
             _logger = logger;
