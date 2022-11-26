@@ -45,9 +45,9 @@
 .form-element-for-login .form-input:not(:focus) ~ .form-label {
     top: 15px;
     background-color: white;
-    padding-left: 5px;
+    padding-left: 0px;
     padding-right: 5px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
     .form-element-for-login .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
@@ -75,7 +75,14 @@
     border-color: dodgerblue;
     box-shadow: 0 0 1px 0 dodgerblue;
 }
-
+.form-element-for-login textarea:hover {
+    border-color: dodgerblue;
+    box-shadow: 0 0 1px 0 dodgerblue;
+}
+.form-element-for-login select:hover {
+    border-color: dodgerblue;
+    box-shadow: 0 0 1px 0 dodgerblue;
+}
 .btn-submit-print {
     background-color: blue;
     width: 200px;
