@@ -249,7 +249,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -267,8 +267,8 @@ BEGIN
 			  (4, N'/UiPageValidation/Index/', 4, 2, 0),
 			  (5, N'/', 5, 2, 0),
 			  (6, N'/Common/Create/{0}', 6, 3, 0),
-              (7, N'/Common/Create/{0}', 7, 3, 0)
-			   
+              (7, N'/Common/Create/{0}', 7, 3, 0),
+			   (8, N'/', 5, 5, 0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

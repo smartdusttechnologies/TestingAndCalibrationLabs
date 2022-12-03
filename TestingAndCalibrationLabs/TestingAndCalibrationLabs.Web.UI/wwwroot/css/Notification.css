@@ -124,6 +124,21 @@
     border-left: 15px solid transparent;
 }
 
+.notification-overlay {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    font-size: 1rem;
+    color: grey;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #f9fafb;
+    border-radius: 1rem;
+}
+
 @media (min-width: 755px) and (max-width: 1045px) {
     .notification-ui_dd:after {
         left: calc(65% - 7px);
@@ -132,7 +147,20 @@
 
 @media (max-width: 750px) {
 
+    .notification-overlay {
+        margin: 10px;
+        margin-left: -10px;
+    }
+
     .notification-ui_dd:after {
         left: calc(55% - 7px);
+    }
+}
+
+@media (min-width: 751px) and (max-width: 1020px) {
+
+    .notification-overlay {
+        margin: 10px;
+        margin-left: 150px;
     }
 }
