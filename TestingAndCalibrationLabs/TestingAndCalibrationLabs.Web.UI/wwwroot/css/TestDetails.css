@@ -350,11 +350,12 @@ select.input-validation-error#TestingType {
     }
 }
 
+
 @media (min-width: 1200px) {
     .navbar-expand-xl .navbar-nav .dropdown-menu {
         position: absolute;
         width: 10px;
         left: auto;
     }
-    
+   
 }

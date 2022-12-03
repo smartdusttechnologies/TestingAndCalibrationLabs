@@ -43,7 +43,6 @@
             type: "POST",
             url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
             success: function (response) {
-                console.log(response);
                 response.sort(function (a, b) {
                     if (a.orders < b.orders) { return 1; }
                     if (a.orders > b.orders) { return -1; }
