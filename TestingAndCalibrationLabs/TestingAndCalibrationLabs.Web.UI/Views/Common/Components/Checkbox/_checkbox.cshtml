@@ -19,13 +19,11 @@
         var idNum = "#checkbox-" + modelData.value.id;
         $(checkboxVal).text($(idNum).val());
         var actionName = $('#actionNameCommon').val();
-        alert(actionName);
         if (actionName == "Edit") {
             var checkboxValue = $(checkboxVal).val();
             alert(checkboxValue);
             if (checkboxValue == "true") {
                 $(idNum).prop('checked', true);
-
             }
         }
         $(idNum).on('change', function () {

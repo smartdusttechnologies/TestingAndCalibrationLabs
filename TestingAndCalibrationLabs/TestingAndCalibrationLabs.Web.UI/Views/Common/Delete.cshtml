@@ -9,13 +9,16 @@
         <input type="hidden" asp-for="Id" />
         @foreach (var item in Model.Fields)
         {
-            var Controlvalue = Model.FieldValues.Where(x => x.UiPageMetadataId == item.Id).FirstOrDefault()?.Value;
-            <dt class="col-sm-2">
-                @Html.DisplayFor(fieldItem => item.UiControlDisplayName)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(modelItem => @Controlvalue)
+            if (item.ControlCategoryName == "DataControl")
+            {
+                var Controlvalue = Model.FieldValues.Where(x => x.UiPageMetadataId == item.Id).FirstOrDefault()?.Value;
+                <dt class="col-sm-2">
+                    @Html.DisplayFor(fieldItem => item.UiControlDisplayName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(modelItem => @Controlvalue)
             </dd>
+            }
         }
     </dl>
     <form asp-action="Delete">

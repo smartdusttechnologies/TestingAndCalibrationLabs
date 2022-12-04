@@ -177,7 +177,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _commonService.Delete((int)id);
-            return RedirectToAction("Index");
+            return Redirect("/");
+            //return RedirectToAction("Index");
         }
     }
 }
