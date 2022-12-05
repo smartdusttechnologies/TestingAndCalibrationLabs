@@ -324,10 +324,6 @@ select.input-validation-error#TestingType {
     border: 1px solid;
 }
 
-.dropdown-right {
-    right: 0;
-}
-
 @media (max-width:768px) {
     #testDetailsGrid_paginate {
         padding: 0;
@@ -351,11 +347,3 @@ select.input-validation-error#TestingType {
 }
 
 
-@media (min-width: 1200px) {
-    .navbar-expand-xl .navbar-nav .dropdown-menu {
-        position: absolute;
-        width: 10px;
-        left: auto;
-    }
-   
-}
