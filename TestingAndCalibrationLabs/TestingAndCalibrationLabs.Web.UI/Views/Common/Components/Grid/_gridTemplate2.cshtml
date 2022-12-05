@@ -40,9 +40,8 @@
                             count++;
                         }
                         <td>
-                            <a class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key">
-
-                            </a><a class="fa fa-solid fa-trash col" style="margin:5px;margin-left:10px;" asp-controller="Common" asp-action="Delete" asp-route-id="@item.Key"></a>
+                            <a class="fas fa-edit" style="margin:5px;"  asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>|
+                            <a class="fa fa-trash" style="margin:5px;" asp-controller="Common" asp-action="Delete" asp-route-id="@item.Key"></a>
                         </td>
 
                     </tr>

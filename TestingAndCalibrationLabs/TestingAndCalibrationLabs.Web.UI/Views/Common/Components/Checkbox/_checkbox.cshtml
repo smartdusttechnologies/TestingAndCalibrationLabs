@@ -13,33 +13,36 @@
 
 <input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id">
 <script>
-    $(document).ready(function () {
-        var modelData = JSON.parse('@Json.Serialize(Model)');
-        var checkboxVal = "#" + modelData.value.uiControlTypeName + modelData.value.id;
-        var checkboxwithoutHash = modelData.value.uiControlTypeName + modelData.value.id;
-        var idNum = "#checkbox-" + modelData.value.id;
-        
-        var actionName = $('#actionNameCommon').val();
-        if (actionName == "Edit") {
-            debugger;
-            var checkboxValue = $(checkboxVal).val();
-            alert(checkboxValue);
-            if (checkboxValue == "true") {
-                $(idNum).prop('checked', true);
-            }
-        }else{
-            $(checkboxVal).text($(idNum).val());
-        }
-        $(idNum).on('change', function () {
-            if ($(idNum).is(':checked')) {
-                //$(idNum).attr('value', 'true');
-                document.getElementById(checkboxwithoutHash).value = "true";
+    var modelData = JSON.parse('@Json.Serialize(Model)');
+    var checkboxVal = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+    var checkboxwithoutHash = modelData.value.uiControlTypeName + modelData.value.id;
+    var idNum = "#checkbox-" + modelData.value.id;
+    var count = 0;
+    $(checkboxVal).on('change', function () {
+        if (count == 0) {
+            var actionName = $('#actionNameCommon').val();
+            if (actionName == "Edit") {
+                debugger;
+                var checkboxValue = $(checkboxVal).val();
+                alert(checkboxValue);
+                if (checkboxValue == "true") {
+                    $(idNum).prop('checked', true);
+                }
             } else {
-               // $(idNum).attr('value', 'false');
-                 document.getElementById(checkboxwithoutHash).value = "false";
+                $(checkboxVal).text($(idNum).val());
             }
-            //$(checkboxVal).text($(idNum).val());
-        });
+            count++;
+        }
     });
-          
+    $(idNum).on('change', function () {
+        if ($(idNum).is(':checked')) {
+            //$(idNum).attr('value', 'true');
+            document.getElementById(checkboxwithoutHash).value = "true";
+        } else {
+            // $(idNum).attr('value', 'false');
+            document.getElementById(checkboxwithoutHash).value = "false";
+        }
+        //$(checkboxVal).text($(idNum).val());
+    });
+
 </script>

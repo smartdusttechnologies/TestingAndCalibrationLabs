@@ -165,19 +165,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Delete(int id)
         {
             var pageMetadata = _commonService.GetRecordById(id);
-            Models.RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
+            RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return View(record);
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id)
+        public ActionResult DeleteConfirmed(int? id,int uiPageId)
         {
             if (id == null)
             {
                 return NotFound();
             }
             _commonService.Delete((int)id);
-            return Redirect("/");
+            return RedirectToAction("Index", new { id = uiPageId});
         }
     }
 }
