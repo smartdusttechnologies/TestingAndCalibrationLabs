@@ -18,6 +18,7 @@
     var checkboxwithoutHash = modelData.value.uiControlTypeName + modelData.value.id;
     var idNum = "#checkbox-" + modelData.value.id;
     var count = 0;
+    //$.holdReady(false);
     $(checkboxVal).on('change', function () {
         if (count == 0) {
             var actionName = $('#actionNameCommon').val();

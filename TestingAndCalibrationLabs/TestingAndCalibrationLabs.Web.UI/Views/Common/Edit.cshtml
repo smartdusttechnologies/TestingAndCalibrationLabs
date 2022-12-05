@@ -65,32 +65,7 @@
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
     var count = 0;
-    function addContentInSelect() {
-        var metadataId = $('#metadataId').find(":selected").val();
-        if (count == 0) {
-            count++;
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("Get","UiPageMetadataCharacteristics")",
-                data: { id: metadataId },
-                success: function (response) {
-                    debugger;
-                    for (var i = 0; i < response.length; i++) {
-                        var name = response[i].lookupName;
-                        console.log(name);
-                        var divId = "#" + response[i].uiPageMetadataId;
-                        console.log(divId);
-                        $(divId).append("<option value='" + name + "'>" + name + "</option>");
-                    }
-                },
-                error: function (req, status, error) {
-                }
-            });
-        }
-        else {
-
-        }
-    }
+    
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -122,18 +97,6 @@
         var modelData = JSON.parse('@Json.Serialize(Model)');
         console.log(modelData);
         var uiPageMetaData = modelData.fields;
-        //var fieldValues = [];
-        //for (let i = 0; i < uiPageMetaData.length; i++) {
-        //    if (uiPageMetaData[i].controlCategoryName == "DataControl") {
-        //        var fieldId = "#"+ uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
-        //        var metadataId = uiPageMetaData[i].id;
-        //        var fieldValue = $(fieldId).val();
-        //            var keyValuepair = {};
-        //            keyValuepair.UiControlId = metadataId;
-        //            keyValuepair.Value = fieldValue;
-        //            fieldValues.push(keyValuepair)
-        //    }
-        //}
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
