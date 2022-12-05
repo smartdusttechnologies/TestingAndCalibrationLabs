@@ -10,7 +10,6 @@
         </label>
     </div>
 </div>
-
 <input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id">
 <script>
     var modelData = JSON.parse('@Json.Serialize(Model)');
@@ -45,5 +44,4 @@
         }
         //$(checkboxVal).text($(idNum).val());
     });
-
 </script>
