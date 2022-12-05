@@ -44,7 +44,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel,RecordsDTO>(pageMetadata);
-            records.Fields = records.Fields.Take(10).ToList();
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
             return View(records);
         }
         [HttpPost]
@@ -178,7 +178,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             _commonService.Delete((int)id);
             return Redirect("/");
-            //return RedirectToAction("Index");
         }
     }
 }

@@ -66,31 +66,31 @@
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
     var count = 0;
-    function addContentInSelect() {
-        var metadataId = $('#metadataId').find(":selected").val();
-        if (count == 0) {
-            count++;
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("Get","UiPageMetadataCharacteristics")",
-                data: { id: metadataId },
-                success: function (response) {
-                    for (var i = 0; i < response.length; i++) {
-                        var name = response[i].lookupName;
-                        console.log(name);
-                        var divId = "#" + response[i].uiPageMetadataId;
-                        console.log(divId);
-                        $(divId).append("<option value='" + name + "'>" + name + "</option>");
-                    }
-                },
-                error: function (req, status, error) {
-                }
-            });
-        }
-        else {
+    //function addContentInSelect() {
+    //    var metadataId = $('#metadataId').find(":selected").val();
+    //    if (count == 0) {
+    //        count++;
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "@Url.Action("Get","UiPageMetadataCharacteristics")",
+    //            data: { id: metadataId },
+    //            success: function (response) {
+    //                for (var i = 0; i < response.length; i++) {
+    //                    var name = response[i].lookupName;
+    //                    console.log(name);
+    //                    var divId = "#" + response[i].uiPageMetadataId;
+    //                    console.log(divId);
+    //                    $(divId).append("<option value='" + name + "'>" + name + "</option>");
+    //                }
+    //            },
+    //            error: function (req, status, error) {
+    //            }
+    //        });
+    //    }
+    //    else {
 
-        }
-    }
+    //    }
+    //}
 </script>
 <script type="text/javascript">
     function AjaxFormSubmit() {

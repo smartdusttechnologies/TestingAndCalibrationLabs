@@ -14,14 +14,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ILookupService _lookupService;
         private readonly IListSorterService _listSorter;
         private readonly IMapper _mapper;
-        
         public LookupController(ILookupService lookupService,IListSorterService listSorter,IMapper mapper)
         {
             _lookupService = lookupService;
             _listSorter = listSorter;
             _mapper = mapper;
         }
-
         public IActionResult Index()
         {
             return View();
