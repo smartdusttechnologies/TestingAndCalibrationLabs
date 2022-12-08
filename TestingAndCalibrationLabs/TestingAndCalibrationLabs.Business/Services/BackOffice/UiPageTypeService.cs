@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -11,11 +12,14 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageTypeService : IUiPageTypeService
     {
-       
+        private readonly IAuthorizationService _authorizationService;
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
         private readonly IUiPageTypeRepository _uiPageTypeRepository;
-        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository)
+        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository,
+            IUiPageTypeRepository uiPageTypeRepository,
+            IAuthorizationService authorizationService)
         {
+            _authorizationService = authorizationService;
             _genericRepository = genericRepository;
             _uiPageTypeRepository = uiPageTypeRepository;
         }
@@ -26,8 +30,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            _uiPageTypeRepository.Insert(uiPageTypeModel);
-            return new RequestResult<int>(1);
+            //if (_authorizationService.AuthorizeAsync(User, uiPageTypeModel, Operations.Read))
+            {
+                _uiPageTypeRepository.Insert(uiPageTypeModel);
+                return new RequestResult<int>(1);
+            }
+            //return new RequestResult<int>(0);
         }
         /// <summary>
         /// Delete Record From Ui Page Type

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
-namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
+namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-    public interface IRoleRepository
+    public interface IRoleService
     {
         /// <summary>
         /// Abstract method to get Role for Orgnization

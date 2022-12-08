@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -35,6 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI
         {
             services.AddSession();
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddNewtonsoftJson();
 
@@ -59,6 +61,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             
  
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddSingleton<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
             services.AddScoped<IOrganizationService, OrganizationService>();
@@ -166,7 +170,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
+                    pattern: "{controller=Security}/{action=Index}/{id?}");
             });
            
         }

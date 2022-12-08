@@ -7,5 +7,7 @@
     public class CustomClaimTypes
     {
         public const string Permission = "Application.Permission";
+        public const string UserId = "UserId";
+        public const string OrganizationId = "OrganizationId";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
         private readonly IUiNavigationCategoryService _uiNavigationCategoryService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
         /// <param name="uiNavigationCategoryService"></param>
-        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiNavigationCategoryService uiNavigationCategoryService)
+        public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper, IUiNavigationCategoryService uiNavigationCategoryService)
         {
+            _httpContextAccessor = httpContextAccessor;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _uiNavigationCategoryService = uiNavigationCategoryService;
@@ -32,6 +35,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
+            var context = _httpContextAccessor.HttpContext;
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
@@ -108,7 +113,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+               var context = _httpContextAccessor.HttpContext;
                 var pageModel = _mapper.Map<Models.UiPageTypeDTO, Business.Core.Model.UiPageTypeModel>(uiPageTypeDTO);
                 _uiPageTypeService.Create(pageModel);
                 TempData["IsTrue"] = true;
