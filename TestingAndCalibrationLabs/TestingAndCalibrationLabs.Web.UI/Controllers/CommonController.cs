@@ -5,10 +5,6 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using Microsoft.AspNetCore.Http;
-using Org.BouncyCastle.Asn1.Ocsp;
-using Microsoft.AspNetCore.Hosting.Server;
-using System.IO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -47,6 +43,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
             return View(records);
         }
+        /// <summary>
+        /// Method To Upload Images in Google Drive And Return The Url Of File
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult FileUpload()
         {
@@ -63,6 +63,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return BadRequest();
             }
         }
+        /// <summary>
+        /// Method To load Grid by given page Id And Template Details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="controlCategoryTypeTemplate"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult LoadGrid(int? id, string controlCategoryTypeTemplate)
         {
@@ -91,6 +97,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return BadRequest();
             }
         }
+        /// <summary>
+        /// To Create Record For Common Page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int id = 1)
         {
@@ -142,7 +153,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="record"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(Models.RecordDTO record)
+        public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO,RecordModel>(record);
             var adddata = _commonService.Update(records);

@@ -3,11 +3,6 @@
     <label for="testing" class="form-label"></label>
     <select class="form-input width-full" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName" />
    
-   @* @foreach (var item in Model.Children)
-    {
-        count++;
-        <option value="@count">@item.Value.UiControlDisplayName</option>
-    }*@
     </select>
 </div>
 <script>
