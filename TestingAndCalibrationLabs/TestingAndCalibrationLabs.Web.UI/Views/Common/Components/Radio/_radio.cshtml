@@ -1,31 +1,58 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+<div onload="valueLoad()" class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
     <p>@Model.Value.UiControlDisplayName</p>
-    <input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id" value="rad-@Model.Children.First().Value.Id"/>
+    <input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id" />
     @foreach (var item in Model.Children)
     {
-        @if (Model.Children.First() == item)
-        {
-            <div class="form-check form-check-inline">
-                <input checked class="form-check-input" onclick="setValueToParent(this)" type="radio" name="radio-@Model.Value.UiControlDisplayName" value="rad-@item.Value.Id" id="rad-@item.Value.Id">
-                <label class="form-check-label" for="@item.Value.UiControlTypeName">
-                    @item.Value.UiControlDisplayName
-                </label>
-            </div>
-        }
-        else
-        {
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" onclick="setValueToParent(this)" name="radio-@Model.Value.UiControlDisplayName" value="rad-@item.Value.Id" id="rad-@item.Value.Id">
-                <label class="form-check-label" for="@item.Value.UiControlTypeName">
-                    @item.Value.UiControlDisplayName
-                </label>
-            </div>
-        }
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" onclick="setValueToParent(this)" for="@Model.Value.UiControlTypeName@Model.Value.Id" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="rad-@item.Value.Id">
+            <label class="form-check-label" for="@item.Value.UiControlTypeName">
+                @item.Value.UiControlDisplayName
+            </label>
+        </div>
     }
 </div>
+
 <script>
- var modelData = JSON.parse('@Json.Serialize(Model)');
+    window.addEventListener("load", function () { preSelectRadio() });
+    var modelData;
+    $(document).ready(function () {
+        modelData = JSON.parse('@Json.Serialize(Model)');
+        var lookupCategoryId = modelData.value.lookupCategoryId;
+        var id = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("LookupByCategoryId","Lookup")",
+            data: { lookupCategoryId: lookupCategoryId },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+
+                    var lookupId = response[i].id;
+                    var lookupName = response[i].name;
+                    var childId = "rad-" + modelData.children[i].value.id;
+                    document.getElementById(childId).value = lookupId;
+                }
+            },
+            error: function (req, status, error) {
+            }
+        });
+    });
+    function preSelectRadio() {
+        var actionName = $('#actionNameCommon').val();
+        if (actionName == "Edit") {
+            var radioInput = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+            var radioValue = $(radioInput).val();
+            for (var i = 0; i < modelData.children.length; i++) {
+                var radioInput = "#rad-" + modelData.children[i].value.id;
+                var valueOfRadio = $(radioInput).val();
+                if(valueOfRadio == radioValue){
+                    $(radioInput).prop("checked", true);
+                }
+            }
+        }
+    }
+</script>
+<script>
     function setValueToParent(elementClicked) {
         var idNum = modelData.value.uiControlTypeName + modelData.value.id;
         document.getElementById(idNum).value = elementClicked.value;

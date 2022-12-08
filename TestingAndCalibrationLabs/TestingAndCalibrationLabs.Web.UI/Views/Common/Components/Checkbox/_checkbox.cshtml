@@ -10,38 +10,31 @@
         </label>
     </div>
 </div>
-<input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id">
+<input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id" value="false">
 <script>
-    var modelData = JSON.parse('@Json.Serialize(Model)');
-    var checkboxVal = "#" + modelData.value.uiControlTypeName + modelData.value.id;
-    var checkboxwithoutHash = modelData.value.uiControlTypeName + modelData.value.id;
-    var idNum = "#checkbox-" + modelData.value.id;
-    var count = 0;
-    //$.holdReady(false);
-    $(checkboxVal).on('change', function () {
-        if (count == 0) {
-            var actionName = $('#actionNameCommon').val();
-            if (actionName == "Edit") {
-                debugger;
-                var checkboxValue = $(checkboxVal).val();
-                alert(checkboxValue);
-                if (checkboxValue == "true") {
-                    $(idNum).prop('checked', true);
-                }
+    window.addEventListener("load", function () { preSelectCheckbox() });
+    var model;
+    $(document).ready(function () {
+        model = JSON.parse('@Json.Serialize(Model)');
+        var checkboxwithoutHash = model.value.uiControlTypeName + model.value.id;
+        var idNum = "#checkbox-" + model.value.id;
+        $(idNum).on('change', function () {
+            if ($(idNum).is(':checked')) {
+                document.getElementById(checkboxwithoutHash).value = "true";
             } else {
-                $(checkboxVal).text($(idNum).val());
+                document.getElementById(checkboxwithoutHash).value = "false";
             }
-            count++;
-        }
+        });
     });
-    $(idNum).on('change', function () {
-        if ($(idNum).is(':checked')) {
-            //$(idNum).attr('value', 'true');
-            document.getElementById(checkboxwithoutHash).value = "true";
-        } else {
-            // $(idNum).attr('value', 'false');
-            document.getElementById(checkboxwithoutHash).value = "false";
+    function preSelectCheckbox() {
+        var actionName = $('#actionNameCommon').val();
+        if (actionName == "Edit") {
+            var inputId = "#" + model.value.uiControlTypeName + model.value.id;
+            var checkboxId = "#checkbox-" + model.value.id;
+            var checkboxValue = $(inputId).val();
+            if (checkboxValue == "true") {
+                $(checkboxId).prop("checked", true);
+            }
         }
-        //$(checkboxVal).text($(idNum).val());
-    });
+    }
 </script>

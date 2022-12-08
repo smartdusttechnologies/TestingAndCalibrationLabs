@@ -64,8 +64,6 @@
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
-    var count = 0;
-    
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -73,7 +71,6 @@
         var uiPageMetaData = modelData.fields;
         var pageData = modelData.fieldValues;
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            debugger;
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var controlId = uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 var metadataId = uiPageMetaData[i].id;
