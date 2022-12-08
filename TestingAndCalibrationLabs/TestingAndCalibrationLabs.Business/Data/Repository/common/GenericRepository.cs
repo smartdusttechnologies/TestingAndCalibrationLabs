@@ -1,10 +1,7 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -89,49 +86,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         private string GenerateInsertQuery()
         {
             var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
-
             insertQuery.Append("(");
-
-            //var properties = GenerateListOfProperties(typeof(T).GetProperties());
             _columnName.ForEach(colName => { insertQuery.Append($"{colName},"); });
-            //properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
-
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(") VALUES (");
             _columnName.ForEach(colName => {  insertQuery.Append($"@{colName},");  });
-           // properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"@{prop},"); } });
-
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(")");
-
             return insertQuery.ToString();
         }
-
         private string GenerateUpdateQuery()
         {
             var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
-            //var properties = GenerateListOfProperties(typeof(T).GetProperties());
-
             _columnName.ForEach(property =>
             {
                     updateQuery.Append($"{property}=@{property},");
             });
-
             updateQuery.Remove(updateQuery.Length - 1, 1); //remove last comma
             updateQuery.Append(" WHERE Id=@Id");
-
             return updateQuery.ToString();
         }
-
-        //private static List<string> GenerateListOfProperties(IEnumerable<PropertyInfo> listOfProperties)
-        //{
-        //    return (from prop in listOfProperties
-        //            let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
-        //            where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
-        //            select prop.Name).ToList();
-        //}
         #endregion
     }
 }
