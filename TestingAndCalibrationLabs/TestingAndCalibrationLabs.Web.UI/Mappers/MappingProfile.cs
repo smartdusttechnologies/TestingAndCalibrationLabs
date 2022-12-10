@@ -26,6 +26,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<TestReportDTO,TestReportModel>().ReverseMap();
             CreateMap<AttachmentDTO,AttachmentModel>().ReverseMap();
             CreateMap<UiControlCategoryTypeDTO,UiControlCategoryTypeModel>().ReverseMap();
+            CreateMap<ModuleDTO,ModuleModel>().ReverseMap();
+            CreateMap<WorkflowDTO,WorkflowModel>().ReverseMap();
+            CreateMap<WorkflowStageDTO,WorkflowStageModel>().ReverseMap();
         }
     }
 }

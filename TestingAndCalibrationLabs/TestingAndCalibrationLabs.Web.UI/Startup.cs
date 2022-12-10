@@ -75,12 +75,16 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ILookupService, LookupService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorterService, ListSorterService>();
+            services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped<IWorkflowService, WorkflowService>();
+            services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
 
 
             //Repository
-            
             services.AddScoped<ILookupRepository, LookupRepository>();
+            services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+            services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
@@ -89,6 +93,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiControlCategoryTypeModel>, GenericRepository<UiControlCategoryTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<ModuleModel>, GenericRepository<ModuleModel>>();
             services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();

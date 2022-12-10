@@ -88,8 +88,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 values (@UiPageId);
                 SELECT @RecordId = @@IDENTITY";
 
-            string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, UiPageId, RecordId) 
-                values (@UiPageMetadataId, @Value, @UiPageId, @RecordId)";
+            string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId,ModuleId, Value, UiPageId, RecordId) 
+                values (@UiPageMetadataId,@ModuleId, @Value, @UiPageId, @RecordId)";
 
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();

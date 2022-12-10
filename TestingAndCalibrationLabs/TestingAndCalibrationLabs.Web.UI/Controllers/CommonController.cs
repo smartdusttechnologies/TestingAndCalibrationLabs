@@ -5,6 +5,7 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using System.Collections.Generic;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -17,19 +18,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly IGoogleDriveService _googleDriveService;
+        private readonly IWorkflowStageService _workflowStageService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
-        /// <param name="listSorterService"></param>
-        public CommonController(IGoogleDriveService googleDriveService,ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IListSorterService listSorterService)
+        public CommonController(IGoogleDriveService googleDriveService,ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService)
         {
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
             _googleDriveService = googleDriveService;
+            _workflowStageService = workflowStageService;
         }
         /// <summary>
         /// for getting old page index
@@ -105,7 +107,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id = 1)
         {
-            var uiPageId = id;
+            var uiPage = _workflowStageService.GetByWorkflowId(id);
+            var uiPageDTO = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(uiPage);
+            var orderdStage = uiPageDTO.OrderBy(x => x.Orders);
+            var uiPageId = orderdStage.First().UiPageTypeId;
+            
             var pageMetadata = _commonService.GetUiPageMetadataHierarchy(uiPageId);
             var result = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return base.View(result);
