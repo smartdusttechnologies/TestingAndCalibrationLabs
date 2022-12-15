@@ -97,12 +97,12 @@
     display: inline-block;
 }
 
-    .container-testing-material .container-chip {
-        background-color: #e5ebee;
-        border-radius: 15px;
-        display: inline-block;
-        top: -6px;
-    }
+.container-testing-material .container-chip {
+    background-color: #e5ebee;
+    border-radius: 15px;
+    display: inline-block;
+    top: -6px;
+}
 
 .field-validation-error.form-input.width-full {
     color: orangered;
@@ -194,54 +194,6 @@ select.input-validation-error#TestingType {
     }
 
 
-@-webkit-keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
-}
-
-@keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
-}
-
-@keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
-}
-
 .inputWithIconSearch {
     width: 100%;
     border: none;
@@ -250,9 +202,9 @@ select.input-validation-error#TestingType {
     transition: 0.3s;
 }
 
-    .inputWithIconSearch:focus {
-        border-bottom: 2px solid black;
-    }
+.inputWithIconSearch:focus {
+    border-bottom: 2px solid black;
+}
 
 .inputSearchGrid .inputWithIconSearch {
     padding-left: 30px;
@@ -263,29 +215,29 @@ select.input-validation-error#TestingType {
     position: relative;
 }
 
-    .inputSearchGrid .iconForSearchLeft {
-        position: absolute;
-        left: 10px;
-        top: 4px;
-        color: black;
-        transition: 0.3s;
-    }
+.inputSearchGrid .iconForSearchLeft {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+    color: black;
+    transition: 0.3s;
+}
 
-    .inputSearchGrid .iconForSearchRight {
-        position: absolute;
-        right: 20px;
-        top: 4px;
-        color: #aaa;
-        transition: 0.3s;
-    }
+.inputSearchGrid .iconForSearchRight {
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    color: #aaa;
+    transition: 0.3s;
+}
 
-        .inputSearchGrid .iconForSearchRight:hover {
-            position: absolute;
-            right: 20px;
-            top: 4px;
-            color: black;
-            transition: 0.3s;
-        }
+.inputSearchGrid .iconForSearchRight:hover {
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    color: black;
+    transition: 0.3s;
+}
 
 .inputWithIcon.inputIconBg .iconForSignIn {
     background-color: #aaa;
@@ -324,14 +276,6 @@ select.input-validation-error#TestingType {
     border: 1px solid;
 }
 
-/*.dropdown-hover:hover .dropdown-menu {
-    display: block;
-}*/
-
-.dropdown-right {
-    right: 0;
-}
-
 @media (max-width:768px) {
     #testDetailsGrid_paginate {
         padding: 0;
@@ -354,11 +298,4 @@ select.input-validation-error#TestingType {
     }
 }
 
-@media (min-width: 1200px) {
-    .navbar-expand-xl .navbar-nav .dropdown-menu {
-        position: absolute;
-        width: 10px;
-        left: auto;
-    }
-    
-}
+

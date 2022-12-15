@@ -85,6 +85,7 @@
     <Build Include="dbo\Tables\Permission.sql" />
     <Build Include="dbo\Tables\ClaimType.sql" />
     <Build Include="dbo\Tables\Survey.sql" />
+    <Build Include="dbo\Tables\UiPageNavigation.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

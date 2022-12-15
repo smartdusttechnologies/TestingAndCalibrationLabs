@@ -15,6 +15,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _genericRepository = genericRepository; 
         }
+
+        #region Public methods
         /// <summary>
         /// Get All Records From Data Type
         /// </summary>
@@ -23,5 +25,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
     }
 }

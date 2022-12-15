@@ -13,20 +13,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
-        /// <summary>
-        /// passing parameter via varibales for establing connection
-        /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="commonService"></param>
-        /// <param name="hostingEnvironment"></param>
+
         public CommonController(ILogger<CommonController> logger, ICommonService commonService, IMapper mapper)
         {
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
         }
+
         /// <summary>
-        /// for getting old page index
+        /// Default Action of the Common Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -37,6 +33,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             records.Fields = records.Fields.Take(10).ToList();
             return View(records);
         }
+
         /// <summary>
         /// Inseting details for common
         /// </summary>
@@ -51,6 +48,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
            
             return base.View(result);
         }
+
         /// <summary>
         /// for creating data
         /// </summary>
@@ -73,6 +71,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(result);
         }
+
         /// <summary>
         /// Edit deatils of common
         /// </summary>
@@ -85,6 +84,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
+
         /// <summary>
         /// Edit and binding with business project
         /// </summary>
@@ -108,8 +108,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage, Web.UI.Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(recordModel);
         }
+
         /// <summary>
-        ///  Delete Details of common
+        ///  Delete
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -119,6 +120,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             Models.RecordDTO record = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
             return View(record);
         }
+
+        /// <summary>
+        /// Delete Confirmed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id)

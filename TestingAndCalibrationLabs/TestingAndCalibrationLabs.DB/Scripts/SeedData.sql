@@ -15,7 +15,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [Role] WHERE Id = 0)
+IF NOT EXISTS (SELECT 1 FROM [Role] WHERE Id IN (0,1,2,3,4))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Role]  ON
 
@@ -122,7 +122,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [UiControlType] WHERE Id = 0)
+IF NOT EXISTS (SELECT 1 FROM [UiControlType] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlType]  ON
 
@@ -132,6 +132,7 @@ BEGIN
                ,[DisplayName]
                ,[IsDeleted])
          VALUES
+               (0, N'None', N'None', 0),
                (1, N'text', N'User Name', 0),
 			   (2, N'password', N'Password', 0),
 			   (3, N'checkbox', N'Checkbox', 0),
@@ -161,7 +162,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [UiPageValidationType] WHERE Id = 0)
+IF NOT EXISTS (SELECT 1 FROM [UiPageValidationType] WHERE Id IN (0,1,2,3,4,5,6,7))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidationType]  ON
 
@@ -172,6 +173,7 @@ BEGIN
 				[Value], 
 				[Message])
          VALUES
+               (0, N'None', 0, N'None', N'None'),
                (1, N'MinPasswordLength', 0, N'8', N'Minimum Password length  is 8'),
 			   (2, N'Email', 0, N'3', N'Email should have a fromat'),
 			   (3, N'AdharLength', 0, N'12', N'AdharLength should be equal to 12'),
@@ -185,7 +187,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id = 0)
+IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id IN (0,1,2,3))
 BEGIN
     SET IDENTITY_INSERT [dbo].[DataType]  ON
 
@@ -194,6 +196,7 @@ BEGIN
 		       ,[Name]
 			   ,[IsDeleted])
          VALUES
+               (0, 'None', 0),
                (1, 'int', 0),
 		       (2, 'string', 0),
 		       (3, 'bit', 0)
@@ -203,7 +206,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [UiNavigationCategory] WHERE Id = 0)
+IF NOT EXISTS (SELECT 1 FROM [UiNavigationCategory] WHERE Id IN (0,1,2,3,4,5))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  ON
 
@@ -213,37 +216,59 @@ BEGIN
 				[Orders]
 			   ,[IsDeleted])
          VALUES
+               (0, 'None',0, 0),
                (1, 'Survey',2, 0),
 		       (2, 'Home',1, 0),
-		       (1002, 'Settings',3, 0),
-			   (1003,'Profile',4,0),
-			   (1004,'Notifications',5,0)
+		       (3, 'Settings',3, 0),
+			   (4,'Profile',4,0),
+			   (5,'Notifications',5,0)
 			   
-
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [UiPageType] WHERE Id = 0)
+IF NOT EXISTS (SELECT 1 FROM [UiPageType] WHERE Id IN (0,1,2,3,4,5,6,7))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageType]  ON
 
     INSERT INTO [dbo].[UiPageType]
                ([Id]
 		       ,[Name]
-			   ,[Url]
-			   ,[UiNavigationCategoryId]
 			   ,[IsDeleted])
          VALUES
-                           (1, 'Ui Page Type','/UiPageType/Index/',1002, 0),
-		      (2, 'Ui Control Type','/UiControlType/Index/',1002, 0),
-			  (3, 'Ui Page Metadata','/UiPageMetadata/Index/',1002, 0),
-			  (4, 'Ui Page Validation','/UiPageValidation/Index/',1002, 0),
-			(5, 'Home','/',2, 0),
-			(6, 'My Activity','/Common/Index/{0}',1003, 0),
-                        (7, 'My Account','/Common/Index/{0}',1003, 0)		
-			   
-
+              (0, 'None', 0),
+              (1, 'Ui Page Type', 0),
+		      (2, 'Ui Control Type', 0),
+			  (3, 'Ui Page Metadata', 0),
+			  (4, 'Ui Page Validation', 0),
+			  (5, 'Home', 0),
+			  (6, 'My Activity', 0),
+              (7, 'My Account', 0)
+						
     SET IDENTITY_INSERT [dbo].[UiPageType]  OFF
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8))
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
+
+    INSERT INTO [dbo].[UiPageNavigation]
+               ([Id],
+			   [Url],
+			   [UiPageTypeId],
+			   [UiNavigationCategoryId],
+			   [IsDeleted])
+         VALUES
+              (0, N'/UiPageType/Index/', 0, 0, 0),
+              (1, N'/UiPageType/Index/', 1, 2, 0),
+		      (2, N'/UiControlType/Index/', 2, 2, 0),
+			  (3, N'/UiPageMetadata/Index/', 3, 2, 0),
+			  (4, N'/UiPageValidation/Index/', 4, 2, 0),
+			  (5, N'/', 5, 2, 0),
+			  (6, N'/Common/Create/{0}', 6, 3, 0),
+              (7, N'/Common/Create/{0}', 7, 3, 0),
+			   (8, N'/', 0, 5, 0)
+    SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

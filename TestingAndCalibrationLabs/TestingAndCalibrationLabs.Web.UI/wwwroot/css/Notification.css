@@ -1,27 +1,25 @@
 ﻿@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap);
 
-
-
-
 /* BellIcon Style */
 .notification-ui_icon.fa-bell {
     position: relative;
     cursor: pointer;
     border-radius: 50px;
-    
-  
 }
+
 .fa-bell {
     -moz-transition: all .6s linear;
     -webkit-transition: all .6s linear;
     transition: all .6s linear;
 }
+
     /*for bell Icon rotation*/
     .fa-bell.down {
         -moz-transform: rotate(40deg);
         -webkit-transform: rotate(40deg);
         transform: rotate(40deg);
     }
+
 /*For Position Notification content*/
 @media (min-width: 1025px) {
 
@@ -62,7 +60,6 @@
     }
 }
 
-
 .notification-ui_dd {
     padding: 0;
     border-radius: 10px;
@@ -72,8 +69,6 @@
     max-width: 350px;
     min-height: 150px;
 }
-
-
 
     /* Notification Body  Header Part  */
     .notification-ui_dd .notification-ui_dd-header {
@@ -102,9 +97,10 @@
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 20px;
-    margin:  0 2px;
+    margin: 0 2px;
     border-bottom: 1px solid #ddd;
 }
+
     /* style of the notification list*/
     .notification-list .notification-list_detail p {
         margin-bottom: 5px;
@@ -117,8 +113,6 @@
     display: inline;
 }
 
-
-
 .notification-ui_dd:after {
     content: "";
     position: absolute;
@@ -129,39 +123,12 @@
     border-bottom: 15px solid #fff;
     border-left: 15px solid transparent;
 }
- 
-@media (min-width: 755px) and (max-width: 1045px){
-    .notification-ui_dd:after {
-        left: calc(65% - 7px);
-    }
-}
 
-@media (max-width: 750px) {
-
-    .dropdown_menu {
-        margin: 10px;
-        margin-left: -10px;
-    }
-    .notification-ui_dd:after{
-        left: calc(55% - 7px);
-    }
-     
-}
-@media (min-width: 751px) and (max-width: 1020px) {
-
-    .dropdown_menu {
-        margin: 10px;
-        margin-left: 150px;
-    }
-}
-
-.dropdown_menu {
+.notification-overlay {
     position: absolute;
     z-index: 1000;
     display: none;
     min-width: 10rem;
-    /* padding: rem;*/
-    
     font-size: 1rem;
     color: grey;
     text-align: left;
@@ -170,4 +137,37 @@
     background-clip: padding-box;
     border: 1px solid #f9fafb;
     border-radius: 1rem;
+}
+
+@media (min-width: 755px) and (max-width: 1045px) {
+    .notification-ui_dd:after {
+        left: calc(65% - 7px);
+    }
+}
+
+@media (max-width: 750px) {
+
+    .notification-overlay {
+        margin: 10px;
+        margin-left: -10px;
+    }
+
+    .notification-ui_dd:after {
+        left: calc(55% - 7px);
+    }
+}
+
+@media (min-width: 751px) and (max-width: 1020px) {
+
+    .notification-overlay {
+        margin: 10px;
+        margin-left: 150px;
+    }
+}
+@media (min-width: 1200px) {
+    .navbar-expand-xl .navbar-nav .dropdown-menu {
+        position: absolute;
+        width: 10px;
+        left: auto;
+    }
 }
