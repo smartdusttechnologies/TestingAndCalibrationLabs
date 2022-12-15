@@ -15,7 +15,7 @@
             @foreach (var item in Model.Fields)
             {
                 var Controlvalue = Model.FieldValues.Where(x => x.UiPageMetadataId == item.Id).FirstOrDefault()?.Value;
-                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
                   <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)" value="@Controlvalue">
                   <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                </div>

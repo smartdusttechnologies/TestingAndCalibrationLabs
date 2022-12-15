@@ -133,7 +133,7 @@
                     var parentListId = uiNavigationCategoryId;
                     var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
                     var nameExistOrNot = document.getElementById(idNameExistOrNot);
-                    debugger;
+                    
                     console.log(response[i].childrens.length);
                     if (!nameExistOrNot && response[i].childrens.length >= 1) {
                         $('#navbarContentAdd').prepend("</li>");

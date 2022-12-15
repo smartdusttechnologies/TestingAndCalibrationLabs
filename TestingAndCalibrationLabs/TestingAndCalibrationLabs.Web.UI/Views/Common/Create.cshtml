@@ -22,7 +22,7 @@
                     }
                     else if (item.UiControlTypeName == "file")
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
                             <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
@@ -41,7 +41,7 @@
                     }
                     else if (item.UiControlTypeName == "search")
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
                             <input class="form-input width-full" style="color: red;" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"   @item.IsRequired onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
@@ -57,7 +57,7 @@
                     }
                     else
                     {
-                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+                        <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
                             <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName"  onchange="this.setAttribute('value',this.value)">
                             <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
                             <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
