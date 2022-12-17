@@ -8,7 +8,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" id="Id" name="Id" />
             <input type="hidden" asp-for="UiPageId" />
-            <input type="hidden" id="actionNameCommon" value="Edit" />
+            <input type="hidden" asp-for="ModuleId" />
             @foreach (var item in Model.Layout)
             {
                 <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
@@ -78,7 +78,6 @@
                     if (metadataId == pageData[j].uiPageMetadataId) {
                         var valueS = pageData[j].value;
                         document.getElementById(controlId).value = valueS;
-                       
                     }
                 }
             }
@@ -92,9 +91,9 @@
         }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        console.log(modelData);
         var uiPageMetaData = modelData.fields;
         var fieldValues = [];
+        
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
@@ -107,11 +106,12 @@
             }
         }
         var uiPageId = parseInt($("#UiPageId").val())
+        var moduleId = parseInt($("#ModuleId").val())
         var id = parseInt($("#Id").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "UiPageId": uiPageId, "FieldValues": fieldValues },
+            data: { "Id": id, "UiPageId": uiPageId,"ModuleId":moduleId, "FieldValues": fieldValues },
             success: function (response) {
                 window.location.href = "/";
             },
@@ -120,8 +120,7 @@
             },
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
-                var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                //console.log(response.fieldId);
+                var newErrorMessage = newresponseJSON.errorMessage;             //assiging the values of errorMessage to  newErrorMessage
                 myFunctionError();                                              //Calling myFunctionError javacript function
                 document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
                 //    var s = newErrorMessage.fid//Sending the reason to html
