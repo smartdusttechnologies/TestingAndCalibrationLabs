@@ -112,7 +112,6 @@
                     var parentListId = uiNavigationCategoryId;
                     var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
                     var nameExistOrNot = document.getElementById(idNameExistOrNot);
-                    console.log(response[i].childrens.length);
                     if (!nameExistOrNot && response[i].childrens.length >= 1) {
                         $('#navbarContentAdd').prepend("</li>");
                         $('#navbarContentAdd').prepend("<li class='nav-item' id='" + uiNavigationCategoryName + "'>");
@@ -139,7 +138,6 @@
                             $(singleListParent).append(singleChild);
                         }
                         else {
-                            console.log(response[i].childrens.length);
                             var pageTypeUrl = response[i].childrens[j].formatedUrl;
                             var pageTypeName = response[i].childrens[j].name;
                             var uiNavigationId = response[i].id;

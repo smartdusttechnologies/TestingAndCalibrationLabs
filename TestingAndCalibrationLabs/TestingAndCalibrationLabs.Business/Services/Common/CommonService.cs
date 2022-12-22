@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -21,6 +19,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IUiPageMetadataCharacteristicsRepository _uiPageMetadataCharacteristicsRepository;
         private readonly IUiPageMetadataRepository _uiPageMetadataRepository;
 
+        private readonly IWorkflowStageService _workflowStageService;
 
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
@@ -29,7 +28,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
-            IUiPageMetadataRepository uiPageMetadataRepository)
+            IUiPageMetadataRepository uiPageMetadataRepository,
+            IWorkflowStageService workflowStageService)
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
@@ -39,6 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageValidationTypesGenericRepository = uiPageValidationTypesGenericRepository;
             _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
             _uiPageMetadataRepository = uiPageMetadataRepository;
+            _workflowStageService = workflowStageService;
         }
         #region public methods
         public RequestResult<bool> Add(RecordModel record)
@@ -72,115 +73,141 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                     else
                     {
-                        _uiPageDataGenericRepository.Insert(new UiPageDataModel { RecordId = record.Id, UiPageMetadataId = item.UiPageMetadataId, UiPageId = record.UiPageId, Value = item.Value });
+                        _uiPageDataGenericRepository.Insert(new UiPageDataModel { RecordId = record.Id, UiPageMetadataId = item.UiPageMetadataId, Value = item.Value });
                     }
                 };
                 return new RequestResult<bool>(true);
             }
             return requestResult;
         }
-        public RecordModel GetUiPageMetadata(int uiPageId)
+        public RecordModel GetUiPageMetadataCreate(int moduleId)
         {
-            var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
-            return uiMetadata;
-        }
-        public RecordModel GetUiPageMetadataHierarchy(int uiPageId)
-        {
-            var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
-            var hierarchy = uiMetadata.Fields.Hierarchize(
-             0, // The "root level" key. We're using -1 to indicate root level.
-             f => f.Id, // The ID property on your object
-             f => f.ParentId,// The property on your object that points to its parent
-            f => f.Position // The property on your object that specifies the order within its parent
-             );
-            uiMetadata.Layout = hierarchy;
-            //var result = _mapper.Map<Business.Core.Model.RecordModel, Models.RecordDTO>(pageMetadata);
-            return uiMetadata;
-        }
-        public RecordsModel GetRecords(int uiPageId)
-        {
-            //var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
-            var uiMetadata = _commonRepository.GetUiPageMetadata(uiPageId);
-            var uiPageData = _commonRepository.GetUiPageDataByUiPageId(uiPageId);
             
-            //var validationtypes = _uiPageValidationTypesGenericRepository.Get();
+            var uiMetadata = GetMetadata((int)UiControlType.workflowStage, moduleId, 0);
+
+            List<LayoutModel> hirericheys = new List<LayoutModel>();
+            uiMetadata.ForEach(x=> hirericheys.Add(new LayoutModel {  UiPageMetadata = x }));
+            
+            var hierarchy = hirericheys.Hierarchize(
+             0, // The "root level" key. We're using -1 to indicate root level.
+             f => f.UiPageMetadata.Id, // The ID property on your object
+             f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
+            f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
+             );
+            var record = new RecordModel();
+            record.ModuleId = moduleId;
+            record.Layout = hierarchy;
+            record.Fields = uiMetadata;
+            return record;
+        }
+        public RecordsModel GetRecords(int moduleId)
+        {
+            var uiMetadata = _commonRepository.GetUiPageMetadataByModuleId(moduleId);
+            uiMetadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First()).OrderBy(x=>x.Id).ToList();
+            var uiPageData = _commonRepository.GetUiPageDataByModuleId(moduleId);
+            var meta =  uiMetadata.GroupBy(x => x.Id).Select(y => y.First()) ;
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
             uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             Dictionary<int, List<UiPageMetadataCharacteristicsModel>> metadataContent = new Dictionary<int, List<UiPageMetadataCharacteristicsModel>>();
-          
-            return new RecordsModel { UiPageId = uiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageDataModels };
+            return new RecordsModel { ModuleId = moduleId, Fields = meta, FieldValues = uiPageDataModels };
         }
+       
         public RecordModel GetRecordById(int recordId)
         {
-            //   var uiPage = _uiPageTypeGenericRepository.Get(UI_PAGE_NAME);
             var recordMdel = _recordGenericRepository.Get(recordId);
-            var uiMetadata = _commonRepository.GetUiPageMetadata(recordMdel.UiPageId);
+            var uiMetadata = GetMetadata((int)UiControlType.workflowStage,recordMdel.ModuleId,recordId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
-            return new RecordModel { Id = recordId, UiPageId = recordMdel.UiPageId, Fields = uiMetadata.Fields, FieldValues = uiPageData };
-        }
-        #endregion
-
-        #region Private Methods
-        private RequestResult<bool> Validate(RecordModel record)
-        {
-            List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageId);
-            List<UiPageValidationTypeModel> validationtypes = _uiPageValidationTypesGenericRepository.Get();
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            foreach (var field in record.FieldValues)
+            List<UiPageDataModel> difList = uiPageData.Where(x => uiMetadata.Any(y => y.Id == x.UiPageMetadataId))
+                .GroupBy(x => x.UiPageMetadataId)
+                .Select(x => x.First()).ToList();
+            List<LayoutModel> hirericheys = new List<LayoutModel>();
+            foreach (var item in uiMetadata)
             {
-                foreach (var item in validations)
+                foreach (var data in difList)
                 {
-                    if (item.UiPageMetadataId == field.UiPageMetadataId)
+                    if (item.Id == data.UiPageMetadataId)
                     {
-                        var validationlist = _uiPageValidationTypesGenericRepository.Get(item.UiPageValidationTypeId);
-                        var uipagedata = _uiPageMetadataRepository.GetById(item.UiPageMetadataId);
-                        string metadataId = Helpers.GenerateUiControlId(uipagedata.UiControlTypeName, item.UiPageMetadataId);
-                        switch ((ValidationType)item.UiPageValidationTypeId)
-                        {
-                            case ValidationType.IsRequired:
-                                if (string.IsNullOrEmpty(field.Value))
-                                {
-                                    string errorMessage = string.Format(validationlist.Message, uipagedata.UiControlDisplayName);
-                                    validationMessages.Add(new ValidationMessage { Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                }
-                                break;
-                            case ValidationType.MinPasswordLength:
-                                int minLength = int.Parse(item.Value);
-                                if (field.Value.Length < minLength)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.Email:
-                                int minLengthEmail = int.Parse(item.Value);
-                                if (field.Value.Length < minLengthEmail)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.AdharLength:
-                                int minLengthAdhar = int.Parse(item.Value);
-                                if (field.Value.Length != minLengthAdhar)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.MobileNumberLength:
-                                int minLengtMobileNumberLength = int.Parse(item.Value);
-                                if (field.Value.Length != minLengtMobileNumberLength)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.Name:
-                                int minLengtName = int.Parse(item.Value);
-                                if (field.Value.Length < minLengtName)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                break;
-                            case ValidationType.Year:
-                                int minLengtYear = int.Parse(item.Value);
-                                if (field.Value.Length != minLengtYear)
-                                    validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                break;
-                        }
+                        hirericheys.Add(new LayoutModel { UiPageMetadata = item, UiPageData = data });
                     }
                 }
             }
-            return new RequestResult<bool>(validationMessages);
+                var hierarchy = hirericheys.Hierarchize(
+                 0, // The "root level" key. We're using -1 to indicate root level.
+                 f => f.UiPageMetadata.Id, // The ID property on your object
+                 f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
+                f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
+                 );
+                return new RecordModel { Id = recordId,ModuleId = recordMdel.ModuleId, Layout = hierarchy,Fields = uiMetadata };
+            }
+            #endregion
+
+            #region Private Methods
+        private List<UiPageMetadataModel>GetMetadata(int uiControlTypeId,int moduleId, int recordId)
+        {
+            var uiPageId = _commonRepository.GetPageIdBasedOnCurrentWorkflowStage(uiControlTypeId, moduleId,recordId);
+            var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
+            return metadata;
         }
-        #endregion
+            private RequestResult<bool> Validate(RecordModel record)
+            {
+                List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.ModuleId);
+                List<UiPageValidationTypeModel> validationtypes = _uiPageValidationTypesGenericRepository.Get();
+                List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+                foreach (var field in record.FieldValues)
+                {
+                    foreach (var item in validations)
+                    {
+                        if (item.UiPageMetadataId == field.UiPageMetadataId)
+                        {
+                            var validationlist = _uiPageValidationTypesGenericRepository.Get(item.UiPageValidationTypeId);
+                            var uipagedata = _uiPageMetadataRepository.GetById(item.UiPageMetadataId);
+                            string metadataId = Helpers.GenerateUiControlId(uipagedata.UiControlTypeName, item.UiPageMetadataId);
+                            switch ((ValidationType)item.UiPageValidationTypeId)
+                            {
+                                case ValidationType.IsRequired:
+                                    if (string.IsNullOrEmpty(field.Value))
+                                    {
+                                        string errorMessage = string.Format(validationlist.Message, uipagedata.UiControlDisplayName);
+                                        validationMessages.Add(new ValidationMessage { Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    }
+                                    break;
+                                case ValidationType.MinPasswordLength:
+                                    int minLength = int.Parse(item.Value);
+                                    if (field.Value.Length < minLength)
+                                        validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    break;
+                                case ValidationType.Email:
+                                    int minLengthEmail = int.Parse(item.Value);
+                                    if (field.Value.Length < minLengthEmail)
+                                        validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    break;
+                                case ValidationType.AdharLength:
+                                    int minLengthAdhar = int.Parse(item.Value);
+                                    if (field.Value.Length != minLengthAdhar)
+                                        validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    break;
+                                case ValidationType.MobileNumberLength:
+                                    int minLengtMobileNumberLength = int.Parse(item.Value);
+                                    if (field.Value.Length != minLengtMobileNumberLength)
+                                        validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    break;
+                                case ValidationType.Name:
+                                    int minLengtName = int.Parse(item.Value);
+                                    if (field.Value.Length < minLengtName)
+                                        validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    break;
+                                case ValidationType.Year:
+                                    int minLengtYear = int.Parse(item.Value);
+                                    if (field.Value.Length != minLengtYear)
+                                        validationMessages.Add(new ValidationMessage { Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    break;
+                            }
+                        }
+                    }
+                }
+                return new RequestResult<bool>(validationMessages);
+            }
+            #endregion
+        }
     }
-}

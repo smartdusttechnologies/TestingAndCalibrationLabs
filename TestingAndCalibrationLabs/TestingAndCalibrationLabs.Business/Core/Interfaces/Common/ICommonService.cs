@@ -34,15 +34,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="uiPageId"></param>
         /// <returns></returns>
-        RecordModel GetUiPageMetadata(int uiPageId);
+        RecordModel GetUiPageMetadataCreate(int uiPageId);
 
-        /// <summary>
-        /// Implimenting for  GetUiPageMetadata
-        /// </summary>
-        /// <param name="uiPageId"></param>
-        /// <returns></returns>
-        RecordModel GetUiPageMetadataHierarchy(int uiPageId);
-
+        
         /// <summary>
         /// Implimenting interface dor GetRecords
         /// </summary>

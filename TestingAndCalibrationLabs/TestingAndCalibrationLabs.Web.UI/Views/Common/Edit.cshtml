@@ -7,7 +7,6 @@
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" id="Id" name="Id" />
-            <input type="hidden" asp-for="UiPageId" />
             <input type="hidden" asp-for="ModuleId" />
             @foreach (var item in Model.Layout)
             {
@@ -66,23 +65,6 @@
     }
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        var modelData = JSON.parse('@Json.Serialize(Model)');
-        var uiPageMetaData = modelData.fields;
-        var pageData = modelData.fieldValues;
-        for (let i = 0; i < uiPageMetaData.length; i++) {
-            if (uiPageMetaData[i].controlCategoryName == "DataControl") {
-                var controlId = uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
-                var metadataId = uiPageMetaData[i].id;
-                for (let j = 0; j < pageData.length; j++) {
-                    if (metadataId == pageData[j].uiPageMetadataId) {
-                        var valueS = pageData[j].value;
-                        document.getElementById(controlId).value = valueS;
-                    }
-                }
-            }
-        }
-    });
     function AjaxFormSubmit() {
         //Set the URL.
         var x = document.getElementById("lefid").value;
@@ -105,15 +87,14 @@
                 fieldValues.push(keyValuepair)
             }
         }
-        var uiPageId = parseInt($("#UiPageId").val())
         var moduleId = parseInt($("#ModuleId").val())
         var id = parseInt($("#Id").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "UiPageId": uiPageId,"ModuleId":moduleId, "FieldValues": fieldValues },
+            data: { "Id": id, "FieldValues": fieldValues },
             success: function (response) {
-                window.location.href = "/";
+                window.location.href = "/common/index/" + moduleId;
             },
             failure: function (response) {
                 alert(response.responseText);

@@ -5,7 +5,6 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using System.Collections.Generic;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -42,7 +41,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel,RecordsDTO>(pageMetadata);
-            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
             return View(records);
         }
         /// <summary>
@@ -107,12 +106,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id = 1)
         {
-            var uiPage = _workflowStageService.GetByWorkflowId(id);
-            var uiPageDTO = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(uiPage);
-            var orderdStage = uiPageDTO.OrderBy(x => x.Orders);
-            var uiPageId = orderdStage.First().UiPageTypeId;
-            
-            var pageMetadata = _commonService.GetUiPageMetadataHierarchy(uiPageId);
+            var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
             var result = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return base.View(result);
         }
@@ -126,12 +120,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
          {
             var records = _mapper.Map<RecordDTO,RecordModel>(record);
             var adddata = _commonService.Add(records);
-            var pageMetadata = _commonService.GetUiPageMetadata(record.UiPageId);
+            var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);
             var result = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(result);
-
             }
             result.FieldValues = record.FieldValues;
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
@@ -145,12 +138,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+
             var pageMetadata = _commonService.GetRecordById(id);
-            var Layout = _commonService.GetUiPageMetadataHierarchy(pageMetadata.UiPageId);
-            pageMetadata.Layout = Layout.Layout;
-            Layout.FieldValues = pageMetadata.FieldValues;
-            Layout.Id = pageMetadata.Id;
-            Models.RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(Layout);
+            RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return View(record);
         }
         /// <summary>

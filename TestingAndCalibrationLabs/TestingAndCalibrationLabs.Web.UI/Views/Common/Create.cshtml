@@ -6,8 +6,7 @@
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UiPageId" />
-
+            <input type="hidden" asp-for="ModuleId" />
             @foreach (var item in Model.Layout)
             {
                 <div class="row ms-1 me-1">
@@ -75,9 +74,9 @@
         }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        console.log(modelData);
         var uiPageMetaData = modelData.fields;
         var fieldValues = [];
+        debugger;
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
@@ -89,11 +88,11 @@
                 fieldValues.push(keyValuepair)
             }
         }
-        var uiPageId = parseInt($("#UiPageId").val())
+        var moduleId = parseInt($("#ModuleId").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "UiPageId": uiPageId, "FieldValues": fieldValues },
+            data: { "ModuleId":moduleId ,"FieldValues": fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 var nuiPageMetaData = response.fields;
@@ -109,7 +108,6 @@
                 alert(response.responseText);
             },
             error: function (response) {
-                console.log(response);
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 document.getElementById("lefid").value = newErrorMessage.sourceId;

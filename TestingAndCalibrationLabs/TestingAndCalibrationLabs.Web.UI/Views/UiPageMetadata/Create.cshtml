@@ -84,53 +84,6 @@
         </form>
     </div>
 </div>
-@*<script type="text/javascript">
-    var count = 0;
-    var comboTree1;
-
-    function category(categoryInput) {
-        var categoryValue = categoryInput.value;
-        debugger;
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("LookupByCategory","Lookup")",
-            data: { categoryName: categoryValue },
-            success: function (response) {
-                debugger;
-                LookupByCategory(response);
-            },
-            error: function (req, status, error) {
-            }
-        });
-    }
-    function LookupByCategory(inp) {
-        if (count == 0) {
-            count++;
-            comboTree1 = $('#multiSelectLookup').comboTree({
-                source: inp,
-                isMultiple: true,
-                cascadeSelect: false,
-                collapse: true,
-                selectableLastNode: true
-            });
-        } else {
-            comboTree1.setSource(inp);
-
-        }
-
-    }
-    $('#pageForm').on('submit', function () {
-
-        var selectedIds = comboTree1.getSelectedIds();
-        console.log(selectedIds);
-        for (i = 0; i < selectedIds.length; i++) {
-            console.log(selectedIds[i]);
-            $('#dropDownList').append("<option selected value='" + selectedIds[i] + "'> temp</option>");
-        }
-
-        return true;
-    });
-</script>*@
 
 <div>
     <a asp-action="Index">Back to List</a>

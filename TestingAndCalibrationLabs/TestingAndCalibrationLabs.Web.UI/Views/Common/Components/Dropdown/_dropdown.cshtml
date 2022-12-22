@@ -1,15 +1,17 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
     <label for="testing" class="form-label"></label>
-    <select class="form-input width-full" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName" />
-   
+    <select class="form-input width-full" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" onchange="this.setAttribute('value',this.value)"  for="@Model.Value.UiPageMetadata.UiControlDisplayName" >
     </select>
 </div>
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        var lookupCategoryId = modelData.value.lookupCategoryId;
-        var id = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+        var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
+        var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        var inputIdWithoutHash = modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        //var inputId = "#"+ modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+
         $.ajax({
             type: "POST",
             url: "@Url.Action("LookupByCategoryId","Lookup")",
@@ -18,11 +20,31 @@
                 for(var i =0; i<response.length; i++){
                     var lookupId = response[i].id;
                     var lookupName = response[i].name;
-                    $(id).append("<option value='"+lookupId+"'>"+lookupName+"</option>");
+                    $(id).append("<option value='" + lookupId + "'>" + lookupName + "</option>");
                 }
+                //document.getElementById(inputIdWithoutHash).value = 1013;
             },
             error: function (req, status, error) {
             }
         });
+        //$(id).change(function () {
+        //    var selectedValue = $(id).val();
+        //    document.getElementById(inputIdWithoutHash).value = selectedValue;
+        //});
+        
     });
+</script>
+<script>
+    //window.addEventListener("load", function () { preSelectCheckbox() });
+    //function preSelectCheckbox() {
+    //    var modelData = JSON.parse('@Json.Serialize(Model)');
+    //    var id = "#dropd-" + modelData.value.uiPageMetadata.id;
+    //    var inputId = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+    //    var idOfRecord = $("#Id").val();
+    //    var selectedId = $(inputId).val();
+    //    if (idOfRecord != undefined) {
+    //        var changeId = id + " [value=" + selectedId + "]";
+    //        $(changeId).attr('selected', 'true');
+    //    }
+    //}
 </script>

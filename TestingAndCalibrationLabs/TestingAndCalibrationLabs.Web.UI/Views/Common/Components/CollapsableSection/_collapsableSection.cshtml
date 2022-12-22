@@ -1,17 +1,17 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-<div class="accordion accordion-flush" id="accordionFlush-@Model.Value.Id">
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<div class="accordion accordion-flush" id="accordionFlush-@Model.Value.UiPageMetadata.Id">
     @foreach (var item in Model.Children)
     {
         @if (Model.Children.First() == item)
         {
             <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-@item.Value.Id">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Value.UiControlTypeName-@item.Value.Id" aria-expanded="true" aria-controls="flush-@item.Value.UiControlTypeName-@item.Value.Id">
+                <h2 class="accordion-header" id="flush-@item.Value.UiPageMetadata.Id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Value.UiPageMetadata.UiControlTypeName-@item.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="flush-@item.Value.UiPageMetadata.UiControlTypeName-@item.Value.UiPageMetadata.Id">
                         <span class="fab fa-leanpub me-2"></span>
-                        @item.Value.UiControlDisplayName
+                        @item.Value.UiPageMetadata.UiControlDisplayName
                     </button>
                 </h2>
-                <div id="flush-@item.Value.UiControlTypeName-@item.Value.Id" class="accordion-collapse collapse show" aria-labelledby="flush-@item.Value.Id" data-bs-parent="#accordionFlush-@Model.Value.Id">
+                <div id="flush-@item.Value.UiPageMetadata.UiControlTypeName-@item.Value.UiPageMetadata.Id" class="accordion-collapse collapse show" aria-labelledby="flush-@item.Value.UiPageMetadata.Id" data-bs-parent="#accordionFlush-@Model.Value.UiPageMetadata.Id">
                     <div class="accordion-body">
                         @*<div class="row ms-1 me-1">*@
                         @foreach (var node in @item.Children)
@@ -26,13 +26,13 @@
         else
         {
             <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-@item.Value.Id">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Value.UiControlTypeName-@item.Value.Id" aria-expanded="true" aria-controls="flush-@item.Value.UiControlTypeName-@item.Value.Id">
+                <h2 class="accordion-header" id="flush-@item.Value.UiPageMetadata.Id">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@item.Value.UiPageMetadata.UiControlTypeName-@item.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="flush-@item.Value.UiPageMetadata.UiControlTypeName-@item.Value.UiPageMetadata.Id">
                         <span class="fab fa-leanpub me-2"></span>
-                        @item.Value.UiControlDisplayName
+                        @item.Value.UiPageMetadata.UiControlDisplayName
                     </button>
                 </h2>
-                <div id="flush-@item.Value.UiControlTypeName-@item.Value.Id" class="accordion-collapse collapse" aria-labelledby="flush-@item.Value.Id" data-bs-parent="#accordionFlush-@Model.Value.Id">
+                <div id="flush-@item.Value.UiPageMetadata.UiControlTypeName-@item.Value.UiPageMetadata.Id" class="accordion-collapse collapse" aria-labelledby="flush-@item.Value.UiPageMetadata.Id" data-bs-parent="#accordionFlush-@Model.Value.UiPageMetadata.Id">
                     <div class="accordion-body">
                         <div class="row ms-1 me-1">
                         @foreach (var node in @item.Children)

@@ -1,6 +1,22 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-    <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
-        <input class="form-input width-full" name="@Model.Value.UiControlTypeName@Model.Value.Id" type="date" onchange="this.setAttribute('value',this.value)" id="@Model.Value.UiControlTypeName@Model.Value.Id" />
-        <label class="form-label" for="@Model.Value.UiControlDisplayName">@Model.Value.UiControlDisplayName@if(Model.Value.IsRequired){<span class="red-color">*</span>}</label>
-        <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
-    </div>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+    <input class="form-input width-full" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" type="date" onchange="this.setAttribute('value',this.value)" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
+    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName">@Model.Value.UiPageMetadata.UiControlDisplayName@if (Model.Value.UiPageMetadata.IsRequired)
+        {
+            <span class="red-color">*</span>
+        }</label>
+    <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+</div>
+<script>
+    $(document).ready(function () {
+        var idOfRecord = $("#Id").val();
+        if (idOfRecord != undefined) {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
+        var uiPageData = modelData.value.uiPageData;
+        var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        var val = uiPageData.value;
+        $(id).val(val);
+        }
+    });
+</script>
