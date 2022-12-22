@@ -1,7 +1,6 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
-       <label class="form-label" for="@Model.Value.UiControlDisplayName"></label>
-        <textarea class="form-input width-full" id="@Model.Value.UiControlTypeName@Model.Value.Id" placeholder="@Model.Value.UiControlDisplayName@if(Model.Value.IsRequired){<span class="red-color">*</span>}"  rows="1" onchange="this.setAttribute('value',this.value)"></textarea>
-        
+        <textarea class="form-input width-full" id="@Model.Value.UiControlTypeName@Model.Value.Id" placeholder=" "  rows="1" onchange="this.setAttribute('value',this.value)"></textarea>
+    <label class="form-label" for="@Model.Value.UiControlDisplayName">@Model.Value.UiControlDisplayName</label>
         <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
     </div>
