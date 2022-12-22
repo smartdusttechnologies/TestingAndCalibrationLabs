@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -26,6 +30,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<UiPageNavigationModel> Get()
         {
             var pageNavigation = _uiPageNavigationRepository.Get();
+            var NoneID = (int)Helpers.None.Value;
+            bool IgnoreNone = pageNavigation.Any(x => x.Id != NoneID);  
+            if (IgnoreNone) 
+            {
+                pageNavigation = pageNavigation.Where(x => x.Id != NoneID).ToList();
+                // write code to hide None element.
+            }
             pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.UiPageTypeId));
             return pageNavigation;
         }
