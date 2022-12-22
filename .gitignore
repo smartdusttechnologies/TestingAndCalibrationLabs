@@ -90,3 +90,7 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.runtimeconfig.dev.json
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.runtimeconfig.json
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Web.UI.deps.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Web.UI.runtimeconfig.dev.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Web.UI.runtimeconfig.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/appsettings.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/appsettings.json
