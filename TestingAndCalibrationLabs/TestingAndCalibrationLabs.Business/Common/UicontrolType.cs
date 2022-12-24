@@ -3,6 +3,7 @@
 
     public enum UiControlType
     {
+        None = 0,
         text,
         password,
         checkbox,
@@ -29,7 +30,7 @@
         card,
         processStatus,
         subLevel1ProcessStatus,
-        tabs,
+        tabs = 28,
         subLevel1Tabs,
         collapsableSection,
         subLevel1CollapsableSection,
@@ -38,6 +39,6 @@
         pincode,
         year,
         question,
-        workflowStage = 2034
+        workflowStage
     }
 }

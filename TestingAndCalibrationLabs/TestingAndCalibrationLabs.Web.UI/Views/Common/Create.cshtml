@@ -7,6 +7,7 @@
         <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ModuleId" />
+            <input type="hidden" asp-for="UiPageTypeId" />
             @foreach (var item in Model.Layout)
             {
                 <div class="row ms-1 me-1">
@@ -21,7 +22,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
+    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
 </div>
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
@@ -76,7 +77,6 @@
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var uiPageMetaData = modelData.fields;
         var fieldValues = [];
-        debugger;
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
@@ -89,10 +89,11 @@
             }
         }
         var moduleId = parseInt($("#ModuleId").val())
+        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "ModuleId":moduleId ,"FieldValues": fieldValues },
+            data: { "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId , "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 var nuiPageMetaData = response.fields;

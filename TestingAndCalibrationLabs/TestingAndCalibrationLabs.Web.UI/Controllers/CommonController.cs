@@ -177,14 +177,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id,int uiPageId)
+        public ActionResult DeleteConfirmed(int? id,int moduleId)
         {
             if (id == null)
             {
                 return NotFound();
             }
             _commonService.Delete((int)id);
-            return RedirectToAction("Index", new { id = uiPageId});
+            return RedirectToAction("Index", new { id = moduleId});
         }
     }
 }

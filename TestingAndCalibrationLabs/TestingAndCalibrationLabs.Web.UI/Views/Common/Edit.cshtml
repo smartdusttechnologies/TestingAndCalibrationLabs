@@ -8,6 +8,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" id="Id" name="Id" />
             <input type="hidden" asp-for="ModuleId" />
+            <input type="hidden" asp-for="UiPageTypeId" />
             @foreach (var item in Model.Layout)
             {
                 <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
@@ -20,7 +21,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
+    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
 </div>
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
@@ -88,13 +89,15 @@
             }
         }
         var moduleId = parseInt($("#ModuleId").val())
+        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
         var id = parseInt($("#Id").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "FieldValues": fieldValues },
+            data: { "Id": id,"ModuleId":moduleId,"UiPageTypeId":uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
-                window.location.href = "/common/index/" + moduleId;
+                myFunction();
+                //window.location.href = "/common/index/" + moduleId;
             },
             failure: function (response) {
                 alert(response.responseText);

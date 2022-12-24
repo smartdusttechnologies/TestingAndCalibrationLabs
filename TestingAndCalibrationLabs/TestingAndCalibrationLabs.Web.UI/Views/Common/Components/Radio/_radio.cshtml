@@ -1,5 +1,5 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-<div onload="valueLoad()" class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
     <p>@Model.Value.UiPageMetadata.UiControlDisplayName</p>
     <input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
     @foreach (var item in Model.Children)
@@ -14,9 +14,9 @@
 </div>
 <script>
     //window.addEventListener("load", function () { preSelectRadio() });
-    var modelData;
+    
     $(document).ready(function () {
-        modelData = JSON.parse('@Json.Serialize(Model)');
+        var modelData = JSON.parse('@Json.Serialize(Model)');
         var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
         $.ajax({
@@ -28,8 +28,8 @@
 
                     var lookupId = response[i].id;
                     var lookupName = response[i].name;
-                    var childId = "rad-" + modelData.children[i].value.uiPageMetadata.id;
-                    document.getElementById(childId).value = lookupId;
+                    var childId = "#rad-" + modelData.children[i].value.uiPageMetadata.id;
+                    $(childId).val(lookupId);
                 }
             },
             error: function (req, status, error) {
@@ -37,6 +37,7 @@
         });
         var idVal = $('#Id').val();
         if (idVal != undefined) {
+            debugger;
             var selectedValue = modelData.value.uiPageData.value;
             for (var i = 0; i < modelData.children.length; i++) {
                 var radioInput = "#rad-" + modelData.children[i].value.uiPageMetadata.id;

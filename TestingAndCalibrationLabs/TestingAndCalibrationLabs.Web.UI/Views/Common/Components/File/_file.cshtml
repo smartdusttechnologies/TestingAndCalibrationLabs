@@ -8,7 +8,6 @@
 <input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"/>
 <script>
     function validateForImages(input) {
-        debugger;
         const fileSize = input.files[0].size / 1024 / 1024;
         var fileName = input.files[0].name;
         var fileExtension = fileName.split('.').pop();

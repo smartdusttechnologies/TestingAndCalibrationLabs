@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     {
         #region Public Properties
         public int Id { get; set; }
-        public int UiPageId { get; set; }
+        public int UiPageTypeId { get; set; }
         public int ModuleId { get; set; }
         public List<UiPageMetadataDTO> Fields { get; set; }
         public List<UiPageDataDTO> FieldValues { get; set; }

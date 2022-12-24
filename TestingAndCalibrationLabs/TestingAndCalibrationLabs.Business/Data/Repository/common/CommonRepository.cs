@@ -16,7 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         {
             _connectionFactory = connectionFactory;
         }
-
         /// <summary>
         /// Connecting with database Via connectionfactory for displaying data
         /// </summary>  
@@ -32,7 +31,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>("Select upd.* From [UiPageData] upd INNER JOIN  [Record] r ON upd.RecordId = r.Id and r.IsDeleted = 0 where r.ModuleId=@moduleId and upd.IsDeleted=0", new { moduleId }).ToList();
         }
-
         public List<UiPageValidationModel> GetUiPageValidations(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -43,7 +41,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                 AND upvt.IsDeleted = 0 
                                             WHERE upv.UiPageTypeId=@uiPageId", new { uiPageId }).ToList();
         }
-
         public List<UiPageMetadataModel> GetUiPageMetadata(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -118,7 +115,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and mmb.IsDeleted = 0", new { moduleId }).ToList();
             return metadata;
         }
-
         /// <summary>
         /// Inserting data to Database
         /// </summary>
@@ -143,11 +139,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
             return insertedRecordId;
         }
-
         public int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId,int recordId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<int>(@"IF (Select Top(1)  upd.Value
+            return db.Query<int>(@"Select Top(1)  upd.Value
                                                     From [MetadataModuleBridge] mmb
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
 													inner join [UiPageData] upd on upm.Id = upd.UiPageMetadataId
@@ -156,19 +151,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                 and upd.RecordId = @recordId
                                                     and upm.IsDeleted = 0 
 													and mmb.IsDeleted = 0
-													and upd.IsDeleted = 0) != 0
-                                        Select Top(1)  upd.Value
-                                                    From [MetadataModuleBridge] mmb
-													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
-													inner join [UiPageData] upd on upm.Id = upd.UiPageMetadataId
-                                                where upm.UiControlTypeId = @uiControlTypeId
-												and mmb.ModuleId = @moduleId
-                                                and upd.RecordId = @recordId
-                                                    and upm.IsDeleted = 0 
-													and mmb.IsDeleted = 0
-													and upd.IsDeleted = 0
-                                    ELSE 
-                                        Select  ws.UiPageTypeId
+													and upd.IsDeleted = 0", new { uiControlTypeId, moduleId,recordId }).FirstOrDefault();
+        }
+        public int GetPageIdBasedOnOrder( int moduleId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<int>(@"Select  ws.UiPageTypeId
                                                     From [Module] m
 													inner join Workflow w on m.Id = w.ModuleId
 													inner join [WorkflowStage] ws on w.Id = ws.WorkflowId
@@ -176,12 +164,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 												and ws.Orders = 1 
                                                     and m.IsDeleted = 0 
 													and w.IsDeleted = 0
-													and ws.IsDeleted = 0
-    ", new { uiControlTypeId, moduleId ,recordId}).FirstOrDefault();
-
-
+													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
         }
-       
         #endregion
     }
 }

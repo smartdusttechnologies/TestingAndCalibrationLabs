@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
@@ -16,6 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         List<UiPageMetadataModel> GetUiPageMetadata(int uiPageId);
         List<UiPageValidationModel> GetUiPageValidations(int uiPageId);
         List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int moduleId);
-        int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId, int recordId);
+        int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId,int recordId);
+        int GetPageIdBasedOnOrder(int moduleId);
     }
 }

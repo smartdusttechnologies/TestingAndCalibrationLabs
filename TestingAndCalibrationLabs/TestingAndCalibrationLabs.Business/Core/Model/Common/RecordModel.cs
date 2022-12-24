@@ -11,6 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class RecordModel : Entity
     {
         #region Public Properties
+        public int UiPageTypeId { get; set; }
         public int ModuleId { get; set; }
         public List<UiPageMetadataModel> Fields { get; set; }
 

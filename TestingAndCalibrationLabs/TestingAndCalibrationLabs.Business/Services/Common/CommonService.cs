@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -82,22 +83,23 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
         public RecordModel GetUiPageMetadataCreate(int moduleId)
         {
-            
-            var uiMetadata = GetMetadata((int)UiControlType.workflowStage, moduleId, 0);
-
+            int uiPageTypeId;
+            var uiMetadata = GetMetadata((int)UiControlType.workflowStage, moduleId, 0,out uiPageTypeId);
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x=> hirericheys.Add(new LayoutModel {  UiPageMetadata = x }));
-            
             var hierarchy = hirericheys.Hierarchize(
              0, // The "root level" key. We're using -1 to indicate root level.
              f => f.UiPageMetadata.Id, // The ID property on your object
              f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
             f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
              );
-            var record = new RecordModel();
-            record.ModuleId = moduleId;
-            record.Layout = hierarchy;
-            record.Fields = uiMetadata;
+            var record = new RecordModel
+            {
+                ModuleId = moduleId,
+                UiPageTypeId = uiPageTypeId,
+                Fields = uiMetadata,
+                Layout = hierarchy
+            };
             return record;
         }
         public RecordsModel GetRecords(int moduleId)
@@ -112,46 +114,45 @@ namespace TestingAndCalibrationLabs.Business.Services
             Dictionary<int, List<UiPageMetadataCharacteristicsModel>> metadataContent = new Dictionary<int, List<UiPageMetadataCharacteristicsModel>>();
             return new RecordsModel { ModuleId = moduleId, Fields = meta, FieldValues = uiPageDataModels };
         }
-       
         public RecordModel GetRecordById(int recordId)
         {
+            int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            var uiMetadata = GetMetadata((int)UiControlType.workflowStage,recordMdel.ModuleId,recordId);
+            var uiMetadata = GetMetadata((int)UiControlType.workflowStage,recordMdel.ModuleId,recordId,out uiPageTypeId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
-            List<UiPageDataModel> difList = uiPageData.Where(x => uiMetadata.Any(y => y.Id == x.UiPageMetadataId))
-                .GroupBy(x => x.UiPageMetadataId)
-                .Select(x => x.First()).ToList();
             List<LayoutModel> hirericheys = new List<LayoutModel>();
-            foreach (var item in uiMetadata)
-            {
-                foreach (var data in difList)
-                {
-                    if (item.Id == data.UiPageMetadataId)
-                    {
-                        hirericheys.Add(new LayoutModel { UiPageMetadata = item, UiPageData = data });
-                    }
-                }
-            }
-                var hierarchy = hirericheys.Hierarchize(
+            uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel {
+                UiPageMetadata = x ,
+                 UiPageData = uiPageData.SingleOrDefault(y=> y.UiPageMetadataId== x.Id)            
+            }));
+            var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-                return new RecordModel { Id = recordId,ModuleId = recordMdel.ModuleId, Layout = hierarchy,Fields = uiMetadata };
+                return new RecordModel { Id = recordId,UiPageTypeId = uiPageTypeId, ModuleId = recordMdel.ModuleId, Layout = hierarchy,Fields = uiMetadata };
             }
             #endregion
 
             #region Private Methods
-        private List<UiPageMetadataModel>GetMetadata(int uiControlTypeId,int moduleId, int recordId)
+        private List<UiPageMetadataModel>GetMetadata(int uiControlTypeId,int moduleId, int recordId,out int uiPageId)
         {
-            var uiPageId = _commonRepository.GetPageIdBasedOnCurrentWorkflowStage(uiControlTypeId, moduleId,recordId);
+            
+            if(recordId == 0) {
+                uiPageId = _commonRepository.GetPageIdBasedOnOrder(moduleId);
+            }
+            else
+            {
+                uiPageId = _commonRepository.GetPageIdBasedOnCurrentWorkflowStage(uiControlTypeId, moduleId,recordId);
+            }
             var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
             return metadata;
         }
+       
             private RequestResult<bool> Validate(RecordModel record)
             {
-                List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.ModuleId);
+                List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageTypeId);
                 List<UiPageValidationTypeModel> validationtypes = _uiPageValidationTypesGenericRepository.Get();
                 List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                 foreach (var field in record.FieldValues)
