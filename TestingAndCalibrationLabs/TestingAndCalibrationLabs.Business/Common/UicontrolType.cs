@@ -3,7 +3,7 @@
 
     public enum UiControlType
     {
-        None = 0,
+        None,
         text,
         password,
         checkbox,
