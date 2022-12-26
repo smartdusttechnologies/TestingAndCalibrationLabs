@@ -9,8 +9,8 @@
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
-        var inputIdWithoutHash = modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
-        //var inputId = "#"+ modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        var uiPageData = modelData.value.uiPageData;
+       
 
         $.ajax({
             type: "POST",
@@ -22,29 +22,15 @@
                     var lookupName = response[i].name;
                     $(id).append("<option value='" + lookupId + "'>" + lookupName + "</option>");
                 }
-                //document.getElementById(inputIdWithoutHash).value = 1013;
+                var idOfRecord = $("#Id").val();
+                if (idOfRecord != undefined) {
+                    var selectedId = uiPageData.value;
+                    var changeId = id + " [value=" + selectedId + "]";
+                    $(changeId).attr('selected', 'true');
+                }
             },
             error: function (req, status, error) {
             }
         });
-        //$(id).change(function () {
-        //    var selectedValue = $(id).val();
-        //    document.getElementById(inputIdWithoutHash).value = selectedValue;
-        //});
-        
     });
-</script>
-<script>
-    //window.addEventListener("load", function () { preSelectCheckbox() });
-    //function preSelectCheckbox() {
-    //    var modelData = JSON.parse('@Json.Serialize(Model)');
-    //    var id = "#dropd-" + modelData.value.uiPageMetadata.id;
-    //    var inputId = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
-    //    var idOfRecord = $("#Id").val();
-    //    var selectedId = $(inputId).val();
-    //    if (idOfRecord != undefined) {
-    //        var changeId = id + " [value=" + selectedId + "]";
-    //        $(changeId).attr('selected', 'true');
-    //    }
-    //}
 </script>
