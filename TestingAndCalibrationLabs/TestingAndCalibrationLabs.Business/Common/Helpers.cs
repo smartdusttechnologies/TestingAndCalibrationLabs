@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Business.Common
         }
         public enum None
         {
-            Value
+            Id
         } 
         public static Dictionary<string, string> GetMimeTypes()
         {
