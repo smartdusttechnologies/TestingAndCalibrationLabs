@@ -15,6 +15,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+
         public HomeController(IAuthenticationService authenticationService, IOrganizationService orgnizationService,IMapper mapper)
         {
             _authenticationService = authenticationService;
@@ -22,13 +23,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Default Action of the Home Controller
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
             return View();
         }
-        
+
         /// <summary>
         /// UI will get the information from the User
         /// </summary>

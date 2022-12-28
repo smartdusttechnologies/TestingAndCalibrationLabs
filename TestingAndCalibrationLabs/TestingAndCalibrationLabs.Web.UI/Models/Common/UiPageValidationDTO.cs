@@ -2,10 +2,10 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
-        /// <summary>
-        /// It Conatains The Properties for Ui Page Validation
-        /// </summary>
-    public class UiPageValidationModel
+    /// <summary>
+    /// It Conatains The Properties for Ui Page Validation
+    /// </summary>
+    public class UiPageValidationDTO
     {
         /// <summary>
         /// It Contains The Id of The Ui Page Validation

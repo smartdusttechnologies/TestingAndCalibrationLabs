@@ -13,4 +13,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         public string Name { get; set; }
     }
+
 }
