@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace TestingAndCalibrationLabs.Web.UI.Common
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class SdtPrincipal : ClaimsPrincipal
     {

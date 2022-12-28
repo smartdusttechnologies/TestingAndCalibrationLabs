@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -15,6 +16,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Abstract method to get Role by Organization including claims
         /// </summary>
-        List<UserRoleClaim> GetRoleByOrganizationWithClaims(string userName);
+        List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
+        List<UserClaim> GetUserClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
+        //TODO: move this to user Repository.
+        UserModel GetUserByUserName(string userName);
+        //List<string> GetRequiredClaimsForModule(PermissionModuleType permissionModuleType);
     }
 }

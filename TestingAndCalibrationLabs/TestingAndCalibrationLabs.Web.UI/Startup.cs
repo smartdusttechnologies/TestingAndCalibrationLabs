@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using TestingAndCalibrationLabs.Web.UI.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -43,11 +44,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             //PolicyBases Authorization
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Add); });
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Edit); });
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Read); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Add); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Edit); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Read); });
                 //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });
-                options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.EditRole); });
+                options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.EditRole); });
             });
             //Services
             services.AddScoped<ICommonService, CommonService>();
@@ -62,7 +63,7 @@ namespace TestingAndCalibrationLabs.Web.UI
  
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IRoleService, RoleService>();
-            services.AddSingleton<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
             services.AddScoped<IOrganizationService, OrganizationService>();
@@ -114,6 +115,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+
+            services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -134,7 +137,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 // The signing key must match!
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT:Secret"])),
 
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
@@ -158,13 +161,15 @@ namespace TestingAndCalibrationLabs.Web.UI
                 var token = context.Session.GetString("Token");
                 if (!string.IsNullOrEmpty(token))
                 {
-                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                    //context.Request.Headers.Add("Authorization", "Bearer " + token);
+                    context.Request.Headers.Add("Authorization", token);
                 }
                 await next();
             });
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
+            app.UseMiddleware<SdtAuthenticationMiddleware>();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

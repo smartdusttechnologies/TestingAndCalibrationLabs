@@ -2,14 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Services;
 
 namespace TestingAndCalibrationLabs.Web.UI.Common
 {
@@ -17,21 +16,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
     {
         private readonly RequestDelegate _next;
         private readonly IConfiguration _configuration;
-        private readonly RoleService _roleService;
+        //TODO: need to pass the roleService instead of creting it local
+        private IRoleService _roleService;
 
-        public SdtAuthenticationMiddleware(RequestDelegate requestDelegate,
-            IConfiguration configuration,
-            RoleService roleservice)
+        public SdtAuthenticationMiddleware(RequestDelegate requestDelegate, IConfiguration configuration)
         {
             _configuration = configuration;
             _next = requestDelegate;
-            _roleService = roleservice;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, IRoleService roleservice)
         {
+            _roleService = roleservice;
             var token = context.Request.Headers["Authorization"].FirstOrDefault();
             JwtSecurityToken validatedToken;
+
+            //TODO: token validation should also consider the logged out token not only expired tokens.
             if (token != null && ValidateToken(context, token, out validatedToken))
             {
                 // attach user to context on successful jwt token validation
@@ -43,10 +43,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 }
 
             }
-            else if (context.Request.Path.Value.Equals("Security/Login", System.StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.Equals("Security/RefreshToken", System.StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.Equals("Security/RevokeToken", System.StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.StartsWith("/Swagger", System.StringComparison.OrdinalIgnoreCase))
+            else if (context.Request.Path.Value.Equals("/Security/Index", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/Login", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/RefreshToken", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/RevokeToken", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase))
             {
                 await _next(context);
             }
@@ -55,18 +56,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
 
         private SdtUserIdentity GetUserIdentity(JwtSecurityToken jwtSecurityToken)
         {
+            var organisations = jwtSecurityToken.Claims.Select(x => x.Type == CustomClaimType.OrganizationId.ToString());
             SdtUserIdentity userIdentity = new SdtUserIdentity
             {
-                UserId = jwtSecurityToken.Claims.First(x => x.Type == CustomClaimTypes.UserId).Value,
-                OrganizationId = jwtSecurityToken.Claims.First(x => x.Type == CustomClaimTypes.OrganizationId).Value
+                UserName = jwtSecurityToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value,
+                OrganizationId = int.Parse(jwtSecurityToken.Claims.Single(x => x.Type == CustomClaimType.OrganizationId.ToString()).Value),
+                UserId = int.Parse(jwtSecurityToken.Claims.Single(x => x.Type == CustomClaimType.UserId.ToString()).Value),
             };
+            //var roleByOrganizationWithClaims = _roleService.GetRoleByOrganizationWithClaims(userIdentity.UserName).Where(x => x.OrgId == userIdentity.OrganizationId);
+            //var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName)).Distinct().ToList();
+            //var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName)).Distinct().ToList();
 
-            var roleByOrganizationWithClaims = _roleService.GetRoleByOrganizationWithClaims(userIdentity.UserId);
-            var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName)).ToList();
-            var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName)).ToList();
+            //var userByOrganizationWithClaims = _roleService.GetUserByOrganizationWithClaims(userIdentity.UserName).Where(x => x.OrgId == userIdentity.OrganizationId);
+            //var userClaims = userByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName));
 
-            userIdentity.UserRoleClaims.AddRange(roleClaims);
-            userIdentity.UserRoleClaims.AddRange(userRoleClaim);
+            //userIdentity.AddClaims(roleClaims);
+            //userIdentity.AddClaims(userRoleClaim);
+            //userIdentity.AddClaims(userClaims);
 
             return userIdentity;
         }
@@ -82,8 +88,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(encodedKey),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     // set clockskew to zero. So, tokens expire exactly at token expiration time.
                     ClockSkew = TimeSpan.Zero
                 };

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -12,13 +13,15 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageTypeService : IUiPageTypeService
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAuthorizationService _authorizationService;
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
         private readonly IUiPageTypeRepository _uiPageTypeRepository;
-        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository,
+        public UiPageTypeService(IHttpContextAccessor httpContextAccessor, IGenericRepository<UiPageTypeModel> genericRepository,
             IUiPageTypeRepository uiPageTypeRepository,
             IAuthorizationService authorizationService)
         {
+            _httpContextAccessor = httpContextAccessor;
             _authorizationService = authorizationService;
             _genericRepository = genericRepository;
             _uiPageTypeRepository = uiPageTypeRepository;
@@ -30,12 +33,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            //if (_authorizationService.AuthorizeAsync(User, uiPageTypeModel, Operations.Read))
+            //if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, PolicyTypes.UIPageType.Add).Result.Succeeded)
             {
                 _uiPageTypeRepository.Insert(uiPageTypeModel);
                 return new RequestResult<int>(1);
             }
-            //return new RequestResult<int>(0);
+            return new RequestResult<int>(0);
         }
         /// <summary>
         /// Delete Record From Ui Page Type
