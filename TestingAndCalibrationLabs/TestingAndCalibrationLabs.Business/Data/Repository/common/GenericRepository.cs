@@ -85,17 +85,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         #region Private Methods
         private string GenerateInsertQuery()
         {
-            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
-            insertQuery.Append("(");
-            _columnName.ForEach(colName => { insertQuery.Append($"{colName},"); });
+            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} (");
+            var columnValues = new StringBuilder();
+
+            _columnName.ForEach(colName => {
+                insertQuery.Append($"{colName},");
+                columnValues.Append($"@{colName},");
+            });
+
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(") VALUES (");
-            _columnName.ForEach(colName => {  insertQuery.Append($"@{colName},");  });
-            insertQuery
+
+            columnValues
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(")");
-            return insertQuery.ToString();
+
+            return insertQuery.Append(columnValues).ToString();
         }
         private string GenerateUpdateQuery()
         {

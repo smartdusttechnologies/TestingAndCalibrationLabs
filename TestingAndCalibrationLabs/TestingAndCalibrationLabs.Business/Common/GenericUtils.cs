@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 namespace TestingAndCalibrationLabs.Business.Common
@@ -42,27 +43,35 @@ namespace TestingAndCalibrationLabs.Business.Common
         /// <returns></returns>
         public static List<string> GetDbColumnName<T>()
         {
-           var _listOfColumns = new List<string>();
-            PropertyInfo[] propertieList = typeof(T).GetProperties();
+            var _listOfColumns = new List<string>();
+            var propertieList = GetApplicableProperties(typeof(T).GetProperties().AsEnumerable());
             foreach (PropertyInfo prop in propertieList)
             {
                 object[] attributeList = prop.GetCustomAttributes(true);
-                foreach (object attribute in attributeList)
+                foreach (var attribute in attributeList)
                 {
-                    DbColumnAttribute dbColumnAttribute = attribute as DbColumnAttribute;
-                    if (dbColumnAttribute.Name != null)
-                    {
-                        string auth = dbColumnAttribute.Name;
-                        _listOfColumns.Add( auth);
-                    }
-                     if(dbColumnAttribute.Name == null)
-                    {
-                        string name = prop.Name;
-                        _listOfColumns.Add(name);
-                    }
+                    string columnName;
+                    if (!(attribute is DbColumnAttribute dbColumnAttribute))
+                        continue;
+                    else if (string.IsNullOrEmpty(dbColumnAttribute.Name))
+                        columnName = prop.Name;
+                    else
+                        columnName = dbColumnAttribute.Name;
+
+                    _listOfColumns.Add(columnName);
                 }
             }
             return _listOfColumns;
+        }
+        #endregion
+
+        #region private methods
+        private static List<PropertyInfo> GetApplicableProperties(IEnumerable<PropertyInfo> listOfProperties)
+        {
+            return (from prop in listOfProperties
+                    let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
+                    select prop).ToList();
         }
         #endregion
     }
