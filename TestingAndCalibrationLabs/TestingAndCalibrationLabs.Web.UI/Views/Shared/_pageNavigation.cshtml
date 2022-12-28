@@ -1,6 +1,6 @@
 ﻿<ul class="navbar-nav ms-auto" id="navbarContentAdd">
     <li class="nav-item " style="display:none" id="nav-item-Settings">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-gear"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
@@ -72,7 +72,7 @@
                         if (a.name > b.name) { return 1; }
                         return 0;
                     });
-                    for (let j = 0; j < response[i].childrens.length && response[i].childrens.length > 1; j++) {
+                   for (let j = 0; j < response[i].childrens.length; j++) {
                         if (!nameExistOrNot && response[i].childrens.length == 1) {
                             var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
                             var singleListParent = "#navigationSingle" + uiNavigationCategoryId;
