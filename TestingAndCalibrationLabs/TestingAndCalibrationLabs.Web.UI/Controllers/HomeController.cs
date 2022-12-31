@@ -91,5 +91,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
+        /// <summary>
+        /// This Method Control is For Header
+        /// </summary>
+        /// <returns>PartilView return haderstrip</returns>
+        public IActionResult Headerstrip()
+        {
+            HeaderstripModel headerstrip = new HeaderstripModel();
+            headerstrip.Contact = "9049894772";
+            headerstrip.Email = "tushardhangar12@gmail.com";
+            headerstrip.CompanyImageURl = "/image/smartdust_technologies_logo.jpg";
+            headerstrip.AwardImageURL1 = "/image/cvalibration_award.jpg";
+            headerstrip.AwardImageURL2 = "/image/award.jpg";
+            headerstrip.AwardImageURL3 = "/image/trophy-gold.jpg";
+            headerstrip.linkedlnIcon = "https://www.linkedin.com/login";
+            headerstrip.FacebookIcon = "https://www.facebook.com/login";
+            return PartialView("~/Views/Home/_headerstripTempleat.cshtml", headerstrip);
+        }
     }
 }

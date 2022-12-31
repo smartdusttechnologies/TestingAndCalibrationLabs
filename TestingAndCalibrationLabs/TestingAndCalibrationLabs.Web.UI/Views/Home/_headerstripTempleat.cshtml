@@ -1,0 +1,43 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.HeaderstripModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- Just an image -->
+<nav class="navbar navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="@Model.CompanyImageURl" height="45"
+            alt="Smatdust Technologies Logo" 
+            loading="lazy" />
+        </a>
+        <div style="margin-right:-565px;">
+            <div>
+                <i class="fas fa-headset"></i>
+                <small>
+                    @Model.Contact
+                </small>
+            </div>
+            <i class="fa fa-envelope"></i>
+            <small>
+                @Model.Email
+            </small>
+        </div>
+        <div style="margin-right: -565px;">
+            <img src="@Model.AwardImageURL1" height="40" />
+            <img src="@Model.AwardImageURL2" height="40" />
+            <img src="@Model.AwardImageURL3" height="40" />
+        </div>
+        <div>
+            <div>
+                <a class="fa fa-linkedin fa-sm" role="button" href="@Model.linkedlnIcon">
+                </a>
+            </div>
+            <div>
+                <a class="fa fa-facebook fa-sm" role="button" href="@Model.FacebookIcon">
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
