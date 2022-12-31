@@ -171,7 +171,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            var pageMetadata = _commonService.GetRecordById(id);
+            var pageMetadata = _commonService.GetRecordByIdForDelete(id);
             RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return View(record);
         }

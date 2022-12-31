@@ -74,9 +74,17 @@
         }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        var uiPageMetaData = modelData.fields;
+        //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
+        const getMembers = (member) => {
+
+            if (!member.children || !member.children.length) {
+                return member.value.uiPageMetadata;
+            }
+            return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
+        }
+        var uiPageMetaData = _.flatMapDeep(modelData.layout, getMembers);
+        //flatten process end
         var fieldValues = [];
-        
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;

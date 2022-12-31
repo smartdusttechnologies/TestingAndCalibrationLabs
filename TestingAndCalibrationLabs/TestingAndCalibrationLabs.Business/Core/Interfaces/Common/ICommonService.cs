@@ -50,5 +50,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="recordId"></param>
         /// <returns></returns>
         RecordModel GetRecordById(int recordId);
+        RecordModel GetRecordByIdForDelete(int recordId);
     }
 }
