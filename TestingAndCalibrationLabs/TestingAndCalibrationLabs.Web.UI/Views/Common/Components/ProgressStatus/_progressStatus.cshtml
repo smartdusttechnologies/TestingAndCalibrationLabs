@@ -23,32 +23,50 @@
         text-align: center
     }
     #form .previous-step, .next-step {
-        width: 100px;
-        font-weight: bold;
+        width: 120px;
+        font-weight: 500;
         color: white;
         border: 0 none;
         border-radius: 0px;
         cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px 10px 0px;
-        float: right
+        padding: 5px 5px;
+        margin: 10px -262px 10px -120px;
+        text-align:center;
+        justify-content:center;               
     }
     .form, .previous-step {
-        width: 110px;
-        font-weight: bold;
-        color: white;
-        border: 0 none;
-        border-radius: 0px;
+        width: 130px;
+        font-weight: 500;
+        color:black;
+        border: 1px solid black;   
         cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px 10px 0px;
-        float: left;
-        background: #2F8D46;
-        margin-top : 10px;
-    }
+        border-radius: 25px;
+        padding: 5px 5px;
+        margin: 10px -95px 5px 0px;
+        justify-content:center;
+        text-align:center;        
+        background: white;
+        margin-top : 10px;     
+     }
     .form, .next-step {
-        background: #2F8D46;
+        border-radius: 25px;
+        background: #2F8D50;
     }
+    .footer2 {
+        position:fixed;
+        overflow: hidden;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        border: 0.5px solid black ;
+        border-right-color: white;
+        border-left-color: white;
+        color: white;
+        text-align:center;
+        justify-content:center;
+        text-decoration:none;
+        display: block;
+     } 
     #form .previous-step:hover,
     #form .previous-step:focus {
         background-color: #fa9e4d;
@@ -139,24 +157,30 @@
                     {
                         <fieldset id="fieldset_@item.Value.Id">
                             <div class="row ms-1 me-1">
+
                             @foreach (var node in item.Children)
                             {
                                 @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
                             }
                             </div>
-                            @if (Model.Children.First() == item)
+                            <div class="footer2">
+                                <a href="Need help?" style="float:left;color:black;padding:14px;">&#x1F6C8 Need help?</a>
+                                <a href="Save Draft & Exit" style="float:right;color:#2F8D50;padding:14px;">Save Draft & Exit</a>                          
+                                @if (Model.Children.First() == item)
                             {
-                                <input type="button" name="next-step" class="next-step" value="Next Step" />
+
+                                    <input type="button" name="next-step" class="next-step" value="Next Step &#129046" />
                             }
                             else if (Model.Children.Last() == item)
                             {
-                                <input type="button" name="previous-step" class="previous-step" value="Previous Step" />
+                                    <input type="button" name="previous-step" class="previous-step " value="&#129044; Previous Step" />
                             }
                             else
                             {
-                                <input type="button" name="next-step" class="next-step" value="Next Step" />
-                                <input type="button" name="previous-step" class="previous-step" value="Previous Step" />
+                                    <input type="button" name="next-step" class="next-step" value="Next Step &#129046" />
+                                    <input type="button" name="previous-step" class="previous-step" value="&#129044; Previous Step" />
                             }
+                            </div>
                         </fieldset>
                     }
                 </form>
@@ -211,7 +235,7 @@
             }
         }
         //Function To Handle Progress Status Clicks
-        $(".btn-step").click(function () {
+        $(".btn-step").click(function () {           
             var btnOfStep = $(this).children(".btn-select");
             var currentFieldSetId = btnOfStep[0].value;
             var stepCount = btnOfStep[0].name;
@@ -230,13 +254,12 @@
             currentGfgStep = nextGfgStep;
         });
         //Fuction To Handle Next Button Click
-        $(".next-step").click(function () {
-            debugger;
-            currentGfgStep = $(this).parent();
-            nextGfgStep = $(this).parent().next();
+        $(".next-step").click(function () {         
+            currentGfgStep = $(this).parent().parent();
+            nextGfgStep = $(this).parent().parent().next();
             $("#progressbar li").eq($("fieldset")
                 .index(nextGfgStep)).addClass("active");
-            currentGfgStep.css({
+               currentGfgStep.css({
                 'display': 'none',
                 'position': 'relative',
                 'opacity': 0
@@ -247,8 +270,8 @@
         });
         //Function To Handle Previous Button
         $(".previous-step").click(function () {
-            currentGfgStep = $(this).parent();
-            previousGfgStep = $(this).parent().prev();
+            currentGfgStep = $(this).parent().parent();
+            previousGfgStep = $(this).parent().parent().prev();
             $("#progressbar li").eq($("fieldset")
                 .index(currentGfgStep)).removeClass("active");
                     currentGfgStep.css({
