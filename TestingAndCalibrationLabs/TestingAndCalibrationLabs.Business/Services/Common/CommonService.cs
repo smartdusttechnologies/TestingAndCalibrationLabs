@@ -48,7 +48,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (requestResult.IsSuccessful)
             {
                 _commonRepository.Insert(record);
-                //var activityList = _workflowActivityService.WorkflowActivityByPageId(record.ModuleId);
                 return new RequestResult<bool>(true);
             }
             return requestResult;
