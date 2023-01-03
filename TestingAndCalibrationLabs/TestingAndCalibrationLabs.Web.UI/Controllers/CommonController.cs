@@ -32,8 +32,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _googleDriveService = googleDriveService;
             _workflowStageService = workflowStageService;
         }
+
         /// <summary>
-        /// for getting old page index
+        /// Default Action of the Common Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -110,6 +111,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return base.View(result);
         }
+
         /// <summary>
         /// for creating data
         /// </summary>
@@ -143,6 +145,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return View(record);
         }
+
         /// <summary>
         /// Edit and binding with business project
         /// </summary>
@@ -165,7 +168,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return BadRequest(recordModel);
         }
         /// <summary>
-        ///  Delete Details of common
+        ///  Delete
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -175,6 +178,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return View(record);
         }
+
+        /// <summary>
+        /// Delete Confirmed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? id,int moduleId)

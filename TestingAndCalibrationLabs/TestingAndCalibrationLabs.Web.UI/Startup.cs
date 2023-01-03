@@ -38,6 +38,15 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddNewtonsoftJson();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+          .AddJwtBearer(options =>
+          {
+              options.TokenValidationParameters = tokenValidationParameters;
+          });
+
             //PolicyBases Authorization
             services.AddAuthorization(options =>
             {
@@ -79,6 +88,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowService, WorkflowService>();
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
+            services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
 
 
             //Repository

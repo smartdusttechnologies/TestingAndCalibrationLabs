@@ -11,7 +11,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// Repository Class For Ui Page Navigation 
+    /// Repository class for Ui Page Navigation 
     /// </summary>
     public class UiPageNavigationRepository : IUiPageNavigationRepository
     {
@@ -20,19 +20,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+
         /// <summary>
-        /// Getting All Records From Ui Page Navigation
+        /// Getting all records from Ui Page Navigation
         /// </summary>
         /// <returns></returns>
-        public List<UiPageTypeModel> Get()
+        public List<UiPageNavigationModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageTypeModel>(@"Select upt.Id, unc.[Id] as UiNavigationCategoryId, unc.[Name] as UiNavigationCategoryName, 
-                                                    upt.Name, upt.Url, unc.[Orders] as Orders
-                                                From[UiPageType] upt
+            return db.Query<UiPageNavigationModel>(@"Select upt.Id, upt.UiPageTypeId, upt.UiNavigationCategoryId , unc.[Name] as UiNavigationCategoryName, 
+                                                    pt.Name as UiPageTypeName, upt.Url, unc.[Orders] as Orders
+                                                From[UiPageNavigation] upt
                                                     inner join[UiNavigationCategory] unc on upt.UiNavigationCategoryId = unc.Id
-                                                where
-                                                     upt.IsDeleted = 0
+                                                    inner join[UiPageType] pt on upt.UiPageTypeId = pt.Id
+											  where
+                                                    upt.IsDeleted = 0
                                                     and unc.IsDeleted = 0 ").ToList();
         }
     }

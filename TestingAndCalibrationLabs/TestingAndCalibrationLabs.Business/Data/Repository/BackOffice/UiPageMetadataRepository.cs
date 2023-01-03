@@ -18,6 +18,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+
         /// <summary>
         /// Insert Record in Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
@@ -31,6 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             
             return db.Execute(query, uiPageMetadataModel);
         }
+
         /// <summary>
         /// Getting All Records From Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
@@ -67,6 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0").ToList();
         }
+
         /// <summary>
         /// Getting Record By Id For Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
@@ -110,6 +113,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
            
             return uiPageMetadataById;
         }
+
         /// <summary>
         /// Edit Record For Ui Page Metadata 
         /// </summary>

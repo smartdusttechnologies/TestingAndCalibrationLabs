@@ -12,6 +12,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
          
         public int Id { get; set; }
+
         /// <summary>
         /// It Contains The Name Of The Ui Navigation Category
         /// </summary> 
