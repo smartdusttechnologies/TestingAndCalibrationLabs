@@ -1,0 +1,367 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Dashboard_Common;
+@{
+   // ViewData["Data"] = Model;
+    var data = ViewData["Control"] as Dashboard_Common;
+    
+}   
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Starter</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <partial name="AdminLTE/_Styles" />
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <partial name="AdminLTE/_TopNavigation" />
+        
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <partial name="AdminLTE/_MainNavigation" />
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Starter Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <partial name="AdminLTE/TilesCard/_BoxTemplate" />
+
+                    <!-- Main row -->
+                    <div class="row">
+
+                        <section class="col-lg-7 connectedSortable">
+                            <partial name="AdminLTE/TilesCard/_Sales" />
+                            <partial name="AdminLTE/TilesCard/_ChatBox" />
+                            <partial name="AdminLTE/TilesCard/_To-do-list" />
+
+                        </section>
+
+                        <section class="col-lg-5 connectedSortable">
+
+                            <partial name="AdminLTE/TilesCard/_SalesGraph" />
+                            <partial name="AdminLTE/TilesCard/_Map" />
+                            <partial name="AdminLTE/TilesCard/_Calendar" />
+                        </section>
+
+                        
+                        @RenderBody();
+                        
+                       
+                    </div>
+                </div>
+                <!-- /.card -->
+            </section>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <partial name="AdminLTE/_Footer" />
+    </div>
+    <partial name="AdminLTE/_Scripts" />
+</body>
+</html>
+
+       
+
+
+   
+    <script>
+     
+    $(function () {
+        'use strict'
+        
+        // Make the dashboard widgets sortable Using jquery UI
+        $('.connectedSortable').sortable({
+            placeholder: 'sort-highlight',
+            connectWith: '.connectedSortable',
+            handle: '.card-header, .nav-tabs',
+            forcePlaceholderSize: true,
+            zIndex: 999999
+        })
+        $('.connectedSortable .card-header').css('cursor', 'move')
+
+        // jQuery UI sortable for the todo list
+        $('.todo-list').sortable({
+            placeholder: 'sort-highlight',
+            handle: '.handle',
+            forcePlaceholderSize: true,
+            zIndex: 999999
+        })
+
+        // bootstrap WYSIHTML5 - text editor
+        $('.textarea').summernote()
+
+        $('.daterange').daterangepicker({
+            ranges: {
+                Today: [moment(), moment()],
+                Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment()
+        }, function (start, end) {
+            // eslint-disable-next-line no-alert
+            alert('You chose: ' + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        })
+
+        /* jQueryKnob */
+        $('.knob').knob()
+
+        // jvectormap data
+        var MapData = JSON.parse('@Html.Raw(Json.Serialize(data.map.CountryData))');
+     
+        var visitorsData = MapData
+        // World map by jvectormap
+        $('#world-map').vectorMap({
+            map: 'usa_en',
+            backgroundColor: 'transparent',
+            regionStyle: {
+                initial: {
+                    fill: 'rgba(255, 255, 255, 0.7)',
+                    'fill-opacity': 1,
+                    stroke: 'rgba(0,0,0,.2)',
+                    'stroke-width': 1,
+                    'stroke-opacity': 1
+                }
+            },
+            series: {
+                regions: [{
+                    values: visitorsData,
+                    scale: ['#ffffff', '#0154ad'],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+            onRegionLabelShow: function (e, el, code) {
+                if (typeof visitorsData[code] !== 'undefined') {
+                    el.html(el.html() + ': ' + visitorsData[code] + ' new visitors')
+                }
+            }
+        })
+
+        // Sparkline charts
+        var sparkline1 = new Sparkline($('#sparkline-1')[0], { width: 80, height: 50, lineColor: '#92c1dc', endColor: '#ebf4f9' })
+        var sparkline2 = new Sparkline($('#sparkline-2')[0], { width: 80, height: 50, lineColor: '#92c1dc', endColor: '#ebf4f9' })
+        var sparkline3 = new Sparkline($('#sparkline-3')[0], { width: 80, height: 50, lineColor: '#92c1dc', endColor: '#ebf4f9' })
+
+        sparkline1.draw([1000, 1200, 920, 927, 931, 1027, 819, 930, 1021])
+        sparkline2.draw([515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921])
+        sparkline3.draw([15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21])
+
+        // The Calender
+        $('#calendar').datetimepicker({
+            format: 'L',
+            inline: true
+        })
+
+        // SLIMSCROLL FOR CHAT WIDGET
+        $('#chat-box').overlayScrollbars({
+            height: '250px'
+        })
+
+        /* Chart.js Charts */
+        // Sales chart
+        var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+        // $('#revenue-chart').get(0).getContext('2d');
+        
+         //model data
+        var data1 = JSON.parse('@Html.Raw(Json.Serialize(data))');
+        debugger;
+        var arr = data1.salesModel.month;
+        var data1 = JSON.parse('@Html.Raw(Json.Serialize(data.SalesModel.salesData1))');
+        var data2 = JSON.parse('@Html.Raw(Json.Serialize(data.SalesModel.SalesData2))');
+
+        var arr = JSON.parse('@Html.Raw(Json.Serialize(data.SalesModel.Month))');
+          alert(arr);
+        //var arr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'];
+        var salesChartData = {
+            labels: arr,
+            datasets: [
+                {
+                    label: 'Digital Goods',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data:data1
+                },
+                {
+                    label: 'Electronics',
+                    backgroundColor: 'rgba(210, 214, 222, 1)',
+                    borderColor: 'rgba(210, 214, 222, 1)',
+                    pointRadius: false,
+                    pointColor: 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor: '#c1c7d1',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data:data2
+                }
+            ]
+        }
+
+        var salesChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        }
+
+        // This will get the first returned node in the jQuery collection.
+        // eslint-disable-next-line no-unused-vars
+        var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
+            type: 'line',
+            data: salesChartData,
+            options: salesChartOptions
+        })
+
+        // Donut Chart
+        var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+        var labelsName = JSON.parse('@Html.Raw(Json.Serialize(data.SalesModel.SalesName))');
+        var dataValue = JSON.parse('@Html.Raw(Json.Serialize(data.SalesModel.DataSet))');
+        var pieData = {
+            labels: labelsName,
+            datasets: [
+                {
+                    data: dataValue,
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+                }
+            ]
+        }
+        var pieOptions = {
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            responsive: true
+        }
+        // Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        // eslint-disable-next-line no-unused-vars
+        var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
+            type: 'doughnut',
+            data: pieData,
+            options: pieOptions
+        })
+
+        // Sales graph chart
+        var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
+        // $('#revenue-chart').get(0).getContext('2d');
+
+        var Labelsdata = JSON.parse('@Html.Raw(Json.Serialize(data.Graph.QuarterData))');
+        var data = JSON.parse('@Html.Raw(Json.Serialize(data.Graph.data))');
+
+        var salesGraphChartData = {
+            labels: Labelsdata,
+            datasets: [
+                {
+                    label: 'Digital Goods',
+                    fill: false,
+                    borderWidth: 2,
+                    lineTension: 0,
+                    spanGaps: true,
+                    borderColor: '#efefef',
+                    pointRadius: 3,
+                    pointHoverRadius: 7,
+                    pointColor: '#efefef',
+                    pointBackgroundColor: '#efefef',
+                    data: data
+                }
+            ]
+        }
+
+        var salesGraphChartOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#efefef'
+                    },
+                    gridLines: {
+                        display: false,
+                        color: '#efefef',
+                        drawBorder: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 5000,
+                        fontColor: '#efefef'
+                    },
+                    gridLines: {
+                        display: true,
+                        color: '#efefef',
+                        drawBorder: false
+                    }
+                }]
+            }
+        }
+
+        // This will get the first returned node in the jQuery collection.
+        // eslint-disable-next-line no-unused-vars
+        var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
+            type: 'line',
+            data: salesGraphChartData,
+            options: salesGraphChartOptions
+        })
+    })
+
+</script>
