@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 pageNavigation = pageNavigation.Where(x => x.Id != (int)Helpers.None.Id).ToList();
                 // write code to hide None element.
             }
-            pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.UiPageTypeId));
+            pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.ModuleId));
             return pageNavigation;
         }
         #endregion

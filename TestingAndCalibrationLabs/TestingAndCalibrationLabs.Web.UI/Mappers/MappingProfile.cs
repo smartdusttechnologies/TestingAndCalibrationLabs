@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<UiControlTypeDTO, UiControlTypeModel>().ReverseMap();
             CreateMap<DataTypeDTO, DataTypeModel>().ReverseMap();
             CreateMap<UiPageValidationDTO, UiPageValidationModel>().ReverseMap();
-            CreateMap<UiPageValidationTypeDTO, UiPageValidationTypeModel>().ReverseMap();
+            CreateMap<UiPageValidationType, UiPageValidationTypeModel>().ReverseMap();
             CreateMap<UiNavigationCategoryDTO, UiNavigationCategoryModel>().ReverseMap();
             CreateMap<LookupDTO, LookupModel>().ReverseMap();
             CreateMap<LookupCategoryDTO, LookupCategoryModel>().ReverseMap();

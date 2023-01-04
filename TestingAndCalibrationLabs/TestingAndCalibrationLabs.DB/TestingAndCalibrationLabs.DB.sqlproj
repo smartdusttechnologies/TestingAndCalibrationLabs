@@ -98,6 +98,13 @@
     <Build Include="dbo\Tables\ClaimType.sql" />
     <Build Include="dbo\Tables\Survey.sql" />
     <Build Include="dbo\Tables\UiPageNavigation.sql" />
+    <Build Include="dbo\Tables\WorkflowStage.sql" />
+    <Build Include="dbo\Tables\WorkflowActivity.sql" />
+    <Build Include="dbo\Tables\Workflow.sql" />
+    <Build Include="dbo\Tables\Module.sql" />
+    <Build Include="dbo\Tables\MetadataModuleBridge.sql" />
+    <Build Include="dbo\Tables\Application.sql" />
+    <Build Include="dbo\Tables\Activity.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -80,7 +81,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
             services.AddScoped<IUiControlCategoryTypeService, UiControlCategoryTypeService>();
 
-            services.AddScoped<IUiNavigationCategoryService, UiNavigationCategoryService>();
             services.AddScoped<ILookupService, LookupService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorterService, ListSorterService>();
@@ -97,7 +97,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
-            services.AddScoped<IUiPageTypeRepository, UiPageTypeRepository>();
             services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();

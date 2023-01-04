@@ -80,9 +80,9 @@
                             var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
                             $(singleListParent).append(singleChild);
                         }
-                        else {
+                        else if (response[i].childrens.length > 1) {
                             var pageTypeUrl = response[i].childrens[j].formatedUrl;
-                            var pageTypeName = response[i].childrens[j].uiPageTypeName;
+                            var pageTypeName = response[i].childrens[j].moduleName;
                             var uiNavigationId = response[i].id;
                             var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
                             var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";

@@ -69,6 +69,7 @@
 
     function AjaxFormSubmit() {
         //Set the URL.
+        debugger;
         var x = document.getElementById("lefid").value;
         if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
             document.getElementById(x).style.border = "1px solid black ";
@@ -85,16 +86,35 @@
         }
         var uiPageMetaData = _.flatMapDeep(modelData.layout, getMembers);
         //flatten process end
+        //                      
+        //pageData flatten
+        const getPageData = (ele) => {
+
+            if (!ele.children || !ele.children.length) {
+                return ele.value.uiPageData;
+            }
+            return [ele.value.uiPageData, _.flatMapDeep(ele.children, getMembers)];
+        }
+        var uiPageData = _.flatMapDeep(modelData.layout, getPageData);
+        //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
-                var keyValuepair = {};
-                keyValuepair.UiPageMetadataId = metadataId;
-                keyValuepair.Value = fieldValue;
-                fieldValues.push(keyValuepair)
+                for (let x = 0; x < uiPageData.length; x++) {
+                    debugger;
+                    var mId = uiPageData[x].uiPageMetadataId;
+                    var oldValue = uiPageData[x].value;
+                    if (metadataId == mId && fieldValue != oldValue ) {
+                        var keyValuepair = {};
+                        keyValuepair.UiPageMetadataId = metadataId;
+                        keyValuepair.Value = fieldValue;
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+
             }
         }
         var moduleId = parseInt($("#ModuleId").val())
@@ -103,7 +123,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id,"ModuleId":moduleId,"UiPageTypeId":uiPageTypeId, "FieldValues": fieldValues },
+            data: { "Id": id, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();
                 //window.location.href = "/common/index/" + moduleId;
@@ -123,3 +143,4 @@
         });
     }
 </script>
+@*<script scr="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>*@
