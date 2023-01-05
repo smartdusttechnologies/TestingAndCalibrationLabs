@@ -172,21 +172,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id)
-        {
-            var pageMetadata = _commonService.GetRecordByIdForDelete(id);
-            RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
-            return View(record);
-        }
-
-        /// <summary>
-        /// Delete Confirmed
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id,int moduleId)
+        
+        public ActionResult Delete(int? id,int moduleId)
         {
             if (id == null)
             {

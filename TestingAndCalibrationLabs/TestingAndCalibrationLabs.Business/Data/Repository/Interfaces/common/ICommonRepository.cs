@@ -16,5 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int moduleId);
         int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId,int recordId);
         int GetPageIdBasedOnOrder(int moduleId);
+        bool Save(RecordModel recordModel);
     }
 }

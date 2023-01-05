@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -139,7 +140,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
             return insertedRecordId;
         }
-        public int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId,int recordId)
+        public int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId, int recordId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<int>(@"Select Top(1)  upd.Value
@@ -151,9 +152,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                 and upd.RecordId = @recordId
                                                     and upm.IsDeleted = 0 
 													and mmb.IsDeleted = 0
-													and upd.IsDeleted = 0", new { uiControlTypeId, moduleId,recordId }).FirstOrDefault();
+													and upd.IsDeleted = 0", new { uiControlTypeId, moduleId, recordId }).FirstOrDefault();
         }
-        public int GetPageIdBasedOnOrder( int moduleId)
+        public int GetPageIdBasedOnOrder(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<int>(@"Select  ws.UiPageTypeId
@@ -165,6 +166,31 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and m.IsDeleted = 0 
 													and w.IsDeleted = 0
 													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
+        }
+        public bool Save(RecordModel recordModel)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var insertList = recordModel.FieldValues.Where(x=>x.Id == 0).ToList();
+            var updateList = recordModel.FieldValues.Where(x=>x.Id != 0).ToList();
+            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value)
+                                        Values (@UiPageMetadataId,@RecordId,@Value)";
+            var updateQurey = @"Update [UiPageData] Set
+                                    UiPageMetadataId = @UiPageMetadataId,
+                                    RecordId = @RecordId,
+                                    Value = @Value
+                                Where Id = @Id";
+            IDbTransaction transaction = db.BeginTransaction();
+            if (insertList.Count > 0)
+            {
+                db.Execute(insertQuery, insertList, transaction);
+            }
+            if (updateList.Count >0)
+            {
+                db.Execute(updateQurey, updateList, transaction);
+            }
+            transaction.Commit();
+
+            return true;
         }
         #endregion
     }

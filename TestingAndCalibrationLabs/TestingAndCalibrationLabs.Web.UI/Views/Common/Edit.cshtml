@@ -68,8 +68,12 @@
 <script type="text/javascript">
 
     function AjaxFormSubmit() {
-        //Set the URL.
-        debugger;
+
+        var moduleId = parseInt($("#ModuleId").val())
+        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+        var id = parseInt($("#Id").val())
+
+
         var x = document.getElementById("lefid").value;
         if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
             document.getElementById(x).style.border = "1px solid black ";
@@ -86,7 +90,7 @@
         }
         var uiPageMetaData = _.flatMapDeep(modelData.layout, getMembers);
         //flatten process end
-        //                      
+        //
         //pageData flatten
         const getPageData = (ele) => {
 
@@ -103,23 +107,38 @@
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
-                for (let x = 0; x < uiPageData.length; x++) {
-                    debugger;
-                    var mId = uiPageData[x].uiPageMetadataId;
-                    var oldValue = uiPageData[x].value;
-                    if (metadataId == mId && fieldValue != oldValue ) {
-                        var keyValuepair = {};
-                        keyValuepair.UiPageMetadataId = metadataId;
-                        keyValuepair.Value = fieldValue;
-                        fieldValues.push(keyValuepair)
-                    }
-                }
+                debugger;
+                var pageDataId = getPageDataId(uiPageData, metadataId, fieldValue);
+                //for (let x = 0; x < uiPageData.length; x++) {
+                //    debugger;
+                //    var pageDataId = uiPageData[x].id;
+                //    var mId = uiPageData[x].uiPageMetadataId;
+                //    var oldValue = uiPageData[x].value;
+                //    if (metadataId == mId && fieldValue != oldValue ) {
+                if (pageDataId != null) {
 
+                    var keyValuepair = {};
+                    keyValuepair.Id = pageDataId;
+                    keyValuepair.UiPageMetadataId = metadataId;
+                    keyValuepair.RecordId = id;
+                    keyValuepair.Value = fieldValue;
+                    fieldValues.push(keyValuepair)
+                }
+                //}
             }
         }
-        var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-        var id = parseInt($("#Id").val())
+
+        function getPageDataId(model, mId, newValue) {
+            debugger;
+            for (var i = 0; i < uiPageData.length; i++) {
+                if (model[i].uiPageMetadataId == mId && newValue != model[i].value) {
+                    return model[i].id;
+                } else if (model[i].uiPageMetadataId == mId && newValue == model[i].value) {
+                    return null;
+                }
+            }
+            return 0;
+        }
         $.ajax({
             type: 'POST',
             url: url,

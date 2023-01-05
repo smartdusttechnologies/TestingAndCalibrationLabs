@@ -62,20 +62,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             RequestResult<bool> requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
-                var uiPageData = _uiPageDataGenericRepository.Get("RecordId", record.Id);
-                foreach (var item in record.FieldValues)
-                {
-                    var data = uiPageData.Where(i => i.UiPageMetadataId == item.UiPageMetadataId).FirstOrDefault();
-                    if (data != null)
-                    {
-                        data.Value = item.Value;
-                        _uiPageDataGenericRepository.Update(data);
-                    }
-                    else
-                    {
-                        _uiPageDataGenericRepository.Insert(new UiPageDataModel { RecordId = record.Id, UiPageMetadataId = item.UiPageMetadataId, Value = item.Value });
-                    }
-                };
+                //var uiPageData = _uiPageDataGenericRepository.Get("RecordId", record.Id);
+                
+                    _commonRepository.Save(record);
+                
                 return new RequestResult<bool>(true);
             }
             return requestResult;
