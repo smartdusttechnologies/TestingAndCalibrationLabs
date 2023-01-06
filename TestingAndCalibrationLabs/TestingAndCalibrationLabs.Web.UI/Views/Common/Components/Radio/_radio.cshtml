@@ -17,6 +17,7 @@
     
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
+        var uiPageData = modelData.value.uiPageData;
         var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
         $.ajax({
@@ -36,8 +37,7 @@
             }
         });
         var idVal = $('#Id').val();
-        if (idVal != undefined) {
-            debugger;
+        if (idVal != undefined && uiPageData != null) {
             var selectedValue = modelData.value.uiPageData.value;
             for (var i = 0; i < modelData.children.length; i++) {
                 var radioInput = "#rad-" + modelData.children[i].value.uiPageMetadata.id;

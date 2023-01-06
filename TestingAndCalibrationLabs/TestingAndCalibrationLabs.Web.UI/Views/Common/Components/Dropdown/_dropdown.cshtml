@@ -23,7 +23,7 @@
                     $(id).append("<option value='" + lookupId + "'>" + lookupName + "</option>");
                 }
                 var idOfRecord = $("#Id").val();
-                if (idOfRecord != undefined) {
+                if (idOfRecord != undefined && uiPageData != null) {
                     var selectedId = uiPageData.value;
                     var changeId = id + " [value=" + selectedId + "]";
                     $(changeId).attr('selected', 'true');

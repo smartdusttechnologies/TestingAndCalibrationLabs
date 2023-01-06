@@ -6,11 +6,12 @@
     </div>
 <script>
     $(document).ready(function () {
-        var idOfRecord = $("#Id").val();
-        if (idOfRecord != undefined) {
             var modelData = JSON.parse('@Json.Serialize(Model)');
+        var idOfRecord = $("#Id").val();
+        var uiPageData = modelData.value.uiPageData;
+        if (idOfRecord != undefined && uiPageData != null) {
             var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
-            var uiPageData = modelData.value.uiPageData;
+            
             var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
             var val = uiPageData.value;
             $(id).val(val);
