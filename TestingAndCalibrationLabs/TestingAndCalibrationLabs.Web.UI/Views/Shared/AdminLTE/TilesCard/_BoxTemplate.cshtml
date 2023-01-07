@@ -3,7 +3,6 @@
 @{
     var value = ViewData["Control"] as Dashboard_Common;
 }
-    <!-- Small boxes (Stat box) -->
     <div class="row">
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
@@ -19,9 +18,7 @@
                             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <!-- ./col -->
                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3 id="Bounce"> <sup style="font-size: 20px">%</sup></h3>
@@ -34,9 +31,7 @@
                             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <!-- ./col -->
                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3 id="Registration"></h3>
@@ -49,9 +44,7 @@
                             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <!-- ./col -->
                     <div class="col-lg-3 col-6">
-                        <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
                         <h3 id="Visitors"></h3>
@@ -64,11 +57,9 @@
                             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <!-- ./col -->
                 </div>
-    <!-- /.row -->
     <script>
-            var Data = JSON.parse('@Html.Raw(Json.Serialize(value.template))');
+            var Data = JSON.parse('@Html.Raw(Json.Serialize(value.Template))');
             debugger;
             document.getElementById("info").innerHTML = Data.info;
             document.getElementById("Bounce").innerHTML = Data.bounce;
