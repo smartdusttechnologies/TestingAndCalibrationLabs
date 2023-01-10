@@ -1,0 +1,115 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.DashboardV2;
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="~/css/adminlte.min.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <partial name="AdminLTE/_TopNavigation" />
+
+        <partial name="AdminLTE/_MainNavigation" />
+
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Dashboard V2</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <partial name="AdminLTE/TilesV2/_V2Box" />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <partial name="AdminLTE/TilesV2/_MonthlyRecap" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <partial name="AdminLTE/TilesV2/_VisitorReport" />
+                            <div class="row">
+                                <partial name="AdminLTE/TilesV2/_Chat" />
+                                <partial name="AdminLTE/TilesV2/_LatestMember" />
+                            </div>
+                            <partial name="AdminLTE/TilesV2/_LatestOrders" />
+
+                        </div>
+                        <div class="col-md-4">
+                            <partial name="AdminLTE/TilesV2/_NotifiedItems" />
+                            <partial name="AdminLTE/TilesV2/_BrowserUsage" />
+                            <partial name="AdminLTE/TilesV2/_AddedItem" />
+                        </div>
+
+                    </div>
+
+                    @RenderBody();
+
+
+                </div>
+
+
+            </section>
+
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <partial name="AdminLTE/_Footer" />
+    </div>
+
+</body>
+</html>
+
+<script>
+    var ModelData = @(Html.Raw(Json.Serialize(Model)));
+</script>
+<script src="~/plugins/jquery/jquery.min.js"></script>
+
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+<script src="~/js/adminlte.js"></script>
+
+
+<script src="~/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="~/plugins/raphael/raphael.min.js"></script>
+<script src="~/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="~/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+
+<script src="~/plugins/chart.js/Chart.min.js"></script>
+
+
+<script src="~/js/pages/dashboard2.js"></script>
+
+
+
+

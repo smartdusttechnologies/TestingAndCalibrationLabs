@@ -1,0 +1,59 @@
+﻿
+@{
+    var value = ViewData["Control"] as DashboardV2;
+} <div class="col-md-8">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">US-Visitors Report</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+       
+        <div class="card-body p-0">
+            <div class="d-md-flex">
+                <div class="p-1 flex-fill" style="overflow: hidden">
+                    <div id="world-map-markers" style="height: 325px; overflow: hidden">
+                        <div class="map"></div>
+                    </div>
+                </div>
+                <div class="card-pane-right bg-success pt-2 pb-2 pl-4 pr-4">
+                    <div class="description-block mb-4">
+                        <div class="sparkbar pad" data-color="#fff"id="vistorslist">90,70,90,70,75,80,70</div>
+                        <h5 class="description-header"id="visitorsAvg">8390</h5>
+                        <span class="description-text">Visits</span>
+                    </div>
+                    <div class="description-block mb-4">
+                        <div class="sparkbar pad" data-color="#fff"id="ReferalNo">90,50,90,70,61,83,63</div>
+                        <h5 class="description-header"id="referalPercent">30%</h5>
+                        <span class="description-text">Referrals</span>
+                    </div>
+                    <div class="description-block">
+                        <div class="sparkbar pad" data-color="#fff"id="organiclist">90,50,90,70,61,83,63</div>
+                        <h5 class="description-header"id="organicPercentage">70%</h5>
+                        <span class="description-text">Organic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<script>
+    var Data = JSON.parse('@Html.Raw(Json.Serialize(value.map))');
+      
+    document.getElementById("vistorslist").innerHTML = Data.vistorslist;
+    document.getElementById("visitorsAvg").innerHTML = Data.visitorsAvg;
+
+    document.getElementById("ReferalNo").innerHTML = Data.referalNo;
+    document.getElementById("referalPercent").innerHTML = Data.referalPercent;
+
+    document.getElementById("organiclist").innerHTML = Data.organiclist;
+    document.getElementById("organicPercentage").innerHTML = Data.organicPercentage;
+</script>
