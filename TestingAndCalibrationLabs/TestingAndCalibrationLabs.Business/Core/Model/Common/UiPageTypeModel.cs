@@ -12,7 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name For The Ui Page Type
         /// </summary>
-        [DbColumn("Name")]
+        [DbColumn]
         
         public string Name { get; set; }
         
