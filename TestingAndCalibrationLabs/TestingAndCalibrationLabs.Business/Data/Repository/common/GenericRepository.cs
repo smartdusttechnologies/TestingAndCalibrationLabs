@@ -98,7 +98,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 .Append(") VALUES (");
 
             columnValues
-                .Remove(insertQuery.Length - 1, 1)
+                .Remove(columnValues.Length - 1, 1)
                 .Append(")");
 
             return insertQuery.Append(columnValues).ToString();
