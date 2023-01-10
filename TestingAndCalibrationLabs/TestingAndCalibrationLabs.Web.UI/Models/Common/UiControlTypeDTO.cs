@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     /// <summary>
     /// It Conatains The Properties for Ui Control Type
     /// </summary>
-    public class UiControlTypeModel
+    public class UiControlTypeDTO
     {
         /// <summary>
         /// It Contains The Id of The Ui Control Type

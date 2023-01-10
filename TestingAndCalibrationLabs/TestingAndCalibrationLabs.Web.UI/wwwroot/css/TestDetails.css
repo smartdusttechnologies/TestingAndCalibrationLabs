@@ -3,14 +3,14 @@
     width: 100%;
 }
 
-.form-element-for-login {
+.form-element-for-common-control {
     height: 50px;
     position: relative;
     padding-left: 2px;
     padding-right: 2px;
 }
 
-    .form-element-for-login .form-input {
+    .form-element-for-common-control .form-input {
         width: 100%;
         height: 100%;
         background: white;
@@ -22,7 +22,7 @@
         font-size: 20px;
     }
 
-    .form-element-for-login .form-label {
+    .form-element-for-common-control .form-label {
         position: absolute;
         top: 15px;
         left: 15px;
@@ -34,7 +34,7 @@
         padding-left: 15px;
     }
 
-    .form-element-for-login .form-input:focus ~ .form-label {
+    .form-element-for-common-control .form-input:focus ~ .form-label {
         top: -6px;
         padding-left: 5px;
         padding-right: 5px;
@@ -42,15 +42,15 @@
         font-size: 12px;
     }
 
-.form-element-for-login .form-input:not(:focus) ~ .form-label {
-    top: 15px;
-    background-color: white;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 18px;
-}
+    .form-element-for-common-control .form-input:not(:focus) ~ .form-label {
+        top: 15px;
+        background-color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 18px;
+    }
 
-    .form-element-for-login .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
+    .form-element-for-common-control .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
         top: -6px;
         background-color: white;
         padding-left: 5px;
@@ -65,13 +65,13 @@
     padding-right: 2px;
 }
 
-.form-element-for-login input:focus {
+.form-element-for-common-control input:focus {
     border-color: dodgerblue;
     box-shadow: 0 0 3px 0 dodgerblue;
     transition: 0.3s all;
 }
 
-.form-element-for-login input:hover {
+.form-element-for-common-control input:hover {
     border-color: dodgerblue;
     box-shadow: 0 0 1px 0 dodgerblue;
 }
@@ -85,7 +85,7 @@
     border: 3px solid yellow;
     color: magenta;
     text-align: center;
-    position:relative;
+    position: relative;
 }
 
 .container-testing-material {
@@ -97,12 +97,12 @@
     display: inline-block;
 }
 
-    .container-testing-material .container-chip {
-        background-color: #e5ebee;
-        border-radius: 15px;
-        display: inline-block;
-        top: -6px;
-    }
+.container-testing-material .container-chip {
+    background-color: #e5ebee;
+    border-radius: 15px;
+    display: inline-block;
+    top: -6px;
+}
 
 .field-validation-error.form-input.width-full {
     color: orangered;
@@ -176,15 +176,15 @@ select.input-validation-error#TestingType {
     }
 
 #snackbar {
-    visibility:visible;
-    border-radius:12px;
-    background-color:green;
-    color:white;
-    margin-bottom:70px;
-    width:370px;
-    padding:14px;
-    text-align:center;
-    font-size:16px;
+    visibility: visible;
+    border-radius: 12px;
+    background-color: green;
+    color: white;
+    margin-bottom: 70px;
+    width: 370px;
+    padding: 14px;
+    text-align: center;
+    font-size: 16px;
 }
 
     #snackbar.show {
@@ -192,6 +192,7 @@ select.input-validation-error#TestingType {
         -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
         animation: fadein 0.5s, fadeout 0.5s 2.5s;
     }
+
 
 .inputWithIconSearch {
     width: 100%;
@@ -201,9 +202,9 @@ select.input-validation-error#TestingType {
     transition: 0.3s;
 }
 
-    .inputWithIconSearch:focus {
-        border-bottom: 2px solid black;
-    }
+.inputWithIconSearch:focus {
+    border-bottom: 2px solid black;
+}
 
 .inputSearchGrid .inputWithIconSearch {
     padding-left: 30px;
@@ -214,29 +215,29 @@ select.input-validation-error#TestingType {
     position: relative;
 }
 
-    .inputSearchGrid .iconForSearchLeft {
-        position: absolute;
-        left: 10px;
-        top: 4px;
-        color: black;
-        transition: 0.3s;
-    }
+.inputSearchGrid .iconForSearchLeft {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+    color: black;
+    transition: 0.3s;
+}
 
-    .inputSearchGrid .iconForSearchRight {
-        position: absolute;
-        right: 20px;
-        top: 4px;
-        color: #aaa;
-        transition: 0.3s;
-    }
+.inputSearchGrid .iconForSearchRight {
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    color: #aaa;
+    transition: 0.3s;
+}
 
-        .inputSearchGrid .iconForSearchRight:hover {
-            position: absolute;
-            right: 20px;
-            top: 4px;
-            color: black;
-            transition: 0.3s;
-        }
+.inputSearchGrid .iconForSearchRight:hover {
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    color: black;
+    transition: 0.3s;
+}
 
 .inputWithIcon.inputIconBg .iconForSignIn {
     background-color: #aaa;
@@ -296,3 +297,5 @@ select.input-validation-error#TestingType {
         padding-left: 20px;
     }
 }
+
+

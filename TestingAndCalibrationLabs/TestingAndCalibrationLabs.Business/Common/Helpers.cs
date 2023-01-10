@@ -20,7 +20,10 @@ namespace TestingAndCalibrationLabs.Business.Common
             var ext = Path.GetExtension(path).ToLowerInvariant();
             return types[ext];
         }
-
+        public enum None
+        {
+            Id
+        }
         public static Dictionary<string, string> GetMimeTypes()
         {
             return new Dictionary<string, string>

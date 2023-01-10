@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     /// <summary>
     /// It Conatains The Properties for  Data Type
     /// </summary>
-    public class DataTypeModel
+    public class DataTypeDTO
     {
         /// <summary>
         /// It Contains The Id of The Data Type
