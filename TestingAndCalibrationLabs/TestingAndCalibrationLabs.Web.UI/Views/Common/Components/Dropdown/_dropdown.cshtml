@@ -1,10 +1,13 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
-    <label for="testing" class="form-label"></label>
-    <select class="form-input width-full" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName" />
-   
+    <select class="form-input width-full" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName" />
     </select>
-</div>
+    <label class="form-label" for="@Model.Value.UiControlTypeName@Model.Value.Id"> @Model.Value.UiControlDisplayName</label>
+    <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
+      </div>
+   
+    
+    
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
