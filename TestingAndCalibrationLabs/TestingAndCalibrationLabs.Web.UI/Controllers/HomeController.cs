@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models.Common;
+using System.Drawing;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -91,6 +93,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
+
         /// <summary>
         /// This Method Control is For Header
         /// </summary>
@@ -106,7 +109,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             headerstrip.AwardImageURL3 = "/image/trophy-gold.jpg";
             headerstrip.linkedlnIcon = "https://www.linkedin.com/login";
             headerstrip.FacebookIcon = "https://www.facebook.com/login";
-            return PartialView("~/Views/Home/_headerstripTempleat.cshtml", headerstrip);
+            return PartialView("~/Views/Home/HeaderstripTempleat.cshtml", headerstrip);
+        }
+
+        /// <summary>
+        /// This Method Control is For NewsStripTicker
+        /// </summary>
+        /// <returns>PartilView "~/Views/Home/_newsstripticker.cshtml" newsValue</returns>
+        public IActionResult NewsStripTicker()
+        {
+
+            var newsValue = new NewsStripModel();
+            newsValue.NewsStrip = new List<string> { "Delhi hit-and-run case live: Last rites of victim under way amid heavy police deployment", "Cricketer Rishabh Pant hospitalised after serious "};
+            newsValue.ImageIcon = "/image/new.gif" ;
+            return PartialView("~/Views/Home/NewsstripTicker.cshtml", newsValue);
         }
     }
 }

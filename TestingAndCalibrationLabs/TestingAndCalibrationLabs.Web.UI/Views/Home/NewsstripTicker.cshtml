@@ -1,0 +1,68 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Common.NewsStripModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<style>
+    a{
+        padding: 0;
+        margin: auto;
+    }
+    .ticker-container {
+        display:flex;
+        width: 100%;
+        height:35px;
+        margin: 13px;
+        align-items: center;
+    }
+    .text{
+         width: 162px;
+         padding: 11px;
+         font-weight: bold;
+         color:black;
+    }
+    .box{
+        display: inline;
+        padding: 0px 40px;
+
+    }
+    .box a{
+        text-decoration: none;
+        color: black;
+        font-size:18px;
+    }
+    .date{
+        display: inline;
+        color: red;
+        margin:0px 6px;
+    }
+    marquee{
+        margin: 0px 7px;
+    }
+    .box a:hover{
+        color: red;
+    }
+
+    .new-img {
+        width: 22px !important;
+        height: 7px !important;
+    }
+</style>
+
+<body>
+    <div class="ticker-container">
+        <i class="fa fa-bullhorn" style="color: #a00;"></i>
+        <marquee behavior="" direction="left">
+
+            @foreach(var item in Model.NewsStrip)
+            {
+                <div class="box">
+                    <a href="#"> @item </a>
+                    <img src="@Model.ImageIcon" class="new-img" alt="New" />
+                </div>
+            }
+           
+        </marquee>
+    </div>
+</body>

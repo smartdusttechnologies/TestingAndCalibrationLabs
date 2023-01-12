@@ -1,0 +1,24 @@
+﻿
+ 
+/* headerstrip control css Moblie View */
+
+@media (max-width: 500px) {
+
+    .navbar-expand .navbar-brand img {
+        width: 71px;
+        height: 70px;
+        display: flex;
+    }
+    .navbar-expand .nav-item img {
+        
+        height:18px;
+    }
+    .navbar-expand .icon12 {
+        width: -20px;
+        font-size: 9px;
+        
+    }
+    .navbar-expand .icon123 {
+        font-size: 8.9px;
+    }
+}
