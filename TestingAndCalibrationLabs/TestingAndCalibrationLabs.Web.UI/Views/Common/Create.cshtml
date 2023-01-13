@@ -8,6 +8,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
+            <input type="hidden" asp-for="WorkflowStageId" />
             @foreach (var item in Model.Layout)
             {
                 <div class="row ms-1 me-1">
@@ -99,10 +100,11 @@
         }
         var moduleId = parseInt($("#ModuleId").val())
         var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+        var workflowStageId = parseInt($("#WorkflowStageId").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId , "FieldValues": fieldValues },
+            data: { "ModuleId": moduleId,"WorkflowStageId": workflowStageId, "UiPageTypeId": uiPageTypeId , "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 var nuiPageMetaData = response.fields;

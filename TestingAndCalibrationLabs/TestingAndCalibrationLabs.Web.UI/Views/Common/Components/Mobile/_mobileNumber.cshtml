@@ -1,13 +1,16 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-    <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
-        <input class="form-input width-full" type="tel" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" onchange="this.setAttribute('value',this.value)" maxlength="10" />
-        <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName">@Model.Value.UiPageMetadata.UiControlDisplayName@if(Model.Value.UiPageMetadata.IsRequired){<span class="red-color">*</span>}</label>
-        <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
-    </div>
+<div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
+    <input class="form-input width-full" type="tel" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" onchange="this.setAttribute('value',this.value)" maxlength="10" />
+    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName">@Model.Value.UiPageMetadata.UiControlDisplayName@if (Model.Value.UiPageMetadata.IsRequired)
+        {
+            <span class="red-color">*</span>
+        }</label>
+    <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+</div>
 <script>
     $(document).ready(function () {
         var idOfRecord = $("#Id").val();
-            var modelData = JSON.parse('@Json.Serialize(Model)');
+        var modelData = JSON.parse('@Json.Serialize(Model)');
         var uiPageData = modelData.value.uiPageData;
         if (idOfRecord != undefined && uiPageData != null) {
             var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;

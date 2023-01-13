@@ -9,6 +9,7 @@
             <input type="hidden" asp-for="Id" id="Id" name="Id" />
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
+            <input type="hidden" asp-for="WorkflowStageId" />
             @foreach (var item in Model.Layout)
             {
                 <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
@@ -16,7 +17,7 @@
         </form>
         <input type="hidden" value="" name="lefid" id="lefid" />
         <div class="form-group">
-            <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+            <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
         </div>
     </div>
 </div>
@@ -51,6 +52,7 @@
         </div>
     </div>
 </div>
+
 <script>
     //This function will display the success snackbar
     function myFunction() {
@@ -72,7 +74,7 @@
         var moduleId = parseInt($("#ModuleId").val())
         var uiPageTypeId = parseInt($("#UiPageTypeId").val())
         var id = parseInt($("#Id").val())
-
+        var workflowStageId = parseInt($("#WorkflowStageId").val())
 
         var x = document.getElementById("lefid").value;
         if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
@@ -80,6 +82,8 @@
         }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
+        var updatedDateT = modelData.updatedDate;
+        console.log(updatedDateT);
         //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
         const getMembers = (member) => {
 
@@ -120,7 +124,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
+            data: { "Id": id, "WorkflowStageId": workflowStageId, "UpdatedDate":updatedDateT, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();
                 //window.location.href = "/common/index/" + moduleId;

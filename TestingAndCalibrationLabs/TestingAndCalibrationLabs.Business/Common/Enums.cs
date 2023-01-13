@@ -4,4 +4,9 @@
     None,
     EmailServices
     }
+    public enum ActivityMetadataType
+    {
+        Static = 1015,
+        Dynamic = 1016
+    }
 }

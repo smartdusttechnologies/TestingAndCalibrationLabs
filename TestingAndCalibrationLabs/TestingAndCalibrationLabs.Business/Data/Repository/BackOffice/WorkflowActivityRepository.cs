@@ -14,17 +14,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
         public WorkflowActivityRepository(IConnectionFactory connectionFactory) {
             _connectionFactory = connectionFactory;
         }
-        public List<WorkflowActivityModel> GetByWorkflowStageId(int uiPageTypeId)
+        public List<WorkflowActivityModel> GetByWorkflowStageId(int stageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<WorkflowActivityModel>(@"select wa.Id , wa.Name, a.[Id] as ActivityId, a.[Name] as ActivityName
-                                                        ,ws.[Id] as WorkflowStageId ,ws.[Name] as WorkflowStageName
-                                                     from [WorkflowActivity] wa inner join [Activity] a on wa.ActivityId = a.Id 
-                                                        inner join [WorkflowStage] ws on wa.WorkflowStageId = ws.Id
-                                                        where ws.UiPageTypeId = @uiPageTypeId
-                                                        AND ws.IsDeleted = 0
-                                                        AND a.IsDeleted = 0
-                                                        AND wa.IsDeleted = 0",new {uiPageTypeId}).ToList();
+            return db.Query<WorkflowActivityModel>(@"select wa.Id, wa.ActivityId , wa.Name , a.Name as ActivityName,wa.WorkflowStageId
+                                                    From [WorkflowActivity] wa 
+                                                         inner join [Activity] a on wa.ActivityId = a.Id
+			                                             where wa.WorkflowStageId = @stageId", new {stageId}).ToList();
         }
     }
 }

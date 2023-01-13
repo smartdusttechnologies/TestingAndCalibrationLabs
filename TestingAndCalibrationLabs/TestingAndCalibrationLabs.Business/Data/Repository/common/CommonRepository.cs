@@ -126,8 +126,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var p = new DynamicParameters();
             p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@ModuleId", record.ModuleId);
-            string recordInsertQuery = @"Insert into [Record](ModuleId) 
-                values (@ModuleId);
+            p.Add("@WorkflowStageId", record.WorkflowStageId);
+            string recordInsertQuery = @"Insert into [Record](ModuleId,WorkflowStageId) 
+                values (@ModuleId,@WorkflowStageId);
                 SELECT @RecordId = @@IDENTITY";
             string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId) 
                 values (@UiPageMetadataId, @Value, @RecordId)";
@@ -140,19 +141,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
             return insertedRecordId;
         }
-        public int GetPageIdBasedOnCurrentWorkflowStage(int uiControlTypeId, int moduleId, int recordId)
+        public  int GetPageIdBasedOnCurrentWorkflowStage(int stageId )
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<int>(@"Select Top(1)  upd.Value
-                                                    From [MetadataModuleBridge] mmb
-													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
-													inner join [UiPageData] upd on upm.Id = upd.UiPageMetadataId
-                                                where upm.UiControlTypeId = @uiControlTypeId
-												and mmb.ModuleId = @moduleId
-                                                and upd.RecordId = @recordId
-                                                    and upm.IsDeleted = 0 
-													and mmb.IsDeleted = 0
-													and upd.IsDeleted = 0", new { uiControlTypeId, moduleId, recordId }).FirstOrDefault();
+                       return db.Query<int>(@"select Top(1) ws.UiPageTypeId
+                                                          From  WorkflowStage ws 
+                                                   where IsDeleted = 0 and ws.Id = @Id", new {Id = stageId}).First();
         }
         public int GetPageIdBasedOnOrder(int moduleId)
         {
@@ -167,11 +161,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and w.IsDeleted = 0
 													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
         }
+        public int GetWorkflowStageBasedOnOrder(int moduleId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<int>(@"Select  ws.Id
+                                                    From [Module] m
+													inner join Workflow w on m.Id = w.ModuleId
+													inner join [WorkflowStage] ws on w.Id = ws.WorkflowId
+                                                where m.Id = @moduleId
+												and ws.Orders = 1 
+                                                    and m.IsDeleted = 0 
+													and w.IsDeleted = 0
+													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
+        }
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var insertList = recordModel.FieldValues.Where(x=>x.Id == 0).ToList();
             var updateList = recordModel.FieldValues.Where(x=>x.Id != 0).ToList();
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate ,
+                                                WorkflowStageId = @WorkflowStageId
+                                            Where Id = @Id";
             var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value)
                                         Values (@UiPageMetadataId,@RecordId,@Value)";
             var updateQurey = @"Update [UiPageData] Set
@@ -180,6 +191,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                     Value = @Value
                                 Where Id = @Id";
             IDbTransaction transaction = db.BeginTransaction();
+            db.Execute(recordInsertQuery, recordModel, transaction);
             if (insertList.Count > 0)
             {
                 db.Execute(insertQuery, insertList, transaction);

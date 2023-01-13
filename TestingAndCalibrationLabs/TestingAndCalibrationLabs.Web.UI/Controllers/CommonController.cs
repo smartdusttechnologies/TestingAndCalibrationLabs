@@ -155,17 +155,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO,RecordModel>(record);
-            var adddata = _commonService.Update(records);
+            var adddata = _commonService.Save(records);
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(recordModel);
-                //  return Json(result);
             }
             recordModel.FieldValues = record.FieldValues;
             recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(recordModel);
+            
         }
         /// <summary>
         ///  Delete
