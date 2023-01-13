@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Web.UI.Models.Common;
-using System.Drawing;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -97,32 +96,31 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// This Method Control is For Header
         /// </summary>
-        /// <returns>PartilView return haderstrip</returns>
+        /// <returns>PartilView return _HeaderStrip</returns>
         public IActionResult Headerstrip()
         {
-            HeaderstripModel headerstrip = new HeaderstripModel();
-            headerstrip.Contact = "9049894772";
-            headerstrip.Email = "tushardhangar12@gmail.com";
-            headerstrip.CompanyImageURl = "/image/smartdust_technologies_logo.jpg";
-            headerstrip.AwardImageURL1 = "/image/cvalibration_award.jpg";
-            headerstrip.AwardImageURL2 = "/image/award.jpg";
-            headerstrip.AwardImageURL3 = "/image/trophy-gold.jpg";
-            headerstrip.linkedlnIcon = "https://www.linkedin.com/login";
-            headerstrip.FacebookIcon = "https://www.facebook.com/login";
-            return PartialView("~/Views/Home/HeaderstripTempleat.cshtml", headerstrip);
+            HeaderstripModelDTO _HeaderStrip = new HeaderstripModelDTO();
+            _HeaderStrip.Contact = "9049894772";
+            _HeaderStrip.Email = "tushardhangar12@gmail.com";
+            _HeaderStrip.CompanyImageURl = "/image/smartdust_technologies_logo.jpg";
+            _HeaderStrip.AwardImageURL1 = "/image/cvalibration_award.jpg";
+            _HeaderStrip.AwardImageURL2 = "/image/award.jpg";
+            _HeaderStrip.AwardImageURL3 = "/image/trophy-gold.jpg";
+            _HeaderStrip.linkedlnURL = "https://www.linkedin.com/login";
+            _HeaderStrip.FacebookURL = "https://www.facebook.com/login";
+            return PartialView("~/Views/Home/HeaderstripTempleat.cshtml", _HeaderStrip);
         }
 
         /// <summary>
         /// This Method Control is For NewsStripTicker
         /// </summary>
-        /// <returns>PartilView "~/Views/Home/_newsstripticker.cshtml" newsValue</returns>
+        /// <returns>PartilView "~/Views/Home/_newsstripticker.cshtml" _Newsstrip</returns>
         public IActionResult NewsStripTicker()
         {
-
-            var newsValue = new NewsStripModel();
-            newsValue.NewsStrip = new List<string> { "Delhi hit-and-run case live: Last rites of victim under way amid heavy police deployment", "Cricketer Rishabh Pant hospitalised after serious "};
-            newsValue.ImageIcon = "/image/new.gif" ;
-            return PartialView("~/Views/Home/NewsstripTicker.cshtml", newsValue);
+            var _Newsstrip = new NewsStripModelDTO();
+            _Newsstrip.NewsStrip = new List<string> { "Delhi hit-and-run case live: Last rites of victim under way amid heavy police deployment", "Cricketer Rishabh Pant hospitalised after serious "};
+            _Newsstrip.ImageIcon = "/image/new.gif";
+            return PartialView("~/Views/Home/NewsstripTicker.cshtml", _Newsstrip);
         }
     }
 }
