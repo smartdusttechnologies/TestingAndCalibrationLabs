@@ -8,7 +8,9 @@ using System.Linq;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
-    
+    /// <summary>
+    /// Repostiory Class For Workflow 
+    /// </summary>
     public class WorkflowRepository : IWorkflowRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -16,14 +18,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
-      
-
+        /// <summary>
+        /// Get Record By ModuleId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public WorkflowModel GetByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<WorkflowModel>(@"select * from Workflow where ModuleId = @ModuleId", new { ModuleId = moduleId }).FirstOrDefault();
         }
     }
-    
+
 }

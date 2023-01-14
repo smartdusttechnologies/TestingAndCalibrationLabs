@@ -8,14 +8,21 @@ using System.Linq;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
-
-    public class WorkflowStageRepository : IWorkflowStageRepository
+    /// <summary>
+    /// Repostiory Class For Workflow Stage
+    /// </summary>
+        public class WorkflowStageRepository : IWorkflowStageRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         public WorkflowStageRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
+        /// <summary>
+        /// Get Record Based On WorkflowId
+        /// </summary>
+        /// <param name="workflowId"></param>
+        /// <returns></returns>
         public List<WorkflowStageModel> GetByWorkflowId(int workflowId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

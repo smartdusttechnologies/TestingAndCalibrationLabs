@@ -6,12 +6,19 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
+    /// <summary>
+    /// Interface For Activity Metadata Service
+    /// </summary>
     public interface IActivityMetadataService
     {
-        List<ActivityMetadataModel> GetAll(int activityId);
-        ActivityMetadataModel GetById (int id); 
-        RequestResult<bool> Update(ActivityMetadataModel activityMetadata);
-        RequestResult<bool> Create(ActivityMetadataModel activityMetadata);
+        /// <summary>
+        /// Get All From Activity Metadata
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <param name="workflowStageId"></param>
+        /// <returns></returns>
+        List<ActivityMetadataModel> GetAll(int activityId ,int workflowStageId);
+       
 
     }
 }

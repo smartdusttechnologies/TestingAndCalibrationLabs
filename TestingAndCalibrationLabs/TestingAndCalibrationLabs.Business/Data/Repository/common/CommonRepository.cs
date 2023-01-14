@@ -17,16 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         {
             _connectionFactory = connectionFactory;
         }
-        /// <summary>
-        /// Connecting with database Via connectionfactory for displaying data
-        /// </summary>  
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public List<UiPageDataModel> GetUiPageDataByUiPageId(int recordId)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageDataModel>("Select upd.* From [UiPageData] upd INNER JOIN  [Record] r ON upd.RecordId = r.Id and r.IsDeleted = 0 where upd.RecordId=@recordId and upd.IsDeleted=0", new { recordId }).ToList();
-        }
+        
         public List<UiPageDataModel> GetUiPageDataByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

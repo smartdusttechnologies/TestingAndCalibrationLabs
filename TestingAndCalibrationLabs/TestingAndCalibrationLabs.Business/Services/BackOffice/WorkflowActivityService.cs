@@ -10,16 +10,17 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Workflow Activity Service In this We Just Run All The Activity Attached To WorkflowStage
+    /// </summary>
     public class WorkflowActivityService : IWorkflowActivityService
     {
-
         private readonly IWorkflowActivityRepository _workflowActivityRepository;
         private readonly IActivityMetadataService _activityMetadataService;
         private readonly IGenericRepository<UiPageDataModel> _pageDataGenericRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
-
         public WorkflowActivityService(IConfiguration configuration,IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService, IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository)
         {
             _workflowActivityRepository = workflowActivityRepository;
@@ -43,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 if (activity.ActivityId == (int)ActivityType.EmailServices)
                 {
-                   SendEmail(pageDataList,activity.ActivityId);
+                   SendEmail(pageDataList,activity.ActivityId,recordModel.WorkflowStageId);
                 }
             }
             return true;
@@ -57,10 +58,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="pageDataList"></param>
         /// <param name="activityId"></param>
-        private void SendEmail(List<UiPageDataModel> pageDataList,int activityId)
+        private void SendEmail(List<UiPageDataModel> pageDataList,int activityId,int stageId)
         {
             EmailModel emailModel = new EmailModel();
-            var activityList = _activityMetadataService.GetAll(activityId);
+            var activityList = _activityMetadataService.GetAll(activityId,stageId);
             var templatePath = activityList.Where(x => x.Name == "HtmlMsg").Select(x => x.Value).First();
             var staticList = activityList.Where(x => x.ActivityMetadataTypeId == (int)ActivityMetadataType.Static);
             var dynamicList = activityList.Where(x => x.ActivityMetadataTypeId == (int)ActivityMetadataType.Dynamic);

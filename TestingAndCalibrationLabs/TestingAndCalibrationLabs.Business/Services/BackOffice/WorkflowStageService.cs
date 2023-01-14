@@ -21,8 +21,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Records From Data Type
         /// </summary>
         /// <returns></returns>
-       
-
         public List<WorkflowStageModel> GetByWorkflowId(int moduleId)
         {
             var workflowData = _workflowService.GetByModuleId(moduleId);

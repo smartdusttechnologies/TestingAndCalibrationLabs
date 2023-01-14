@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWorkflowActivityService workflowActivityService)
-           
+
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
@@ -43,6 +43,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowActivityService = workflowActivityService;
         }
         #region public methods
+        /// <summary>
+        /// To Insert Record
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         public RequestResult<bool> Add(RecordModel record)
         {
             RequestResult<bool> requestResult = Validate(record);
@@ -50,25 +55,36 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 var workflowStageId = GetWorkflowStageId(record.ModuleId);
                 _commonRepository.Insert(record);
-                record.WorkflowStageId= workflowStageId;
-                //_workflowActivityService.WorkflowActivity(record);
+                record.WorkflowStageId = workflowStageId;
+                _workflowActivityService.WorkflowActivity(record);
                 return new RequestResult<bool>(true);
             }
             return requestResult;
         }
+        /// <summary>
+        /// to Delete Record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             _recordGenericRepository.Delete(id);
             return true;
         }
+        /// <summary>
+        /// to save the record 
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         public RequestResult<bool> Save(RecordModel record)
         {
             RequestResult<bool> requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
                 var oldRecord = _recordGenericRepository.Get(record.Id);
-                if (oldRecord.UpdatedDate == record.UpdatedDate) { 
-                    record.UpdatedDate =DateTime.Now;
+                if (oldRecord.UpdatedDate == record.UpdatedDate)
+                {
+                    record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
                     _workflowActivityService.WorkflowActivity(record);
                     return new RequestResult<bool>(true);
@@ -80,7 +96,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RecordModel GetUiPageMetadataCreate(int moduleId)
         {
             int uiPageTypeId;
-            var uiMetadata = GetMetadata( moduleId,0, out uiPageTypeId);
+            var uiMetadata = GetMetadata(moduleId, 0, out uiPageTypeId);
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel { UiPageMetadata = x }));
             var hierarchy = hirericheys.Hierarchize(
@@ -114,11 +130,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             Dictionary<int, List<UiPageMetadataCharacteristicsModel>> metadataContent = new Dictionary<int, List<UiPageMetadataCharacteristicsModel>>();
             return new RecordsModel { ModuleId = moduleId, Fields = meta, FieldValues = uiPageDataModels };
         }
+        /// <summary>
+        /// Get Record By Record Id
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
         public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            var uiMetadata = GetMetadata(recordMdel.ModuleId,recordMdel.WorkflowStageId, out uiPageTypeId);
+            var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
@@ -132,12 +153,19 @@ namespace TestingAndCalibrationLabs.Business.Services
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy};
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy };
         }
         #endregion
 
         #region Private Methods
-        private List<UiPageMetadataModel> GetMetadata(int moduleId,int stageId, out int uiPageId)
+        /// <summary>
+        /// To Get Metadata Based On Module Id And stageId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <param name="stageId"></param>
+        /// <param name="uiPageId"></param>
+        /// <returns></returns>
+        private List<UiPageMetadataModel> GetMetadata(int moduleId, int stageId, out int uiPageId)
         {
             //TODO: All this can be done in one call inside GetUiMetadata , one call to database
             if (stageId == 0)

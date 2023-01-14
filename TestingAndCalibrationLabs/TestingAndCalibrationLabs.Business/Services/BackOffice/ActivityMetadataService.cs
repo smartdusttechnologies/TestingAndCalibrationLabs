@@ -8,31 +8,26 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service class For Activity Metadata 
+    /// </summary>
     public class ActivityMetadataService : IActivityMetadataService
     {
-        private readonly IGenericRepository<ActivityMetadataModel> _genericRepository;
-        public ActivityMetadataService(IGenericRepository<ActivityMetadataModel> genericRepository)
+        private readonly IActivityMetadataRepository _activityMetadataRepository;
+        public ActivityMetadataService(IActivityMetadataRepository activityMetadataRepository)
         {
-            _genericRepository = genericRepository;
+           _activityMetadataRepository= activityMetadataRepository;
         }
-        public RequestResult<bool> Create(ActivityMetadataModel activityMetadata)
+        /// <summary>
+        /// Get all From Activity Metadata
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <param name="workflowStageId"></param>
+        /// <returns></returns>
+        public List<ActivityMetadataModel> GetAll(int activityId,int workflowStageId)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<ActivityMetadataModel> GetAll(int activityId)
-        {
-            return _genericRepository.Get("ActivityId",activityId);
-        }
-
-        public ActivityMetadataModel GetById(int id)
-        {
-            throw new NotImplementedException();
+            return _activityMetadataRepository.Get(activityId,workflowStageId);
         }
 
-        public RequestResult<bool> Update(ActivityMetadataModel activityMetadata)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
