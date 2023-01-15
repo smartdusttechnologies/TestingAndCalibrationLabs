@@ -8,6 +8,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     public class Dashboard_To_Do
     {
         public List<string> ToDo { get; set; }
-        public string Time { get; set; }
+        public List<string> Time { get; set; }
+
+        public List<string> Status{get;set; }
     }
 }
