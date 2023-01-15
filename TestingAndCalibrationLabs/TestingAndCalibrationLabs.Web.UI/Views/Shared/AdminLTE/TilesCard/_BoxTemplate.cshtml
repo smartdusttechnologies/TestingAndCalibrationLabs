@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Dashboard_Common;
+﻿@model Dashboard_Common;
 
 @{
     var value = ViewData["Control"] as Dashboard_Common;
@@ -69,7 +69,7 @@
     <!-- /.row -->
     <script>
             var Data = JSON.parse('@Html.Raw(Json.Serialize(value.template))');
-            debugger;
+              
             document.getElementById("info").innerHTML = Data.info;
             document.getElementById("Bounce").innerHTML = Data.bounce;
             document.getElementById("Registration").innerHTML =Data.registration;

@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Dashboard_Common;
+﻿@model Dashboard_Common;
 
 @{
     var Data = ViewData["control"] as Dashboard_Common;
@@ -135,7 +135,7 @@
 
     <script>
     var data = JSON.parse('@Html.Raw(Json.Serialize(Data.To_Do))');
-    debugger;
+      
     document.getElementById("Message").innerHTML = data.toDo;
     document.getElementById("Time").innerHTML = data.time;
 
