@@ -1,10 +1,20 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.DashboardV2;
+﻿
 @{
     var value = ViewData["Control"] as DashboardV2;
+}
+<style>
+    .info-box {
+        background-color: #343a40;
 
-    <div class="row">
+    }
+    .info-box-text{color:white}
+    .info-box-number {
+        color: white;
+    }
+</style>
+<div class="row" >
         <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
+        <div class="info-box" >
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
                 <div class="info-box-content">
@@ -61,7 +71,7 @@
         </div>
        
     </div>
-}
+
 <script>
     var Data = JSON.parse('@Html.Raw(Json.Serialize(value.Box))');
       

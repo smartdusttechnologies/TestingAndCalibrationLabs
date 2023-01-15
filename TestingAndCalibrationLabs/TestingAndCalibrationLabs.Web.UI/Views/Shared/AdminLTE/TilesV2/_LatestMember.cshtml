@@ -1,6 +1,16 @@
 ﻿
 @{
+    var value = ViewData["Control"] as DashboardV2;
 }
+<style>
+    .users-list-name{
+        color:white;
+    }
+
+    .users-list-date{
+        color:white;
+    }
+</style>
 <div class="col-md-6">
    
     <div class="card">
@@ -19,7 +29,7 @@
         </div>
        
         <div class="card-body p-0">
-            <ul class="users-list clearfix">
+            <ul class="users-list clearfix" id="ImageClass">
                 <li>
                     <img src="~/img/user1-128x128.jpg" alt="User Image">
                     <a class="users-list-name" href="#">Alexander Pierce</a>
@@ -35,31 +45,7 @@
                     <a class="users-list-name" href="#">Jane</a>
                     <span class="users-list-date">12 Jan</span>
                 </li>
-                <li>
-                    <img src="~/img/user6-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">John</a>
-                    <span class="users-list-date">12 Jan</span>
-                </li>
-                <li>
-                    <img src="~/img/user2-160x160.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Alexander</a>
-                    <span class="users-list-date">13 Jan</span>
-                </li>
-                <li>
-                    <img src="~/img/user5-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Sarah</a>
-                    <span class="users-list-date">14 Jan</span>
-                </li>
-                <li>
-                    <img src="~/img/user4-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Nora</a>
-                    <span class="users-list-date">15 Jan</span>
-                </li>
-                <li>
-                    <img src="~/img/user3-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">Nadia</a>
-                    <span class="users-list-date">15 Jan</span>
-                </li>
+               
             </ul>
         </div>
         <div class="card-footer text-center">
@@ -67,3 +53,32 @@
         </div>
     </div>
 </div>
+<script>
+    var Data = JSON.parse('@Html.Raw(Json.Serialize(value.Member))');
+
+
+    let Element = document.getElementById("ImageClass");
+
+    for(item=0;item<4;item++)
+    {
+    let List = document.createElement("li");
+     
+     let Image = document.createElement("img");
+     Image.alt= "User Image";
+        Image.src = Data.imageLink[item];
+     List.appendChild(Image);
+
+     let Name = document.createElement("a");
+     Name.className = "users-list-name";
+        Name.innerText = Data.name[item];
+     List.appendChild(Name);
+
+     let Date = document.createElement("span");
+     Date.className= "users-list-date";
+        Date.innerText = Data.date[item];
+     List.appendChild(Date);
+      
+     Element.appendChild(List);
+     }
+
+</script>

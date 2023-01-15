@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {

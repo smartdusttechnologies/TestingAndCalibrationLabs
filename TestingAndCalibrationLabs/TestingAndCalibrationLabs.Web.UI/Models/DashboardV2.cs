@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
@@ -11,5 +12,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public BrowserUsage Usage { get; set; }
         public LatestOrder Order { get; set; }
         public RecentProduct Detail { get; set; }
+        
+        public LatestMember Member { get; set; }
+        public List<ChatModel> ChatData { get; set; }
     }
 }

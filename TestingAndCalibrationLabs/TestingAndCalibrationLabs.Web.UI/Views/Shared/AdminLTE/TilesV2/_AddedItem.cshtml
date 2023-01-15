@@ -14,70 +14,10 @@
             </button>
         </div>
     </div>
-   
+
     <div class="card-body p-0">
-        <ul class="products-list product-list-in-card pl-2 pr-2">
-            <li class="item">
-                <div class="product-img">
-                    <img src="~/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                    <span class="product-title" id="productName">
-                        Samsung TVvv
-                        <span class="badge badge-warning float-right" id="cost">$1800</span>
-                    </span>
-                    <span class="product-description"id="details">
-                        Samsung 32" 1080p 60Hz LED Smart HDTV.
-                    </span>
-                </div>
-            </li>
-            
-            <li class="item">
-                <div class="product-img">
-                    <img src="~/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">
-                        Bicycle
-                        <span class="badge badge-info float-right">$700</span>
-                    </a>
-                    <span class="product-description">
-                        26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                    </span>
-                </div>
-            </li>
-            
-            <li class="item">
-                <div class="product-img">
-                    <img src="~/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">
-                        Xbox One <span class="badge badge-danger float-right">
-                            $350
-                        </span>
-                    </a>
-                    <span class="product-description">
-                        Xbox One Console Bundle with Halo Master Chief Collection.
-                    </span>
-                </div>
-            </li>
-            
-            <li class="item">
-                <div class="product-img">
-                    <img src="~/img/default-150x150.png" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">
-                        PlayStation 4
-                        <span class="badge badge-success float-right">$399</span>
-                    </a>
-                    <span class="product-description">
-                        PlayStation 4 500GB Console (PS4)
-                    </span>
-                </div>
-            </li>
-            
+        <ul class="products-list product-list-in-card pl-2 pr-2" id="ItemsList">
+          
         </ul>
     </div>
     <div class="card-footer text-center">
@@ -85,12 +25,53 @@
     </div>
 </div>
 
+
 <script>
     var Data = JSON.parse('@Html.Raw(Json.Serialize(value.Detail))');
+    
 
-    document.getElementById("cost").innerHTML = Data.price;
-    document.getElementById("details").innerHTML = Data.productDetails;
-    document.getElementById("productName").innerHTML = Data.name;
-    
-    
+
+    for (var item = 0; item < 4; item++) {
+        const Element = document.getElementById('ItemsList');
+       
+        var Items = document.createElement('li');
+        Items.className = "item";
+        Items.style = "background:#343a40;border-bottom-color: #6c757d;";
+        Element.appendChild(Items);
+
+
+        const ImageDiv = document.createElement('div');
+        ImageDiv.className = "product-img";
+        Items.appendChild(ImageDiv);
+
+        const ImagesInfo = document.createElement('img');
+        ImageDiv.appendChild(ImagesInfo);
+        ImagesInfo.src = Data.productImg[item];
+        ImagesInfo.className = "img-size-50";
+        ImagesInfo.alt = "Product Image";
+
+
+        const ProductList = document.createElement('div');
+        Items.appendChild(ProductList);
+        ProductList.className = "product-info";
+
+        const SpanClass = document.createElement('span');
+        ProductList.appendChild(SpanClass);
+        SpanClass.className = "product-title";
+        SpanClass.innerHTML = Data.name[item];
+
+        var SpanCostElement = document.createElement('span');
+        SpanCostElement.className = "badge badge-warning float-right";
+        SpanClass.appendChild(SpanCostElement);
+        SpanCostElement.innerHTML = Data.price[item];
+
+        var DetailInfoSpan = document.createElement('span');
+        DetailInfoSpan.className = "product-description";
+        ProductList.appendChild(DetailInfoSpan);
+        DetailInfoSpan.style = "color:white;";
+        DetailInfoSpan.innerHTML = Data.productDetails[item];
+        
+
+    }
+
 </script>

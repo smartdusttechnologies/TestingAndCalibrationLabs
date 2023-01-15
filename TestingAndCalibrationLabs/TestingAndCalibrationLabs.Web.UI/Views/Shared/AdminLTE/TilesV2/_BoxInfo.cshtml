@@ -7,7 +7,7 @@
 
     <div class="info-box-content">
         <span class="info-box-text">Inventory</span>
-        <span class="info-box-number" id="inventory">5,200</span>
+        <span class="info-box-number" id="inventory"></span>
     </div>
    
 </div>
@@ -17,7 +17,7 @@
 
     <div class="info-box-content">
         <span class="info-box-text">Mentions</span>
-        <span class="info-box-number" id="mention">92,050</span>
+        <span class="info-box-number" id="mention"></span>
     </div>
    
 </div>
@@ -27,7 +27,7 @@
 
     <div class="info-box-content">
         <span class="info-box-text">Downloads</span>
-        <span class="info-box-number" id="downloads">114,381</span>
+        <span class="info-box-number" id="downloads"></span>
     </div>
    
 </div>
@@ -37,14 +37,14 @@
 
     <div class="info-box-content">
         <span class="info-box-text">Direct Messages</span>
-        <span class="info-box-number" id="messages">163,921</span>
+        <span class="info-box-number" id="messages"></span>
     </div>
    
 </div>
 
 <script>
 
-    var Data = JSON.parse('@Html.Raw(Json.Serialize(value.map))');
+    var Data = JSON.parse('@Html.Raw(Json.Serialize(value.Box))');
 
     document.getElementById("inventory").innerHTML = Data.inventory;
     document.getElementById("mention").innerHTML = Data.mention;
