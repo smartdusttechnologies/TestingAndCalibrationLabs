@@ -105,6 +105,7 @@
     <Build Include="dbo\Tables\MetadataModuleBridge.sql" />
     <Build Include="dbo\Tables\Application.sql" />
     <Build Include="dbo\Tables\Activity.sql" />
+    <Build Include="dbo\Tables\ActivityMetadata.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />
