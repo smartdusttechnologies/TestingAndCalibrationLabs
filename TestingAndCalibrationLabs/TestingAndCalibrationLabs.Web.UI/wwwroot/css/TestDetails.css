@@ -2,13 +2,24 @@
 .width-full {
     width: 100%;
 }
-
-.form-element-for-login {
-    height: 50px;
-    position: relative;
-    padding-left: 2px;
-    padding-right: 2px;
+.form-element-for-login textarea:hover {
+    border-color: dodgerblue;
+    box-shadow: 0 0 1px 0 dodgerblue;
+  
 }
+.form-element-for-login textarea:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 3px 0 dodgerblue;
+    transition: 0.3s all;
+}
+
+
+    .form-element-for-login {
+        height: 50px;
+        position: relative;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
 
     .form-element-for-login .form-input {
         width: 100%;
@@ -26,7 +37,7 @@
         position: absolute;
         top: 15px;
         left: 15px;
-        color: black;
+        color:dimgrey;
         text-transform: capitalize;
         font-size: 18px;
         transition: top 0.3s;
