@@ -14,5 +14,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 
         public Dashboard_BoxTemplate template { get; set; }
         public Dashboard_To_Do To_Do { get; set; }
+        public List<ChatModel> ChatData { get; set; }
     }
 }
