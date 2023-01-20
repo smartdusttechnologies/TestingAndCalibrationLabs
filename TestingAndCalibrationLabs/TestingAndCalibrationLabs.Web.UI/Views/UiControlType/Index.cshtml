@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style>   
+    .nav2-link{
+        color: dimgray;
+        padding: 10px;
+        cursor: pointer
+    }
+</style>
 <h1>Ui Control Type</h1>
 <p>
     <a asp-action="Create">Create New</a>
@@ -10,27 +17,27 @@
     <div class="row mb-1">
     </div>
 </div>
-<div class="table-responsive simple-pagination card shadow border-radius-grid">
+<div class="table-responsive simple-pagination card shadow border-radius-grid">    
     <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                <th>                   
+                    @Html.DisplayNameFor(model => model.Name)                                         
                 </th>
                 <th>
-                    <h6><b>Display Name</b></h6>
+                    @Html.DisplayNameFor(model => model.DisplayName)                   
                 </th>
                 <th> <h6><b>Actions</b></h6></th>
-            </tr>
-        </thead>
-        <tbody>
+            </tr>                   
+        </thead>      
+       <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                    <td >
+                        @Html.DisplayFor(modelItem => item.Name)                                      
                     </td>
-                    <td>
+                    <td >
                         @Html.DisplayFor(modelItem => item.DisplayName)
                     </td>
                     <td>
@@ -56,7 +63,27 @@
         </div>
     </div>
 }
+<!-- Modal to hide column  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hide Column</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <a class="dropdown-item" href="#" onclick="enable(0)"><input type="checkbox" id="namecheck" checked>  @Html.DisplayNameFor(model => model.Name)</a>
+                <a class="dropdown-item" href="#" onclick="enable(1)"><input type="checkbox" id="displaycheck" checked> @Html.DisplayNameFor(model => model.DisplayName)</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    var oTable;
     oTable = $('#gridui').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -66,5 +93,21 @@
     });
     $('#gridsearch').keyup(function () {
         oTable.search($(this).val()).draw();
-    })
+    })  
+    function enable(ind) {
+            debugger;
+            if (oTable.column(ind).visible() === true) {
+                oTable.column(ind).visible(false);
+            }
+            else {
+                oTable.column(ind).visible(true);
+            }
+        } 
+    $(document).ready(function () {
+        var icon = '<a class="nav2-link dropdown" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa fa-gear"  id="sicon" data-toggle="tooltip" title="Column Configuration"aria-hidden="true"></i></a>';
+        $("#gridui_filter").prepend(icon);
+        $('[data-toggle="tooltip"]').tooltip();
+    });  
 </script>
+
+
