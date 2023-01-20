@@ -69,6 +69,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IEmailService, EmailService >();
 
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
