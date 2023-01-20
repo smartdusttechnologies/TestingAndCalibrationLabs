@@ -91,10 +91,12 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
 
 
             //Repository
             services.AddScoped<ILookupRepository, LookupRepository>();
+            services.AddScoped<IActivityMetadataRepository, ActivityMetadataRepository>();
             services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();
             services.AddScoped<IWorkflowRepository, WorkflowRepository>();
             services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
