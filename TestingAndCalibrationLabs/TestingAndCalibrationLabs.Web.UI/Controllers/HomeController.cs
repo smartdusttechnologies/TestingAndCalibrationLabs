@@ -8,6 +8,7 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
+
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class HomeController : Controller
@@ -90,6 +91,36 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
+        }
+
+        /// <summary>
+        /// This Method Control is For Header
+        /// </summary>
+        /// <returns>PartilView return _HeaderStrip</returns>
+        public IActionResult Headerstrip()
+        {
+            HeaderstripModelDTO _HeaderStrip = new HeaderstripModelDTO();
+            _HeaderStrip.Contact = "9049894772";
+            _HeaderStrip.Email = "tushardhangar12@gmail.com";
+            _HeaderStrip.CompanyImageURl = "/image/smartdust_technologies_logo.jpg";
+            _HeaderStrip.AwardImageURL1 = "/image/cvalibration_award.jpg";
+            _HeaderStrip.AwardImageURL2 = "/image/award.jpg";
+            _HeaderStrip.AwardImageURL3 = "/image/trophy-gold.jpg";
+            _HeaderStrip.linkedlnURL = "https://www.linkedin.com/login";
+            _HeaderStrip.FacebookURL = "https://www.facebook.com/login";
+            return PartialView("~/Views/Home/HeaderstripTempleat.cshtml", _HeaderStrip);
+        }
+
+        /// <summary>
+        /// This Method Control is For NewsStripTicker
+        /// </summary>
+        /// <returns>PartilView "~/Views/Home/_newsstripticker.cshtml" _Newsstrip</returns>
+        public IActionResult NewsStripTicker()
+        {
+            var _Newsstrip = new NewsStripModelDTO();
+            _Newsstrip.NewsStrip = new List<string> { "Delhi hit-and-run case live: Last rites of victim under way amid heavy police deployment", "Cricketer Rishabh Pant hospitalised after serious "};
+            _Newsstrip.ImageIcon = "/image/new.gif";
+            return PartialView("~/Views/Home/NewsstripTicker.cshtml", _Newsstrip);
         }
     }
 }

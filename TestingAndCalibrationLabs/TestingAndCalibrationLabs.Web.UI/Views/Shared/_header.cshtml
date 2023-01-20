@@ -1,0 +1,9 @@
+﻿<div id="headerID"></div>
+
+<script>
+    $(document).ready(function () {
+        var url = "@Url.Action("Headerstrip","Home")";
+        var idNum = "#headerID";
+        $(idNum).load(url);
+    });
+</script>

@@ -1,0 +1,10 @@
+﻿
+<div id="newsstripID"></div>
+
+<script>
+    $(document).ready(function () {
+        var url = "@Url.Action("NewsStripTicker","Home")";
+        var idNum = "#newsstripID";
+        $(idNum).load(url);
+    });
+</script>
