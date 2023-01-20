@@ -43,3 +43,12 @@ hs_err_pid*
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI.csproj.user
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.jfm
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.dbmdl
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/CoverletSourceRootsMapping
+*.cache
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/project.assets.json
+*.editorconfig
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/TestingAndCalibrationLabs.Tests.csproj.nuget.g.props
+*.targets
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.AssemblyInfo.cs
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/TestingAndCalibrationLabs.Tests.csproj.nuget.dgspec.json
