@@ -56,7 +56,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var workflowStageId = GetWorkflowStageId(record.ModuleId);
                 _commonRepository.Insert(record);
                 record.WorkflowStageId = workflowStageId;
-                _workflowActivityService.WorkflowActivity(record);
+                //_workflowActivityService.WorkflowActivity(record);
                 return new RequestResult<bool>(true);
             }
             return requestResult;
