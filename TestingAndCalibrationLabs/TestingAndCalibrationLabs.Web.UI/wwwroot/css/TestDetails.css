@@ -7,8 +7,7 @@
 
 .divDrop {
     position: relative;
-    margin-bottom: 20px;
-}
+    }
 
 .divLabel {
     color: dimgrey;
@@ -23,7 +22,7 @@
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
-}
+   }
 
 .divSelect {
     font-size: 20px;
@@ -106,12 +105,12 @@ select.divSelect {
     transition: 0.3s all;
 }
 
-    .form-element-for-login {
-        height: 50px;
-        position: relative;
-        padding-left: 2px;
-        padding-right: 2px;
-    }
+.form-element-for-login {
+    height: 50px;
+    position: relative;
+    padding-left: 2px;
+    padding-right: 2px;
+}
 
         .form-element-for-login .form-input  {
             width: 100%;
