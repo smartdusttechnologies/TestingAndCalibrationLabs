@@ -28,7 +28,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
             return db.Query<WorkflowActivityModel>(@"select wa.Id, wa.ActivityId , wa.Name , a.Name as ActivityName,wa.WorkflowStageId
                                                     From [WorkflowActivity] wa 
                                                          inner join [Activity] a on wa.ActivityId = a.Id
-			                                             where wa.WorkflowStageId = @stageId", new {stageId}).ToList();
+			                                             where wa.WorkflowStageId = @stageId
+                                                         AND wa.IsDeleted = 0
+                                                         AND a.IsDeleted = 0", new {stageId}).ToList();
         }
     }
 }
