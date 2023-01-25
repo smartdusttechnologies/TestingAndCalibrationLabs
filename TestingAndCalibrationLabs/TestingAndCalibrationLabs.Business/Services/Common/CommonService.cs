@@ -53,9 +53,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             RequestResult<bool> requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
-                var workflowStageId = GetWorkflowStageId(record.ModuleId);
+                //var workflowStageId = GetWorkflowStageId(record.ModuleId);
                 _commonRepository.Insert(record);
-                record.WorkflowStageId = workflowStageId;
+                //record.WorkflowStageId = workflowStageId;
                 //_workflowActivityService.WorkflowActivity(record);
                 return new RequestResult<bool>(true);
             }
@@ -86,7 +86,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
-                    _workflowActivityService.WorkflowActivity(record);
+                    //_workflowActivityService.WorkflowActivity(record);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false);
