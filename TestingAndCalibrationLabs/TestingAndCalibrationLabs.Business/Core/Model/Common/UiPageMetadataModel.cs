@@ -33,6 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The UiControlDisplayName of The Ui Page Metadata
         /// </summary>
         public string UiControlDisplayName { get; set; }
+        public string MetadataModuleBridgeUiControlDisplayName { get; set; }
         /// <summary>
         /// It Contains The Id of The Data Type
         /// </summary>

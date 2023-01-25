@@ -5,6 +5,7 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -80,6 +81,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
             return PartialView(controlCategoryTypeTemplate, records);
         }
+        [HttpGet]
+        public ActionResult TemplateGenerate(int uiPageTypeId)
+        {
+             var pageMetadata = _commonService.TemplateGenerate(uiPageTypeId);
+            //var node = r.Layout;
+            // //var nodeModel = _mapper.Map<Models.Node<LayoutDTO>,TestingAndCalibrationLabs.Business.Common.Node<LayoutModel>>(node);
+
+            return Ok(pageMetadata);
+           
+        }
         /// <summary>
         /// sending record to axaj to show grid control
         /// </summary>
@@ -129,7 +140,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return Ok(result);
             }
             result.FieldValues = record.FieldValues;
-            result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
+            result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(result);
         }
         /// <summary>
@@ -163,7 +174,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return Ok(recordModel);
             }
             recordModel.FieldValues = record.FieldValues;
-            recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
+            recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(recordModel);
             
         }

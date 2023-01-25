@@ -8,17 +8,20 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
-            <input type="hidden" asp-for="WorkflowStageId" />
-            @foreach (var item in Model.Layout)
-            {
-                <div class="row ms-1 me-1">
+            <input type="hidden" asp-for="WorkflowStageId" value="true"/>
+            <input type="hidden" id="workflowStageChecker" value="false"/>
+            <div class="row ms-1 me-1">
+                @await Html.PartialAsync("~/Views/Common/Components/ReportTemplate/_payment.cshtml");
+                @foreach (var item in Model.Layout)
+                {
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
-                </div>
-            }
+
+                }
+            </div>
         </form>
         <input type="hidden" value="" name="lefid" id="lefid" />
         <div class="form-group">
-            <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+            <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
         </div>
     </div>
 </div>
@@ -104,7 +107,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "ModuleId": moduleId,"WorkflowStageId": workflowStageId, "UiPageTypeId": uiPageTypeId , "FieldValues": fieldValues },
+            data: { "ModuleId": moduleId, "WorkflowStageId": workflowStageId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 var nuiPageMetaData = response.fields;

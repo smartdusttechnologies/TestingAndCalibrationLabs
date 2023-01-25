@@ -10,10 +10,12 @@
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
             <input type="hidden" asp-for="WorkflowStageId" />
-            @foreach (var item in Model.Layout)
-            {
-                <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
-            }
+            <div class="row ms-1 me-1">
+                @foreach (var item in Model.Layout)
+                {
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
+                }
+            </div>
         </form>
         <input type="hidden" value="" name="lefid" id="lefid" />
         <div class="form-group">
@@ -95,7 +97,7 @@
         var layout = _.flatMapDeep(modelData.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
-                if (layout[i].uiPageMetadata.controlCategoryName == "DataControl") {
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl") {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 var metadataId = layout[i].uiPageMetadata.id;
                 var fieldValue = $(fieldId).val();
@@ -124,7 +126,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "WorkflowStageId": workflowStageId, "UpdatedDate":updatedDateT, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
+            data: { "Id": id, "WorkflowStageId": workflowStageId, "UpdatedDate": updatedDateT, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();
                 //window.location.href = "/common/index/" + moduleId;

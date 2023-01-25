@@ -41,6 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 														mmb.Orders,
 														mmb.ParentId,
 														mmb.ModuleId,
+                                                        mmb.[UiControlDisplayName] as MetadataModuleBridgeUiControlDisplayName,
                                                         upt.[Name] as UiPageTypeName,
                                                          upm.IsRequired,
                                                         upm.UiControlTypeId,
@@ -147,7 +148,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join Workflow w on m.Id = w.ModuleId
 													inner join [WorkflowStage] ws on w.Id = ws.WorkflowId
                                                 where m.Id = @moduleId
-												and ws.Orders = 1 
+												and ws.Orders = 0
                                                     and m.IsDeleted = 0 
 													and w.IsDeleted = 0
 													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
@@ -160,7 +161,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join Workflow w on m.Id = w.ModuleId
 													inner join [WorkflowStage] ws on w.Id = ws.WorkflowId
                                                 where m.Id = @moduleId
-												and ws.Orders = 1 
+												and ws.Orders = 0 
                                                     and m.IsDeleted = 0 
 													and w.IsDeleted = 0
 													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();

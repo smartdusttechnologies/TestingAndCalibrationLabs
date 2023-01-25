@@ -51,3 +51,6 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin
 *.props
 *.props
+*.nuspec
+*.editorconfig
+*.cache

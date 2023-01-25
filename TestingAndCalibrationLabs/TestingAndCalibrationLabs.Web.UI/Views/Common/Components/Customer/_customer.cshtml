@@ -1,0 +1,47 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
+    <select class="form-input width-full" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiPageMetadata.UiControlDisplayName" />
+    </select>
+    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"> @Model.Value.UiPageMetadata.UiControlDisplayName</label>
+    <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+</div>
+<script>
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
+        var uiPageData = modelData.value.uiPageData;
+        var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetByModuleId","WorkflowStage")",
+            data: { moduleId: lookupCategoryId },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var lookupId = response[i].id;
+                    var lookupName = response[i].name;
+                    if (i == 0) {
+                        $("#WorkflowStageId").val(lookupId);
+                        $(id).append("<option value='" + lookupId + "' selected>" + lookupName + "</option>");
+                    } else {
+                        $(id).append("<option value='" + lookupId + "'>" + lookupName + "</option>");
+                    }
+                }
+                var idOfRecord = $("#Id").val();
+                if (idOfRecord != undefined) {
+                    var selectedId = uiPageData.value;
+                    var changeId = id + " [value=" + selectedId + "]";
+                    $(changeId).attr('selected', 'true');
+                    $("#WorkflowStageId").val(selectedId);
+                }
+            },
+            error: function (req, status, error) {
+            }
+        });
+
+        $(id).change(function () {
+            var stageId = this.value;
+            $("#WorkflowStageId").val(stageId);
+        });
+
+    });
+</script>
