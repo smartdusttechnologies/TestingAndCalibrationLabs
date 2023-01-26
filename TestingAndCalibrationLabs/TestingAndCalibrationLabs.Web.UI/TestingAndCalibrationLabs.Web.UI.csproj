@@ -10,11 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\DriveServiceCredentials\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user" />
-    <None Include="wwwroot\GoogleDriveSecret\client_secret_717056822258-n0k8vmnf5io9na8iqk71a3sevo60kaof.apps.googleusercontent.com.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.18.1" />
@@ -27,6 +22,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestingAndCalibrationLabs.Business\TestingAndCalibrationLabs.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\DriveServiceCredentials\" />
+    <Folder Include="wwwroot\GoogleDriveSecret\" />
   </ItemGroup>
 
 </Project>
