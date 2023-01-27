@@ -18,14 +18,12 @@
             </div>
         </form>
         <input type="hidden" value="" name="lefid" id="lefid" />
-        <div class="form-group">
+        <div class="form-group" id="sub-mt-btn">
             <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
-</div>
+
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbarsuccess">
@@ -39,7 +37,6 @@
         </div>
     </div>
 </div>
-@ViewBag.resultD
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div role="alert" id="snackbarerror">
@@ -129,7 +126,7 @@
             data: { "Id": id, "WorkflowStageId": workflowStageId, "UpdatedDate": updatedDateT, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();
-                //window.location.href = "/common/index/" + moduleId;
+                window.location.href = "/common/edit/" + id;
             },
             failure: function (response) {
                 alert(response.responseText);

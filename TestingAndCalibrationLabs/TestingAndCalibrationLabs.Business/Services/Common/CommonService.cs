@@ -198,8 +198,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.SingleOrDefault(y => y.UiPageMetadataId == x.Id)
-            }));
+                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).FirstOrDefault()
+            })) ;
             var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object

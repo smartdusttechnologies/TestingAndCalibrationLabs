@@ -1,41 +1,23 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-<style>
-    .download-btn {
-        font-weight: bold;
-        color: white;
-        border: 0 none;
-        border-radius: 0px;
-        cursor: pointer;
-        padding: 10px 5px;
-        margin: 10px 5px 10px 0px;
-        float: left;
-        background: #3ddc84;
-        margin-top: 10px;
-        border: 1.5px solid #080808;
-        border-radius: 20px;
-    }
-    .download-btn:hover{
-        color:dimgrey;
-            background: #eff7cf;
-    }
-</style>
-<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
-    <input type="button" name="download-btn" onclick="GenerateReport()" class="download-btn" value="@Model.Value.UiPageMetadata.UiControlDisplayName" />
-</div>
-<div id="repo"></div>
-<script>
-   function GenerateReport(pageTypeId) {
-        var modelData = JSON.parse('@Json.Serialize(Model)');
-        var metadata = modelData.value.uiPageMetadata.id;
-        
-        var id =  $("#Id").val();
 
+<script>
+    var modelData;
+    $(document).ready(function(){
+        modelData = JSON.parse('@Json.Serialize(Model)');
+        var displayName = modelData.value.uiPageMetadata.uiControlDisplayName;
+        var btnHtml = '<input type="button" value="'+displayName+'" class="btn btn-primary mt-3" onclick="GenerateReport()" />'
+        $("#sub-mt-btn").append(btnHtml);
+    });
+   function GenerateReport(pageTypeId) {
+       
+        var metadata = modelData.value.uiPageMetadata.id;
+        var id =  $("#Id").val();
         $.ajax({
             type: "Get",
             url: "@Url.Action("TemplateGenerate","Common")",
             data: { recordId: id ,metadataId:metadata},
             success: function (response) {
-               // $("#repo").append(response);
+              
             },
             error: function (req, status, error) {
             }
