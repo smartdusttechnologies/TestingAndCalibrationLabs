@@ -84,11 +84,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult TemplateGenerate(int recordId, int metadataId)
         {
-             var pageMetadata = _commonService.TemplateGenerate(recordId, metadataId);
-            //var node = r.Layout;
-            // //var nodeModel = _mapper.Map<Models.Node<LayoutDTO>,TestingAndCalibrationLabs.Business.Common.Node<LayoutModel>>(node);
-
-            return Ok(pageMetadata);
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId);
+            return File(reportByte, "application/pdf");
            
         }
         /// <summary>

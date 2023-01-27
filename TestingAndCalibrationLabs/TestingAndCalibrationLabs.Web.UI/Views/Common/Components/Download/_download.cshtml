@@ -12,15 +12,6 @@
        
         var metadata = modelData.value.uiPageMetadata.id;
         var id =  $("#Id").val();
-        $.ajax({
-            type: "Get",
-            url: "@Url.Action("TemplateGenerate","Common")",
-            data: { recordId: id ,metadataId:metadata},
-            success: function (response) {
-              
-            },
-            error: function (req, status, error) {
-            }
-        });
+        window.location.href = "/common/templateGenerate/?recordId=" + id +"&metadataId=" +metadata;
     }
 </script>

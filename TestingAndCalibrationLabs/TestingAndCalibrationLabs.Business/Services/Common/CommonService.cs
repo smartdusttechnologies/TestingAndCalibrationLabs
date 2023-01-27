@@ -71,7 +71,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return requestResult;
         }
-        public string TemplateGenerate(int recordId,int metadataId )
+        public byte[] TemplateGenerate(int recordId,int metadataId )
         {
             var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
             int uiPageId;
@@ -101,13 +101,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template);
-            //var sdf = doc.Save();
             var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
-            var fileName = "reportTemplate.pdf";
-            doc.Save(pdfPath);
+            var pdfByte = doc.Save();
             doc.Close();
 
-            return pdfPath;
+            return pdfByte;
         }
         /// <summary>
         /// to Delete Record

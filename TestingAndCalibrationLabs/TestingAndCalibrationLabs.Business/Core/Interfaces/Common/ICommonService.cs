@@ -50,6 +50,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="recordId"></param>
         /// <returns></returns>
         RecordModel GetRecordById(int recordId);
-        string TemplateGenerate(int uiPageTypeId,int metadataId);
+		byte[] TemplateGenerate(int uiPageTypeId,int metadataId);
     }
 }
