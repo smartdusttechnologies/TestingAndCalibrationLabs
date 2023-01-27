@@ -25,6 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IUiPageMetadataRepository _uiPageMetadataRepository;
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
 
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
@@ -35,7 +36,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWorkflowActivityService workflowActivityService,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
 
         {
             _commonRepository = commonRepository;
@@ -48,6 +50,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageMetadataRepository = uiPageMetadataRepository;
             _workflowActivityService = workflowActivityService;
             _webHostEnvironment = webHostEnvironment;
+            _uiPageMetadataCharacteristicsService = uiPageMetadataCharacteristicsService;
         }
         #region public methods
         /// <summary>
@@ -68,11 +71,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return requestResult;
         }
-        public string TemplateGenerate(int recordId )
+        public string TemplateGenerate(int recordId,int metadataId )
         {
+            var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
             int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            var path = Path.Combine(_webHostEnvironment.WebRootPath, "_testReport.html");
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);
             var template = File.ReadAllText(path);
             var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId,out uiPageId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);

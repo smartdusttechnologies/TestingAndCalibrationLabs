@@ -9,8 +9,14 @@
         padding: 10px 5px;
         margin: 10px 5px 10px 0px;
         float: left;
-        background: #2F8D46;
+        background: #3ddc84;
         margin-top: 10px;
+        border: 1.5px solid #080808;
+        border-radius: 20px;
+    }
+    .download-btn:hover{
+        color:dimgrey;
+            background: #eff7cf;
     }
 </style>
 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
@@ -19,17 +25,17 @@
 <div id="repo"></div>
 <script>
    function GenerateReport(pageTypeId) {
-        //var modelData = JSON.parse('@Json.Serialize(Model)');
-        //var pageTypeId = modelData.value.uiPageMetadata.uiPageTypeId;
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var metadata = modelData.value.uiPageMetadata.id;
         
         var id =  $("#Id").val();
 
         $.ajax({
             type: "Get",
             url: "@Url.Action("TemplateGenerate","Common")",
-            data: { uiPageTypeId: id },
+            data: { recordId: id ,metadataId:metadata},
             success: function (response) {
-                $("#repo").append(response);
+               // $("#repo").append(response);
             },
             error: function (req, status, error) {
             }

@@ -82,9 +82,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return PartialView(controlCategoryTypeTemplate, records);
         }
         [HttpGet]
-        public ActionResult TemplateGenerate(int uiPageTypeId)
+        public ActionResult TemplateGenerate(int recordId, int metadataId)
         {
-             var pageMetadata = _commonService.TemplateGenerate(uiPageTypeId);
+             var pageMetadata = _commonService.TemplateGenerate(recordId, metadataId);
             //var node = r.Layout;
             // //var nodeModel = _mapper.Map<Models.Node<LayoutDTO>,TestingAndCalibrationLabs.Business.Common.Node<LayoutModel>>(node);
 

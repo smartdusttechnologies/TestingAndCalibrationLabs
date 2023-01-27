@@ -11,7 +11,6 @@
             <input type="hidden" asp-for="WorkflowStageId" value="true"/>
             <input type="hidden" id="workflowStageChecker" value="false"/>
             <div class="row ms-1 me-1">
-                @await Html.PartialAsync("~/Views/Common/Components/ReportTemplate/_payment.cshtml");
                 @foreach (var item in Model.Layout)
                 {
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
