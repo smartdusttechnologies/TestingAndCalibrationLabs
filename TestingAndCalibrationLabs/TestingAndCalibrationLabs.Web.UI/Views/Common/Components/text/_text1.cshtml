@@ -1,7 +1,7 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 <div class="row ms-1 me-1">
-    <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
-        <input class="form-input width-full" type="text" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+    <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+        <input class="form-input width-full black-border" type="text" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" />
         <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName">@Model.Value.UiPageMetadata.UiControlDisplayName</label>
         <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
     </div>

@@ -17,7 +17,6 @@
                 }
             </div>
         </form>
-        <input type="hidden" value="" name="lefid" id="lefid" />
         <div class="form-group" id="sub-mt-btn">
             <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
         </div>
@@ -75,14 +74,9 @@
         var id = parseInt($("#Id").val())
         var workflowStageId = parseInt($("#WorkflowStageId").val())
 
-        var x = document.getElementById("lefid").value;
-        if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
-            document.getElementById(x).style.border = "1px solid black ";
-        }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var updatedDateT = modelData.updatedDate;
-        console.log(updatedDateT);
         //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
         const getMembers = (member) => {
 
@@ -96,6 +90,9 @@
         for (let i = 0; i < layout.length; i++) {
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl") {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
                 var metadataId = layout[i].uiPageMetadata.id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
@@ -133,12 +130,15 @@
             },
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
-                var newErrorMessage = newresponseJSON.errorMessage;             //assiging the values of errorMessage to  newErrorMessage
-                myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                //    var s = newErrorMessage.fid//Sending the reason to html
-                document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
-                document.getElementById("lefid").value = newErrorMessage.sourceId;
+                var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                for (var i = 0; i < newErrorMessage.length; i++) {
+                    var sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    myFunctionError();                                              //Calling myFunctionError javacript function
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+
+                }
             }
         });
     }

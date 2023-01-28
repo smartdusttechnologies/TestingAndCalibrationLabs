@@ -8,8 +8,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
-            <input type="hidden" asp-for="WorkflowStageId" value="true"/>
-            <input type="hidden" id="workflowStageChecker" value="false"/>
+            <input type="hidden" asp-for="WorkflowStageId" value="true" />
+            <input type="hidden" id="workflowStageChecker" value="false" />
             <div class="row ms-1 me-1">
                 @foreach (var item in Model.Layout)
                 {
@@ -18,7 +18,6 @@
                 }
             </div>
         </form>
-        <input type="hidden" value="" name="lefid" id="lefid" />
         <div class="form-group">
             <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
         </div>
@@ -72,10 +71,6 @@
 <script type="text/javascript">
     function AjaxFormSubmit() {
         //Set the URL.
-        var x = document.getElementById("lefid").value;
-        if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
-            document.getElementById(x).style.border = "1px solid black ";
-        }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
         //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
@@ -92,6 +87,9 @@
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
@@ -109,6 +107,8 @@
             data: { "ModuleId": moduleId, "WorkflowStageId": workflowStageId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
+                SuccessMessage(NotificationNumbers++, "Saved Successfully");
+                //window.location.href = "/common/index/" + moduleId;
                 var nuiPageMetaData = response.fields;
                 var a = response.fieldValues;
                 for (let i = 0; i < nuiPageMetaData.length; i++) {
@@ -124,12 +124,14 @@
             error: function (response) {
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                document.getElementById("lefid").value = newErrorMessage.sourceId;
-                var namea = document.getElementById(newErrorMessage.sourceId);
-                var txtname = namea.name;
-                myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
+                for (var i = 0; i < newErrorMessage.length; i++) {
+                    var sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    myFunctionError();                                              //Calling myFunctionError javacript function
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+
+                }
             }
         });
     }

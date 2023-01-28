@@ -6,6 +6,7 @@ using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Common;
+using System.Collections.Generic;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -137,7 +138,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return Ok(result);
             }
             result.FieldValues = record.FieldValues;
-            result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
+            result.ErrorMessage = _mapper.Map<IList<Business.Common.ValidationMessage>,IList<Models.ValidationMessage>>(adddata.ValidationMessages);
             return BadRequest(result);
         }
         /// <summary>
@@ -171,7 +172,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return Ok(recordModel);
             }
             recordModel.FieldValues = record.FieldValues;
-            recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,Models.ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
+            recordModel.ErrorMessage = _mapper.Map<IList<Business.Common.ValidationMessage>,IList<Models.ValidationMessage>>(adddata.ValidationMessages);
             return BadRequest(recordModel);
             
         }

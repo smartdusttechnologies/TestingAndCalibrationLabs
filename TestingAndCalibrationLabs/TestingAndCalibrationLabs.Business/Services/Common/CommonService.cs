@@ -80,6 +80,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var template = File.ReadAllText(path);
             var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId,out uiPageId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
+            
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
