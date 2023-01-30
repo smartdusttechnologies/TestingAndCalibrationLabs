@@ -73,7 +73,7 @@
         //Set the URL.
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
+        //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
 
             if (!member.children || !member.children.length) {
@@ -129,8 +129,9 @@
                     $(sourceId).removeClass("black-border").addClass("red-error-border");
                     myFunctionError();                                              //Calling myFunctionError javacript function
                     ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
-                    document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
-
+                    if (i == 0) {
+                        document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+                    }
                 }
             }
         });
