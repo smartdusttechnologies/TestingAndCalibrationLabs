@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using SelectPdf;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -71,6 +70,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return requestResult;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <param name="metadataId"></param>
+        /// <returns></returns>
         public byte[] TemplateGenerate(int recordId,int metadataId )
         {
             var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
@@ -141,6 +146,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return requestResult;
         }
+        /// <summary>
+        /// Get By Module Id For Create
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public RecordModel GetUiPageMetadataCreate(int moduleId)
         {
             int uiPageTypeId;

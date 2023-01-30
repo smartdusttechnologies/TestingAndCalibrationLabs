@@ -22,6 +22,17 @@
             display: grid;
         }
 
+        .report-body {
+            margin-top: 80px;
+            border: 0px solid black;
+            text-align: center;
+            font-size: 100px;
+            padding: 100px;
+            transform: rotate(-50deg);
+            color: grey;
+            text-transform: uppercase;
+        }
+
         img {
             height: 100%;
             width: 100%;
@@ -47,9 +58,10 @@
         }
 
         .imag {
-            background-image: url('https://i.ibb.co/svy8WR0/sdt-Things.jpg');
+            background-image: url('https://i.ibb.co/5MnKgM9/sdt-Things.jpg');
             background-size: 100%;
             width: 100%;
+            background-repeat:no-repeat;
             height: 1682px;
             object-fit: contain;
         }
@@ -60,13 +72,13 @@
 
         td, .txt-un {
             font: 1em sans-serif;
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .mx-text {
-            font-size: 35px;
+            font-size: 25px;
             font-weight: 500;
-            margin-top: 68px;
+            margin-top: 270px;
         }
     </style>
 </head>
@@ -78,12 +90,9 @@
                     <div class="col center">
                         <table border="0" class="">
                             <tr>
-                                <td>**field0**: **fieldvalue0**</td>
+                                <td>**field0**</td>
+                                <td class="align-left">**fieldvalue0**</td>
                             </tr>
-                        </table>
-                    </div>
-                    <div class="col">
-                        <table border="0" class="table-centre">
                             <tr>
                                 <td>**field1**</td>
                                 <td class="align-left">**fieldvalue1**</td>
@@ -108,16 +117,10 @@
                                 <td>**field6**</td>
                                 <td class="align-left">**fieldvalue6**</td>
                             </tr>
-                            <tr>
-                                <td>**field7**</td>
-                                <td class="align-left">**fieldvalue7**</td>
-                            </tr>
                         </table>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col">
-                        <table border="0" class="">
+                        <table border="0" class="table-centre">
                             <tr>
                                 <td>**field8**</td>
                                 <td class="align-left">**fieldvalue8**</td>
@@ -128,10 +131,6 @@
                             </tr>
                             <tr>
                                 <td>**field10**</td>
-                                <td class="align-left">**fieldvalue10**</td>
-                            </tr>
-                            <tr>
-                                <td>**field11**</td>
                                 <td class="align-left">**fieldvalue11**</td>
                             </tr>
                             <tr>
@@ -146,148 +145,18 @@
                                 <td>**field14**</td>
                                 <td class="align-left">**fieldvalue14**</td>
                             </tr>
+                            <tr>
+                                <td>**field15**</td>
+                                <td class="align-left">**fieldvalue15**</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
                 <p class="table-centre mx-text">Test Method: IS:516(Part-1/Sec-1):2021/IS:516(Par-2/Sec-1):2018</p>
-                <div class="row" style="margin-top:70px; margin-bottom: 50px;">
-                    <div class="col table-centre txt-un">**field15** **fieldvalue15**</div>
-                    <div class="col table-centre txt-un">**field16** **fieldvalue16**</div>
-                    <div class="col table-centre txt-un">**field17** **fieldvalue17**</div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <table>
-                            <tr class="table-centre">
-                                <th>Tests</th>
-                            </tr>
-                            <tr class="table-centre">
-                                <td style="font-size: 20px;">Conpressive Strenth</td>
-                            </tr>
-                            <tr class="table-centre">
-                                <td style="font-size: 20px;">{Mpa or N/mm2}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col table-centre">
-                        <table>
-                            <tr class="table-centre">
-                                <th>Dimension Of Sepimen, mm</th>
-                            </tr>
-                            <table>
-                                <tr>
-                                    <th>Length</th>
-                                    <th>Width</th>
-                                    <th>Height</th>
-                                </tr>
-                                <tr>
-                                    <td>150</td>
-                                    <td>150</td>
-                                    <td>150</td>
-                                </tr>
-                                <tr>
-                                    <td>150</td>
-                                    <td>150</td>
-                                    <td>150</td>
-                                </tr>
-                                <tr>
-                                    <td>150</td>
-                                    <td>150</td>
-                                    <td>150</td>
-                                </tr>
-                                <tr>
-                                    <td>150</td>
-                                    <td>150</td>
-                                    <td>150</td>
-                                </tr>
-                            </table>
-                        </table>
-                    </div>
-                    <div class="col table-centre">
-                        <table>
-                            <tr class="table-centre">
-                                <th>
-                                    Area, <br />
-                                    mm
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>22500</td>
-                            </tr>
-                            <tr>
-                                <td>22500</td>
-                            </tr>
-                            <tr>
-                                <td>22500</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col table-centre">
-                        <table>
-                            <tr class="table-centre">
-                                <th>
-                                    Volume, <br />
-                                    cm3
-                                </th>
-                            </tr>
-
-                            <tr>
-                                <td>3375</td>
-                            </tr>
-                            <tr>
-                                <td>3375</td>
-                            </tr>
-                            <tr>
-                                <td>3375</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col table-centre">
-                        <table>
-                            <tr class="table-centre">
-                                <th>
-                                    Weight, <br />
-                                    gm
-                                </th>
-                            </tr>
-
-                            <tr>
-                                <td>7937</td>
-                            </tr>
-                            <tr>
-                                <td>7765</td>
-                            </tr>
-                            <tr>
-                                <td>7069</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col table-centre">
-                        <table>
-                            <tr class="table-centre">
-                                <th>
-                                    Density, <br />
-                                    gm/cm3
-                                </th>
-                            </tr>
-
-                            <tr>
-                                <td>2.352</td>
-                            </tr>
-                            <tr>
-                                <td>2.302</td>
-                            </tr>
-                            <tr>
-                                <td>2.283</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+                    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+                    crossorigin="anonymous"></script>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-                integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-                crossorigin="anonymous"></script>
-    </div>
 </body>
 </html>
