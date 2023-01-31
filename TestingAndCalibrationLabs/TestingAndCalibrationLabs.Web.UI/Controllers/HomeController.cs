@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class HomeController : Controller
-    {
+    {   
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
@@ -23,11 +24,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = PolicyTypes.Users.Manage)]
+       /// [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
-            return View();
+    
+            var Image = new List<imageslideModelDTO>();
+            Image.Add(new imageslideModelDTO { Image = "/image/flowers-276014__340.jpg", header = "star55", paragraph = "aman" });
+            Image.Add(new imageslideModelDTO { Image = "/image/istockphoto-1181366400-612x612.jpg", header = "roll", paragraph = "eee" });
+            Image.Add(new imageslideModelDTO { Image = "/image/istockphoto-1202227531-612x612.jpg", header = "erttttt", paragraph = "ama111n" });
+            Image.Add(new imageslideModelDTO { Image = "/image/istockphoto-517188688-612x612.jpg", header = "w222", paragraph = "a344111n" });
+        
+            return View(Image);
+      
         }
+       
         
         /// <summary>
         /// UI will get the information from the User
@@ -90,6 +100,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
         }
     }
 }
