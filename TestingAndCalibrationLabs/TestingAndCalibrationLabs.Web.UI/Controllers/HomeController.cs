@@ -29,10 +29,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
     
             var Image = new List<imageslideModelDTO>();
-            Image.Add(new imageslideModelDTO { Image = "/image/flowers-276014__340.jpg", header = "star55", paragraph = "aman" });
-            Image.Add(new imageslideModelDTO { Image = "/image/istockphoto-1181366400-612x612.jpg", header = "roll", paragraph = "eee" });
-            Image.Add(new imageslideModelDTO { Image = "/image/istockphoto-1202227531-612x612.jpg", header = "erttttt", paragraph = "ama111n" });
-            Image.Add(new imageslideModelDTO { Image = "/image/istockphoto-517188688-612x612.jpg", header = "w222", paragraph = "a344111n" });
+            Image.Add(new imageslideModelDTO { Image = "https://thumbs.dreamstime.com/b/teamwork-bees-bridge-gap-bee-swarm-making-chain-to-combine-two-parts-one-metaphor-business-community-55767925.jpg", header = "star55", paragraph = "aman" });
+            Image.Add(new imageslideModelDTO { Image = "https://thumbs.dreamstime.com/b/bandra-worli-sea-link-sunset-dadar-coast-51035486.jpg", header = "roll", paragraph = "eee" });
+            Image.Add(new imageslideModelDTO { Image = "https://thumbs.dreamstime.com/b/amaranth-love-lies-bleeding-chain-link-fence-29603774.jpg", header = "erttttt", paragraph = "ama111n" });
+            
         
             return View(Image);
       
