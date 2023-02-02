@@ -3,10 +3,13 @@ using System;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1
 {
+    /// <summary>
+    /// This class consist the property for the Areachart
+    /// </summary>
     public class SalesModel
     {
 
-        // Sales Graph
+
        
         public string  Label { get; set; }
         public string backgroundColor { get; set; }

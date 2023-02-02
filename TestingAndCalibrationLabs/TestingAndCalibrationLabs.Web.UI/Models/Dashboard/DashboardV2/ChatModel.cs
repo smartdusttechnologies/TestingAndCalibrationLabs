@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2
 {
+    /// <summary>
+    /// IT consist the property for the Inbox
+    /// </summary>
     public class ChatModel
     {
         public string Name { get; set; }

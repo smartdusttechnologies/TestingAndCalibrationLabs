@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2
 {
+    /// <summary>
+    /// It Consist the Latest Order Property
+    /// </summary>
     public class LatestOrder
     {
         public List<string> Orderid { get; set; }

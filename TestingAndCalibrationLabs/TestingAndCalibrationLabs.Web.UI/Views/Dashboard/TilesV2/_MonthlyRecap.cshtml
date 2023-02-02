@@ -101,11 +101,6 @@
 
 
 
-
-
-
-
-
     $.ajax({
         type: "POST",
         url: "@Url.Action("AreachartV2","Dashboard")",
@@ -136,7 +131,7 @@
 
                 var GoalValue = document.createElement('span');
                 GoalValue.className = "float-right";
-                GoalValue.innerHTML = RecapModelData.goalListData[item].target + "/" + RecapModelData.goalListData[item].reach;
+                GoalValue.innerHTML = RecapModelData.goalListData[item].reach + "/" + RecapModelData.goalListData[item].target;
 
                 var ProgressIcon = document.createElement('div')
                 ProgressIcon.className = "progress progress-sm";
@@ -162,10 +157,10 @@
                 var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
                 var AreaChartRecapdata = []
 
-                for (var i = 0; i < RecapModelData.areaGraphData.length; i++) {
+                for (var item = 0; item < RecapModelData.areaGraphData.length; item++) {
 
 
-                    AreaChartRecapdata.push(RecapModelData.areaGraphData[i]);
+                    AreaChartRecapdata.push(RecapModelData.areaGraphData[item]);
                 }
 
                 var salesChartData = {

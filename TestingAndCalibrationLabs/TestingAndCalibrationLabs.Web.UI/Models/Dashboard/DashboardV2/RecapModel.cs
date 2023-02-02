@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2
 {
+    /// <summary>
+    /// It consist the property for the Area Chart
+    /// </summary>
     public class RecapModel
     {
         public string Label { get; set; }

@@ -166,7 +166,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
+                    pattern: "{controller=Dashboard}/{action=DashboardV2}/{id?}");
             });
            
         }

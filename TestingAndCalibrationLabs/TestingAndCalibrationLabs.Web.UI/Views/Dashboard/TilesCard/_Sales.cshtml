@@ -45,9 +45,9 @@
                 var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
                 var AreaChartdata = []
 
-                for (var i = 0; i < SalesModelData.areaData.length; i++) {
+                for (var item = 0; i < SalesModelData.areaData.length; item++) {
 
-                    var sale = SalesModelData.areaData[i];
+                    var sale = SalesModelData.areaData[item];
                     AreaChartdata.push(sale);
                 }
                 
@@ -91,9 +91,9 @@
                 var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
                 var DonutData = []
                 var DonutLabelName = []
-                for (i = 0; i < SalesModelData.donutData.length; i++) {
-                    DonutLabelName.push(SalesModelData.donutData[i].salesName[i]);
-                    var DataValues = { data: SalesModelData.donutData[i].dataSet, backgroundColor: SalesModelData.donutData[i].background };
+                for (item = 0; item < SalesModelData.donutData.length; item++) {
+                    DonutLabelName.push(SalesModelData.donutData[item].salesName[item]);
+                    var DataValues = { data: SalesModelData.donutData[item].dataSet, backgroundColor: SalesModelData.donutData[item].background };
                     DonutData.push(DataValues);
 
 

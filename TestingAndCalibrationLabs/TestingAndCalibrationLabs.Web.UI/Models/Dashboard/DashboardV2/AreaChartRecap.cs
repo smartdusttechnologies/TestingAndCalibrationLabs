@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2
 {
+    /// <summary>
+    /// It Consist the property of list type for Area chart and property for other small tiles
+    /// </summary>
     public class AreaChartRecap
     {
         public List<string> Month { get; set; }

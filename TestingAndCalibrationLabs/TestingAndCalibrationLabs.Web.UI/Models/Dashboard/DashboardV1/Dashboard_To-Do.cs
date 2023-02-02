@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1
 {
+    /// <summary>
+    /// It consist the properties Todo List Data
+    /// </summary>
     public class Dashboard_To_Do
     {
         public List<string> ToDo { get; set; }

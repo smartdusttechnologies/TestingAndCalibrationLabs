@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2
 {
+    /// <summary>
+    /// It consist The property for the Cartogram Graph
+    /// </summary>
     public class UsVisitor
     {
         public List<int> vistorslist { get; set; }

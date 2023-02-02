@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
+
 using System.Collections.Generic;
-using System.Drawing;
-using System.Security.Cryptography;
+
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1;
 
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2;
@@ -18,9 +17,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return View();
         }
+        /// <summary>
+        /// This Method is for AreaGraph And Dounut Graph
+        /// </summary>
+        /// <returns> It will return the object of area Graph </returns>
         [HttpPost]
         public IActionResult AreaChart()
         {
+
+            #region Different Numbers of data for AreaChart 
             //var AreaInfo = new SalesModel();
             //AreaInfo.Label = "Digital goods";
             //AreaInfo.backgroundColor = "yellow";
@@ -50,7 +55,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //AreaInfo3.pointStrokeColor = "red";
             //AreaInfo3.pointHighlightStroke = "rgba(220,220,220,1)";
             //AreaInfo3.data = new List<int> { 21, 23, 13, 11, 54, 7, 65 };
-            
+            #endregion
 
 
 
@@ -79,22 +84,29 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             donutData.DataSet = new List<int> { 51, 43, 23 };
             donutData.Background = new List<string> { "#f56954", "#00a65a", "#f39c12" };
 
+            #region Different Data for Donut Chart
             //var donutData1 = new DonutGraph();
             //donutData1.SalesName = new List<string> { "Mobile Sales", "cracker Sales", "Website Sales" };
             //donutData1.DataSet = new List<int> { 45, 12, 43 };
             //donutData1.Background = new List<string> { "red", "pink", "yellow" };
+            #endregion
 
             var salesValue = new AreaGraph();
-            salesValue.AreaData = new List<SalesModel> { /*AreaInfo, AreaInfo2, AreaInfo3,*/ AreaInfo5 , AreaInfo4 };
+            salesValue.AreaData = new List<SalesModel> { /*AreaInfo, AreaInfo2, AreaInfo3,*/ AreaInfo5, AreaInfo4 };
             salesValue.DonutData = new List<DonutGraph> { donutData/*,donutData1*/};
             salesValue.Month = new List<string> { "January", "February", "March", "April", "May", "June", "July" };
-          
-            
+
+
             return Ok(salesValue);
         }
+        /// <summary>
+        /// This Method is for Line Chart 
+        /// </summary>
+        /// <returns> It will return the object of Line Chart</returns>
         [HttpPost]
         public IActionResult LineChart()
         {
+            #region DYNAMIC Data for Line Chart
             //var LinechartData = new Dashboard_SalesGraph();
             //LinechartData.Label = "Goodies";
             //LinechartData.fill = "false";
@@ -107,7 +119,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //LinechartData.pointColor = "blue";
             //LinechartData.pointBackgroundColor = "green";
             //LinechartData.data = new List<int> { 2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432 };
-
+            #endregion
 
 
             var LinechartData2 = new Dashboard_SalesGraph();
@@ -125,13 +137,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
 
             var graph = new LineGraph();
-            graph.LineGraphData = new List<Dashboard_SalesGraph> { /*LinechartData ,*/ LinechartData2};
+            graph.LineGraphData = new List<Dashboard_SalesGraph> { /*LinechartData ,*/ LinechartData2 };
             graph.QuarterData = new List<string> { "2011 Q1", "2011 Q2", "2011 Q3", "2011 Q4", "2012 Q1", "2012 Q2", "2012 Q3", "2012 Q4", "2013 Q1", "2013 Q2" };
             graph.Gapdata = 5000;
 
             return Ok(graph);
         }
-
+        /// <summary>
+        /// This Method Consist the Data For the small tiles 
+        /// </summary>
+        /// <returns> It will return the object of TilesCard</returns>
         [HttpPost]
         public ActionResult TemplateData()
         {
@@ -142,48 +157,53 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             Template.visitors = 422;
             return Ok(Template);
         }
+        /// <summary>
+        /// It Method consist the data for the Todo list 
+        /// </summary>
+        /// <returns> It will return the ojbect of the ToDo List</returns>
         [HttpPost]
         public IActionResult TODO_List()
         {
 
-            //var TODO = new Dashboard_To_Do();
-            //TODO.ToDo = new List<string> { "Hi ritesh i was sent from the T0-DO controller", "Hi ritesh i was sent from the T0-DO controller", "Hi ritesh i was sent from the T0-DO controller" };
-            //TODO.Time = new List<string> { "4 min", "4 min", "4 min" };
-            //TODO.Status = new List<string> { "badge badge-success", "badge badge-danger", "badge badge-warning" };
+
             var TODO1 = new Dashboard_To_Do();
             TODO1.ToDo = new List<string> { "Design a nice theme", "Make the theme responsive", "Let theme shine like a star", "Let theme shine like a star ", "Check your messages and notifications", "Let theme shine like a star " };
             TODO1.Time = new List<string> { "2 min", "4 min", "1 Day", "3 Day", "1 week", "1 month" };
-            TODO1.Status = new List<string> { "badge badge-success", "badge badge-danger", "badge badge-warning","badge badge-success", "badge badge-danger", "badge badge-warning" };
+            TODO1.Status = new List<string> { "badge badge-success", "badge badge-danger", "badge badge-warning", "badge badge-success", "badge badge-danger", "badge badge-warning" };
 
 
             return Ok(TODO1);
         }
+        /// <summary>
+        /// IT Conist the Message For the Inbox of V1
+        /// </summary>
+        /// <returns>It will return the object of the ChatBox</returns>
         [HttpPost]
         public IActionResult ChatBox()
         {
-
+            #region ChatBox Extra Message
             //var chat1 = new ChatBox();
-            //chat1.Name = "Raj";
+            //chat1.Name = "Alexander Pierce";
             //chat1.Message = "Hi Ritesh how are you";
             //chat1.Time = "23 Jan 5:37 pm";
             //chat1.Image = "/img/user1-128x128.jpg";
-            
+
             //var chat2 = new ChatBox();
-            //chat2.Name = "Raj";
+            //chat2.Name = "Sarah Bullock";
             //chat2.Message = "Hi Ritesh how are you";
             //chat2.Time =  "23 Jan 5:37 pm";
             //chat2.Image = "/img/user1-128x128.jpg";
             //var chat3 = new ChatBox();
-            //chat3.Name = "Ritesh singh";
+            //chat3.Name = "Alexander Pierce";
             //chat3.Message = "Hi Ritesh how are you";
             //chat3.Time = "23 Jan 5:37 pm";
             //chat3.Image = "/img/user1-128x128.jpg"; 
             //var chat4 = new ChatBox();
-            //chat4.Name = "Prem Ranjan";
+            //chat4.Name = "Alexander Pierce";
             //chat4.Message = "Hi Ritesh how are you";
             //chat4.Time = "23 Jan 5:37 pm";
             //chat4.Image = "/img/user1-128x128.jpg";
-           
+            #endregion
             var chat5 = new ChatBox();
             chat5.Name = "Alexander Pierce";
             chat5.Message = "Is this template really for free? That's unbelievable!";
@@ -212,6 +232,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             MessageData.OwnerName = "Sarah Bullock";
             return Ok(MessageData);
         }
+        /// <summary>
+        /// It Consist the Data for the visitor
+        /// </summary>
+        /// <returns> It will return the object of Visitor Map</returns>
         [HttpPost]
         public IActionResult Map()
         {
@@ -228,6 +252,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// It consist the data for Templates
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DashboardV2Template()
         {
@@ -239,6 +267,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             Template.Messages = 422;
             return Ok(Template);
         }
+
+        /// <summary>
+        /// It Consist the data for the small tiles item
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult V2InfoBox()
         {
@@ -249,10 +282,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TemplateInfo.NewMember = 422;
             return Ok(TemplateInfo);
         }
+
+        /// <summary>
+        /// It consist the data for the areachart of v2
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult AreachartV2()
         {
-
+            #region Area Chart Multiple Data
             //var AreaInfo = new RecapModel();
             //AreaInfo.Label = "Digital goods";
             //AreaInfo.backgroundColor = "yellow";
@@ -272,6 +310,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //AreaInfo2.pointStrokeColor = "red";
             //AreaInfo2.pointHighlightStroke = "rgba(220,220,220,1)";
             //AreaInfo2.data = new List<int> { 21, 12, 33, 56, 21, 7, 78 };
+            #endregion
+
             var AreaInfo4 = new RecapModel();
             AreaInfo4.Label = "Digital Goods";
             AreaInfo4.backgroundColor = "rgba(210, 214, 222, 1)";
@@ -313,7 +353,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             GoalList3.Reach = 250;
             GoalList3.AlertType = "progress-bar bg-warning";
 
-            /// This is to get extra Data in Recap Goal List
+            #region Extra Goal Completion Data
             //var GoalList4 = new GoalCompletionList();
             //GoalList4.GoalMessage = "MobileSell Rate";
             //GoalList4.Target = 500;
@@ -324,13 +364,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //GoalList5.Target = 400;
             //GoalList5.Reach = 370;
             //GoalList5.AlertType = "progress-bar bg-danger";
-
+            #endregion
 
             var salesValue = new AreaChartRecap();
-            salesValue.AreaGraphData = new List<RecapModel> { /*AreaInfo,AreaInfo2 ,*/ AreaInfo4, AreaInfo5 }; 
-            salesValue.GoalListData = new List<GoalCompletionList> { GoalList,GoalList1,GoalList2,GoalList3/*, GoalList4, GoalList5*/ };
+            salesValue.AreaGraphData = new List<RecapModel> { /*AreaInfo,AreaInfo2 ,*/ AreaInfo4, AreaInfo5 };
+            salesValue.GoalListData = new List<GoalCompletionList> { GoalList, GoalList1, GoalList2, GoalList3/*, GoalList4, GoalList5*/ };
             salesValue.Month = new List<string> { "January", "February", "March", "April", "May", "June", "July" };
-           
+
             salesValue.Revenue = 21110;
             salesValue.RevenueGrowth = 20;
             salesValue.Cost = 2110;
@@ -342,6 +382,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             salesValue.DateRange = " 21 July ,2014 to 22 jan, 2022";
             return Ok(salesValue);
         }
+        /// <summary>
+        /// It consist the The Data CartoGram Graph
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult VisitorsReport()
         {
@@ -355,6 +399,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             visitorvalue.OrganicPercentage = "31%";
             return Ok(visitorvalue);
         }
+        /// <summary>
+        /// It Consist the data for the dounut of V2
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
 
         public IActionResult BrowserUse()
@@ -362,13 +410,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var Browse = new BrowserUsage();
             Browse.Data = new List<int> { 700, 500, 400, 600, 300, 100 };
             Browse.BackgroundColor = new List<string> { "#f56954", "#00a65a", "#f39c12", "#00c0ef", "#3c8dbc", "#d2d6de" };
-           var DoughtNut = new DoughNutGraph();
-            DoughtNut.DounutData= new List<BrowserUsage> { Browse};
+            var DoughtNut = new DoughNutGraph();
+            DoughtNut.DounutData = new List<BrowserUsage> { Browse };
             DoughtNut.BrowserName = new List<string> { "Chrome", "IE", "FireFox", "Safari", "Opera", "Navigator" };
             DoughtNut.DounutAlertType = new List<string> { "text-danger", "text-success", "text-warning", "text-info", "text-primary", "text-secondary" };
 
             return Ok(DoughtNut);
         }
+        /// <summary>
+        /// It Consist the data for the Newest order Received
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult LatestOrders()
         {
@@ -377,10 +429,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             orderdata.item = new List<string> { "Call of Duty IV", "Samsung Smart TV", "iPhone 6 Plus", "Samsung Smart TV", "Samsung Smart TV", "Call of Duty IV" };
             orderdata.Status = new List<string> { "Pending", "Delivered", "waiting", "Pending", "Pending", "Delivered" };
             orderdata.Popularity = new List<string> { "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63" };
-            orderdata.BadgeName = new List<string> { "badge badge-success", "badge badge-danger", "badge badge-warning", "badge badge-success" , "badge badge-success", "badge badge-danger"};
+            orderdata.BadgeName = new List<string> { "badge badge-success", "badge badge-danger", "badge badge-warning", "badge badge-success", "badge badge-success", "badge badge-danger" };
 
             return Ok(orderdata);
         }
+        /// <summary>
+        /// IT consist the detail of the Recent Items 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult RecentItem()
         {
@@ -392,27 +448,31 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             product.ProductImg = new List<string> { "/img/default-150x150.png", "/img/default-150x150.png", "/img/default-150x150.png", "/img/default-150x150.png" };
             return Ok(product);
         }
+        /// <summary>
+        /// It Consist the message of the chatbox of Dashboard V2 chat box
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult MessageBoxV2()
         {
             //var chat1 = new ChatModel();
-            //chat1.Name = "Raj";
+            //chat1.Name = "Sarah Bullock";
             //chat1.Message = "Hi Ritesh how are you";
             //chat1.Time = "23 Jan 5:37 pm";
             //chat1.Image = "/img/user1-128x128.jpg";
 
             //var chat2 = new ChatModel();
-            //chat2.Name = "Raj";
+            //chat2.Name = "Sarah Bullock";
             //chat2.Message = "Hi Ritesh how are you";
             //chat2.Time = "23 Jan 5:37 pm";
             //chat2.Image = "/img/user1-128x128.jpg";
             //var chat3 = new ChatModel();
-            //chat3.Name = "Ritesh singh";
+            //chat3.Name = "Sarah Bullock";
             //chat3.Message = "Hi Ritesh how are you";
             //chat3.Time = "23 Jan 5:37 pm";
             //chat3.Image = "/img/user1-128x128.jpg";
             //var chat4 = new ChatModel();
-            //chat4.Name = "Prem Ranjan";
+            //chat4.Name = "Sarah Bullock";
             //chat4.Message = "Hi Ritesh how are you";
             //chat4.Time = "23 Jan 5:37 pm";
             //chat4.Image = "/img/user1-128x128.jpg";
@@ -447,8 +507,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
 
             return Ok(MessageBox);
-            
+
         }
+        /// <summary>
+        /// IT consist the Information of New Memeber joiners
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult NewMembers()
         {

@@ -2,6 +2,9 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1
 {
+    /// <summary>
+    /// It consist the Property for the DonutChart
+    /// </summary>
     public class DonutGraph
     {
         public List<string> SalesName { get; set; }

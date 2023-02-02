@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1
 {
+    /// <summary>
+    /// This Class consist the properties of the line Graph 
+    /// </summary>
     public class Dashboard_SalesGraph
     {
         
