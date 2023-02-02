@@ -1,0 +1,116 @@
+﻿
+
+
+<div class="card bg-gradient-info">
+    <div class="card-header border-0">
+        <h3 class="card-title">
+            <i class="fas fa-th mr-1"></i>
+            Sales Graph
+        </h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+    </div>
+    <div class="card-footer bg-transparent">
+        <div class="row">
+            <div class="col-4 text-center">
+                <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                       data-fgColor="#39CCCC">
+
+                <div class="text-white">Mail-Orders</div>
+            </div>
+            <div class="col-4 text-center">
+                <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                       data-fgColor="#39CCCC">
+
+                <div class="text-white">Online</div>
+            </div>
+            <div class="col-4 text-center">
+                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                       data-fgColor="#39CCCC">
+
+                <div class="text-white">In-Store</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("LineChart","Dashboard")",
+        success: function (graphData) {
+            
+            $(function () {
+
+
+                $('.knob').knob()
+                var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
+             
+                var LineChartData=[]
+                for (var i = 0; i < graphData.lineGraphData.length; i++) {
+                    var DataInfo = graphData.lineGraphData[i];
+                   LineChartData.push(DataInfo);
+                  
+                }
+                
+
+                var salesGraphChartData = {
+                    labels: graphData.quarterData,
+                    datasets: LineChartData
+                }
+
+                var salesGraphChartOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: '#efefef'
+                            },
+                            gridLines: {
+                                display: false,
+                                color: '#efefef',
+                                drawBorder: false
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                stepSize: graphData.gapdata,
+                                fontColor: '#efefef'
+                            },
+                            gridLines: {
+                                display: true,
+                                color: '#efefef',
+                                drawBorder: false
+                            }
+                        }]
+                    }
+                }
+
+
+                var salesGraphChart = new Chart(salesGraphChartCanvas, {
+                    type: 'line',
+                    data: salesGraphChartData,
+                    options: salesGraphChartOptions
+                })
+
+            })
+
+        }
+
+    });
+   
+
+</script>

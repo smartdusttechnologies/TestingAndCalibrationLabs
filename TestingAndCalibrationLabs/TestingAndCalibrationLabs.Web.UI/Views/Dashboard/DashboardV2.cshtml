@@ -1,0 +1,103 @@
+﻿
+
+@{
+
+    Layout = ("~/Views/Shared/AdminLTE/_Layout2.cshtml");
+}
+
+
+
+
+<script src="~/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="~/plugins/raphael/raphael.min.js"></script>
+<script src="~/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="~/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+
+
+
+<style>
+    .card {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    .main-header {
+        background-color: #343a40;
+    }
+
+    .fa-bell {
+        color: white
+    }
+
+    .fa-bars {
+        color: white;
+    }
+
+    .fa-search {
+        color: white;
+    }
+
+    .fa-comments {
+        color: white;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    .fa-expand-arrows-alt {
+        color: white;
+    }
+
+    .fa-th-large {
+        color: white;
+    }
+
+    .content-wrapper {
+        background: rgb(79 81 84);
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        color:white;
+    }
+</style>
+<section class="content">
+    <div class="container-fluid">
+
+        @await Html.PartialAsync("TilesV2/_V2Box")
+
+        <div class="row">
+            <div class="col-md-12">
+
+                @await Html.PartialAsync("TilesV2/_MonthlyRecap")
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-8">
+                @await Html.PartialAsync("TilesV2/_VisitorReport")
+                <div class="row">
+                    @await Html.PartialAsync("TilesV2/_Chat")
+                    @await Html.PartialAsync("TilesV2/_LatestMember")
+
+                </div>
+                @await Html.PartialAsync("TilesV2/_LatestOrders")
+
+            </div>
+            <div class="col-md-4">
+                @await Html.PartialAsync("TilesV2/_BoxInfo")
+                @await Html.PartialAsync("TilesV2/_BrowserUsage")
+
+                @await Html.PartialAsync("TilesV2/_AddedItem")
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+

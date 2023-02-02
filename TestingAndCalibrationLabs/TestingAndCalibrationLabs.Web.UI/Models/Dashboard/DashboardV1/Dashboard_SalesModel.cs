@@ -7,14 +7,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1
     {
 
         // Sales Graph
-        public List<string> Month { get; set; }
-        public List<int> salesData1 { get; set; }
-        public List<int> SalesData2 { get; set; }
+       
+        public string  Label { get; set; }
+        public string backgroundColor { get; set; }
+        public string borderColor { get; set; }
+        public string pointColor { get; set; }
+        public string pointStrokeColor { get; set; }
+        public string pointHighlightStroke { get; set; }
 
-        //donut graph
+        public string pointRadius { get; set; }
 
-        public List<string> SalesName { get; set; }
-        public List<int> DataSet { get; set; }
+        public List<int> data { get; set; }
+       
 
+     
     }
 }
