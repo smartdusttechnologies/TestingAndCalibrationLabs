@@ -17,14 +17,33 @@
 
                 }
             </div>
+            <div class="d-flex">
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_primary.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_secondary.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_success.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_warning.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_info.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_dark.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/OutlineButton/_light.Cshtml")
+                
+            </div>
+            <div class="d-flex">
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_primary.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_secondary.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_success.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_warning.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_info.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_dark.Cshtml")
+                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/FilledButton/_light.Cshtml")
+                
+            </div>
+           
         </form>
-        <div class="form-group">
-            <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+        <div class="form-group" style="margin-left:2rem;">
+            <button class="button-base ripple" id="createbtn" onclick="AjaxFormSubmit()" >Save</button>
+            @*<input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />*@
         </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
 </div>
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
@@ -39,7 +58,6 @@
         </div>
     </div>
 </div>
-@ViewBag.resultD
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div role="alert" id="snackbarerror">
@@ -70,6 +88,7 @@
 </script>
 <script type="text/javascript">
     function AjaxFormSubmit() {
+        //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');

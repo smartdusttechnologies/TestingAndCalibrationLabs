@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -39,6 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id,
                                                         mmb.UiPageTypeId,
 														mmb.Orders,
+                                                        mmb.MultiValueControl,
 														mmb.ParentId,
 														mmb.ModuleId,
                                                         mmb.[UiControlDisplayName] as MetadataModuleBridgeUiControlDisplayName,
@@ -77,6 +77,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id,
                                                         mmb.UiPageTypeId,
 														mmb.Orders,
+                                                        mmb.MultiValueControl,
 														mmb.ParentId,
 														mmb.ModuleId,
                                                         upt.[Name] as UiPageTypeName,
@@ -195,6 +196,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
 
             return true;
+        }
+
+        public List<UiPageDataModel> GetPageData(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
+                                                    inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
+                                                    inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                    inner join [UiPageData] upd on r.Id = upd.RecordId
+                                               where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
+                                                    and r.Id = @id", id).ToList();
         }
         #endregion
     }
