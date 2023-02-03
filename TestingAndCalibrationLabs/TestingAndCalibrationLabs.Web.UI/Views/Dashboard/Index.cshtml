@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
 
     Layout = ("~/Views/Shared/AdminLTE/_Layout2.cshtml");
 }
@@ -67,10 +65,11 @@
             <section class="col-lg-5 connectedSortable">
 
 
+
+                @await Html.PartialAsync("TilesCard/_Map")
                 @await Html.PartialAsync("TilesCard/_SalesGraph")
 
 
-                @await Html.PartialAsync("TilesCard/_Map")
 
 
                 @await Html.PartialAsync("TilesCard/_Calendar")
