@@ -50,3 +50,9 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs
 *.nuspec
 *.exe
 *.targets
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/CoverletSourceRootsMapping
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.AssemblyInfo.cs
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/TestingAndCalibrationLabs.Tests.csproj.nuget.dgspec.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/TestingAndCalibrationLabs.Tests.csproj.nuget.g.props
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/project.assets.json
