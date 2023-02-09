@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -11,11 +12,9 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class ModuleService : IModuleService
     {
         private readonly IGenericRepository<ModuleModel> _genericRepository;
-        private readonly IModuleRepository _moduleRepository;
-        public ModuleService(IGenericRepository<ModuleModel> genericRepository, IModuleRepository moduleRepository)
+        public ModuleService(IGenericRepository<ModuleModel> genericRepository)
         {
             _genericRepository = genericRepository;
-            _moduleRepository = moduleRepository;
         }
         /// <summary>
         /// Get All Records From Data Type
@@ -25,9 +24,24 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-        public List<Dictionary<int, string>> GetValues(int moduleId)
+        public RequestResult<int> Create(ModuleModel ModuleModel)
         {
-            return _moduleRepository.GetValues(moduleId);
+            _genericRepository.Insert(ModuleModel);
+            return new RequestResult<int>(1);
         }
+        public RequestResult<int> Update(ModuleModel ModuleModel)
+        {
+            _genericRepository.Update(ModuleModel);
+            return new RequestResult<int>(1);
+        }
+        public ModuleModel GetById(int id)
+        {
+            return _genericRepository.Get(id);
+        }
+        public bool Delete(int id)
+        {
+            return _genericRepository.Delete(id);
+        }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using Microsoft.Extensions.Configuration;
 
@@ -38,6 +40,11 @@ namespace TestingAndCalibrationLabs.Business.Infrastructure
                     return conn;
                 }
             }
+        }
+
+        public List<ApplicationId> Get()
+        {
+            throw new NotImplementedException();
         }
     }
 }

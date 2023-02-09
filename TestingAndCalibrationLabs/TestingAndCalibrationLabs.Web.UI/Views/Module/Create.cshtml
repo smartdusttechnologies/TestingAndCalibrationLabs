@@ -1,0 +1,59 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.ModuleDTO
+
+@{
+    ViewData["Title"] = "Create";
+   
+}
+
+<h1>Module</h1>
+
+<h4>Create</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*
+            <div class="form-group">
+            <label asp-for="Id" class="control-label"></label>
+            <input asp-for="Id" class="form-control" />
+            <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+          
+    
+    <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+        <label for="ApplicationId" class="form-label"></label>
+                <select class="form-input " name="ApplicationId" id="ApplicationId" onchange="this.setAttribute('value',this.value)" asp-for="ApplicationId">
+                    <option disabled="disabled" selected>ApplicationId ...</option>
+                    @foreach (var item in ViewBag.Application)
+            {
+                        <option value=@item.Id>@item.Name</option>
+
+                   @* <option value=1>1</option>*@
+            }
+
+        </select>
+        </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

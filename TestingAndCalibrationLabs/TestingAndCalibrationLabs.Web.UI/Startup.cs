@@ -60,6 +60,7 @@ namespace TestingAndCalibrationLabs.Web.UI
                 options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.EditRole); });
             });
             //Services
+            services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
@@ -89,7 +90,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorterService, ListSorterService>();
-            services.AddScoped<IModuleService, ModuleService>();
+           // services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowService, WorkflowService>();
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();

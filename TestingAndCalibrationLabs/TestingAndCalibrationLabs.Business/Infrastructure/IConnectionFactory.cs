@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace TestingAndCalibrationLabs.Business.Infrastructure
 {
@@ -11,5 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Infrastructure
         /// Implimenting IDb connection with GetConnection method
         /// </summary>
         IDbConnection GetConnection { get; }
+
+        List<ApplicationId> Get();
     }
 }
