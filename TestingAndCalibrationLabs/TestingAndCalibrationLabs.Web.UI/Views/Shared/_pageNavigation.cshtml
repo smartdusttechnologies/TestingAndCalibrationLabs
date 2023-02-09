@@ -4,6 +4,9 @@
             <i class="fa fa-gear"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" style="display:none" id="nav-item-FullPage" onclick="toggleFullScreen(++Page)">
+                FullPage
+            </a>
         </div>
     </li>
     <li class="nav-item dropdown notification-ui show" style="display:none;padding-right:10px" id="nav-item-Notifications">
@@ -63,16 +66,17 @@
                         $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
                         $(parentListDiv).append("</div>");
                     }
-                    else if(nameExistOrNot) {
+                    else if (nameExistOrNot) {
                         nameExistOrNot.style.display = "block";
                     }
                     var divExistOrNot = document.getElementById(parentListId);//Its not being used anywhere who to take
                     response[i].childrens.sort(function (a, b) {
+
                         if (a.name < b.name) { return -1; }
                         if (a.name > b.name) { return 1; }
                         return 0;
                     });
-                   for (let j = 0; j < response[i].childrens.length; j++) {
+                    for (let j = 0; j < response[i].childrens.length; j++) {
                         if (!nameExistOrNot && response[i].childrens.length == 1) {
                             var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
                             var singleListParent = "#navigationSingle" + uiNavigationCategoryId;
@@ -85,8 +89,17 @@
                             var pageTypeName = response[i].childrens[j].moduleName;
                             var uiNavigationId = response[i].id;
                             var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
+                            var pageTypeName = response[i].childrens[j].moduleName;
+                            var nameexist = "nav-item-" + pageTypeName;
+                            var nameid = document.getElementById(nameexist);
                             var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
-                            $(dropdownContentId).append(script);
+                            if (!nameid) {
+                                $(dropdownContentId).append(script);
+                            }
+                            else {
+
+                                nameid.style.display = "block";
+                            }
                         }
                     }
                 }
@@ -98,4 +111,23 @@
             }
         });
     });
+</script>
+<script>
+    var Page = 0;
+    function toggleFullScreen(Screen) {
+        var element = document.getElementById('PageBody');
+        var Size = window.matchMedia("(min-width:0px)");
+        if (Screen == 1 && Size.matches) {
+            element.style = "padding-right: 0px;padding-left: 0px;";
+            document.getElementById('nav-item-FullPage').innerHTML = "Exit FullPage";
+        }
+        else {
+            var View = window.matchMedia("(min-width: 481px)")
+            Page = 0;
+            if (View.matches) {
+                element.style = "padding-right:230px;padding-left: 230px;";
+            }
+            document.getElementById('nav-item-FullPage').innerHTML = "FullPage";
+        }
+    }
 </script>
