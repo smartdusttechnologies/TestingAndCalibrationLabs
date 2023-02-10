@@ -25,9 +25,5 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-        public List<Dictionary<int, string>> GetValues(int moduleId)
-        {
-            return _moduleRepository.GetValues(moduleId);
-        }
     }
 }
