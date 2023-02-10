@@ -17,7 +17,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
         public IActionResult GetRecord(int moduleId)
         {
-            var sd = _moduleService.GetValues(3);
             return View();
 
         }
