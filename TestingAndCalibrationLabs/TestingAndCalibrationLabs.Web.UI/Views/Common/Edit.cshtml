@@ -10,6 +10,7 @@
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
             <input type="hidden" asp-for="WorkflowStageId" />
+            <input type="hidden" asp-for="UpdatedDate" />
             <div class="row ms-1 me-1">
                 @foreach (var item in Model.Layout)
                 {
@@ -66,17 +67,18 @@
     }
 </script>
 <script type="text/javascript">
+    var modelData = JSON.parse('@Json.Serialize(Model)');
+    var updatedDateT = modelData.updatedDate;
 
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     function AjaxFormSubmit() {
 
         var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
         var id = parseInt($("#Id").val())
         var workflowStageId = parseInt($("#WorkflowStageId").val())
 
         var url = $("#commonForm").attr("action");
-        var modelData = JSON.parse('@Json.Serialize(Model)');
-        var updatedDateT = modelData.updatedDate;
+      
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
 

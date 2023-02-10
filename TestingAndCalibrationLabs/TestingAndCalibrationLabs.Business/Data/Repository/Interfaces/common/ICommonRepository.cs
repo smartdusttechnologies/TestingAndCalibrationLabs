@@ -65,7 +65,20 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="recordId"
+        /// <param name="uiPageTypeId"
         /// <returns></returns>
         List<UiPageDataModel> GetPageData(int recordId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="uiPageTypeId"></param>
+        /// <returns></returns>
+        List<UiPageDataModel> GetMultiPageData(int id);
+        List<UiPageMetadataModel> GetMultiControlMetadata(int recordId);
+        bool InsertMultiValue(RecordModel record);
+        bool UpdateMultiValue(RecordModel record);
+        bool DeleteMultiValue(RecordModel record);
     }
 }

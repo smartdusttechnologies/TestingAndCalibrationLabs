@@ -1,34 +1,19 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
 <input type="hidden" asp-for="ModuleId" />
-<style>
-    .raj{
-        position: absolute;
-        right: 10px;
-        top: 15px;
-        color: #aaa;
-        transition: 0.3s;
-        font-size: 20px;
-    }
-    .raj:hover{
-        color:black;
-    }
-</style>
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
             <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@Model.Fields.First().UiPageTypeName</h2>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
-            <a href="/Common/Create/@Model.ModuleId"><i class="fa fa-plus raj"></i></a>
+            <a href="/Common/Create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-3">
             <div class="inputSearchGrid text-right">
                 <input type="text" id="TestDetailsGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
                 <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
                 <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
-               
             </div>
-            
         </div>
     </div>
     <div class="table-responsive simple-pagination card shadow border-radius-grid">
@@ -47,7 +32,7 @@
                 {
                     int count = 0;
                     <tr>
-                        @foreach (var itemValue in item.Value)
+                        @foreach(var itemValue in item.Value)
                         {
                             if (count == 4)
                             {
@@ -86,7 +71,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
-                <button type="button" id="deletePopup" onclick="deleteFun(this.value)" class="btn btn-danger">Delete</button>
+                <button type="button" id="deletePopup" onclick="deleteFun(this.value)" class="button-base button-danger">Delete</button>
             </div>
         </div>
     </div>
@@ -104,12 +89,10 @@
         inputID.value = "";
     }
     //Set The Value To Popup Delete Button
-    function setValue(id){
-        $("#deletePopup").val(id);
-    }
+    let setValue = (id) => $("#deletePopup").val(id);
     //Call the Delete Method Of Common Page 
-    function deleteFun(id){
-        var moduleId = parseInt($("#ModuleId").val())
+    let deleteFun = (id) =>{
+        let moduleId = parseInt($("#ModuleId").val())
         debugger;
         window.location.href = "/common/delete?id=" + id+ "&moduleId=" + moduleId;
     }

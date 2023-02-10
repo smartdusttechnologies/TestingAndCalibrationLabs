@@ -1,5 +1,5 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-@if (@Model.Value.UiPageMetadata.UiControlTypeId == (int)UiControlType.grid)
+@if (@Model.Value.UiPageMetadata.UiControlTypeId == (int)UiControlType.grid && @Model.Value.UiPageMetadata.UiControlDisplayName != "MultiControlGrid")
 {
     @await Html.PartialAsync("~/Views/Common/Components/Grid/_grid.cshtml", Model)
 

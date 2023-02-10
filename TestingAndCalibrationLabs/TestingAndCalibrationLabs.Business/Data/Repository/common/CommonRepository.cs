@@ -109,6 +109,57 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and mmb.IsDeleted = 0", new { moduleId }).ToList();
             return metadata;
         }
+        public bool InsertMultiValue(RecordModel record)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var subRecordId = GenerateNewSubRecordId(record.Id);
+            record.FieldValues.ForEach(x => x.SubRecordId = subRecordId);
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate 
+                                            Where Id = @Id";
+            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,SubRecordId,UiPageTypeId)
+                                        Values (@UiPageMetadataId,@RecordId,@Value,@SubRecordId,@UiPageTypeId)";
+
+            IDbTransaction transaction = db.BeginTransaction();
+            var result = db.Execute(recordInsertQuery, record, transaction);
+            var resultField = db.Execute(insertQuery, record.FieldValues, transaction);
+            transaction.Commit();
+            return true;
+        }
+        public bool UpdateMultiValue(RecordModel record)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate
+                                            Where Id = @Id";
+            var updateQurey = @"Update [UiPageData] Set
+                                    UiPageMetadataId = @UiPageMetadataId,
+                                    RecordId = @RecordId,
+                                    Value = @Value,
+                                    SubRecordId = @SubRecordId,
+                                    UiPageTypeId = @UiPageTypeId
+                                Where Id = @Id And SubRecordId = @SubRecordId";
+            IDbTransaction transaction = db.BeginTransaction();
+            db.Execute(recordInsertQuery, record, transaction);
+            db.Execute(updateQurey, record.FieldValues, transaction);
+            transaction.Commit();
+            return true;
+        }
+        public bool DeleteMultiValue(RecordModel record)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate
+                                            Where Id = @Id";
+            var updateQurey = @"Update [UiPageData] Set
+                                    IsDeleted = 1
+                                Where RecordId = @RecordId And SubRecordId = @SubRecordId";
+            IDbTransaction transaction = db.BeginTransaction();
+            db.Execute(recordInsertQuery, record, transaction);
+            db.Execute(updateQurey, record.FieldValues, transaction);
+            transaction.Commit();
+            return true;
+        }
         /// <summary>
         /// Inserting data to Database
         /// </summary>
@@ -206,7 +257,71 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
                                                     inner join [UiPageData] upd on r.Id = upd.RecordId
                                                where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
-                                                    and r.Id = @id", id).ToList();
+                                                    and r.Id = @id and r.IsDeleted = 0 
+                                                    and ws.IsDeleted = 0
+                                                    and mmb.IsDeleted = 0 
+                                                    and upd.IsDeleted = 0", new { id }).ToList();
+        }
+        public List<UiPageDataModel> GetMultiPageData(int id )
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
+                                                    inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
+                                                    inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                    inner join [UiPageData] upd on r.Id = upd.RecordId
+                                               where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
+                                                    and r.Id = @id and mmb.MultiValueControl = 'true'
+                                                    and r.IsDeleted = 0 
+                                                    and ws.IsDeleted = 0
+                                                    and mmb.IsDeleted = 0 
+                                                    and upd.IsDeleted = 0", new { id }).ToList();
+        }
+        public List<UiPageMetadataModel> GetMultiControlMetadata(int recordId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageMetadataModel>(@"Select upm.Id,
+                                                        mmb.UiPageTypeId,
+														mmb.Orders,
+                                                        mmb.MultiValueControl,
+														mmb.ParentId,
+														mmb.ModuleId,
+                                                        mmb.[UiControlDisplayName] as MetadataModuleBridgeUiControlDisplayName,
+                                                        upt.[Name] as UiPageTypeName,
+                                                         upm.IsRequired,
+                                                        upm.UiControlTypeId,
+                                                        uct.[Name] as UiControlTypeName,
+                                                        upm.UiControlDisplayName,
+                                                        upm.DataTypeId,
+                                                        dt.Name as DataTypeName,
+                                                        uct.ControlCategoryId,
+                                                        lc.Id as LookupCategoryId,
+                                                        l.Name as ControlCategoryName,
+														ucct.Template as UiControlCategoryTypeTemplate
+                                                    From [Record] r 
+													inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
+													inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
+                                                    inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
+                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
+                                                    inner join [DataType] dt on upm.DataTypeId = dt.Id
+                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
+													
+                                                where r.Id = @recordId and mmb.MultiValueControl = 'true'
+                                                    and upm.IsDeleted = 0 
+                                                    and upt.IsDeleted = 0 
+                                                    and uct.IsDeleted = 0
+                                                    and dt.IsDeleted = 0
+                                                    and l.IsDeleted = 0
+													and mmb.IsDeleted = 0", new { recordId }).ToList();
+        }
+        public int GenerateNewSubRecordId(int recordId)
+        {
+            using IDbConnection con = _connectionFactory.GetConnection;
+            var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId}").First();
+            return result + 1;
         }
         #endregion
     }

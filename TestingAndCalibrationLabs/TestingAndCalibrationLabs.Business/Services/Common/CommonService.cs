@@ -63,8 +63,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (requestResult.IsSuccessful)
             {
                 //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
-               record.Id =  _commonRepository.Insert(record);
-               // record.WorkflowStageId = workflowStageId;
+                record.Id = _commonRepository.Insert(record);
+                // record.WorkflowStageId = workflowStageId;
                 //_workflowActivityService.WorkflowActivity(record);
                 return new RequestResult<bool>(true);
             }
@@ -76,16 +76,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public byte[] TemplateGenerate(int recordId,int metadataId )
+        public byte[] TemplateGenerate(int recordId, int metadataId)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
             int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
             var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);
             var template = File.ReadAllText(path);
-            var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId,out uiPageId);
+            var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageId);
             var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
-            
+
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
@@ -100,9 +100,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                     {
                         item.UiPageMetadata.UiControlDisplayName = item.UiPageMetadata.MetadataModuleBridgeUiControlDisplayName;
                     }
-                    string fieldName = string.Format("**field{0}**",item.UiPageMetadata.Orders);
+                    string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
                     var fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
-                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues,item.UiPageData.Value);
+                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.Value);
                 }
             }
             HtmlToPdf converter = new HtmlToPdf();
@@ -181,15 +181,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RecordsModel GetRecords(int moduleId)
         {
             var uiMetadata = _commonRepository.GetUiPageMetadataByModuleId(moduleId);
-            uiMetadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First()).OrderBy(x => x.Id).ToList();
             var uiPageData = _commonRepository.GetUiPageDataByModuleId(moduleId);
-            var meta = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
+            var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
             uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
-            Dictionary<int, List<UiPageMetadataCharacteristicsModel>> metadataContent = new Dictionary<int, List<UiPageMetadataCharacteristicsModel>>();
-            return new RecordsModel { ModuleId = moduleId, Fields = meta, FieldValues = uiPageDataModels };
+            return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
+
         /// <summary>
         /// Get Record By Record Id
         /// </summary>
@@ -202,13 +201,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
-            var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
+            //var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
+            var uiPageData = _commonRepository.GetPageData(recordId);
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
                 UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).FirstOrDefault()
-            })) ;
+            }));
             var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object
@@ -217,6 +217,84 @@ namespace TestingAndCalibrationLabs.Business.Services
                  );
             return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy };
         }
+        #region Multi Value Control
+        /// <summary>
+        /// This Method Returns Data For Multi Value Grid
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
+        public RecordsModel GetMultiControlValue(int recordId)
+        {
+            var uiMetadata = _commonRepository.GetMultiControlMetadata(recordId);
+            var uiPageData = _commonRepository.GetMultiPageData(recordId);
+            var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
+
+            Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
+            uiPageData.GroupBy(x => x.SubRecordId).ToList()
+                .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
+
+            return new RecordsModel { Id = recordId, Fields = metadata, FieldValues = uiPageDataModels };
+        }
+        /// <summary>
+        /// Insert Multi Value Records
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public RequestResult<bool> InsertMultiValue(RecordModel record)
+        {
+            RequestResult<bool> requestResult = Validate(record);
+            if (requestResult.IsSuccessful)
+            {
+                var previousRecord = _recordGenericRepository.Get(record.Id);
+                if (record.UpdatedDate == previousRecord.UpdatedDate)
+                {
+                    record.UpdatedDate = DateTime.Now;
+                    _commonRepository.InsertMultiValue(record);
+                }
+                return new RequestResult<bool>(true);
+            }
+            return requestResult;
+        }
+        /// <summary>
+        /// Update Multi Value Records
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public RequestResult<bool> UpdateMultiValue(RecordModel record)
+        {
+            RequestResult<bool> requestResult = Validate(record);
+            if (requestResult.IsSuccessful)
+            {
+                var previousRecord = _recordGenericRepository.Get(record.Id);
+                if (record.UpdatedDate == previousRecord.UpdatedDate)
+                {
+                    record.UpdatedDate = DateTime.Now;
+                    _commonRepository.UpdateMultiValue(record);
+                }
+                return new RequestResult<bool>(true);
+            }
+            return requestResult;
+        }
+        /// <summary>
+        /// Delete Multi Value Records
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public RequestResult<bool> DeleteMultiValue(RecordModel record)
+        {
+            var previousRecord = _recordGenericRepository.Get(record.Id);
+            bool result;
+            if (record.UpdatedDate == previousRecord.UpdatedDate)
+            {
+                result = _commonRepository.DeleteMultiValue(record);
+            }
+            else
+            {
+                result = false;
+            }
+            return new RequestResult<bool>(result);
+        }
+        #endregion
         #endregion
 
         #region Private Methods
@@ -306,8 +384,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(validationMessages);
         }
-
-       
         #endregion
     }
 }
