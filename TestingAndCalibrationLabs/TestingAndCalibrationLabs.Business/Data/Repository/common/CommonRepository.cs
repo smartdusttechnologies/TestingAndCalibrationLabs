@@ -16,12 +16,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         {
             _connectionFactory = connectionFactory;
         }
-        
+        /// <summary>
+        /// Get Ui Page Data Based On Record Id For Grid
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public List<UiPageDataModel> GetUiPageDataByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>("Select upd.* From [UiPageData] upd INNER JOIN  [Record] r ON upd.RecordId = r.Id and r.IsDeleted = 0 where r.ModuleId=@moduleId and upd.IsDeleted=0", new { moduleId }).ToList();
         }
+        /// <summary>
+        /// Get All Validations Based On UiPageTypeId
+        /// </summary>
+        /// <param name="uiPageId"></param>
+        /// <returns></returns>
         public List<UiPageValidationModel> GetUiPageValidations(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -32,6 +41,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                 AND upvt.IsDeleted = 0 
                                             WHERE upv.UiPageTypeId=@uiPageId", new { uiPageId }).ToList();
         }
+        /// <summary>
+        /// Get All UiPageMetadata based On UiPageTypeId
+        /// </summary>
+        /// <param name="uiPageId"></param>
+        /// <returns></returns>
         public List<UiPageMetadataModel> GetUiPageMetadata(int uiPageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -71,6 +85,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and mmb.IsDeleted = 0", new { uiPageId }).ToList();
             return metadata;
         }
+        /// <summary>
+        /// Get Ui Page Metadata Based On Module Id
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -109,57 +128,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and mmb.IsDeleted = 0", new { moduleId }).ToList();
             return metadata;
         }
-        public bool InsertMultiValue(RecordModel record)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            var subRecordId = GenerateNewSubRecordId(record.Id);
-            record.FieldValues.ForEach(x => x.SubRecordId = subRecordId);
-            string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate 
-                                            Where Id = @Id";
-            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,SubRecordId,UiPageTypeId)
-                                        Values (@UiPageMetadataId,@RecordId,@Value,@SubRecordId,@UiPageTypeId)";
-
-            IDbTransaction transaction = db.BeginTransaction();
-            var result = db.Execute(recordInsertQuery, record, transaction);
-            var resultField = db.Execute(insertQuery, record.FieldValues, transaction);
-            transaction.Commit();
-            return true;
-        }
-        public bool UpdateMultiValue(RecordModel record)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate
-                                            Where Id = @Id";
-            var updateQurey = @"Update [UiPageData] Set
-                                    UiPageMetadataId = @UiPageMetadataId,
-                                    RecordId = @RecordId,
-                                    Value = @Value,
-                                    SubRecordId = @SubRecordId,
-                                    UiPageTypeId = @UiPageTypeId
-                                Where Id = @Id And SubRecordId = @SubRecordId";
-            IDbTransaction transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, record, transaction);
-            db.Execute(updateQurey, record.FieldValues, transaction);
-            transaction.Commit();
-            return true;
-        }
-        public bool DeleteMultiValue(RecordModel record)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate
-                                            Where Id = @Id";
-            var updateQurey = @"Update [UiPageData] Set
-                                    IsDeleted = 1
-                                Where RecordId = @RecordId And SubRecordId = @SubRecordId";
-            IDbTransaction transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, record, transaction);
-            db.Execute(updateQurey, record.FieldValues, transaction);
-            transaction.Commit();
-            return true;
-        }
         /// <summary>
         /// Inserting data to Database
         /// </summary>
@@ -185,13 +153,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
             return insertedRecordId;
         }
-        public  int GetPageIdBasedOnCurrentWorkflowStage(int stageId )
+        /// <summary>
+        /// Get Page Id Based On Current Workflow Stage 
+        /// </summary>
+        /// <param name="stageId"></param>
+        /// <returns></returns>
+        public int GetPageIdBasedOnCurrentWorkflowStage(int stageId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-                       return db.Query<int>(@"select Top(1) ws.UiPageTypeId
+            return db.Query<int>(@"select Top(1) ws.UiPageTypeId
                                                           From  WorkflowStage ws 
-                                                   where IsDeleted = 0 and ws.Id = @Id", new {Id = stageId}).First();
+                                                   where IsDeleted = 0 and ws.Id = @Id", new { Id = stageId }).First();
         }
+        /// <summary>
+        /// Get Page Id Based On Order And Module Id
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public int GetPageIdBasedOnOrder(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -205,6 +183,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and w.IsDeleted = 0
 													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
         }
+        /// <summary>
+        /// Get Workflow Stage Based on Order And Module Id
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public int GetWorkflowStageBasedOnOrder(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -218,11 +201,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and w.IsDeleted = 0
 													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
         }
+        /// <summary>
+        /// Save Record
+        /// </summary>
+        /// <param name="recordModel"></param>
+        /// <returns></returns>
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var insertList = recordModel.FieldValues.Where(x=>x.Id == 0).ToList();
-            var updateList = recordModel.FieldValues.Where(x=>x.Id != 0).ToList();
+            var insertList = recordModel.FieldValues.Where(x => x.Id == 0).ToList();
+            var updateList = recordModel.FieldValues.Where(x => x.Id != 0).ToList();
             string recordInsertQuery = @"Update [Record] Set
                                                 UpdatedDate = @UpdatedDate ,
                                                 WorkflowStageId = @WorkflowStageId
@@ -240,7 +228,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             {
                 db.Execute(insertQuery, insertList, transaction);
             }
-            if (updateList.Count >0)
+            if (updateList.Count > 0)
             {
                 db.Execute(updateQurey, updateList, transaction);
             }
@@ -248,7 +236,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             return true;
         }
-
+        /// <summary>
+        /// Get All Page Data
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<UiPageDataModel> GetPageData(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -262,7 +254,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and mmb.IsDeleted = 0 
                                                     and upd.IsDeleted = 0", new { id }).ToList();
         }
-        public List<UiPageDataModel> GetMultiPageData(int id )
+        #region Multi Value Control CRUD
+        /// <summary>
+        /// Get All Page Data Based On Multi Controls
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<UiPageDataModel> GetMultiPageData(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
@@ -276,6 +274,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and mmb.IsDeleted = 0 
                                                     and upd.IsDeleted = 0", new { id }).ToList();
         }
+        /// <summary>
+        /// Get All Metadata Based On Multi Control
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
         public List<UiPageMetadataModel> GetMultiControlMetadata(int recordId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -317,12 +320,84 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and l.IsDeleted = 0
 													and mmb.IsDeleted = 0", new { recordId }).ToList();
         }
+        /// <summary>
+        /// Generate New SubRecordId Based On Previous SubRecordId
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
         public int GenerateNewSubRecordId(int recordId)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
             var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId}").First();
             return result + 1;
         }
+        /// <summary>
+        /// Insert Multi Record Values 
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public bool InsertMultiValue(RecordModel record)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var subRecordId = GenerateNewSubRecordId(record.Id);
+            record.FieldValues.ForEach(x => x.SubRecordId = subRecordId);
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate 
+                                            Where Id = @Id";
+            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,SubRecordId,UiPageTypeId)
+                                        Values (@UiPageMetadataId,@RecordId,@Value,@SubRecordId,@UiPageTypeId)";
+
+            IDbTransaction transaction = db.BeginTransaction();
+            var result = db.Execute(recordInsertQuery, record, transaction);
+            var resultField = db.Execute(insertQuery, record.FieldValues, transaction);
+            transaction.Commit();
+            return true;
+        }
+        /// <summary>
+        /// Update Multi Record Value
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public bool UpdateMultiValue(RecordModel record)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate
+                                            Where Id = @Id";
+            var updateQurey = @"Update [UiPageData] Set
+                                    UiPageMetadataId = @UiPageMetadataId,
+                                    RecordId = @RecordId,
+                                    Value = @Value,
+                                    SubRecordId = @SubRecordId,
+                                    UiPageTypeId = @UiPageTypeId
+                                Where Id = @Id And SubRecordId = @SubRecordId";
+            IDbTransaction transaction = db.BeginTransaction();
+            db.Execute(recordInsertQuery, record, transaction);
+            db.Execute(updateQurey, record.FieldValues, transaction);
+            transaction.Commit();
+            return true;
+        }
+        /// <summary>
+        /// Delete Multi Record Values
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public bool DeleteMultiValue(RecordModel record)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string recordInsertQuery = @"Update [Record] Set
+                                                UpdatedDate = @UpdatedDate
+                                            Where Id = @Id";
+            var updateQurey = @"Update [UiPageData] Set
+                                    IsDeleted = 1
+                                Where RecordId = @RecordId And SubRecordId = @SubRecordId";
+            IDbTransaction transaction = db.BeginTransaction();
+            db.Execute(recordInsertQuery, record, transaction);
+            db.Execute(updateQurey, record.FieldValues, transaction);
+            transaction.Commit();
+            return true;
+        }
+        #endregion
         #endregion
     }
 }
