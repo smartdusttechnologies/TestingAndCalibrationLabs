@@ -45,7 +45,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(UiNavigationCategoryModel uiPageTypeModel)
+        public RequestResult<int> Update(int id ,UiNavigationCategoryModel uiPageTypeModel)
         {
             _genericRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
@@ -70,15 +70,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _genericRepository.Get(id);
         }
 
-          RequestResult<int> IUiNavigationCategoryServices.Update(int id, UiNavigationCategoryModel uiNavigationCategoryModel)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IUiNavigationCategoryServices.Update(UiNavigationCategoryModel pageModel)
-        {
-           // throw new NotImplementedException();
-        }
+       
 
 
 
