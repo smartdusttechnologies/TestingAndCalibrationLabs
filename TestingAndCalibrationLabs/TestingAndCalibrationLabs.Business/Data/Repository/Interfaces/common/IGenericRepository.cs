@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
@@ -18,5 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         T Get(int id);
         T Get(string name);
         bool Delete(int id);
+        UiNavigationCategoryModel GetById(int id);
     }
 }

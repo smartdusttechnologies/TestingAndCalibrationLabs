@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
+using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
@@ -130,6 +131,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                     let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
                     where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
                     select prop.Name).ToList();
+        }
+
+        public UiNavigationCategoryModel GetById(int id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

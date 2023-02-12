@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class UiPageNavigationDTO
     {
@@ -11,11 +13,14 @@
         /// <summary>
         /// Configured Url of page.
         /// </summary>
+         [Required(ErrorMessage = "Please Enter Url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Ui Page Type Id reference from Ui page type.
         /// </summary>
+
+        [Required(ErrorMessage = "Please Select ModuleId")]
         public int ModuleId { get; set; }
 
         /// <summary>
@@ -26,6 +31,7 @@
         /// <summary>
         /// Ui Navigation Category Id reference from UiNavigationCategory.
         /// </summary>
+        [Required(ErrorMessage = "Please Select UiNavigationCategoryId")]
         public int UiNavigationCategoryId { get; set; }
 
         /// <summary>

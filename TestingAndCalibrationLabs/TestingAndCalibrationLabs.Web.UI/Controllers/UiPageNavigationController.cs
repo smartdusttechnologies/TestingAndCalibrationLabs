@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+//using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -11,30 +12,178 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class UiPageNavigationController : Controller
     {
         private readonly IUiPageNavigationService _uiPageNavigationService;
+        private readonly IModuleService _uiModuleService;
         private readonly IMapper _mapper;
+        private readonly IUiNavigationCategoryServices _uiPageNavigationCategoryServics;
 
-        public UiPageNavigationController(IUiPageNavigationService uiPageNavigationService, IMapper mapper)
+        public UiPageNavigationController(IUiPageNavigationService uiPageNavigationService, IModuleService uiModuleService, IUiNavigationCategoryServices uiPageNavigationCategoryServics, IMapper mapper)
         {
             _uiPageNavigationService = uiPageNavigationService;
+            _uiModuleService = uiModuleService;
             _mapper = mapper;
+            _uiPageNavigationCategoryServics = uiPageNavigationCategoryServics;
+          
         }
 
         /// <summary>
-        /// Get All Records From Ui Page Type With Navigation Category And Pass It TO Ajax Call
+        /// Get All The Pages From Database
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public IActionResult GetAllPagesWithNavigation()
+        [HttpGet]
+        public IActionResult Index()
         {
-            var pageWithNavigationCategoryList = _uiPageNavigationService.Get();
-            var pageTypeList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageWithNavigationCategoryList);
+            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+            List<UiPageNavigationModel> pageNavigationList = _uiPageNavigationService.Get();
+            var pageNavigationModel = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageNavigationList);
+            return View(pageNavigationModel.AsEnumerable());
+        }
 
-            if (pageTypeList != null && pageTypeList.Count > 0)
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Create(int id)
+        {
+           // List<UiPageNavigationModel> navigationType = _uiPageNavigationService.Get();
+            List<ModuleModel> moduleType = _uiModuleService.Get();
+            List<UiNavigationCategoryModel> navigationCategoryType = _uiPageNavigationCategoryServics.Get();
+           // var pageList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(navigationType);
+            var metadataList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(moduleType);
+            var validationList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(navigationCategoryType);
+           // ViewBag.UiPageNavigationTypes = pageList;
+            ViewBag.Module = metadataList;
+            ViewBag.UiNavigationCategory = validationList;
+
+            return base.View(new UiPageNavigationDTO { Id = id });
+        }
+
+        /// <summary>
+        /// To Create Record In Ui Page Navigation
+        /// </summary>
+        /// <param name="uiPageNavigationDTO"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create( [Bind] UiPageNavigationDTO uiPageNavigationDTO)
+        {
+            if (ModelState.IsValid)
             {
-                var dataAfterSorting = pageTypeList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, Childrens = x.ToList() });
-                return Ok(dataAfterSorting);
+                var createPageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
+                _uiPageNavigationService.Create(createPageNavigation);
+                TempData["IsTrue"] = true;
+                return RedirectToAction("Index");
             }
-            return BadRequest();
+            return View(uiPageNavigationDTO);
+        }
+
+        /// <summary>
+        /// For Edit Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="uiPageTypeId"></param>
+        /// <param name="uiPageMetadataId"></param>
+        /// <param name="uiPageValidationTypeId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Edit(int? id, int uiPageNavigationUrl, int uiModuleId, int uiPageNavigationCategoryId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+           // ViewBag.UiPageNavigationTypes = uiPageNavigationUrl;
+            ViewBag.Module = uiModuleId;
+            ViewBag.UiNavigationCategory = uiPageNavigationCategoryId;
+            //List<UiPageNavigationModel> navigation = _uiPageNavigationService.Get();
+            List<ModuleModel> module = _uiModuleService.Get();
+            List<UiNavigationCategoryModel> categoryType = _uiPageNavigationCategoryServics.Get();
+           // var navigationList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(navigation);
+            var moduleList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(module);
+            var categoryList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(categoryType);
+            //ViewBag.UiPageNavigationTypes = navigationList;
+            ViewBag.Module = moduleList;
+            ViewBag.UiNavigationCategory = categoryList;
+
+            var getByIdPageNavigationType = _uiPageNavigationService.GetById((int)id);
+            if (getByIdPageNavigationType == null)
+            {
+                return NotFound();
+            }
+            var pageNavigationModel = _mapper.Map<UiPageNavigationModel, UiPageNavigationDTO>(getByIdPageNavigationType);
+            return View(pageNavigationModel);
+        }
+
+        /// <summary>
+        /// To Edit Record In Ui Page Navigation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="uiPageNavigationDTO"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public IActionResult Edit(int id ,[Bind] UiPageNavigationDTO uiPageNavigationDTO)
+        //{
+        //    if (id != uiPageNavigationDTO.Id)
+        //   {
+        //        return NotFound();
+        //    }
+        //    if (ModelState.IsValid)
+        //    {
+        //        var pageNavigationEdit = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
+        //       _uiPageNavigationService.Update(id, pageNavigationEdit);
+        //        TempData["IsTrue"] = true;
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(uiPageNavigationDTO);
+        //}
+        public IActionResult Edit(int id,[Bind] UiPageNavigationDTO uiPageNavigationDTO)
+        {
+
+           if (ModelState.IsValid)
+           {
+               var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
+                _uiPageNavigationService.Update(id, pageNavigation);
+                TempData["IsTrue"] = true;
+                return RedirectToAction("Index");
+            }
+            return View(uiPageNavigationDTO);
+        }
+
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var getByIdPageNavigationType = _uiPageNavigationService.GetById(id);
+            var pageNavigationModel = _mapper.Map<UiPageNavigationModel, UiPageNavigationDTO>(getByIdPageNavigationType);
+            return View(pageNavigationModel);
+        }
+
+        /// <summary>
+        /// To Delete Record From Ui Page Validation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            _uiPageNavigationService.Delete((int)id);
+            TempData["IsTrue"] = true;
+            return RedirectToAction("Index");
         }
     }
+
 }
