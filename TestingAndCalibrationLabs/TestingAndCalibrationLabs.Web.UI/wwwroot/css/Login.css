@@ -1,4 +1,105 @@
-﻿
+﻿/*  Oranization DropDown Code Start */
+
+/*.divDrop {
+    position: relative;
+   }*/
+
+.OrgLabel {
+    color: dimgrey;
+    font-size: 15px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 36px;
+    top: 8px;
+    padding: 0 5px;
+    background: #fff;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.3s ease all;
+}
+
+
+
+.divOrgSelect {
+    font-size: 13px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    background: #fff;
+    color: black;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 8px 0;
+    padding-left: 38px;
+    
+}
+    
+
+    .divOrgSelect:focus {
+        outline: none;
+        border-color: dodgerblue;
+        box-shadow: 0 0 3px 0 dodgerblue;
+        transition: 0.3s all;
+    }
+
+    .divOrgSelect:hover {
+        border-color: dodgerblue;
+        box-shadow: 0 0 1px 0 dodgerblue;
+    }
+
+
+
+    .divOrgSelect:focus ~ .OrgLabel {
+        top: -6px;
+        font-size: 12px;
+       
+    }
+
+select.divOrgSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+}
+
+    select.divOrgSelect::-ms-expand {
+        display: none;
+    }
+.did-floating-input:not(:placeholder-shown) ~ .OrgLabel {
+    top: -6px;
+    font-size: 12px;
+}
+
+
+.divOrgSelect:not([value=""]):valid ~ .OrgLabel {
+    top: -10px;
+    font-size: 12px;
+}
+
+.divOrgSelect[value=""]:focus ~ .OrgLabel {
+    top: 12px;
+    font-size: 13px;
+   
+}
+
+
+
+
+.divOrgSelect:not([multiple]):not([size]) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'%3E%3Cpath id='Path_1' data-name='Path 1' d='M371,294l4,6,4-6Z' transform='translate(-371 -294)' fill='%23003d71'/%3E%3C/svg%3E%0A");
+    background-position: right 15px top 50%;
+    background-repeat: no-repeat;
+}
+
+.did-error-input .divOrgSelect:not([multiple]):not([size]) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'%3E%3Cpath id='Path_1' data-name='Path 1' d='M371,294l4,6,4-6Z' transform='translate(-371 -294)' fill='%239d3b3b'/%3E%3C/svg%3E%0A");
+}
+
+
+/* End Organization DropDown Code */
+
 /* Add styles to the form container */
 .container-Login {
     max-width: 450px;
@@ -43,9 +144,16 @@
         border-color: dodgerblue;
         box-shadow: 0 0 8px 0 dodgerblue;
     }
-
+    .inputForSignIn:hover {
+        border-color: dodgerblue;
+        box-shadow: 0 0 1px 0 dodgerblue;
+    }
+    .select.inputForSignIn{
+        color: dimgray;
+    }
+   
 .inputWithIcon .inputForSignIn {
-    padding-left: 30px;
+    padding-left: 38px;
 }
 
 .inputWithIcon {
@@ -55,8 +163,8 @@
     .inputWithIcon .iconForSignIn {
         position: absolute;
         left: 0;
-        top: 7px;
-        padding: 9px 8px;
+        top: 6px;
+        padding:8px 8px;
         color: #aaa;
         transition: 0.3s;
     }

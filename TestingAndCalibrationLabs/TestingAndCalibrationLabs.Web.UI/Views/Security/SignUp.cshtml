@@ -13,11 +13,12 @@
             <input class="inputForSignIn" type="email" asp-for="Email" placeholder="Enter Email">
             <i class="fa-solid fa-envelope iconForSignIn"></i>
         </div>
-        <div class="inputWithIcon">
-            <select name="Orgnizations" class="inputForSignIn" placeholder="Enter Email" asp-items="@ViewBag.Organizations">
-            </select>
+        <div class=" inputWithIcon">
+            <select class="divOrgSelect" id="org5" name="Orgnizations" asp-items="@ViewBag.Organizations" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value)">
+             </select>
+            <label for="org5" class="OrgLabel">Organizations</label>
             <i class="fa-solid fa-sitemap iconForSignIn"></i>
-        </div>
+            </div>
         <div class="inputWithIcon">
             <input class="inputForSignIn" type="password" asp-for="Password" placeholder="Enter Password">
             <i class="fa-solid fa-key iconForSignIn"></i>
