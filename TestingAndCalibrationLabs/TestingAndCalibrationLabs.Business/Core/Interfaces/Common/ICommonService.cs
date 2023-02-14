@@ -58,18 +58,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RecordsModel GetMultiControlValue(int recordId);
         /// <summary>
-        /// To Insert Multi Value Records
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        RequestResult<bool> InsertMultiValue(RecordModel record);
-        /// <summary>
-        /// To Update Multi Value Records
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        RequestResult<bool> UpdateMultiValue(RecordModel record);
-        /// <summary>
         /// To Delete Multi Value Records
         /// </summary>
         /// <param name="record"></param>

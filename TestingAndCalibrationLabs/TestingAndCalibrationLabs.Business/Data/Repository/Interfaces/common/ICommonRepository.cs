@@ -83,18 +83,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         List<UiPageMetadataModel> GetMultiControlMetadata(int recordId);
         /// <summary>
-        /// Insert Multi Value Record
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        bool InsertMultiValue(RecordModel record);
-        /// <summary>
-        /// Update Multi Value Records
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        bool UpdateMultiValue(RecordModel record);
-        /// <summary>
         /// Delete Multi Value Records
         /// </summary>
         /// <param name="record"></param>

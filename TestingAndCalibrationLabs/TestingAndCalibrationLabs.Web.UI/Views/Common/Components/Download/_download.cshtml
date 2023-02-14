@@ -5,7 +5,7 @@
     $(document).ready(function(){
         modelData = JSON.parse('@Json.Serialize(Model)');
         var displayName = modelData.value.uiPageMetadata.uiControlDisplayName;
-        var btnHtml = '<input type="button" value="'+displayName+'" class="btn btn-primary mt-3" onclick="GenerateReport()" />'
+        var btnHtml = '<input type="button" value="'+displayName+'" class="button-base button-material-primary" onclick="GenerateReport()" />'
         $("#sub-mt-btn").append(btnHtml);
     });
    function GenerateReport(pageTypeId) {

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -142,14 +143,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             string recordInsertQuery = @"Insert into [Record](ModuleId,WorkflowStageId) 
                 values (@ModuleId,@WorkflowStageId);
                 SELECT @RecordId = @@IDENTITY";
-            string uiPageMetadataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId) 
-                values (@UiPageMetadataId, @Value, @RecordId)";
+            string singleValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId) 
+                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId)"; 
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, p, transaction);
+            db.Execute(recordInsertQuery, p, transaction);  
             int insertedRecordId = p.Get<int>("@RecordId");
-            var uiPageMetaData = record.FieldValues.Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
-            db.Execute(uiPageMetadataInsertQuery, uiPageMetaData, transaction);
+            var subRecordId = GenerateNewSubRecordId(insertedRecordId);
+            var singlePageData = record.FieldValues.Where(x=>x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId}).ToList();
+            var multiValueData = record.FieldValues.Where(x => x.MultiValueControl == true).Select(x => new { SubRecordId = subRecordId, RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
+            db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
+            if(multiValueData.Count > 0)
+            {
+                string multiValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId,SubRecordId) 
+                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId,@SubRecordId)";
+                db.Execute(multiValueDataInsertQuery, multiValueData, transaction);
+            }
+           
+         
             transaction.Commit();
             return insertedRecordId;
         }
@@ -209,17 +220,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var insertList = recordModel.FieldValues.Where(x => x.Id == 0).ToList();
+            var subRecordId = GenerateNewSubRecordId(recordModel.Id);
+            var insertList = recordModel.FieldValues.Where(x => x.Id == 0 && x.MultiValueControl != true).ToList();
+            var multiValueInsert = recordModel.FieldValues.Where(x => x.Id == 0 && x.MultiValueControl == true)
+                .Select(x=> new UiPageDataModel{ UiPageMetadataId =x.UiPageMetadataId, RecordId =x.RecordId, Value = x.Value, UiPageTypeId =x.UiPageTypeId,SubRecordId = subRecordId}).ToList();
             var updateList = recordModel.FieldValues.Where(x => x.Id != 0).ToList();
             string recordInsertQuery = @"Update [Record] Set
                                                 UpdatedDate = @UpdatedDate ,
                                                 WorkflowStageId = @WorkflowStageId
                                             Where Id = @Id";
-            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value)
-                                        Values (@UiPageMetadataId,@RecordId,@Value)";
+            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,UiPageTypeId)
+                                        Values (@UiPageMetadataId,@RecordId,@Value,@UiPageTypeId)";
+            var multiInsertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,UiPageTypeId,SubRecordId)
+                                        Values (@UiPageMetadataId,@RecordId,@Value,@UiPageTypeId,@SubRecordId)";
             var updateQurey = @"Update [UiPageData] Set
                                     UiPageMetadataId = @UiPageMetadataId,
                                     RecordId = @RecordId,
+                                    UiPageTypeId = @UiPageTypeId,
                                     Value = @Value
                                 Where Id = @Id";
             IDbTransaction transaction = db.BeginTransaction();
@@ -227,6 +244,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             if (insertList.Count > 0)
             {
                 db.Execute(insertQuery, insertList, transaction);
+            }
+            if (multiValueInsert.Count > 0)
+            {
+                db.Execute(multiInsertQuery, multiValueInsert, transaction);
             }
             if (updateList.Count > 0)
             {
@@ -250,6 +271,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     inner join [UiPageData] upd on r.Id = upd.RecordId
                                                where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
                                                     and r.Id = @id and r.IsDeleted = 0 
+                                                    and mmb.MultiValueControl != 'true'
                                                     and ws.IsDeleted = 0
                                                     and mmb.IsDeleted = 0 
                                                     and upd.IsDeleted = 0", new { id }).ToList();
@@ -330,52 +352,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection con = _connectionFactory.GetConnection;
             var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId}").First();
             return result + 1;
-        }
-        /// <summary>
-        /// Insert Multi Record Values 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public bool InsertMultiValue(RecordModel record)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            var subRecordId = GenerateNewSubRecordId(record.Id);
-            record.FieldValues.ForEach(x => x.SubRecordId = subRecordId);
-            string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate 
-                                            Where Id = @Id";
-            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,SubRecordId,UiPageTypeId)
-                                        Values (@UiPageMetadataId,@RecordId,@Value,@SubRecordId,@UiPageTypeId)";
-
-            IDbTransaction transaction = db.BeginTransaction();
-            var result = db.Execute(recordInsertQuery, record, transaction);
-            var resultField = db.Execute(insertQuery, record.FieldValues, transaction);
-            transaction.Commit();
-            return true;
-        }
-        /// <summary>
-        /// Update Multi Record Value
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public bool UpdateMultiValue(RecordModel record)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate
-                                            Where Id = @Id";
-            var updateQurey = @"Update [UiPageData] Set
-                                    UiPageMetadataId = @UiPageMetadataId,
-                                    RecordId = @RecordId,
-                                    Value = @Value,
-                                    SubRecordId = @SubRecordId,
-                                    UiPageTypeId = @UiPageTypeId
-                                Where Id = @Id And SubRecordId = @SubRecordId";
-            IDbTransaction transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, record, transaction);
-            db.Execute(updateQurey, record.FieldValues, transaction);
-            transaction.Commit();
-            return true;
         }
         /// <summary>
         /// Delete Multi Record Values

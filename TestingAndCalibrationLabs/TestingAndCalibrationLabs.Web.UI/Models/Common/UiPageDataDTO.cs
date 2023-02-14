@@ -9,7 +9,7 @@
         public int UiPageMetadataId { get; set; }
         public int RecordId { get; set; }
         public int SubRecordId { get; set; }
-
+        public bool MultiValueControl { get; set; }
         public int UiPageTypeId { get; set; }
         public string Value { get; set; }
     }

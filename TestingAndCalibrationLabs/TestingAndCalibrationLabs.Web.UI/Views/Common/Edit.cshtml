@@ -21,6 +21,12 @@
         <div class="form-group" id="sub-mt-btn">
             <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="AjaxFormSubmit()" />
         </div>
+        <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+        <div class="submit-progress hidden" style="z-index:1056;" id="snacResponse">
+            <i class="fa fa-2x fa-spinner fa-spin"></i>
+            <label>Please wait while Saving Data...</label>
+        </div>
+        <!-- ** END POP-UP MESSAGE AREA ** -->
     </div>
 </div>
 
@@ -67,18 +73,21 @@
     }
 </script>
 <script type="text/javascript">
-    var modelData = JSON.parse('@Json.Serialize(Model)');
-    var updatedDateT = modelData.updatedDate;
-
+    var mainModel = JSON.parse('@Json.Serialize(Model)');
+    var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-    function AjaxFormSubmit() {
-
-        var moduleId = parseInt($("#ModuleId").val())
-        var id = parseInt($("#Id").val())
-        var workflowStageId = parseInt($("#WorkflowStageId").val())
-
-        var url = $("#commonForm").attr("action");
-      
+    var moduleId = parseInt($("#ModuleId").val())
+    var id = parseInt($("#Id").val())
+    var url = $("#commonForm").attr("action");
+    AjaxFormSubmit = () => {
+        // Gray out background on page
+        $("body").addClass("submit-progress-bg");
+        // Wrap in setTimeout so the UI can update the spinners
+        setTimeout(function () {
+            $("#snacResponse").removeClass("hidden");
+        }, 1);
+        let workflowStageId = parseInt($("#WorkflowStageId").val())
+        
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
 
@@ -87,10 +96,10 @@
             }
             return [member.value, _.flatMapDeep(member.children, getMembers)];
         }
-        var layout = _.flatMapDeep(modelData.layout, getMembers);
+        var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
-            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl") {
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
@@ -107,6 +116,7 @@
                         keyValuepair.uiPageMetadataId = metadataId;
                         keyValuepair.RecordId = id;
                         keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
                     }
                 }
@@ -115,6 +125,7 @@
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
                 }
             }
@@ -122,7 +133,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "WorkflowStageId": workflowStageId, "UpdatedDate": updatedDateT, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();
                 window.location.href = "/common/edit/" + id;
@@ -131,6 +142,11 @@
                 alert(response.responseText);
             },
             error: function (response) {
+                $("body").removeClass("submit-progress-bg");
+                // Wrap in setTimeout so the UI can update the spinners
+                setTimeout(function () {
+                    $("#snacResponse").addClass("hidden");
+                }, 1);
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {
@@ -147,4 +163,3 @@
         });
     }
 </script>
-@*<script scr="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>*@

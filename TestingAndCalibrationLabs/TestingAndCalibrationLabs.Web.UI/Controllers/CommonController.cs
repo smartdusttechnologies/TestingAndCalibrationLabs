@@ -1,13 +1,11 @@
-﻿using System.Linq;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
-using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using System.Collections.Generic;
-using System;
-using System.Reflection;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -80,7 +78,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
-            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
             return PartialView(controlCategoryTypeTemplate, records);
         }
         [HttpGet]
@@ -201,45 +199,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _commonService.Delete((int)id);
             return RedirectToAction("Index", new { id = moduleId });
         }
-        #region MultiValue Control CRUD
-        /// <summary>
-        /// Insert Multi Record Values
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult InsertMultiValue([Bind] RecordDTO record)
-        {
-            if (ModelState.IsValid)
-            {
-                var recordModel = _mapper.Map<RecordDTO, RecordModel>(record);
-                var result = _commonService.InsertMultiValue(recordModel);
-                if (result.IsSuccessful)
-                {
-                    return Ok(result);
-                }
-            }
-            return BadRequest();
-        }
-        /// <summary>
-        /// Update Multi Record Values
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult UpdateMultiValue([Bind] RecordDTO record)
-        {
-            if (ModelState.IsValid)
-            {
-                var recordModel = _mapper.Map<RecordDTO, RecordModel>(record);
-                var result = _commonService.UpdateMultiValue(recordModel);
-                if (result.IsSuccessful)
-                {
-                    return Ok(result);
-                }
-            }
-            return BadRequest();
-        }
         /// <summary>
         /// Delete Multi Record
         /// </summary>
@@ -254,6 +213,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
-        #endregion
     }
 }
