@@ -70,12 +70,7 @@
         
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
-        // Gray out background on page
-        $("body").addClass("submit-progress-bg");
-        // Wrap in setTimeout so the UI can update the spinners
-        setTimeout(function () {
-            $("#snacResponse").removeClass("hidden");
-        }, 1);
+        WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
         //createRipple(this);
         //Set the URL.
@@ -93,7 +88,7 @@
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            if (uiPageMetaData[i].controlCategoryName == "DataControl") {
+            if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
@@ -115,11 +110,7 @@
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");
-                  $("body").removeClass("submit-progress-bg");
-                // Wrap in setTimeout so the UI can update the spinners
-                setTimeout(function () {
-                    $("#snacResponse").addClass("hidden");
-                }, 1);
+                HideWheelLoader();
                 var nuiPageMetaData = response.fields;
                 var a = response.fieldValues;
                 for (let i = 0; i < nuiPageMetaData.length; i++) {
@@ -133,11 +124,7 @@
                 alert(response.responseText);
             },
             error: function (response) {
-                $("body").removeClass("submit-progress-bg");
-                // Wrap in setTimeout so the UI can update the spinners
-                setTimeout(function () {
-                    $("#snacResponse").addClass("hidden");
-                }, 1);
+                HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {

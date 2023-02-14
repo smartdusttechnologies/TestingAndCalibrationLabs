@@ -21,12 +21,6 @@
         <div class="form-group" id="sub-mt-btn">
             <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="AjaxFormSubmit()" />
         </div>
-        <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
-        <div class="submit-progress hidden" style="z-index:1056;" id="snacResponse">
-            <i class="fa fa-2x fa-spinner fa-spin"></i>
-            <label>Please wait while Saving Data...</label>
-        </div>
-        <!-- ** END POP-UP MESSAGE AREA ** -->
     </div>
 </div>
 
@@ -80,14 +74,8 @@
     var id = parseInt($("#Id").val())
     var url = $("#commonForm").attr("action");
     AjaxFormSubmit = () => {
-        // Gray out background on page
-        $("body").addClass("submit-progress-bg");
-        // Wrap in setTimeout so the UI can update the spinners
-        setTimeout(function () {
-            $("#snacResponse").removeClass("hidden");
-        }, 1);
+        wheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val())
-        
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
 
@@ -142,11 +130,7 @@
                 alert(response.responseText);
             },
             error: function (response) {
-                $("body").removeClass("submit-progress-bg");
-                // Wrap in setTimeout so the UI can update the spinners
-                setTimeout(function () {
-                    $("#snacResponse").addClass("hidden");
-                }, 1);
+               HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {
