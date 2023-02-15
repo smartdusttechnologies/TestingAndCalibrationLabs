@@ -84,7 +84,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);
             var template = File.ReadAllText(path);
             var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageId);
-            var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
+            var uiPageData = _commonRepository.GetPageData(recordId);
 
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
