@@ -1,6 +1,9 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
     <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
         <input class="form-input width-full" type="email" placeholder=" " id="@Model.Value.UiControlTypeName@Model.Value.Id" name="@Model.Value.UiControlTypeName@Model.Value.Id" onchange="this.setAttribute('value',this.value)" />
-        <label class="form-label" for="@Model.Value.UiControlDisplayName">@Model.Value.UiControlDisplayName@if(Model.Value.IsRequired){<span class="red-color">*</span>}</label>
+    <label class="form-label" for="@Model.Value.UiControlTypeName@Model.Value.Id">@Model.Value.UiControlDisplayName@if (Model.Value.IsRequired)
+        {
+            <span class="red-color">*</span>
+        }</label>
         <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
     </div>
