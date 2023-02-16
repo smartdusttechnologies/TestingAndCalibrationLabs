@@ -111,14 +111,7 @@
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");
                 HideWheelLoader();
-                var nuiPageMetaData = response.fields;
-                var a = response.fieldValues;
-                for (let i = 0; i < nuiPageMetaData.length; i++) {
-                    if (nuiPageMetaData[i].controlCategoryName == "DataControl") {
-                        var nfieldId = nuiPageMetaData[i].uiControlTypeName + nuiPageMetaData[i].id;
-                        $('#' + nfieldId).val('');         //Assigning a empty values to input fields
-                    }
-                }
+                window.location.href = "/common/index/" + moduleId;
             },
             failure: function (response) {
                 alert(response.responseText);

@@ -95,7 +95,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var reportByte = _commonService.TemplateGenerate(recordId, metadataId);
             return File(reportByte, "application/pdf");
-
         }
         /// <summary>
         /// sending record to axaj to show grid control
