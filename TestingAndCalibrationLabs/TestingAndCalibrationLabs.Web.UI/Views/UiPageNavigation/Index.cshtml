@@ -44,8 +44,8 @@
                     </td>
 
                     <td>
-                        @Html.ActionLink("", "Edit", new { id=item.Id,Url=item.Url,ModuleName=item.ModuleName,UiNavigationCategoryName=item.UiNavigationCategoryName}, new{@class="fas fa-edit"}) |
-                        @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
+                        @Html.ActionLink("", "Edit", new { id=item.Id,uiPageNavigationUrl=item.Url,uiModuleId=item.ModuleId,uiPageNavigationCategoryId=item.UiNavigationCategoryId}, new{@class="fas fa-edit"}) |
+                        @Html.ActionLink("", "Delete", new {  id=item.Id,uiPageNavigationUrl=item.Url,uiModuleId=item.ModuleId,uiPageNavigationCategoryId=item.UiNavigationCategoryId }, new{@class="fa fa-trash"})
                     </td>
                 </tr>
             }

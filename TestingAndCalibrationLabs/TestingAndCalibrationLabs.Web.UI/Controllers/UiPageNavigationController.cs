@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiModuleService = uiModuleService;
             _mapper = mapper;
             _uiPageNavigationCategoryServics = uiPageNavigationCategoryServics;
-          
+
         }
 
         /// <summary>
@@ -46,13 +46,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-           // List<UiPageNavigationModel> navigationType = _uiPageNavigationService.Get();
             List<ModuleModel> moduleType = _uiModuleService.Get();
             List<UiNavigationCategoryModel> navigationCategoryType = _uiPageNavigationCategoryServics.Get();
-           // var pageList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(navigationType);
             var metadataList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(moduleType);
             var validationList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(navigationCategoryType);
-           // ViewBag.UiPageNavigationTypes = pageList;
             ViewBag.Module = metadataList;
             ViewBag.UiNavigationCategory = validationList;
 
@@ -66,7 +63,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create( [Bind] UiPageNavigationDTO uiPageNavigationDTO)
+        public IActionResult Create([Bind] UiPageNavigationDTO uiPageNavigationDTO)
         {
             if (ModelState.IsValid)
             {
@@ -87,22 +84,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageValidationTypeId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id, int uiPageNavigationUrl, int uiModuleId, int uiPageNavigationCategoryId)
+        public IActionResult Edit(int id, string uiPageNavigationUrl, int uiModuleId, int uiPageNavigationCategoryId)
         {
             if (id == null)
             {
                 return NotFound();
             }
-           // ViewBag.UiPageNavigationTypes = uiPageNavigationUrl;
             ViewBag.Module = uiModuleId;
             ViewBag.UiNavigationCategory = uiPageNavigationCategoryId;
-            //List<UiPageNavigationModel> navigation = _uiPageNavigationService.Get();
             List<ModuleModel> module = _uiModuleService.Get();
             List<UiNavigationCategoryModel> categoryType = _uiPageNavigationCategoryServics.Get();
-           // var navigationList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(navigation);
             var moduleList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(module);
             var categoryList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(categoryType);
-            //ViewBag.UiPageNavigationTypes = navigationList;
             ViewBag.Module = moduleList;
             ViewBag.UiNavigationCategory = categoryList;
 
@@ -113,6 +106,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             var pageNavigationModel = _mapper.Map<UiPageNavigationModel, UiPageNavigationDTO>(getByIdPageNavigationType);
             return View(pageNavigationModel);
+
+            
         }
 
         /// <summary>
@@ -123,27 +118,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public IActionResult Edit(int id ,[Bind] UiPageNavigationDTO uiPageNavigationDTO)
-        //{
-        //    if (id != uiPageNavigationDTO.Id)
-        //   {
-        //        return NotFound();
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        var pageNavigationEdit = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
-        //       _uiPageNavigationService.Update(id, pageNavigationEdit);
-        //        TempData["IsTrue"] = true;
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(uiPageNavigationDTO);
-        //}
-        public IActionResult Edit(int id,[Bind] UiPageNavigationDTO uiPageNavigationDTO)
+    
+        public IActionResult Edit(int id, [Bind] UiPageNavigationDTO uiPageNavigationDTO)
         {
 
-           if (ModelState.IsValid)
-           {
-               var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
+            if (ModelState.IsValid)
+            {
+                var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
                 _uiPageNavigationService.Update(id, pageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");

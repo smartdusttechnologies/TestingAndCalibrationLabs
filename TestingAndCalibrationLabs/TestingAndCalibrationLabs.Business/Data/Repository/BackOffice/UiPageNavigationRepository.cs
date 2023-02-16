@@ -63,14 +63,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public UiPageNavigationModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageNavigationModel>(@"SELECT upt.Id, upt.ModuleId, upt.UiNavigationCategoryId , unc.[Name] as UiNavigationCategoryName, 
+            return db.Query<UiPageNavigationModel>(@"SELECT upt.Id,upt.ModuleId, upt.UiNavigationCategoryId , unc.[Name] as UiNavigationCategoryName, 
                                                     pt.Name as ModuleName, upt.Url, unc.[Orders] as Orders
                                                 From[UiPageNavigation] upt
                                                     inner join[UiNavigationCategory] unc on upt.UiNavigationCategoryId = unc.Id
                                                     inner join[Module] pt on upt.ModuleId = pt.Id
 											  where
+                                                    upt.Id=@Id and
                                                     upt.IsDeleted = 0
                                                     and unc.IsDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
+            
         }
 
         /// <summary>
