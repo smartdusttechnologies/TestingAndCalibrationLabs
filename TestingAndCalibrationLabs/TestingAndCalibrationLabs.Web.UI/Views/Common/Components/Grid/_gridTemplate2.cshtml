@@ -13,7 +13,9 @@
                 <input type="text" id="TestDetailsGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
                 <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
                 <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
+
             </div>
+
         </div>
     </div>
     <div class="table-responsive simple-pagination card shadow border-radius-grid">
@@ -39,9 +41,9 @@
                                 break;
                             }
                             <td>
-                             @Html.DisplayFor(modelItem => itemValue.Value)
+                                @Html.DisplayFor(modelItem => itemValue.Value)
                             </td>
-                            
+
                             count++;
                         }
                         <td>
