@@ -94,7 +94,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult TemplateGenerate(int recordId, int metadataId)
         {
             var reportByte = _commonService.TemplateGenerate(recordId, metadataId);
-            return Ok(File(reportByte, "application/pdf"));
+            return File(reportByte, "application/pdf");
 
         }
         /// <summary>
