@@ -199,13 +199,14 @@
                 HideWheelLoader();
                 let newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 let newErrorMessage = newresponseJSON.errorMessage;            //assiging the values of errorMessage to  newErrorMessage
+                let ele = "";
                 for (let i = 0; i < newErrorMessage.length; i++) {
                     let msg = newErrorMessage[i].reason;
                     let sourceId = "#" + newErrorMessage[i].sourceId;
                     $(sourceId).removeClass("black-border").addClass("red-error-border");
                     if (newErrorMessage[i].messageKey == "True") {
-                        let ele = `<div class="alert"><span onclick="this.parentElement.style.display='none';" class="closebtn">&times;</span>${msg}</div>`;
-                        $("#gridPopup").prepend(ele);
+                        ele += `<div class="alert"><span onclick="this.parentElement.style.display='none';" class="closebtn">&times;</span>${msg}</div>`;
+                       
                     }
                     else {
                         myFunctionError();                                              //Calling myFunctionError javacript function
@@ -213,8 +214,9 @@
                             document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
                         }
                     }
-                    ErrorMessage(NotificationNumbers++, msg);
+                    ErrorMessage(NotificationNumbers++, msg); 
                 }
+                $("#alert-box").html(ele);
             }
         });
     }
