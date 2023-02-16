@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        RequestResult<bool> Update(RecordModel record);
+        RequestResult<bool> Save(RecordModel record);
 
         /// <summary>
         /// Implimenting Delete for Class.
@@ -34,15 +34,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="uiPageId"></param>
         /// <returns></returns>
-        RecordModel GetUiPageMetadata(int uiPageId);
+        RecordModel GetUiPageMetadataCreate(int uiPageId);
 
-        /// <summary>
-        /// Implimenting for  GetUiPageMetadata
-        /// </summary>
-        /// <param name="uiPageId"></param>
-        /// <returns></returns>
-        RecordModel GetUiPageMetadataHierarchy(int uiPageId);
-
+        
         /// <summary>
         /// Implimenting interface dor GetRecords
         /// </summary>

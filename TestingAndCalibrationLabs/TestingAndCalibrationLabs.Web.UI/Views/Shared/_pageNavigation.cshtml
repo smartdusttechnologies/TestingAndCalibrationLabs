@@ -1,0 +1,101 @@
+﻿<ul class="navbar-nav ms-auto" id="navbarContentAdd">
+    <li class="nav-item " style="display:none" id="nav-item-Settings">
+        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-gear"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
+        </div>
+    </li>
+    <li class="nav-item dropdown notification-ui show" style="display:none;padding-right:10px" id="nav-item-Notifications">
+        <a class=" notification-ui_icon" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-bell" onclick="DisplayNotification()" style="font-size:15px; color:grey;" id="rotate"> </i> <span class="fa-bell__badge" id="value">0</span>
+        </a>
+
+        <div class="notification-overlay notification-ui_dd show" id="Menu" style="display:none" aria-labelledby="navbarDropdown">
+            <div class="notification-ui_dd-header">
+                <h3 class="text-center">Notification</h3>
+                <a style="color:royalblue; width:auto;cursor:pointer" onclick="Delete()">Clear</a>
+            </div>
+            <div class="notification-ui_dd-content" id="dropdownContentNotifications">
+
+                <div class="notification-list_detail" id="Paragraph">
+                    <p id="Name" style="color:grey"><center><b>No Notification</b></center> </p>
+                </div>
+
+            </div>
+            <div class="notification-ui_dd-footer">
+                <a href="#!" class="btn btn-success btn-block" style="border-radius:0.9rem;padding:10px;width:100%; display:none;" id="view" onclick="View()">View All</a>
+            </div>
+        </div>
+
+    </li>
+    <li class="nav-item " style="display:none" id="nav-item-Profile">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
+        </div>
+    </li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
+            success: function (response) {
+                response.sort(function (a, b) {
+                    if (a.orders < b.orders) { return 1; }
+                    if (a.orders > b.orders) { return -1; }
+                    return 0;
+                });
+                for (let i = 0; i < response.length; i++) {
+                    var uiNavigationCategoryId = response[i].id;
+                    var uiNavigationCategoryName = response[i].name;
+                    var parentListDiv = "#" + uiNavigationCategoryName;
+                    var parentListId = uiNavigationCategoryId;
+                    var idNameExistOrNot = "nav-item-" + uiNavigationCategoryName;
+                    var nameExistOrNot = document.getElementById(idNameExistOrNot);
+                    if (!nameExistOrNot && response[i].childrens.length > 1) {
+                        $('#navbarContentAdd').prepend("</li>");
+                        $('#navbarContentAdd').prepend("<li class='nav-item' id='" + uiNavigationCategoryName + "'>");
+                        var buttonDropdown = "<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown" + uiNavigationCategoryId + "' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" + uiNavigationCategoryName + "</a>";
+                        $(parentListDiv).append(buttonDropdown);
+                        $(parentListDiv).append("<div class='dropdown-menu' id='dropdownContent" + uiNavigationCategoryName + "' aria-labelledby='navbarDropdown" + uiNavigationCategoryId + "'>");
+                        $(parentListDiv).append("</div>");
+                    }
+                    else if(nameExistOrNot) {
+                        nameExistOrNot.style.display = "block";
+                    }
+                    var divExistOrNot = document.getElementById(parentListId);//Its not being used anywhere who to take
+                    response[i].childrens.sort(function (a, b) {
+                        if (a.name < b.name) { return -1; }
+                        if (a.name > b.name) { return 1; }
+                        return 0;
+                    });
+                   for (let j = 0; j < response[i].childrens.length; j++) {
+                        if (!nameExistOrNot && response[i].childrens.length == 1) {
+                            var singlePageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var singleListParent = "#navigationSingle" + uiNavigationCategoryId;
+                            $('#navbarContentAdd').prepend("<li class='nav-item' id='navigationSingle" + uiNavigationCategoryId + "'></li>");
+                            var singleChild = "<a class='nav-link text-dark' href='" + singlePageTypeUrl + "'>" + uiNavigationCategoryName + "</a>";
+                            $(singleListParent).append(singleChild);
+                        }
+                        else if (response[i].childrens.length > 1) {
+                            var pageTypeUrl = response[i].childrens[j].formatedUrl;
+                            var pageTypeName = response[i].childrens[j].moduleName;
+                            var uiNavigationId = response[i].id;
+                            var dropdownContentId = "#dropdownContent" + uiNavigationCategoryName;
+                            var script = "<a class='dropdown-item' href='" + pageTypeUrl + "'>" + pageTypeName + "</a>";
+                            $(dropdownContentId).append(script);
+                        }
+                    }
+                }
+            },
+            error: function (req, status, error) {
+                console.log(req);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
+</script>

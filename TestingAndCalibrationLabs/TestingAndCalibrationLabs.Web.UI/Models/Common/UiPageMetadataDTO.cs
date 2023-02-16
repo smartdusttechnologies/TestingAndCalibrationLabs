@@ -63,9 +63,7 @@
         public string UiControlCategoryTypeName { get; set; }
         public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
+        public int ModuleId { get; set; }
         public int Position { get; set; }
 
     }

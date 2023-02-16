@@ -9,8 +9,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     /// </summary>
     public class RecordsModel : Entity
     {
-        public int UiPageId { get; set; }
-        public List<UiPageMetadataModel> Fields { get; set; }
+        public int ModuleId { get; set; }
+        public IEnumerable<UiPageMetadataModel> Fields { get; set; }
         public Dictionary<int, List<Core.Model.UiPageDataModel>> FieldValues { get; set; }
     }
 }

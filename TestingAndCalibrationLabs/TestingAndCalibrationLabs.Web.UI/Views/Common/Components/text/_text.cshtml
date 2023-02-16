@@ -8,3 +8,16 @@
         }</label>
     <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
     </div>
+    <script>
+    $(document).ready(function () {
+        var idOfRecord = $("#Id").val();
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var uiPageData = modelData.value.uiPageData;
+        if (idOfRecord != undefined && uiPageData != null) {
+            var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
+            var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+            var val = uiPageData.value;
+            $(id).val(val);
+        }
+    });
+</script>

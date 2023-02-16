@@ -16,7 +16,8 @@ namespace TestingAndCalibrationLabs.Business.Services
               IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
-            IUiPageMetadataRepository uiPageMetadataRepository)
+            IUiPageMetadataRepository uiPageMetadataRepository,
+            IWorkflowActivityService workflowActivityService)
             : base(commonRepository,
                   recordGenericRepository,
                   uiPageTypeGenericRepository,
@@ -24,7 +25,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                   uiPageMetaDataGenericRepository,
                   uiPageValidationTypesGenericRepository,
                   uiPageMetadataCharacteristicsRepository,
-                  uiPageMetadataRepository)
+                  uiPageMetadataRepository,
+                  workflowActivityService)
         {
             UI_PAGE_NAME = "SamplePage";
         }

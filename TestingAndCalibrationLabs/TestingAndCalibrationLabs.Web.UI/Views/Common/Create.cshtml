@@ -6,8 +6,9 @@
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UiPageId" />
-
+            <input type="hidden" asp-for="ModuleId" />
+            <input type="hidden" asp-for="UiPageTypeId" />
+            <input type="hidden" asp-for="WorkflowStageId" />
             @foreach (var item in Model.Layout)
             {
                 <div class="row ms-1 me-1">
@@ -22,7 +23,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
+    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
 </div>
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
@@ -75,8 +76,16 @@
         }
         var url = $("#commonForm").attr("action");
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        console.log(modelData);
-        var uiPageMetaData = modelData.fields;
+        //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
+        const getMembers = (member) => {
+
+            if (!member.children || !member.children.length) {
+                return member.value.uiPageMetadata;
+            }
+            return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
+        }
+        var uiPageMetaData = _.flatMapDeep(modelData.layout, getMembers);
+        //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
@@ -89,11 +98,13 @@
                 fieldValues.push(keyValuepair)
             }
         }
-        var uiPageId = parseInt($("#UiPageId").val())
+        var moduleId = parseInt($("#ModuleId").val())
+        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+        var workflowStageId = parseInt($("#WorkflowStageId").val())
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "UiPageId": uiPageId, "FieldValues": fieldValues },
+            data: { "ModuleId": moduleId,"WorkflowStageId": workflowStageId, "UiPageTypeId": uiPageTypeId , "FieldValues": fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 var nuiPageMetaData = response.fields;
@@ -109,7 +120,6 @@
                 alert(response.responseText);
             },
             error: function (response) {
-                console.log(response);
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 document.getElementById("lefid").value = newErrorMessage.sourceId;

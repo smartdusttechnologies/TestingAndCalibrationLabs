@@ -18,6 +18,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+
         /// <summary>
         /// Insert Record in Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
@@ -31,6 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             
             return db.Execute(query, uiPageMetadataModel);
         }
+
         /// <summary>
         /// Getting All Records From Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
@@ -67,6 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0").ToList();
         }
+
         /// <summary>
         /// Getting Record By Id For Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
@@ -76,36 +79,41 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var uiPageMetadataById = db.Query<UiPageMetadataModel>(@"Select upm.Id,
-                                                        upm.UiPageTypeId,
+                                                        mmb.UiPageTypeId,
+														mmb.Orders,
+														mmb.ParentId,
+														mmb.ModuleId,
                                                         upt.[Name] as UiPageTypeName,
-                                                        upm.IsRequired,
+                                                         upm.IsRequired,
                                                         upm.UiControlTypeId,
                                                         uct.[Name] as UiControlTypeName,
                                                         upm.UiControlDisplayName,
-                                                        upm.ParentId,
                                                         upm.DataTypeId,
-														l.Id as LookupCategoryId,
-														upm.Name,
-														lc.Name as lookupCategoryName,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
-														ucct.Id as UiControlCategoryTypeId,ucct.Name as UiControlCategoryTypeName
-                                                    From [UiPageMetadata] upm
-                                                    inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
+                                                        lc.Id as LookupCategoryId,
+                                                        l.Name as ControlCategoryName,
+														ucct.Template as UiControlCategoryTypeTemplate
+                                                    From [MetadataModuleBridge] mmb
+													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
+                                                    inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
-                                                    
+                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
-													left join [UiPageMetadataCharacteristics] l on l.UiPageMetadataId = upm.Id and l.IsDeleted = 0
-													left join [LookupCategory] lc on lc.Id = l.LookupCategoryId and lc.IsDeleted = 0
-                                                where upm.Id = @Id
+													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
+                                                where mmb.UiPageMetadataId = @Id
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
-                                                    and dt.IsDeleted = 0", new { Id = id }).FirstOrDefault();
+                                                    and dt.IsDeleted = 0
+                                                    and l.IsDeleted = 0
+													and mmb.IsDeleted = 0", new { Id = id }).FirstOrDefault();
            
             return uiPageMetadataById;
         }
+
         /// <summary>
         /// Edit Record For Ui Page Metadata 
         /// </summary>

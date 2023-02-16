@@ -17,22 +17,24 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly IGoogleDriveService _googleDriveService;
+        private readonly IWorkflowStageService _workflowStageService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
-        /// <param name="listSorterService"></param>
-        public CommonController(IGoogleDriveService googleDriveService,ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IListSorterService listSorterService)
+        public CommonController(IGoogleDriveService googleDriveService,ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService)
         {
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
             _googleDriveService = googleDriveService;
+            _workflowStageService = workflowStageService;
         }
+
         /// <summary>
-        /// for getting old page index
+        /// Default Action of the Common Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -40,7 +42,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel,RecordsDTO>(pageMetadata);
-            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(5).ToList();
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
             return View(records);
         }
         /// <summary>
@@ -105,11 +107,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id = 1)
         {
-            var uiPageId = id;
-            var pageMetadata = _commonService.GetUiPageMetadataHierarchy(uiPageId);
+            var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
             var result = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return base.View(result);
         }
+
         /// <summary>
         /// for creating data
         /// </summary>
@@ -120,12 +122,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
          {
             var records = _mapper.Map<RecordDTO,RecordModel>(record);
             var adddata = _commonService.Add(records);
-            var pageMetadata = _commonService.GetUiPageMetadata(record.UiPageId);
+            var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);
             var result = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(result);
-
             }
             result.FieldValues = record.FieldValues;
             result.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
@@ -139,14 +140,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+
             var pageMetadata = _commonService.GetRecordById(id);
-            var Layout = _commonService.GetUiPageMetadataHierarchy(pageMetadata.UiPageId);
-            pageMetadata.Layout = Layout.Layout;
-            Layout.FieldValues = pageMetadata.FieldValues;
-            Layout.Id = pageMetadata.Id;
-            Models.RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(Layout);
+            RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             return View(record);
         }
+
         /// <summary>
         /// Edit and binding with business project
         /// </summary>
@@ -156,39 +155,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO,RecordModel>(record);
-            var adddata = _commonService.Update(records);
+            var adddata = _commonService.Save(records);
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
                 return Ok(recordModel);
-                //  return Json(result);
             }
             recordModel.FieldValues = record.FieldValues;
             recordModel.ErrorMessage = _mapper.Map<Business.Common.ValidationMessage,ValidationMessage>(adddata.ValidationMessages.FirstOrDefault());
             return BadRequest(recordModel);
+            
         }
         /// <summary>
-        ///  Delete Details of common
+        ///  Delete
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int id)
-        {
-            var pageMetadata = _commonService.GetRecordById(id);
-            RecordDTO record = _mapper.Map<RecordModel,RecordDTO>(pageMetadata);
-            return View(record);
-        }
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id,int uiPageId)
+        
+        public ActionResult Delete(int? id,int moduleId)
         {
             if (id == null)
             {
                 return NotFound();
             }
             _commonService.Delete((int)id);
-            return RedirectToAction("Index", new { id = uiPageId});
+            return RedirectToAction("Index", new { id = moduleId});
         }
     }
 }
