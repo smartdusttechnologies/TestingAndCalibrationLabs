@@ -1,93 +1,763 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.QueryBuilderRecordDTO
 
-@{
-    ViewData["Title"] = "QueryBuilder";
-}
+<link rel="stylesheet" href="https://cdn.korzh.com/eq/7.2.0/eq.core.min.css">
+@*<link rel="stylesheet" href="https://cdn.korzh.com/eq/7.2.0/eq.view.min.css">*@
+<style>
+    #eqv-main {
+        width: 1174px;
+        background: #fff;
+        margin: auto;
+        padding-top: 10px
+    }
+
+    .eqv-error, .eqv-error div {
+        color: red;
+        font: normal 20px Calibri
+    }
+
+   
+
+    .eqv-sub-title {
+        margin: 14px 0 0 10px;
+        float: left;
+        font: 700 11px Trebuchet MS,Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif;
+        color: #3a94d4
+    }
+
+    .eqv-header {
+        display: block;
+        height: 40px
+    }
+
+    .eqv-global-message {
+        display: none;
+        background-color: coral;
+        border-radius: 10px;
+        color: #fff;
+        float: right;
+        padding: 5px 10px 8px
+    }
+
+    .eqv-header-panel {
+        height: 494px
+    }
+
+        .eqv-header-panel > div {
+            height: 494px;
+            margin: 0 0 20px
+        }
+
+    #eqv-content {
+        background: #f6f6f6;
+        border: 2px solid #dedede;
+        padding: 20px
+    }
+
+    .eqv-hr {
+        height: 6px;
+        border: none;
+        margin: 0
+    }
+
+    .eqv-bottom-panel {
+        height: 313px
+    }
+
+        .eqv-bottom-panel > div {
+            height: 287px;
+            margin: 0 0 20px
+        }
+
+    .eqv-central-block {
+        width: 59%;
+        float: left
+    }
+
+    #eqv-footer {
+        margin: 10px 0;
+        padding: 0 0 20px;
+        font: normal 12px Calibri;
+        color: #000
+    }
+
+    .eqv-copyright {
+        float: left
+    }
+
+    .eqv-power-by {
+        float: right
+    }
+
+        .eqv-copyright a, .eqv-power-by a {
+            color: #237901
+        }
+
+    .eqv-entities-block {
+        width: 20%;
+        float: left;
+        margin: 0 20px 0 0 !important;
+        background: #fff;
+        border: 1px solid silver;
+        position: relative
+    }
+
+    .eqv-entities-hr {
+        background: #7bc4f8
+    }
+
+    .eqv-entities-title {
+        font: normal 18pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif;
+        color: #4f4f4f;
+        padding: 0 0 4px 10px;
+        background: #f9f9f9;
+        border-bottom: 1px solid #7bc4f8;
+        height: 38px
+    }
+
+    .eqv-entities-panel-container, .eqv-query-panel-container {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 44px
+    }
+
+    .eqv-conditions-block {
+        background: #fff;
+        border: 1px solid silver;
+        height: 294px;
+        position: relative
+    }
+
+    .eqv-conditions-hr {
+        background: #1777b1
+    }
+
+    .eqv-conditions-title {
+        font: normal 18pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif;
+        color: #4f4f4f;
+        padding: 0 0 4px 10px;
+        background: #f9f9f9;
+        border-bottom: 1px solid #1777b1;
+        height: 38px
+    }
+
+    .eqv-columns-block, .eqv-columns-sorting-block {
+        background: #fff;
+        border: 1px solid silver;
+        height: 180px;
+        margin: 0 0 20px;
+        position: relative
+    }
+
+    .eqv-columns-sorting-block {
+        height: auto;
+        margin-top: -21px
+    }
+
+    .eqv-columns-hr {
+        background: #1777b1
+    }
+
+    .eqv-columns-title {
+        font: normal 18pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif;
+        color: #4f4f4f;
+        padding: 0 0 4px 10px;
+        background: #f9f9f9;
+        border-bottom: 1px solid #1777b1;
+        height: 38px
+    }
+
+    .eqv-columns-panel-container {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 44px
+    }
+
+    .eqv-columns-sorting-title {
+        z-index: 1000;
+        position: absolute;
+        top: -12px;
+        left: 20px;
+        background-color: #fff;
+        padding: 0 10px 2px;
+        border: 1px solid #d3d3d3;
+        border-radius: 7px;
+        font: normal 10pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif
+    }
+
+    .eqv-columns-sorting-container {
+        margin-top: 10px
+    }
+
+    .eqv-menu-block {
+        width: 17%;
+        float: right;
+        background: #fff;
+        border: 1px solid silver
+    }
+
+    .eqv-menu-hr {
+        background: #ae67df
+    }
+
+    .eqv-menu-title {
+        font: normal 18pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif;
+        color: #4f4f4f;
+        padding: 0 0 4px 10px;
+        background: #f9f9f9;
+        border-bottom: 1px solid #1777b1
+    }
+
+    .eqv-menu-content {
+        padding: 10px
+    }
+
+        .eqv-button, .eqv-menu-content div {
+            margin: 10px 0
+        }
+
+    .eqv-button {
+        width: 100%;
+        border: 1px solid #ae67df;
+        font-family: Segoe UI;
+        font-size: 15px;
+        color: #4f4f4f;
+        cursor: pointer;
+        padding: 3px 10px;
+        display: inline-block;
+        text-align: center
+    }
+
+        .eqv-button:hover {
+            background-color: #ae67df;
+            color: #fff !important
+        }
+
+    .eqv-button-execute {
+        border-color: #237901;
+        margin-top: 40px
+    }
+
+        .eqv-button-execute:hover {
+            background-color: #237901
+        }
+
+    .eqv-sql-panel {
+        width: 25%;
+        border: 1px solid #c4d6e5;
+        background: #fff;
+        float: left;
+        position: relative
+    }
+
+    .eqv-sql-panel-hr {
+        background: #a8abad
+    }
+
+    .eqv-sql-panel-title {
+        font: normal 18pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif;
+        color: #4f4f4f;
+        padding: 0 0 4px 10px;
+        background: #f9f9f9;
+        border-bottom: 1px solid #a8abad;
+        height: 38px
+    }
+
+    .eqv-sql-block {
+        bottom: 0;
+        left: 0;
+        overflow: auto;
+        position: absolute;
+        right: 0;
+        top: 44px
+    }
+
+    .eqv-sql-panel-result {
+        padding: 7px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        font: normal 11px Verdana
+    }
+
+    #eqv-ResultExportButtons {
+        display: none;
+        float: right;
+        margin-right: 5px;
+        margin-top: 3px;
+        font-size: 12pt;
+        padding: 4px
+    }
+
+    .eqv-result-panel {
+        background: #fff;
+        position: relative;
+        border: 1px solid #c1d5e4;
+        width: 100%;
+        float: right
+    }
+
+    .eqv-result-panel-hr {
+        background: #237901
+    }
+
+    .eqv-result-panel-title {
+        border-bottom: 1px solid #237901;
+        font: normal 18pt Segoe UI Light,Segoe Light,Segoe UI,Arial,Helvetica,sans-serif;
+        color: #4f4f4f;
+        padding: 0 0 4px 10px;
+        background: #f8f7f7;
+        height: 38px
+    }
+
+        .eqv-result-panel-title a {
+            font-family: Trebuchet MS,Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px dashed;
+            margin-right: 10px
+        }
+
+            .eqv-result-panel-title a:hover {
+                color: #333;
+                border-bottom: 1px solid;
+                text-decoration: none
+            }
+
+    .eqv-result-panel-content {
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        top: 44px;
+        display: flex
+    }
+
+        .eqv-result-panel-content table {
+            font: normal 12px Calibri;
+            border: 1px solid rgba(0,0,0,.125)
+        }
+
+            .eqv-result-panel-content table td {
+                padding: 5px;
+                color: #4f4f4f;
+                font: 10px Arial;
+                border-bottom: 1px solid #e4e4e4
+            }
+
+    .eqv-result-panel-error {
+        color: red;
+        font: normal 20px Calibri;
+        text-align: center
+    }
+
+    
+
+    .eqv-result-grid {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        flex: 100 1 auto
+    }
+
+    .eqv-result-grid-header td {
+        font: 700 14px Calibri;
+        border-bottom: 1px solid silver !important
+    }
+
+    .eqv-result-grid-header th {
+        background-color: #f6f6f6;
+        color: #4f4f4f;
+        height: 30px;
+        font: 700 11px Arial !important;
+        border-bottom: 1px solid #e4e4e4;
+        text-align: left;
+        padding-left: 4px;
+        padding-right: 4px
+    }
+
+    .eqv-grid-panel {
+        overflow: auto;
+        flex-grow: 100
+    }
+
+        .eqv-grid-panel.eqjs-mobile {
+            overflow: hidden
+        }
+
+    .eqv-chart-panel {
+        flex: 0 0 360px
+    }
+
+    .pagination {
+        margin: 0
+    }
+
+    .eqv-pagination {
+        display: inline-block;
+        padding-left: 0;
+        margin: 0;
+        border-radius: 4px
+    }
+
+        .eqv-pagination > li {
+            display: inline
+        }
+
+            .eqv-pagination > li > a, .eqv-pagination > li > span {
+                font-size: 12px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                color: #428bca;
+                float: left;
+                line-height: 1.42857;
+                margin-left: -1px;
+                padding: 5px 10px;
+                position: relative;
+                text-decoration: none
+            }
+
+                .eqv-pagination > li > a:focus, .eqv-pagination > li > a:hover, .eqv-pagination > li > span:focus, .eqv-pagination > li > span:hover {
+                    background-color: #eee;
+                    border-color: #ddd;
+                    color: #2a6496
+                }
+
+        .eqv-pagination > .active > a, .eqv-pagination > .active > a:focus, .eqv-pagination > .active > a:hover, .eqv-pagination > .active > span, .eqv-pagination > .active > span:focus, .eqv-pagination > .active > span:hover {
+            background-color: #428bca;
+            border-color: #428bca;
+            color: #fff;
+            cursor: default;
+            z-index: 2
+        }
+
+        .eqv-pagination > .disabled > a, .eqv-pagination > .disabled > a:focus, .eqv-pagination > .disabled > a:hover, .eqv-pagination > .disabled > span, .eqv-pagination > .disabled > span:focus, .eqv-pagination > .disabled > span:hover {
+            background-color: #fff;
+            border-color: #ddd;
+            color: #999;
+            cursor: not-allowed
+        }
+
+        .eqv-pagination > li:first-child > a, .eqv-pagination > li:first-child > span {
+            border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+            margin-left: 0
+        }
+
+        .eqv-pagination > li:last-child > a, .eqv-pagination > li:last-child > span {
+            border-bottom-right-radius: 3px;
+            border-top-right-radius: 3px
+        }
+
+    .eqv-export-buttons {
+        float: right;
+        margin-right: 5px;
+        margin-top: 3px;
+        font-size: 12pt;
+        padding: 4px
+    }
+
+    .eqv-select {
+        font-size: 12px;
+        width: 100%
+    }
+
+    .eqv-drop-button {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important
+    }
+
+    .eqv-dropdown-container {
+        width: 100%;
+        position: relative;
+        display: inline-block
+    }
+
+    .eqv-dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 160px;
+        z-index: 1;
+        border: 1px solid silver;
+        border-radius: 0 0 4px 4px;
+        padding: 6px 0;
+        box-shadow: 4px 8px 15px 0 rgba(0,0,0,.16);
+        margin-top: 0 !important;
+        background-color: #fff;
+        right: 0
+    }
+
+        .eqv-dropdown-content a {
+            font-size: .9rem;
+            color: #333;
+            padding: 5px 14px;
+            text-decoration: none;
+            display: block;
+            white-space: nowrap
+        }
+
+            .eqv-dropdown-content a:hover {
+                background-color: #ecf3f5;
+                color: #1776b1
+            }
+
+    .eqv-dropdown-show {
+        display: block
+    }
+
+    .eqjs-query-name .eqjs-query-name-tooltip {
+        visibility: hidden;
+        background-color: #fff;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        left: 0
+    }
+
+    .eqjs-query-name:hover .eqjs-query-name-tooltip {
+        visibility: visible
+    }
+
+    .eqjs-query-name-theme {
+        color: #7a10c3;
+        border-bottom: 1px solid silver
+    }
+   
+</style>
+
 <h1>Query Builder</h1>
 
 <div class="container">
 
-    <div class="row g-3">
-       <div class="col-sm-4"> 
-@*<div class="accordion accordion-flush" id="accordionFlushExample">*@
-    @*<div class="querybuilderboarderContainer">*@
-@foreach (var item in Model.FieldValues)
-{
-    <div class="row ms-1 me-1">
-     <div class="accordion-item">
-     <h6 class="accordion-header" id="flush-@item.Key.tableName">
-      <label class="accordion-button collapsed" type="checkbox" data-bs-toggle="collapse" data-bs-target="#flush-@item.Key.tableName@item.Value.Count" aria-expanded="true" aria-controls="flush-@item.Key.tableName@item.Value.Count">  </label>
-      <input id= "flush-@item.Key.tableName" value="@item.Key.tableName" class="checkBoxExpand" type="checkbox"/> @Html.DisplayFor(tables => item.Key.tableName)  
- 
-  </h6>
-    @foreach(var values in item.Value)
-{
-    <div id="flush-@item.Key.tableName@item.Value.Count" class="accordion-collapse collapse" aria-labelledby="flush-@item.Key.tableName" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body"> <input type="checkbox" data-select-all="flush-@item.Key.tableName@item.Value.Count" value="@values.coloumnName"/><code>@Html.DisplayFor(colNames =>values.coloumnName)</code></div>
-    </div>
-    }
-  </div>
-  </div>
-  }
-  @*</div>*@
-@*</div>*@
+    <div id="eqv-content">
+        <div class="eqv-header-panel">
+            <div class="eqv-entities-block">
+                <hr class="eqv-entities-hr eqv-hr">
+                <div class="eqv-entities-title">Entities</div>
+                <div class="eqv-entities-panel-container">
+                    <div id="EntitiesPanel" onselectstart="return false" class="eqjs-ep-panel eqjs-mobile">
+                        <div class="eqjs-ep-entity eqjs-mobile" style="top:0px" id="LeftPanel">
 
-</div>
-<div class="col">
-        <div class="row g-3">
-            <div class="col-sm"><h6>Expression</h6>
-                <div id="checkboxName"></div>
-                </div>
-                <div class="col-sm"><h6>Title</h6> 
-                    <div id="checkboxvalue"></div>
+                            @*yaha tak ka cllss*@
+
+                            <div class="eqjs-ep-entity-children eqjs-mobile">
+                                @foreach (var item in Model.FieldValues)
+                                {
+
+                                    @*this is for title part*@
+                                    <div class="eqjs-ep-entity-node eqjs-mobile">
+                                        <div class="eqjs-ep-entity-node-button" onclick="DropdownContent('@item.Key.tableName')"></div>
+                                        <label class="eqjs-ep-entity-node-label">
+                                            <input type="checkbox" name="@item.Key.tableName" value="@item.Key.tableName" class="Parent-item" id="@item.Key.tableName" onclick="FunctionBox('@item.Key.tableName','@item.Value.Count')"> @Html.DisplayFor(tables => item.Key.tableName)
+                                        </label>
+                                    </div>
+                                    <div class="eqjs-ep-entity-children eqjs-mobile" id="flush-@item.Key.tableName" style="display:none">
+                                        @for (var pos = 0; pos < item.Value.Count; pos++)
+                                        {
+
+                                            <div class="eqjs-ep-entity-attr">
+                                                <label class="eqjs-ep-entity-attr-label">
+                                                    <div class="eqjs-ep-entity-offset" style="width:30px;"></div>
+                                                    <input type="checkbox" class="child-item" name="@item.Key.tableName" id="@item.Key.tableName@pos" value="@item.Value[pos].coloumnName" />@Html.DisplayFor(colNames =>@item.Value[pos].coloumnName)
+                                                </label>
+                                            </div>
+
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                        <div class="eqjs-ep-tool-panel eqjs-mobile">
+                            <div class="eqjs-ep-tool-panel-left-side">
+                                <div class="eqjs-ep-tool-panel-deselect-all" title="Clear selection"></div>
+                            </div>
+                            <div class="eqjs-ep-tool-panel-right-side">
+                                <div class="eqjs-ep-tool-panel-add-columns" title="Add column(s)" onclick="CheckboxContent()"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-    </div>    
-<div class="row g-3">
-    <div class="col-sm"> 
-<button type="button" class="btn btn-primary">Clear</button>
-</div>
-     <div class="col-sm-9"> 
- <input type="button" id="addcolbtn" value="Add Columns" class="btn btn-primary mt-3" onclick="getSelectedCheckboxesArray()" />
-</div>
-</div> 
-</div>
-</div>
+            <div class="eqv-central-block">
 
-<script type="text/javascript">
-    $("input[id]").click(function() {
-   if (this.checked) {
-       $("input[data-select-all]").each(function() {
-           this.checked = true;                        
-       });
-   } else {
-      $(':checkbox').each(function() {
-           this.checked = false;                        
-       });
-   } 
-});
+                <div class="eqv-columns-block">
+                    <hr class="eqv-columns-hr eqv-hr" />
+                    <div class="eqv-columns-title">Columns</div>
+                    <div class="eqv-columns-panel-container">
 
-function getSelectedCheckboxesArray(){     
- var array = []
-var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-for (var i = 0; i < checkboxes.length; i++) {
-  array.push(checkboxes[i].value)
-  document.getElementById('checkboxvalue').innerHTML += '<a href="'+checkboxes[i].value+'">'+checkboxes[i].value+'</a></br>';
-}
-//document.getElementById("checkboxvalue").innerHTML = array;
-debugger;
-}
-</script>
+                        <div id="ColumnsPanel" class="eqjs-qc-panel">
+                            <div class="eqjs-qc-header" style="display:block">
+                                <div class="eqjs-qc-header-expression">Expression</div>
+                                <div class="eqjs-qc-header-title">Title</div>
+                            </div>
+                            <div class="eqjs-qc-columns" id="ColumnData">
+                            </div>
 
-<style>
-.querybuilderboarderContainer{
-    background: #f6f6f6;
-    border: 10px solid green;
-    padding: 200px;
-    display: flex;
-    flex-direction: column;
-    }
-  .panel-heading{    
-       padding: 0px; 
-   }
-    </style>
+                            <div class="eqjs-addrow eqjs-qc-addrow eqjs-addrow-empty eqjs-mobile">
+                                <a href="javascript:void(0)">[Add new column]</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="eqv-conditions-block">
+                    <hr class="eqv-conditions-hr eqv-hr">
+                    <div class="eqv-conditions-title">Conditions</div>
+                    <div class="eqv-query-panel-container">
+                        <div id="queryPanel" class="eqjs-qp-panel eqjs-mobile">
+
+                            <div class="eqjs-addrow eqjs-qp-addrow eqjs-mobile">
+                                <a href="javascript:void(0)" title="[Add new condition]">[Add new condition]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="eqv-menu-block">
+                <hr class="eqv-menu-hr eqv-hr">
+                <div class="eqv-menu-title">Query Menu</div>
+                <div class="eqv-menu-content">
+                    @*New Query button*@
+                    <div id="QueryNameLabel" class="eqjs-query-name eqjs-mobile">
+                        <div class="eqjs-query-name-text eqjs-query-name-theme">[New query]</div>
+                        <span class="eqjs-query-name-asterisk" style="visibility: visible;">*</span>
+                        <span class="eqjs-query-name-tooltip eqjs-query-name-theme">[New query]</span>
+                    </div>
+                    <a id="ClearQueryButton" class="eqv-button">Clear</a>
+                    <div class="eqv-dropdown-container">
+                        <a id="LoadQueryButton" class="eqv-button eqv-drop-button">Load <span style="float: right">▼</span></a>
+                        <div class="eqv-dropdown-content">
+                        </div>
+                    </div>
+                    <div id="ChangeLocale">
+                        <select class="eqv-select">
+                            <option value="en-US">English - English</option>
+                            <option value="ru">Russian - русский</option>
+                            <option value="es">Spanish - español</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="eqv-bottom-panel">
+            <div class="eqv-result-panel">
+                <hr class="eqv-result-panel-hr eqv-hr">
+                <div class="eqv-result-panel-title">
+                    Result
+                    <span id="ResultCount" style="display:none; margin-left:20px; font-size:small"></span>
+                    <span class="eqv-export-buttons">
+                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel">Export to Excel</a>
+                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="pdf">Export to PDF</a>
+                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel-html">Export to HTML (Excel-compatible)</a>
+                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="csv">Export to CSV</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    </div>
+    <script>
+
+
+
+        function DropdownContent(value) {
+
+            var value = "flush-" + value;
+            var element = document.getElementById(value);
+
+            if (element.style.display == "none") {
+                element.style = "display:block";
+
+            }
+            else
+                element.style = "display:none";
+        }
+
+
+
+        function FunctionBox(a, b) {
+            var value = document.getElementById(a);
+
+
+            for (var item = 0; item < b; item++) {
+                var element = a + item;
+
+
+
+                if (value.checked == true) {
+                    document.getElementById(element).checked = true;
+                }
+                else {
+                    document.getElementById(element).checked = false;
+
+                }
+
+
+            }
+        }
+
+
+
+        $(".eqjs-ep-entity-node-button").click(function () {
+
+            $(this).toggleClass(" eqjs-ep-entity-node-button-open");
+        });
+
+        $(".eqjs-ep-tool-panel-deselect-all").click(function () {
+        $(':checkbox').each(function () {
+            this.checked = false;
+        });
+
+        })
+
+        function CheckboxContent() {
+
+            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+            var Description = document.getElementById("ColumnData");
+
+            for (var item of checkboxes) {
+
+                var Element = document.getElementById(item.id);
+
+
+
+
+                if (Element.className == "child-item") {
+                    var ElementAttribute = document.createElement('div');
+                    ElementAttribute.className = "eqjs-qc-row eqjs-qc-row-column-entattr";
+
+                    var ExpressionColumn = document.createElement('div');
+                    ExpressionColumn.className = "eqjs-qc-expr-block";
+                    ExpressionColumn.innerHTML = Element.name;
+                    ElementAttribute.appendChild(ExpressionColumn);
+
+                    var TitleColumn = document.createElement('div');
+                    TitleColumn.className = "eqjs-qc-colelement eqjs-qc-captionelement";
+                    TitleColumn.innerHTML = Element.value;
+                    ElementAttribute.appendChild(TitleColumn);
+
+                    Description.appendChild(ElementAttribute);
+
+                }
+
+
+            }
+            $(':checkbox').each(function () {
+                this.checked = false;
+            });
+        }
+
+    </script>
