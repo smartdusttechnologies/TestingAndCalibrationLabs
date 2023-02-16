@@ -8,6 +8,8 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+using System.Text;
+using System.Threading;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -105,6 +107,32 @@ namespace TestingAndCalibrationLabs.Business.Services
                     template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.Value);
                 }
             }
+            var multiVal = GetMultiControlValue(recordId);
+            if(multiVal.Fields.Count() > 0)
+            {
+                var table = new StringBuilder("<table class='multiValueGrid'  cellspacing='0'> <tr>");
+                foreach (var item in multiVal.Fields)
+                {
+                    table.Append($"<th>{item.UiControlDisplayName}</th>");
+                }
+                table.Append("</tr> ");
+                foreach (var item in multiVal.FieldValues)
+                {
+                    table.Append("<tr>");
+                    foreach (var node in item.Value)
+                    {
+                        table.Append($"<td> {node.Value}</td>");
+                    }
+                    table.Append("</tr>");
+                }
+                table.Append("</table>");
+                template = template.Replace("**gridTableMulti**", table.ToString());
+            }
+            else
+            {
+                template = template.Replace("**gridTableMulti**", "");
+            }
+            
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template);
             var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
