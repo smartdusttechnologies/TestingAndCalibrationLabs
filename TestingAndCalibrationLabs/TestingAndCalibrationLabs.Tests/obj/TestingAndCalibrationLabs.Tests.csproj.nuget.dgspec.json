@@ -1,0 +1,304 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
+        "projectName": "TestingAndCalibrationLabs.Business",
+        "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
+        "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "Google.Apis.Drive.v3": {
+              "target": "Package",
+              "version": "[1.57.0.2789, )"
+            },
+            "ImageProcessor": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            },
+            "ImageProcessor.Plugins.WebP": {
+              "target": "Package",
+              "version": "[1.3.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.18.0, )"
+            },
+            "PagedList": {
+              "target": "Package",
+              "version": "[1.17.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.2, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.18.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+        "projectName": "TestingAndCalibrationLabs.Tests",
+        "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+        "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+                "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+              },
+              "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+                "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.11.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.17.1, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.2, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
+        "projectName": "TestingAndCalibrationLabs.Web.UI",
+        "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
+        "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+                "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\ChildDashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.18.1, )"
+            },
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.22, )"
+            },
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.28, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

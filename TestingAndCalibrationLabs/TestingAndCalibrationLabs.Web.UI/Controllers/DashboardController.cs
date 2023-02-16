@@ -11,6 +11,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class DashboardController : Controller
     {
+        /// <summary>
+        /// This Function is putting the data in the model 
+        /// </summary>
+        /// ModelList model will be return to the view
+        /// <returns></returns>
         public IActionResult Index()
         {
 
@@ -151,8 +156,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult TemplateData()
         {
             var Template = new Dashboard_BoxTemplate();
-            Template.info = 21;
-            Template.bounce = "23%";
+            Template.Info = 21;
+            Template.Bounce = "23%";
             Template.Registration = 211;
             Template.visitors = 422;
             return Ok(Template);
