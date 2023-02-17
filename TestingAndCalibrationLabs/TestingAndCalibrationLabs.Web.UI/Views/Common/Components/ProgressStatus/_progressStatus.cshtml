@@ -102,6 +102,20 @@
     .progress-bar {
         background-color: #2F8D46
     }
+    /* Scroll Start*/
+      #progressbar {
+        display: flex;
+        padding: 1rem;
+        margin-left:10px;
+        overflow-x: visible;
+      }
+     #progressbar li {
+            flex: none;
+            width: 165px;
+            height: 100px;
+            margin-right: 0px;
+     }
+/* End*/
 </style>
 <div class="container">
     <div class="row justify-content-center">
@@ -173,7 +187,7 @@
         var steps = modelData.children.length;
         var percentofWidth = parseFloat(100 / steps)  ;
         percentofWidth = percentofWidth;
-        var str = "#progressbar li {list-style-type:none;font-size:15px;width:" + percentofWidth + "%;float:left;position: relative;font-weight:400; text-align:center;}";
+        var str = "#progressbar li {list-style-type:none;font-size:15px;float:left;position: relative;font-weight:400; text-align:center;}";
         var utrstyle = document.createElement("style")
         utrstyle.innerText = str;
         document.head.appendChild(utrstyle);
