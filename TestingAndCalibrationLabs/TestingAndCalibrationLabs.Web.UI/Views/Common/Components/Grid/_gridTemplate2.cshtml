@@ -6,20 +6,18 @@
             <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@Model.Fields.First().UiPageTypeName</h2>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
-            <a href="/Common/Create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
+            <a href="/common/create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-3">
             <div class="inputSearchGrid text-right">
-                <input type="text" id="TestDetailsGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+                <input type="text" id="gridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
                 <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
                 <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
-
             </div>
-
         </div>
     </div>
     <div class="table-responsive simple-pagination card shadow border-radius-grid">
-        <table id="testDetailsGrid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <table id="grid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     @foreach (var item in Model.Fields)
@@ -79,18 +77,18 @@
     </div>
 </div>
 <script>
-    oTable = $('#testDetailsGrid').DataTable({
+    oTable = $('#grid').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
             [5, 10, 25, 50, 'All'],
         ],
         scrollX: true,
     });
-    $('#TestDetailsGridSearch').keyup(function () {
+    $('#gridSearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
     const clearText = () => {
-        const inputID = document.querySelector("#TestDetailsGridSearch");
+        const inputID = document.querySelector("#gridSearch");
         inputID.value = "";
     }
     //Set The Value To Popup Delete Button
