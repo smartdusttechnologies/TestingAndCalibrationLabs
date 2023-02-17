@@ -7,6 +7,9 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
+    /// <summary>
+    /// This class will perform the Crud operation for datatype
+    /// </summary>
     public class DataTypeController : Controller
     {
         public readonly IDataTypeService _dataTypeService;
