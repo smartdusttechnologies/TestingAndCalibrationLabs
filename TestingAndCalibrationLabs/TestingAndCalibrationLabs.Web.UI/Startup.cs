@@ -19,6 +19,7 @@ using System;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
+using Newtonsoft.Json.Serialization;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -68,6 +69,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGoogleDriveService, GoogleDriveService>();
             services.AddScoped<IEmailService, EmailService >();
 
+            services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
@@ -96,6 +98,7 @@ namespace TestingAndCalibrationLabs.Web.UI
 
 
             //Repository
+            services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
             services.AddScoped<IActivityMetadataRepository, ActivityMetadataRepository>();
             services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();

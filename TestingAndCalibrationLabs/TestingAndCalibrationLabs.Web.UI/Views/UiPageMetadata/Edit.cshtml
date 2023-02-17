@@ -42,7 +42,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         @foreach (var item in ViewBag.DataTypes)
@@ -104,11 +104,11 @@
                     </select>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
-                    <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
-                    <input class="form-input width-full" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
+                    <input class="form-input width-full black-border" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">

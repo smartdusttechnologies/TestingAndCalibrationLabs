@@ -62,5 +62,31 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="moduleId"></param>
         /// <returns></returns>
         int GetWorkflowStageBasedOnOrder(int moduleId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recordId"
+        /// <param name="uiPageTypeId"
+        /// <returns></returns>
+        List<UiPageDataModel> GetPageData(int recordId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="uiPageTypeId"></param>
+        /// <returns></returns>
+        List<UiPageDataModel> GetMultiPageData(int id);
+        /// <summary>
+        /// Get All UiPageMetadata Based On Record Id
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
+        List<UiPageMetadataModel> GetMultiControlMetadata(int recordId);
+        /// <summary>
+        /// Delete Multi Value Records
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        bool DeleteMultiValue(RecordModel record);
     }
 }

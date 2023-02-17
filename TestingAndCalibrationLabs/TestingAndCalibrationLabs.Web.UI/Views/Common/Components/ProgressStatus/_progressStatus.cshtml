@@ -1,6 +1,9 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 
 <style>
+    .non-clickable{
+        pointer-events: none;
+    }
     h2 {
         color: #2F8D46;
     }
@@ -171,7 +174,7 @@
         var current = 1;
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var steps = modelData.children.length;
-        var percentofWidth = parseFloat(100 / steps)  ;
+        var percentofWidth = parseFloat(100 / steps);
         percentofWidth = percentofWidth;
         var str = "#progressbar li {list-style-type:none;font-size:15px;width:" + percentofWidth + "%;float:left;position: relative;font-weight:400; text-align:center;}";
         var utrstyle = document.createElement("style")
@@ -179,15 +182,15 @@
         document.head.appendChild(utrstyle);
         for (var i = 0; steps > i; i++) {
             if(i==0){
-                var fieldId = "#fieldset_" + modelData.children[i].value.id;
+                var fieldId = "#fieldset_" + modelData.children[i].value.uiPageMetadata.id;
                 currentGfgStep = $(fieldId);
                 currentGfgStep.show();
             }
             else{
-                var fieldId = "#fieldset_" + modelData.children[i].value.id;
+                var fieldId = "#fieldset_" + modelData.children[i].value.uiPageMetadata.id;
                 $(fieldId).hide();
             }
-            var stepId = "#step-" + modelData.children[i].value.id;
+            var stepId = "#step-" + modelData.children[i].value.uiPageMetadata.id;
             var contentCount = i + 1;
             var styleOfStep = "#progressbar " + stepId + ":before{content:'" + contentCount + "'} ";
             var styleSheet = document.createElement("style")
@@ -195,16 +198,18 @@
             document.head.appendChild(styleSheet)
         }
         setProgressBar(current);
+        var workflow = $("#workflowStageChecker");
+        //var isWorkflowWorking
         //Function To Set Progress Status Active
         function activeCurrentStep(stepNumber){
             for (var ind = 1; steps > ind; ind++) {
                 var addInStep = stepNumber-1;
                 if(ind<stepNumber){
-                    var idOfStep = "#step-" + modelData.children[ind].value.id;
+                    var idOfStep = "#step-" + modelData.children[ind].value.uiPageMetadata.id;
                     var stepMakeActive = $(idOfStep);
                     stepMakeActive.addClass("active");
                 } else if (ind > addInStep) {
-                    var idOfStep = "#step-" + modelData.children[ind].value.id;
+                    var idOfStep = "#step-" + modelData.children[ind].value.uiPageMetadata.id;
                     var stepMakeActive = $(idOfStep);
                     stepMakeActive.removeClass("active");
                 }

@@ -8,34 +8,34 @@
 
         <div class="row ms-1 me-1">
             <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
-                <input class="form-input width-full" type="text" id="Name" name="Name"  placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                <input class="form-input width-full black-border" type="text" id="Name" name="Name"  placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                 <label class="form-label" for="Name">Name</label>
             </div>
         </div>
 
         <div class="row ms-1 me-1">
-            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control left-pd-input">
-                <input class="form-input width-full" type="tel" placeholder=" " id="TRJobId" name="JobId"  onchange="this.setAttribute('value',this.value)" asp-for="JobId">
+            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  left-pd-input">
+                <input class="form-input width-full black-border" type="tel" placeholder=" " id="TRJobId" name="JobId"  onchange="this.setAttribute('value',this.value)" asp-for="JobId">
                 <label class="form-label" for="JobId">Job ID</label>
             </div>
 
-            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control left-pd-input">
-                <input class="form-input width-full" type="text" id="TRClient" placeholder=" " name="Client"  onchange="this.setAttribute('value',this.value)" asp-for="Client">
+            <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  left-pd-input">
+                <input class="form-input width-full black-border" type="text" id="TRClient" placeholder=" " name="Client"  onchange="this.setAttribute('value',this.value)" asp-for="Client">
                 <label class="form-label" for="Client">Client Name</label>
             </div>
         </div>
 
         <div class="row ms-1 me-1">
             <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control left-pd-input">
-                <input class="form-input width-full" type="email" placeholder=" " id="TREmail" name="Email" onchange="this.setAttribute('value',this.value)" asp-for="Email">
+                <input class="form-input width-full black-border" type="email" placeholder=" " id="TREmail" name="Email" onchange="this.setAttribute('value',this.value)" asp-for="Email">
                 <label class="form-label" for="Email">Email ID</label>
             </div>
         </div>
 
         <div class="row ms-1 me-1">
-            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
-                <input class="form-input width-full" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF"  asp-for="DataUrl">
-               @* <input class="form-input width-full" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="DataUrl">*@
+            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                <input class="form-input width-full black-border" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF"  asp-for="DataUrl">
+               @* <input class="form-input width-full black-border" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="DataUrl">*@
                 <label class="form-label" for="DataUrl">File Upload</label>
             </div>
         </div>
@@ -93,13 +93,6 @@
     </div>
 }
 
-<!-- ** BEGIN POP-UP MESSAGE AREA ** -->
-<div class="submit-progress hidden" id="TestReport">
-    <i class="fa fa-2x fa-spinner fa-spin"></i>
-    <label>Please wait while Saving Data...</label>
-</div>
-<!-- ** END POP-UP MESSAGE AREA ** -->
-
 <script>
     
     function onUpload(ctl, msg) {
@@ -107,11 +100,7 @@
         // Turn off the "Save" button and change text
         $(ctl).prop("disabled", true).text(msg);
         // Gray out background on page
-        $("body").addClass("submit-progress-bg");
-        // Wrap in setTimeout so the UI can update the spinners
-        setTimeout(function () {
-            $(".submit-progress").removeClass("hidden");
-        }, 1);
+        WheelLoader();
         $("#IsSendAndUpload").val("false");
         $('#TestReport').submit();
 
@@ -123,11 +112,7 @@
         // Turn off the "Save" button and change text
         $(ctl).prop("disabled", true).text(msg);
         // Gray out background on page
-        $("body").addClass("submit-progress-bg");
-        // Wrap in setTimeout so the UI can update the spinners
-        setTimeout(function () {
-            $(".submit-progress").removeClass("hidden");
-        }, 1);
+        WheelLoader();
         $("#IsSendAndUpload").val("true");
         $('#TestReport').submit();
 

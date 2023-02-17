@@ -10,20 +10,20 @@
             <input type="hidden" asp-for="ModuleId" />
             <input type="hidden" asp-for="UiPageTypeId" />
             <input type="hidden" asp-for="WorkflowStageId" />
-            @foreach (var item in Model.Layout)
-            {
-                <div> @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)</div>
-            }
+            <input type="hidden" asp-for="UpdatedDate" />
+            <div class="row ms-1 me-1">
+                @foreach (var item in Model.Layout)
+                {
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
+                }
+            </div>
         </form>
-        <input type="hidden" value="" name="lefid" id="lefid" />
-        <div class="form-group">
-            <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+        <div class="form-group" style="margin:6px;" id="sub-mt-btn">
+            <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="AjaxFormSubmit()" />
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
-</div>
+
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbarsuccess">
@@ -37,7 +37,6 @@
         </div>
     </div>
 </div>
-@ViewBag.resultD
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div role="alert" id="snackbarerror">
@@ -68,23 +67,16 @@
     }
 </script>
 <script type="text/javascript">
-
-    function AjaxFormSubmit() {
-
-        var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-        var id = parseInt($("#Id").val())
-        var workflowStageId = parseInt($("#WorkflowStageId").val())
-
-        var x = document.getElementById("lefid").value;
-        if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
-            document.getElementById(x).style.border = "1px solid black ";
-        }
-        var url = $("#commonForm").attr("action");
-        var modelData = JSON.parse('@Json.Serialize(Model)');
-        var updatedDateT = modelData.updatedDate;
-        console.log(updatedDateT);
-        //here I am flatting the hirarchy of Node<Layout> and taking only uiPageMetadata
+    var mainModel = JSON.parse('@Json.Serialize(Model)');
+    var updatedDate = mainModel.updatedDate;
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+    var moduleId = parseInt($("#ModuleId").val())
+    var id = parseInt($("#Id").val())
+    var url = $("#commonForm").attr("action");
+    AjaxFormSubmit = () => {
+        WheelLoader();
+        let workflowStageId = parseInt($("#WorkflowStageId").val())
+        //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
 
             if (!member.children || !member.children.length) {
@@ -92,11 +84,14 @@
             }
             return [member.value, _.flatMapDeep(member.children, getMembers)];
         }
-        var layout = _.flatMapDeep(modelData.layout, getMembers);
+        var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
-                if (layout[i].uiPageMetadata.controlCategoryName == "DataControl") {
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
                 var metadataId = layout[i].uiPageMetadata.id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
@@ -109,6 +104,7 @@
                         keyValuepair.uiPageMetadataId = metadataId;
                         keyValuepair.RecordId = id;
                         keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
                     }
                 }
@@ -117,6 +113,7 @@
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
                 }
             }
@@ -124,24 +121,29 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id": id, "WorkflowStageId": workflowStageId, "UpdatedDate":updatedDateT, "ModuleId": moduleId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();
-                //window.location.href = "/common/index/" + moduleId;
+                window.location.href = "/common/edit/" + id;
             },
             failure: function (response) {
                 alert(response.responseText);
             },
             error: function (response) {
+               HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
-                var newErrorMessage = newresponseJSON.errorMessage;             //assiging the values of errorMessage to  newErrorMessage
-                myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                //    var s = newErrorMessage.fid//Sending the reason to html
-                document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
-                document.getElementById("lefid").value = newErrorMessage.sourceId;
+                var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                for (var i = 0; i < newErrorMessage.length; i++) {
+                    var sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    myFunctionError();                                              //Calling myFunctionError javacript function
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    if (i == 0) {
+                        document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+                    }
+
+                }
             }
         });
     }
 </script>
-@*<script scr="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>*@
