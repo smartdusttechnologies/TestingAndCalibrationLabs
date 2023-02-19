@@ -9,9 +9,8 @@
         $("#sub-mt-btn").append(btnHtml);
     });
     function GenerateReport() {
-        debugger;
         var metadata = modelData.value.uiPageMetadata.id;
         var id = $("#Id").val();
-        window.location.href = "/common/templateGenerate/?recordId=" + id + "&metadataId=" + metadata;
+        window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}`, '_blank');
     }
 </script>
