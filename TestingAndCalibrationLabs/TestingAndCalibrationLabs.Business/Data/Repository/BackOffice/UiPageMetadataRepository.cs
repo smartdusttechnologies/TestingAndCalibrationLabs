@@ -94,7 +94,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
-                                                    From [MetadataModuleBridge] mmb
+                                                    From [UiPageMetadataModuleBridge] mmb
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id

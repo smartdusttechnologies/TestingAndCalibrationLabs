@@ -9,8 +9,17 @@
     <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName">@Model.Value.UiPageMetadata.UiControlDisplayName</label>
     <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
 </div>
+<div id="fileLabel-@Model.Value.UiPageMetadata.Id"></div>
 <input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"/>
 <script>
+    var fileModel = JSON.parse('@Json.Serialize(Model)');
+    $(document).ready(function (){
+        if(fileModel.value.uiPageData != null){
+        let metadataId = fileModel.value.uiPageMetadata.id;
+        let value = fileModel.value.uiPageData.value;
+        $(`#fileLabel${metadataId}`).append(`<p id='${value}'>FileName</p>`);
+        }
+    });
     function validateForImages(input) {
         const fileSize = input.files[0].size / 1024 / 1024;
         var fileName = input.files[0].name;
@@ -50,8 +59,7 @@
             processData: false,
             data: file,
             success: function (response) {
-                var modelData = JSON.parse('@Json.Serialize(Model)');
-                var idNum = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+                var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
                 $(idNum).val(response);
             },
             error: function (req, status, error) {

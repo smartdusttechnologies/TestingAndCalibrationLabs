@@ -68,7 +68,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
-                                                    From [MetadataModuleBridge] mmb
+                                                    From [UiPageMetadataModuleBridge] mmb
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
@@ -111,7 +111,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
-                                                    From [MetadataModuleBridge] mmb
+                                                    From [UiPageMetadataModuleBridge] mmb
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
@@ -267,7 +267,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
                                                     inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-                                                    inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                    inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
                                                     inner join [UiPageData] upd on r.Id = upd.RecordId
                                                where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
                                                     and r.Id = @id and r.IsDeleted = 0 
@@ -287,7 +287,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
                                                     inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-                                                    inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                    inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
                                                     inner join [UiPageData] upd on r.Id = upd.RecordId
                                                where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
                                                     and r.Id = @id and mmb.MultiValueControl = 'true'
@@ -324,7 +324,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 														ucct.Template as UiControlCategoryTypeTemplate
                                                     From [Record] r 
 													inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-													inner join [MetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+													inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
