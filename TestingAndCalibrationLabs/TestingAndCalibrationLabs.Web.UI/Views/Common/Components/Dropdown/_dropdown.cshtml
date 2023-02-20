@@ -1,8 +1,8 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3  divDrop" >
-   <select class=" width-full divSelect" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id"  for="@Model.Value.UiControlDisplayName" />
+   <select class=" width-full CubeSelect" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" value="" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id"  for="@Model.Value.UiControlDisplayName" />
 	</select>
-	<label class=" divLabel" > @Model.Value.UiControlDisplayName  <span class="red-color">*</span></label>
+	<label class="CubeLabel" > @Model.Value.UiControlDisplayName  <span class="red-color">*</span></label>
     <span asp-validation-for="@Model.Value.UiControlDisplayName" class="text-danger"></span>
   </div>
 
