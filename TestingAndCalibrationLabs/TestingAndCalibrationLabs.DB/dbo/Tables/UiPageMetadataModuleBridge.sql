@@ -8,9 +8,9 @@
     [Orders]               INT          NULL,
     [UiControlDisplayName] VARCHAR (50) NULL,
     [MultiValueControl]    BIT          CONSTRAINT [DF_MetadataModuleBridge_MultiValueControl] DEFAULT ((0)) NULL,
-    CONSTRAINT [PK_MetadataModuleBridge] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_MetadataModuleBridge_UiPageMetadata] FOREIGN KEY ([UiPageMetadataId]) REFERENCES [dbo].[UiPageMetadata] ([Id]),
-    CONSTRAINT [FK_MetadataModuleBridge_UiPageType_Id] FOREIGN KEY ([UiPageTypeId]) REFERENCES [dbo].[UiPageType] ([Id])
+    CONSTRAINT [PK_UiPageMetadataModuleBridge] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_UiPageMetadataModuleBridge_UiPageMetadata] FOREIGN KEY ([UiPageMetadataId]) REFERENCES [dbo].[UiPageMetadata] ([Id]),
+    CONSTRAINT [FK_UiPageMetadataModuleBridge_UiPageType_Id] FOREIGN KEY ([UiPageTypeId]) REFERENCES [dbo].[UiPageType] ([Id])
 );
 
 
