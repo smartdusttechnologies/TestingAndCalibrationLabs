@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[MetadataModuleBridge] (
+﻿CREATE TABLE [dbo].[UiPageMetadataModuleBridge] (
     [Id]                   INT          IDENTITY (1, 1) NOT NULL,
     [UiPageMetadataId]     INT          NOT NULL,
     [UiPageTypeId]         INT          NOT NULL,
