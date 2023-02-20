@@ -29,8 +29,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                     From [WorkflowActivity] wa 
                                                          inner join [Activity] a on wa.ActivityId = a.Id
 			                                             where wa.WorkflowStageId = @stageId
-                                                         AND wa.IsDeleted = 0 
-                                                         And a.IsDeleted = 0", new {stageId}).ToList();
+                                                         AND wa.IsDeleted = 0
+                                                         AND a.IsDeleted = 0", new {stageId}).ToList();
         }
     }
 }

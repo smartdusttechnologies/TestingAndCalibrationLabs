@@ -11,9 +11,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class ModuleService : IModuleService
     {
         private readonly IGenericRepository<ModuleModel> _genericRepository;
-        public ModuleService(IGenericRepository<ModuleModel> genericRepository)
+        private readonly IModuleRepository _moduleRepository;
+        public ModuleService(IGenericRepository<ModuleModel> genericRepository, IModuleRepository moduleRepository)
         {
-            _genericRepository = genericRepository; 
+            _genericRepository = genericRepository;
+            _moduleRepository = moduleRepository;
         }
         /// <summary>
         /// Get All Records From Data Type

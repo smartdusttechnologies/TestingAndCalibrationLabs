@@ -11,5 +11,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public int ModuleId { get; set; }
         public List<UiPageMetadataDTO> Fields { get; set; }
         public Dictionary<int, List<UiPageDataDTO>> FieldValues { get; set; }
+        public  List<UiPageDataDTO> FieldValue { get; set; }
     }
 }

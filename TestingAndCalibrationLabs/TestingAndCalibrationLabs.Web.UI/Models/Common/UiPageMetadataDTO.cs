@@ -65,6 +65,6 @@
         public int ParentId { get; set; }
         public int ModuleId { get; set; }
         public int Position { get; set; }
-
+        public bool MultiValueControl { get;set; }
     }
 }
