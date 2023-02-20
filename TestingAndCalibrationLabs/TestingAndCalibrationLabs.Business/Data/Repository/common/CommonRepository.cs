@@ -82,8 +82,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
-                                                    and l.IsDeleted = 0
-													and mmb.IsDeleted = 0", new { uiPageId }).ToList();
+													and mmb.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0", new { uiPageId }).ToList();
             return metadata;
         }
         /// <summary>
@@ -125,8 +125,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
-                                                    and l.IsDeleted = 0
-													and mmb.IsDeleted = 0", new { moduleId }).ToList();
+													and mmb.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0", new { moduleId }).ToList();
             return metadata;
         }
         /// <summary>
@@ -174,7 +174,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<int>(@"select Top(1) ws.UiPageTypeId
                                                           From  WorkflowStage ws 
-                                                   where IsDeleted = 0 and ws.Id = @Id", new { Id = stageId }).First();
+                                                   where ws.IsDeleted = 0 and ws.Id = @Id", new { Id = stageId }).First();
         }
         /// <summary>
         /// Get Page Id Based On Order And Module Id
@@ -339,8 +339,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
-                                                    and l.IsDeleted = 0
-													and mmb.IsDeleted = 0", new { recordId }).ToList();
+													and mmb.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0", new { recordId }).ToList();
         }
         /// <summary>
         /// Generate New SubRecordId Based On Previous SubRecordId

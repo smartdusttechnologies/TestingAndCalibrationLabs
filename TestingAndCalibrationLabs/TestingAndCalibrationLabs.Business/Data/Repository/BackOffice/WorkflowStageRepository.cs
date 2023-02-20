@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<WorkflowStageModel> GetByWorkflowId(int workflowId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<WorkflowStageModel>(@"select * from WorkflowStage where WorkflowId = @WorkflowId", new { WorkflowId = workflowId }).ToList();
+            return db.Query<WorkflowStageModel>(@"select * from WorkflowStage where WorkflowId = @WorkflowId and IsDeleted = 0", new { WorkflowId = workflowId }).ToList();
         }
     }
     
