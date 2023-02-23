@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
@@ -8,9 +9,17 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// </summary>
     public interface IWorkflowStageService
     {
-        /// <summary>
-        /// Get All Record From Module
-        /// </summary>
-        List<WorkflowStageModel> GetByWorkflowId(int workflowId);
+       
+      //  List<WorkflowStageModel> GetByWorkflowId(int workflowId);
+
+        List<WorkflowStageModel> Get();
+      
+        WorkflowStageModel GetById(int id);
+       
+        RequestResult<int> Create(WorkflowStageModel workflowStageModel);
+        
+        RequestResult<int> Update(int id, WorkflowStageModel workflowStageModel);
+       
+        bool Delete(int id);
     }
 }

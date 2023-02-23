@@ -8,11 +8,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface IWorkflowStageRepository
     {
-     /// <summary>
-     /// Get All Records From 
-     /// </summary>
-     /// <returns></returns>
-     List<WorkflowStageModel> GetByWorkflowId(int workflowId);
-       
+        /// <summary>
+        /// Get All Records From 
+        /// </summary>
+        /// <returns></returns>
+          //List<WorkflowStageModel> GetByWorkflowId(int workflowId);
+
+
+        List<WorkflowStageModel> Get();
+
+        WorkflowStageModel GetById(int id);
+
+        int Create(WorkflowStageModel workflowStageModel);
+
+        int Update(WorkflowStageModel workflowStageModel);
+
+        bool Delete(int id);
+
+
     }
 }

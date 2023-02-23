@@ -96,6 +96,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            ////
+            services.AddScoped<IActivityService, ActivityService>();
 
 
             //Repository
@@ -125,6 +127,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiControlTypeModel>, GenericRepository<UiControlTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<IGenericRepository<ApplicationModel>, GenericRepository<ApplicationModel>>();
+            services.AddScoped<IGenericRepository<ActivityModel>, GenericRepository<ActivityModel>>();
             ////
             ///
             services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();
