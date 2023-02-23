@@ -2,12 +2,13 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    [DbTable("Module")]
-    public class ModuleModel : Entity
-    {
-        public string Name { get; set; }
-        public int ApplicationId { get; set; }
 
-        public string ApplicationName { get; set; }
+    [DbTable("Application")]
+    public class ApplicationModel : Entity
+    {
+       // public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
+
 }

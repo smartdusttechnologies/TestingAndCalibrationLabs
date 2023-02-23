@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -23,7 +25,37 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<ModuleModel> Get()
         {
-            return _genericRepository.Get();
+            return _moduleRepository.Get();
         }
+        //public RequestResult<int> Create(ModuleModel ModuleModel)
+        //{
+        //    _moduleRepository.Insert(ModuleModel);
+        //    return new RequestResult<int>(1);
+        //}
+        public RequestResult<int> Create(ModuleModel ModuleModel)
+        {
+            int id = _moduleRepository.Create(ModuleModel);
+            return new RequestResult<int>(1);
+        }
+
+        public RequestResult<int> Update(ModuleModel ModuleModel)
+        {
+            _moduleRepository.Update(ModuleModel);
+            return new RequestResult<int>(1);
+        }
+        //public ModuleModel GetById(int id)
+        //{
+        //    return _moduleRepository.Get(id);
+        //}
+        public ModuleModel GetById(int id)
+        {
+
+            return _moduleRepository.GetById(id);
+        }
+        public bool Delete(int id)
+        {
+            return _moduleRepository.Delete(id);
+        }
+
     }
 }

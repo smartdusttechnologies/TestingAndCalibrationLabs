@@ -61,6 +61,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             });
             //Services
             services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailService, EmailService>();
@@ -103,7 +104,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IActivityMetadataRepository, ActivityMetadataRepository>();
             services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();
             services.AddScoped<IWorkflowRepository, WorkflowRepository>();
-            services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
+           services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
@@ -123,6 +124,10 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiPageValidationModel>, GenericRepository < UiPageValidationModel >> ();
             services.AddScoped<IGenericRepository<UiControlTypeModel>, GenericRepository<UiControlTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
+            services.AddScoped<IGenericRepository<ApplicationModel>, GenericRepository<ApplicationModel>>();
+            ////
+            ///
+            services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<ILoggerRepository, LoggerRepository>();

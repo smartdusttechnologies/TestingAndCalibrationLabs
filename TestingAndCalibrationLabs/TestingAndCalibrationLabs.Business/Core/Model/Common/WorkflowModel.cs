@@ -17,5 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains Id Of Module
         /// </summary>
         public int ModuleId { get; set; }
+        public string ModuleName { get; set; }
     }
 }

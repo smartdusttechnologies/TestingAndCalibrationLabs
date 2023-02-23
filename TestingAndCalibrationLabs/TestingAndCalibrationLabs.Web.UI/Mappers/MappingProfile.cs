@@ -9,6 +9,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
     {
         public MappingProfile()
         {
+            CreateMap<ApplicationDTO, ApplicationModel>().ReverseMap();
             CreateMap<RecordDTO, RecordModel>().ReverseMap();
             CreateMap<UiPageMetadataDTO, UiPageMetadataModel>().ReverseMap();
             CreateMap<RecordsDTO, RecordsModel>().ReverseMap();
