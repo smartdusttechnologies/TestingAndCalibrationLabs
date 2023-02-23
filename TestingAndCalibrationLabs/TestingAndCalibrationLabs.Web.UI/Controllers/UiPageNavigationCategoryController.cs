@@ -64,18 +64,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public IActionResult Edit([Bind] UiNavigationCategoryDTO uiNavigationCategoryDTO)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        var uiPageTypeModel = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(uiNavigationCategoryDTO);
-        //        _uiPageNavigationCategoryServics.Update(uiPageTypeModel);
-        //        TempData["IsTrue"] = true;
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(uiNavigationCategoryDTO);
-        //}
         public IActionResult Edit(int id, [Bind] UiNavigationCategoryDTO uiPageNavigationCategoryDTO)
         {
 

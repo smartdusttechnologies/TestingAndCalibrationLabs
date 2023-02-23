@@ -15,9 +15,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 
 
         List<UiPageNavigationModel> Get();
-       
+
         /// <summary>
-        /// Get Record By Id From Ui Page Type
+        /// Get Record By Id From Ui Page Navigation Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
