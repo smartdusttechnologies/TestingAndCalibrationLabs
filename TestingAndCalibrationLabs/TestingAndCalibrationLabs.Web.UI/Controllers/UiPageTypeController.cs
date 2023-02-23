@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Web.UI.Models.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -35,9 +37,31 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
             var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
-            return View(pageData.AsEnumerable());
-        }
-        
+            var gridDto = new GridDTO();
+            gridDto.Columns = typeof(UiPageTypeDTO).GetProperties().Select(x => x.Name).ToList();
+            gridDto.Values = new List<GridRow>();
+
+            foreach (var row in pageData)
+            {
+                var rowValue = new GridRow();
+                rowValue.Id = row.Id;
+
+                rowValue.Values = new List<string>();
+                rowValue.Values.Add(row.Id.ToString());
+                rowValue.Values.Add(row.Name);
+                rowValue.Values.Add(row.Url);
+                rowValue.Values.Add(row.UiNavigationCategoryId.ToString());
+                rowValue.Values.Add(row.UiNavigationCategoryName);
+                rowValue.Values.Add(row.FormatedUrl);
+                rowValue.Values.Add(row.Orders);
+
+                gridDto.Values.Add(rowValue);
+            }
+            var uiData = new IndexPageDTO();
+            uiData.PageTitle = "UI Page Type";
+            uiData.GridData = gridDto;
+            return View(uiData);
+        }      
         /// <summary>
         /// For Edit Record View
         /// </summary>
@@ -45,7 +69,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="NavigationCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id,int NavigationCategoryId)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -53,7 +77,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             var navigationCategory = _uiNavigationCategoryService.Get();
             var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>, List<Models.UiNavigationCategoryDTO>>(navigationCategory);
-            ViewBag.NavigationCategoryId = NavigationCategoryId;
+            //ViewBag.NavigationCategoryId = NavigationCategoryId;
             ViewBag.UiNavigationCategory = navigationCategoryList;
             var getByIdPageModel = _uiPageTypeService.GetById((int)id);
             if (getByIdPageModel == null)

@@ -1,0 +1,113 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Common.GridDTO
+<style>
+    .nav3-link {
+        color: dimgray;
+        padding: 10px;
+        cursor: pointer 
+    }
+</style>
+<!--Popup Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hide Column</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @{
+                    var ind = 0;
+                }
+                @foreach (var gridDto in Model.Columns)
+                {
+                    <a class="dropdown-item" href="#" onclick="enable(@ind)">
+                        <input type="checkbox" id="gridcheck" checked>
+                        @Html.DisplayFor(Model => gridDto)
+
+                    </a>
+                    ind++;
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 mt-2">
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;"></h2>
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+    </div>      
+    <div class="table-responsive simple-pagination card shadow border-radius-grid">
+        <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+            
+            <thead>
+                <tr>
+                  @foreach (var gridDto in Model.Columns)
+                  { 
+                 <th> @Html.DisplayFor(Model => gridDto)</th>
+                  }  
+                 <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>             
+                        @foreach (var row in Model.Values)
+                        {
+                    <tr>
+                              @foreach(var data in row.Values)
+                              {
+                            <td>
+                                @Html.DisplayFor(Model => data)                          
+                            </td>
+                              }                             
+                           <td>
+                                @Html.ActionLink("", "Edit", new { id=row.Id },new {@class="fas fa-edit",style = "color:rebeccapurple"}) |
+                                @Html.ActionLink("", "Delete", new {  id=row.Id }, new{@class="fa fa-trash",style = "color:red"})
+                           </td>  
+                    </tr>
+                        }              
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<script>
+    var oTable;   
+    oTable = $('#gridui').DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
+        scrollX: true,     
+    });
+    $('#gridui').keyup(function () {
+        oTable.search($(this).val()).draw();
+    })
+    const clearText = () => {
+        const inputID = document.querySelector("#gridui");
+        inputID.value = "";
+    }
+    function enable(ind) {
+         if (oTable.column(ind).visible() === true) {
+            oTable.column(ind).visible(false);
+        }
+        else {
+            oTable.column(ind).visible(true);
+        }
+    }
+    $(document).ready(function () {
+        var icon = '<a class="nav3-link dropdown" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa fa-gear"  id="sicon" data-toggle="tooltip" title="Column Configuration"aria-hidden="true"></i></a>';
+        $("#gridui_filter").prepend(icon);
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    $(document).ready(function () {
+        var plus = ' <i class="fa fa-plus icon-plus"></i>';
+        $("#gridui_filter").append(plus);
+    });
+    
+</script>

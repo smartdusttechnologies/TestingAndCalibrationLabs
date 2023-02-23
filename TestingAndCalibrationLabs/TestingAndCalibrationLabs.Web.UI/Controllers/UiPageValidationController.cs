@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Web.UI.Models.Common;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -39,7 +41,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<Business.Core.Model.UiPageValidationModel> pageValidationList = _uiPageValidationService.Get();
             var pageValidationModel = _mapper.Map<List<Business.Core.Model.UiPageValidationModel>, List<Models.UiPageValidationDTO>>(pageValidationList);
-            return View(pageValidationModel.AsEnumerable());
+            var gridDto = new GridDTO();
+            gridDto.Columns = typeof(UiPageValidationDTO).GetProperties().Select(x => x.Name).ToList();
+            gridDto.Values = new List<GridRow>();
+
+            foreach (var row in pageValidationModel)
+            {
+                var rowValue = new GridRow();
+                rowValue.Id = row.Id;
+
+                rowValue.Values = new List<string>();
+                rowValue.Values.Add(row.Id.ToString());
+                rowValue.Values.Add(row.UiPageTypeId.ToString());
+                rowValue.Values.Add(row.UiPageTypeName);
+                rowValue.Values.Add(row.UiPageMetadataId.ToString());
+                rowValue.Values.Add(row.UiPageMetadataName);
+                rowValue.Values.Add(row.UiPageValidationTypeId.ToString());
+                rowValue.Values.Add(row.UiPageValidationTypeName);
+
+                gridDto.Values.Add(rowValue);
+            }
+                 var uiData = new IndexPageDTO();
+                 uiData.PageTitle = "UI Page Validation";
+                 uiData.GridData = gridDto;
+                 return View(uiData);
         }
         /// <summary>
         /// For Create Record View
@@ -88,15 +113,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageValidationTypeId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id, int uiPageTypeId, int uiPageValidationTypeId, int uiPageMetadataId)
+        public IActionResult Edit(int? id  )
         {
             if (id == null)
             {
                 return NotFound();
             }
-            ViewBag.UiPageTypeId = uiPageTypeId;
-            ViewBag.UiPageValidaitonTypeId = uiPageValidationTypeId;
-            ViewBag.UiPageMetadataId=uiPageMetadataId;
             List<Business.Core.Model.UiPageTypeModel> page = _uiPageTypeService.Get();
             List<Business.Core.Model.UiPageMetadataModel> metadata = _uiPageMetadataService.Get();
             List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
