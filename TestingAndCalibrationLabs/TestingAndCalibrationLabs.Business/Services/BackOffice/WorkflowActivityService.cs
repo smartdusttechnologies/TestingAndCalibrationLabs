@@ -7,6 +7,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -22,7 +23,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
-        public WorkflowActivityService(IConfiguration configuration,IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService, IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository)
+        public WorkflowActivityService(IConfiguration configuration, IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService, IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository)
         {
             _workflowActivityRepository = workflowActivityRepository;
             _pageDataGenericRepository = pageDataGenericRepository;
@@ -31,30 +32,61 @@ namespace TestingAndCalibrationLabs.Business.Services
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
         }
-        #region Public Methods
+        
         /// <summary>
         /// To Run All Activity here Which Are Given To A Stage
         /// </summary>
         /// <param name="recordModel"></param>
         /// <returns></returns>
-        public bool WorkflowActivity(RecordModel recordModel)
-        {
-            ///In Future I Have To Redesign Structure of Activity
-            //var activityList = _workflowActivityRepository.GetByWorkflowStageId(recordModel.WorkflowStageId);
-            //var pageDataList = _pageDataGenericRepository.Get("RecordId", recordModel.Id);
-            //foreach (var activity in activityList)
-            //{
-            //    if (activity.ActivityId == (int)ActivityType.EmailServices)
-            //    {
-            //       SendEmail(pageDataList,activity.ActivityId,recordModel.WorkflowStageId);
-            //    }
-            //}
-            return true;
-        }
-        #endregion
-        #region private Methods
+        //public bool WorkflowActivity(RecordModel recordModel)
+        //{
+        //    ///In Future I Have To Redesign Structure of Activity
+        //    //var activityList = _workflowActivityRepository.GetByWorkflowStageId(recordModel.WorkflowStageId);
+        //    //var pageDataList = _pageDataGenericRepository.Get("RecordId", recordModel.Id);
+        //    //foreach (var activity in activityList)
+        //    //{
+        //    //    if (activity.ActivityId == (int)ActivityType.EmailServices)
+        //    //    {
+        //    //       SendEmail(pageDataList,activity.ActivityId,recordModel.WorkflowStageId);
+        //    //    }
+        //    //}
+        //    return true;
+        //}
+        //#endregion
 
-        #region Email Send Service
+
+        ////////////
+        ///
+        public List<WorkflowActivityModel> Get()
+        {
+            return _workflowActivityRepository.Get();
+        }
+        //public RequestResult<int> Create(WorkflowModel workflowModel)
+        //{
+        //    _workflowRepository.Insert(workflowModel);
+        //    return new RequestResult<int>(1);
+        //}
+        public RequestResult<int> Create(WorkflowActivityModel workflowActivityModel)
+        {
+            int id = _workflowActivityRepository.Create(workflowActivityModel);
+            return new RequestResult<int>(1);
+        }
+        public RequestResult<int> Update(int id, WorkflowActivityModel workflowActivityModel)
+        {
+            _workflowActivityRepository.Update(workflowActivityModel);
+            return new RequestResult<int>(1);
+        }
+        public WorkflowActivityModel GetById(int id)
+        {
+            return _workflowActivityRepository.GetById(id);
+        }
+
+        public bool Delete(int id)
+        {
+            return _workflowActivityRepository.Delete(id);
+        }
+
+      
         /// <summary>
         /// Sending Email With Dynamic And Static Parameters 
         /// </summary>
@@ -109,8 +141,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         //    emailModel.HtmlMsg = template;
         //   _emailService.Sendemail(emailModel);
         //}
-        #endregion
-        #endregion
+       
     }
-
 }
+

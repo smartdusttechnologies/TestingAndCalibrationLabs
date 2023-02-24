@@ -9,6 +9,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
     {
         public MappingProfile()
         {
+            CreateMap<WorkflowActivityDTO, WorkflowActivityModel>().ReverseMap();
+            CreateMap<ActivityDTO, ActivityModel>().ReverseMap();
             CreateMap<ApplicationDTO, ApplicationModel>().ReverseMap();
             CreateMap<RecordDTO, RecordModel>().ReverseMap();
             CreateMap<UiPageMetadataDTO, UiPageMetadataModel>().ReverseMap();

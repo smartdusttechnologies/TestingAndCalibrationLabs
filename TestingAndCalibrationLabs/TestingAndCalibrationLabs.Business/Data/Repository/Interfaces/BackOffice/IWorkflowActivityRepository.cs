@@ -13,6 +13,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
      /// </summary>
      /// <returns></returns>
      List<WorkflowActivityModel> GetByWorkflowStageId(int uiPageTypeId);
-       
+        List<WorkflowActivityModel> Get();
+
+        WorkflowActivityModel GetById(int id);
+
+        int Create(WorkflowActivityModel workflowActivityModel);
+
+        int Update(WorkflowActivityModel workflowActivityModel);
+
+        bool Delete(int id);
+
     }
 }

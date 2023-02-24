@@ -1,4 +1,6 @@
-﻿using TestingAndCalibrationLabs.Business.Core.Model;
+﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -12,6 +14,18 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="recordModel"></param>
         /// <returns></returns>
-       bool WorkflowActivity(RecordModel recordModel);
+        //bool WorkflowActivity(RecordModel recordModel);
+
+
+
+        List<WorkflowActivityModel> Get();
+
+        WorkflowActivityModel GetById(int id);
+
+        RequestResult<int> Create(WorkflowActivityModel workflowActivityModel);
+
+        RequestResult<int> Update(int id, WorkflowActivityModel workflowActivityModel);
+
+        bool Delete(int id);
     }
 }

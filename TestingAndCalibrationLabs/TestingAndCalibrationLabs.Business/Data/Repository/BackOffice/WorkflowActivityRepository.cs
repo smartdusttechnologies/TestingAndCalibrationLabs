@@ -32,5 +32,72 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                          AND wa.IsDeleted = 0
                                                          AND a.IsDeleted = 0", new {stageId}).ToList();
         }
+        public int Create(WorkflowActivityModel workflowActivityModel)
+        {
+            string query = @"Insert into [WorkflowActivity] (Name,WorkflowStageId,ActivityId)
+                                                  values (@Name,@WorkflowStageId,@ActivityId)";
+            using IDbConnection db = _connectionFactory.GetConnection;
+
+            return db.Execute(query, workflowActivityModel);
+        }
+
+        public List<WorkflowActivityModel> Get()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<WorkflowActivityModel>(@"Select   wfa.Id,
+                                                            wfa.WorkflowStageId,
+                                                            wfs.[Name] as WorkflowStageName,
+                                                            wfa.ActivityId,
+                                                            a.[Name] as ActivityName,                                                         
+                                                            wfa.Name
+                                                                                                                   
+                                                    From [WorkflowActivity] wfa
+                                                   inner join [WorkflowStage] wfs on wfa.WorkflowStageId = wfs.Id
+                                                   inner join [Activity] a on wfa.ActivityId = a.Id
+                                                where 
+                                                    wfa.IsDeleted = 0 
+                                                    and wfs.IsDeleted = 0
+                                                    and a.IsDeleted = 0").ToList();
+        }
+        public WorkflowActivityModel GetById(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var WorkflowById = db.Query<WorkflowActivityModel>(@"Select wfa.Id,
+                                                       wfa.WorkflowStageId,     
+													  wfs.[Name] as WorkflowStageName, 
+                                                       wfa.ActivityId,
+                                                       a.[Name] as ActivityName,  
+                                                     wfa.Name
+                                                    From [WorkflowActivity] wfa													
+                                                 inner join [WorkflowStage] wfs on wfa.WorkflowStageId = wfs.Id 
+                                                  inner join [Activity] a on wfa.ActivityId = a.Id
+                                                where 
+                                                        wfa.Id=@Id
+                                                     and wfs.IsDeleted = 0 
+                                                    and a.IsDeleted = 0", new { Id = id }).FirstOrDefault();
+
+            return WorkflowById;
+        }
+        public int Update(WorkflowActivityModel workflowActivityModel)
+        {
+            string query = @"update [WorkflowActivity] Set  
+                                WorkflowStageId = @WorkflowStageId,
+                                ActivityId=@ActivityId,
+                                Name = @Name                              
+                                Where Id = @Id";
+            using IDbConnection db = _connectionFactory.GetConnection;
+
+            //workflowStageModel.ControlCategoryId = null;
+            return db.Execute(query, workflowActivityModel);
+        }
+        public bool Delete(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+
+            db.Execute(@"update [WorkflowActivity] Set 
+                                    IsDeleted = 1
+                                    Where Id = @Id", new { Id = id });
+            return true;
+        }
     }
 }
