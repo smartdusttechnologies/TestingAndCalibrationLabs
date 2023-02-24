@@ -44,17 +44,21 @@
                 </select>
             </div>
           
-            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">               
+          @*  <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">               
                 <input asp-for="Orders" class="form-control" />
                 <label asp-for="Orders" class="control-label"></label>
                 <span asp-validation-for="Orders" class="text-danger"></span>
+            </div>*@
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
+                <label class="form-label" for="Orders">Orders</label>
             </div>
-
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
+
         </form>
     </div>
 </div>
