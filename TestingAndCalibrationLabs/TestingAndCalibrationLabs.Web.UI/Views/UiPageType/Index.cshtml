@@ -3,7 +3,9 @@
     ViewData["Title"] = Model.PageTitle;
 }
 <h1>@Model.PageTitle</h1>
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <div>
     @await Html.PartialAsync("~/Views/Common/Components/Grid/Backoffice/_gridtemplate.cshtml", Model.GridData)
 </div>
@@ -22,6 +24,16 @@
         </div>
     </div>
 }
+<script>
+    $(document).ready(function () {
+        var plus = '<i class="fa fa-plus icon-plus"></i>';
+        $("#gridui_filter").append(plus);
+        $(".icon-plus").click(function () {
+            window.location.href = "/uipagetype/create";
+        });
+    });
+</script>
+
 
 
 
