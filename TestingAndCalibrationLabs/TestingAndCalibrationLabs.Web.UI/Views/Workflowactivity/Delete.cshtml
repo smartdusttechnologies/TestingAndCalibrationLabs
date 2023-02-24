@@ -11,12 +11,7 @@
     <h4>Workflow</h4>
     <hr />
     <dl class="row">
-        @*<dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.Id)
-        </dd>*@
+     
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -24,16 +19,16 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ActivityName)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.WorkflowStageName)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.WorkflowStageName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActivityName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActivityName)
         </dd>
     </dl>
 

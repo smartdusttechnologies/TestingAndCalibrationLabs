@@ -22,10 +22,10 @@
                 <h6><b>Name</b></h6>
             </th>
             <th>
-                    <h6><b>UiPageTypeName</b></h6>
+                    <h6><b>WorkflowName</b></h6>
             </th>
             <th>
-                    <h6><b>WorkflowName</b></h6>
+                    <h6><b>UiPageTypeName</b></h6>
             </th>
                 <th>
                     <h6><b>Orders</b></h6>
@@ -46,18 +46,15 @@
                         @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                        @Html.DisplayFor(modelItem => item.UiPageTypeName)
+                        @Html.DisplayFor(modelItem => item.WorkflowName)
             </td>
             <td>
-                        @Html.DisplayFor(modelItem => item.WorkflowName)
+                        @Html.DisplayFor(modelItem => item.UiPageTypeName)
             </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Orders)
                     </td>
-                  @*  <td>
-                        @Html.DisplayFor(modelItem => item.Orders)
-                    </td>*@
-            
+                
             <td>
                         @Html.ActionLink("", "Edit", new {  id=item.Id ,UiPageTypeId =item.UiPageTypeId ,WorkflowId = item.WorkflowId },new {@class="fas fa-edit" }) |
                 @Html.ActionLink("", "Delete", new {  id=item.Id  }, new{@class="fa fa-trash"})

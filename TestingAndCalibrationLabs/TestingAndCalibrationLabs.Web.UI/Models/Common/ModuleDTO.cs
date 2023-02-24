@@ -8,6 +8,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 
         [Required(ErrorMessage = "Please Enter Page Name")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Please Enter Page Application")]
         public int ApplicationId { get; set; }
 
         public string ApplicationName { get; set; }

@@ -14,11 +14,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The Name of The Data Type
         /// </summary>
-        [Required(ErrorMessage = "Please Enter Data Type Name")]
+        [Required(ErrorMessage = "Please Enter Name")]
         public string Name { get; set; }
 
 
-        [Required(ErrorMessage = "Please Enter Data Description")]
+        [Required(ErrorMessage = "Please Enter Description")]
         public string Description { get; set; }
     }
 }

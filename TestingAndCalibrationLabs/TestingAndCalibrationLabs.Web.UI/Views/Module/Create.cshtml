@@ -13,32 +13,21 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*
-            <div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
 
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                <label class="form-label" for="Name">Name</label>
+            </div>
 
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                 <label for="Application" class="form-label"></label>
                 <select class="form-input " name="ApplicationId" id="Application" onchange="this.setAttribute('value',this.value)" asp-for="ApplicationId">
-                    <option disabled="disabled" selected>ApplicationId ...</option>
+                    <option disabled="disabled" selected>ApplicationName ...</option>
                       @foreach (var item in ViewBag.Application)
                     {
-                      <option value=@item.Id>@item.Name</option>
-                    
-                   @* <option value=1>1</option>*@
+                      <option value=@item.Id>@item.Name</option> 
                     }
-
                 </select>
-@*                <label for="Application" class="form-label">ApplicationName</label>*@
             </div>
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <div class="form-group">

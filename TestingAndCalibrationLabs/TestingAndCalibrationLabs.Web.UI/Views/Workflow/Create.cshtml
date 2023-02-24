@@ -1,47 +1,34 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.WorkflowDTO
-
 @{
     ViewData["Title"] = "Create";
-
 }
-
 <h1>Workflow</h1>
-
 <h4>Create</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*
-            <div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkFlow" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
 
-
-            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <label for="ModuleId" class="form-label"></label>
-                <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
-                    <option disabled="disabled" selected>Module ...</option>
-                    @foreach (var item in ViewBag.module)
-                    {
-                      <option value=@item.Id>@item.Name</option>
-                    
-                   @* <option value=1>1</option>*@
-                    }
-
-                </select>
-            </div>
-            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <label class="form-label" for="Name">Name</label>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <label for="ModuleId" class="form-label"></label>
+                    <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                        <option disabled="disabled" selected>Module ...</option>
+                        @foreach (var item in ViewBag.module)
+                        {
+                            <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                </div>
+                
+               
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
             </div>
         </form>
@@ -56,4 +43,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }
