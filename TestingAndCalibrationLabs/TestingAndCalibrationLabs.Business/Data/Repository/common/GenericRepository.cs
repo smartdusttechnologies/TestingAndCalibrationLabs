@@ -133,10 +133,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                     select prop.Name).ToList();
         }
 
-        public UiNavigationCategoryModel GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }
