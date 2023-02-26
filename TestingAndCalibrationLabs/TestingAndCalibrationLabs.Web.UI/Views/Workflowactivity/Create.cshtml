@@ -11,16 +11,19 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+      @*  <form asp-action="Create">*@
+            <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkflowActivity" novalidate>
+                <div asp-validation-summary="All"></div>
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row ms-1 me-1">
+          @*  <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                 <label class="form-label" for="Name">Name</label>
             </div>
 
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <label for="WorkflowStageId" class="form-label"></label>
+               @* <label for="WorkflowStageId" class="form-label"></label>*@
                 <select class="form-input " name="WorkflowStageId" id="WorkflowStageId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
                     <option disabled="disabled" selected>WorkflowStage ...</option>
                     @foreach (var item in ViewBag.WorkflowStage)
@@ -28,9 +31,10 @@
                         <option value=@item.Id>@item.Name</option>
                     }
                 </select>
+                    <label class="form-label" for="WorkflowStageId">WorkflowStageName</label>
             </div>
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <label for="ActivityId" class="form-label"></label>
+             @*   <label for="ActivityId" class="form-label"></label>*@
                 <select class="form-input " name="ActivityId" id="ActivityId" onchange="this.setAttribute('value',this.value)" asp-for="ActivityId">
                     <option disabled="disabled" selected>Activity ...</option>
                     @foreach (var item in ViewBag.Activity)
@@ -39,6 +43,7 @@
                     }
 
                 </select>
+                  <label class="form-label" for="ActivityId">ActivityName</label>
             </div>
           
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
@@ -46,6 +51,7 @@
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </div>
+                </div>
         </form>
     </div>
 </div>

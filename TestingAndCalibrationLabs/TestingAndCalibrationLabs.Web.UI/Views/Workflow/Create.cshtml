@@ -9,6 +9,7 @@
     <div class="col-md-4">
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkFlow" novalidate>
             <div asp-validation-summary="All"></div>
+
             <div class="row ms-1 me-1">
 
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
@@ -16,7 +17,7 @@
                     <label class="form-label" for="Name">Name</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <label for="ModuleId" class="form-label"></label>
+                  @*  <label for="ModuleId" class="form-label">Module Name</label>*@
                     <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
                         <option disabled="disabled" selected>Module ...</option>
                         @foreach (var item in ViewBag.module)
@@ -24,7 +25,9 @@
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                    <label class="form-label" for="ModuleId">Module Name</label>
                 </div>
+
                 
                
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">

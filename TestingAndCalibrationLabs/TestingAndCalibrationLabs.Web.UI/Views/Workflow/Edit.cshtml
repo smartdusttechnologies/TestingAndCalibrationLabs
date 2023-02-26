@@ -10,16 +10,18 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+       @* <form asp-action="Edit">*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-          
+            <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkFlow" novalidate>
+                <div asp-validation-summary="All"></div>
+                <div class="row ms-1 me-1">
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
 
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <label for="ModuleId" class="form-label"></label>
+               @* <label for="ModuleId" class="form-label"></label>*@
                 <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
                     <option disabled="disabled" selected>Module ...</option>
                     @foreach (var item in ViewBag.Module)
@@ -29,12 +31,14 @@
 
                     }
                 </select>
+                    <label class="form-label" for="ModuleId">Module Name</label>
             </div>
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
+                </div>
         </form>
     </div>
 </div>
