@@ -32,6 +32,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                          AND wa.IsDeleted = 0
                                                          AND a.IsDeleted = 0", new {stageId}).ToList();
         }
+
+        /// <summary>
+        /// Insert Record in WorkflowActivity
+        /// </summary>
+        /// <param name="workflowActivityModel"></param>
+        /// <returns></returns>
         public int Create(WorkflowActivityModel workflowActivityModel)
         {
             string query = @"Insert into [WorkflowActivity] (Name,WorkflowStageId,ActivityId)
@@ -40,7 +46,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
 
             return db.Execute(query, workflowActivityModel);
         }
-
+        /// <summary>
+        /// Getting All Records From WorkflowActivity
+        /// </summary>
+        /// <returns></returns>
         public List<WorkflowActivityModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -59,6 +68,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                     and wfs.IsDeleted = 0
                                                     and a.IsDeleted = 0").ToList();
         }
+        /// <summary>
+        /// Getting Record By Id WorkflowActivity
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public WorkflowActivityModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -78,6 +92,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
 
             return WorkflowById;
         }
+        /// <summary>
+        /// Edit Record For WorkflowActivity 
+        /// </summary>
+        /// <param name="workflowActivityModel"></param>
+        /// <returns></returns>
         public int Update(WorkflowActivityModel workflowActivityModel)
         {
             string query = @"update [WorkflowActivity] Set  
@@ -87,9 +106,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                 Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
 
-            //workflowStageModel.ControlCategoryId = null;
+           
             return db.Execute(query, workflowActivityModel);
         }
+        /// <summary>
+        /// Delete Record From WorkflowActivity
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

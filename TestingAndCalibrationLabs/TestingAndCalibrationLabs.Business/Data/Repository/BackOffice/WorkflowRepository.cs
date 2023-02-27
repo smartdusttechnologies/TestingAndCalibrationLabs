@@ -28,7 +28,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<WorkflowModel>(@"select * from Workflow where ModuleId = @ModuleId", new { ModuleId = moduleId }).FirstOrDefault();
         }
-
+        /// <summary>
+        /// Insert Record in Workflow
+        /// </summary>
+        /// <param name="workflowModel"></param>
+        /// <returns></returns>
         public int Create(WorkflowModel workflowModel)
         {
             string query = @"Insert into [Workflow] (Name,ModuleId)
@@ -37,7 +41,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Execute(query, workflowModel);
         }
-
+        /// <summary>
+        /// Getting All Records From Workflow
+        /// </summary>
+        /// <returns></returns>
         public List<WorkflowModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -54,6 +61,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     wf.IsDeleted = 0 
                                                     and m.IsDeleted = 0").ToList();
         }
+        /// <summary>
+        /// Getting Record By Id Workflow
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public WorkflowModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -70,6 +82,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return WorkflowById;
         }
+        /// <summary>
+        /// Edit Record For Workflow 
+        /// </summary>
+        /// <param name="WorkflowModel"></param>
+        /// <returns></returns>
         public int Update(WorkflowModel WorkflowModel)
         {
             string query = @"update [Workflow] Set  
@@ -78,9 +95,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
 
-            //workflowStageModel.ControlCategoryId = null;
+          
             return db.Execute(query, WorkflowModel);
         }
+        /// <summary>
+        /// Delete Record From Workflow
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

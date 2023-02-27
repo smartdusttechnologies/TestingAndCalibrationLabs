@@ -1,35 +1,31 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
-
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
-    public class ModuleController : Controller
+    public class OrganizationController : Controller
     {
-       
-        public readonly IModuleService _ModuleService;
+        public readonly IOrganizationService _organizationService;
         public readonly IMapper _mapper;
-         public readonly IApplicationService _ApplicationService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
-        /// <param name="applicationService"></param>
         /// <param name="mapper"></param>
-        /// <param name="moduleService"></param>
-        public ModuleController(IMapper mapper, IModuleService moduleService, IApplicationService applicationService)
+        /// <param name="organizationService"></param>
+        
+
+        public OrganizationController(IOrganizationService organizationService, IMapper mapper)
         {
-            _ModuleService = moduleService;
+            _organizationService = organizationService;
             _mapper = mapper;
-             _ApplicationService = applicationService;
-            
+           
         }
+
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -38,10 +34,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<ModuleModel> page = _ModuleService.Get();
-            var pageData = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(page);
-            return View(pageData.AsEnumerable());
+            List<Organization> Organizationpage = _organizationService.Get();
+            var OrganizationData = _mapper.Map<List<Organization>, List<OrganizationDTO>>(Organizationpage);
+            return View(OrganizationData.AsEnumerable());
         }
+
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -54,37 +51,35 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var applicationlist = _ApplicationService.Get();
-            var applicationdatas = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(applicationlist);
-            ViewBag.Application = applicationdatas;
-
-            var getByIdPageModel = _ModuleService.GetById((int)id);
+            var getByIdPageModel = _organizationService.GetById((int)id);
             if (getByIdPageModel == null)
             {
                 return NotFound();
             }
-            var pageData = _mapper.Map<ModuleModel, ModuleDTO>((ModuleModel)getByIdPageModel);
+            var pageData = _mapper.Map<Organization, OrganizationDTO>(getByIdPageModel);
 
             return View(pageData);
         }
+
         /// <summary>
-        /// To Edit Record In Module
+        /// To Edit Record In Organization
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] ModuleDTO ModuleDTO)
+        public IActionResult Edit([Bind] OrganizationDTO organizationDTO)
         {
 
             if (ModelState.IsValid)
             {
-                var pageModel = _mapper.Map<ModuleDTO, ModuleModel>(ModuleDTO);
-                _ModuleService.Update(pageModel);
+                var pageModel = _mapper.Map<OrganizationDTO, Organization>(organizationDTO);
+                _organizationService.Update(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(ModuleDTO);
+            return View(organizationDTO);
         }
+
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -93,32 +88,29 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            var applicationlist = _ApplicationService.Get();
-            var applicationdatas = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(applicationlist);
-             ViewBag.Application = applicationdatas;
-
-
-            return base.View(new ModuleDTO { Id = id });
+            return base.View(new Models.OrganizationDTO { Id = id });
         }
+
         /// <summary>
-        /// To Create Record In Module
+        /// To Create Record In Organization
         /// </summary>
-        /// <param name="ModuleDTO"></param>
+        /// <param name="organizationDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] ModuleDTO ModuleDTO)
+        public IActionResult Create([Bind] OrganizationDTO organizationDTO)
         {
             if (ModelState.IsValid)
             {
 
-                var pageModel = _mapper.Map<ModuleDTO, ModuleModel>(ModuleDTO);
-                _ModuleService.Create(pageModel);
+                var pageModel = _mapper.Map<OrganizationDTO, Organization>(organizationDTO);
+                _organizationService.Create(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(ModuleDTO);
+            return View(organizationDTO);
         }
+
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -130,19 +122,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            ModuleModel getByIdPageModel = (ModuleModel)_ModuleService.GetById((int)id);
+            Organization getByIdPageModel = _organizationService.GetById((int)id);
             if (getByIdPageModel == null)
             {
                 return NotFound();
             }
-            var pageModel = _mapper.Map<ModuleModel, ModuleDTO>(getByIdPageModel);
+            var pageModel = _mapper.Map<Organization, OrganizationDTO>(getByIdPageModel);
             return View(pageModel);
         }
         /// <summary>
-        /// To Delete Record In Module
+        /// To Edit Record In Organization
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
@@ -151,10 +143,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            _ModuleService.Delete((int)id);
+            _organizationService.Delete((int)id);
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
-
     }
 }

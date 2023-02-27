@@ -13,7 +13,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IApplicationService _applicationService;
         public readonly IMapper _mapper;
         private readonly IUiPageNavigationService _uiNavigationCategoryService;
-
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="applicationService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="uiNavigationCategoryService"></param>
+       
         public ApplicationController(IApplicationService applicationService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _applicationService = applicationService;
@@ -34,7 +40,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(pageData.AsEnumerable());
         }
 
-
+        /// <summary>
+        /// For Edit Records View
+        /// </summary>
+        /// <param name="id"></param>   
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -52,7 +62,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(pageData);
         }
 
-
+        /// <summary>
+        /// To Edit Record In Application
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit([Bind] ApplicationDTO applicationDTO)
@@ -68,14 +81,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(applicationDTO);
         }
 
-
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int id)
         {
             return base.View(new Models.ApplicationDTO { Id = id });
         }
 
-       
+        /// <summary>
+        /// To Create Record In Application
+        /// </summary>
+        /// <param name="applicationDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] ApplicationDTO applicationDTO)
@@ -91,7 +112,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(applicationDTO);
         }
 
-       
+
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,7 +133,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(pageModel);
         }
 
-       
+        /// <summary>
+        /// To Delete Record In Application
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

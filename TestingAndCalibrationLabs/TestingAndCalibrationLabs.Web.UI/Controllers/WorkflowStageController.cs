@@ -40,7 +40,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         //    return BadRequest();
         //}
 
-
+        /// <summary>
+        /// Get All The Pages From Database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -49,6 +52,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageworkflowstages = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(pageworkflowstage);
             return View(pageworkflowstages.AsEnumerable());
         }
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create(int id)
         {
@@ -63,6 +71,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             
             return base.View(new Models.WorkflowStageDTO { Id = id });
         }
+        /// <summary>
+        /// To Create Record In WorkflowActivity
+        /// </summary>
+        /// <param name="workflowStageDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] WorkflowStageDTO workflowStageDTO)
@@ -78,8 +91,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(workflowStageDTO);
         }
+        /// <summary>
+        /// For Edit Records View
+        /// </summary>
+        /// <param name="id"></param>   
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id, int uiPageTypeId, int workflowId)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -101,6 +119,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var flowstage = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(flowStageModel);
             return View(flowstage);
         }
+        /// <summary>
+        /// To Edit Record In WorkflowStage
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] WorkflowStageDTO workflowStageDTO)
@@ -119,6 +141,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(workflowStageDTO);
         }
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int id)
         {
             if(id == null)
@@ -129,6 +156,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var deleteMetadata = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(workflowStageModel);
             return View(deleteMetadata);
         }
+        /// <summary>
+        /// To Delete Record In WorkflowStage
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

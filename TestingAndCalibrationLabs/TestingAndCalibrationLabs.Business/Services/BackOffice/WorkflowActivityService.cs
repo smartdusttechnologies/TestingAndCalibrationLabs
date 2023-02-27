@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
         }
-        
+
         /// <summary>
         /// To Run All Activity here Which Are Given To A Stage
         /// </summary>
@@ -55,27 +55,48 @@ namespace TestingAndCalibrationLabs.Business.Services
         //#endregion
 
 
-       
+        /// <summary>
+        /// Get All Records From WorkflowActivity
+        /// </summary>
+        /// <returns></returns>
         public List<WorkflowActivityModel> Get()
         {
             return _workflowActivityRepository.Get();
         }
-       
+        /// <summary>
+        /// Insert Record In WorkflowActivity
+        /// </summary>
+        /// <param name="workflowActivityModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Create(WorkflowActivityModel workflowActivityModel)
         {
             int id = _workflowActivityRepository.Create(workflowActivityModel);
             return new RequestResult<int>(1);
         }
+        /// <summary>
+        /// Edit Record From WorkflowActivity
+        /// </summary>
+        /// <param name="workflowActivityModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Update(int id, WorkflowActivityModel workflowActivityModel)
         {
             _workflowActivityRepository.Update(workflowActivityModel);
             return new RequestResult<int>(1);
         }
+        /// <summary>
+        /// Get Record by Id For WorkflowActivity
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public WorkflowActivityModel GetById(int id)
         {
             return _workflowActivityRepository.GetById(id);
         }
-
+        /// <summary>
+        /// Delete Record From WorkflowActivity
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             return _workflowActivityRepository.Delete(id);

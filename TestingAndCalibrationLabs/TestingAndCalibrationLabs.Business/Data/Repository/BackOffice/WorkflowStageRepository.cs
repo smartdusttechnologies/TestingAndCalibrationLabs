@@ -18,17 +18,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-        /// <summary>
-        /// Get Record Based On WorkflowId
-        /// </summary>
-        /// <param name="workflowId"></param>
-        /// <returns></returns>
-        //public List<WorkflowStageModel> GetByWorkflowId(int workflowId)
-        //{
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-        //    return db.Query<WorkflowStageModel>(@"select * from WorkflowStage where WorkflowId = @WorkflowId", new { WorkflowId = workflowId }).ToList();
-        //}
+       
 
+        /// <summary>
+        /// Insert Record in Workflow Stage
+        /// </summary>
+        /// <param name="workflowStageModel"></param>
+        /// <returns></returns>
         public int Create(WorkflowStageModel workflowStageModel)
         {
             string query = @"Insert into [WorkflowStage] (WorkflowId,Name,UiPageTypeId,Orders)
@@ -37,6 +33,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Execute(query, workflowStageModel);
         }
+        /// <summary>
+        /// Getting All Records From Workflow Stage
+        /// </summary>
+        /// <returns></returns>
 
         public List<WorkflowStageModel> Get()
         {
@@ -57,7 +57,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upt.IsDeleted = 0 
                                                     and  wf.IsDeleted = 0").ToList();
         }
-
+        /// <summary>
+        /// Getting Record By Id Workflow Stage
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public WorkflowStageModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -80,7 +84,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return workflowStageById;
         }
-
+        /// <summary>
+        /// Edit Record For Workflow Stage 
+        /// </summary>
+        /// <param name="workflowStageModel"></param>
+        /// <returns></returns>
         public int Update(WorkflowStageModel workflowStageModel)
         {
             string query = @"update [WorkflowStage] Set  
@@ -94,6 +102,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             //workflowStageModel.ControlCategoryId = null;
             return db.Execute(query, workflowStageModel);
         }
+        /// <summary>
+        /// Delete Record From Workflow Stage 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

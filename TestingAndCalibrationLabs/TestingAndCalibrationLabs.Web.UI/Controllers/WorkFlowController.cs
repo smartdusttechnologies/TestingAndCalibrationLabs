@@ -14,7 +14,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IWorkflowService _WorkflowService;
         private readonly IMapper _mapper;
         private readonly IModuleService _ModuleService;
-
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="WorkflowService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="moduleService"></param>
         public WorkFlowController(IWorkflowService WorkflowService, IMapper mapper, IModuleService moduleService)
         {
             _WorkflowService = WorkflowService;
@@ -22,6 +27,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
 
         }
+        /// <summary>
+        /// Get All The Pages From Database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -32,7 +41,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
 
         }
-       [HttpGet]
+
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Create(int id)
         {
             var pageList = _ModuleService.Get();
@@ -41,7 +56,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return base.View(new WorkflowDTO { Id = id });
         }
-
+        /// <summary>
+        /// To Create Record In Workflow
+        /// </summary>
+        /// <param name="workflowDTO"></param>
+        /// <returns></returns>
         [HttpPost]
        [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] WorkflowDTO workflowDTO)
@@ -55,15 +74,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(workflowDTO);
         }
-
-       [HttpGet]
-        public IActionResult Edit(int id, int ModuleId)
+        /// <summary>
+        /// For Edit Records View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Edit(int id)
        {
            if (id == null)
             {
                 return NotFound();
             }
-           ViewBag.ModuleId = ModuleId;
+         
             var pages = _ModuleService.Get();
            var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
            ViewBag.Module = pageList;
@@ -72,8 +95,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
            var Workflowdata = _mapper.Map<WorkflowModel, WorkflowDTO>(Module);
            return View(Workflowdata);
        }
-
-       [HttpPost]
+        /// <summary>
+        /// To Edit Record In Workflow
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
        [ValidateAntiForgeryToken]
        public IActionResult Edit(int id, [Bind] WorkflowDTO workflowDTO)
        {
@@ -90,7 +116,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(workflowDTO);
         }
-
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int id)
         {
             if (id == null)
@@ -101,6 +131,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var deleteWorkflow = _mapper.Map<WorkflowModel, WorkflowDTO>(workflowModel);
             return View(deleteWorkflow);
         }
+        /// <summary>
+        /// To Delete Record In workflow
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

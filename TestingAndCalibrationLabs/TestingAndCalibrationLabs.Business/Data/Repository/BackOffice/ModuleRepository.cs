@@ -11,6 +11,9 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repostiory Class For Module 
+    /// </summary>
     public class ModuleRepository : IModuleRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -29,7 +32,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             var df = con.Query<Dictionary<int, string>>(query, new { moduleId }).ToList();
             return df;
         }
-
+        /// <summary>
+        /// Insert Record in Module
+        /// </summary>
+        /// <param name="moduleModel"></param>
+        /// <returns></returns>
         public int Create(ModuleModel moduleModel)
         {
             string query = @"Insert into [Module] (ApplicationId,Name)
@@ -38,6 +45,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Execute(query, moduleModel);
         }
+        /// <summary>
+        /// Getting All Records From Module
+        /// </summary>
+        /// <returns></returns>
         public List<ModuleModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -54,6 +65,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     m.IsDeleted = 0 
                                                     and a.IsDeleted = 0").ToList();
         }
+        /// <summary>
+        /// Getting Record By Id Module
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ModuleModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -70,6 +86,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return moduleById;
         }
+        /// <summary>
+        /// Edit Record For Module 
+        /// </summary>
+        /// <param name="moduleModel"></param>
+        /// <returns></returns>
         public int Update(ModuleModel moduleModel)
         {
             string query = @"update [Module] Set  
@@ -81,6 +102,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             //workflowStageModel.ControlCategoryId = null;
             return db.Execute(query, moduleModel);
         }
+        /// <summary>
+        /// Delete Record From Module
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

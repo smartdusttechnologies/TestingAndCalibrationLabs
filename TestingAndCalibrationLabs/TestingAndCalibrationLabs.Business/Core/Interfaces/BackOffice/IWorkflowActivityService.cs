@@ -10,22 +10,34 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IWorkflowActivityService
     {
         /// <summary>
-        /// To Run All Activity here Which Are Given To A Stage
+        /// Get All Records From WorkflowActivityService
         /// </summary>
-        /// <param name="recordModel"></param>
         /// <returns></returns>
-        //bool WorkflowActivity(RecordModel recordModel);
-
-
-
         List<WorkflowActivityModel> Get();
-
+        /// <summary>
+        /// Get Record By Id From WorkflowActivityService
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         WorkflowActivityModel GetById(int id);
-
+        /// <summary>
+        /// Insert Record In WorkflowActivityService
+        /// </summary>
+        /// <param name="workflowActivityModel"></param>
+        /// <returns></returns>
         RequestResult<int> Create(WorkflowActivityModel workflowActivityModel);
-
+        /// <summary>
+        /// Update Record In WorkflowActivityService
+        /// </summary>   
+        /// <param name="id"></param>
+        /// <param name="workflowActivityModel"></param>
+        /// <returns></returns>
         RequestResult<int> Update(int id, WorkflowActivityModel workflowActivityModel);
-
+        /// <summary>
+        /// Delete Record WorkflowActivityService
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         bool Delete(int id);
     }
 }

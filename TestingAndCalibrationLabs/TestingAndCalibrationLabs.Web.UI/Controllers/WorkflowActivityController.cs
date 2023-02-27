@@ -16,17 +16,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IActivityService _activityService;
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IMapper _mapper;
-        private readonly IWorkflowActivityRepository _workflowActivityRepository;
         private readonly IWorkflowStageService _workflowStageService;
-
-        public WorkflowActivityController(IMapper mapper,  IWorkflowStageService workflowStageService,IActivityService activityService, IWorkflowActivityService workflowActivityService, IWorkflowActivityRepository workflowActivityRepository)
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="activityService"></param>
+        /// <param name="workflowStageService"></param>
+        /// <param name="workflowActivityService"></param>
+        public WorkflowActivityController(IMapper mapper,  IWorkflowStageService workflowStageService,IActivityService activityService, IWorkflowActivityService workflowActivityService)
         {
-            _workflowActivityRepository = workflowActivityRepository;
             _activityService = activityService;
             _mapper = mapper;
             _workflowStageService = workflowStageService;
             _workflowActivityService = workflowActivityService;
         }
+        /// <summary>
+        /// Get All The Pages From Database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,6 +43,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var workflowActivitypages = _mapper.Map<List<WorkflowActivityModel>, List<WorkflowActivityDTO>>(workflowActivitypage);
             return View(workflowActivitypages.AsEnumerable());
         }
+        /// <summary>
+        /// For Create Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create(int id)
         {
@@ -47,6 +60,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return base.View(new WorkflowActivityDTO { Id = id });
         }
+        /// <summary>
+        /// To Create Record In WorkflowActivity
+        /// </summary>
+        /// <param name="workflowActivityDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] WorkflowActivityDTO workflowActivityDTO)
@@ -60,9 +78,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(workflowActivityDTO);
         }
-
+        /// <summary>
+        /// For Edit Records View
+        /// </summary>
+        /// <param name="id"></param>   
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id, int ActivityId, int WorkflowStageId)
+        public IActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -81,6 +103,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var WorkflowActivitydata = _mapper.Map<WorkflowActivityModel, WorkflowActivityDTO>(WorkflowActivity);
             return View(WorkflowActivitydata);
         }
+        /// <summary>
+        /// To Edit Record In WorkflowActivity
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] WorkflowActivityDTO workflowActivityDTO)
@@ -98,6 +124,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(workflowActivityDTO);
         }
+        /// <summary>
+        /// For Delete Record View
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Delete(int id)
         {
             if (id == null)
@@ -108,6 +139,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var deleteWorkflowActivity = _mapper.Map<WorkflowActivityModel, WorkflowActivityDTO>(workflowActivityModel);
             return View(deleteWorkflowActivity);
         }
+        /// <summary>
+        /// To Delete Record In workflowActivity
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
