@@ -28,7 +28,7 @@
 
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>*@
-    <link href="~/css/Buttons.css" rel="stylesheet" />
+    <link href="~/css/Buttons.css" rel="stylesheet"/>
     <link href="~/css/bootstrap-utilities.css" rel="stylesheet" />
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -87,6 +87,13 @@
             @RenderBody()
         </main>
     </div>
+    <!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+    <div class="submit-progress hidden" style="z-index:1056;" id="snacResponse">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+        <label>Please wait while Saving Data...</label>
+    </div>
+    <!-- ** END POP-UP MESSAGE AREA ** -->
+
     <!---Footer--->
     <footer class="border-top-footer text-muted" id=footer style="background-color: #2a4472;">
         <div class="text-center p-3 text-white">
