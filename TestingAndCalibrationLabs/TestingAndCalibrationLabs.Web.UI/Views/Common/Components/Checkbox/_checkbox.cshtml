@@ -1,40 +1,37 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
     <div class="form-check form-check-inline">
-        <input class="form-check-input" name="@Model.Value.UiControlDisplayName" type="checkbox" value="false" id="checkbox-@Model.Value.Id" />
-        <label class="form-check-label" for="@Model.Value.UiControlDisplayName">
-            @Model.Value.UiControlDisplayName@if (Model.Value.IsRequired)
+        <input class="form-check-input" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" type="checkbox"  id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
+        <label class="form-check-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName">
+            @Model.Value.UiPageMetadata.UiControlDisplayName@if (Model.Value.UiPageMetadata.IsRequired)
             {
                 <span class="red-color">*</span>
             }
         </label>
     </div>
 </div>
-<input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id" value="false">
 <script>
-    window.addEventListener("load", function () { preSelectCheckbox() });
     var model;
     $(document).ready(function () {
         model = JSON.parse('@Json.Serialize(Model)');
-        var checkboxwithoutHash = model.value.uiControlTypeName + model.value.id;
-        var idNum = "#checkbox-" + model.value.id;
-        $(idNum).on('change', function () {
-            if ($(idNum).is(':checked')) {
-                document.getElementById(checkboxwithoutHash).value = "true";
-            } else {
-                document.getElementById(checkboxwithoutHash).value = "false";
-            }
-        });
-    });
-    function preSelectCheckbox() {
-        var actionName = $('#actionNameCommon').val();
-        if (actionName == "Edit") {
-            var inputId = "#" + model.value.uiControlTypeName + model.value.id;
-            var checkboxId = "#checkbox-" + model.value.id;
-            var checkboxValue = $(inputId).val();
-            if (checkboxValue == "true") {
-                $(checkboxId).prop("checked", true);
+        var uiPageData = model.value.uiPageData;
+        var id = "#" + model.value.uiPageMetadata.uiControlTypeName + model.value.uiPageMetadata.id;
+        var idVal = $('#Id').val();
+        if (idVal != undefined && uiPageData != null) {
+            var valueOfControl = uiPageData.value;
+            if (valueOfControl == "true") {
+                $(id).prop("checked", true);
             }
         }
-    }
+        //whenever user check or uncheck then this function will assign the true/false value to the control
+        $(id).on('change', function () {
+            if ($(id).is(':checked')) {
+                $(id).val("true");
+            } else {
+                $(id).val("false");
+            }
+        });
+        
+    });
+        
 </script>
