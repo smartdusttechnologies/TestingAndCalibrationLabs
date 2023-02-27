@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <select class="form-input " name="WorkflowStageId" id="WorkflowStageId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
+                <select class="form-input " name="WorkflowStageId" id="WorkflowStage" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
                     <option disabled="disabled" selected>WorkflowStage ...</option>
                     @foreach (var item in ViewBag.WorkflowStage)
                     {
@@ -31,7 +31,7 @@
                     <label class="form-label" for="WorkflowStageId">WorkflowStageName</label>
             </div>
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <select class="form-input " name="ActivityId" id="ActivityId" onchange="this.setAttribute('value',this.value)" asp-for="ActivityId">
+                <select class="form-input " name="ActivityId" id="Activity" onchange="this.setAttribute('value',this.value)" asp-for="ActivityId">
                     <option disabled="disabled" selected>Activity ...</option>
                     @foreach (var item in ViewBag.Activity)
                     {

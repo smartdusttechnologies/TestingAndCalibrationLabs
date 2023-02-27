@@ -20,6 +20,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -128,6 +129,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<IGenericRepository<ApplicationModel>, GenericRepository<ApplicationModel>>();
             services.AddScoped<IGenericRepository<ActivityModel>, GenericRepository<ActivityModel>>();
+            services.AddScoped<IGenericRepository<Organization>, GenericRepository<Organization>>();
             ////
             ///
             services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();
