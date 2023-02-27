@@ -85,9 +85,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            ViewBag.WorkflowId = workflowId;
-           
-            ViewBag.UiPageTypeId = uiPageTypeId;
+            
           
             var pages = _uiPageTypeService.Get();
             var flow = _workflowService.Get();

@@ -16,12 +16,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IActivityService _activityService;
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IMapper _mapper;
-        //private readonly IWorkflowActivityRepository _workflowActivityRepository;
+        private readonly IWorkflowActivityRepository _workflowActivityRepository;
         private readonly IWorkflowStageService _workflowStageService;
 
-        public WorkflowActivityController(IMapper mapper,  IWorkflowStageService workflowStageService,IActivityService activityService, IWorkflowActivityService workflowActivityService)
+        public WorkflowActivityController(IMapper mapper,  IWorkflowStageService workflowStageService,IActivityService activityService, IWorkflowActivityService workflowActivityService, IWorkflowActivityRepository workflowActivityRepository)
         {
-            //_workflowActivityRepository = workflowActivityRepository;
+            _workflowActivityRepository = workflowActivityRepository;
             _activityService = activityService;
             _mapper = mapper;
             _workflowStageService = workflowStageService;
@@ -68,8 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            ViewBag.ModuleId = ActivityId;
-            ViewBag.ModuleId = WorkflowStageId;
+            
 
             var pages = _activityService.Get();
             var pagess = _workflowStageService.Get();

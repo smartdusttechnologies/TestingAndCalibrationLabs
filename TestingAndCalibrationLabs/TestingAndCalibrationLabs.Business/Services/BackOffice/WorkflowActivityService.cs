@@ -55,17 +55,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         //#endregion
 
 
-        ////////////
-        ///
+       
         public List<WorkflowActivityModel> Get()
         {
             return _workflowActivityRepository.Get();
         }
-        //public RequestResult<int> Create(WorkflowModel workflowModel)
-        //{
-        //    _workflowRepository.Insert(workflowModel);
-        //    return new RequestResult<int>(1);
-        //}
+       
         public RequestResult<int> Create(WorkflowActivityModel workflowActivityModel)
         {
             int id = _workflowActivityRepository.Create(workflowActivityModel);

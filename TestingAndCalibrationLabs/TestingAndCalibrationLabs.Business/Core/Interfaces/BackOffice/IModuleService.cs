@@ -17,8 +17,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         List<ModuleModel> Get();
         ModuleModel GetById(int id);
-        RequestResult<int> Update(ModuleModel ModuleModel);
-        RequestResult<int> Create(ModuleModel ModuleModel);
+        RequestResult<int> Update(ModuleModel moduleModel);
+        RequestResult<int> Create(ModuleModel moduleModel);
         bool Delete(int id);
 
 

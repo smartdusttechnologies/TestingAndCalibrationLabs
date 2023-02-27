@@ -7,26 +7,23 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
-//using TestingAndCalibrationLabs.Web.UI.Models.Common;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class ModuleController : Controller
     {
-       // private readonly IApplicationservice _IApplicationservice;
-        // private readonly IConnectionFactory _connectionFactory;
+       
         public readonly IModuleService _ModuleService;
         public readonly IMapper _mapper;
          public readonly IApplicationService _ApplicationService;
-        // private readonly IApplicationService _ApplicationService;
+        
         public ModuleController(IMapper mapper, IModuleService moduleService, IApplicationService applicationService)
         {
             _ModuleService = moduleService;
             _mapper = mapper;
              _ApplicationService = applicationService;
-            // _connectionFactory = connectionFactory;
-            //_connectionFactory = connectionFactory;
-            //_uiNavigationCategoryService = uiNavigationCategoryService;
+            
         }
         [HttpGet]
         public IActionResult Index()

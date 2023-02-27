@@ -64,11 +64,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
            ViewBag.ModuleId = ModuleId;
-
             var pages = _ModuleService.Get();
-
            var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
-
            ViewBag.Module = pageList;
 
            WorkflowModel Module = _WorkflowService.GetById((int)id);

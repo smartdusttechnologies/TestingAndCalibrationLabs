@@ -7,9 +7,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    /// <summary>
-    /// Service Class For Data Type
-    /// </summary>
+    
     public class WorkflowService : IWorkflowService
     {
         private readonly IWorkflowRepository _workflowRepository;
@@ -19,30 +17,18 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
             _workflowRepository = workflowRepository;
         }
-        //public WorkflowService(IWorkflowRepository workflowRepository)
-        //{
-        //    _workflowRepository = workflowRepository;
-        //}
-        /// <summary>
-        /// Get All Records From 
-        /// </summary>
-        /// <returns></returns>
+    
         public WorkflowModel GetByModuleId(int moduleId)
         {
             return _workflowRepository.GetByModuleId(moduleId);
         }
 
-        ////////////
-        ///
+       
         public List<WorkflowModel> Get()
         {
             return _workflowRepository.Get();
         }
-        //public RequestResult<int> Create(WorkflowModel workflowModel)
-        //{
-        //    _workflowRepository.Insert(workflowModel);
-        //    return new RequestResult<int>(1);
-        //}
+       
         public RequestResult<int> Create(WorkflowModel workflowModel)
         {
             int id = _workflowRepository.Create(workflowModel);
@@ -63,9 +49,5 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _workflowRepository.Delete(id);
         }
 
-        //public RequestResult<int> Update(int id, WorkflowModel workflowModel)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
     }
 }

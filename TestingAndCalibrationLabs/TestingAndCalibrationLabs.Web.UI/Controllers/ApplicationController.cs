@@ -75,11 +75,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return base.View(new Models.ApplicationDTO { Id = id });
         }
 
-        /// <summary>
-        /// To Create Record In Ui Page Type
-        /// </summary>
-        /// <param name="uiPageTypeDTO"></param>
-        /// <returns></returns>
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] ApplicationDTO applicationDTO)
@@ -95,11 +91,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(applicationDTO);
         }
 
-        /// <summary>
-        /// For Delete Record View
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+       
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -115,11 +107,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(pageModel);
         }
 
-        /// <summary>
-        /// To Delete Record From Ui Control Type
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

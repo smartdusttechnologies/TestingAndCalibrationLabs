@@ -4,10 +4,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-    /// <summary>
-    /// Service Interface For Ui Page Type
-    /// </summary>
-    /// <returns></returns>
+   
     public interface IApplicationService
     {
 

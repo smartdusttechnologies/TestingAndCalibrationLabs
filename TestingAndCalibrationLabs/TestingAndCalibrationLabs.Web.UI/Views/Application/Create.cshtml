@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-       @* <form asp-action="Create">*@
+      
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="Application" novalidate>
                 <div asp-validation-summary="All"></div>
@@ -20,12 +20,7 @@
                 <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                 <label class="form-label" for="Name">Name</label>
             </div>
-@*
-             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                <input class="form-input width-full black-border" type="text" id="Description" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Description">
-                <label class="form-label" for="Description">Description</label>
-            </div>
-*@
+
 
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <input class="form-input width-full black-border" type="text" id="Description" name="Description" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Description">

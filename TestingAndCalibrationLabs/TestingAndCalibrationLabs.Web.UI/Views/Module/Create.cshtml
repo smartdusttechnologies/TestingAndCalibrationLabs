@@ -11,8 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-       @* <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+     
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="Module" novalidate>
                 <div asp-validation-summary="All"></div>
                 <div class="row ms-1 me-1">
@@ -22,8 +21,7 @@
                 <label class="form-label" for="Name">Name</label>
             </div>
 
-            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-               @* <label for="Application" class="form-label"></label>*@
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">            
                 <select class="form-input " name="ApplicationId" id="Application" onchange="this.setAttribute('value',this.value)" asp-for="ApplicationId">
                     <option disabled="disabled" selected>ApplicationName ...</option>
                       @foreach (var item in ViewBag.Application)

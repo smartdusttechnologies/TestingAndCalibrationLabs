@@ -2,19 +2,13 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
-    /// <summary>
-    /// It Conatains The Properties for  Data Type
-    /// </summary>
+ 
     public class ActivityDTO
     {
-        /// <summary>
-        /// It Contains The Id of The Data Type
-        /// </summary>
+     
         public int Id { get; set; }
-        /// <summary>
-        /// It Contains The Name of The Data Type
-        /// </summary>
-        [Required(ErrorMessage = "Please Enter Data Type Name")]
+       
+        [Required(ErrorMessage = "Please Enter  Name")]
         public string Name { get; set; }
 
 

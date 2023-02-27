@@ -9,8 +9,7 @@
 <h4>Edit</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-       @* <form asp-action="Edit">*@
+    <div class="col-md-4">      
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkFlow" novalidate>
                 <div asp-validation-summary="All"></div>
@@ -21,7 +20,6 @@
                 </div>
 
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-               @* <label for="ModuleId" class="form-label"></label>*@
                 <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
                     <option disabled="disabled" selected>Module ...</option>
                     @foreach (var item in ViewBag.Module)
