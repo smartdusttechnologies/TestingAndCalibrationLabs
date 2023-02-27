@@ -14,7 +14,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
         private readonly IUiPageNavigationService _uiNavigationCategoryService;
-        
+        private List<UiNavigationCategoryModel> navigationcategory;
+
         public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _uiPageTypeService = uiPageTypeService;
@@ -43,12 +44,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 rowValue.Values = new List<string>();
                 rowValue.Values.Add(row.Id.ToString());
-                rowValue.Values.Add(row.Name);
-                rowValue.Values.Add(row.Url);
-                rowValue.Values.Add(row.UiNavigationCategoryId.ToString());
-                rowValue.Values.Add(row.UiNavigationCategoryName);
-                rowValue.Values.Add(row.FormatedUrl);
-                rowValue.Values.Add(row.Orders);
+                rowValue.Values.Add(row.Name);              
 
                 gridDto.Values.Add(rowValue);
             }
@@ -71,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             var navigationCategory = _uiNavigationCategoryService.Get();
-            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>, List<Models.UiNavigationCategoryDTO>>(navigationCategory);
+            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>, List<Models.UiNavigationCategoryDTO>>(navigationcategory);
             //ViewBag.NavigationCategoryId = NavigationCategoryId;
             ViewBag.UiNavigationCategory = navigationCategoryList;
             var getByIdPageModel = _uiPageTypeService.GetById((int)id);

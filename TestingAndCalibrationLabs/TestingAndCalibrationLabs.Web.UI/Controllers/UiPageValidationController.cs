@@ -5,6 +5,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Web.UI.Models.Common;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -121,7 +122,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<Business.Core.Model.UiPageValidationTypeModel> uiPagevalidationType = _uiPageValidationTypeService.Get();
             var pageList = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
             var metadataList = _mapper.Map<List<Business.Core.Model.UiPageMetadataModel>, List<Models.UiPageMetadataDTO>>(metadata);
-            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationTypeDTO>>(uiPagevalidationType);
+            var valList = _mapper.Map<List<Business.Core.Model.UiPageValidationTypeModel>, List<Models.UiPageValidationType>>(uiPagevalidationType);
             ViewBag.UiPageTypes=pageList;
             ViewBag.UiPageValidationTypes=valList;
             ViewBag.UiPageMetadata=metadataList;
