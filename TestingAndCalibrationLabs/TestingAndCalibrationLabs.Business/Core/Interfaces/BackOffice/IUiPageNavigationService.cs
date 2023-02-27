@@ -17,25 +17,25 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         List<UiPageNavigationModel> Get();
 
         /// <summary>
-        /// Get Record By Id From Ui Page Navigation Service
+        /// Get Record By Id From Ui Page Navigation Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         UiPageNavigationModel GetById(int id);
         /// <summary>
-        /// Insert Record In Ui Page Type
+        /// Insert Record In Ui Page Navigation
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
         RequestResult<int> Create(UiPageNavigationModel uiPageNavigationModel);
         /// <summary>
-        /// Edit Record From Ui Page Type
+        /// Edit Record From Ui Page Navigation
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
         RequestResult<int> Update(int id, UiPageNavigationModel uiPageNavigationModel);
         /// <summary>
-        /// Delete Record From Ui Page Type
+        /// Delete Record From Ui Page Navigation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

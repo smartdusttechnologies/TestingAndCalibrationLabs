@@ -15,7 +15,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
     /// </summary>
     public class UiPageNavigationRepository : IUiPageNavigationRepository
     {
-        public readonly IConnectionFactory _connectionFactory;
+        private readonly IConnectionFactory _connectionFactory;
         public UiPageNavigationRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
@@ -33,12 +33,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiPageNavigationModel);
         }
 
-        public void Create(UiNavigationCategoryModel pageControl)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
+       
+         /// <summary>
         /// Getting all records from Ui Page Navigation
         /// </summary>
         /// <returns></returns>
