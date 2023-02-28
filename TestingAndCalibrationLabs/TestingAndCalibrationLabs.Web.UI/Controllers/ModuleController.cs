@@ -20,9 +20,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
-        /// <param name="applicationService"></param>
-        /// <param name="mapper"></param>
         /// <param name="moduleService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="applicationService"></param>
         public ModuleController(IMapper mapper, IModuleService moduleService, IApplicationService applicationService)
         {
             _ModuleService = moduleService;
@@ -63,7 +63,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var pageData = _mapper.Map<ModuleModel, ModuleDTO>((ModuleModel)getByIdPageModel);
+            var pageData = _mapper.Map<ModuleModel, ModuleDTO>(getByIdPageModel);
 
             return View(pageData);
         }
@@ -130,7 +130,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            ModuleModel getByIdPageModel = (ModuleModel)_ModuleService.GetById((int)id);
+            ModuleModel getByIdPageModel = _ModuleService.GetById((int)id);
             if (getByIdPageModel == null)
             {
                 return NotFound();
