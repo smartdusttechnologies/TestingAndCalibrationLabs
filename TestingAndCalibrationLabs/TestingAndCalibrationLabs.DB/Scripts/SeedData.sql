@@ -27,7 +27,13 @@ BEGIN
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'Applicaton',30,1),
+			   (9, N'Workflow',29,1),
+			   (10,N'WorkflowStage',29,0),
+			   (11,N'Module',29,1),
+			   (12,N'Workflowactivitiy',29,1),
+			   (13,N'Organization',29,1)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -385,7 +391,13 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+			   (11, N'/Application/Index/', 57, 1002, 0),
+			  (12, N'/Workflow/Index/', 58, 1002, 0),
+			  (13, N'/WorkflowStage/Index/', 59, 1002, 0),
+			  (14, N'/Module/Index/', 60, 1002, 0),
+			  (15, N'/workflowactivity/Index/', 61, 1002, 0),
+			  (16, N'/Organization/Index/', 83, 1002, 0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

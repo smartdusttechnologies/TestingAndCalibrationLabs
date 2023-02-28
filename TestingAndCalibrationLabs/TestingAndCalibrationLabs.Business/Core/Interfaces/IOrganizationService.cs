@@ -3,7 +3,9 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
-{
+{    /// <summary>
+     /// Interface For Organization
+     /// </summary>
     public interface IOrganizationService
     {
         List<Organization> Get();

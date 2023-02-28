@@ -4,9 +4,9 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 { 
-    /// <summary>
- /// Service interface for Activity
- /// </summary>
+     /// <summary>
+     /// Service interface for Activity
+     /// </summary>
 
     public interface IActivityService
     {
