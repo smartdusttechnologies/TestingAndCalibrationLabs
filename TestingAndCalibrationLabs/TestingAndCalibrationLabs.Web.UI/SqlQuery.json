@@ -1,0 +1,49 @@
+{
+  "head": {
+    "type": "select",
+    "tableName": "UserT",
+    "column": [
+      {
+        "columnName": "Id",
+        "As": "Id",
+        "tableName": "UserT"
+      },
+      {
+        "columnName": "Name",
+        "As": "Name",
+        "tableName": "UserT"
+      },
+      {
+        "columnName": "Name",
+        "As": "GroupName",
+        "tableName": "GroupT"
+      }
+    ]
+  },
+  "forign": [
+    {
+      "type": "INNER JOIN",
+      "tableName": "GroupT",
+      "forignTableName": "UserT",
+      "on": {
+        "pKey": "Id",
+        "optor": "=",
+        "fKey": "GroupId"
+      }
+    }
+  ],
+  "condition": [
+    {
+      "where": "IsDeleted",
+      "optor": "=",
+      "value": 0,
+      "tableName": "UserT"
+    },
+    {
+      "where": "IsDeleted",
+      "optor": "=",
+      "value": 0,
+      "tableName": "GroupT"
+    }
+  ]
+}

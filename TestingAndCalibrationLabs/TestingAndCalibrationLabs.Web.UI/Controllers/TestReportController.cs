@@ -43,6 +43,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         
         {
+            var result = GenericUtils.JsonToSql("sdf");
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             return View();
         }
