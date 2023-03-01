@@ -14,6 +14,7 @@ IF NOT EXISTS (SELECT 1 FROM [Module] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Module]  ON
 
+
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
