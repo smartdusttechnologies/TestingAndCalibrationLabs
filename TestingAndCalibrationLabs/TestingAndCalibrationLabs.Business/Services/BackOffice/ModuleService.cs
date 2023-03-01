@@ -30,21 +30,21 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Insert Record In Module
         /// </summary>
-        /// <param name="ModuleModel"></param>
+        /// <param name="moduleModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(ModuleModel ModuleModel)
+        public RequestResult<int> Create(ModuleModel moduleModel)
         {
-            int id = _moduleRepository.Create(ModuleModel);
+            int id = _moduleRepository.Create(moduleModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
         /// Edit Record From Module
         /// </summary>
-        /// <param name="ModuleModel"></param>
+        /// <param name="moduleModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(ModuleModel ModuleModel)
+        public RequestResult<int> Update(ModuleModel moduleModel)
         {
-            _moduleRepository.Update(ModuleModel);
+            _moduleRepository.Update(moduleModel);
             return new RequestResult<int>(1);
         }
         /// <summary>

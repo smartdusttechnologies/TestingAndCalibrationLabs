@@ -12,12 +12,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The OrgCode of Organization
         /// </summary>
-        [Required(ErrorMessage = "Please Enter orgCode")]   
+        [Required(ErrorMessage = "Please Enter OrgCode")]   
         public string OrgCode { get; set; }
         /// <summary>
         /// It Contains The OrgName of Organization
         /// </summary>
-        [Required(ErrorMessage = "Please Enter orgName")]
+        [Required(ErrorMessage = "Please Enter OrgName")]
         public string OrgName { get; set; }
     }
 }

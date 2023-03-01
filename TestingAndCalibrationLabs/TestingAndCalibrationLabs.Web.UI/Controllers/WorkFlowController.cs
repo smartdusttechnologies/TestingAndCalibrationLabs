@@ -11,19 +11,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class WorkFlowController : Controller
     {
-        private readonly IWorkflowService _WorkflowService;
+        private readonly IWorkflowService _workflowService;
         private readonly IMapper _mapper;
-        private readonly IModuleService _ModuleService;
+        private readonly IModuleService _moduleService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
-        /// <param name="WorkflowService"></param>
+        /// <param name="workflowService"></param>
         /// <param name="mapper"></param>
         /// <param name="moduleService"></param>
-        public WorkFlowController(IWorkflowService WorkflowService, IMapper mapper, IModuleService moduleService)
+        public WorkFlowController(IWorkflowService workflowService, IMapper mapper, IModuleService moduleService)
         {
-            _WorkflowService = WorkflowService;
-            _ModuleService= moduleService;
+            _workflowService = workflowService;
+            _moduleService = moduleService;
             _mapper = mapper;
 
         }
@@ -35,9 +35,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            var workflowpage = _WorkflowService.Get();
-            var workflowpages = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(workflowpage);
-            return View(workflowpages.AsEnumerable());
+            var workflowPage = _workflowService.Get();
+            var workflowPages = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(workflowPage);
+            return View(workflowPages.AsEnumerable());
 
 
         }
@@ -50,7 +50,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-            var pageList = _ModuleService.Get();
+            var pageList = _moduleService.Get();
             var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
             ViewBag.module= pages;
 
@@ -68,7 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                var createPageValidation = _mapper.Map<WorkflowDTO, WorkflowModel>(workflowDTO);
-                _WorkflowService.Create(createPageValidation);
+                _workflowService.Create(createPageValidation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -87,13 +87,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
          
-            var pages = _ModuleService.Get();
+            var pages = _moduleService.Get();
            var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
            ViewBag.Module = pageList;
 
-           WorkflowModel Module = _WorkflowService.GetById((int)id);
-           var Workflowdata = _mapper.Map<WorkflowModel, WorkflowDTO>(Module);
-           return View(Workflowdata);
+           WorkflowModel module = _workflowService.GetById(id);
+           var workflowData = _mapper.Map<WorkflowModel, WorkflowDTO>(module);
+           return View(workflowData);
        }
         /// <summary>
         /// To Edit Record In Workflow
@@ -110,7 +110,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var editWorkflowDTO = _mapper.Map<Models.WorkflowDTO, Business.Core.Model.WorkflowModel>(workflowDTO);
-                _WorkflowService.Update(id, editWorkflowDTO);
+                _workflowService.Update(id, editWorkflowDTO);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -127,7 +127,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            WorkflowModel workflowModel = _WorkflowService.GetById((int)id);
+            WorkflowModel workflowModel = _workflowService.GetById(id);
             var deleteWorkflow = _mapper.Map<WorkflowModel, WorkflowDTO>(workflowModel);
             return View(deleteWorkflow);
         }
@@ -144,7 +144,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            _WorkflowService.Delete((int)id);
+            _workflowService.Delete((int)id);
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
        }

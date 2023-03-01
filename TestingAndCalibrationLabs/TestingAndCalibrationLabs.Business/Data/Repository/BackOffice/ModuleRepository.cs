@@ -12,7 +12,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// Repostiory Class For Module 
+    /// Repository Class For Module 
     /// </summary>
     public class ModuleRepository : IModuleRepository
     {

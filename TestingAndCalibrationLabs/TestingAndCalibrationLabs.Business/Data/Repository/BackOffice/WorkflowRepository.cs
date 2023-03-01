@@ -9,7 +9,7 @@ using System.Linq;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// Repostiory Class For Workflow 
+    /// Repository Class For Workflow 
     /// </summary>
     public class WorkflowRepository : IWorkflowRepository
     {
@@ -69,7 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public WorkflowModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var WorkflowById = db.Query<WorkflowModel>(@"Select wf.Id,
+            var workflowById = db.Query<WorkflowModel>(@"Select wf.Id,
                                                        wf.ModuleId,     
 													 m.[Name] as ModuleName, 								
                                                      wf.Name
@@ -80,14 +80,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                      and wf.IsDeleted = 0 
                                                     and m.IsDeleted = 0", new { Id = id }).FirstOrDefault();
 
-            return WorkflowById;
+            return workflowById;
         }
         /// <summary>
         /// Edit Record For Workflow 
         /// </summary>
-        /// <param name="WorkflowModel"></param>
+        /// <param name="workflowModel"></param>
         /// <returns></returns>
-        public int Update(WorkflowModel WorkflowModel)
+        public int Update(WorkflowModel workflowModel)
         {
             string query = @"update [Workflow] Set  
                                 ModuleId = @ModuleId,                                
@@ -96,7 +96,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
 
           
-            return db.Execute(query, WorkflowModel);
+            return db.Execute(query, workflowModel);
         }
         /// <summary>
         /// Delete Record From Workflow

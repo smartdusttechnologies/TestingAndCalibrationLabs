@@ -80,30 +80,52 @@ namespace TestingAndCalibrationLabs.Business.Services
         //    }
         //}
 
+
+        /// <summary>
+        /// Get All Records From Organization
+        /// </summary>
+        /// <returns></returns>
         public List<Organization> Get()
         {
             return _genericRepository.Get();
         }
+        /// <summary>
+        /// Insert Record In Organization
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
         public RequestResult<int> Create(Organization organization)
         {
             _genericRepository.Insert(organization);
             return new RequestResult<int>(1);
         }
 
-
+        /// <summary>
+        /// Delete Record From Organization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             return _genericRepository.Delete(id);
         }
 
-
+        /// <summary>
+        /// Edit Record From Organization
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
         public RequestResult<int> Update(Organization organization)
         {
             _genericRepository.Update(organization);
             return new RequestResult<int>(1);
         }
 
-
+        /// <summary>
+        /// Get Record by Id For Organization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Organization GetById(int id)
         {
             return _genericRepository.Get(id);

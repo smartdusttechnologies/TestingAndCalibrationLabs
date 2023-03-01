@@ -2,7 +2,7 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {   /// <summary>
-    /// It Conatains The Properties for WorkflowStage
+    /// It Contains The Properties for WorkflowStage
     /// </summary>
     public class WorkflowStageDTO
     {    /// <summary>
@@ -36,6 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Orders of WorkflowStage
         /// </summary>
         [Required(ErrorMessage = "Please Enter Orders ")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please Enter  Number Greater Than 0 In Orders")]
         public int Orders { get; set; }
     }
 }

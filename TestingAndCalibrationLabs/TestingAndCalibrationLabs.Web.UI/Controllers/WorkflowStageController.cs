@@ -48,9 +48,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            var pageworkflowstage = _workflowStageService.Get();
-            var pageworkflowstages = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(pageworkflowstage);
-            return View(pageworkflowstages.AsEnumerable());
+            var pageWorkflowStage = _workflowStageService.Get();
+            var pageWorkflowStages = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(pageWorkflowStage);
+            return View(pageWorkflowStages.AsEnumerable());
         }
         /// <summary>
         /// For Create Record View
@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
            
             // var dropdownssss =    categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
             ViewBag.UiPageTypes = pages;
-            ViewBag.Uiworkflow = workflowLists;
+            ViewBag.Workflow = workflowLists;
             
             return base.View(new Models.WorkflowStageDTO { Id = id });
         }
@@ -83,9 +83,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
 
-                var createworkflowStageModel = _mapper.Map<Models.WorkflowStageDTO, Business.Core.Model.WorkflowStageModel>(workflowStageDTO);
+                var createWorkflowStageModel = _mapper.Map<Models.WorkflowStageDTO, Business.Core.Model.WorkflowStageModel>(workflowStageDTO);
 
-                _workflowStageService.Create(createworkflowStageModel);
+                _workflowStageService.Create(createWorkflowStageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -103,21 +103,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            
-          
+                     
             var pages = _uiPageTypeService.Get();
-            var flow = _workflowService.Get();
-    
+            var flow = _workflowService.Get();  
+
             var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pages);
-            var flowList = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(flow);
-         
+            var flowList = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(flow);        
            
             ViewBag.UiPageTypes = pageList;
-            ViewBag.Uiworkflow = flowList;
+            ViewBag.Workflow = flowList;
 
             WorkflowStageModel flowStageModel = _workflowStageService.GetById((int)id);
-            var flowstage = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(flowStageModel);
-            return View(flowstage);
+            var flowStage = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(flowStageModel);
+            return View(flowStage);
         }
         /// <summary>
         /// To Edit Record In WorkflowStage
@@ -134,8 +132,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
 
-                var editworkflowStage = _mapper.Map<Models.WorkflowStageDTO, Business.Core.Model.WorkflowStageModel>(workflowStageDTO);
-                _workflowStageService.Update(id, editworkflowStage);
+                var editWorkflowStage = _mapper.Map<Models.WorkflowStageDTO, Business.Core.Model.WorkflowStageModel>(workflowStageDTO);
+                _workflowStageService.Update(id, editWorkflowStage);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
@@ -152,9 +150,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            WorkflowStageModel workflowStageModel = _workflowStageService.GetById((int)id);
-            var deleteMetadata = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(workflowStageModel);
-            return View(deleteMetadata);
+            WorkflowStageModel workflowStageModel = _workflowStageService.GetById(id);
+            var deleteStage = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(workflowStageModel);
+            return View(deleteStage);
         }
         /// <summary>
         /// To Delete Record In WorkflowStage

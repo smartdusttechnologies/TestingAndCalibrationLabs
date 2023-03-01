@@ -33,10 +33,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="moduleModel"></param>
         /// <returns></returns>
-
         RequestResult<int> Create(ModuleModel moduleModel);
         /// <summary>
-        /// Delete Record Module
+        /// Delete Record In Module
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

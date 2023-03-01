@@ -9,7 +9,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
 {
     /// <summary>
-    /// Repostiory Class For Workflow Activity
+    /// Repository Class For Workflow Activity
     /// </summary>
     public class WorkflowActivityRepository : IWorkflowActivityRepository
     {
@@ -76,7 +76,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
         public WorkflowActivityModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var WorkflowById = db.Query<WorkflowActivityModel>(@"Select wfa.Id,
+            var workflowActivityById = db.Query<WorkflowActivityModel>(@"Select wfa.Id,
                                                        wfa.WorkflowStageId,     
 													  wfs.[Name] as WorkflowStageName, 
                                                        wfa.ActivityId,
@@ -90,7 +90,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                      and wfs.IsDeleted = 0 
                                                     and a.IsDeleted = 0", new { Id = id }).FirstOrDefault();
 
-            return WorkflowById;
+            return workflowActivityById;
         }
         /// <summary>
         /// Edit Record For WorkflowActivity 

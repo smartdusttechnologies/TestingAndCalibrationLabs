@@ -25,7 +25,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="applicationModel"></param>
         /// <returns></returns>
-
         RequestResult<int> Create(ApplicationModel applicationModel);
         /// <summary>
         /// Update Record In Application
@@ -34,7 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RequestResult<int> Update(ApplicationModel applicationModel);
         /// <summary>
-        /// Delete Record Application
+        /// Delete Record In Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

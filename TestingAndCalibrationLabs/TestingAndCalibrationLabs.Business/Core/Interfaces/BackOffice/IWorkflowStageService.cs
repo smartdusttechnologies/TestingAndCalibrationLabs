@@ -23,16 +23,16 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Insert Record In WorkflowStage
         /// </summary>
-        /// <param name="WorkflowStage"></param>
+        /// <param name="workflowStageModel"></param>
         /// <returns></returns>
         RequestResult<int> Create(WorkflowStageModel workflowStageModel);
         /// <summary>
         /// Update Record In WorkflowStage
         /// </summary>   
         /// <param name="id"></param>
-        /// <param name="WorkflowStage"></param>
+        /// <param name="workflowStage"></param>
         /// <returns></returns>
-        RequestResult<int> Update(int id, WorkflowStageModel WorkflowStage);
+        RequestResult<int> Update(int id, WorkflowStageModel workflowStage);
         /// <summary>
         /// Delete Record WorkflowStage
         /// </summary>

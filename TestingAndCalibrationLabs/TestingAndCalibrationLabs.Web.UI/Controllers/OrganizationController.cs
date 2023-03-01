@@ -34,9 +34,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Organization> Organizationpage = _organizationService.Get();
-            var OrganizationData = _mapper.Map<List<Organization>, List<OrganizationDTO>>(Organizationpage);
-            return View(OrganizationData.AsEnumerable());
+            List<Organization> organizationPage = _organizationService.Get();
+            var organizationData = _mapper.Map<List<Organization>, List<OrganizationDTO>>(organizationPage);
+            return View(organizationData.AsEnumerable());
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(pageModel);
         }
         /// <summary>
-        /// To Edit Record In Organization
+        /// To Delete Record In Organization
         /// </summary>
         /// <returns></returns>
 

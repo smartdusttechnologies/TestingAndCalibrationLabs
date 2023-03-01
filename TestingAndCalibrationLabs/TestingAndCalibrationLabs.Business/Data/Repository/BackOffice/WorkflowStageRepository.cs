@@ -9,7 +9,7 @@ using System.Linq;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// Repostiory Class For Workflow Stage
+    /// Repository Class For Workflow Stage
     /// </summary>
     public class WorkflowStageRepository : IWorkflowStageRepository
     {
