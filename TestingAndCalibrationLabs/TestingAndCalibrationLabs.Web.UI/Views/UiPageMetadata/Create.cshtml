@@ -11,10 +11,10 @@
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <label for="UiPageTypeId" class="form-label"></label>
-                    <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-                        <option disabled="disabled" selected>Select Pages ...</option>
-                        @foreach (var item in ViewBag.UiPageTypes)
+                    <label for="UiControlCategoryTypeId" class="form-label"></label>
+                    <select class="form-input " name="UiControlCategoryTypeId" id="UiControlCategoryType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId">
+                        <option disabled="disabled" selected> ...</option>
+                        @foreach (var item in ViewBag.UiControlCategoryType)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
@@ -40,6 +40,7 @@
                         }
                     </select>
                 </div>
+
                 <div class="row ms-1 me-1">
                 <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <label class="form-check-label">
