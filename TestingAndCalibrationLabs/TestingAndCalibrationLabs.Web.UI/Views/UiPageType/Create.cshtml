@@ -7,17 +7,17 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageType" novalidate>
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageType" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style="padding-left:10px; padding-bottom:5px;">
                     <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
-                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
-                <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
-            </div>
-                @await Html.PartialAsync("~/Views/Common/Components/Button/Configurable/_button.cshtml")
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
+                    <input type="submit" value="Create" class="button-base ripple button-material-primary" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+
+                </div>
             </div>
         </form>
     </div>

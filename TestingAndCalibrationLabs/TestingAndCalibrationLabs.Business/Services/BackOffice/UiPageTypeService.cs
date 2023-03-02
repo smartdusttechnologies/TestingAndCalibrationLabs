@@ -16,9 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAuthorizationService _authorizationService;
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
-        private readonly IUiPageTypeRepository _uiPageTypeRepository;
         public UiPageTypeService(IHttpContextAccessor httpContextAccessor, IGenericRepository<UiPageTypeModel> genericRepository,
-            IUiPageTypeRepository uiPageTypeRepository,
             IAuthorizationService authorizationService)
         {
             _httpContextAccessor = httpContextAccessor;
@@ -36,7 +34,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
             {
-                _uiPageTypeRepository.Insert(uiPageTypeModel);
+                _genericRepository.Insert(uiPageTypeModel);
                 return new RequestResult<int>(1);
             }
             return new RequestResult<int>(0);
@@ -64,7 +62,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User,uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
             {
-                _uiPageTypeRepository.Update(uiPageTypeModel);
+                _genericRepository.Update(uiPageTypeModel);
                 return new RequestResult<int>(1);
             }
             return new RequestResult<int>(0);
@@ -73,7 +71,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
             {
-                return _uiPageTypeRepository.Get();
+                return _genericRepository.Get();
             }
             return null;
         }
@@ -87,9 +85,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
             {
-                return _uiPageTypeRepository.GetById(id);
+                return _genericRepository.Get(id);
             }
             return null;
         }
+        #endregion
     }
 }

@@ -13,7 +13,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
-        private readonly IUiNavigationCategoryService _uiNavigationCategoryService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         /// <summary>
         /// passing parameter via varibales for establing connection
@@ -21,12 +20,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
         /// <param name="uiNavigationCategoryService"></param>
-        public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper, IUiNavigationCategoryService uiNavigationCategoryService)
+        public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper)
         {
             _httpContextAccessor = httpContextAccessor;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
-            _uiNavigationCategoryService = uiNavigationCategoryService;
         }
 
         /// <summary>

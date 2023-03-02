@@ -56,3 +56,15 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/TestingAndCalibrationLabs.Tests.csproj.nuget.dgspec.json
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/TestingAndCalibrationLabs.Tests.csproj.nuget.g.props
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/project.assets.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Web.UI.runtimeconfig.dev.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.runtimeconfig.dev.json
+*.dep
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.csproj.FileListAbsolute.txt
+*.CopyComplete
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj/Debug/netcoreapp3.1/_IsIncrementalBuild
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Web.UI.runtimeconfig.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Web.UI.deps.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.runtimeconfig.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/TestingAndCalibrationLabs.Tests.deps.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/appsettings.json
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin/Debug/netcoreapp3.1/appsettings.json
