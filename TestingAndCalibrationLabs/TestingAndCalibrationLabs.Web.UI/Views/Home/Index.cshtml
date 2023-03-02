@@ -1,4 +1,4 @@
-﻿@model List<imageslideModelDTO>
+﻿@model List<ImageSlideModel>
 @{
 
 
@@ -10,7 +10,7 @@
         <div class="carousel-indicators">
             @{
                 int count = 0;
-                @foreach (var Image in Model)
+                @foreach (var image in Model)
                 {
                     if (count == 0)
                     {
@@ -26,25 +26,25 @@
             }
         </div>
         <div class="carousel-inner">
-            @foreach (var Image in Model)
+            @foreach (var image in Model)
             {
-                @if (Model.First() == Image)
+            @if (Model.First() == image)
                 {
                     <div class="carousel-item active ">
-                        <img src="@Image.Image" class="d-block " alt="...">
+                    <img src="@image.Image" class="d-block " alt="...">
                         <div class="carousel-caption ">
-                            <h5>@Image.header</h5>
-                            <p>@Image.paragraph</p>
+                        <h5>@image.Header</h5>
+                        <p>@image.Paragraph</p>
                         </div>
                     </div>
                 }
                 else
                 {
                     <div class="carousel-item  ">
-                        <img src="@Image.Image" class="d-block " alt="...">
+                    <img src="@image.Image" class="d-block " alt="...">
                         <div class="carousel-caption ">
-                            <h5>@Image.header</h5>
-                            <p>@Image.paragraph</p>
+                        <h5>@image.Header</h5>
+                        <p>@image.Paragraph</p>
                         </div>
                     </div>
                 }

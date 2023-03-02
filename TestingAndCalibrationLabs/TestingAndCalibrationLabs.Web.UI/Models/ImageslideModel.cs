@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
-{
-    public class imageslideModelDTO
-    {
-       public  string Image{ get; set; }
-        public string header{ get; set; }
-        public string paragraph { get; set; }
-      //  public  new string ImageLink { get; set; }
-      //  public  new string ImageLink1 { get; set; }
-      //public  new string ImageLink2 { get; set; }
-
-      //  public new string upper1 { get; set; }
-      //  public new string lower1 { get; set; }
-      //  public new string upper2 { get; set; }
-      //  public new string lower2 { get; set; }
-      //  public new string upper3 { get; set; }
-      //  public new string lower3 { get; set; }
+{    /// <summary>
+     /// It Represent The Property Of ImageSlideModel
+     /// </summary>
+    public class ImageSlideModel
+    {   /// <summary>
+        /// It Contains The HardCoded Data Of Image Which Passes From Home Controller
+        /// </summary>
+        public string Image{ get; set; }
+        /// <summary>
+        /// It Contains The HardCoded Data Of Header Which Passes From Home Controller
+        /// </summary>
+        public string Header{ get; set; }
+        /// <summary>
+        /// It Contains The HardCoded Data Of Paragraph Which Passes From Home Controller
+        /// </summary>
+        public string Paragraph { get; set; }
+    
     }
 }

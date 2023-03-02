@@ -5,9 +5,7 @@ using TestingAndCalibrationLabs.Web.UI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Web.UI.Models;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -27,14 +25,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
        /// [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
-    
-            var Image = new List<imageslideModelDTO>();
-            Image.Add(new imageslideModelDTO { Image = "https://thumbs.dreamstime.com/b/teamwork-bees-bridge-gap-bee-swarm-making-chain-to-combine-two-parts-one-metaphor-business-community-55767925.jpg", header = "star55", paragraph = "aman" });
-            Image.Add(new imageslideModelDTO { Image = "https://thumbs.dreamstime.com/b/bandra-worli-sea-link-sunset-dadar-coast-51035486.jpg", header = "roll", paragraph = "eee" });
-            Image.Add(new imageslideModelDTO { Image = "https://thumbs.dreamstime.com/b/amaranth-love-lies-bleeding-chain-link-fence-29603774.jpg", header = "erttttt", paragraph = "ama111n" });
+            // here hardcoding the ImageSlide values instead of accessing from the DB
+            var image = new List<ImageSlideModel>();
+            image.Add(new ImageSlideModel { Image = "https://thumbs.dreamstime.com/b/teamwork-bees-bridge-gap-bee-swarm-making-chain-to-combine-two-parts-one-metaphor-business-community-55767925.jpg", Header = "Aman", Paragraph = "Kumar" });
+            image.Add(new ImageSlideModel { Image = "https://thumbs.dreamstime.com/b/bandra-worli-sea-link-sunset-dadar-coast-51035486.jpg", Header = "Ritesh", Paragraph = "Raj" });
+            image.Add(new ImageSlideModel { Image = "https://thumbs.dreamstime.com/b/amaranth-love-lies-bleeding-chain-link-fence-29603774.jpg", Header = "Prem", Paragraph = "Star" });
             
         
-            return View(Image);
+            return View(image);
       
         }
        
