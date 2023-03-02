@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -34,11 +35,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult Add(UserDTO userRequest)
         {
-            var userModel = _mapper.Map<UserDTO,UserModel>(userRequest);
-            var result = _authenticationService.Add(userModel, userRequest.Password);
-            if (result.IsSuccessful)
+            var userModel = _mapper.Map<UserDTO, UserModel>(userRequest);
+
+            var result = _authenticationService.Add(userModel, userRequest.Password,userRequest.Email,userRequest.Mobile, userRequest.ReEnterPassword, userRequest.UserName, userRequest.FirstName, userRequest.LastName, userRequest.Country, userRequest.Organizations);
+            if (result.IsSuccessful && result.RequestedObject)
+            {
                 return Ok(result.RequestedObject);
-            return Ok(result.ValidationMessages);
+            }
+            return BadRequest(result.ValidationMessages);
 
         }
 

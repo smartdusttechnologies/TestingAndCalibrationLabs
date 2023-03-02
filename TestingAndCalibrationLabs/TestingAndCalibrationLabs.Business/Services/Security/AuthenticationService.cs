@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -88,13 +89,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             catch (Exception ex)
             {
                 //_logger.LogException(new ExceptionLog
-               // {
-                 //   ExceptionDate = DateTime.Now,
-                 //   ExceptionMsg = ex.Message,
-                  //  ExceptionSource = ex.Source,
-                 //   ExceptionType = "UserService",
-                  //  FullException = ex.StackTrace
-               // });
+                // {
+                //   ExceptionDate = DateTime.Now,
+                //   ExceptionMsg = ex.Message,
+                //  ExceptionSource = ex.Source,
+                //   ExceptionType = "UserService",
+                //  FullException = ex.StackTrace
+                // });
                 validationMessages.Add(new ValidationMessage { Reason = ex.Message, Severity = ValidationSeverity.Error, Description = ex.StackTrace });
                 return new RequestResult<LoginToken>(validationMessages);
             }
@@ -160,7 +161,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 new Claim(JwtRegisteredClaimNames.Sub, sub),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, Helpers.ToUnixEpochDate(dateTime).ToString(), ClaimValueTypes.Integer64)
-            }.Union(roleClaims).Union(userRoleClaim).ToList(); 
+            }.Union(roleClaims).Union(userRoleClaim).ToList();
 
             var roles = _roleRepository.GetRoleWithOrg(sub);
             foreach (var role in roles)
@@ -168,30 +169,32 @@ namespace TestingAndCalibrationLabs.Business.Services
                 claims.Add(new Claim(ClaimTypes.Role, role.Item2));
             }
 
-            if (sub.ToLower() == "sysadmin")
+            //if (sub.ToLower() == "sysadmin")
                 claims.Add(new Claim("OrganizationId", "0"));
-            else
-                claims.Add(new Claim("OrganizationId", roleByOrganizationWithClaims.FirstOrDefault().OrgId.ToString()));
+            //else
+            //    claims.Add(new Claim("OrganizationId", roleByOrganizationWithClaims.FirstOrDefault().OrgId.ToString()));
             return claims;
         }
 
         /// <summary>
         /// Method to Add new and validate existing user for Registration
         /// </summary>
-        public RequestResult<bool> Add(UserModel user, string password)
+        public RequestResult<bool> Add(UserModel user, string password, string Email, string Mobile, string ReEnterPassword,  string UserName, string FirstName, string LastName, string Country, string Organizations)
         {
             try
             {
-                var validationResult = ValidateNewUserRegistration(user, password);
+                var validationResult = ValidateNewUserRegistration(user, password, Email, Mobile, ReEnterPassword, UserName, FirstName, LastName, Country, Organizations);
                 if (validationResult.IsSuccessful)
                 {
                     PasswordLogin passwordLogin = Hasher.HashPassword(password);
+                    user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 return new RequestResult<bool>(false);
             }
@@ -199,18 +202,48 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
-        private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
+        private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password, string Email, string Mobile,string ReEnterPassword,  string UserName, string FirstName, string LastName, string Country, string Organizations)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
+            var ValidateReEnterResult = _securityParameterService.ValidateReEnterPasswordPolicy(user.OrgId, ReEnterPassword);
+            var validationEmailResult = _securityParameterService.ValidateEmailPolicy(user.OrgId, Email);
+            var ValidateMobilePolicy = _securityParameterService.ValidateMobilePolicy(user.OrgId, Mobile);
+            var ValidateOrganizationId = _securityParameterService.ValidateOrganizations(user.OrgId, Organizations);
+            var ValidateUserName = _securityParameterService.ValidateUserName(user.OrgId, UserName);
+            var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, FirstName);
+            var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, LastName);
+            var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, Country);
+
+
             UserModel existingUser = _userRepository.Get(user.UserName);
-            if (existingUser != null) 
+            if (existingUser != null)
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
-            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-            return validatePasswordResult;
+            // var validateEmailResult = _securityParameterService.ValidateEmailPolicy()
+            // RequestResult<bool> validation = new RequestResult<bool>();
+            //if (validationEmailResult.IsSuccessful && ValidateMobilePolicy.IsSuccessful && validatePasswordResult.IsSuccessful)
+            //{
+            validationMessages.AddRange(validatePasswordResult.ValidationMessages);
+            validationMessages.AddRange(ValidateReEnterResult.ValidationMessages);
+            validationMessages.AddRange(ValidateOrganizationId.ValidationMessages);
+            validationMessages.AddRange(ValidateUserName.ValidationMessages);
+            validationMessages.AddRange(ValidateFirstName.ValidationMessages);
+            validationMessages.AddRange(ValidateLastName.ValidationMessages);
+            validationMessages.AddRange(ValidateCountry.ValidationMessages);
+
+            validationMessages.AddRange(validationEmailResult.ValidationMessages);
+            validationMessages.AddRange(ValidateMobilePolicy.ValidationMessages);
+            ////  return new RequestResult<bool>(validation);
+
+            //    return new RequestResult<bool>(true);
+            //}
+
+            return new RequestResult<bool>(validationMessages);
+
         }
     }
 }

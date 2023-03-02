@@ -12,6 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Common
         MobileNumberLength,
         Year,
         Name,
-        IsRequired
+        IsRequired,
+        Password
     }
 }
