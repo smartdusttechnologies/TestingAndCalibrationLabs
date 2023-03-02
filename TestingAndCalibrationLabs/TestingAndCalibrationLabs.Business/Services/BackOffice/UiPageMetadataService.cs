@@ -27,6 +27,8 @@ namespace TestingAndCalibrationLabs.Business.Services
            _httpContextAccessor= httpContextAccessor;
             _authorizationService= authorizationService;
         }
+
+        #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
         /// </summary>
@@ -94,5 +96,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return null;
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }

@@ -1,19 +1,23 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
+<input type="hidden" asp-for="ModuleId" />
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
-        <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 mt-2">
-            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@Model.Fields.First().UiPageTypeName</h2>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@if(@Model.Fields.Count()> 0){@Model.Fields.First().UiPageTypeName}</h2>
         </div>
-        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 mt-3">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
+            <a href="/common/create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-3">
             <div class="inputSearchGrid text-right">
-                <input type="text" id="TestDetailsGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+                <input type="text" id="gridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
                 <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
                 <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
             </div>
         </div>
     </div>
     <div class="table-responsive simple-pagination card shadow border-radius-grid">
-        <table id="testDetailsGrid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <table id="grid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     @foreach (var item in Model.Fields)
@@ -28,21 +32,21 @@
                 {
                     int count = 0;
                     <tr>
-                        @foreach (var itemValue in item.Value)
+                        @foreach(var itemValue in item.Value)
                         {
-                            <td>
-                             @Html.DisplayFor(modelItem => itemValue.Value)
-                            </td>
                             if (count == 4)
                             {
                                 break;
                             }
+                            <td>
+                                @Html.DisplayFor(modelItem => itemValue.Value)
+                            </td>
+
                             count++;
                         }
                         <td>
-                            <a class="fa fa-solid fa-pen col" style="margin:5px;margin-right:10px;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key">
-
-                            </a><a class="fa fa-solid fa-trash col" style="margin:5px;margin-left:10px;" asp-controller="Common" asp-action="Delete" asp-route-id="@item.Key"></a>
+                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>|
+                            <a class="fa fa-trash" style="margin:5px;color:red;" data-toggle="modal" data-target="#deleteModalPopup" onclick="setValue(@item.Key)"></a>
                         </td>
 
                     </tr>
@@ -51,16 +55,47 @@
         </table>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModalPopup" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal">Delete Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are You Sure Want to Delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
+                <button type="button" id="deletePopup" onclick="deleteFun(this.value)" class="button-base button-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    oTable = $('#testDetailsGrid').DataTable({
-        pageLength: 5,
+    oTable = $('#grid').DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
         scrollX: true,
     });
-    $('#TestDetailsGridSearch').keyup(function () {
+    $('#gridSearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
     const clearText = () => {
-        const inputID = document.querySelector("#TestDetailsGridSearch");
+        const inputID = document.querySelector("#gridSearch");
         inputID.value = "";
+    }
+    //Set The Value To Popup Delete Button
+    let setValue = (id) => $("#deletePopup").val(id);
+    //Call the Delete Method Of Common Page 
+    let deleteFun = (id) =>{
+        let moduleId = parseInt($("#ModuleId").val())
+        window.location.href = "/common/delete?id=" + id+ "&moduleId=" + moduleId;
     }
 </script>

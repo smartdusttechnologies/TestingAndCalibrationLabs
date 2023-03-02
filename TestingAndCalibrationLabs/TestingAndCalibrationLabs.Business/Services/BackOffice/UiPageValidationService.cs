@@ -18,6 +18,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageValidationTypeRepository = uiPageValidationTypeRepository;
             _genericRepository = genericRepository;
         }
+
+        #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Validation 
         /// </summary>
@@ -65,5 +67,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageValidationTypeRepository.Update(pageControl);
             return new RequestResult<int>(1);
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }

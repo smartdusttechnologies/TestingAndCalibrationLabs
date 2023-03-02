@@ -6,26 +6,25 @@
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UiPageId" />
-
-            @foreach (var item in Model.Layout)
-            {
-                <div class="row ms-1 me-1">
+            <input type="hidden" asp-for="ModuleId" />
+            <input type="hidden" asp-for="UiPageTypeId" />
+            <input type="hidden" asp-for="WorkflowStageId" value="true" />
+            <input type="hidden" id="workflowStageChecker" value="false" />
+            <div class="row ms-1 me-1">
+                @foreach (var item in Model.Layout)
+                {
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
-                </div>
-            }
+
+                }
+            </div>        
         </form>
-        <input type="hidden" value="" name="lefid" id="lefid" />
-        <div class="form-group">
-            <input type="button" id="createbtn" value="Create" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+        <div class="form-group" style="margin-left:2rem;">
+            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()" >Save</button>
         </div>
     </div>
 </div>
 <div>
-    <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
-</div>
-<div>
-    @*<div class="d-flex justify-content-center fixed-bottom">*@
+    <div class="d-flex justify-content-center fixed-bottom">
         <div class="alert alert-success" role="alert" id="snackbarsuccess">
             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert">
                 <div class="MuiAlert-icon css-1l54tgj">
@@ -36,10 +35,9 @@
             </div>
         </div>
     </div>
-@*</div>*@
-@ViewBag.resultD
+</div>
 <div>
-   @* <div class="d-flex justify-content-center fixed-bottom">*@
+    <div class="d-flex justify-content-center fixed-bottom">
         <div role="alert" id="snackbarerror">
             <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledError MuiAlert-filled css-1ufabz4" role="alert">
                 <div class="MuiAlert-icon css-1l54tgj">
@@ -51,7 +49,7 @@
             </div>
         </div>
     </div>
-@*</div>*@
+</div>
 <script>
     //This function will display the success snackbar
     function myFunction() {
@@ -65,86 +63,72 @@
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
-    var count = 0;
-    function addContentInSelect() {
-        var metadataId = $('#metadataId').find(":selected").val();
-        if (count == 0) {
-            count++;
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("Get","UiPageMetadataCharacteristics")",
-                data: { id: metadataId },
-                success: function (response) {
-                    debugger;
-                    for (var i = 0; i < response.length; i++) {
-                        var name = response[i].lookupName;
-                        console.log(name);
-                        var divId = "#" + response[i].uiPageMetadataId;
-                        console.log(divId);
-                        $(divId).append("<option value='" + name + "'>" + name + "</option>");
-                    }
-                },
-                error: function (req, status, error) {
-                }
-            });
-        }
-        else {
-
-        }
-    }
 </script>
-
 <script type="text/javascript">
+    var moduleId = parseInt($("#ModuleId").val())
+        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+        
+    var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
+        WheelLoader();
+        var workflowStageId = parseInt($("#WorkflowStageId").val())
+        //createRipple(this);
         //Set the URL.
-        var x = document.getElementById("lefid").value;
-        if (document.getElementById(x) != null && document.getElementById(x) != undefined) {
-            document.getElementById(x).style.border = "1px solid black ";
-        }
         var url = $("#commonForm").attr("action");
-        var modelData = JSON.parse('@Json.Serialize(Model)');
-        console.log(modelData);
-        var uiPageMetaData = modelData.fields;
+        
+        //here I am flatting the hirarchy of Node<Layout> and List Of Layout
+        const getMembers = (member) => {
+
+            if (!member.children || !member.children.length) {
+                return member.value.uiPageMetadata;
+            }
+            return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
+        }
+        var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
+        //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            if (uiPageMetaData[i].controlCategoryName == "DataControl") {
+            if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 keyValuepair.UiPageMetadataId = metadataId;
+                keyValuepair.UiPageTypeId = uiPageTypeId;
                 keyValuepair.Value = fieldValue;
                 fieldValues.push(keyValuepair)
             }
         }
-        var uiPageId = parseInt($("#UiPageId").val())
+       
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "UiPageId": uiPageId, "FieldValues": fieldValues },
+            data: {  moduleId, workflowStageId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
-                var nuiPageMetaData = response.fields;
-                var a = response.fieldValues;
-                for (let i = 0; i < nuiPageMetaData.length; i++) {
-                    var nfieldId = nuiPageMetaData[i].id;
-                    $('#' + nfieldId).val('');         //Assigning a empty values to input fields
-                }
+                SuccessMessage(NotificationNumbers++, "Saved Successfully");
+                HideWheelLoader();
+                window.location.href = "/common/index/" + moduleId;
             },
             failure: function (response) {
                 alert(response.responseText);
             },
             error: function (response) {
-                console.log(response);
-                debugger;
+                HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                document.getElementById("lefid").value = newErrorMessage.sourceId;
-                var namea = document.getElementById(newErrorMessage.sourceId);
-                var txtname = namea.name;
-                myFunctionError();                                              //Calling myFunctionError javacript function
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                document.getElementById(newErrorMessage.sourceId).style.border = "2px solid red";
+                for (var i = 0; i < newErrorMessage.length; i++) {
+                    var sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    myFunctionError();                                              //Calling myFunctionError javacript function
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    if (i == 0) {
+                        document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+                    }
+                }
             }
         });
     }

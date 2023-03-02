@@ -35,6 +35,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _PageMetadataCharacteristicsRepository.Get();
         }
-       
+
+        public UiPageMetadataCharacteristicsModel Get(int metadataId)
+        {
+           return _PageMetadataCharacteristicsRepository.Get(metadataId);
+        }
     }
 }

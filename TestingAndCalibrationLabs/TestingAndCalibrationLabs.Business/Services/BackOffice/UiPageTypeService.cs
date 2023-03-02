@@ -24,8 +24,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             _httpContextAccessor = httpContextAccessor;
             _authorizationService = authorizationService;
             _genericRepository = genericRepository;
-            _uiPageTypeRepository = uiPageTypeRepository;
         }
+
+        #region Public methods
         /// <summary>
         /// Create Record For Ui Page Type
         /// </summary>
@@ -59,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update( UiPageTypeModel uiPageTypeModel)
+        public RequestResult<int> Update(UiPageTypeModel uiPageTypeModel)
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User,uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
             {
@@ -76,7 +77,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return null;
         }
-       
+
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>

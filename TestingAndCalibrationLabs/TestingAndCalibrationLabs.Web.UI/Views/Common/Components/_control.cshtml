@@ -1,10 +1,10 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 
-@if (Model.Value.ControlCategoryName == "DataControl")
+@if (Model.Value.UiPageMetadata.ControlCategoryName == "DataControl")
 {
     @await Html.PartialAsync("~/Views/Common/Components/_dataControls.cshtml", Model)
 }
-else if (Model.Value.ControlCategoryName == "NonDataControl")
+else if (Model.Value.UiPageMetadata.ControlCategoryName == "NonDataControl")
 {
     @await Html.PartialAsync("~/Views/Common/Components/_nondataControl.cshtml", Model)
 }

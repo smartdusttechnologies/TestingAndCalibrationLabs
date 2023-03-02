@@ -40,6 +40,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _lookupCategoryService = lookupCategory;
             _uiControlCategoryTypeService = uiControlCategoryTypeService;
         }
+
         /// <summary>
         /// To List All Record
         /// </summary>
@@ -47,12 +48,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var pageMetadata = _uiPageMetadataService.Get();
             var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
             return View(pageMetadatas.AsEnumerable());
         }
+
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -79,6 +80,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageMetadata = pageMetadatas;
             return base.View(new Models.UiPageMetadataDTO { Id = id});
         }
+
         /// <summary>
         /// To Create Record In Ui Page Metadata Type
         /// </summary>
@@ -86,7 +88,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiPageMetadataDTO uiPageMetadataDTO)
+        public IActionResult Create([Bind] UiPageMetadataDTO uiPageMetadataDTO)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +101,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageMetadataDTO);
         }
+
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -140,6 +143,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageMetadata = _mapper.Map<UiPageMetadataModel,UiPageMetadataDTO>(pageMetadataModel);
             return View(pageMetadata);
         }
+
         /// <summary>
         /// To Edit Record In Ui Page Metadata Type
         /// </summary>
@@ -148,7 +152,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] Models.UiPageMetadataDTO uiPageMetadataDTO)
+        public IActionResult Edit(int id, [Bind] UiPageMetadataDTO uiPageMetadataDTO)
         {
             if (id != uiPageMetadataDTO.Id)
             {
@@ -164,6 +168,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiPageMetadataDTO);
         }
+
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -175,10 +180,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Business.Core.Model.UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetById((int)id);
-            var deleteMetadata = _mapper.Map<Business.Core.Model.UiPageMetadataModel, Models.UiPageMetadataDTO>(uiPageMetadataModel);
+            UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetById((int)id);
+            var deleteMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(uiPageMetadataModel);
             return View(deleteMetadata);
         }
+
         /// <summary>
         /// To Delete Record In Ui Page Metadata Type
         /// </summary>
@@ -196,6 +202,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -16,6 +16,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _genericRepository = genericRepository;
         }
+
+        #region Public methods
         /// <summary>
         /// Get Record By Id For Ui Control Type
         /// </summary>
@@ -64,5 +66,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }

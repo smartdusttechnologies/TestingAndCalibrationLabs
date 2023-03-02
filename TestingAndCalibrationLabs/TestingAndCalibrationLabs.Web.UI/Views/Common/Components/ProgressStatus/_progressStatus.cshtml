@@ -1,6 +1,9 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 
 <style>
+    .non-clickable{
+        pointer-events: none;
+    }
     h2 {
         color: #2F8D46;
     }
@@ -116,17 +119,17 @@
                         {
                             @if (Model.Children.First() == item)
                             {
-                                <li class="active btn-step" id="step-@item.Value.Id">
-                                    <input class="btn-select" type="hidden" value="fieldset_@item.Value.Id" name="@count">
-                                    <strong>@item.Value.UiControlDisplayName</strong>
+                                <li class="active btn-step" id="step-@item.Value.UiPageMetadata.Id">
+                                    <input class="btn-select" type="hidden" value="fieldset_@item.Value.UiPageMetadata.Id" name="@count">
+                                    <strong>@item.Value.UiPageMetadata.UiControlDisplayName</strong>
                                 </li>
                                 ++count;
                             }
                             else
                             {
-                                <li id="step-@item.Value.Id" class="btn-step">
-                                    <input class="btn-select" type="hidden" value="fieldset_@item.Value.Id" name="@count">
-                                    <strong>@item.Value.UiControlDisplayName</strong>
+                                <li id="step-@item.Value.UiPageMetadata.Id" class="btn-step">
+                                    <input class="btn-select" type="hidden" value="fieldset_@item.Value.UiPageMetadata.Id" name="@count">
+                                    <strong>@item.Value.UiPageMetadata.UiControlDisplayName</strong>
                                 </li>
                                 ++@count;
                             }
@@ -137,7 +140,7 @@
                     </div> <br>
                     @foreach (var item in Model.Children)
                     {
-                        <fieldset id="fieldset_@item.Value.Id">
+                        <fieldset id="fieldset_@item.Value.UiPageMetadata.Id">
                             <div class="row ms-1 me-1">
                             @foreach (var node in item.Children)
                             {
@@ -166,12 +169,12 @@
 </div>
 <script>
     $(document).ready(function () {
-        var currentGfgStep, nextGfgStep, previousGfgStep,currentStepForClick;
+        var currentGfgStep, nextGfgStep, previousGfgStep;
         var opacity;
         var current = 1;
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var steps = modelData.children.length;
-        var percentofWidth = parseFloat(100 / steps)  ;
+        var percentofWidth = parseFloat(100 / steps);
         percentofWidth = percentofWidth;
         var str = "#progressbar li {list-style-type:none;font-size:15px;width:" + percentofWidth + "%;float:left;position: relative;font-weight:400; text-align:center;}";
         var utrstyle = document.createElement("style")
@@ -179,15 +182,15 @@
         document.head.appendChild(utrstyle);
         for (var i = 0; steps > i; i++) {
             if(i==0){
-                var fieldId = "#fieldset_" + modelData.children[i].value.id;
+                var fieldId = "#fieldset_" + modelData.children[i].value.uiPageMetadata.id;
                 currentGfgStep = $(fieldId);
                 currentGfgStep.show();
             }
             else{
-                var fieldId = "#fieldset_" + modelData.children[i].value.id;
+                var fieldId = "#fieldset_" + modelData.children[i].value.uiPageMetadata.id;
                 $(fieldId).hide();
             }
-            var stepId = "#step-" + modelData.children[i].value.id;
+            var stepId = "#step-" + modelData.children[i].value.uiPageMetadata.id;
             var contentCount = i + 1;
             var styleOfStep = "#progressbar " + stepId + ":before{content:'" + contentCount + "'} ";
             var styleSheet = document.createElement("style")
@@ -195,74 +198,73 @@
             document.head.appendChild(styleSheet)
         }
         setProgressBar(current);
+        var workflow = $("#workflowStageChecker");
+        //var isWorkflowWorking
+        //Function To Set Progress Status Active
         function activeCurrentStep(stepNumber){
             for (var ind = 1; steps > ind; ind++) {
                 var addInStep = stepNumber-1;
                 if(ind<stepNumber){
-                    var idOfStep = "#step-" + modelData.children[ind].value.id;
+                    var idOfStep = "#step-" + modelData.children[ind].value.uiPageMetadata.id;
                     var stepMakeActive = $(idOfStep);
                     stepMakeActive.addClass("active");
                 } else if (ind > addInStep) {
-                    var idOfStep = "#step-" + modelData.children[ind].value.id;
+                    var idOfStep = "#step-" + modelData.children[ind].value.uiPageMetadata.id;
                     var stepMakeActive = $(idOfStep);
                     stepMakeActive.removeClass("active");
                 }
             }
         }
+        //Function To Handle Progress Status Clicks
         $(".btn-step").click(function () {
             var btnOfStep = $(this).children(".btn-select");
             var currentFieldSetId = btnOfStep[0].value;
-            console.log(currentFieldSetId);
             var stepCount = btnOfStep[0].name;
             var x = parseInt(stepCount, 10); // you want to use radix 10
-            console.log(x);
             var idModifiewithHash = "#"+currentFieldSetId;
             nextGfgStep = $(idModifiewithHash);
             activeCurrentStep(x);
-            currentGfgStep.hide();
-            nextGfgStep.show();
+                    currentGfgStep.css({
+                        'display': 'none',
+                        'position': 'relative',
+                        'opacity' : 0
+                    });
+            nextGfgStep.css({ 'display': 'block', 'opacity': 1 });
             setProgressBar(x);
             current= x;
             currentGfgStep = nextGfgStep;
         });
+        //Fuction To Handle Next Button Click
         $(".next-step").click(function () {
             currentGfgStep = $(this).parent();
             nextGfgStep = $(this).parent().next();
             $("#progressbar li").eq($("fieldset")
                 .index(nextGfgStep)).addClass("active");
-            nextGfgStep.show();
-            currentGfgStep.animate({ opacity: 0 }, {
-                step: function (now) {
-                    opacity = 1 - now;
-                    currentGfgStep.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    nextGfgStep.css({ 'opacity': opacity });
-                },
-                duration: 500
+            currentGfgStep.css({
+                'display': 'none',
+                'position': 'relative',
+                'opacity': 0
             });
+            nextGfgStep.css({ 'display': 'block', 'opacity': 1 });
             setProgressBar(++current);
+            currentGfgStep = nextGfgStep;
         });
+        //Function To Handle Previous Button
         $(".previous-step").click(function () {
             currentGfgStep = $(this).parent();
             previousGfgStep = $(this).parent().prev();
             $("#progressbar li").eq($("fieldset")
                 .index(currentGfgStep)).removeClass("active");
-            previousGfgStep.show();
-            currentGfgStep.animate({ opacity: 0 }, {
-                step: function (now) {
-                    opacity = 1 - now;
                     currentGfgStep.css({
                         'display': 'none',
-                        'position': 'relative'
+                        'position': 'relative',
+                        'opacity' : 0
                     });
-                    previousGfgStep.css({ 'opacity': opacity });
-                },
-                duration: 500
-            });
+                    previousGfgStep.css({ 'display' : 'block', 'opacity': 1 });
             setProgressBar(--current);
+            currentGfgStep = previousGfgStep;
         });
+        //Fuction To Manage Progress Bar Line
         function setProgressBar(currentStep) {
             var percent = parseFloat(100 / steps) * currentStep;
             percent = percent.toFixed();

@@ -1,12 +1,12 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 
-<div id="@Model.Value.UiControlTypeName@Model.Value.Id"></div> 
+<div id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"></div> 
 
 <script>
 $(document).ready(function () {
     var modelData = JSON.parse('@Json.Serialize(Model)');
-        var url = "@Url.Action("LoadGrid","Common")" + "?id=" + modelData.value.uiPageTypeId + "&controlCategoryTypeTemplate="+ modelData.value.uiControlCategoryTypeTemplate;
-    var idNum = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+        var url = "@Url.Action("LoadGrid","Common")" + "?id=" + modelData.value.uiPageMetadata.moduleId + "&controlCategoryTypeTemplate="+ modelData.value.uiPageMetadata.uiControlCategoryTypeTemplate;
+        var idNum = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
     $(idNum).load(url);
 });
 </script>

@@ -1,18 +1,18 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 <div class="accordion" id="accordionExample" style="margin-top:2px;">
     @foreach (var item in Model.Children)
     {
         @if (Model.Children.First() == item)
         {
             <div class="card">
-                <div class="card-header" id="@item.Value.UiControlTypeName@item.Value.Id">
+                <div class="card-header" id="@item.Value.UiPageMetadata.UiControlTypeName@item.Value.UiPageMetadata.Id">
                     <h2 class="mb-0">
-                        <button class="btn " type="button" data-toggle="collapse" data-target="#collapse-@item.Value.Id" aria-expanded="true" aria-controls="collapse-@item.Value.Id">
-                            @item.Value.UiControlDisplayName
+                        <button class="btn " type="button" data-toggle="collapse" data-target="#collapse-@item.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="collapse-@item.Value.UiPageMetadata.Id">
+                            @item.Value.UiPageMetadata.UiControlDisplayName 
                         </button>
                     </h2>
                 </div>
-                <div id="collapse-@item.Value.Id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapse-@item.Value.UiPageMetadata.Id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         @foreach (var node in item.Children)
                         {
@@ -25,14 +25,14 @@
         else
         {
             <div class="card">
-                <div class="card-header" id="@item.Value.UiControlTypeName@item.Value.Id">
+                <div class="card-header" id="@item.Value.UiPageMetadata.UiControlTypeName@item.Value.UiPageMetadata.Id">
                     <h2 class="mb-0">
-                        <button class="btn  collapsed" type="button" data-toggle="collapse" data-target="#collapse-@item.Value.Id" aria-expanded="true" aria-controls="collapse-@item.Value.Id">
-                            @item.Value.UiControlDisplayName
+                        <button class="btn  collapsed" type="button" data-toggle="collapse" data-target="#collapse-@item.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="collapse-@item.Value.UiPageMetadata.Id">
+                            @item.Value.UiPageMetadata.UiControlDisplayName
                         </button>
                     </h2>
                 </div>
-                <div id="collapse-@item.Value.Id" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapse-@item.Value.UiPageMetadata.Id" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         @foreach (var node in item.Children)
                         {
@@ -44,46 +44,3 @@
         }
     }
 </div>
- @*   This Is another Collaspible section Just For Testing *@
-@*
-<div class="accordion" id="accordionPanelsStayOpenExample">
-    @foreach (var item in Model.Children)
-    {
-        @if (Model.Children.First() == item)
-        {
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-@item.Value.Id">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-@item.Value.Id" aria-expanded="true" aria-controls="panelsStayOpen-@item.Value.Id">
-                        @item.Value.UiControlDisplayName
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-@item.Value.Id" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-@item.Value.Id">
-                    <div class="accordion-body">
-                        @foreach (var node in @item.Children)
-                        {
-                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
-                        }
-                    </div>
-                </div>
-            </div>
-        }else{
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-@item.Value.Id">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-@item.Value.Id" aria-expanded="true" aria-controls="panelsStayOpen-@item.Value.Id">
-                        @item.Value.UiControlDisplayName
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-@item.Value.Id" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-@item.Value.Id">
-                    <div class="accordion-body">
-                        @foreach (var node in @item.Children)
-                        {
-                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    
-    
-</div>*@

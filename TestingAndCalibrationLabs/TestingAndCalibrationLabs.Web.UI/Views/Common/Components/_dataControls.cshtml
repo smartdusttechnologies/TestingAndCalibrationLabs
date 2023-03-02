@@ -1,6 +1,7 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 
-@await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model)
+
+@await Html.PartialAsync(Model.Value.UiPageMetadata.UiControlCategoryTypeTemplate, Model)
 
 @section Scripts {
     @{
