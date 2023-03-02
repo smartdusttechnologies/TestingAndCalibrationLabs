@@ -80,7 +80,6 @@
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\UiPageMetadataCharacteristics.sql" />
     <Build Include="dbo\Tables\LookupCategory.sql" />
-    <Build Include="dbo\Tables\UserRoleClaim.sql" />
     <Build Include="dbo\Tables\UserClaim.sql" />
     <Build Include="dbo\Tables\UiControlCategoryType.sql" />
     <Build Include="dbo\Tables\TestReport.sql" />
@@ -106,9 +105,10 @@
     <Build Include="dbo\Tables\Application.sql" />
     <Build Include="dbo\Tables\Activity.sql" />
     <Build Include="dbo\Tables\ActivityMetadata.sql" />
-    <Build Include="dbo\Tables\GroupUser.sql" />
     <Build Include="dbo\Tables\GroupClaim.sql" />
     <Build Include="dbo\Tables\Group.sql" />
+    <Build Include="dbo\Tables\UserGroup.sql" />
+    <Build Include="dbo\Tables\RoleClaim.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

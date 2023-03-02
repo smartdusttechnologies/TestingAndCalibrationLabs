@@ -88,7 +88,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             string query = @"Select gc.ClaimTypeId as claimType, pt.Name as ClaimValue
-                            from [GroupUser] g
+                            from [UserGroup] g
                                 inner join [GroupClaim] gc on gc.GroupId = g.GroupId
                                 inner join [Permission] p on p.Id = gc.PermissionId
                                 inner join [PermissionType] pt on pt.Id = p.PermissionTypeId
@@ -132,7 +132,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             string query = @"Select urc.ClaimTypeId as claimType, pt.Name as ClaimValue 
                             from [User] u 
                                 inner join [UserRole] ur on u.id = ur.userId
-                                inner join [UserRoleClaim] urc on urc.RoleId = ur.RoleId
+                                inner join [RoleClaim] urc on urc.RoleId = ur.RoleId
                                 inner join [Permission] p on p.Id = urc.PermissionId
                                 inner join [PermissionType] pt on pt.Id = p.PermissionTypeId
                             where u.Id=@userId 
