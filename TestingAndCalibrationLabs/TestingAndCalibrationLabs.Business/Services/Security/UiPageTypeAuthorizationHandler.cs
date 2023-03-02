@@ -26,6 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var sdtUserIdentity = user.Identity as SdtUserIdentity;
             var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission, CustomClaimType.ApplicationPermission);
             var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission, CustomClaimType.ApplicationPermission);
+            var groupClaim = _roleService.GetGroupClaim(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission, CustomClaimType.ApplicationPermission);
 
             // Validate the requirement against the resource and identity.
               
@@ -34,6 +35,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             if(userRoleClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
             else if(userClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
+                context.Succeed(requirement);
+            else if(groupClaim.Any(p=>p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
             //TODO: Clamims based on groups access can be next here.
 

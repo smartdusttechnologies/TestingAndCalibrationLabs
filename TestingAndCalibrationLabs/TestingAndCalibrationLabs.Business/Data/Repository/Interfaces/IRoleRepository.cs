@@ -18,6 +18,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         //List<UserClaim> GetUserByOrganizationWithClaims(string userName);
         //TODO: move this to user Repository.
         UserModel GetUserByUserName(string userName);
+        List<GroupClaim> GetGroupClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
         List<UserClaim> GetUserClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
         List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
        // List<string> GetRequiredClaimsForModule(PermissionModuleType permissionModuleType);

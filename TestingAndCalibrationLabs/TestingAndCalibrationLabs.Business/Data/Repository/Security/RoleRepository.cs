@@ -84,7 +84,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         //    return db.Query<UserClaim>(query, new { userName }).ToList();
         //}
 
+        public List<GroupClaim> GetGroupClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string query = @"Select gc.ClaimTypeId as claimType, pt.Name as ClaimValue
+                            from [GroupUser] g
+                                inner join [GroupClaim] gc on gc.GroupId = g.GroupId
+                                inner join [Permission] p on p.Id = gc.PermissionId
+                                inner join [PermissionType] pt on pt.Id = p.PermissionTypeId
+                            where g.UserId=@userId
+                                and gc.ClaimTypeId=@claimType
+                                and p.PermissionModuleTypeId=@permissionModuleType
+                                and gc.IsDeleted=0  
+                                and p.IsDeleted=0 
+                                and g.IsDeleted=0
+                                and pt.IsDeleted=0";
 
+            return db.Query<GroupClaim>(query, new { userId, organizationId, claimType, permissionModuleType }).ToList();
+        }
         /// <summary>
         /// Get Role by Orgnization including Claims
         /// </summary>

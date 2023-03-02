@@ -31,6 +31,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _roleRepository.GetUserClaims(organizationId, userId, permissionModuleType, claimType);
         }
+        
+        public List<GroupClaim> GetGroupClaim(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType)
+        {
+            return _roleRepository.GetGroupClaims(organizationId, userId, permissionModuleType, claimType);
+        }
 
         public UserModel GetUserByUserName(string userName)
         {

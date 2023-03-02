@@ -33,8 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            //if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, PolicyTypes.UIPageType.Add).Result.Succeeded)
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
             {
                 _uiPageTypeRepository.Insert(uiPageTypeModel);
                 return new RequestResult<int>(1);
@@ -48,7 +47,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _genericRepository.Delete(id);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Delete }).Result.Succeeded)
+            {
+                return _genericRepository.Delete(id);
+            }
+            return false;
         }
         /// <summary>
         /// Edit Record For Ui Page Type
@@ -58,11 +61,20 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update( UiPageTypeModel uiPageTypeModel)
         {
-            _uiPageTypeRepository.Update(uiPageTypeModel);
-            return new RequestResult<int>(1);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User,uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
+            {
+                _uiPageTypeRepository.Update(uiPageTypeModel);
+                return new RequestResult<int>(1);
+            }
+            return new RequestResult<int>(0);
         }
        public List<UiPageTypeModel> Get()
-        {return  _uiPageTypeRepository.Get();;
+        {
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            {
+                return _uiPageTypeRepository.Get();
+            }
+            return null;
         }
        
         /// <summary>
@@ -72,7 +84,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
-            return _uiPageTypeRepository.GetById(id);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            {
+                return _uiPageTypeRepository.GetById(id);
+            }
+            return null;
         }
     }
 }

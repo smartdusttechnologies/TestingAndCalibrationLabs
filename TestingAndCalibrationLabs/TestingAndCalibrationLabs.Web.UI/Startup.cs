@@ -19,6 +19,7 @@ using System;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using TestingAndCalibrationLabs.Web.UI.Common;
+using TestingAndCalibrationLabs.Business.Services.Security;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -64,6 +65,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, UiPageMetadataAuthorizationHandler>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
             services.AddScoped<IOrganizationService, OrganizationService>();
