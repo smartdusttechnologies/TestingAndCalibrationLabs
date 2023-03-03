@@ -5,6 +5,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Web.UI.Models.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -34,9 +35,29 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
-            var controlTypeList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlTypeListModel);
-            return View(controlTypeList.AsEnumerable());
+            List<Business.Core.Model.UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
+            var controlTypeList = _mapper.Map<List<Business.Core.Model.UiControlTypeModel>, List<Models.UiControlTypeDTO>>(controlTypeListModel);
+            var gridDto = new GridDTO();
+            gridDto.Columns = typeof(UiControlTypeDTO).GetProperties().Select(x => x.Name).ToList();
+            gridDto.Values = new List<GridRow>();
+
+            foreach (var row in controlTypeList)
+            {
+                var rowValue = new GridRow();
+                rowValue.Id = row.Id;
+
+                rowValue.Values = new List<string>();
+
+                rowValue.Values.Add(row.Id.ToString());
+                rowValue.Values.Add(row.Name);
+                rowValue.Values.Add(row.DisplayName);
+
+                gridDto.Values.Add(rowValue);
+            }
+            var uiData = new IndexPageDTO();
+            uiData.PageTitle = "UI Control Type";
+            uiData.GridData = gridDto;
+            return View(uiData);
         }
 
         /// <summary>

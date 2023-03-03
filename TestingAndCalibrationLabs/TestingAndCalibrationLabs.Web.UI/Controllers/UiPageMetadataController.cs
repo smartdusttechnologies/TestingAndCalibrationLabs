@@ -6,6 +6,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Web.UI.Models.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -51,7 +52,41 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var pageMetadata = _uiPageMetadataService.Get();
             var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
-            return View(pageMetadatas.AsEnumerable());
+            var gridDto = new GridDTO();
+            gridDto.Columns = typeof(UiPageMetadataDTO).GetProperties().Select(x => x.Name).ToList();
+            gridDto.Values = new List<GridRow>();
+            foreach (var row in pageMetadatas)
+            {
+                var rowValue = new GridRow();
+                rowValue.Id = row.Id;
+                
+                rowValue.Values = new List<string>();
+                rowValue.Values.Add(row.Id.ToString());
+                rowValue.Values.Add(row.Name);
+                rowValue.Values.Add(row.UiPageTypeId.ToString());
+                rowValue.Values.Add(row.UiPageTypeName);
+                rowValue.Values.Add(row.UiControlTypeId.ToString());
+                rowValue.Values.Add(row.UiControlTypeName);
+                rowValue.Values.Add(row.IsRequired.ToString());
+                rowValue.Values.Add(row.UiControlDisplayName);
+                rowValue.Values.Add(row.DataTypeId.ToString());
+                rowValue.Values.Add(row.DataTypeName);
+                rowValue.Values.Add(row.LookupCategoryId.ToString());
+                rowValue.Values.Add(row.LookupCategoryName);
+                rowValue.Values.Add(row.ControlCategoryId.ToString());
+                rowValue.Values.Add(row.ControlCategoryName);
+                rowValue.Values.Add(row.UiControlCategoryTypeId.ToString());
+                rowValue.Values.Add(row.UiControlCategoryTypeName);
+                rowValue.Values.Add(row.UiControlCategoryTypeTemplate);
+                rowValue.Values.Add(row.ParentId.ToString());
+                rowValue.Values.Add(row.Position.ToString());
+
+                gridDto.Values.Add(rowValue);
+            }
+            var uiData = new IndexPageDTO();
+            uiData.PageTitle = "UI Page Metadata";
+            uiData.GridData = gridDto;
+            return View(uiData);
         }
 
         /// <summary>
@@ -112,17 +147,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="LookupCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id,int parentId,int uiPageTypeId,int uiControlTypeId,int dataTypeId , int uiControlCategoryTypeId)
+        public IActionResult Edit(int? id)
         {
             if(id == null)
             {
                 return NotFound();
             }
-            ViewBag.UiControlTypeId = uiControlTypeId;
-            ViewBag.DataTypeId = dataTypeId;
-            ViewBag.UiPageTypeId = uiPageTypeId;
-            ViewBag.UiPageMetadataId = parentId;
-            ViewBag.UiControlCategoryTypeId = uiControlCategoryTypeId;
             var pages = _uiPageTypeService.Get();
             var controls = _uiControlTypeService.Get();
             var datas = _dataTypeService.Get();

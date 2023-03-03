@@ -1,46 +1,13 @@
-﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiControlTypeDTO>
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Common.IndexPageDTO
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Model.PageTitle;
 }
-<h1>Ui Control Type</h1>
+<h1>@Model.PageTitle</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+  <a asp-action="Create">Create New</a>
 </p>
-<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
-    <div class="row mb-1">
-    </div>
-</div>
-<div class="table-responsive simple-pagination card shadow border-radius-grid">
-    <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    <h6><b>Display Name</b></h6>
-                </th>
-                <th> <h6><b>Actions</b></h6></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DisplayName)
-                    </td>
-                    <td>
-                        @Html.ActionLink("", "Edit", new {  id=item.Id }, new{@class="fas fa-edit"}) |
-                        @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div>
+    @await Html.PartialAsync("~/Views/Common/Components/Grid/Backoffice/_gridtemplate.cshtml", Model.GridData)
 </div>
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
 {
@@ -57,14 +24,13 @@
     </div>
 }
 <script>
-    oTable = $('#gridui').DataTable({
-        lengthMenu: [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, 'All'],
-        ],
-        scrollX: true,
-    });
-    $('#gridsearch').keyup(function () {
-        oTable.search($(this).val()).draw();
-    })
+     $(document).ready(function () {
+        var plus = '<i class="fa fa-plus"></i>';
+        $("#gridui_filter").prepend(plus);
+         $(".fa-plus").click(function () {
+             window.location.href = "/uicontroltype/create";
+         });
+     });
 </script>
+
+

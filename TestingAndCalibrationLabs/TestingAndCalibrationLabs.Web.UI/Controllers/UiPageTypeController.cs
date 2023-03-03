@@ -5,6 +5,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Web.UI.Models.Common;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -13,7 +14,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
         private readonly IUiPageNavigationService _uiNavigationCategoryService;
-        
+        private List<UiNavigationCategoryModel> navigationcategory;
+
         public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _uiPageTypeService = uiPageTypeService;
@@ -30,10 +32,27 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
-            var pageData = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(page);
-            return View(pageData.AsEnumerable());
-        }
-        
+            var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
+            var gridDto = new GridDTO();
+            gridDto.Columns = typeof(UiPageTypeDTO).GetProperties().Select(x => x.Name).ToList();
+            gridDto.Values = new List<GridRow>();
+
+            foreach (var row in pageData)
+            {
+                var rowValue = new GridRow();
+                rowValue.Id = row.Id;
+
+                rowValue.Values = new List<string>();
+                rowValue.Values.Add(row.Id.ToString());
+                rowValue.Values.Add(row.Name);              
+
+                gridDto.Values.Add(rowValue);
+            }
+            var uiData = new IndexPageDTO();
+            uiData.PageTitle = "UI Page Type";
+            uiData.GridData = gridDto;
+            return View(uiData);
+        }      
         /// <summary>
         /// For Edit Record View
         /// </summary>
@@ -47,6 +66,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
+            var navigationCategory = _uiNavigationCategoryService.Get();
+            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>, List<Models.UiNavigationCategoryDTO>>(navigationcategory);
+            //ViewBag.NavigationCategoryId = NavigationCategoryId;
+            ViewBag.UiNavigationCategory = navigationCategoryList;
             var getByIdPageModel = _uiPageTypeService.GetById((int)id);
             if (getByIdPageModel == null)
             {
