@@ -9,8 +9,6 @@
 <div>
     @await Html.PartialAsync("~/Views/Common/Components/Grid/Backoffice/_gridtemplate.cshtml", Model.GridData)
 </div>
-
-
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
 {
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -27,9 +25,9 @@
 }
 <script>
      $(document).ready(function () {
-        var plus = '<i class="fa fa-plus icon-plus" style="margin:-12px"></i>';
-         $("#gridui_filter").append(plus);
-         $(".icon-plus").click(function () {
+        var plus = '<i class="fa fa-plus"></i>';
+        $("#gridui_filter").prepend(plus);
+         $(".fa-plus").click(function () {
              window.location.href = "/uicontroltype/create";
          });
      });
