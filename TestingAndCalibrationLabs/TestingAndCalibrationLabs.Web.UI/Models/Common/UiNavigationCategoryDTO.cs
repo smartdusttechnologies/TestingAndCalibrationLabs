@@ -23,6 +23,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
 
         [Required(ErrorMessage = "Please Enter Orders")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please Enter  Number Greater than 0 in Orders")]
         public string Orders { get; set; }
     }
 }

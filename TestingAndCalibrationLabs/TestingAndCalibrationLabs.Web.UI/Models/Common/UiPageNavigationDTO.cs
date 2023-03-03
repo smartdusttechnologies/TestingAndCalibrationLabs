@@ -26,6 +26,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Ui Page Type Name
         /// </summary>
+         //[Required(ErrorMessage = "Please Enter Module Name")]
         public string ModuleName { get; set; }
 
         /// <summary>
@@ -37,6 +38,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Ui Navigation Category Name.
         /// </summary>
+        /// 
+        //[Required(ErrorMessage = "Please Select UiNavigationCategoryName")]
         public string UiNavigationCategoryName { get; set; }
 
         /// <summary>

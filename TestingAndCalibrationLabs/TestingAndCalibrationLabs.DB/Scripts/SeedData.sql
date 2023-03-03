@@ -27,7 +27,9 @@ BEGIN
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'Ui Page Navigation',1,0),
+			   (9, N'Ui Page Category',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -370,7 +372,7 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -385,7 +387,10 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+              (11, N'/UiPageNavigation/Index/', 8, 1002, 0),
+              (12, N'/UiPageNavigationCategory/Index/', 9, 1002, 0)
+
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

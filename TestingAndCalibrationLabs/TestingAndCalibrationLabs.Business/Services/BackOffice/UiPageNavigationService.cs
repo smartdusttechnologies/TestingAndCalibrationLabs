@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -22,18 +23,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Records From Ui Page Navigation With Formated Url.
         /// </summary>
         /// <returns></returns>
-        //public List<UiPageNavigationModel> Get()
-        //{
-        //    var pageNavigation = _uiPageNavigationTypeRepository.Get();
-        //    bool IgnoreNone = pageNavigation.Any(x => x.Id != (int)Helpers.None.Id);
-        //    if (IgnoreNone)
-        //    {
-        //        pageNavigation = pageNavigation.Where(x => x.Id != (int)Helpers.None.Id).ToList();
-        //        ////// ////////        // write code to hide None element.
-        //    }
-        //    pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.ModuleId));
-        //    return pageNavigation;
-        //}
+        public List<UiPageNavigationModel> Get()
+        {
+            var pageNavigation = _uiPageNavigationTypeRepository.Get();
+            bool IgnoreNone = pageNavigation.Any(x => x.Id != (int)Helpers.None.Id);
+            if (IgnoreNone)
+            {
+                pageNavigation = pageNavigation.Where(x => x.Id != (int)Helpers.None.Id).ToList();
+                ////// ////////        // write code to hide None element.
+            }
+            pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.ModuleId));
+            return pageNavigation;
+        }
         #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Navigation 
@@ -64,10 +65,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Record From Ui Page Validation 
         /// </summary>
         /// <returns></returns>
-        public List<UiPageNavigationModel> Get()
-        {
-            return _uiPageNavigationTypeRepository.Get();
-        }
+        //public List<UiPageNavigationModel> Get()
+        //{
+        //    return _uiPageNavigationTypeRepository.Get();
+        //}
         /// <summary>
         /// Get Record By Id From Ui Page Valdation 
         /// </summary>
