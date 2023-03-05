@@ -114,19 +114,20 @@
     });
 </script>
 <script>
+      //  FullPage script start
     var Page = 0;
     function toggleFullScreen(Screen) {
-        var element = document.getElementById('PageBody');
+        var Element = document.getElementById('PageBody');
         var Size = window.matchMedia("(min-width:0px)");
         if (Screen == 1 && Size.matches) {
-            element.style = "padding-right: 0px;padding-left: 0px;";
+            Element.style = "padding-right: 0px;padding-left: 0px;";
             document.getElementById('nav-item-FullPage').innerHTML = "Exit FullPage";
         }
         else {
             var View = window.matchMedia("(min-width: 600px)")
             Page = 0;
             if (View.matches) {
-                element.style = "padding-right:230px;padding-left: 230px;";
+                Element.style = "padding-right:230px;padding-left: 230px;";
             }
             document.getElementById('nav-item-FullPage').innerHTML = "FullPage";
         }
