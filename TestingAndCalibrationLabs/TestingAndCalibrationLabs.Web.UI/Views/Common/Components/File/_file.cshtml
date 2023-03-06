@@ -17,7 +17,7 @@
         if(fileModel.value.uiPageData != null){
         let metadataId = fileModel.value.uiPageMetadata.id;
         let value = fileModel.value.uiPageData.value;
-        $(`#fileLabel${metadataId}`).append(`<p id='${value}'>FileName</p>`);
+            $(`#fileLabel${metadataId}`).append(`<p href="https://drive.google.com/uc?export=view&id=${value}">FileName</p>`);
         }
     });
     function validateForImages(input) {
