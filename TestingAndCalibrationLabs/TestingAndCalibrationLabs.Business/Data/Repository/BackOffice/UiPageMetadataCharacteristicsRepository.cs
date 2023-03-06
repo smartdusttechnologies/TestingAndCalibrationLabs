@@ -32,9 +32,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                 where
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    ").ToList();
+                                                    and lc.IsDeleted = 0").ToList();
         }
-       
+
         /// <summary>
         /// Get Ui Page Metadata Characteristics Record By UiPageMetadataId
         /// </summary>
@@ -50,7 +50,20 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                      upm.UiPageMetadataId = @Id and
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    ", new { Id = id }).ToList(); 
+                                                    ", new { Id = id }).ToList();
+        }
+        public UiPageMetadataCharacteristicsModel Get(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageMetadataCharacteristicsModel>(@"Select upm.UiPageMetadataId , upt.[Name] as LookupName, lc.[Name] as CategoryName 
+                                                From[UiPageMetadataCharacteristics] upm
+                                                    inner join[LookupCategory] lc on upm.LookupCategoryId = lc.Id
+                                                    inner join[Lookup] upt on lc.Id = upt.LookupCategoryId
+                                                where
+                                                    upm.UiPageMetadataId = @metadataId
+                                                    and upm.IsDeleted = 0
+                                                    and upt.IsDeleted = 0
+                                                    and lc.IsDeleted = 0", new { metadataId = id }).First();
         }
     }
 }

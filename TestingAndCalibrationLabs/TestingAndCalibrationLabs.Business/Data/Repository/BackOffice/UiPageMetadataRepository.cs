@@ -67,7 +67,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
-                                                    and dt.IsDeleted = 0").ToList();
+                                                    and dt.IsDeleted = 0
+                                                    and lc.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0
+                                                    and l.IsDeleted = 0").ToList();
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
-                                                    From [MetadataModuleBridge] mmb
+                                                    From [UiPageMetadataModuleBridge] mmb
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id

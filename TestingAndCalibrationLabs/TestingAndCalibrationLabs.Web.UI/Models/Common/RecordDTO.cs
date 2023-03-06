@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public List<UiPageMetadataDTO> Fields { get; set; }
         public List<UiPageDataDTO> FieldValues { get; set; }
         public IEnumerable<Node<LayoutDTO>> Layout { get; set; }
-        public ValidationMessage ErrorMessage { get; set; } = new ValidationMessage();
+        public IList<ValidationMessage> ErrorMessage { get; set; } 
       
         #endregion
     }

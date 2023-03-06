@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool WorkflowActivity(RecordModel recordModel)
         {
+            ///In Future I Have To Redesign Structure of Activity
             //var activityList = _workflowActivityRepository.GetByWorkflowStageId(recordModel.WorkflowStageId);
             //var pageDataList = _pageDataGenericRepository.Get("RecordId", recordModel.Id);
             //foreach (var activity in activityList)
@@ -52,12 +54,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         #endregion
         #region private Methods
 
-        //#region Email Send Service
-        ///// <summary>
-        ///// Sending Email With Dynamic And Static Parameters 
-        ///// </summary>
-        ///// <param name="pageDataList"></param>
-        ///// <param name="activityId"></param>
+        #region Email Send Service
+        /// <summary>
+        /// Sending Email With Dynamic And Static Parameters 
+        /// </summary>
+        /// <param name="pageDataList"></param>
+        /// <param name="activityId"></param>
         //private void SendEmail(List<UiPageDataModel> pageDataList,int activityId,int stageId)
         //{
         //    EmailModel emailModel = new EmailModel();
@@ -83,6 +85,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         //        {
         //            emailModel.Subject = activity.Value;
         //        }
+        //        else if(activity.Name == "Email")
+        //        {
+        //            emailModel.Email = new List<string> { activity.Value };
+        //        }else if (activity.Name == "Name")
+        //        {
+        //            template = template.Replace("**name**", activity.Value);
+        //        }
         //    }
         //    //loop for Dynamic Parameters
         //    foreach (var param in dynamicList)
@@ -91,18 +100,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         //        {
         //            emailModel.Email = new List<string> { pageDataList.Where(x => x.UiPageMetadataId == param.UiPageMetadataId).Select(x => x.Value).First() };
         //        }
-        //        else if(param.Name== "Name")
+        //        else 
         //        {
         //            var value = pageDataList.Where(x => x.UiPageMetadataId == param.UiPageMetadataId).Select(x => x.Value).First();
-        //            template = template.Replace("*name*", value);
+        //            template = template.Replace(param.Name, value);
         //        }
         //    }
         //    emailModel.HtmlMsg = template;
         //   _emailService.Sendemail(emailModel);
-        //} 
-        
-        //#endregion
-
+        //}
+        #endregion
         #endregion
     }
 
