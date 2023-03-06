@@ -11,14 +11,14 @@
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <label for="UiControlCategoryTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlCategoryTypeId" id="UiControlCategoryType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId">
-                        <option disabled="disabled" selected> ...</option>
+                        <option disabled="disabled" selected>Select ControlCategory ...</option>
                         @foreach (var item in ViewBag.UiControlCategoryType)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                    <label class="form-label" for="UiControlCategoryTypeId"></label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
@@ -30,7 +30,7 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control   right-pd-input">
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
                         <option disabled="disabled" selected>Select Data Type ...</option>
@@ -40,7 +40,6 @@
                         }
                     </select>
                 </div>
-
                 <div class="row ms-1 me-1">
                 <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <label class="form-check-label">

@@ -79,7 +79,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 rowValue.Values.Add(row.UiControlCategoryTypeName);
                 rowValue.Values.Add(row.UiControlCategoryTypeTemplate);
                 rowValue.Values.Add(row.ParentId.ToString());
+                rowValue.Values.Add(row.ModuleId.ToString());
                 rowValue.Values.Add(row.Position.ToString());
+                rowValue.Values.Add(row.MultiValueControl.ToString());
 
                 gridDto.Values.Add(rowValue);
             }

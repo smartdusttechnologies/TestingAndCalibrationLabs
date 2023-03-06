@@ -84,16 +84,33 @@ select.form-element- {
 select.input-validation-error#TestingType {
     border: 2px solid red;
 }
+select.input-validation-error#UiControlCategoryType {
+    border: 2px solid red;
+}
 
 select.input-validation-error#UiControlType {
+    border: 2px solid red;
+}
+
+select.input-validation-error#DataType {
+    border: 2px solid red;
+}
+select.input-validation-error#UiPageMetadata {
     border: 2px solid red;
 }
 select.input-validation-error#UiPageType {
     border: 2px solid red;
 }
-select.input-validation-error#DataType {
+select.input-validation-error#UiPageMetadata {
     border: 2px solid red;
 }
+select.input-validation-error#UiControlDisplayName {
+    border: 2px solid red;
+}
+select.input-validation-error#UiPageValidationType {
+    border: 2px solid red;
+}
+
 
 .validation-summary-errors {
     color: red;

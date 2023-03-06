@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
     /// It Conatains The Properties for Ui Page Metadata 
@@ -30,6 +32,8 @@
         /// <summary>
         /// It Contains The UiControlDisplayName of The Ui Page Metadata
         /// </summary>
+        [Required(ErrorMessage = "Please Enter UiControlDisplayName")]
+
         public string UiControlDisplayName { get; set; }
         /// <summary>
         /// It Contains The Id of The Data Type

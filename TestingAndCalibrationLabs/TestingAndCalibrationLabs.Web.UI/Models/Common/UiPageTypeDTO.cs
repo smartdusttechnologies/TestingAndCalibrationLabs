@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The Name Of The Ui Page Type
         /// </summary> 
-        [Required(ErrorMessage = "Please Enter Page Name")]
+        [Required(ErrorMessage = "Please Enter Name")]
         
         public string Name { get; set; }
        
