@@ -17,9 +17,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RequestResult<bool> ValidateCountry(int orgId, string Country);
 
         RequestResult<bool> ValidateOrganizations(int orgId, string Organizations);
-
-
-
-
     }
 }

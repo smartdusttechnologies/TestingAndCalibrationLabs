@@ -214,8 +214,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, FirstName);
             var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, LastName);
             var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, Country);
-
-
             UserModel existingUser = _userRepository.Get(user.UserName);
             if (existingUser != null)
             {
@@ -223,10 +221,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
-            // var validateEmailResult = _securityParameterService.ValidateEmailPolicy()
-            // RequestResult<bool> validation = new RequestResult<bool>();
-            //if (validationEmailResult.IsSuccessful && ValidateMobilePolicy.IsSuccessful && validatePasswordResult.IsSuccessful)
-            //{
             validationMessages.AddRange(validatePasswordResult.ValidationMessages);
             validationMessages.AddRange(ValidateReEnterResult.ValidationMessages);
             validationMessages.AddRange(ValidateOrganizationId.ValidationMessages);
@@ -234,14 +228,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             validationMessages.AddRange(ValidateFirstName.ValidationMessages);
             validationMessages.AddRange(ValidateLastName.ValidationMessages);
             validationMessages.AddRange(ValidateCountry.ValidationMessages);
-
             validationMessages.AddRange(validationEmailResult.ValidationMessages);
             validationMessages.AddRange(ValidateMobilePolicy.ValidationMessages);
-            ////  return new RequestResult<bool>(validation);
-
-            //    return new RequestResult<bool>(true);
-            //}
-
             return new RequestResult<bool>(validationMessages);
 
         }

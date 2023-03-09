@@ -182,7 +182,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             if (password == null || password.Length < securityParameter.MinLength)
             {
-                validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error, SourceId = "Enter Password" });
+                validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             if (!Helpers.ValidateMinimumSmallChars(password, securityParameter.MinSmallChars))
@@ -223,7 +223,7 @@ namespace TestingAndCalibrationLabs.Business.Services
            if (ReEnterPassword == null)
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Enter confirm password ", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter confirm password ", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
@@ -249,7 +249,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (Mobile == null )
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Enter mobile number", Severity = ValidationSeverity.Error, SourceId = "Mobile" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter mobile number", Severity = ValidationSeverity.Error, SourceId = "Mobile" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
@@ -262,7 +262,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (FirstName == null)
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Enter first name", Severity = ValidationSeverity.Error, SourceId = "FirstName" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter first name", Severity = ValidationSeverity.Error, SourceId = "FirstName" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
@@ -275,7 +275,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (LastName == null)
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Enter last name", Severity = ValidationSeverity.Error, SourceId = "LastName" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter last name", Severity = ValidationSeverity.Error, SourceId = "LastName" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
@@ -288,7 +288,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (Country == null)
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Select country", Severity = ValidationSeverity.Error, SourceId = "Country" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please select a country", Severity = ValidationSeverity.Error, SourceId = "Country" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
@@ -301,7 +301,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (Organizations == null)
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Select OrganizationId", Severity = ValidationSeverity.Error, SourceId = "Organizations" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please select a Organizations", Severity = ValidationSeverity.Error, SourceId = "Organizations" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
@@ -314,7 +314,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (UserName == null)
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Enter user name", Severity = ValidationSeverity.Error, SourceId = "Enter Username" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter user name", Severity = ValidationSeverity.Error, SourceId = "Username" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
