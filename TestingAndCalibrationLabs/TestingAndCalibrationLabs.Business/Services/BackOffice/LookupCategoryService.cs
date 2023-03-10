@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -16,25 +17,50 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _genericRepository = genericRepository;
         }
+        #region Public methods
+        /// <summary>
+        /// Insert Record In Application
+        /// </summary>
+        /// <param name="lookupCategoryModel"></param>
+        /// <returns></returns>
         public RequestResult<int> Create(LookupCategoryModel lookupCategoryModel)
         {
-            throw new System.NotImplementedException();
+            _genericRepository.Insert(lookupCategoryModel);
+            return new RequestResult<int>(1);
         }
 
+        /// <summary>
+        /// Delete Record From Application
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
-            throw new System.NotImplementedException();
+            return _genericRepository.Delete(id);
         }
+
         /// <summary>
-        /// Get All Records Of LookupCategory
+        /// Edit Record From Application
+        /// </summary>
+        /// <param name="lookupCategoryModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> Update(LookupCategoryModel lookupCategoryModel)
+        {
+            _genericRepository.Update(lookupCategoryModel);
+            return new RequestResult<int>(1);
+        }
+
+        /// <summary>
+        /// Get All Records From Application
         /// </summary>
         /// <returns></returns>
         public List<LookupCategoryModel> Get()
         {
             return _genericRepository.Get();
         }
+
         /// <summary>
-        /// Get LookupCategory By Id
+        /// Get Record by Id For Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -42,10 +68,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get(id);
         }
-        public RequestResult<int> Update(LookupCategoryModel lookupCategoryModel)
-        {
-            throw new System.NotImplementedException();
-        }
+        #endregion
 
+        #region Private Methods
+
+        #endregion
     }
 }
