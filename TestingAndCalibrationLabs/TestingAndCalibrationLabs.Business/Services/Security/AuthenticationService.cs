@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -179,6 +180,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method to Add new and validate existing user for Registration
         /// </summary>
         public RequestResult<bool> Add(UserModel user, string password)
+
         {
             try
             {
@@ -197,6 +199,65 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
         }
         /// <summary>
+        /// Method to Add new and validate Of Change Password
+        /// </summary>
+        // public RequestResult<bool> UpdatePaasword(int userId, string oldpassword, string newpassword, string confirmpassword)
+        public RequestResult<bool> UpdatePaasword(ChangePasswordModel password)
+
+        {
+            try
+            {
+                var validationResult = _securityParameterService.ValidatePasswordPolicy(0, password.NewPassword);
+                var passworsResult = _securityParameterService.ChangePaaswordPolicy(password);
+               
+                  
+                var passwordLogin = _authenticationRepository.GetLoginPassword("Priya");
+                List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+                string valueHash = string.Empty;
+                if (password != null && !Hasher.ValidateHash(password.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                {
+                    validationMessages.Add(new ValidationMessage { Reason = "Old password is incorrect.", Severity = ValidationSeverity.Error, SourceId="OldPassword" });
+                    return new RequestResult<bool>(validationMessages);
+                }
+
+                if (validationResult.IsSuccessful)
+                {
+                        if (passworsResult.IsSuccessful)
+                        {
+
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(password.NewPassword);
+                            ChangePasswordModel passwordModel = new ChangePasswordModel();
+                            passwordModel.PasswordHash= newPasswordLogin.PasswordHash;
+                            passwordModel.UserId=1;
+                            passwordModel.PasswordSalt= newPasswordLogin.PasswordSalt;
+                 
+
+                        _userRepository.Update(passwordModel);
+
+                            return new RequestResult<bool>(true);
+
+
+                    }
+                    else
+                    {
+                        return new RequestResult<bool>(false, passworsResult.ValidationMessages);
+
+                    }
+                }
+                
+                return new RequestResult<bool>(false, validationResult.ValidationMessages);
+
+               
+            }
+            catch (Exception ex)
+            {
+
+                return new RequestResult<bool>(false);
+            }
+          
+        }
+        /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
         private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
@@ -212,5 +273,31 @@ namespace TestingAndCalibrationLabs.Business.Services
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             return validatePasswordResult;
         }
+
+        /// <summary>
+        /// Method to Add new and validate Of Change Password
+        /// </summary>
+        //public RequestResult<bool> Update(ChangePasswordModel user, string oldpassword, string newpassword, string confirmpassword)
+        //{
+        //    try
+        //    {
+        //        // var validationResult = ValidateChangePassword(user,oldpassword, newpassword, confirmpassword);
+        //     //   var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
+        //      //  if (validatePasswordResult.IsSuccessful)
+        //        {
+        //            PasswordLogin passwordLogin = Hasher.HashPassword(newpassword);
+        //           // _userRepository.Update(user, newpassword);
+        //            return new RequestResult<bool>(true);
+        //        }
+        //       // return new RequestResult<bool>(false, validationResult.ValidationMessages);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return new RequestResult<bool>(false);
+        //    }
+        //}
+       
+       
     }
 }

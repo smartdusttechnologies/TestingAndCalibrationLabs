@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -87,5 +88,23 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(true);
         }
+      public  RequestResult<bool> ChangePaaswordPolicy(ChangePasswordModel password)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            if (password.OldPassword == password.NewPassword)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "New password must be different from old password.", Severity = ValidationSeverity.Error,SourceId="NewPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+
+            }
+            if (password.NewPassword != password.ConfirmPassword) { 
+                 validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error,SourceId = "ConfirmPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+
+            }
+            
+            return new RequestResult<bool>(true);
+        }
+
     }
 }

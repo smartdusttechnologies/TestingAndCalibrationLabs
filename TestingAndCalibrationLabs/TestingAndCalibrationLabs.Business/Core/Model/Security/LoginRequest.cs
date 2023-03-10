@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
@@ -40,5 +41,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Hash
         /// </summary>
         public int Status { get; set; }
+
+       
+
     }
 }

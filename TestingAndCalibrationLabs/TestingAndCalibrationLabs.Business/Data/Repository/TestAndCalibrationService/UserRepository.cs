@@ -1,9 +1,12 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -55,15 +58,19 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             var p = new DynamicParameters();
             p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@UserName", user.UserName);
-            p.Add("@FirstName", user.FirstName);
+            //  p.Add("@FirstName", user.FirstName);
+            p.Add("@FirstName", "Neha");
             p.Add("@LastName", user.LastName);
             p.Add("@Email", user.Email);
-            p.Add("@Mobile", user.Mobile);
+            // p.Add("@Mobile", user.Mobile);
+            p.Add("@Mobile", "7004899589");
             p.Add("@Country", user.Country);
             p.Add("@ISDCode", user.ISDCode);
             p.Add("@TwoFactor", user.TwoFactor);
             p.Add("@Locked", user.Locked);
-            p.Add("@IsActive", user.IsActive);
+            // p.Add("@IsActive", user.IsActive);
+             p.Add("@IsActive", true);
+
             p.Add("@EmailValidationStatus", user.EmailValidationStatus);
             p.Add("@MobileValidationStatus", user.MobileValidationStatus);
             p.Add("@OrgId", user.OrgId);
@@ -77,6 +84,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                 values (@PasswordHash, @PasswordSalt, @UserId, @ChangeDate)";
 
             string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
+
+           
 
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
@@ -95,5 +104,29 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return insertedUserId;
         }
+       // public bool Update( int userId,string newpassword)
+            public int Update(ChangePasswordModel newpassword)
+        {
+          //  ChangePasswordModel model = new ChangePasswordModel();
+            //model.UserId = userId;
+            //model.PasswordHash = newpassword;
+            //model.PasswordSalt = newpassword;
+            var p = new DynamicParameters();
+            p.Add("@PasswordHash", "PasswordHash");
+            p.Add("@PasswordSalt", "PasswordSalt");
+
+
+            string changepasswordQuery = @"update [PasswordLogin] Set
+                                           PasswordHash = @PasswordHash,
+                                           PasswordSalt = @PasswordSalt
+                                                Where UserId = @UserId";
+
+                  using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Execute(changepasswordQuery, newpassword);
+
+            // db.Execute(changepasswordQuery , model );
+
+            // return true;
+          }
     }
 }
