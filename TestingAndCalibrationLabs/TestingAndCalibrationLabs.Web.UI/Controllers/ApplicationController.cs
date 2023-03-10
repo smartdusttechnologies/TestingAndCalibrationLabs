@@ -12,7 +12,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IApplicationService _applicationService;
         public readonly IMapper _mapper;
-        private readonly IUiPageNavigationService _uiNavigationCategoryService;
+      //  private readonly IUiPageNavigationService _uiNavigationCategoryService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -20,11 +20,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="mapper"></param>
         /// <param name="uiNavigationCategoryService"></param>
        
-        public ApplicationController(IApplicationService applicationService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
+        public ApplicationController(IApplicationService applicationService, IMapper mapper)
         {
             _applicationService = applicationService;
             _mapper = mapper;
-            _uiNavigationCategoryService = uiNavigationCategoryService;
+            //_uiNavigationCategoryService = uiNavigationCategoryService;
         }
 
         /// <summary>
