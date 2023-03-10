@@ -15,8 +15,7 @@
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
-                    <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-                        
+                    <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">                       
                         @foreach (var item in ViewBag.UiPageTypes)
                         {
                             if (@item.Id == @ViewBag.UiPageTypeId)
@@ -29,11 +28,11 @@
                             
                         }
                     </select>
+                    <label class="form-label" for="UiPageTypeId">UiPageTypeName</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageMetadataId" class="form-label"></label>
-                    <select class="form-input " name="UiPageMetadataId" id="uimetadataType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
-                       
+                    <select class="form-input " name="UiPageMetadataId" id="uimetadataType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">                      
                         @foreach (var item in ViewBag.UiPageMetadata)
                         {
                             if (@item.Id == @ViewBag.UiPageMetadataId)
@@ -45,13 +44,13 @@
                         }
                         }
                     </select>
+                    <label class="form-label" for="UiPageMetadataId">UiPageMetadataName</label>
                 </div>
             </div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageValidationTypeId" class="form-label"></label>
-                    <select class="form-input" name="UiPageValidationTypeId" id="uivalType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
-                        
+                    <select class="form-input" name="UiPageValidationTypeId" id="uivalType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">                       
                         @foreach (var item in ViewBag.UiPageValidationTypes)
                         {
                             if (@item.Id == @ViewBag.UiPageValidationTypeId)
@@ -63,6 +62,7 @@
                         }
                         }
                     </select>
+                    <label class="form-label" for="UiPageValidationTypeId">UiPageValidationTypeName</label>
                 </div>
             </div>
            

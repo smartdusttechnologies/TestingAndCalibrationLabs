@@ -13,32 +13,36 @@
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-                        <option disabled="disabled" selected>Select Pages ...</option>
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.UiPageTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                    <label class="form-label" for="UiPageTypeId">UiPageTypeName</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageMetadataId" class="form-label"></label>
                     <select class="form-input " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
-                        <option disabled="disabled" selected>Select Metadata ...</option>
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.UiPageMetadata)
                         {
                             <option value=@item.Id>@item.UiControlDisplayName</option>
                         }
                     </select>
+                    <label class="form-label" for="UiPageMetadataId">UiPageMetadataName</label>
+
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
                     <label for="UiPageValidationTypeId" class="form-label"></label>
                     <select class="form-input" name="UiPageValidationTypeId" id="UiPageValidationType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
-                        <option disabled="disabled" selected>Select Validation Type ...</option>
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.UiPageValidationTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                    <label class="form-label" for="UiPageValidationTypeId">UiPageValidationTypeName</label>
                 </div>
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return  DisplayProgressMessage(this, 'Saving...');" />

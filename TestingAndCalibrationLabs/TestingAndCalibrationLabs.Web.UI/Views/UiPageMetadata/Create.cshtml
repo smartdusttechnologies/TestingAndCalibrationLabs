@@ -11,34 +11,36 @@
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input " name="UiControlCategoryTypeId" id="UiControlCategoryType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId">
-                        <option disabled="disabled" selected>Select ControlCategory ...</option>
+                    <select class="form-input " name="UiControlCategoryTypeId" id="UiControlCategoryType" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId">
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.UiControlCategoryType)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
-                    <label class="form-label" for="UiControlCategoryTypeId"></label>
-                </div>
+                    <label class="form-label" for="UiControlCategoryTypeId">UiControlCategoryTypeName</label>
+                </div>               
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
-                        <option disabled="disabled" selected>Select Control ...</option>
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.UiControlTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                    <label class="form-label" for="UiControlTypeId">UiControlTypeName</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control   right-pd-input">
                     <label for="DataType" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
-                        <option disabled="disabled" selected>Select Data Type ...</option>
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.DataTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
+                    <label class="form-label" for="DataTypeId">DataTypeName</label>
                 </div>
                 <div class="row ms-1 me-1">
                 <div class="col-lg-3 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
