@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentAssertions;
 using Google.Apis.Drive.v3.Data;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -61,13 +62,13 @@ namespace TestingAndCalibrationLabs.Tests
             _mapper = mapper;
 
             validations.Add(new UiPageValidationModel { Id = 4, Name = "MinPasswordLength", UiPageTypeId = 3, UiPageTypeName = "hg", UiPageMetadataId = 3, UiPageMetadataName = "hgy", UiPageValidationTypeId = 4, UiPageValidationTypeName = "iuy", Value = "ju" });
-            validations.Add(new UiPageValidationModel { Id = 3, Name = "AdharLength", UiPageMetadataId = 3, UiPageMetadataName = null, UiPageTypeId = 2, UiPageTypeName = null, UiPageValidationTypeId = 3, UiPageValidationTypeName = null, Value = "12" });
+          //  validations.Add(new UiPageValidationModel { Id = 3, Name = "AdharLength", UiPageMetadataId = 3, UiPageMetadataName = null, UiPageTypeId = 2, UiPageTypeName = null, UiPageValidationTypeId = 3, UiPageValidationTypeName = null, Value = "12" });
             // validations.Add(new UiPageValidationModel { Id = 2, Name = "Email", UiPageMetadataId = 2, UiPageMetadataName = null, UiPageTypeId = 2, UiPageTypeName = null, UiPageValidationTypeId = 2, UiPageValidationTypeName = null, Value = "3" });
             // validations.Add(new UiPageValidationModel { Id = 1, Name = "MobileNumberLength", UiPageMetadataId = 4, UiPageMetadataName = null, UiPageTypeId = 2, UiPageTypeName = null, UiPageValidationTypeId = 4, UiPageValidationTypeName = null, Value = "10" });
             // validations.Add(new UiPageValidationModel { Id = 5, Name = "Year", UiPageMetadataId = 5, UiPageMetadataName = null, UiPageTypeId = 2, UiPageTypeName = null, UiPageValidationTypeId = 5, UiPageValidationTypeName = null, Value = "4" });
 
             validationlist.Add(new UiPageValidationTypeModel { Id = 1, Name = "MinPasswordLength", Value = "8", Message = "aman" });
-            validationlist.Add(new UiPageValidationTypeModel { Id = 2, Message = "Email should have format", Name = "Email", Value = "3" });
+           // validationlist.Add(new UiPageValidationTypeModel { Id = 2, Message = "Email should have format", Name = "Email", Value = "3" });
             //  validationlist.Add(new UiPageValidationTypeModel { Id = 3, Message = "Aadhar length should be equal to 12", Name = "AdharLength", Value = "12" });
             //  validationlist.Add(new UiPageValidationTypeModel { Id = 4, Message = "Mobile No length eq to 10", Name = "MobileNumberLength", Value = "10" });
             //  validationlist.Add(new UiPageValidationTypeModel { Id = 5, Message = "Year length eq to 4 ", Name = "Year ", Value = "4" });
@@ -841,66 +842,54 @@ namespace TestingAndCalibrationLabs.Tests
         // * step1- Passing Parameter = Record of recordDTO 
         // * ExpectedResult = Record of RecordDTO
         // */
-        //[Test]
-        //public void common_Edit_POST_True_Test()
-        //{
-        //    List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
-        //    uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 1, Value = "ritesh1267" });
-        //    uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 2, Value = "8709" });
+        [Test]
+        public void common_Edit_POST_True_Test()
+        {
+         
+            List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
+            uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 3, Name = "aman", UiPageTypeId = 8, UiPageTypeName = "deepak", UiControlTypeId = 8, UiControlTypeName = "jjf", IsRequired = true, UiControlDisplayName = "jkf", DataTypeId = 7, DataTypeName = "ddd", LookupCategoryId = 5, LookupCategoryName = "kji", ControlCategoryName = "DataControl", ControlCategoryId = 6, UiControlCategoryTypeId = 4, UiControlCategoryTypeName = "DataControl", UiControlCategoryTypeTemplate = "jio", ParentId = 3, ModuleId = 9, Position = 8, MultiValueControl = true, MetadataModuleBridgeUiControlDisplayName = "kji", Orders = 8 });
 
-        //    List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
-        //    uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 1, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Password", IsRequired = false, DataTypeId = 12, DataTypeName = "string" });
-        //    uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 2, UiPageTypeId = 4, UiPageTypeName = null, UiControlTypeId = 33, UiControlTypeName = null, UiControlDisplayName = "mail", IsRequired = true, DataTypeId = 127, DataTypeName = "string" });
-
-
-        //    List<UiPageDataModel> uiPageDataModels = new List<UiPageDataModel>();
-        //    uiPageDataModels.Add(new UiPageDataModel { Id = 13, UiPageId = 12, RecordId = 5, UiPageMetadataId = 1, Value = "Ritesh1244" });
-        //    uiPageDataModels.Add(new UiPageDataModel { Id = 5, UiPageId = 12, RecordId = 5, UiPageMetadataId = 2, Value = "Ritesh44" });
-        //    genericRepositoryuipageData.Setup(x => x.Get<int>("RecordId", It.IsAny<int>())).Returns(uiPageDataModels);
+            List<UiPageDataModel> uipageDataModels = new List<UiPageDataModel>();
+            uipageDataModels.Add(new UiPageDataModel { Id = 11, UiPageTypeId = 11, UiPageMetadataId = 11, RecordId = 6, Value = "Name", SubRecordId = 7, MultiValueControl = true });
+            uipageDataModels.Add(new UiPageDataModel { Id = 41, UiPageTypeId = 51, UiPageMetadataId = 51, RecordId = 56, Value = "Nam5e", SubRecordId = 47, MultiValueControl = true });
 
 
-        //    //validation List
+            //validation List
 
-        //    iGenericRepositoryPageValidation.Setup(x => x.Get()).Returns(validationlist);
-        //    commonRepository.Setup(x => x.GetUiPageValidations(It.IsAny<int>())).Returns(validations);
-        //    igenericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new RecordModel { Id = 12, UiPageId = 10, Fields = null, FieldValues = null });
-
-        //    foreach (var item in validationlist)
-        //    {
-        //        iGenericRepositoryPageValidation.Setup(x => x.Get(item.Id)).Returns(item);
-        //    }
-        //    foreach (var item in uiPageMetaDataModels)
-        //    {
-        //        iGenericRepositoryPageMetaData.Setup(x => x.Get(item.Id)).Returns(item);
-        //    }
-
-        //    List<UiPageMetadataDTO> uiPageMetadataDTO = new List<UiPageMetadataDTO>();
-        //    var record = new RecordDTO { Id = 5, UiPageId = 12, Fields = uiPageMetadataDTO, FieldValues = uipagedata };
-        //    var logger = new Mock<ILogger<CommonController>>();
-
-        //    _commonService = new SampleService(commonRepository.Object, igenericRepository.Object, iGenericRepositoryPageType.Object, genericRepositoryuipageData.Object, iGenericRepositoryPageMetaData.Object, iGenericRepositoryPageValidation.Object);
-        //    var controller = new CommonController(logger.Object, _commonService, _mapper);
-
-
-        //    commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(new RecordModel { UiPageId = 12, Id = 1, Fields = uiPageMetaDataModels, FieldValues = null });
+            iGenericRepositoryPageValidation.Setup(x => x.Get()).Returns(validationlist);
+            commonRepository.Setup(x => x.GetUiPageValidations(It.IsAny<int>())).Returns(validations);
+            igenericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new RecordModel { Id = 1, UiPageTypeId = 12, Fields = null, ModuleId = 5, WorkflowStageId = 0, FieldValues = null });
+            commonRepository.Setup(x => x.GetPageIdBasedOnOrder(It.IsAny<int>())).Returns(0);
+            commonRepository.Setup(x => x.GetPageIdBasedOnCurrentWorkflowStage(It.IsAny<int>())).Returns(0);
+            commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(uiPageMetaDataModels);
+            commonRepository.Setup(x => x.GetPageData(It.IsAny<int>())).Returns(uipageDataModels);
 
 
 
-        //    var createResult = (OkObjectResult)controller.Edit(record);
-        //    var value = (RecordDTO)createResult.Value;
 
-        //    List<UiPageDataDTO> expectField = new List<UiPageDataDTO>();
-        //    expectField.Add(new UiPageDataDTO { UiPageId = 12, UiPageMetadataId = 1, Value = "ritesh1267" });
-        //    expectField.Add(new UiPageDataDTO { UiPageId = 12, UiPageMetadataId = 2, Value = "8709" });
+           var record = new RecordDTO { Id = 1, UiPageTypeId = 12, Fields = null, ModuleId = 5, WorkflowStageId = 0, FieldValues = null };
+            var logger = new Mock<ILogger<CommonController>>();
 
-        //    List<UiPageMetadataDTO> uiPageDTOFields = new List<UiPageMetadataDTO>();
-        //    uiPageDTOFields.Add(new UiPageMetadataDTO { Id = 2, UiPageTypeId = 4, UiPageTypeName = null, UiControlTypeId = 33, UiControlTypeName = null, UiControlDisplayName = "mail", IsRequired = true, DataTypeId = 127, DataTypeName = "string" });
-        //    uiPageDTOFields.Add(new UiPageMetadataDTO { Id = 1, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Password", IsRequired = false, DataTypeId = 12, DataTypeName = "string" });
+            _commonService = new SampleService(commonRepository.Object, igenericRepository.Object, iGenericRepositoryPageType.Object, genericRepositoryuipageData.Object, iGenericRepositoryPageMetaData.Object, iGenericRepositoryPageValidation.Object, uiPageMetadataCharacteristicsRepository.Object, uiPageMetadataRepository.Object, workflowActivityService.Object, webHostEnvironment.Object, uiPageMetadataCharacteristicsService.Object);
+            var controller = new CommonController(_googleDriveService, logger.Object, _commonService, _mapper, _workflowStageService);
 
-        //    var expectedResult = new RecordDTO { Id = 5, UiPageId = 10, Fields = uiPageDTOFields, FieldValues = expectField };
 
-        //    value.Should().BeEquivalentTo(expectedResult);
-        //}
+      
+
+
+            var createResult = (OkObjectResult)controller.Edit(record);
+            var value = (RecordDTO)createResult.Value;
+
+            List<UiPageDataDTO> expectField = new List<UiPageDataDTO>();
+            IList<Web.UI.Models.ValidationMessage> validationMessage = new List<Web.UI.Models.ValidationMessage>();
+            IEnumerable<Web.UI.Models.Node<LayoutDTO>> layoutDTO = new List<Web.UI.Models.Node<LayoutDTO>>();
+
+            List<UiPageMetadataDTO> uiPageDTOFields = new List<UiPageMetadataDTO>();
+
+            var expectedResult = new RecordDTO { Id = 1, UiPageTypeId = 0, ModuleId = 5, WorkflowStageId = 0, Fields = uiPageDTOFields, FieldValues = expectField, Layout = layoutDTO, ErrorMessage = validationMessage };
+
+            value.Should().BeEquivalentTo(expectedResult);
+        }
 
 
         ///* 
@@ -908,66 +897,54 @@ namespace TestingAndCalibrationLabs.Tests
         // * step - passing parameter = Record of RecordDTO 
         // * ExpectedResult = RecordDTO record with error Message 
         //*/
-        //[Test]
-        //public void Common_controller_EDIT_POSt_Wrong_value_Test()
-        //{
-        //    List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
-        //    uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 1, Value = "rites" });
-        //    uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 2, Value = "87" });
+        [Test]
+        public void Common_controller_EDIT_POSt_Wrong_value_Test()
+        {
 
-        //    List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
-        //    uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 1, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Password", IsRequired = false, DataTypeId = 12, DataTypeName = "string" });
-        //    uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 2, UiPageTypeId = 4, UiPageTypeName = null, UiControlTypeId = 33, UiControlTypeName = null, UiControlDisplayName = "mail", IsRequired = true, DataTypeId = 127, DataTypeName = "string" });
+            List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
+            uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 3, Name = "aman", UiPageTypeId = 8, UiPageTypeName = "deepak", UiControlTypeId = 8, UiControlTypeName = "jjf", IsRequired = true, UiControlDisplayName = "jkf", DataTypeId = 7, DataTypeName = "ddd", LookupCategoryId = 5, LookupCategoryName = "kji", ControlCategoryName = "DataControl", ControlCategoryId = 6, UiControlCategoryTypeId = 4, UiControlCategoryTypeName = "DataControl", UiControlCategoryTypeTemplate = "jio", ParentId = 3, ModuleId = 9, Position = 8, MultiValueControl = true, MetadataModuleBridgeUiControlDisplayName = "kji", Orders = 8 });
 
-
-        //    List<UiPageDataModel> uiPageDataModels = new List<UiPageDataModel>();
-        //    uiPageDataModels.Add(new UiPageDataModel { Id = 13, UiPageId = 12, RecordId = 5, UiPageMetadataId = 1, Value = "Ritesh1244" });
-        //    uiPageDataModels.Add(new UiPageDataModel { Id = 5, UiPageId = 12, RecordId = 5, UiPageMetadataId = 2, Value = "Ritesh44" });
-
-        //    genericRepositoryuipageData.Setup(x => x.Get<int>("RecordId", It.IsAny<int>())).Returns(uiPageDataModels);
-        //    iGenericRepositoryPageValidation.Setup(x => x.Get()).Returns(validationlist);
-        //    commonRepository.Setup(x => x.GetUiPageValidations(It.IsAny<int>())).Returns(validations);
-        //    igenericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new RecordModel { Id = 12, UiPageId = 10, Fields = null, FieldValues = null });
+            List<UiPageDataModel> uipageDataModels = new List<UiPageDataModel>();
+            uipageDataModels.Add(new UiPageDataModel { Id = 11, UiPageTypeId = 11, UiPageMetadataId = 11, RecordId = 6, Value = "Name", SubRecordId = 7, MultiValueControl = true });
+            uipageDataModels.Add(new UiPageDataModel { Id = 41, UiPageTypeId = 51, UiPageMetadataId = 51, RecordId = 56, Value = "Nam5e", SubRecordId = 47, MultiValueControl = true });
 
 
+            //validation List
 
-        //    foreach (var item in validationlist)
-        //    {
-        //        iGenericRepositoryPageValidation.Setup(x => x.Get(item.Id)).Returns(item);
-        //    }
-        //    foreach (var item in uiPageMetaDataModels)
-        //    {
-        //        iGenericRepositoryPageMetaData.Setup(x => x.Get(item.Id)).Returns(item);
-        //    }
-
-        //    List<UiPageMetadataDTO> uiPageMetadataDTO = new List<UiPageMetadataDTO>();
-        //    var record = new RecordDTO { Id = 5, UiPageId = 12, Fields = uiPageMetadataDTO, FieldValues = uipagedata };
-        //    var logger = new Mock<ILogger<CommonController>>();
-
-        //    _commonService = new SampleService(commonRepository.Object, igenericRepository.Object, iGenericRepositoryPageType.Object, genericRepositoryuipageData.Object, iGenericRepositoryPageMetaData.Object, iGenericRepositoryPageValidation.Object);
-        //    var controller = new CommonController(logger.Object, _commonService, _mapper);
-
-
-        //    commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(new RecordModel { UiPageId = 12, Id = 1, Fields = uiPageMetaDataModels, FieldValues = null });
+            iGenericRepositoryPageValidation.Setup(x => x.Get()).Returns(validationlist);
+            commonRepository.Setup(x => x.GetUiPageValidations(It.IsAny<int>())).Returns(validations);
+            igenericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new RecordModel { Id = 1, UiPageTypeId = 12, Fields = null, ModuleId = 5, WorkflowStageId = 0, FieldValues = null });
+            commonRepository.Setup(x => x.GetPageIdBasedOnOrder(It.IsAny<int>())).Returns(0);
+            commonRepository.Setup(x => x.GetPageIdBasedOnCurrentWorkflowStage(It.IsAny<int>())).Returns(0);
+            commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(uiPageMetaDataModels);
+            commonRepository.Setup(x => x.GetPageData(It.IsAny<int>())).Returns(uipageDataModels);
 
 
 
-        //    var createResult = (BadRequestObjectResult)controller.Edit(record);
-        //    var value = (RecordDTO)createResult.Value;
 
-        //    List<UiPageDataDTO> expectField = new List<UiPageDataDTO>();
-        //    expectField.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 1, Value = "rites" });
-        //    expectField.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 2, Value = "87" });
+            var record = new RecordDTO { Id = 1, UiPageTypeId = 12, Fields = null, ModuleId = 5, WorkflowStageId = 0, FieldValues = null };
+            var logger = new Mock<ILogger<CommonController>>();
 
-        //    List<UiPageMetadataDTO> uiPageDTOFields = new List<UiPageMetadataDTO>();
-        //    uiPageDTOFields.Add(new UiPageMetadataDTO { Id = 2, UiPageTypeId = 4, UiPageTypeName = null, UiControlTypeId = 33, UiControlTypeName = null, UiControlDisplayName = "mail", IsRequired = true, DataTypeId = 127, DataTypeName = "string" });
-        //    uiPageDTOFields.Add(new UiPageMetadataDTO { Id = 1, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Password", IsRequired = false, DataTypeId = 12, DataTypeName = "string" });
+            _commonService = new SampleService(commonRepository.Object, igenericRepository.Object, iGenericRepositoryPageType.Object, genericRepositoryuipageData.Object, iGenericRepositoryPageMetaData.Object, iGenericRepositoryPageValidation.Object, uiPageMetadataCharacteristicsRepository.Object, uiPageMetadataRepository.Object, workflowActivityService.Object, webHostEnvironment.Object, uiPageMetadataCharacteristicsService.Object);
+            var controller = new CommonController(_googleDriveService, logger.Object, _commonService, _mapper, _workflowStageService);
 
-        //    var expectedResult = new RecordDTO { Id = 5, UiPageId = 10, Fields = uiPageDTOFields, FieldValues = expectField };
 
-        //    value.Should().NotBeEquivalentTo(expectedResult);
 
-        //}
+
+
+            var createResult = (OkObjectResult)controller.Edit(record);
+            var value = (RecordDTO)createResult.Value;
+
+            List<UiPageDataDTO> expectField = new List<UiPageDataDTO>();
+            IList<Web.UI.Models.ValidationMessage> validationMessage = new List<Web.UI.Models.ValidationMessage>();
+            IEnumerable<Web.UI.Models.Node<LayoutDTO>> layoutDTO = new List<Web.UI.Models.Node<LayoutDTO>>();
+
+            List<UiPageMetadataDTO> uiPageDTOFields = new List<UiPageMetadataDTO>();
+
+            var expectedResult = new RecordDTO { Id = 0, UiPageTypeId = 0, ModuleId = 5, WorkflowStageId = 0, Fields = uiPageDTOFields, FieldValues = expectField, Layout = layoutDTO, ErrorMessage = validationMessage };
+
+            value.Should().NotBeEquivalentTo(expectedResult);
+        }
 
 
 
@@ -977,44 +954,44 @@ namespace TestingAndCalibrationLabs.Tests
         // * ExpectedResult = It will return the record of RecordDTO
         // * 
         // */
-        //[Test]
-        //public void common_Delete_Test()
-        //{
-        //    List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
-        //    uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 5, UiPageTypeId = 10, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Year", IsRequired = false, DataTypeId = 12, DataTypeName = "int" });
+        [Test]
+        public void common_Delete_Test()
+        {
+            //List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
+            //uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 3, Name = "aman", UiPageTypeId = 8, UiPageTypeName = "deepak", UiControlTypeId = 8, UiControlTypeName = "jjf", IsRequired = true, UiControlDisplayName = "jkf", DataTypeId = 7, DataTypeName = "ddd", LookupCategoryId = 5, LookupCategoryName = "kji", ControlCategoryName = "DataControl", ControlCategoryId = 6, UiControlCategoryTypeId = 4, UiControlCategoryTypeName = "DataControl", UiControlCategoryTypeTemplate = "jio", ParentId = 3, ModuleId = 9, Position = 8, MultiValueControl = true, MetadataModuleBridgeUiControlDisplayName = "kji", Orders = 8 });
 
-        //    List<UiPageDataModel> uiPageDataModels = new List<UiPageDataModel>();
+            // List<UiPageDataModel> uipageDataModels = new List<UiPageDataModel>();
+            // uipageDataModels.Add(new UiPageDataModel { Id = 11, UiPageTypeId = 11, UiPageMetadataId = 11, RecordId = 6, Value = "Name", SubRecordId = 7, MultiValueControl = true });
+            // uipageDataModels.Add(new UiPageDataModel { Id = 41, UiPageTypeId = 51, UiPageMetadataId = 51, RecordId = 56, Value = "Nam5e", SubRecordId = 47, MultiValueControl = true });
 
-        //    uiPageDataModels.Add(new UiPageDataModel { Id = 3, UiPageId = 10, RecordId = 14, UiPageMetadataId = 4, Value = "Ritesh1244" });
-        //    uiPageDataModels.Add(new UiPageDataModel { Id = 5, UiPageId = 10, RecordId = 14, UiPageMetadataId = 5, Value = "Ritesh44" });
-
-
-        //    igenericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new RecordModel { Id = 12, UiPageId = 10, Fields = null, FieldValues = null });
-        //    commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(new RecordModel { Id = 0, UiPageId = 10, Fields = uiPageMetaDataModels, FieldValues = null });
+            //   igenericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new RecordModel { Id = 1, UiPageTypeId = 12, Fields = null, ModuleId = 5, WorkflowStageId = 0, FieldValues = null });
+            //commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(uiPageMetaDataModels);
 
 
-        //    genericRepositoryuipageData.Setup(x => x.Get<int>("RecordId", It.IsAny<int>())).Returns(uiPageDataModels);
+            // genericRepositoryuipageData.Setup(x => x.Get<int>("RecordId", It.IsAny<int>())).Returns(uipageDataModels);
+            igenericRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
 
+            var logger = new Mock<ILogger<CommonController>>();
 
-        //    var logger = new Mock<ILogger<CommonController>>();
+            _commonService = new SampleService(commonRepository.Object, igenericRepository.Object, iGenericRepositoryPageType.Object, genericRepositoryuipageData.Object, iGenericRepositoryPageMetaData.Object, iGenericRepositoryPageValidation.Object, uiPageMetadataCharacteristicsRepository.Object, uiPageMetadataRepository.Object, workflowActivityService.Object, webHostEnvironment.Object, uiPageMetadataCharacteristicsService.Object);
+            var controller = new CommonController(_googleDriveService, logger.Object, _commonService, _mapper, _workflowStageService);
 
-        //    _commonService = new SampleService(commonRepository.Object, igenericRepository.Object, iGenericRepositoryPageType.Object, genericRepositoryuipageData.Object, iGenericRepositoryPageMetaData.Object, iGenericRepositoryPageValidation.Object);
-        //    var controller = new CommonController(logger.Object, _commonService, _mapper);
-
-        //    var result = (ViewResult)controller.Delete(12);
+            var result = (RedirectToActionResult)controller.Delete(12,5);
 
         //    List<UiPageMetadataDTO> uiPageMetadataDTO = new List<UiPageMetadataDTO>();
-        //    uiPageMetadataDTO.Add(new UiPageMetadataDTO { Id = 5, UiPageTypeId = 10, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Year", IsRequired = false, DataTypeId = 12, DataTypeName = "int" });
+        ////   uiPageMetadataDTO.Add(new UiPageMetadataDTO { Id = 3, Name = "aman", UiPageTypeId = 8, UiPageTypeName = "deepak", UiControlTypeId = 8, UiControlTypeName = "jjf", IsRequired = true, UiControlDisplayName = "jkf", DataTypeId = 7, DataTypeName = "ddd", LookupCategoryId = 5, LookupCategoryName = "kji", ControlCategoryName = "DataControl", ControlCategoryId = 6, UiControlCategoryTypeId = 4, UiControlCategoryTypeName = "DataControl", UiControlCategoryTypeTemplate = "jio", ParentId = 3, ModuleId = 9, Position = 8, MultiValueControl = true, MetadataModuleBridgeUiControlDisplayName = "kji", Orders = 8 });
 
-        //    List<UiPageDataDTO> uiPageDTO = new List<UiPageDataDTO>();
-        //    uiPageDTO.Add(new UiPageDataDTO { UiPageId = 10, UiPageMetadataId = 4, Value = "Ritesh1244" });
-        //    uiPageDTO.Add(new UiPageDataDTO { UiPageId = 10, UiPageMetadataId = 5, Value = "Ritesh44" });
+        //   List<UiPageDataDTO> expectField = new List<UiPageDataDTO>();
+        //  //  expectField.Add(new UiPageDataDTO { Id = 11, UiPageTypeId = 11, UiPageMetadataId = 11, RecordId = 6, Value = "Name", SubRecordId = 7, MultiValueControl = true });
 
-        //    var expectedResult = new RecordDTO { Id = 12, UiPageId = 10, Fields = uiPageMetadataDTO, FieldValues = uiPageDTO };
+        //    IList<Web.UI.Models.ValidationMessage> validationMessage = new List<Web.UI.Models.ValidationMessage>();
+        //    IEnumerable<Web.UI.Models.Node<LayoutDTO>> layoutDTO = new List<Web.UI.Models.Node<LayoutDTO>>();
 
-        //    result.Model.Should().BeEquivalentTo(expectedResult);
+           // var expectedResult = new RecordDTO { Id = 0, UiPageTypeId = 0, ModuleId = 0, WorkflowStageId = 0, Fields = null, FieldValues = null, Layout = null, ErrorMessage = null };
+            var expectedResult = "index";
+            result.ActionName.Should().BeEquivalentTo(expectedResult);
 
-        //}
+        }
 
         ///*
         // * Description: This Method is to Delete the Record Of the Passed Id 
@@ -1037,10 +1014,10 @@ namespace TestingAndCalibrationLabs.Tests
 
         //}
 
-        ///*
-        // * Description :Passing Null to Validate the Method 
-        // * Expected Result : Error 404 
-        // */
+        /*
+         * Description :Passing Null to Validate the Method 
+         * Expected Result : Error 404 
+         */
         //[Test]
         //public void Common_Delete_Post_NUll_Val()
         //{
