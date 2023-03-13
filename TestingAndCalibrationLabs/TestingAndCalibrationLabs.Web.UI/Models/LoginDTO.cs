@@ -14,5 +14,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        
     }
 }
