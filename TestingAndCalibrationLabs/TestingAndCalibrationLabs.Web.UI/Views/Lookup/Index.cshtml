@@ -1,8 +1,11 @@
-﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.LookupCategoryDTO>
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.LookupDTO>
+
 @{
     ViewData["Title"] = "Index";
 }
-<h1>LookupCategory</h1>
+
+<h1>Lookup</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -15,25 +18,31 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    <h6><b>Name</b></h6>
                 </th>
-               
                 <th>
-                    Actions
+                    <h6><b>LookupCategoryId</b></h6>
                 </th>
+
+                <th> <h6><b>Actions</b></h6></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
+
                     <td>
-                        <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="LookupCategory" asp-action="Edit" asp-route-id="@item.Id"></a>|
-                        <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="LookupCategory" asp-action="Delete" asp-route-id="@item.Id"></a>
-                  </td>
+                        @Html.DisplayFor(modelItem => item.LookupCategoryId)
+                    </td>
+                    <td>
+                        <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="Lookup" asp-action="Edit" asp-route-id="@item.Id"></a>|
+                        <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="Lookup" asp-action="Delete" asp-route-id="@item.Id"></a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -61,7 +70,7 @@
         ],
         scrollX: true,
     });
-    $('#gridui').keyup(function () {
+    $('#gridsearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
 </script>
