@@ -239,6 +239,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(new ValidationMessage { Reason = "Email should have a fromat", Severity = ValidationSeverity.Error, SourceId = "Email" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
+            if (!Helpers.ValidateMinimumSpecialCharsemail(Email, securityParameter.MinSpecialChars))
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the email should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error, SourceId = "Email" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
             return new RequestResult<bool>(validationMessages);
 
         }

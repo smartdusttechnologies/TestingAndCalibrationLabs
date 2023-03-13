@@ -240,13 +240,28 @@ namespace TestingAndCalibrationLabs.Business.Common
         /// <summary>
         /// Method to validate Special charcs in password
         /// </summary>
-        public static bool ValidateMinimumSpecialChars(string password, int expectedCount)
+        public static bool ValidateMinimumSpecialChars(string password,int expectedCount)
         {
             int minSpecialCharCount = 0;
             char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' };
             foreach (char c in special)
             {
                 if (password.IndexOf(c) != -1)
+                {
+                    minSpecialCharCount++;
+                    if (expectedCount == minSpecialCharCount)
+                        return true;
+                }
+            }
+            return false;
+        }
+        public static bool ValidateMinimumSpecialCharsemail(string Email, int expectedCount)
+        {
+            int minSpecialCharCount = 0;
+            char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' };
+            foreach (char c in special)
+            {
+                if (Email.IndexOf(c) != -1)
                 {
                     minSpecialCharCount++;
                     if (expectedCount == minSpecialCharCount)
