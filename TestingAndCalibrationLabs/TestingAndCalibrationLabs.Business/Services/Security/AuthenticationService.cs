@@ -206,7 +206,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-            var ValidateReEnterResult = _securityParameterService.ValidateReEnterPasswordPolicy(user.OrgId, ReEnterPassword);
+            var ValidateReEnterResult = _securityParameterService.ValidateReEnterPasswordPolicy(user.OrgId, ReEnterPassword,password);
             var validationEmailResult = _securityParameterService.ValidateEmailPolicy(user.OrgId, Email);
             var ValidateMobilePolicy = _securityParameterService.ValidateMobilePolicy(user.OrgId, Mobile);
             var ValidateOrganizationId = _securityParameterService.ValidateOrganizations(user.OrgId, Organizations);

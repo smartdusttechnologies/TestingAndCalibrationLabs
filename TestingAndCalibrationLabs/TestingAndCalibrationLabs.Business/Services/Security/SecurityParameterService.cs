@@ -125,13 +125,13 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
-        public RequestResult<bool> ValidateReEnterPasswordPolicy(int orgId, string ReEnterPassword)
+        public RequestResult<bool> ValidateReEnterPasswordPolicy(int orgId, string ReEnterPassword, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             try
             {
                 var passwordPolicy = _securityParameterRepository.Get(orgId);
-                var validatePasswordResult = ValidateReEnterPassword(ReEnterPassword, passwordPolicy);
+                var validatePasswordResult = ValidateReEnterPassword(ReEnterPassword, password, passwordPolicy);
                 return (validatePasswordResult);
             }
             catch (Exception ex)
@@ -216,11 +216,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(validationMessages);
         }
-          private RequestResult<bool> ValidateReEnterPassword(string ReEnterPassword, SecurityParameter securityParameter)
+          private RequestResult<bool> ValidateReEnterPassword(string ReEnterPassword, string password, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
-           if (ReEnterPassword == null)
+           if (ReEnterPassword == null || ReEnterPassword !=password)
             {
 
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter confirm password ", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
@@ -246,10 +246,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
-            if (Mobile == null )
+            if (Mobile == null || Mobile.Length!=10 )
             {
 
-                validationMessages.Add(new ValidationMessage { Reason = "Please enter mobile number", Severity = ValidationSeverity.Error, SourceId = "Mobile" });
+                validationMessages.Add(new ValidationMessage { Reason = "Mobile number length is equal to 10", Severity = ValidationSeverity.Error, SourceId = "Mobile" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(validationMessages);
