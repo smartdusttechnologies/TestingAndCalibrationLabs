@@ -81,8 +81,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var lookupCategoryList = _lookupService.Get();
-            var lookupCategoryDatas = _mapper.Map<List<LookupModel>, List<LookupDTO>>(lookupCategoryList);
+            var lookupCategoryList = _lookupCategoryService.Get();
+            var lookupCategoryDatas = _mapper.Map<List<LookupCategoryModel>, List<LookupCategoryDTO>>(lookupCategoryList);
             ViewBag.LookupCategory = lookupCategoryDatas;
 
             var getByIdPageModel = _lookupService.GetById((int)id);
