@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<LookupModel>(@"select * from Lookup where LookupCategoryId = @LookupCategoryId", new { LookupCategoryId =lookupCategoryId}).ToList();
+            return db.Query<LookupModel>(@"select * from Lookup where LookupCategoryId = @LookupCategoryId and IsDeleted = 0", new { LookupCategoryId =lookupCategoryId}).ToList();
         }
     }
 }

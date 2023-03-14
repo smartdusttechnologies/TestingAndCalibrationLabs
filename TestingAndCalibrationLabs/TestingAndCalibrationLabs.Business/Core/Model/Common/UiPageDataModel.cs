@@ -8,9 +8,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     [DbTable("UiPageData")]
     public class UiPageDataModel : Entity
     {
-        public int UiPageId { get; set; }
-        
+        public int SubRecordId { get; set; }
+        public int UiPageTypeId { get; set; }
         public int UiPageMetadataId { get; set;}
+        public bool MultiValueControl { get; set; }
         private string _value;
         public string Value
         {

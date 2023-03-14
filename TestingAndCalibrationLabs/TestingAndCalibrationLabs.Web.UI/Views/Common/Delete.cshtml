@@ -22,8 +22,8 @@
         }
     </dl>
     <form asp-action="Delete">
-        <input type="hidden" asp-for="UiPageId" value="@Model.UiPageId"/>
+        <input type="hidden" asp-for="ModuleId" value="@Model.ModuleId"/>
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
+        <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
     </form>
 </div>

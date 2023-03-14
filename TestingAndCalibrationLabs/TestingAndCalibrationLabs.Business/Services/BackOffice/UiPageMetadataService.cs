@@ -22,6 +22,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
            
         }
+
+        #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
         /// </summary>
@@ -70,5 +72,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _uiPageMetadataRepository.Get();
         }
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }
