@@ -5,13 +5,12 @@ using TestingAndCalibrationLabs.Web.UI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using TestingAndCalibrationLabs.Business.Core.Model;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class HomeController : Controller
-    {
+    {   
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
@@ -28,12 +27,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Policy = PolicyTypes.Users.Manage)]
+       /// [Authorize(Policy = PolicyTypes.Users.Manage)]
         public IActionResult Index()
         {
-            return View();
+            // here hardcoding the ImageSlide values instead of accessing from the DB
+            var image = new List<ImageSlideModel>();
+            image.Add(new ImageSlideModel { Image = "https://thumbs.dreamstime.com/b/teamwork-bees-bridge-gap-bee-swarm-making-chain-to-combine-two-parts-one-metaphor-business-community-55767925.jpg", Header = "Aman", Paragraph = "Kumar" });
+            image.Add(new ImageSlideModel { Image = "https://thumbs.dreamstime.com/b/bandra-worli-sea-link-sunset-dadar-coast-51035486.jpg", Header = "Ritesh", Paragraph = "Raj" });
+            image.Add(new ImageSlideModel { Image = "https://thumbs.dreamstime.com/b/amaranth-love-lies-bleeding-chain-link-fence-29603774.jpg", Header = "Prem", Paragraph = "Star" });
+            
+        
+            return View(image);
+      
         }
-
+       
+        
         /// <summary>
         /// UI will get the information from the User
         /// </summary>
@@ -95,6 +103,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
         }
     }
 }

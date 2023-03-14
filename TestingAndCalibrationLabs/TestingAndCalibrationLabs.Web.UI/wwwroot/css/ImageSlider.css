@@ -1,0 +1,15 @@
+﻿
+@media screen and (min-width: 820px) {
+    .d-block {
+        width: 100%;
+        height: 500px !important;
+    }
+}
+.d-block {
+    height: auto;
+    width: 100%;
+}
+.carousel-inner {
+      width: auto;
+    max-height: 500px;
+}
