@@ -18,8 +18,8 @@
             
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
                    
-                    <select class="form-input width-full " name="ModuleId" id="Module" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
-                       <option disabled="disabled" selected></option>
+                    <select class="form-input" name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                       <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.Module)
                         {
                             <option value=@item.Id>@item.Name</option>
@@ -27,13 +27,13 @@
                     </select>
                     
                     
-                    <label for="Module" class="form-label">ModuleName</label>
+                    <label for="ModuleId" class="form-label">ModuleName</label>
                 </div>
             
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
 
-                    <select class="form-input width-full " name="UiNavigationCategoryId" id="UiNavigationCategory" onchange="this.setAttribute('value',this.value)" asp-for="UiNavigationCategoryId">
-                        <option disabled="disabled" selected></option>
+                    <select class="form-input width-full" name="UiNavigationCategoryId" id="UiNavigationCategoryId" onchange="this.setAttribute('value',this.value)" asp-for="UiNavigationCategoryId">
+                        <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.UiNavigationCategory)
                         {
                             <option value=@item.Id>@item.Name</option>
@@ -41,7 +41,7 @@
                     </select>
 
 
-                    <label for="UiNavigationCategory" class="form-label">UiNavigationCategoryName</label>
+                    <label for="UiNavigationCategoryId" class="form-label">UiNavigationCategoryName</label>
                 </div>
 
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">

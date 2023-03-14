@@ -20,7 +20,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// Ui Page Type Id reference from Ui page type.
         /// </summary>
 
-        [Required(ErrorMessage = "Please Select ModuleId")]
+        [Required(ErrorMessage = "Please Select Module Name")]
         public int ModuleId { get; set; }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Ui Navigation Category Id reference from UiNavigationCategory.
         /// </summary>
-        [Required(ErrorMessage = "Please Select UiNavigationCategoryId")]
+        [Required(ErrorMessage = "Please Select Ui Navigation Category Name")]
         public int UiNavigationCategoryId { get; set; }
 
         /// <summary>

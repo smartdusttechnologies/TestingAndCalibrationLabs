@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
@@ -66,6 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Create(int id)
         {
             List<ModuleModel> moduleType = _uiModuleService.Get();
+            moduleType = moduleType.Where(x => x.Id != (int)Helpers.None.Id).ToList();
             List<UiNavigationCategoryModel> navigationCategoryType = _uiPageNavigationCategoryServics.Get();
             var metadataList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(moduleType);
             var validationList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(navigationCategoryType);
