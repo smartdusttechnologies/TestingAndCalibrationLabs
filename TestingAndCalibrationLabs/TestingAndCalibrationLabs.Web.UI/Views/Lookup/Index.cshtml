@@ -21,7 +21,7 @@
                     <h6><b>Name</b></h6>
                 </th>
                 <th>
-                    <h6><b>LookupCategoryId</b></h6>
+                    <h6><b>LookupCategoryName</b></h6>
                 </th>
 
                 <th> <h6><b>Actions</b></h6></th>
@@ -37,7 +37,7 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.LookupCategoryId)
+                        @Html.DisplayFor(modelItem => item.LookupCategoryName)
                     </td>
                     <td>
                         <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="Lookup" asp-action="Edit" asp-route-id="@item.Id"></a>|

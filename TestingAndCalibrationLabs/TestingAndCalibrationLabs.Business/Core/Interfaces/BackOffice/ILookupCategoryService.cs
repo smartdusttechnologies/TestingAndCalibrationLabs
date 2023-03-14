@@ -15,10 +15,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         List<LookupCategoryModel> Get();
         /// <summary>
-        /// Get Record By Id From LookupCategory
+        /// Get All Records From LookupCategory
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
+       
         LookupCategoryModel GetById(int id);
         /// <summary>
         /// Insert Record In LookupCategory
@@ -38,6 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+
 
     }
 }
