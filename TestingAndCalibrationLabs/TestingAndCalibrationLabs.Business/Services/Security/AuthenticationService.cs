@@ -210,7 +210,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var validationEmailResult = _securityParameterService.ValidateEmailPolicy(user.OrgId, Email);
             var ValidateMobilePolicy = _securityParameterService.ValidateMobilePolicy(user.OrgId, Mobile);
             var ValidateOrganizationId = _securityParameterService.ValidateOrganizations(user.OrgId, Organizations);
-            var ValidateUserName = _securityParameterService.ValidateUserName(user.OrgId, UserName);
+            var ValidateUserName = _securityParameterService.ValidateUserName(UserName);
             var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, FirstName);
             var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, LastName);
             var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, Country);
