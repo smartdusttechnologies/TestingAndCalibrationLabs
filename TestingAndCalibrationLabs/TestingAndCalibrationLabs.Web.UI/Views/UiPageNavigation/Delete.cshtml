@@ -16,21 +16,21 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Url)
         </dt>
-         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModuleId)
-        </dt>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UiNavigationCategoryId)
-        </dt>
-
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Url)
         </dd>
+         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ModuleName)
+        </dt>
+
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModuleId)
+            @Html.DisplayFor(model => model.ModuleName)
         </dd>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UiNavigationCategoryId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UiNavigationCategoryName)
+        </dt>
+         <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UiNavigationCategoryName)
         </dd>
 
     </dl>
