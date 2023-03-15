@@ -37,9 +37,13 @@
                         @Html.DisplayFor(modelItem => item.Orders)
                     </td>
 
-                    <td>
+                   @* <td>
                         @Html.ActionLink("", "Edit", new { id=item.Id}, new{@class="fas fa-edit"}) |
                         @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
+                    </td>*@
+                    <td>
+                    <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="UiPageNavigationCategory" asp-action="Edit" asp-route-id="@item.Id"></a>|
+                    <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="UiPageNavigationCategory" asp-action="Delete" asp-route-id="@item.Id"></a>
                     </td>
                 </tr>
             }
