@@ -53,9 +53,9 @@
                     </td>
                 
             <td>
-                        @Html.ActionLink("", "Edit", new {  id=item.Id ,UiPageTypeId =item.UiPageTypeId ,WorkflowId = item.WorkflowId },new {@class="fas fa-edit" }) |
-                @Html.ActionLink("", "Delete", new {  id=item.Id  }, new{@class="fa fa-trash"})
-            </td>
+                        <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="WorkflowStage" asp-action="Edit" asp-route-id="@item.Id"></a>|
+                        <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="WorkflowStage" asp-action="Delete" asp-route-id="@item.Id"></a>
+                    </td>
         </tr>
 }
     </tbody>

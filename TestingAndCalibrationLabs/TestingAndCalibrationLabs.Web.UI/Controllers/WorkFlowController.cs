@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using System.Collections.Generic;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
@@ -51,6 +53,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageList = _moduleService.Get();
             var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
+           pages = pages.Where(x => x.Id != (int)Helpers.None.Id).ToList();
             ViewBag.module= pages;
 
             return base.View(new WorkflowDTO { Id = id });
