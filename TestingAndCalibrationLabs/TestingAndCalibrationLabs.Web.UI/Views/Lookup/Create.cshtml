@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                    <select class="form-input width-full black-border" name="LookupCategoryId" id="LookupCategory" onchange="this.setAttribute('value',this.value)" asp-for="LookupCategoryId">
+                    <select class="form-input width-full black-border" name="LookupCategoryId" id="Lookup" onchange="this.setAttribute('value',this.value)" asp-for="LookupCategoryId">
                         <option disabled="disabled" selected>....</option>
                         @foreach (var item in ViewBag.LookupCategory)
                         {
