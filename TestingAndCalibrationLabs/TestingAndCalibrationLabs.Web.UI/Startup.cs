@@ -35,7 +35,7 @@ namespace TestingAndCalibrationLabs.Web.UI
 
         public IConfiguration Configuration { get; }
         public static TokenValidationParameters tokenValidationParameters;
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -57,7 +57,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             //PolicyBases Authorization
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Add); });
+                     
+                     options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Add); });
                 options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Edit); });
                 options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Read); });
                 //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });
@@ -78,8 +79,12 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IRoleService, RoleService>();
+            //Authorization Handler Initalization Start
             services.AddScoped<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, UiControlTypeAuthorizationHandler>();
             services.AddScoped<IAuthorizationHandler, UiPageMetadataAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, CommonAuthorizationHandler>();
+            //Authorization Handler Initalization End
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
             services.AddScoped<IOrganizationService, OrganizationService>();
@@ -148,6 +153,7 @@ namespace TestingAndCalibrationLabs.Web.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -158,7 +164,15 @@ namespace TestingAndCalibrationLabs.Web.UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            //app.Use(async (context, next) =>
+            //{
+            //    await next();
+            //    if (context.Response.StatusCode == 401)
+            //    {
+            //        context.Request.Path = "/Home/Forbidden";
+            //        await next();
+            //    }
+            //});
             tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!

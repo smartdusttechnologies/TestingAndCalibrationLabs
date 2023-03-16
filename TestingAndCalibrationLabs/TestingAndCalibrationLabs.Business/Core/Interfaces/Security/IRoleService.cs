@@ -16,11 +16,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Abstract method to get Role by Organization including claims
         /// </summary>
-        List<GroupClaim> GetGroupClaim(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
-        List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
-        List<UserClaim> GetUserClaims(int organizationId, int userId, PermissionModuleType permissionModuleType, CustomClaimType claimType);
+        
         //TODO: move this to user Repository.
         UserModel GetUserByUserName(string userName);
         //List<string> GetRequiredClaimsForModule(PermissionModuleType permissionModuleType);
+        List<GroupClaim> GetGroupClaims(int organizationId, int userId, string moduleId, string stageId, CustomClaimType claimType);
+        List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, string moduleId, string stageId, CustomClaimType claimType);
+        List<UserClaim> GetUserClaims(int organizationId, int userId, string moduleId, string stageId, CustomClaimType claimType);
     }
 }

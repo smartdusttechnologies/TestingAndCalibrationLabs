@@ -8,6 +8,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// </summary>
     public interface IWorkflowStageService
     {
+        WorkflowStageModel GetStage(int moduleId, int stageId);
         /// <summary>
         /// Get All Record From Module
         /// </summary>

@@ -164,36 +164,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
             return insertedRecordId;
         }
-        /// <summary>
-        /// Get Page Id Based On Current Workflow Stage 
-        /// </summary>
-        /// <param name="stageId"></param>
-        /// <returns></returns>
-        public int GetPageIdBasedOnCurrentWorkflowStage(int stageId)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<int>(@"select Top(1) ws.UiPageTypeId
-                                                          From  WorkflowStage ws 
-                                                   where ws.IsDeleted = 0 and ws.Id = @Id", new { Id = stageId }).First();
-        }
-        /// <summary>
-        /// Get Page Id Based On Order And Module Id
-        /// </summary>
-        /// <param name="moduleId"></param>
-        /// <returns></returns>
-        public int GetPageIdBasedOnOrder(int moduleId)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<int>(@"Select  ws.UiPageTypeId
-                                                    From [Module] m
-													inner join Workflow w on m.Id = w.ModuleId
-													inner join [WorkflowStage] ws on w.Id = ws.WorkflowId
-                                                where m.Id = @moduleId
-												and ws.Orders = 0
-                                                    and m.IsDeleted = 0 
-													and w.IsDeleted = 0
-													and ws.IsDeleted = 0", new { moduleId }).FirstOrDefault();
-        }
+        
         /// <summary>
         /// Get Workflow Stage Based on Order And Module Id
         /// </summary>

@@ -205,6 +205,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public ActionResult DeleteMultiValue(RecordModel record)
         {
+            
             var result = _commonService.DeleteMultiValue(record);
             if (result.IsSuccessful)
             {

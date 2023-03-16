@@ -96,5 +96,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
+        [Route("401")]
+        public IActionResult Forbidden() => View();
     }
 }
