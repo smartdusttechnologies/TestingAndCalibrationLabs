@@ -17,7 +17,7 @@ BEGIN
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),
+               
 			   
 			   (1, N'Cube Testing', 1, 0),
 			   
@@ -29,7 +29,7 @@ BEGIN
 			   (6, N'Ui Page Metadata', 1, 0),
 			   (7, N'Ui Page Validation',1,0),
 			   (8, N'Ui Page Navigation',1,0),
-			   (9, N'Ui Page Category',1,0)
+			   (9, N'Ui Nav Category',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
