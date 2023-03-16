@@ -75,10 +75,10 @@
         lengthMenu: [
             [5, 10, 25, 50, -1],
             [5, 10, 25, 50, 'All'],
-        ]
-            scrollX: true,
+        ],
+        scrollX: true,
     });
-    $('#gridui').keyup(function () {
+    $('#gridsearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
 </script>
