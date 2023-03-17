@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Mysqlx.Session;
 using MySqlX.XDevAPI.Common;
 using NUnit.Framework;
 using System;
@@ -105,7 +106,7 @@ namespace TestingAndCalibrationLabs.Tests
             // genericRepository.Setup(x => x.Update(It.IsAny<int>())).Returns(new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" });
 
             // genericRepository.Setup(x => x.Update()).Returns(applicationModel);
-            genericRepository.Setup(x => x.Update(lookupModel)).Returns(0);
+            genericRepository.Setup(x => x.Update(lookupModel)).Throws(new NullReferenceException());
 
 
             var applicationDTO = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
@@ -113,18 +114,19 @@ namespace TestingAndCalibrationLabs.Tests
             _applicationService = new ApplicationService(genericRepository.Object);
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var createResult =(RedirectToActionResult) controller.Edit(applicationDTO);
-              // var value = (ApplicationDTO)createResult.Value;
+            var createResult = (RedirectToActionResult)controller.Edit(applicationDTO);
+            // var value = (ApplicationDTO)createResult.Value;
             //  var expectField = new List<ApplicationDTO>();
 
             //List<ApplicationDTO> applicationDT = new List<ApplicationDTO>();
             //applicationDT.Add(new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" });
-           // ApplicationDTO lookupModela = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
+            // ApplicationDTO lookupModela = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
 
+           // Assert.AreEqual("Index", createResult.ActionName);
+            //Assert.AreEqual("Errors", createResult.ControllerName);
+             var expectedResult = "Index";
 
-            var expectedResult = 0;
-
-            createResult.Should().BeEquivalentTo(expectedResult);
+             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
         }
         [Test]
@@ -152,10 +154,9 @@ namespace TestingAndCalibrationLabs.Tests
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
             var createResult = (RedirectToActionResult)controller.Create(applicationDTO);
+            var expectedResult = "Index";
 
-            var expectedResult =0;
-
-            createResult.Should().BeEquivalentTo(expectedResult);
+            createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
         }
         [Test]
