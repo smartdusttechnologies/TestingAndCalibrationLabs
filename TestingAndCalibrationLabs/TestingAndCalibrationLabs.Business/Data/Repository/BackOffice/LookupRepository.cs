@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         }
         /// <summary>
-        /// Insert Record in Module
+        /// Insert Record in Lookup
         /// </summary>
         /// <param name="lookupModel"></param>
         /// <returns></returns>
@@ -37,7 +37,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, lookupModel);
         }
         /// <summary>
-        /// Getting All Records From Module
+        /// Getting All Records From Lookup
         /// </summary>
         /// <returns></returns>
         public List<LookupModel> Get()
@@ -58,7 +58,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     ").ToList();
         }
         /// <summary>
-        /// Getting Record By Id Module
+        /// Getting Record By Id Lookup
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return lookupCategoryId;
         }
         /// <summary>
-        /// Edit Record For Module 
+        /// Edit Record For Lookup 
         /// </summary>
         /// <param name="lookupModel"></param>
         /// <returns></returns>
@@ -96,7 +96,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, lookupModel);
         }
         /// <summary>
-        /// Delete Record From Module
+        /// Delete Record From Lookup
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

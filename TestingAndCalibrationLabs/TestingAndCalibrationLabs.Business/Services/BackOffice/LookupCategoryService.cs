@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
         #region Public methods
         /// <summary>
-        /// Insert Record In Application
+        /// Insert Record In LookupCategory
         /// </summary>
         /// <param name="lookupCategoryModel"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
-        /// Delete Record From Application
+        /// Delete Record From LookupCategory
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
-        /// Edit Record From Application
+        /// Edit Record From LookupCategory
         /// </summary>
         /// <param name="lookupCategoryModel"></param>
         /// <returns></returns>
@@ -51,7 +51,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
-        /// Get All Records From Application
+        /// Get All Records From LookupCategory
         /// </summary>
         /// <returns></returns>
         public List<LookupCategoryModel> Get()
@@ -60,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
-        /// Get Record by Id For Application
+        /// Get Record by Id For LookupCategory
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

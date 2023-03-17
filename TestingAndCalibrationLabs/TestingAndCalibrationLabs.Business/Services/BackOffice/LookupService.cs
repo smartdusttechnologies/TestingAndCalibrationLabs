@@ -21,7 +21,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _lookupRepository = lookupRepository;
         }
         /// <summary>
-        /// Get All Records From Module
+        /// Get All Records From Lookup
         /// </summary>
         /// <returns></returns>
         public List<LookupModel> Get()
@@ -29,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _lookupRepository.Get();
         }
         /// <summary>
-        /// Insert Record In Module
+        /// Insert Record In Lookup
         /// </summary>
         /// <param name="lookupModel"></param>
         /// <returns></returns>
@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// Edit Record From Module
+        /// Edit Record From Lookup
         /// </summary>
         /// <param name="lookupModel"></param>
         /// <returns></returns>
@@ -49,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// Get Record by Id For Module
+        /// Get Record by Id For Lookup
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -59,7 +59,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _lookupRepository.GetById(id);
         }
         /// <summary>
-        /// Delete Record From Module
+        /// Delete Record From Lookup
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

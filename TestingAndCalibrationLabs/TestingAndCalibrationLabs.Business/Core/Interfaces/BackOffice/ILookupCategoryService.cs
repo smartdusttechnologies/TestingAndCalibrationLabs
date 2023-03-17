@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RequestResult<int> Update(LookupCategoryModel lookupCategoryModel);
         /// <summary>
-        /// Delete Record From Ui Page Type
+        /// Delete Record From LookupCategory
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

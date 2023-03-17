@@ -62,7 +62,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(pageData);
         }
         /// <summary>
-        /// To Edit Record In Application
+        /// To Edit Record In LookupCategory
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -92,7 +92,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         /// <summary>
-        /// To Create Record In Application
+        /// To Create Record In LookupCategory
         /// </summary>
         /// <param name="LookupCategoryDTO"></param>
         /// <returns></returns>
@@ -133,7 +133,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         /// <summary>
-        /// To Delete Record In Application
+        /// To Delete Record In LookupCategory
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
