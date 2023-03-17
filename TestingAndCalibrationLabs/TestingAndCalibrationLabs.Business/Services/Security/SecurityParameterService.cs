@@ -93,13 +93,13 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
-        public RequestResult<bool> ValidateUserName(string UserName)
+        public RequestResult<bool> ValidateUserName(int orgId,string UserName)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             try
             {
-                //var UserNamePolicy = _securityParameterRepository.Get(orgId);
-                var validateUserNameResult = ValidateUserName(UserName);
+                var UserNamePolicy = _securityParameterRepository.Get(orgId);
+                var validateUserNameResult = ValidateUserName(UserName, UserNamePolicy);
                 return (validateUserNameResult);
             }
             catch (Exception ex)

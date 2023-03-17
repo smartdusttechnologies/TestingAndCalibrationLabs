@@ -9,7 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RequestResult<bool> ValidateEmailPolicy(int orgId, string Email);
         RequestResult<bool> ValidateMobilePolicy(int orgId, string Mobile);
         RequestResult<bool> ValidateReEnterPasswordPolicy(int orgId, string ReEnterPassword,string password);
-        RequestResult<bool> ValidateUserName(string UserName);
+        RequestResult<bool> ValidateUserName(int orgId, string UserName);
 
         RequestResult<bool> ValidateFirstName(int orgId, string FirstName);
         RequestResult<bool> ValidateLastName(int orgId, string LastName);
