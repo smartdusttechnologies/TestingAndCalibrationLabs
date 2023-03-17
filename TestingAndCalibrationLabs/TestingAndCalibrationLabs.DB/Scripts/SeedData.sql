@@ -22,7 +22,6 @@ BEGIN
 			   (1, N'Cube Testing', 1, 0),
 			   
 			   (2, N'Water Testing', 1, 0),
-			   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
