@@ -20,12 +20,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="lookupService"></param>
         /// <param name="mapper"></param>
         /// <param name="lookupCategoryService"></param>
-        //public LookupController(ILookupService lookupService,IListSorterService listSorter,IMapper mapper)
-        //{
-        //    _lookupService = lookupService;
-        //    _listSorter = listSorter;
-        //    _mapper = mapper;
-        //}
+       
         public LookupController(IMapper mapper, ILookupService lookupService, ILookupCategoryService lookupCategoryService)
         {
             _lookupService = lookupService;
@@ -45,27 +40,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<LookupModel>, List<LookupDTO>>(page);
             return View(pageData.AsEnumerable());
         }
-        //[HttpPost]
-        //public IActionResult LookupByCategory(int categoryName)
-        //{
-        //    var lookupList = _lookupService.Get();
-        //    var lookupByCategory = lookupList.Where(x=>x.LookupCategoryId == categoryName).ToList();
-        //    List<ListSorterModel> listSorterDTO = new List<ListSorterModel>();
-        //    foreach (var item in lookupByCategory)
-        //    {
-        //        listSorterDTO.Add(new ListSorterModel { Id = item.Id, Name = item.Name });
-        //    }
-        //    var jsonFormated = _listSorter.SortListToJson(listSorterDTO);
-        //   var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
-        //    return Ok(jsonObjectConverted);
-        //}
-        //[HttpPost]
-        //public IActionResult LookupByCategoryId(int lookupCategoryId)
-        //{
-        //    var lookupList = _lookupService.GetByLookupCategoryId(lookupCategoryId);
-        //    var lookupListDTO = _mapper.Map<List<LookupModel>, List<LookupDTO>>(lookupList);
-        //    return Ok(lookupListDTO);
-        //}
 
         /// <summary>
         /// For Edit Records View
