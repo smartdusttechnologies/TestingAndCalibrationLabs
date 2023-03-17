@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentAssertions;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -37,33 +38,29 @@ namespace TestingAndCalibrationLabs.Tests
             _mapper = mapper;
 
 
-            //  var controller = new ApplicationController(_applicationService, _mapper);
-
         }
         [Test]
         public void Index_Method_Test()
         {
-        //    List<ApplicationModel> applicationModel = new List<ApplicationModel>();
-        //    applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
-        //    // applicationModel.Add(new ApplicationModel { Id = 46, Name = "Amane", Description = "Kiumar" });
+           List<ApplicationModel> applicationModel = new List<ApplicationModel>();
+            applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
+            applicationModel.Add(new ApplicationModel { Id = 46, Name = "Amane", Description = "Kiumar" });
 
 
             _applicationService = new ApplicationService(genericRepository.Object);
 
-
-            genericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
-
-
+                genericRepository.Setup(x => x.Get()).Returns(applicationModel);
+  
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
             var result = (ViewResult)controller.Index();
             //Expected Result
-            // List<ApplicationDTO> applicationDTO = new List<ApplicationDTO>();
-            //applicationDTO.Add(new ApplicationDTO { Id = 6, Name = "Aman", Description = "Kumar" });
-            ////applicationDTO.Add(new ApplicationDTO { Id = 46, Name = "Amane", Description = "Kiumar" });
+             List<ApplicationDTO> applicationDTO = new List<ApplicationDTO>();
+            applicationDTO.Add(new ApplicationDTO { Id = 6, Name = "Aman", Description = "Kumar" });
+            applicationDTO.Add(new ApplicationDTO { Id = 46, Name = "Amane", Description = "Kiumar" });
 
 
-            var ExpectedResult = new ApplicationDTO() { Id = 6, Name = "Aman", Description = "Kumar" };
+            var ExpectedResult = applicationDTO;
 
             result.Model.Should().BeEquivalentTo(ExpectedResult);
 
@@ -82,7 +79,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var result = (ViewResult)controller.Edit(6);
+            var result = (ViewResult)controller.Edit(8);
             //Expected Result
             //   List<ApplicationDTO> applicationDTO = new List<ApplicationDTO>();
             // applicationDTO.Add(new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" });
@@ -97,11 +94,18 @@ namespace TestingAndCalibrationLabs.Tests
         public void Edit_post_Test()
         {
 
-            List<ApplicationModel> applicationModel = new List<ApplicationModel>();
-            applicationModel.Add(new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" });
+            //List<ApplicationModel> applicationModel = new List<ApplicationModel>();
+            //applicationModel.Add(new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" });
+            //applicationModel.Add(new ApplicationModel { Id = 3, Name = "Amang", Description = "Kumarg" });
+
+            //   List<LookupModel> lookupModel = new List<LookupModel>();
+            ApplicationModel lookupModel = new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" };
 
 
-       //    genericRepository.Setup(x => x.Update(It.IsAny<int>())).Returns(new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" });
+            // genericRepository.Setup(x => x.Update(It.IsAny<int>())).Returns(new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" });
+
+            // genericRepository.Setup(x => x.Update()).Returns(applicationModel);
+            genericRepository.Setup(x => x.Update(lookupModel)).Returns(0);
 
 
             var applicationDTO = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
@@ -109,12 +113,16 @@ namespace TestingAndCalibrationLabs.Tests
             _applicationService = new ApplicationService(genericRepository.Object);
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var createResult = (RedirectToActionResult)controller.Edit(applicationDTO);
-            //   var value = (ApplicationDTO)createResult.Value;
+            var createResult =(RedirectToActionResult) controller.Edit(applicationDTO);
+              // var value = (ApplicationDTO)createResult.Value;
             //  var expectField = new List<ApplicationDTO>();
 
+            //List<ApplicationDTO> applicationDT = new List<ApplicationDTO>();
+            //applicationDT.Add(new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" });
+           // ApplicationDTO lookupModela = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
 
-            var expectedResult = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
+
+            var expectedResult = 0;
 
             createResult.Should().BeEquivalentTo(expectedResult);
 
@@ -122,15 +130,19 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void Create_post_Test()
         {
-            List<ApplicationModel> applicationModel = new List<ApplicationModel>();
-            applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
-            applicationModel.Add(new ApplicationModel { Name = "Amane", Description = "Kiumar" });
+           // List<ApplicationModel> applicationModel = new List<ApplicationModel>();
+           // applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
+           //// applicationModel.Add(new ApplicationModel { Name = "Amane", Description = "Kiumar" });
 
+            ApplicationModel lookupModel = new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" };
 
+            // GenericRepository lookupModel = new GenericRepository();
+            // var lookupModel =
+            //string value = string.Empty;
+           // _applicationService = new ApplicationService(genericRepository.Object);
 
-            _applicationService = new ApplicationService(genericRepository.Object);
-
-       //   genericRepository.Setup(x => x.Insert(It.IsAny<int>())).Returns(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
+          //genericRepository.Setup(x => x.Insert(It.IsAny<int>())).Returns(applicationModel);
+             genericRepository.Setup(x => x.Insert(lookupModel)).Returns(0);
 
 
             var applicationDTO = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
@@ -141,7 +153,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             var createResult = (RedirectToActionResult)controller.Create(applicationDTO);
 
-            var expectedResult = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
+            var expectedResult =0;
 
             createResult.Should().BeEquivalentTo(expectedResult);
 
@@ -149,9 +161,9 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void Delete_get_Test()
         {
-        //    List<ApplicationModel> applicationModel = new List<ApplicationModel>();
-        //    applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
-        //    applicationModel.Add(new ApplicationModel { Name = "Amane", Description = "Kiumar" });
+          //List<ApplicationModel> applicationModel = new List<ApplicationModel>();
+          // applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
+          //  applicationModel.Add(new ApplicationModel { Name = "Amane", Description = "Kiumar" });
 
 
             genericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
@@ -159,14 +171,14 @@ namespace TestingAndCalibrationLabs.Tests
             _applicationService = new ApplicationService(genericRepository.Object);
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-           var result = (ViewResult)controller.Delete(1);
+           var result = (ViewResult)controller.Delete(6);
 
             //List<ApplicationDTO> applicationDTO = new List<ApplicationDTO>();
             //applicationDTO.Add(new ApplicationDTO { Id = 6, Name = "Aman", Description = "Kumar" });
             //applicationDTO.Add(new ApplicationDTO { Name = "Amane", Description = "Kiumar" });
 
 
-            var ExpectedResult = new ApplicationDTO() { Id = 1, Name = "Aman", Description = "Kumar" };
+            var ExpectedResult = new ApplicationDTO() { Id = 6, Name = "Aman", Description = "Kumar" };
             result.Should().BeEquivalentTo(ExpectedResult);
 
 
@@ -179,7 +191,7 @@ namespace TestingAndCalibrationLabs.Tests
         //    _applicationService = new ApplicationService(genericRepository.Object);
         //    var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-        //    var result = (RedirectToAction)controller.Delete(12);
+        //    var result = (NotFoundResult)controller.Delete(12);
 
         //    var expectedResult = "index";
         //    result.Should().BeEquivalentTo(expectedResult);
