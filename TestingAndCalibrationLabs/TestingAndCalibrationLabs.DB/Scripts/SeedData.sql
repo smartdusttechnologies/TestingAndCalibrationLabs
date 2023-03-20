@@ -388,7 +388,7 @@ BEGIN
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
-			  (11, N'/Security/Change Password', 10, 1003, 0)
+			  (11, N'/Security/Change Password', 8, 1003, 0)
 
 
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF

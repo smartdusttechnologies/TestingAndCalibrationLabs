@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -59,78 +60,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// Method to get the Change Password.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordDTO changepasswordRequest)
         {
 
-            var psswReq = new ChangePasswordModel { OldPassword= changepasswordRequest.OldPassword, NewPassword=changepasswordRequest.NewPassword, ConfirmPassword=changepasswordRequest.ConfirmPassword, UserId = 1 };
+            var psswReq = new ChangePasswordModel { OldPassword= changepasswordRequest.OldPassword, NewPassword=changepasswordRequest.NewPassword, ConfirmPassword=changepasswordRequest.ConfirmPassword, UserId = 2 };
             //string authorization = HttpContext.Session.GetString("Token").ToString() ;
 
             //var Token = authorization.Substring(authorization.IndexOf(' ') + 1);
 
             //JwtSecurityToken jwt = (JwtSecurityToken)new JwtSecurityTokenHandler().ReadToken(refreshToken);
 
-
-            //if (changepasswordRequest.NewPassword == null)
-            //{
-            //    return Json(new { status = true, message = " Password  never null!" });
-
-            //}
-
-
-            //int userId = 8;
-            //var oldpassword = "Apurwa@123";
-            //var newpassword = "Puja@123";
-            //var confirmpassword = "Puja@123";
-
-            // RequestResult<bool> result  = _authenticationService.UpdatePaasword(psswReq);
             var result = _authenticationService.UpdatePaasword(psswReq);
             
             if (result.IsSuccessful)
             {
 
-                //HttpContext.Session.SetString("Token", result.RequestedObject.AccessToken);
-
-                // return Json(new { status = true});
                 return Ok(result.RequestedObject);
 
 
             }
             return BadRequest(result.ValidationMessages);
-
-            //else
-            //{
-            //    return Json(new { status = false, message = result.ValidationMessages.First().Reason});
-            //}
-
-
         }
-            //public ClaimsPrincipal PasswordChange(string refreshToken)
-            //{
-            //    try
-            //    {
-            //    byte[] tokenSecurityKey = null;
-            //    var validationParams = new TokenValidationParameters
-            //        {
-            //            ValidateIssuerSigningKey = true,
-            //            IssuerSigningKey = new SymmetricSecurityKey(tokenSecurityKey),
-            //            ValidateLifetime = true
-            //        };
-            //        return new JwtSecurityTokenHandler().ValidateToken
-            //        (
-            //            refreshToken,
-            //            validationParams,
-            //            out SecurityToken token
-            //        );
-            //    }
-            //    catch (Exception e)
-            //    {
-            //       // Log.Error(e.Message);
-            //        return null;
-            //    }
-            //}
-             //return View();
-        
         public IActionResult ChangePassword()
         {
             return View();
