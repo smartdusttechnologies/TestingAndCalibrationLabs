@@ -17,7 +17,7 @@ BEGIN
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               
+                (0, N'none', 1, 0),
 			   
 			   (1, N'Cube Testing', 1, 0),
 			   
