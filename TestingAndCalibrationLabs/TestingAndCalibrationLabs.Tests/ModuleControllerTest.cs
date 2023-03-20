@@ -88,7 +88,8 @@ namespace TestingAndCalibrationLabs.Tests
 
 
             _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
-            //   genericRepository.Setup(x => x.Get()).Returns(moduleModel);
+           // _applicationService = new ApplicationService(genericRepository.Object);
+          //  genericRepository.Setup(x => x.Get()).Returns();
             moduleRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new ModuleModel { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" });
 
             var controller = new ModuleController(_mapper, _moduleService, _applicationService);
@@ -131,7 +132,7 @@ namespace TestingAndCalibrationLabs.Tests
             moduleModel.Add(new ModuleModel { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" });
             moduleModel.Add(new ModuleModel { Id = 5, Name = "amane", ApplicationId = 85, ApplicationName = "tritesh" });
 
-            genericRepository.Setup(x => x.Get()).Returns(moduleModel);
+         //   genericRepository.Setup(x => x.Get()).Returns(applicationModel);
 
 
             _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
@@ -141,7 +142,7 @@ namespace TestingAndCalibrationLabs.Tests
             var controller = new ModuleController(_mapper, _moduleService, _applicationService);
 
 
-            var createResult = (ViewResult)controller.Edit(3);
+            var createResult = (ViewResult)controller.Create(3);
             var expectedResult = new ModuleDTO() { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" };
 
             createResult.Model.Should().BeEquivalentTo(expectedResult);
