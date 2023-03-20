@@ -184,7 +184,7 @@
             success: function (result) {
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
-                window.location.replace("https://localhost:44337/security");
+                window.location.href = '@Url.Action("index","security")';
             },
             error: function (result) {
                 var newresponseJSON = result.responseJSON;
