@@ -72,10 +72,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var controlTypeEditModel = _mapper.Map<UiControlTypeDTO, UiControlTypeModel>(uiControlTypeDTO);
-                _uiControlTypeServices.Update(controlTypeEditModel);
+                var modal = _uiControlTypeServices.Update(controlTypeEditModel);
                 TempData["IsTrue"] = true;
-                return RedirectToAction("Index");
+                if (modal.IsSuccessful)
+                
+                    return RedirectToAction("Index");
+                else
+                    return Unauthorized();
             }
+            
             return View(uiControlTypeDTO);
         }
 

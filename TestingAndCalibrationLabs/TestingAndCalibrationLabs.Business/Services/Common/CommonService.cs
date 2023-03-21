@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.Net.Mail;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -27,14 +28,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWorkflowStageService _workflowStageService;
-
+        private readonly IEmailService _emailService;
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWebHostEnvironment webHostEnvironment,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,
-            IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor, IWorkflowStageService workflowStageService)
+            IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,
+            IWorkflowStageService workflowStageService,
+            IEmailService emailService)
 
         {
             _commonRepository = commonRepository;
@@ -46,6 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _authorizationService = authorizationService;
             _httpContextAccessor = httpContextAccessor;
             _workflowStageService = workflowStageService;
+            _emailService = emailService;
         }
         #region public methods
         /// <summary>
@@ -76,7 +80,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public byte[] TemplateGenerate(int recordId, int metadataId)
+        public RequestResult<byte[]> TemplateGenerate(int recordId, int metadataId, string email, bool send)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
             var recordMdel = _recordGenericRepository.Get(recordId);
@@ -128,7 +132,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             else
             {
-                template = template.Replace("**gridTableMulti**", "");
+                template = template.Replace("**gridTableMulti**","");
             }
 
             HtmlToPdf converter = new HtmlToPdf();
@@ -136,8 +140,27 @@ namespace TestingAndCalibrationLabs.Business.Services
             var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
             var pdfByte = doc.Save();
             doc.Close();
-
-            return pdfByte;
+            if (send)
+            {
+                //string emailAd = new string(email);
+                var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
+                var htmlWeb = File.ReadAllText(htmlPath);
+                using Stream stream= new MemoryStream(pdfByte);
+                Attachment attachment = new Attachment(stream, "report.pdf", "application/pdf");
+                EmailModel emailModel = new EmailModel();
+                var emailAd = new List<string>
+                {
+                    email
+                };
+                emailModel.Email = emailAd;
+                
+                emailModel.Subject = "Thanks For Visiting Testing And Calibration Labs";
+                emailModel.HtmlMsg= htmlWeb;
+                var atchmt = new List<Attachment>() { attachment };
+                emailModel.Attachments = atchmt;
+                var sendMail = _emailService.Sendemail(emailModel);
+            }
+            return new RequestResult<byte[]>(pdfByte);
         }
         /// <summary>
         /// to Delete Record
@@ -219,13 +242,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RecordsModel GetRecords(int moduleId)
         {
+            var workflowStage = _workflowStageService.GetStage(moduleId, 0);
             var uiMetadata = _commonRepository.GetUiPageMetadataByModuleId(moduleId);
             var uiPageData = _commonRepository.GetUiPageDataByModuleId(moduleId);
             var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
             uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
-            return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
+            return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels ,WorkflowStageName = workflowStage.Name};
         }
 
         /// <summary>

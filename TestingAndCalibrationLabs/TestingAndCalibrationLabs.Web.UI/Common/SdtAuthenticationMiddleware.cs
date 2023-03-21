@@ -47,7 +47,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 || context.Request.Path.Value.Equals("/Security/Login", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RefreshToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RevokeToken", StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase))
+                || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.StartsWith("/", StringComparison.OrdinalIgnoreCase))
             {
                 await _next(context);
             }

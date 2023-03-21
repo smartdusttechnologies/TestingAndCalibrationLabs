@@ -52,12 +52,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update( UiControlTypeModel uiControlTypeModel)
         {
+            var result = new RequestResult<int>(1);
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiControlTypeModel, Operations.Update).Result.Succeeded)
             { 
                 _genericRepository.Update(uiControlTypeModel);
-                return new RequestResult<int>(1);
+                return result;
             }
-            return new RequestResult<int>(0);
+            var msg = new ValidationMessage() { Reason = "Unauthorized", Severity = ValidationSeverity.Error };
+            var validationMsg = new List<ValidationMessage>() { msg};
+            result.ValidationMessages = validationMsg;
+            return result;
         }
         /// <summary>
         /// Insert Record In Ui Control Type

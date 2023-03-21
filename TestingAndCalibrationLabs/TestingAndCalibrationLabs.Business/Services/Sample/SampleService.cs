@@ -18,14 +18,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWebHostEnvironment webHostEnvironment,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,IWorkflowStageService workflowStageService,
-            IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor)
+            IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,IEmailService email)
             : base(commonRepository,
                   recordGenericRepository,
                   uiPageValidationTypesGenericRepository,
                   uiPageMetadataRepository,
                   webHostEnvironment,
                   uiPageMetadataCharacteristicsService,
-                  authorizationService,httpContextAccessor,workflowStageService)
+                  authorizationService,httpContextAccessor,workflowStageService,email)
         {
             UI_PAGE_NAME = "SamplePage";
         }

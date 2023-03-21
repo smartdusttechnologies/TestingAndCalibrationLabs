@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
 
-        public HomeController(IAuthenticationService authenticationService, IOrganizationService orgnizationService,IMapper mapper)
+        public HomeController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
@@ -96,7 +96,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
-        [Route("401")]
-        public IActionResult Forbidden() => View();
+        
     }
 }

@@ -90,11 +90,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
         }
-        [HttpGet]
-        public ActionResult TemplateGenerate(int recordId, int metadataId)
+        [HttpPost]
+        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send)
         {
-            var reportByte = _commonService.TemplateGenerate(recordId, metadataId);
-            return File(reportByte, "application/pdf");
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send);
+            
+            if (send)
+            {
+                return Ok("Sent Succsefully");
+            }
+            return File(reportByte.RequestedObject, "application/pdf");
         }
         /// <summary>
         /// sending record to axaj to show grid control

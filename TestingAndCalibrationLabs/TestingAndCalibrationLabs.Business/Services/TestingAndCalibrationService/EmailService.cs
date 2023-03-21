@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -50,7 +51,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                     mm.Subject = emailModel.Subject;
                     mm.Body = emailModel.HtmlMsg;
                     mm.IsBodyHtml = true;
-
+                    if(emailModel.Attachments.Count > 0)
+                    {
+                        emailModel.Attachments.ForEach(x=>mm.Attachments.Add(x));
+                    }
                     using (SmtpClient smtp = new SmtpClient())
                     {
                         smtp.Host = host;
@@ -64,10 +68,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 return false;
             }                           
-        }   
+        }
+
     }
 }    

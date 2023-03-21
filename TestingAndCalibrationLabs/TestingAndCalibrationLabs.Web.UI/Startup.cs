@@ -23,6 +23,7 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -153,26 +154,20 @@ namespace TestingAndCalibrationLabs.Web.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePagesWithRedirects("/ErrorPage/{0}");
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/ErrorPage/{0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //app.Use(async (context, next) =>
-            //{
-            //    await next();
-            //    if (context.Response.StatusCode == 401)
-            //    {
-            //        context.Request.Path = "/Home/Forbidden";
-            //        await next();
-            //    }
-            //});
+           
             tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!

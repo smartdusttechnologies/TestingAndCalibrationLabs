@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
+using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -31,16 +35,19 @@ namespace TestingAndCalibrationLabs.Business.Services
             var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiControlTypePermission", "UiControlTypePermission", CustomClaimType.ApplicationPermission);
 
             // Validate the requirement against the resource and identity.
-              
+
             //if (user.HasClaim(p => p.Type == CustomClaimType.ApplicationPermission.ToString() && p.Value == requirement.Name))
 
-            if(userRoleClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
+            if (userRoleClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
-            else if(userClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
+            else if (userClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
-            else if(groupClaim.Any(p=>p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
+            else if (groupClaim.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
-            //_httpContextAccessor.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            else
+            {
+                
+            }
             return Task.CompletedTask;
         }
     }
