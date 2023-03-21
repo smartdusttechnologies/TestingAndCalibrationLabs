@@ -44,10 +44,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 context.Succeed(requirement);
             else if (groupClaim.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
-            else
-            {
-                
-            }
             return Task.CompletedTask;
         }
     }

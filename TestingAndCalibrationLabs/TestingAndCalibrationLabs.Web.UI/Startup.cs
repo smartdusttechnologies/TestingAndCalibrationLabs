@@ -157,13 +157,11 @@ namespace TestingAndCalibrationLabs.Web.UI
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseStatusCodePagesWithRedirects("/ErrorPage/{0}");
+                app.UseExceptionHandler("/Home/Error");
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseStatusCodePagesWithRedirects("/ErrorPage/{0}");
+                app.UseExceptionHandler();
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -205,6 +203,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             app.UseRouting();
             app.UseAuthentication();
             app.UseMiddleware<SdtAuthenticationMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

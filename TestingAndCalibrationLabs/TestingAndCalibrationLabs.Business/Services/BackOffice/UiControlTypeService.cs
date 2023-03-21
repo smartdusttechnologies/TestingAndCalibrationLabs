@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -58,9 +59,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 _genericRepository.Update(uiControlTypeModel);
                 return result;
             }
-            var msg = new ValidationMessage() { Reason = "Unauthorized", Severity = ValidationSeverity.Error };
-            var validationMsg = new List<ValidationMessage>() { msg};
-            result.ValidationMessages = validationMsg;
+            throw new UnauthorizedAccessException("Your Unauthorized");
             return result;
         }
         /// <summary>
