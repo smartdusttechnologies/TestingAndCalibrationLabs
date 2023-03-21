@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -201,54 +202,48 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate Of Change Password
         /// </summary>
-        // public RequestResult<bool> UpdatePaasword(int userId, string oldpassword, string newpassword, string confirmpassword)
         public RequestResult<bool> UpdatePaasword(ChangePasswordModel password)
 
         {
             try
             {
-                var validationResult = _securityParameterService.ValidatePasswordPolicy(0, password.NewPassword);
                 var passworsResult = _securityParameterService.ChangePaaswordPolicy(password);
-               
-                  
-                var passwordLogin = _authenticationRepository.GetLoginPassword("Priya");
-                List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-                string valueHash = string.Empty;
-                if (password != null && !Hasher.ValidateHash(password.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                if (passworsResult.IsSuccessful)
                 {
-                    validationMessages.Add(new ValidationMessage { Reason = "Old password is incorrect.", Severity = ValidationSeverity.Error, SourceId="OldPassword" });
-                    return new RequestResult<bool>(validationMessages);
-                }
+                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, password.NewPassword);
 
-                if (validationResult.IsSuccessful)
-                {
+                    var passwordLogin = _authenticationRepository.GetLoginPassword("Apurwa");
+                    List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+                    string valueHash = string.Empty;
+                    if (password != null && !Hasher.ValidateHash(password.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                    {
+                        validationMessages.Add(new ValidationMessage { Reason = "Old password is incorrect.", Severity = ValidationSeverity.Error, SourceId="OldPassword" });
+                        return new RequestResult<bool>(validationMessages);
+                    }
+
+                    if (validationResult.IsSuccessful)
+                    {
                         if (passworsResult.IsSuccessful)
                         {
-
                             PasswordLogin newPasswordLogin = Hasher.HashPassword(password.NewPassword);
                             ChangePasswordModel passwordModel = new ChangePasswordModel();
                             passwordModel.PasswordHash= newPasswordLogin.PasswordHash;
-                            passwordModel.UserId=1;
+                            passwordModel.UserId=2;
                             passwordModel.PasswordSalt= newPasswordLogin.PasswordSalt;
-                 
 
-                        _userRepository.Update(passwordModel);
+                            _userRepository.Update(passwordModel);
 
                             return new RequestResult<bool>(true);
+                        }
+                        //else
+                        //{
+                        //    return new RequestResult<bool>(false, passworsResult.ValidationMessages);
 
-
+                        //}
                     }
-                    else
-                    {
-                        return new RequestResult<bool>(false, passworsResult.ValidationMessages);
-
-                    }
+                    return new RequestResult<bool>(false, validationResult.ValidationMessages);
                 }
-                
-                return new RequestResult<bool>(false, validationResult.ValidationMessages);
-
-               
+                return new RequestResult<bool>(false,passworsResult.ValidationMessages);
             }
             catch (Exception ex)
             {
@@ -274,30 +269,5 @@ namespace TestingAndCalibrationLabs.Business.Services
             return validatePasswordResult;
         }
 
-        /// <summary>
-        /// Method to Add new and validate Of Change Password
-        /// </summary>
-        //public RequestResult<bool> Update(ChangePasswordModel user, string oldpassword, string newpassword, string confirmpassword)
-        //{
-        //    try
-        //    {
-        //        // var validationResult = ValidateChangePassword(user,oldpassword, newpassword, confirmpassword);
-        //     //   var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-        //      //  if (validatePasswordResult.IsSuccessful)
-        //        {
-        //            PasswordLogin passwordLogin = Hasher.HashPassword(newpassword);
-        //           // _userRepository.Update(user, newpassword);
-        //            return new RequestResult<bool>(true);
-        //        }
-        //       // return new RequestResult<bool>(false, validationResult.ValidationMessages);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return new RequestResult<bool>(false);
-        //    }
-        //}
-       
-       
     }
 }
