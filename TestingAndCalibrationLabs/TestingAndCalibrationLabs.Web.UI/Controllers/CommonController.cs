@@ -43,9 +43,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetRecords(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
-            //////////
-            /////
-            ////
+ 
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
             return View(records);
         }
