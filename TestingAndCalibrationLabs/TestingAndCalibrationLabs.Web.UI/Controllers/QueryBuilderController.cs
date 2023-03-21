@@ -25,5 +25,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<Business.Core.Model.QueryBuilder.QueryRecordModel, Models.QueryBuilderRecordDTO>(queryBuilderMetaData);
             return View(records);
         }
+        public IActionResult Index1()
+        {
+            List<Business.Core.Model.QueryBuilder.QueryBuilderModel> tableName = _querybuilderService.GetTableNames();
+            var queryBuilderMetaData = _querybuilderService.GetColoumsNames(tableName);
+            var records = _mapper.Map<Business.Core.Model.QueryBuilder.QueryRecordModel, Models.QueryBuilderRecordDTO>(queryBuilderMetaData);
+            return View(records);
+        }
     }
 }

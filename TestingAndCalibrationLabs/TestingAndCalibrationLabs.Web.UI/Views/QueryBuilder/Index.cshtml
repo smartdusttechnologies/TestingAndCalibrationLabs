@@ -3,39 +3,10 @@
 <link rel="stylesheet" href="https://cdn.korzh.com/eq/7.2.0/eq.core.min.css">
 @*<link rel="stylesheet" href="https://cdn.korzh.com/eq/7.2.0/eq.view.min.css">*@
 <style>
-    #eqv-main {
-        width: 1174px;
-        background: #fff;
-        margin: auto;
-        padding-top: 10px
-    }
 
-    .eqv-error, .eqv-error div {
-        color: red;
-        font: normal 20px Calibri
-    }
 
-   
-
-    .eqv-sub-title {
-        margin: 14px 0 0 10px;
-        float: left;
-        font: 700 11px Trebuchet MS,Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif;
-        color: #3a94d4
-    }
-
-    .eqv-header {
-        display: block;
-        height: 40px
-    }
-
-    .eqv-global-message {
-        display: none;
-        background-color: coral;
-        border-radius: 10px;
-        color: #fff;
-        float: right;
-        padding: 5px 10px 8px
+    .eqjs-button-placeholder {
+        display: inline;
     }
 
     .eqv-header-panel {
@@ -80,17 +51,9 @@
         color: #000
     }
 
-    .eqv-copyright {
-        float: left
-    }
 
-    .eqv-power-by {
-        float: right
-    }
 
-        .eqv-copyright a, .eqv-power-by a {
-            color: #237901
-        }
+
 
     .eqv-entities-block {
         width: 20%;
@@ -356,7 +319,7 @@
         text-align: center
     }
 
-    
+
 
     .eqv-result-grid {
         display: flex;
@@ -394,65 +357,6 @@
         flex: 0 0 360px
     }
 
-    .pagination {
-        margin: 0
-    }
-
-    .eqv-pagination {
-        display: inline-block;
-        padding-left: 0;
-        margin: 0;
-        border-radius: 4px
-    }
-
-        .eqv-pagination > li {
-            display: inline
-        }
-
-            .eqv-pagination > li > a, .eqv-pagination > li > span {
-                font-size: 12px;
-                background-color: #fff;
-                border: 1px solid #ddd;
-                color: #428bca;
-                float: left;
-                line-height: 1.42857;
-                margin-left: -1px;
-                padding: 5px 10px;
-                position: relative;
-                text-decoration: none
-            }
-
-                .eqv-pagination > li > a:focus, .eqv-pagination > li > a:hover, .eqv-pagination > li > span:focus, .eqv-pagination > li > span:hover {
-                    background-color: #eee;
-                    border-color: #ddd;
-                    color: #2a6496
-                }
-
-        .eqv-pagination > .active > a, .eqv-pagination > .active > a:focus, .eqv-pagination > .active > a:hover, .eqv-pagination > .active > span, .eqv-pagination > .active > span:focus, .eqv-pagination > .active > span:hover {
-            background-color: #428bca;
-            border-color: #428bca;
-            color: #fff;
-            cursor: default;
-            z-index: 2
-        }
-
-        .eqv-pagination > .disabled > a, .eqv-pagination > .disabled > a:focus, .eqv-pagination > .disabled > a:hover, .eqv-pagination > .disabled > span, .eqv-pagination > .disabled > span:focus, .eqv-pagination > .disabled > span:hover {
-            background-color: #fff;
-            border-color: #ddd;
-            color: #999;
-            cursor: not-allowed
-        }
-
-        .eqv-pagination > li:first-child > a, .eqv-pagination > li:first-child > span {
-            border-bottom-left-radius: 3px;
-            border-top-left-radius: 3px;
-            margin-left: 0
-        }
-
-        .eqv-pagination > li:last-child > a, .eqv-pagination > li:last-child > span {
-            border-bottom-right-radius: 3px;
-            border-top-right-radius: 3px
-        }
 
     .eqv-export-buttons {
         float: right;
@@ -529,7 +433,12 @@
         color: #7a10c3;
         border-bottom: 1px solid silver
     }
-   
+    /*.sort-icon{
+                background: url(data:image/png;base64,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) no-repeat;
+
+                display: block;
+            }*/
+
 </style>
 
 <h1>Query Builder</h1>
@@ -614,7 +523,19 @@
                     <div class="eqv-conditions-title">Conditions</div>
                     <div class="eqv-query-panel-container">
                         <div id="queryPanel" class="eqjs-qp-panel eqjs-mobile">
-
+                            <div class="eqjs-qp-row eqjs-qp-row-group eqjs-qp-row-group-root" data-group-row="">
+                                <span class="eqjs-qp-grelement">Select records where </span>
+                                <a href="javascript:void(0)" onclick="ConditionAll(this)" title="all" class="eqjs-qp-grelement" id="conditionValue">all</a>
+                                <span class="eqjs-qp-grelement"> of the following apply</span>
+                                <div class="eqjs-qp-condition-buttonsBlock">
+                                    <div class="eqjs-qp-button-placeholder" data-btnplaceholder="">
+                                        <div class="eqjs-qp-condition-button eqjs-qp-condition-button-addCondition" tabindex="0" data-button="" title="Add condition"></div>
+                                    </div>
+                                    <div class="eqjs-qp-button-placeholder" data-btnplaceholder="">
+                                        <div class="eqjs-qp-condition-button eqjs-qp-condition-button-addPredicate" tabindex="0" data-button="" title="Add group of conditions"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="eqjs-addrow eqjs-qp-addrow eqjs-mobile">
                                 <a href="javascript:void(0)" title="[Add new condition]">[Add new condition]</a>
                             </div>
@@ -665,99 +586,610 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
-    </div>
-    <script>
+</div>
+<script>
+
+
+    /// Entities content dropdown  hide or unhide function
+
+    function DropdownContent(HiddenValue) {
+
+        var HiddenValue = "flush-" + HiddenValue;
+        var element = document.getElementById(HiddenValue);
+
+        if (element.style.display == "none") {
+            element.style = "display:block";
+
+        }
+        else
+            element.style = "display:none";
+
+    }
+
+
+    /// This Function is to Check  the Dropdown Item of Entities
+
+    function FunctionBox(TableName, CountValue) {
+
+        var value = document.getElementById(TableName);
 
 
 
-        function DropdownContent(value) {
+        for (var item = 0; item < CountValue; item++) {
+            var element = TableName + item;
 
-            var value = "flush-" + value;
-            var element = document.getElementById(value);
 
-            if (element.style.display == "none") {
-                element.style = "display:block";
+
+            if (value.checked == true) {
+                document.getElementById(element).checked = true;
+            }
+            else {
+                document.getElementById(element).checked = false;
 
             }
-            else
-                element.style = "display:none";
+
+
         }
+    }
 
 
 
-        function FunctionBox(a, b) {
-            var value = document.getElementById(a);
+    /// This funtion will hiden and Unhide the icon of entities dropdown
+    $(".eqjs-ep-entity-node-button").click(function () {
 
 
-            for (var item = 0; item < b; item++) {
-                var element = a + item;
+        $(this).toggleClass(" eqjs-ep-entity-node-button-open");
+    });
 
 
+    /// This will clear the Select Checkboxes and its item
 
-                if (value.checked == true) {
-                    document.getElementById(element).checked = true;
-                }
-                else {
-                    document.getElementById(element).checked = false;
-
-                }
-
-
-            }
-        }
-
-
-
-        $(".eqjs-ep-entity-node-button").click(function () {
-
-            $(this).toggleClass(" eqjs-ep-entity-node-button-open");
-        });
-
-        $(".eqjs-ep-tool-panel-deselect-all").click(function () {
+    $(".eqjs-ep-tool-panel-deselect-all").click(function () {
         $(':checkbox').each(function () {
             this.checked = false;
         });
 
-        })
-
-        function CheckboxContent() {
-
-            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-            var Description = document.getElementById("ColumnData");
-
-            for (var item of checkboxes) {
-
-                var Element = document.getElementById(item.id);
+    })
 
 
+    /// Checked will be selected  and will  put it in the express and title
+    function CheckboxContent() {
+
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+        var Description = document.getElementById("ColumnData");
 
 
-                if (Element.className == "child-item") {
-                    var ElementAttribute = document.createElement('div');
-                    ElementAttribute.className = "eqjs-qc-row eqjs-qc-row-column-entattr";
+        for (var item of checkboxes) {
 
-                    var ExpressionColumn = document.createElement('div');
-                    ExpressionColumn.className = "eqjs-qc-expr-block";
-                    ExpressionColumn.innerHTML = Element.name;
-                    ElementAttribute.appendChild(ExpressionColumn);
+            var Element = document.getElementById(item.id);
 
-                    var TitleColumn = document.createElement('div');
-                    TitleColumn.className = "eqjs-qc-colelement eqjs-qc-captionelement";
-                    TitleColumn.innerHTML = Element.value;
-                    ElementAttribute.appendChild(TitleColumn);
 
-                    Description.appendChild(ElementAttribute);
 
-                }
+
+
+            if (Element.className == "child-item") {
+
+
+
+                var ElementAttribute = document.createElement('div');
+                ElementAttribute.className = "eqjs-qc-row eqjs-qc-row-column-entattr";
+                ElementAttribute.id = item.id + "column-menu";
+
+                var sortingIcon = document.createElement('div');
+                sortingIcon.className = "fa fa-sort-amount-asc";
+                sortingIcon.style = "font-size:20px";
+                sortingIcon.onclick = function () { Sorting(this) }
+                sortingIcon.title = "sorting";
+                sortingIcon.tabIndex = "0";
+                ElementAttribute.appendChild(sortingIcon);
+
+                var ExpressionColumn = document.createElement('div');
+                ExpressionColumn.className = "eqjs-qc-expr-block";
+                var ExpressionDiv = document.createElement('div');
+                ExpressionDiv.className = "eqjs-qc-colelement eqjs-qc-attrelement";
+                ExpressionDiv.innerHTML = "<a href='#'>" + Element.name + " " + Element.value + "</a>";
+                ExpressionColumn.appendChild(ExpressionDiv);
+                ElementAttribute.appendChild(ExpressionColumn);
+
+                var TitleColumn = document.createElement('div');
+                TitleColumn.className = "eqjs-qc-colelement eqjs-qc-captionelement";
+
+                TitleColumn.innerHTML = "<a href='#' onclick='TitleEdit(this)' style title= " + Element.value + ">" + Element.value + "</a>" + '<input style="min-width: 0px; display: none;" value=' + Element.value + '></input> ';
+
+                ElementAttribute.appendChild(TitleColumn);
+
+                Description.appendChild(ElementAttribute);
+                /// From here all icon data
+                var sideIcon = document.createElement('div');
+                sideIcon.className = "eqjs-column-buttonsBlock eqjs-qc-buttonsBlock";
+                sideIcon.style.display = "block";
+
+                var Aggregate = document.createElement('div');
+                Aggregate.className = "eqjs-button-placeholder";
+                Aggregate.id = ElementAttribute.id + "-agg";
+                Aggregate.onclick = function () { Aggregates(this.id) }
+
+                Aggregate.innerHTML = ' <i class="fa fa-facebook-f" style="font-size:10px;margin:2.5px" > </i>';
+                sideIcon.appendChild(Aggregate);
+                //Delete icon
+                var Delete = document.createElement('div');
+                Delete.className = "eqjs-button-placeholder";
+                Delete.id = ElementAttribute.id;
+                Delete.onclick = function () { DeleteExpression(this.id) }
+                Delete.innerHTML = '<i class="fa fa-close"></i>'
+                sideIcon.appendChild(Delete);
+                ElementAttribute.appendChild(sideIcon);
+
 
 
             }
-            $(':checkbox').each(function () {
-                this.checked = false;
-            });
+
+
+        }
+        $(':checkbox').each(function () {
+            this.checked = false;
+        });
+    }
+
+
+    /// This will delete the single Expression
+    function DeleteExpression(ID) {
+
+        document.getElementById(ID).remove();
+        var Expression = document.getElementsByClassName("eqjs-menu-rootLevel eqjs-menu-levelDiv")[0]
+        Expression.style.display = "none";
+
+    }
+
+    var temporaryDetail = null;
+    var sortingIconCaller = null;
+
+    // sorting function
+    function Sorting(sortIconDetails) {
+        var stylevalue = sortIconDetails.getBoundingClientRect();
+
+        var sortDropdown = document.getElementById('ColumnsPanel-SortMenu');
+        sortDropdown.style.display = "block";
+        sortDropdown.style.top = stylevalue.bottom + "px";
+        sortDropdown.style.left = stylevalue.left + "px";
+        sortingIconCaller = sortIconDetails;
+    }
+
+    /// Dropdown item For Aggregate function
+
+    function Aggregates(Aggregitem) {
+
+        var styleData = document.getElementById(Aggregitem);
+        var data = $(styleData.parentElement.parentElement).find('.eqjs-qc-expr-block')[0];
+        if (data.nextSibling.children.length > 2) {
+            while (data.children.length != 1) {
+                $(data.children[0]).remove();
+            }
+            $(data).children().show();
+            while (data.nextSibling.children.length != 2) {
+                $(data.nextSibling.children[0]).remove();
+            }
+
+            $(data.nextSibling.children[0]).show();
+
+        }
+        else if (data.children.length > 1) {
+
+            var TitleTag = $(data).find('.eqjs-qc-colelement.eqjs-qc-aggrfuncelement')[0].innerText;
+
+            while (data.children.length != 1) {
+                $(data.children[0]).remove();
+
+            }
+
+            Titledetail = (data.nextSibling.children[0]);
+
+            Titledetail.innerText = (Titledetail.innerText).split(TitleTag).join("");
+            Titledetail.title = Titledetail.innerText;
+            TitleTag = (data.nextSibling.children[1]);
+            TitleTag.value = Titledetail.innerText;
+
+        }
+        else {
+
+            var aggreg = document.getElementsByClassName("eqjs-menu-rootLevel eqjs-menu-levelDiv")[0]
+            aggreg.style.display = "none";
+
+
+            var arr = ["COUNT", "CNTDST", "MIN", "MAX", "CustomSqlDivider", "CUSTOMSQL"];
+
+
+
+
+            var rect = styleData.getBoundingClientRect();
+
+            var aggreg = document.getElementsByClassName("eqjs-menu-rootLevel eqjs-menu-levelDiv")[0]
+            aggreg.style.display = "block";
+            //aggreg.id = Aggregitem + "-menu";
+            aggreg.style.top = (rect.bottom + 5) + "px";
+            aggreg.style.left = (rect.left + 2) + "px";
+
+
+
+            ///for Dropdown item of aggregate function
+            var parent = document.getElementsByClassName('eqjs-menu-scrollDiv')[0]
+
+            for (var item = 0; item < parent.children.length; item++) {
+                // alert(parent.children[item]);
+                parent.children[item].id = Aggregitem + "-" + arr[item];
+            }
+            sortingIconCaller = Aggregitem;
+
         }
 
-    </script>
+    }
+
+
+    /// This is to hide all the Menu items
+    window.onclick = function (event) {
+
+
+        if (event.target.className != "fa fa-facebook-f") {
+            var aggreg = document.getElementsByClassName("eqjs-menu-rootLevel eqjs-menu-levelDiv")[0]
+            aggreg.style.display = "none";
+        }
+        if (event.target.className != "fa fa-sort-amount-asc") {
+            var sortDropdown = document.getElementById('ColumnsPanel-SortMenu');
+            sortDropdown.style.display = "none";
+            // temporaryDetail = null;
+        }
+        if (event.target.localName != 'a') {
+            var aggreg = document.getElementById("DataTypeMenu");
+            aggreg.style.display = "none";
+        }
+
+        if (event.target.localName != 'a' && temporaryDetail != null && event.target.localName != 'input') {
+
+            if (temporaryDetail.parentElement.children.length > 2) {
+
+
+                var inputdata = temporaryDetail.nextSibling;
+                temporaryDetail.title = inputdata.value;
+                temporaryDetail.parentElement.previousElementSibling.children[0].children[0].innerHTML = inputdata.value;
+                temporaryDetail.innerHTML = inputdata.value;
+                inputdata.style.display = "none";
+                temporaryDetail.style.display = "block";
+                temporaryDetail = null;
+
+            }
+            else {
+                var inputdata = temporaryDetail.nextSibling;
+                temporaryDetail.title = inputdata.value;
+                temporaryDetail.innerHTML = inputdata.value;
+                inputdata.style.display = "none";
+                temporaryDetail.style.display = "block";
+                temporaryDetail = null;
+            }
+
+        }
+        if (event.target.localName != 'a' && customTemporaryValue != null && event.target.localName != 'input') {
+
+            var inputdata = customTemporaryValue.nextSibling;
+            inputdata.style.display = "none";
+            customTemporaryValue.style.display = "block";
+            customTemporaryValue = null;
+
+        }
+    }
+
+
+    ///This will edit the title on click
+    function TitleEdit(titledetail) {
+
+        temporaryDetail = titledetail;
+        titledetail.style.display = "none";
+        var inputdata = titledetail.nextSibling;
+        inputdata.style.display = "block";
+        titledetail.innerHTML = titledetail.title;
+
+
+    }
+
+    var customTemporaryValue = null;
+
+    /// This will make change for CustomFunction
+
+    function CustomFunction(titledetail) {
+        customTemporaryValue = titledetail;
+        titledetail.style.display = "none";
+        var inputdata = titledetail.nextSibling;
+        inputdata.style.display = "block";
+
+
+    }
+
+    /// This will change the arrangement of Expression item as per Selected Order
+
+    function ExpressionPositioning(Position) {
+        var cont = $(".eqjs-qc-columns");
+        var arr = $.makeArray(cont.children());
+        var temp = arr;
+
+        switch (Position) {
+
+            case 1:
+                arr.sort(function (a, b) {
+
+
+                    var textA = a.textContent;
+                    var textB = b.textContent;
+
+
+                    if (textA < textB) return -1;
+                    if (textA > textB) return 1;
+
+                    return 0;
+                });
+                cont.empty();
+
+                $.each(arr, function () {
+                    cont.append(this);
+                });
+                break;
+
+            case 2:
+                arr.sort(function (a, b) {
+
+
+                    var textA = a.textContent;
+                    var textB = b.textContent;
+
+
+                    if (textA > textB) return -1;
+                    if (textA < textB) return 1;
+
+                    return 0;
+                });
+                cont.empty();
+
+                $.each(arr, function () {
+                    cont.append(this);
+                });
+                break;
+            case 3:
+                $(".eqjs-qc-columns").prepend(sortingIconCaller.parentElement);
+                break;
+            case 4:
+                $(sortingIconCaller.parentElement).insertBefore($(sortingIconCaller.parentElement.previousSibling));
+                break;
+            case 5:
+
+                $(sortingIconCaller.parentElement).next().after($(sortingIconCaller.parentElement));
+                break;
+            case 6:
+                $(".eqjs-qc-columns").append(sortingIconCaller.parentElement);
+                break;
+
+
+            default:
+
+        }
+    }
+
+
+    /// Dropdown List for the Custom function  string
+
+    function customStringDropdown(ElementValue) {
+        temporaryDetail = ElementValue;
+        var stringPosition = ElementValue.getBoundingClientRect();
+        var Aggregates = document.getElementById("DataTypeMenu");
+        Aggregates.style.display = "block";
+        Aggregates.style.top = (stringPosition.bottom + 5) + "px";
+        Aggregates.style.left = (stringPosition.left + 2) + "px";
+    }
+
+
+    /// This  function is  to add all the items  of aggregate function  to the expression
+    function AggregateFunctionAdd(Position) {
+
+        var element = document.getElementById(sortingIconCaller).offsetParent.offsetParent.children[2];
+
+        var count = document.createElement('div');
+
+        count.className = "eqjs-qc-colelement eqjs-qc-aggrfuncelement";
+
+
+        /// for of element creation
+        var spanclass = document.createElement('span');
+        spanclass.className = "eqjs-qc-colelement";
+        spanclass.title = "of";
+        spanclass.innerHTML = spanclass.title;
+
+
+        switch (Position) {
+
+            case 1:
+
+                count.innerHTML = '<a href="#" onclick="Aggregates(this)">Count</a>';
+                $(element).prepend($(spanclass));
+                $(element).prepend($(count));
+                element = element.nextSibling.firstChild;
+                element.title += " Count";
+                element.innerHTML += " Count";
+                element.nextSibling.value += " Count";
+
+                break;
+
+
+            case 2:
+                count.innerHTML = '<a href="#"onclick="Aggregates(this)">Distinct count</a>';
+                $(element).prepend($(spanclass));
+                $(element).prepend($(count));
+                element = element.nextSibling.firstChild;
+                element.title += " Distinct count";
+                element.innerHTML += " Distinct count";
+                element.nextSibling.value += " Distinct count";
+
+
+                break;
+
+            case 3:
+                count.innerHTML = "<a href='#'onclick='Aggregates(this)'>Minimum</a>";
+                $(element).prepend($(spanclass));
+                $(element).prepend($(count));
+                element = element.nextSibling.firstChild;
+
+                element.title += " Minimum";
+                element.innerHTML += " Minimum";
+                element.nextSibling.value += " Minimum";
+
+
+                break;
+
+            case 4:
+                count.innerHTML = '<a href="#"onclick="Aggregates(this)">Maximum</a>';
+                $(element).prepend($(spanclass));
+                $(element).prepend($(count));
+                element = element.nextSibling.firstChild;
+
+                element.title += " Maximum";
+                element.innerHTML += " Maximum";
+                element.nextSibling.value += " Maximum";
+                break;
+
+            case 5:
+
+                var divCont = document.createElement('div');
+                divCont.className = "eqjs-qc-colelement eqjs-qc-attrelement";
+                divCont.innerHTML = '<a href="#" title="Custom SQL Column"onclick="CustomFunction(this)">Custom SQL Column</a>' + '<input style="width:100%; display:none;" value=' + element.innerText + '>'
+
+
+                var divCont2 = document.createElement('div');
+                divCont2.className = "eqjs-qc-colelement";
+                divCont2.innerHTML = "<span title=': ' >: </span>"
+
+
+                var divCont3 = document.createElement('div');
+                divCont3.className = "eqjs-qc-colelement eqjs-qc-attrelement";
+                divCont3.innerHTML = '<a href="#" title ="String" onclick="customStringDropdown(this)"> String</a>'
+
+                $(element).children().hide();
+
+
+                var anchorTag = '<a href="#" onclick="TitleEdit(this)" title= "Custom SQL Column" >Custom SQL Column </a>'
+
+                var inputTag = document.createElement('input');
+                inputTag.value = "Custom SQL Column";
+                inputTag.style = "display:none";
+
+
+
+
+                $(element).prepend($(divCont3));
+                $(element).prepend($(divCont2));
+                $(element).prepend($(divCont));
+
+                element = element.nextSibling;
+                $(element).children().hide();
+                $(element).prepend($(inputTag));
+                $(element).prepend($(anchorTag));
+
+                break;
+
+            default:
+        }
+
+    }
+
+
+    /// This function is to  replace the string with the selected item
+
+    function DataTypeMenuFunc(DatatypeValue) {
+
+        temporaryDetail.innerHTML = DatatypeValue.innerText;
+
+    }
+
+</script>
+
+
+<script>
+     function ConditionAll(Value){
+         var PositionDetails =  Value.getBoundingClientRect();
+        document.getElementById('QueryPanel-LinkTypeMenu').style.display="block";
+        document.getElementById('QueryPanel-LinkTypeMenu').style.top = (PositionDetails.bottom + 3) + "px";
+        document.getElementById('QueryPanel-LinkTypeMenu').style.left = (PositionDetails.left + 5) + "px";
+
+     }
+   
+     window.onclick = function (event){
+         if(event.target.localName!= 'a'){
+
+             document.getElementById('QueryPanel-LinkTypeMenu').style.display="none";
+         }
+       
+
+     }
+     function ConditionADD(Value){
+          
+         document.getElementById('conditionValue').innerHTML = Value.innerText;
+     }
+</script>
+
+
+<div class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 721px; top: 193px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(1)">Count</div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(2)">Distinct count</div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(3)">Minimum</div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(4)">Maximum</div>
+        <div class="eqjs-menu-itemDiv"><hr></div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(5)">Custom Expression</div>
+    </div>
+</div>
+
+<div id="ColumnsPanel-SortMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 280px; top: 193px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(0)">Not sorted</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(1)">Ascending</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(2)">Descending</div>
+        <div class="eqjs-menu-itemDiv"><hr></div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(3)">Move to the first</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(4)">Move to the previous</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(5)">Move to the next</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(6)">Move to the last</div>
+    </div>
+</div>
+<div id="DataTypeMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 614px; top: 189px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Unknown</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">String</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Byte</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Word</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Int32</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Int64</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Bool</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Float</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Currency</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">BCD</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Date</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Time</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">DateTime</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Autoinc</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Memo</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Blob</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">FixedChar</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Guid</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Geometry</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Geography</div>
+    </div>
+</div>
+
+
+<div id="QueryPanel-LinkTypeMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 500px; top: 365px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="ConditionADD(this)">all</div>
+        <div class="eqjs-menu-itemDiv"onclick="ConditionADD(this)">any</div>
+        <div class="eqjs-menu-itemDiv"onclick="ConditionADD(this)">none</div>
+        <div class="eqjs-menu-itemDiv" onclick="ConditionADD(this)">not all</div>
+    </div>
+</div>
+
