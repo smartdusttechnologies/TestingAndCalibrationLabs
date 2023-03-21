@@ -235,11 +235,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
                             return new RequestResult<bool>(true);
                         }
-                        //else
-                        //{
-                        //    return new RequestResult<bool>(false, passworsResult.ValidationMessages);
-
-                        //}
+                     
                     }
                     return new RequestResult<bool>(false, validationResult.ValidationMessages);
                 }
