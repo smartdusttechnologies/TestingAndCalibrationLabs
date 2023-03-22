@@ -214,13 +214,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, FirstName);
             var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, LastName);
             var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, Country);
-            UserModel existingUser = _userRepository.Get(user.UserName);
-            if (existingUser != null)
-            {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
-                validationMessages.Add(error);
-                return new RequestResult<bool>(false, validationMessages);
-            }
+            var validateexistinguser = ExistingUservalidation( UserName, user);
+            //UserModel existingUser = _userRepository.Get(user.UserName);
+            //if (existingUser != null)
+            //{
+            //    var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+            //    validationMessages.Add(error);
+            //    return new RequestResult<bool>(false, validationMessages);
+            //}
             validationMessages.AddRange(validatePasswordResult.ValidationMessages);
             validationMessages.AddRange(ValidateReEnterResult.ValidationMessages);
             validationMessages.AddRange(ValidateOrganizationId.ValidationMessages);
@@ -230,7 +231,24 @@ namespace TestingAndCalibrationLabs.Business.Services
             validationMessages.AddRange(ValidateCountry.ValidationMessages);
             validationMessages.AddRange(validationEmailResult.ValidationMessages);
             validationMessages.AddRange(ValidateMobilePolicy.ValidationMessages);
+            validationMessages.AddRange(validateexistinguser.ValidationMessages);
+
             return new RequestResult<bool>(validationMessages);
+
+        }
+        private RequestResult<bool> ExistingUservalidation(string UserName, UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+            UserModel existingUser = _userRepository.Get(user.UserName);
+            if (existingUser != null)
+            {
+                var error = new ValidationMessage { Reason = "The UserName is already available", Severity = ValidationSeverity.Error , SourceId = "Username" };
+                validationMessages.Add(error);
+                return new RequestResult<bool>(false, validationMessages);
+            }
+            return new RequestResult<bool>(validationMessages);
+
 
         }
     }
