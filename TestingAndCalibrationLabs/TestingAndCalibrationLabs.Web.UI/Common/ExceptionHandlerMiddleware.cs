@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
 namespace TestingAndCalibrationLabs.Web.UI.Common
 {
-
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
-            _logger = logger;
         }
-
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -30,29 +22,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
-
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            
-
-
+            var message =  exception.Message;
             switch (exception)
             {
-                case ApplicationException ex:
-
+                case UnauthorizedAccessException ex:
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-
                     break;
                 default:
-                    context.Response.StatusCode = (int)StatusCodes.Status404NotFound;
-                   
+                    context.Response.StatusCode = (int)StatusCodes.Status500InternalServerError;
+                    message = "Unable To Process Your Request  Please Contact To Admin";
                     break;
             }
-            context.Response.Redirect($"/ErrorPage/Index?statuscode={exception.Message}");
-            _logger.LogError(exception.Message);
-            var result = JsonSerializer.Serialize("hkkjhkjl");
-            
+            context.Response.Redirect($"/ErrorPage/Index?message={message}");
         }
     }
 }

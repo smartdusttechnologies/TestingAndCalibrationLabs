@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.HttpSys;
-using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -30,9 +27,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (user == null) return Task.CompletedTask;
 
             var sdtUserIdentity = user.Identity as SdtUserIdentity;
-            var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiControlTypePermission", "UiControlTypePermission", CustomClaimType.ApplicationPermission);
-            var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiControlTypePermission", "UiControlTypePermission", CustomClaimType.ApplicationPermission);
-            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiControlTypePermission", "UiControlTypePermission", CustomClaimType.ApplicationPermission);
+            var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId,PermissionModuleType.UiControlTypePermission.ToString(), PermissionModuleType.UiControlTypePermission.ToString(), CustomClaimType.ApplicationPermission);
+            var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiControlTypePermission.ToString(), PermissionModuleType.UiControlTypePermission.ToString(), CustomClaimType.ApplicationPermission);
+            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiControlTypePermission.ToString(), PermissionModuleType.UiControlTypePermission.ToString(), CustomClaimType.ApplicationPermission);
 
             // Validate the requirement against the resource and identity.
 

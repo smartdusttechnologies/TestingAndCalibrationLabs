@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Read).Result.Succeeded)
                 return _genericRepository.Get(id);
-            return null;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Get All Record For Ui Control Type
@@ -43,7 +43,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Read).Result.Succeeded)
                 return _genericRepository.Get();
-            return null;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Edit Record From Ui Control Type
@@ -60,7 +60,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return result;
             }
             throw new UnauthorizedAccessException("Your Unauthorized");
-            return result;
         }
         /// <summary>
         /// Insert Record In Ui Control Type
@@ -74,7 +73,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 _genericRepository.Insert(uiControlTypeModel);
                 return new RequestResult<int>(1);
             }
-            return new RequestResult<int>(0);
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Delete Record From Ui Control 
@@ -85,7 +84,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Delete).Result.Succeeded)
                 return _genericRepository.Delete(id);
-            return false;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         #endregion
     }

@@ -24,7 +24,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
             _listSorterService = listSorterService;
         }
-
         /// <summary>
         /// For Showing All Records Of Ui Control Type
         /// </summary>
@@ -32,7 +31,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
             var controlTypeList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlTypeListModel);
@@ -74,16 +72,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var controlTypeEditModel = _mapper.Map<UiControlTypeDTO, UiControlTypeModel>(uiControlTypeDTO);
                 var modal = _uiControlTypeServices.Update(controlTypeEditModel);
                 TempData["IsTrue"] = true;
-                if (modal.IsSuccessful)
-                
                     return RedirectToAction("Index");
-                else
-                    return Unauthorized();
             }
             
             return View(uiControlTypeDTO);
         }
-
         /// <summary>
         /// For Create View
         /// </summary>
@@ -94,7 +87,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new UiControlTypeDTO { Id = id });
         }
-
         /// <summary>
         /// To Insert Record
         /// </summary>
@@ -113,7 +105,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiControlTypeDTO);
         }
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -133,7 +124,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var controlTypeEditModel = _mapper.Map<UiControlTypeModel, UiControlTypeDTO>(getByIdControlType);
             return View(controlTypeEditModel);
         }
-
         /// <summary>
         /// To Delete Record From Ui Control Type
         /// </summary>

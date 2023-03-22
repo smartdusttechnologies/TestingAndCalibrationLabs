@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="ripple button-base button-second" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" class="ripple button-base button-second" id="cancleSendModal" data-bs-dismiss="modal">Cancle</button>
                 <button type="button" onclick="SendMail()"  class="ripple button-base button-material-primary">Send</button>
             </div>
         </div>
@@ -33,7 +33,6 @@
     });
     function GenerateReport() {
         var metadata = modelData.value.uiPageMetadata.id;
-        
         window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}&email=null&send=false`, '_blank');
     }
     function SendMail(){
@@ -45,8 +44,7 @@
             url: "@Url.Action("TemplateGenerate","Common")",
             data: { "recordId": id,"metadataId":metadata,"email":emailId,"send":true },
             success: function (response) {
-                debugger;
-                $('#sendModal').modal('hide')
+                $('#cancleSendModal').click();
             },
             error: function (req, status, error) {
             }

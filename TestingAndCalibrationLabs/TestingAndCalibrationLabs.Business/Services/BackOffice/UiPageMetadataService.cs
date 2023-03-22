@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -41,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 int id = _uiPageMetadataRepository.Create(pageControl);
                 return new RequestResult<int>(1);
             }
-            return new RequestResult<int>(0);   
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Delete Record From Ui Page Metadata Type
@@ -54,7 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return _uiPageMetadataRepository.Delete(id);
             }
-            return false;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
@@ -67,7 +65,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return _uiPageMetadataRepository.GetById(id);
             }
-            return null;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Edit Record From Ui Page Metadata Type
@@ -82,7 +80,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 _uiPageMetadataRepository.Update(uiPageMetadataModel);
                 return new RequestResult<int>(1);
             }
-            return new RequestResult<int>(0);
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Get All Records From Ui Page Metadata Type
@@ -94,12 +92,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return _uiPageMetadataRepository.Get();
             }
-            return null;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
-        #endregion
-
-        #region Private Methods
-
         #endregion
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Linq.Expressions;
 using System.Net;
 using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -27,7 +26,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _configuration = configuration;
         }
-        
         /// <summary>
         /// Sends mail using the Email model.
         /// </summary>

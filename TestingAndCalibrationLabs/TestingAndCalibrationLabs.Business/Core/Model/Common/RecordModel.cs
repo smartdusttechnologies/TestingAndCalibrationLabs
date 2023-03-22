@@ -5,7 +5,6 @@ using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-
     /// <summary>
     /// It Conatains The Properties for Record
     /// </summary>

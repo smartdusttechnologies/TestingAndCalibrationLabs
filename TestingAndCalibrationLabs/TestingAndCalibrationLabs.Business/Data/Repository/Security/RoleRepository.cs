@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
@@ -29,7 +28,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Query<(int, string)>(query, new { userName }).ToList();
         }
-
         public UserModel GetUserByUserName(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -38,8 +36,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Query<UserModel>(query, new { userName }).FirstOrDefault();
         }
-
-
         ///// <summary>
         ///// Get Role by Orgnization including Claims
         ///// </summary>
@@ -83,17 +79,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         //    return db.Query<UserClaim>(query, new { userName }).ToList();
         //}
-
-        
-
-        public List<GroupClaim> GetGroupClaims(int organizationId, int userId,string moduleId, string stageId, CustomClaimType claimType)
+        public List<GroupClaim> GetGroupClaims(int organizationId, int userId,string permissionModuleType, string subPermissionModuleType, CustomClaimType claimType)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             string query = @"  Select gc.ClaimTypeId as claimType, pt.Name as ClaimValue
                             from [UserGroup] g
                                 inner join [GroupClaim] gc on gc.GroupId = g.GroupId
-                                inner join [PermissionModuleType] pmt on pmt.Name = @moduleId
-								inner join [SubPermissionModuleType] spmt on pmt.Id = spmt.PermissionModuleTypeId and spmt.Name = @stageId
+                                inner join [PermissionModuleType] pmt on pmt.Name = @permissionModuleType
+								inner join [SubPermissionModuleType] spmt on pmt.Id = spmt.PermissionModuleTypeId and spmt.Name = @subPermissionModuleType
                                 inner join [Permission] p on p.Id = gc.PermissionId and p.PermissionModuleTypeId=spmt.Id
                                 inner join [PermissionType] pt on pt.Id = p.PermissionTypeId
                             where g.UserId=@userId
@@ -104,19 +97,19 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 and pt.IsDeleted=0
                                 and pmt.IsDeleted=0";
 
-            return db.Query<GroupClaim>(query, new { userId, organizationId, claimType, moduleId, stageId }).ToList();
+            return db.Query<GroupClaim>(query, new { userId, organizationId, claimType, permissionModuleType, subPermissionModuleType }).ToList();
         }
         /// <summary>
         /// Get Role by Orgnization including Claims
         /// </summary>
-        public List<UserClaim> GetUserClaims(int organizationId, int userId, string moduleId, string stageId, CustomClaimType claimType)
+        public List<UserClaim> GetUserClaims(int organizationId, int userId, string permissionModuleType, string subPermissionModuleType, CustomClaimType claimType)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             string query = @" Select uc.ClaimTypeId as claimType, pt.Name as ClaimValue 
                             from [User] u 
                                 inner join [UserClaim] uc on uc.userId = u.Id
-                                inner join [PermissionModuleType] pmt on pmt.Name = @moduleId
-                                inner join [SubPermissionModuleType] spmt on pmt.Id = spmt.PermissionModuleTypeId and spmt.Name = @stageId
+                                inner join [PermissionModuleType] pmt on pmt.Name = @permissionModuleType
+                                inner join [SubPermissionModuleType] spmt on pmt.Id = spmt.PermissionModuleTypeId and spmt.Name = @subPermissionModuleType
 								inner join [Permission] p on p.Id = uc.PermissionId and p.PermissionModuleTypeId=spmt.Id
                                 inner join [PermissionType] pt on pt.Id = p.PermissionTypeId
                             where u.Id=@userId 
@@ -129,19 +122,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 and pt.IsDeleted=0
 								and spmt.IsDeleted=0";
 
-            return db.Query<UserClaim>(query, new { userId, organizationId,moduleId, claimType, stageId }).ToList();
+            return db.Query<UserClaim>(query, new { userId, organizationId, permissionModuleType, claimType, subPermissionModuleType }).ToList();
         }
-
-
-        public List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, string moduleId, string stageId, CustomClaimType claimType)
+        public List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, string permissionModuleType, string subPermissionModuleType, CustomClaimType claimType)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             string query = @"Select urc.ClaimTypeId as claimType, pt.Name as ClaimValue 
                             from [User] u 
                                 inner join [UserRole] ur on u.id = ur.userId
                                 inner join [RoleClaim] urc on urc.RoleId = ur.RoleId
-                                inner join [PermissionModuleType] pmt on pmt.Name = @moduleId
-                                inner join [SubPermissionModuleType] spmt on pmt.Id = spmt.PermissionModuleTypeId and spmt.Name = @stageId
+                                inner join [PermissionModuleType] pmt on pmt.Name = @permissionModuleType
+                                inner join [SubPermissionModuleType] spmt on pmt.Id = spmt.PermissionModuleTypeId and spmt.Name = @subPermissionModuleType
                                 inner join [Permission] p on p.Id = urc.PermissionId and p.PermissionModuleTypeId=spmt.Id
                                 inner join [PermissionType] pt on pt.Id = p.PermissionTypeId
                             where u.Id=@userId
@@ -154,10 +145,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 and pmt.IsDeleted=0
                                 and pt.IsDeleted=0";
 
-            return db.Query<UserRoleClaim>(query, new { userId, organizationId, moduleId, claimType, stageId }).ToList();
+            return db.Query<UserRoleClaim>(query, new { userId, organizationId, permissionModuleType, claimType, subPermissionModuleType }).ToList();
         }
-
-        
         //List<string> GetRequiredClaimsForModule(PermissionModuleType permissionModuleType)
         //{
         //    throw new System.NotImplementedException();

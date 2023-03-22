@@ -24,9 +24,9 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
             if (user == null) return Task.CompletedTask;
 
             var sdtUserIdentity = user.Identity as SdtUserIdentity;
-            var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId,sdtUserIdentity.UserId,"UiPageMetadataPermission","UiPageMetadataPermission",CustomClaimType.ApplicationPermission);
-            var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId,sdtUserIdentity.UserId,"UiPageMetadataPermission","UiPageMetadataPermission",CustomClaimType.ApplicationPermission);
-            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId,sdtUserIdentity.UserId,"UiPageMetadataPermission","UiPageMetadataPermission",CustomClaimType.ApplicationPermission);
+            var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId,sdtUserIdentity.UserId, PermissionModuleType.UiPageMetadataPermission.ToString(), PermissionModuleType.UiPageMetadataPermission.ToString(), CustomClaimType.ApplicationPermission);
+            var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId,sdtUserIdentity.UserId, PermissionModuleType.UiPageMetadataPermission.ToString(), PermissionModuleType.UiPageMetadataPermission.ToString(), CustomClaimType.ApplicationPermission);
+            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId,sdtUserIdentity.UserId, PermissionModuleType.UiPageMetadataPermission.ToString(), PermissionModuleType.UiPageMetadataPermission.ToString(), CustomClaimType.ApplicationPermission);
             // Validate the requirement against the resource and identity.
 
             //if (user.HasClaim(p => p.Type == CustomClaimType.ApplicationPermission.ToString() && p.Value == requirement.Name))

@@ -2,21 +2,19 @@
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
-    //[Route("/ErrorPage/{statuscode}")]
     public class ErrorPageController : Controller
     {
-        
-        public IActionResult Index(string statuscode)
+        public IActionResult Index(string message)
         {
-            //HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-            //switch (statuscode)
-            //{
-            //    case "401":
-            //        return View("401");
-            //    case "404":
-            //        return View("404");
-            //}
-            return View("Index",statuscode);
+            var statuscode = HttpContext.Response.StatusCode;
+            switch (statuscode)
+            {
+                case 401:
+                    return View("401");
+                case 404:
+                    return View("404");
+            }
+            return View("Index",message);
         }
         
     }

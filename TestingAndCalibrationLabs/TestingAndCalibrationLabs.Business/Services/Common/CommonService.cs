@@ -59,7 +59,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<bool> Add(RecordModel record)
         {
-            RequestResult<bool> requestResult = new RequestResult<bool>();
+            RequestResult<bool> requestResult = new RequestResult<bool>(false);
             if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Create).Result.Succeeded)
             {
                 requestResult = Validate(record);
@@ -71,8 +71,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                     //_workflowActivityService.WorkflowActivity(record);
                     return new RequestResult<bool>(true);
                 }
+                return requestResult;
             }
-            return requestResult;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// 
@@ -175,7 +176,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 _recordGenericRepository.Delete(id);
                 return true;
             }
-            return false;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// to save the record 
@@ -202,7 +203,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     return new RequestResult<bool>(false);
                 }
             }
-            return requestResult;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// Get By Module Id For Create
@@ -233,7 +234,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     Layout = hierarchy
                 };
             }
-            return record;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
         /// <summary>
         /// This Method Return Data For Grid
@@ -282,7 +283,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                      );
                 return new RecordModel { Id = recordId, UiPageTypeId = workflowStage.UiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy };
             }
-            return recordMdel;
+            throw new UnauthorizedAccessException("Your Unauthorized");
         }
 
         #region Multi Value Control

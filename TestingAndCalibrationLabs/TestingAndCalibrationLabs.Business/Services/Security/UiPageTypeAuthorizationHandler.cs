@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -23,9 +24,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (user == null) return Task.CompletedTask;
 
             var sdtUserIdentity = user.Identity as SdtUserIdentity;
-            var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiPageTypePermission", "UiPageTypePermission", CustomClaimType.ApplicationPermission);
-            var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiPageTypePermission", "UiPageTypePermission", CustomClaimType.ApplicationPermission);
-            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, "UiPageTypePermission", "UiPageTypePermission", CustomClaimType.ApplicationPermission);
+            var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
+            var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
+            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
 
             // Validate the requirement against the resource and identity.
               

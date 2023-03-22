@@ -8,6 +8,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model.Common
     {
         DefaultModulePermission,
         UiPageTypePermission,
-        UiPageMetadataPermission
+        UiPageMetadataPermission,
+        UiControlTypePermission
     }
 }
