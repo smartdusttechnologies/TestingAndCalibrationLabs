@@ -8,10 +8,13 @@ using TestingAndCalibrationLabs.Business.Core.Model.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    public class UiControlTypeAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, UiPageTypeModel>
+    /// <summary>
+    /// Authorization Handler For UiPageTypeModel
+    /// </summary>
+    public class UiPageTypeAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, UiPageTypeModel>
     {
         private readonly IRoleService _roleService;
-        public UiControlTypeAuthorizationHandler(IRoleService roleService)
+        public UiPageTypeAuthorizationHandler(IRoleService roleService)
         {
             _roleService = roleService;
         }
@@ -20,25 +23,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                                                        UiPageTypeModel resource)
         {
             var user = context.User as SdtPrincipal;
-
             if (user == null) return Task.CompletedTask;
 
             var sdtUserIdentity = user.Identity as SdtUserIdentity;
             var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
             var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
-            var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
+            var groupClaims = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
 
             // Validate the requirement against the resource and identity.
-              
             //if (user.HasClaim(p => p.Type == CustomClaimType.ApplicationPermission.ToString() && p.Value == requirement.Name))
-
             if(userRoleClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
             else if(userClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
-            else if(groupClaim.Any(p=>p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
+            else if(groupClaims.Any(p=>p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
-
             return Task.CompletedTask;
         }
     }

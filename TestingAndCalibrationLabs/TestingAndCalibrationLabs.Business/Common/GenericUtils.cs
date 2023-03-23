@@ -42,7 +42,6 @@ namespace TestingAndCalibrationLabs.Business.Common
 
             return childrenFetcher(topMostKey);
         }
-   
         #endregion
 
     }
