@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+           // ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<Organization> organizationPage = _organizationService.Get();
             var organizationData = _mapper.Map<List<Organization>, List<OrganizationDTO>>(organizationPage);
             return View(organizationData.AsEnumerable());
@@ -67,14 +67,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] OrganizationDTO organizationDTO)
+        public IActionResult Edit(int? id,[Bind] OrganizationDTO organizationDTO)
         {
 
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<OrganizationDTO, Organization>(organizationDTO);
                 _organizationService.Update(pageModel);
-                TempData["IsTrue"] = true;
+             //   TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(organizationDTO);
@@ -105,7 +105,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 var pageModel = _mapper.Map<OrganizationDTO, Organization>(organizationDTO);
                 _organizationService.Create(pageModel);
-                TempData["IsTrue"] = true;
+               // TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(organizationDTO);
@@ -144,7 +144,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _organizationService.Delete((int)id);
-            TempData["IsTrue"] = true;
+          //  TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
     }

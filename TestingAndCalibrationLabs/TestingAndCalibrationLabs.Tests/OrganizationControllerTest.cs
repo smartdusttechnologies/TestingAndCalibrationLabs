@@ -86,7 +86,37 @@ namespace TestingAndCalibrationLabs.Tests
 
             result.Model.Should().BeEquivalentTo(ExpectedResult);
         }
+        [Test]
+        public void Edit_GetById_NullId_Test()
+        {
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
+            _genericRepository.Setup(x => x.Get(It.IsAny<int>()));
 
+            var controller = new OrganizationController(_organizationService, _mapper);
+
+            var createResult = (NotFoundResult)controller.Edit(44);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+        }
+        [Test]
+        public void Edit_Get_NullId_Test()
+        {
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
+            var controller = new OrganizationController(_organizationService, _mapper);
+            // var value = null;
+            var createResult = (NotFoundResult)controller.Edit(null);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
         [Test]
         public void Edit_post_Test()
         {
@@ -102,7 +132,7 @@ namespace TestingAndCalibrationLabs.Tests
             _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
             var controller = new OrganizationController(_organizationService, _mapper);
 
-            var createResult = (RedirectToActionResult)controller.Edit(organizationDTO);
+            var createResult = (RedirectToActionResult)controller.Edit(1, organizationDTO);
                 var expectedResult = "Index";
 
              createResult.ActionName.Should().BeEquivalentTo(expectedResult);
@@ -145,6 +175,40 @@ namespace TestingAndCalibrationLabs.Tests
 
         }
         [Test]
+        public void Delete_get_null_Id()
+        {
+
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
+            var controller = new OrganizationController(_organizationService, _mapper);
+
+            var createResult = (NotFoundResult)controller.Delete(null);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+        [Test]
+        public void Delete_getbyId_null()
+        {
+            _genericRepository.Setup(x => x.Get(It.IsAny<int>()));
+
+
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
+            var controller = new OrganizationController(_organizationService, _mapper);
+
+            var createResult = (NotFoundResult)controller.Delete(5);
+
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+        }
+        [Test]
         public void DeleteConfirmed_Test()
         {
             _genericRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
@@ -157,6 +221,24 @@ namespace TestingAndCalibrationLabs.Tests
             var expectedResult = "index";
        
             result.ActionName.Should().BeEquivalentTo(expectedResult);
+
+
+        }
+        [Test]
+        public void Delete_Confirmed_IdNull()
+        {
+
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
+            var controller = new OrganizationController(_organizationService, _mapper);
+
+            var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
+            _genericRepository.Setup(x => x.Delete(It.IsAny<int>()));
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
 
 
         }

@@ -93,7 +93,22 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+        [Test]
+        public void Edit_get_null_Id()
+        {
 
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+          
+            var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
+
+            var createResult = (NotFoundResult)controller.Edit(null);
+              var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
         [Test]
         public void Edit_post_Test()
         {
@@ -112,6 +127,23 @@ namespace TestingAndCalibrationLabs.Tests
 
             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
+
+
+        }
+        [Test]
+        public void Edit_Null_Id_Post_Test()
+        {
+            var workflowActivityDTO = new WorkflowActivityDTO { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" };
+
+
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+
+            var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
+
+            var createResult = (NotFoundResult)controller.Edit(1, workflowActivityDTO);
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
 
 
         }
@@ -164,6 +196,23 @@ namespace TestingAndCalibrationLabs.Tests
 
         }
         [Test]
+        public void Delete_get_null_Id()
+        {
+
+
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+            var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
+
+            var createResult = (NotFoundResult)controller.Delete(null);
+       
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+        [Test]
         public void DeleteConfirmed_Test()
         {
             workflowActivityRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
@@ -180,6 +229,24 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+        [Test]
+        public void Delete_Confirmed_IdNull()
+        {
+
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+            var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
+
+            var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
+         
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+
+        }
+
     }
 }
 

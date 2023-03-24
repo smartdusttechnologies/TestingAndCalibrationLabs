@@ -87,7 +87,24 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+        [Test]
+        public void Edit_get_null_Id()
+        {
 
+            _workflowService = new WorkflowService(workflowRepository.Object);
+          
+
+            var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
+
+            var createResult = (NotFoundResult)controller.Edit(null);
+          
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
         [Test]
         public void Edit_post_Test()
         {
@@ -106,6 +123,22 @@ namespace TestingAndCalibrationLabs.Tests
             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
 
+
+
+        }
+        [Test]
+        public void Edit_Null_Id_Post_Test()
+        {
+            var workflowDTO = new WorkflowDTO { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" };
+
+
+            _workflowService = new WorkflowService(workflowRepository.Object);
+            var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
+
+            var createResult = (NotFoundResult)controller.Edit(1, workflowDTO);
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
 
 
         }
@@ -157,6 +190,22 @@ namespace TestingAndCalibrationLabs.Tests
 
         }
         [Test]
+        public void Delete_get_null_Id()
+        {
+
+            _workflowService = new WorkflowService(workflowRepository.Object);
+            var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
+
+            var createResult = (NotFoundResult)controller.Delete(null);
+         
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+        [Test]
         public void DeleteConfirmed_Test()
         {
             workflowRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
@@ -170,6 +219,23 @@ namespace TestingAndCalibrationLabs.Tests
             var expectedResult = "Index";
 
             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
+
+
+
+        }
+        [Test]
+        public void Delete_Confirmed_IdNull()
+        {
+
+            _workflowService = new WorkflowService(workflowRepository.Object);
+            var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
+
+            var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
+         
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
 
 
 

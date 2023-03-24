@@ -36,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+          //  ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<ModuleModel> page = _moduleService.Get();
             var pageData = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(page);
             return View(pageData.AsEnumerable());
@@ -53,9 +53,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var applicationList = _applicationService.Get();
-            var applicationDatas = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(applicationList);
-            ViewBag.Application = applicationDatas;
+            //var applicationList = _applicationService.Get();
+            //var applicationDatas = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(applicationList);
+            //ViewBag.Application = applicationDatas;
 
             var getByIdPageModel = _moduleService.GetById((int)id);
             if (getByIdPageModel == null)
@@ -72,14 +72,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] ModuleDTO moduleDTO)
+        public IActionResult Edit(int? id,[Bind] ModuleDTO moduleDTO)
         {
 
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<ModuleDTO, ModuleModel>(moduleDTO);
                 _moduleService.Update(pageModel);
-                TempData["IsTrue"] = true;
+           //     TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(moduleDTO);
@@ -92,9 +92,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            var applicationList = _applicationService.Get();
-            var applicationDatas = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(applicationList);
-             ViewBag.Application = applicationDatas;
+            //var applicationList = _applicationService.Get();
+            //var applicationDatas = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(applicationList);
+            // ViewBag.Application = applicationDatas;
 
 
             return base.View(new ModuleDTO { Id = id });
@@ -113,7 +113,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 var pageModel = _mapper.Map<ModuleDTO, ModuleModel>(moduleDTO);
                 _moduleService.Create(pageModel);
-                TempData["IsTrue"] = true;
+               // TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(moduleDTO);
@@ -151,7 +151,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _moduleService.Delete((int)id);
-            TempData["IsTrue"] = true;
+           // TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
 

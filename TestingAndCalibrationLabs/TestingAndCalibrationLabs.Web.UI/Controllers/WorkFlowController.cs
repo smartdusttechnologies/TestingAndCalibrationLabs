@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+           // ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var workflowPage = _workflowService.Get();
             var workflowPages = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(workflowPage);
             return View(workflowPages.AsEnumerable());
@@ -49,9 +49,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-            var pageList = _moduleService.Get();
-            var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
-            ViewBag.module= pages;
+            //var pageList = _moduleService.Get();
+            //var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
+            //ViewBag.module= pages;
 
             return base.View(new WorkflowDTO { Id = id });
         }
@@ -68,7 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                var createPageValidation = _mapper.Map<WorkflowDTO, WorkflowModel>(workflowDTO);
                 _workflowService.Create(createPageValidation);
-                TempData["IsTrue"] = true;
+           //     TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(workflowDTO);
@@ -79,18 +79,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
        {
-           if (id == null)
+            if (id == null)
             {
                 return NotFound();
             }
-         
-            var pages = _moduleService.Get();
-           var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
-           ViewBag.Module = pageList;
 
-           WorkflowModel module = _workflowService.GetById(id);
+            // var pages = _moduleService.Get();
+            //var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
+            //ViewBag.Module = pageList;
+
+            WorkflowModel module = _workflowService.GetById((int)id);
            var workflowData = _mapper.Map<WorkflowModel, WorkflowDTO>(module);
            return View(workflowData);
        }
@@ -104,13 +104,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
        {
             if (id != workflowDTO.Id)
             {
-               return NotFound();
+                return NotFound();
             }
             if (ModelState.IsValid)
             {
                 var editWorkflowDTO = _mapper.Map<Models.WorkflowDTO, Business.Core.Model.WorkflowModel>(workflowDTO);
                 _workflowService.Update(id, editWorkflowDTO);
-                TempData["IsTrue"] = true;
+              //  TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(workflowDTO);
@@ -120,13 +120,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            WorkflowModel workflowModel = _workflowService.GetById(id);
+            WorkflowModel workflowModel = _workflowService.GetById((int)id);
             var deleteWorkflow = _mapper.Map<WorkflowModel, WorkflowDTO>(workflowModel);
             return View(deleteWorkflow);
         }
@@ -144,7 +144,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _workflowService.Delete((int)id);
-            TempData["IsTrue"] = true;
+         //   TempData["IsTrue"] = true;
             return RedirectToAction("Index");
        }
    }

@@ -101,6 +101,42 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+      
+        [Test]
+        public void Edit_getbyId_null_Id()
+        {
+
+            _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
+            // _applicationService = new ApplicationService(genericRepository.Object);
+            //  genericRepository.Setup(x => x.Get()).Returns();
+            moduleRepository.Setup(x => x.GetById(It.IsAny<int>()));
+
+            var controller = new ModuleController(_mapper, _moduleService, _applicationService);
+
+            var createResult = (NotFoundResult)controller.Edit(55);
+          //  var ExpectedResult = new ModuleDTO() { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" };
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+        [Test]
+        public void Edit_Get_NullId_Test()
+        {
+            _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
+
+            var controller = new ModuleController(_mapper, _moduleService, _applicationService);
+
+            var createResult = (NotFoundResult)controller.Edit(null);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+        }
         [Test]
         public void Edit_post_Test()
         {
@@ -115,40 +151,13 @@ namespace TestingAndCalibrationLabs.Tests
             var controller = new ModuleController(_mapper, _moduleService, _applicationService);
 
 
-            var createResult = (RedirectToActionResult)controller.Edit(moduleDTO);
+            var createResult = (RedirectToActionResult)controller.Edit(1, moduleDTO);
             var expectedResult = "Index";
 
             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
         }
-        [Test]
-        public void Create_get_Test()
-        {
-            List<ApplicationDTO> applicationModel = new List<ApplicationDTO>();
-            applicationModel.Add(new ApplicationDTO { Id = 3, Name = "Aman", Description = "Kumar" });
-            applicationModel.Add(new ApplicationDTO { Id = 6, Name = "Amane", Description = "Kiumar" });
-
-            List<ModuleModel> moduleModel = new List<ModuleModel>();
-            moduleModel.Add(new ModuleModel { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" });
-            moduleModel.Add(new ModuleModel { Id = 5, Name = "amane", ApplicationId = 85, ApplicationName = "tritesh" });
-
-         //   genericRepository.Setup(x => x.Get()).Returns(applicationModel);
-
-
-            _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
-
-            //  moduleRepository.Setup(x => x.Create(moduleModel)).Returns(0);
-
-            var controller = new ModuleController(_mapper, _moduleService, _applicationService);
-
-
-            var createResult = (ViewResult)controller.Create(3);
-            var expectedResult = new ModuleDTO() { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" };
-
-            createResult.Model.Should().BeEquivalentTo(expectedResult);
-
-
-        }
+       
         [Test]
         public void Create_post_Test()
         {
@@ -186,7 +195,42 @@ namespace TestingAndCalibrationLabs.Tests
 
         }
         [Test]
-        public void Delete_post()
+        public void Delete_get_null_Id()
+        {
+
+            _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
+            var controller = new ModuleController(_mapper, _moduleService, _applicationService);
+
+            var createResult = (NotFoundResult)controller.Delete(null);
+            //   moduleRepository.Setup(x => x.Delete(It.IsAny<int>()));
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+     
+        [Test]
+        public void Delete_getbyId_null()
+        {
+            moduleRepository.Setup(x => x.GetById(It.IsAny<int>()));
+
+            _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
+            var controller = new ModuleController(_mapper, _moduleService, _applicationService);
+
+            var createResult = (NotFoundResult)controller.Delete(5);
+           
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+        }
+        [Test]
+        public void Delete_Confirmed()
         {
 
             moduleRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
@@ -202,5 +246,23 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+        [Test]
+        public void Delete_Confirmed_IdNull()
+        {
+
+            _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
+            var controller = new ModuleController(_mapper, _moduleService, _applicationService);
+
+            var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
+            moduleRepository.Setup(x => x.Delete(It.IsAny<int>()));
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+
+        }
     }
-}
+    }

@@ -17,6 +17,7 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository;
+using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Services;
@@ -94,7 +95,23 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+        [Test]
+        public void Edit_get_null_Id()
+        {
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
+
+            var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
+
+            var createResult = (NotFoundResult)controller.Edit(null);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
         [Test]
         public void Edit_post_Test()
         {
@@ -113,6 +130,23 @@ namespace TestingAndCalibrationLabs.Tests
 
             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
+
+
+        }
+        [Test]
+        public void Edit_Null_Id_Post_Test()
+        {
+            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
+
+
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
+
+            var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
+
+            var createResult = (NotFoundResult)controller.Edit(1, workflowStageDTO);
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
 
 
         }
@@ -166,6 +200,22 @@ namespace TestingAndCalibrationLabs.Tests
 
         }
         [Test]
+        public void Delete_get_null_Id()
+        {
+
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
+            var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
+
+            var createResult = (NotFoundResult)controller.Delete(null);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+        [Test]
         public void DeleteConfirmed_Test()
         {
             workflowStageRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
@@ -178,6 +228,23 @@ namespace TestingAndCalibrationLabs.Tests
             var expectedResult = "Index";
 
             createResult.ActionName.Should().BeEquivalentTo(expectedResult);
+
+
+
+        }
+        [Test]
+        public void Delete_Confirmed_IdNull()
+        {
+
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
+            var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
+
+            var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
+
+            var expectedResult = 404;
+
+            createResult.StatusCode.Should().Be(expectedResult);
+
 
 
 

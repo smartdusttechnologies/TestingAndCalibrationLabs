@@ -36,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+          //  ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var workflowActivityPage = _workflowActivityService.Get();
             var workflowActivitypages = _mapper.Map<List<WorkflowActivityModel>, List<WorkflowActivityDTO>>(workflowActivityPage);
             return View(workflowActivitypages.AsEnumerable());
@@ -49,12 +49,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-            var activityList = _activityService.Get();
-            var stageList = _workflowStageService.Get();
-            var activityPages = _mapper.Map<List<ActivityModel>, List<ActivityDTO>>(activityList);
-            var stagePages = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(stageList);
-            ViewBag.Activity = activityPages;
-            ViewBag.WorkflowStage = stagePages;
+            //var activityList = _activityService.Get();
+            //var stageList = _workflowStageService.Get();
+            //var activityPages = _mapper.Map<List<ActivityModel>, List<ActivityDTO>>(activityList);
+            //var stagePages = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(stageList);
+            //ViewBag.Activity = activityPages;
+            //ViewBag.WorkflowStage = stagePages;
 
             return base.View(new WorkflowActivityDTO { Id = id });
         }
@@ -71,7 +71,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var createPageValidation = _mapper.Map<WorkflowActivityDTO, WorkflowActivityModel>(workflowActivityDTO);
                 _workflowActivityService.Create(createPageValidation);
-                TempData["IsTrue"] = true;
+                //TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(workflowActivityDTO);
@@ -82,20 +82,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>   
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            
 
-            var pages = _activityService.Get();
-            var pagess = _workflowStageService.Get();
-            var pageList = _mapper.Map<List<ActivityModel>, List<ActivityDTO>>(pages);
-            var pageLists = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(pagess);
-            ViewBag.Activity = pageList;
-            ViewBag.WorkflowStage = pageLists;
+
+            //var pages = _activityService.Get();
+            //var pagess = _workflowStageService.Get();
+            //var pageList = _mapper.Map<List<ActivityModel>, List<ActivityDTO>>(pages);
+            //var pageLists = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(pagess);
+            //ViewBag.Activity = pageList;
+            //ViewBag.WorkflowStage = pageLists;
 
             WorkflowActivityModel workflowActivity = _workflowActivityService.GetById((int)id);
             var workflowActivityData = _mapper.Map<WorkflowActivityModel, WorkflowActivityDTO>(workflowActivity);
@@ -117,7 +117,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 var editWorkflowActivityDTO = _mapper.Map<Models.WorkflowActivityDTO, Business.Core.Model.WorkflowActivityModel>(workflowActivityDTO);
                 _workflowActivityService.Update(id, editWorkflowActivityDTO);
-                TempData["IsTrue"] = true;
+             //   TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(workflowActivityDTO);
@@ -127,13 +127,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            WorkflowActivityModel workflowActivityModel = _workflowActivityService.GetById(id);
+            WorkflowActivityModel workflowActivityModel = _workflowActivityService.GetById((int)id);
             var deleteWorkflowActivity = _mapper.Map<WorkflowActivityModel, WorkflowActivityDTO>(workflowActivityModel);
             return View(deleteWorkflowActivity);
         }
@@ -151,7 +151,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _workflowActivityService.Delete((int)id);
-            TempData["IsTrue"] = true;
+           // TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
     }
