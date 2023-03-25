@@ -20,9 +20,30 @@ BEGIN
               ([Id], [Name], [IsDeleted])
          VALUES
                (1, N'UIPageTypePermission', 0),
-			   (2, N'UiPageMetadataPermission', 0)
+			   (2, N'UiPageMetadataPermission', 0),
+			   (3, N'CubeTesting', 0),
+			   (1004, N'UiControlTypePermission', 0)
 
     SET IDENTITY_INSERT [dbo].[PermissionModuleType]  OFF
+END
+GO
+IF NOT EXISTS (SELECT 1 FROM [SubPermissionModuleType] WHERE ID IN (1))
+BEGIN
+    SET IDENTITY_INSERT [dbo].[SubPermissionModuleType]  ON
+
+    INSERT INTO [dbo].[SubPermissionModuleType]
+             ([Id], [Name], [PermissionModuleTypeId], [IsDeleted])
+         VALUES
+              (1, N'SampleReceiving', 3, 0),
+			  (2, N'TestPlan', 3, 0),
+			  (3, N'LabAnalysis', 3, 0),
+			  (4, N'TestReport', 3, 0),
+			  (5, N'Billing&Payments', 3, 0),
+			  (6, N'UIPageTypePermission', 1, 0),
+			  (7, N'UiPageMetadataPermission', 2, 0),
+			  (8, N'UiControlTypePermission', 1004, 0)
+
+    SET IDENTITY_INSERT [dbo].[SubPermissionModuleType]  OFF
 END
 GO
 IF NOT EXISTS (SELECT 1 FROM [PermissionType] WHERE ID IN (1))
@@ -54,7 +75,17 @@ BEGIN
 			   (5, N'uiPageMetadata.add', 2, 1, 0),
 			   (6, N'uiPageMetadata.edit', 2, 2, 0),
 			   (7, N'uiPageMetadata.read', 2, 3, 0),
-			   (8, N'uiPageMetadata.delete', 2, 4, 0)
+			   (8, N'uiPageMetadata.delete', 2, 4, 0),
+			   (9, N'testPlan.add', 3, 1, 0),
+			   (10, N'testPlan.read', 3, 3, 0),
+			   (12, N'sample.add', 4, 1, 0),
+			   (13, N'sample.read', 4, 3, 0),
+			   (1011, N'uiControlType.add', 8, 1, 0),
+			   (1012, N'uiControlType.read', 8, 3, 0),
+			   (1013, N'uiC.ad', 5, 3, 0),
+			   (1014, N'uiC.read', 5, 1, 0),
+			   (1015, N'j', 4, 2, 0),
+			   (1016, N'k', 4, 4, 0)
 
     SET IDENTITY_INSERT [dbo].[Permission]  OFF
 END
