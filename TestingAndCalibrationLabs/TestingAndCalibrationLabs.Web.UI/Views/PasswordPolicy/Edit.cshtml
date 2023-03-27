@@ -1,0 +1,98 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.PasswordPolicyDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>PasswordPolicy</h1>
+
+<h4>Edit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="PasswordPolicy" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="MinCaps" name="MinCaps" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="MinCaps">
+                    <label class="form-label" for="MinCaps">MinCaps</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="MinSmallChars" name="MinSmallChars" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="MinSmallChars">
+                    <label class="form-label" for="MinSmallChars">MinSmallChars</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="MinSpecialChars" name="MinSpecialChars" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="MinSpecialChars">
+                    <label class="form-label" for="MinSpecialChars">MinSpecialChars</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="MinNumber" name="MinNumber" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="MinNumber">
+                    <label class="form-label" for="MinNumber">MinNumber</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="MinLength" name="MinLength" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="MinLength">
+                    <label class="form-label" for="MinLength">MinLength</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <select class="form-input width-full black-border" type="text" id="AllowUserName" name="AllowUserName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="AllowUserName">
+                        <option disabled="disabled" selected>....</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                    <label class="form-label" for="AllowUserName">AllowUserName</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="DisAllPastPassword" name="DisAllPastPassword" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="DisAllPastPassword">
+                    <label class="form-label" for="DisAllPastPassword">DisAllPastPassword</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="DisAllowedChars" name="DisAllowedChars" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="DisAllowedChars">
+                    <label class="form-label" for="DisAllowedChars">DisAllowedChars</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="ChangeIntervalDays" name="ChangeIntervalDays" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="ChangeIntervalDays">
+                    <label class="form-label" for="ChangeIntervalDays">ChangeIntervalDays</label>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <select class="form-input width-full black-border" name="OrgId" id="OrgId" onchange="this.setAttribute('value',this.value)" asp-for="OrgId">
+                        <option disabled="disabled" selected>....</option>
+                        @foreach (var item in ViewBag.Organization)
+                        {
+                            <option value=@item.Id>@item.OrgName</option>
+                        }
+                    </select>
+                    <label class="form-label" for="Organization">OrganizationOrgName</label>
+                </div>
+
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <select class="form-input width-full black-border" name="OrgId" id="Password" onchange="this.setAttribute('value',this.value)" asp-for="OrgId">
+                        <option disabled="disabled" selected>....</option>
+                        @foreach (var item in ViewBag.Organization)
+                        {
+                            <option value=@item.Id>@item.OrgCode</option>
+                        }
+                    </select>
+                    <label class="form-label" for="Organization">OrganizationOrgCode</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

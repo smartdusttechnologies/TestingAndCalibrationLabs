@@ -10,5 +10,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         List<Organization> Get();
         List<Organization> Get(SessionContext sessionContext);
         Organization Get(SessionContext sessionContext, int id);
+        List<OrganizationModel> Getby();
+
     }
 }

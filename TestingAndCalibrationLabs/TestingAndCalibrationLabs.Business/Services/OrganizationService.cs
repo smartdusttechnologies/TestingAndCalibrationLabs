@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -76,6 +78,12 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //});
                 return null;
             }
+        }
+        public List<OrganizationModel> Getby()
+        {
+            var organizationList=_organizationRepository.Getby();
+            organizationList = organizationList.Where(x => x.Id != (int)Helpers.None.Id).ToList();
+            return organizationList;
         }
     }
 }

@@ -88,6 +88,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ILookupService, LookupService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
+            services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
+
             services.AddScoped<IListSorterService, ListSorterService>();
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowService, WorkflowService>();
@@ -100,6 +102,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
+            services.AddScoped<IPasswordPolicyRepository, PasswordPolicyRepository>();
+
             services.AddScoped<IActivityMetadataRepository, ActivityMetadataRepository>();
             services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();
             services.AddScoped<IWorkflowRepository, WorkflowRepository>();
@@ -114,6 +118,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<ActivityMetadataModel>, GenericRepository<ActivityMetadataModel>>();
             services.AddScoped<IGenericRepository<ModuleModel>, GenericRepository<ModuleModel>>();
             services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
+
+            services.AddScoped<IGenericRepository<PasswordPolicyModel>, GenericRepository<PasswordPolicyModel>>();
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();

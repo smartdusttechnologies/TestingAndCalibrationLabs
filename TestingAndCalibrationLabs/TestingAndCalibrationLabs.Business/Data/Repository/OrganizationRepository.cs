@@ -14,6 +14,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
     public class OrganizationRepository : IOrganizationRepository
     {
         private readonly IConnectionFactory _connectionFactory;
+        private readonly string _tableName;
+
         public OrganizationRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
@@ -39,6 +41,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<Organization>("Select top 1 * From [Organization] where Id=@id and (Id=@OrganizationId OR @OrganizationId = 0) and IsDeleted=0", new { id, sessionContext.OrganizationId }).FirstOrDefault();
+        }
+        public List<OrganizationModel> Getby()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<OrganizationModel>("Select * From [Organization] where IsDeleted=0", _tableName).ToList();
         }
     }
 }

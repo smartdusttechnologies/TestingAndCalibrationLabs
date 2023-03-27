@@ -27,7 +27,8 @@ BEGIN
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'PasswordPolicy',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -385,7 +386,8 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+			  (11,N'/PasswordPolicy/Index/',8,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

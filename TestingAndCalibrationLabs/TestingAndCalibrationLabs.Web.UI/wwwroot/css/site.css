@@ -91,6 +91,16 @@ select.input-validation-error#UiControlType {
 select.input-validation-error#UiPageType {
     border: 2px solid red;
 }
+select.input-validation-error#OrgId {
+    border: 2px solid red;
+}
+select.input-validation-error#AllowUserName {
+    border: 2px solid red;
+}
+select.input-validation-error#Password {
+    border: 2px solid red;
+}
+
 select.input-validation-error#DataType {
     border: 2px solid red;
 }
