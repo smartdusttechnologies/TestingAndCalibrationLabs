@@ -68,11 +68,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains OrgId For PasswordPolicy
         /// </summary>
-        [Required(ErrorMessage = "Please choose OrganizationOrgName and OrganizationOrgCode")]
+        [Required(ErrorMessage = "Please choose OrganizationOrgName ")]
         public int OrgId { get; set; }
         /// <summary>
         /// It Contains OrgCode For PasswordPolicy
         /// </summary>
+        [Required(ErrorMessage = "Please choose  OrganizationOrgCode")]
+
         public string OrganizationOrgCode { get; set; }
         /// <summary>
         /// It Contains OrgName For PasswordPolicy
