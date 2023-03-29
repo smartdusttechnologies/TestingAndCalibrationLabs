@@ -6,42 +6,43 @@
 <div class="padding-login bg-white">
     <form id="SignUpData" asp-controller="User" asp-action="Add">
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="text" id="FirstName" placeholder=" " name="FirstName" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=FirstName>
+            <input class="form-input  inputForSignUp gray-border" type="text" id="FirstName" placeholder=" " name="FirstName" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=FirstName>
                 FirstName
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="text" id="LastName" placeholder=" " name="LastName" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=LastName>
+            <input class="form-input  inputForSignUp gray-border" type="text" id="LastName" placeholder=" " name="LastName" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=LastName>
                 LastName
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="text" id="Username" placeholder=" " name="UserName" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=Username>
+            <input class="form-input  inputForSignUp gray-border" type="text" id="Username" placeholder=" " name="UserName" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=Username>
                 UserName
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="email" id="Email" placeholder=" " name="Email" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=Email>
+            <input class="form-input  inputForSignUp gray-border" type="email" id="Email" placeholder=" " name="Email" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=Email>
                 Email
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="Mobile" id="Mobile" placeholder=" " name="Mobile" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=Mobile>
+            <input class="form-input inputForSignUp gray-border" type="Mobile" id="Mobile" placeholder=" " name="Mobile" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=Mobile>
                 Mobile
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-3 form-element-for-common-control right-pd-frm-input divDrop">
-            <select class="form-input width-full black-border" name="Country" id="Country" onchange="this.setAttribute('value',this.value)" asp-for="Country" asp-items="@ViewBag.Country">
+            <select class="form-input  inputForSignUp gray-border" name="Country" id="Country" onchange="this.setAttribute('value',this.value)" asp-for="Country" asp-items="@ViewBag.Country">
+                <option disabled="disabled" selected>....</option>
                 <option value="0">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="India">India</option>
@@ -62,29 +63,31 @@
                 <option value="Bahrain">Bahrain</option>
                 <option value="Bangladesh">Bangladesh</option>
             </select>
-            <label for="Country" class="form-label">
+            <label for="Country" class="form-label" style="color:gray;">
                 Country
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-3 form-element-for-common-control right-pd-frm-input">
-            <select class="form-input width-full black-border" name="Organizations" id="Organizations" asp-items="@ViewBag.Organizations">
+            <select class="form-input inputForSignUp gray-border" name="Organizations" id="Organizations" asp-items="@ViewBag.Organizations">
+                <option disabled="disabled" selected>....</option>
+
             </select>
-            <label for="Organizations" class="form-label">
+            <label for="Organizations" style="color:gray;" class="form-label">
                 Organizations
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="password" id="EnterPassword" placeholder=" " name="password" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=Enter Password>
+            <input class="form-input  inputForSignUp gray-border" type="password" id="EnterPassword" placeholder=" " name="password" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=Enter Password>
                 password
                 <span class="red-color">*</span>
             </label>
         </div>
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
-            <input class="form-input width-full black-border" type="password" id="ReEnterPassword" placeholder=" " name="ReEnterPassword" item.IsRequired onchange="this.setAttribute('value',this.value)">
-            <label class="form-label" for=ReEnterPassword>
+            <input class="form-input  inputForSignUp gray-border" type="password" id="ReEnterPassword" placeholder=" " name="ReEnterPassword" item.IsRequired onchange="this.setAttribute('value',this.value)">
+            <label class="form-label" style="color:gray;" for=ReEnterPassword>
                 Confirm password
                 <span class="red-color">*</span>
             </label>
@@ -172,7 +175,7 @@
         var under = ["#FirstName", "#LastName", "#Mobile", "#Email", "#ReEnterPassword", "#EnterPassword", "#Organizations", "#Country", "#Username"];
         for (var i = 0; i < under.length; i++) {
             if ($(under[i]).hasClass("red-error-border")) {
-           $(under[i]).removeClass("red-error-border").addClass("black-border");
+                $(under[i]).removeClass("red-error-border").addClass("gray-border");
         }
         }
         //validation messages
@@ -191,7 +194,7 @@
                 var newErrorMessage = newresponseJSON;
                 for (var i = 0; i < newErrorMessage.length; i++) {
                     var sourceId = "#" + newErrorMessage[i].sourceId;
-                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    $(sourceId).removeClass("gray-border").addClass("red-error-border");
                     myFunctionError();
                     document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
                     ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
