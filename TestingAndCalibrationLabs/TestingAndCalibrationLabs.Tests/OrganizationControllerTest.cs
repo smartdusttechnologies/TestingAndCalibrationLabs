@@ -1,24 +1,19 @@
 using AutoMapper;
 using FluentAssertions;
-using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Mysqlx.Session;
-using MySqlX.XDevAPI.Common;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
-using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Controllers;
 using TestingAndCalibrationLabs.Web.UI.Mappers;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using ILogger = TestingAndCalibrationLabs.Business.Core.Interfaces.ILogger;
 
 namespace TestingAndCalibrationLabs.Tests
 {
@@ -26,11 +21,10 @@ namespace TestingAndCalibrationLabs.Tests
     public class OrganizationControllerTest
     {
          IOrganizationService _organizationService;
-         IMapper _mapper;
-      //  ILogger _logger;
+         IMapper _mapper;   
         Mock<IGenericRepository<Organization>> _genericRepository = new Mock<IGenericRepository<Organization>>();
         Mock<IOrganizationRepository> _organizationRepository = new Mock<IOrganizationRepository>();
-
+       Mock<ILogger<Organization>> _logger = new Mock<ILogger<Organization>>();
 
         [SetUp]
         public void SetUp()
@@ -39,8 +33,8 @@ namespace TestingAndCalibrationLabs.Tests
             var Configuration = new MapperConfiguration(x => x.AddProfile(profile));
             var mapper = new Mapper(Configuration);
             _mapper = mapper;
-
            
+
         }
         [Test]
         public void Index_Method_Test()
@@ -50,7 +44,7 @@ namespace TestingAndCalibrationLabs.Tests
             organization.Add(new Organization { Id = 46, OrgCode = "Amane", OrgName = "Kiumar" });
 
 
-            _organizationService = new OrganizationService(_organizationRepository.Object,_genericRepository.Object);
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
 
             _genericRepository.Setup(x => x.Get()).Returns(organization);
   
@@ -137,6 +131,21 @@ namespace TestingAndCalibrationLabs.Tests
 
              createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
+        }
+        [Test]
+        public void Create_Get_Test()
+        {
+
+            _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
+
+           var controller = new OrganizationController(_organizationService, _mapper);
+
+            var result = (ViewResult)controller.Create(8);
+
+
+            var ExpectedResult = new OrganizationDTO() { Id = 8 };
+
+            result.Model.Should().BeEquivalentTo(ExpectedResult);
         }
         [Test]
         public void Create_post_Test()

@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions.AspNetCore.Mvc" Version="4.2.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Microsoft.Data.Tools.Msbuild" Version="16.0.62005.1040-preview" />
+    <PackageReference Include="Microsoft.Data.Tools.UnitTest" Version="16.0.62005.1040-preview" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0-preview-20230223-05" />
     <PackageReference Include="Moq" Version="4.17.1" />
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
@@ -18,6 +20,9 @@
   <ItemGroup>
     <ProjectReference Include="..\TestingAndCalibrationLabs.Business\TestingAndCalibrationLabs.Business.csproj" />
     <ProjectReference Include="..\TestingAndCalibrationLabs.Web.UI\TestingAndCalibrationLabs.Web.UI.csproj" />
+	  <!--<ProjectReference Include="..\TestingAndCalibrationLabs.DB\TestingAndCalibrationLabs.DB.sqlproj.user" />-->
+	  <!--<ProjectReference Include="..\TestingAndCalibrationLabs.DB\TestingAndCalibrationLabs.DB.sqlproj" />-->
+
   </ItemGroup>
 
 </Project>

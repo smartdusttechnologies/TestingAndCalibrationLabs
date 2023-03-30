@@ -23,14 +23,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
-        public WorkflowActivityService(IConfiguration configuration, IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService, IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository)
+        public WorkflowActivityService(/*IConfiguration configuration, IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService,*/ IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository)
         {
             _workflowActivityRepository = workflowActivityRepository;
             _pageDataGenericRepository = pageDataGenericRepository;
-            _activityMetadataService = activityMetadataService;
-            _emailService = emailService;
-            _webHostEnvironment = webHostEnvironment;
-            _configuration = configuration;
+            //_activityMetadataService = activityMetadataService;
+            //_emailService = emailService;
+            //_webHostEnvironment = webHostEnvironment;
+            //_configuration = configuration;
         }
 
         /// <summary>

@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Mysqlx.Session;
-using MySqlX.XDevAPI.Common;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -165,6 +163,41 @@ namespace TestingAndCalibrationLabs.Tests
 
              createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
+        }
+        //[Test]
+        //public void ModelStateInvalid_Edit_post_Test()
+        //{
+
+
+
+        //    var applicationDTO = new ApplicationDTO() { Id = 0 };
+
+        //    _applicationService = new ApplicationService(genericRepository.Object);
+        //    var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
+
+        //    var createResult = (ViewResult)controller.Edit(1, applicationDTO);
+        //    var applicationDTOa = new ApplicationDTO() { Id = 1, Name = null, Description = null };
+
+        //    var expectedResult = applicationDTO;
+
+        //    createResult.Should().BeEquivalentTo(expectedResult);
+
+        //}
+        [Test]
+        public void Create_Get_Test()
+        {
+
+            _applicationService = new ApplicationService(genericRepository.Object);
+
+
+            var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
+
+            var result = (ViewResult)controller.Create(6);
+
+
+            var ExpectedResult = new ApplicationDTO() { Id = 6};
+
+            result.Model.Should().BeEquivalentTo(ExpectedResult);
         }
         [Test]
         public void Create_post_Test()

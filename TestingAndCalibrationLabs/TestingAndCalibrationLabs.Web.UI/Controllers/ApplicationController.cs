@@ -12,7 +12,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IApplicationService _applicationService;
         public readonly IMapper _mapper;
-      //  private readonly IUiPageNavigationService _uiNavigationCategoryService;
+        private readonly IUiPageNavigationService _uiNavigationCategoryService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -20,11 +20,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="mapper"></param>
         /// <param name="uiNavigationCategoryService"></param>
        
-        public ApplicationController(IApplicationService applicationService, IMapper mapper)
+        public ApplicationController(IApplicationService applicationService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _applicationService = applicationService;
             _mapper = mapper;
-            //_uiNavigationCategoryService = uiNavigationCategoryService;
+            _uiNavigationCategoryService = uiNavigationCategoryService;
+            _uiNavigationCategoryService = uiNavigationCategoryService;
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+            //ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<ApplicationModel> page = _applicationService.Get();
             var pageData = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(page);
             return View(pageData.AsEnumerable());
@@ -68,14 +69,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] ApplicationDTO applicationDTO)
+        public IActionResult Edit(int? id,[Bind] ApplicationDTO applicationDTO)
         {
 
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<ApplicationDTO, ApplicationModel>(applicationDTO);
                 _applicationService.Update(pageModel);
-                TempData["IsTrue"] = true;
+            //    TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(applicationDTO);
@@ -106,7 +107,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 var pageModel = _mapper.Map<ApplicationDTO, ApplicationModel>(applicationDTO);
                 _applicationService.Create(pageModel);
-                TempData["IsTrue"] = true;
+              //  TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(applicationDTO);
@@ -147,7 +148,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _applicationService.Delete((int)id);
-            TempData["IsTrue"] = true;
+           // TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
     }

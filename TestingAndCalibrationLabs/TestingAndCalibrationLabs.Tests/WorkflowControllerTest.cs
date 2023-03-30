@@ -1,23 +1,11 @@
 using AutoMapper;
 using FluentAssertions;
-using Microsoft.AspNetCore.DataProtection.Repositories;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Moq;
-using Mysqlx.Crud;
-using Mysqlx.Session;
-using MySqlX.XDevAPI.Common;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
-using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
-using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Controllers;
@@ -101,6 +89,22 @@ namespace TestingAndCalibrationLabs.Tests
             var expectedResult = 404;
 
             createResult.StatusCode.Should().Be(expectedResult);
+
+
+
+        }
+        [Test]
+        public void Create_Get_Test()
+        {
+            _workflowService = new WorkflowService(workflowRepository.Object);
+
+
+             var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
+
+            var result = (ViewResult)controller.Create(6);
+            var ExpectedResult = new WorkflowDTO() { Id = 6};
+
+            result.Model.Should().BeEquivalentTo(ExpectedResult);
 
 
 
