@@ -66,5 +66,7 @@
         public int ModuleId { get; set; }
         public int Position { get; set; }
         public bool MultiValueControl { get;set; }
+        public string MetadataModuleBridgeUiControlDisplayName { get; set; }
+        public int Orders { get; set; }
     }
 }
