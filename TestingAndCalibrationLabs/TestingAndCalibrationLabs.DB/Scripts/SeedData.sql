@@ -754,11 +754,11 @@ BEGIN
     INSERT INTO [dbo].[WorkflowStage]
                ([Id], [Name], [IsDeleted], [WorkflowId], [UiPageTypeId], [Orders])
 			   VALUES
-             (2, N'Sample Receiving', 0, 1, 15, 0),
-			 (3, N'Test Plan', 0, 1, 16, 1),
-			 (4, N'Lab Analysis', 0, 1, 17, 2),
-			 (5, N'Test Report', 0, 1, 18, 3),
-			 (9, N'Billing & Payments', 0, 1, 19, 4),
+             (2, N'SampleReceiving', 0, 1, 15, 0),
+			 (3, N'TestPlan', 0, 1, 16, 1),
+			 (4, N'LabAnalysis', 0, 1, 17, 2),
+			 (5, N'TestReport', 0, 1, 18, 3),
+			 (9, N'Billing&Payments', 0, 1, 19, 4),
 			 (10, N'Customer', 0, 3, 14, 0)
     SET IDENTITY_INSERT [dbo].[WorkflowStage]  OFF
 END
