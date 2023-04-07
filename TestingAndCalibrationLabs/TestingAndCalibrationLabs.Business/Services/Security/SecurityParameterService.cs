@@ -45,6 +45,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate FirstName
+        /// </summary>
         public RequestResult<bool> ValidateFirstName(int orgId, string FirstName)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -61,6 +64,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate LastName
+        /// </summary>
         public RequestResult<bool> ValidateLastName(int orgId, string LastName)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -77,6 +83,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate Country
+        /// </summary>
         public RequestResult<bool> ValidateCountry(int orgId, string Country)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -93,6 +102,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate UserName
+        /// </summary>
         public RequestResult<bool> ValidateUserName(int orgId,string UserName)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -109,6 +121,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate Organizations
+        /// </summary>
         public RequestResult<bool> ValidateOrganizations(int orgId, string Organizations)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -125,6 +140,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate ReEnter Password Policy
+        /// </summary>
         public RequestResult<bool> ValidateReEnterPasswordPolicy(int orgId, string ReEnterPassword, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -141,6 +159,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate Email Policy
+        /// </summary>
         public RequestResult<bool> ValidateEmailPolicy(int orgId, string Email)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -157,6 +178,9 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        /// <summary>
+        /// Method to validate Mobile Policy
+        /// </summary>
         public RequestResult<bool> ValidateMobilePolicy(int orgId, string Mobile)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -216,7 +240,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(validationMessages);
         }
-          private RequestResult<bool> ValidateReEnterPassword(string ReEnterPassword, string password, SecurityParameter securityParameter)
+        /// <summary>
+        /// Method to validate the ReEnterPassword like ReEnterPassword and password both are same or not
+        /// </summary>
+        private RequestResult<bool> ValidateReEnterPassword(string ReEnterPassword, string password, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
@@ -229,6 +256,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the Email like MinSpecialChars
+        /// </summary>
         private RequestResult<bool> ValidateEmail(string Email, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -247,6 +277,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the Mobile like Length, Min and Max Digits
+        /// </summary>
         private RequestResult<bool> ValidateMobile(string Mobile, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -260,6 +293,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the FirstName
+        /// </summary>
         private RequestResult<bool> ValidateFirstName(string FirstName, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -273,6 +309,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the LastName like Length
+        /// </summary>
         private RequestResult<bool> ValidateLastName(string LastName, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -286,6 +325,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the Country
+        /// </summary>
         private RequestResult<bool> ValidateCountry(string Country, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -299,6 +341,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the Organizations
+        /// </summary>
         private RequestResult<bool> ValidateOrganizations(string Organizations, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -312,6 +357,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
 
         }
+        /// <summary>
+        /// Method to validate the UserName
+        /// </summary>
         private RequestResult<bool> ValidateUserName(string UserName, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
