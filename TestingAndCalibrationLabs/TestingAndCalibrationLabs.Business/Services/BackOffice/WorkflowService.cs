@@ -13,11 +13,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class WorkflowService : IWorkflowService
     {
         private readonly IWorkflowRepository _workflowRepository;
-      
-        public WorkflowService( IWorkflowRepository workflowRepository)
+        private readonly IGenericRepository<WorkflowModel> _genericRepository;
+
+        public WorkflowService( IWorkflowRepository workflowRepository, IGenericRepository<WorkflowModel> genericRepository)
         {
            
             _workflowRepository = workflowRepository;
+            _genericRepository = genericRepository;
         }
       
         public WorkflowModel GetByModuleId(int moduleId)
@@ -69,7 +71,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _workflowRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
 
     }

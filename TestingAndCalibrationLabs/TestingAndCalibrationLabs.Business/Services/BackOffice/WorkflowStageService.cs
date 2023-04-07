@@ -13,12 +13,12 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class WorkflowStageService : IWorkflowStageService
     {
         private readonly IWorkflowStageRepository _workflowStageRepository;
-       
+        private readonly IGenericRepository<WorkflowStageModel> _genericRepository;
 
-        public WorkflowStageService(IWorkflowStageRepository workflowStageRepository)
+        public WorkflowStageService(IWorkflowStageRepository workflowStageRepository, IGenericRepository<WorkflowStageModel> genericRepository)
         {
             _workflowStageRepository = workflowStageRepository;
-       
+            _genericRepository = genericRepository;
         }
 
 
@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _workflowStageRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
         /// <summary>
         /// Get Record by Id For WorkflowStage

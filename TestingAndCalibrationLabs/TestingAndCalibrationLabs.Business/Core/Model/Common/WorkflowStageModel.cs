@@ -1,11 +1,12 @@
-﻿using TestingAndCalibrationLabs.Business.Common;
+﻿using System;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
     /// It Contains Properties Of WorfklowStage
     /// </summary>
-    [DbTable("Module")]
+    [DbTable("WorkflowStage")]
     public class WorkflowStageModel : Entity
     {
         /// <summary>
@@ -31,7 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains Orders Of WorkflowStage
         /// </summary>
-        public int Orders { get; set; }
+        public String Orders { get; set; }
 
 
 

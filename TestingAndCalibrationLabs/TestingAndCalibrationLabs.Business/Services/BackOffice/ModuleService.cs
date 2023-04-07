@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _moduleRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
 
     }

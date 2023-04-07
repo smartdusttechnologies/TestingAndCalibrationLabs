@@ -103,15 +103,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
+        //public bool Delete(int id)
+        //{
+        //    using IDbConnection db = _connectionFactory.GetConnection;
 
-            db.Execute(@"update [Workflow] Set 
-                                    IsDeleted = 1
-                                    Where Id = @Id", new { Id = id });
-            return true;
-        }
+        //    db.Execute(@"update [Workflow] Set 
+        //                            IsDeleted = 1
+        //                            Where Id = @Id", new { Id = id });
+        //    return true;
+        //}
     }
 
 }

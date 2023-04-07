@@ -20,10 +20,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWorkflowActivityRepository _workflowActivityRepository;
         private readonly IActivityMetadataService _activityMetadataService;
         private readonly IGenericRepository<UiPageDataModel> _pageDataGenericRepository;
+        private readonly IGenericRepository<WorkflowActivityModel> _genericRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
-        public WorkflowActivityService(IConfiguration configuration, IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService, IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository)
+        public WorkflowActivityService(IConfiguration configuration, IWebHostEnvironment webHostEnvironment, IEmailService emailService, IActivityMetadataService activityMetadataService, IWorkflowActivityRepository workflowActivityRepository, IGenericRepository<UiPageDataModel> pageDataGenericRepository, IGenericRepository<WorkflowActivityModel> genericRepository)
         {
             _workflowActivityRepository = workflowActivityRepository;
             _pageDataGenericRepository = pageDataGenericRepository;
@@ -31,6 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _emailService = emailService;
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
+            _genericRepository = genericRepository;
         }
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _workflowActivityRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
 
       
