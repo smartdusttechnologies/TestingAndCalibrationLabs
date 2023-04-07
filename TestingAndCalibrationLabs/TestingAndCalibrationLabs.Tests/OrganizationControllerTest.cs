@@ -13,7 +13,7 @@ using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Controllers;
 using TestingAndCalibrationLabs.Web.UI.Mappers;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using ILogger = TestingAndCalibrationLabs.Business.Core.Interfaces.ILogger;
+
 
 namespace TestingAndCalibrationLabs.Tests
 {
@@ -34,6 +34,7 @@ namespace TestingAndCalibrationLabs.Tests
             var mapper = new Mapper(Configuration);
             _mapper = mapper;
            
+
 
         }
         [Test]
@@ -84,15 +85,17 @@ namespace TestingAndCalibrationLabs.Tests
         public void Edit_GetById_NullId_Test()
         {
             _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
-            _genericRepository.Setup(x => x.Get(It.IsAny<int>()));
+            _genericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Organization { Id = 6, OrgCode = "Aman", OrgName = "Kumar" });
 
             var controller = new OrganizationController(_organizationService, _mapper);
 
-            var createResult = (NotFoundResult)controller.Edit(44);
+            var createResult = (NotFoundResult)controller.Edit(null);
 
             var expectedResult = 404;
 
             createResult.StatusCode.Should().Be(expectedResult);
+
+
 
 
         }
@@ -118,7 +121,7 @@ namespace TestingAndCalibrationLabs.Tests
             Organization organization = new Organization { Id = 6, OrgCode = "Aman", OrgName = "Kumar" };
 
 
-            _genericRepository.Setup(x => x.Update(organization)).Throws(new NullReferenceException());
+            _genericRepository.Setup(x => x.Update(organization)).Returns(0);
 
 
             var organizationDTO = new OrganizationDTO { Id = 6, OrgCode = "Aman", OrgName = "Kumar" };
@@ -126,7 +129,7 @@ namespace TestingAndCalibrationLabs.Tests
             _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
             var controller = new OrganizationController(_organizationService, _mapper);
 
-            var createResult = (RedirectToActionResult)controller.Edit(1, organizationDTO);
+            var createResult = (RedirectToActionResult)controller.Edit(6, organizationDTO);
                 var expectedResult = "Index";
 
              createResult.ActionName.Should().BeEquivalentTo(expectedResult);
@@ -208,7 +211,7 @@ namespace TestingAndCalibrationLabs.Tests
             _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
             var controller = new OrganizationController(_organizationService, _mapper);
 
-            var createResult = (NotFoundResult)controller.Delete(5);
+            var createResult = (NotFoundResult)controller.Delete(null);
 
 
             var expectedResult = 404;
@@ -225,7 +228,7 @@ namespace TestingAndCalibrationLabs.Tests
             _organizationService = new OrganizationService(_organizationRepository.Object, _genericRepository.Object);
             var controller = new OrganizationController(_organizationService, _mapper);
 
-            var result = (RedirectToActionResult)controller.DeleteConfirmed(0);
+            var result = (RedirectToActionResult)controller.DeleteConfirmed(1);
 
             var expectedResult = "index";
        
@@ -241,8 +244,7 @@ namespace TestingAndCalibrationLabs.Tests
             var controller = new OrganizationController(_organizationService, _mapper);
 
             var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
-            _genericRepository.Setup(x => x.Delete(It.IsAny<int>()));
-
+          
             var expectedResult = 404;
 
             createResult.StatusCode.Should().Be(expectedResult);
