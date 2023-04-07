@@ -320,10 +320,12 @@
     <ul class="ul-Div" id="file-showcase-@Model.Value.UiPageMetadata.Id">
     </ul>
 </div>
+<input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
 
 <script>
     var fileModel = JSON.parse('@Json.Serialize(Model)');
     let metadataId = fileModel.value.uiPageMetadata.id;
+    //debugger
     //$(document).ready(function () {
     //    if (fileModel.value.uiPageData != null) {
     //        debugger;
@@ -335,6 +337,8 @@
         $(`#image-${metadataId}`).click();
     });
     function validateForImages(input) {
+        
+
         $(`#file-showcase-${metadataId}`).empty();
         var file = new FormData();
         for (let i = 0; i < input.files.length; i++) {
@@ -371,6 +375,24 @@
             $(`#file-showcase-${metadataId}`).append(fileInfo);
             file.append(fileName, input.files[i]);
         }
+        //const fileshow =(fileName, input.files[i])=>{
+        //    const showfileboxElement = document.createElement("div");
+        //    const leftElem = document.createElement("upload-Btn")
+        //    leftElem.classList.add("left");
+        //    const fileTypeElem = document.createElement("span");
+        //    fileTypeElem.innerHTML = input.files[i]);
+        //    leftElem.append(fileTypeElem);
+        //    const filetiteleme = document.createElement("h3");
+        //    filetiteleme.innerHTML=fileName;
+        //    leftElem.append(filetiteleme);
+        //    showfileboxElement.append(leftElem);
+        //    filewrapper.append(showfileboxElement);
+
+        //}
+    
+
+
+
         $.ajax({
             type: "POST",
             url: "@Url.Action("FileUpload","Common")",
@@ -378,10 +400,13 @@
             processData: false,
             data: file,
             success: function (response) {
-                //var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
-                //$(idNum).val(response);
+                debugger
+                var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
+                $(idNum).val(response.join(", "));
+
             },
             error: function (req, status, error) {
+             
             }
         });
     }

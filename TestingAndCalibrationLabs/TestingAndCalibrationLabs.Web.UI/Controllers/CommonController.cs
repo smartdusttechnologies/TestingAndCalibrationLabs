@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -51,20 +52,34 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+
         public IActionResult FileUpload()
         {
-            AttachmentModel attachmentModel = new AttachmentModel();
-            attachmentModel.DataUrl = Request.Form.Files.FirstOrDefault();
-            var result = _googleDriveService.Upload(attachmentModel);
-            if (result.IsSuccessful)
+
+            List<string> imageId = new List<string>();
+            
+            foreach (var item in Request.Form.Files)
             {
-                var imageId = result.RequestedObject.FilePath;
-                return Ok(imageId);
+                AttachmentModel attachmentModel = new AttachmentModel();
+                attachmentModel.DataUrl = item;
+
+                var result = _googleDriveService.Upload(attachmentModel);
+                imageId.Add(result.RequestedObject.FilePath);
+
+                //if (result.IsSuccessful)
+                //{
+
+
+                    
+                //    return Ok(imageId);
+                //}
+                
+                //else
+                //{
+                //    return BadRequest();
+                //}
             }
-            else
-            {
-                return BadRequest();
-            }
+            return Ok(imageId);
         }
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
@@ -89,6 +104,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+            
+
         }
         [HttpGet]
         public ActionResult TemplateGenerate(int recordId, int metadataId)
@@ -136,6 +153,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public ActionResult Create(RecordDTO record)
         {
+           
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
             var adddata = _commonService.Add(records);
             var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);
