@@ -69,7 +69,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id,[Bind] ApplicationDTO applicationDTO)
+        public IActionResult Edit(int id,[Bind] ApplicationDTO applicationDTO)
         {
 
             if (ModelState.IsValid)

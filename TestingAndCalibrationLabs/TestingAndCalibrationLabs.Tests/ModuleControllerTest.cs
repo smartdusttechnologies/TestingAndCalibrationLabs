@@ -101,11 +101,11 @@ namespace TestingAndCalibrationLabs.Tests
             _moduleService = new ModuleService(genericRepository.Object, moduleRepository.Object);
             // _applicationService = new ApplicationService(genericRepository.Object);
             //  genericRepository.Setup(x => x.Get()).Returns();
-            moduleRepository.Setup(x => x.GetById(It.IsAny<int>()));
+            moduleRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new ModuleModel { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" });
 
             var controller = new ModuleController(_mapper, _moduleService, _applicationService);
 
-            var createResult = (NotFoundResult)controller.Edit(55);
+            var createResult = (NotFoundResult)controller.Edit(null);
           //  var ExpectedResult = new ModuleDTO() { Id = 3, Name = "aman", ApplicationId = 8, ApplicationName = "ritesh" };
             var expectedResult = 404;
 
@@ -261,8 +261,7 @@ namespace TestingAndCalibrationLabs.Tests
             var controller = new ModuleController(_mapper, _moduleService, _applicationService);
 
             var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
-            moduleRepository.Setup(x => x.Delete(It.IsAny<int>()));
-
+       
             var expectedResult = 404;
 
             createResult.StatusCode.Should().Be(expectedResult);

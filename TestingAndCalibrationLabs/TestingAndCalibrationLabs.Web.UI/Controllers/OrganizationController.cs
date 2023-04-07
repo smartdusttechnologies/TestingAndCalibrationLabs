@@ -129,6 +129,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             var pageModel = _mapper.Map<Organization, OrganizationDTO>(getByIdPageModel);
             return View(pageModel);
+
+
+
+
         }
         /// <summary>
         /// To Delete Record In Organization
@@ -141,7 +145,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+               return NotFound();
             }
             _organizationService.Delete((int)id);
           //  TempData["IsTrue"] = true;

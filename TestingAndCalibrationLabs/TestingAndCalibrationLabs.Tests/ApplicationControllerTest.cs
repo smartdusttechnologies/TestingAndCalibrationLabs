@@ -2,9 +2,11 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using Org.BouncyCastle.Asn1;
 using System;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
@@ -65,30 +67,21 @@ namespace TestingAndCalibrationLabs.Tests
             result.Model.Should().BeEquivalentTo(ExpectedResult);
 
         }
-        [Test]
-        public void Index_Method_Wrong_Data_Test()
-        {
-            List<ApplicationModel> applicationModel = new List<ApplicationModel>();
-            applicationModel.Add(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
-            applicationModel.Add(new ApplicationModel { Id = 46, Name = "Amane", Description = "Kiumar" });
 
+        [Test]
+        public void Edit_Get_NullId_Test()
+        {
 
             _applicationService = new ApplicationService(genericRepository.Object);
-
-            genericRepository.Setup(x => x.Get()).Returns(applicationModel);
+         //   genericRepository.Setup(x => x.Get(It.IsAny<int>()));
 
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var result = (ViewResult)controller.Index();
-            //Expected Result
-            List<ApplicationDTO> applicationDTO = new List<ApplicationDTO>();
-            applicationDTO.Add(new ApplicationDTO { Id = 16, Name = "Aman", Description = "Kumar" });
-            applicationDTO.Add(new ApplicationDTO { Id = 76, Name = "Amane", Description = "Kiumar" });
+            var createResult = (NotFoundResult)controller.Edit(3);
 
+            var expectedResult = 404;
 
-            var ExpectedResult = applicationDTO;
-
-            result.Model.Should().NotBeEquivalentTo(ExpectedResult);
+            createResult.StatusCode.Should().Be(expectedResult);
 
         }
 
@@ -99,14 +92,14 @@ namespace TestingAndCalibrationLabs.Tests
             _applicationService = new ApplicationService(genericRepository.Object);
 
 
-            genericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
+            genericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new ApplicationModel {Id=5 ,Name = "Aman", Description = "Kumar" });
 
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var result = (ViewResult)controller.Edit(6);
+            var result = (ViewResult)controller.Edit(5);
           
 
-            var ExpectedResult = new ApplicationDTO() { Id = 6, Name = "Aman", Description = "Kumar" };
+            var ExpectedResult = new ApplicationDTO() {Id=5, Name = "Aman", Description = "Kumar" };
 
             result.Model.Should().BeEquivalentTo(ExpectedResult);
         }
@@ -115,11 +108,11 @@ namespace TestingAndCalibrationLabs.Tests
         public void Edit_GetById_NullId_Test()
         {
             _applicationService = new ApplicationService(genericRepository.Object);
-            genericRepository.Setup(x => x.Get(It.IsAny<int>()));
+            genericRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new ApplicationModel { Id = 6, Name = "Aman", Description = "Kumar" });
 
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var createResult = (NotFoundResult)controller.Edit(4);
+            var createResult = (NotFoundResult)controller.Edit(null);
           
             var expectedResult = 404;
 
@@ -127,22 +120,7 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
-        [Test]
-        public void Edit_Get_NullId_Test()
-        {
-            _applicationService = new ApplicationService(genericRepository.Object);
-          //  genericRepository.Setup(x => x.Get(It.IsAny<int>()));
-
-            var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
-
-            var createResult = (NotFoundResult)controller.Edit(null);
-
-            var expectedResult = 404;
-
-            createResult.StatusCode.Should().Be(expectedResult);
-
-
-        }
+      
         [Test]
         public void Edit_post_Test()
         {
@@ -164,25 +142,7 @@ namespace TestingAndCalibrationLabs.Tests
              createResult.ActionName.Should().BeEquivalentTo(expectedResult);
 
         }
-        //[Test]
-        //public void ModelStateInvalid_Edit_post_Test()
-        //{
-
-
-
-        //    var applicationDTO = new ApplicationDTO() { Id = 0 };
-
-        //    _applicationService = new ApplicationService(genericRepository.Object);
-        //    var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
-
-        //    var createResult = (ViewResult)controller.Edit(1, applicationDTO);
-        //    var applicationDTOa = new ApplicationDTO() { Id = 1, Name = null, Description = null };
-
-        //    var expectedResult = applicationDTO;
-
-        //    createResult.Should().BeEquivalentTo(expectedResult);
-
-        //}
+       
         [Test]
         public void Create_Get_Test()
         {
@@ -205,7 +165,7 @@ namespace TestingAndCalibrationLabs.Tests
            
             ApplicationModel lookupModel = new ApplicationModel { Id = 1, Name = "Aman", Description = "Kumar" };
 
-               genericRepository.Setup(x => x.Insert(lookupModel)).Returns(0);
+               genericRepository.Setup(x => x.Insert(lookupModel)).Returns(9);
 
 
             var applicationDTO = new ApplicationDTO { Id = 1, Name = "Aman", Description = "Kumar" };
@@ -244,7 +204,7 @@ namespace TestingAndCalibrationLabs.Tests
             _applicationService = new ApplicationService(genericRepository.Object);
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var createResult = (NotFoundResult)controller.Delete(null);
+            var createResult = (NotFoundResult)controller.Delete(66);
 
 
             var expectedResult = 404;
@@ -275,15 +235,15 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void DeleteConfirmed_Test()
         {
-            genericRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
+            genericRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(false);
 
             _applicationService = new ApplicationService(genericRepository.Object);
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
-            var result = (RedirectToActionResult)controller.DeleteConfirmed(0);
+            var result = (RedirectToActionResult)controller.DeleteConfirmed(5);
 
             var expectedResult = "index";
-       
+
             result.ActionName.Should().BeEquivalentTo(expectedResult);
 
 
@@ -296,7 +256,7 @@ namespace TestingAndCalibrationLabs.Tests
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 
             var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
-            genericRepository.Setup(x => x.Delete(It.IsAny<int>()));
+           // genericRepository.Setup(x => x.Delete(It.IsAny<int>()));
 
             var expectedResult = 404;
 
