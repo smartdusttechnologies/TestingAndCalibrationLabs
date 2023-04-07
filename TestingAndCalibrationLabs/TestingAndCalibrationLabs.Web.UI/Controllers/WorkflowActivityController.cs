@@ -82,7 +82,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>   
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -127,13 +127,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            WorkflowActivityModel workflowActivityModel = _workflowActivityService.GetById(id);
+            WorkflowActivityModel workflowActivityModel = _workflowActivityService.GetById((int)id);
             var deleteWorkflowActivity = _mapper.Map<WorkflowActivityModel, WorkflowActivityDTO>(workflowActivityModel);
             return View(deleteWorkflowActivity);
         }

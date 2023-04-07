@@ -144,13 +144,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             if(id == null)
             {
                 return NotFound();
             }
-            WorkflowStageModel workflowStageModel = _workflowStageService.GetById(id);
+            WorkflowStageModel workflowStageModel = _workflowStageService.GetById((int)id);
             var deleteStage = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(workflowStageModel);
             return View(deleteStage);
         }

@@ -130,6 +130,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<ApplicationModel>, GenericRepository<ApplicationModel>>();
             services.AddScoped<IGenericRepository<ActivityModel>, GenericRepository<ActivityModel>>();
             services.AddScoped<IGenericRepository<Organization>, GenericRepository<Organization>>();
+            services.AddScoped<IGenericRepository<WorkflowActivityModel>, GenericRepository<WorkflowActivityModel>>();
+            services.AddScoped<IGenericRepository<WorkflowStageModel>, GenericRepository<WorkflowStageModel>>();
+
             ////
             ///
             services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();

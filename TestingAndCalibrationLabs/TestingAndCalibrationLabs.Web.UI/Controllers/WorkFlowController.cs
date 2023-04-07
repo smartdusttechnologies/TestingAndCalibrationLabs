@@ -82,7 +82,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
        {
            if (id == null)
             {
@@ -93,7 +93,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
            var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
            ViewBag.Module = pageList;
 
-           WorkflowModel module = _workflowService.GetById(id);
+           WorkflowModel module = _workflowService.GetById((int)id);
            var workflowData = _mapper.Map<WorkflowModel, WorkflowDTO>(module);
            return View(workflowData);
        }
@@ -123,13 +123,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            WorkflowModel workflowModel = _workflowService.GetById(id);
+            WorkflowModel workflowModel = _workflowService.GetById((int)id);
             var deleteWorkflow = _mapper.Map<WorkflowModel, WorkflowDTO>(workflowModel);
             return View(deleteWorkflow);
         }
