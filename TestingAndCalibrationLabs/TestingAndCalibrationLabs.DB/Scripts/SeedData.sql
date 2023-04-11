@@ -364,9 +364,9 @@ BEGIN
          VALUES
                (0, N'none', 1, 0),
 			   
-			   (1, N'Cube Testing', 1, 0),
+			   (1, N'CubeTesting', 1, 0),
 			   
-			   (2, N'Water Testing', 1, 0),
+			   (2, N'WaterTesting', 1, 0),
 			   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),

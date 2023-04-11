@@ -233,6 +233,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     UiPageTypeId = workflowStage.UiPageTypeId,
                     Layout = hierarchy
                 };
+                return record;
             }
             throw new UnauthorizedAccessException("Your Unauthorized");
         }
