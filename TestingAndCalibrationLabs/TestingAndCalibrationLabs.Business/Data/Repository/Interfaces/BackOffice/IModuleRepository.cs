@@ -9,7 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface IModuleRepository
     {
-        List<Dictionary<int, string>> GetValues(int moduleId);
+       
         /// <summary>
         /// Get All Records From Module
         /// </summary>

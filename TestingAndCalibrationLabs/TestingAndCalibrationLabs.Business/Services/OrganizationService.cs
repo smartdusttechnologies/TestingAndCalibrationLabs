@@ -22,73 +22,70 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Get Orgnization Details from DB
         /// </summary>
-        //public List<Organization> Get()
-        //{
-        //    try
-        //    {
-        //        return _organizationRepository.Get();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.LogException(new ExceptionLog
-        //        // {
-        //        //    ExceptionDate = DateTime.Now,
-        //        //    ExceptionMsg = ex.Message,
-        //        //    ExceptionSource = ex.Source,
-        //        //    ExceptionType = "UserService",
-        //        //    FullException = ex.StackTrace
-        //        //});
-        //        return null;
-        //    }
-        //}
-        //public List<Organization> Get(SessionContext sessionContext)
-        //{
-        //    try
-        //    {
-        //        return _organizationRepository.Get(sessionContext);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.LogException(new ExceptionLog
-        //        // {
-        //        //    ExceptionDate = DateTime.Now,
-        //        //    ExceptionMsg = ex.Message,
-        //        //    ExceptionSource = ex.Source,
-        //        //    ExceptionType = "UserService",
-        //        //    FullException = ex.StackTrace
-        //        //});
-        //        return null;
-        //    }
-        //}
-        //public Organization Get(SessionContext sessionContext, int id)
-        //{
-        //    try
-        //    {
-        //        return _organizationRepository.Get(sessionContext, id);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //_logger.LogException(new ExceptionLog
-        //        //{
-        //        //    ExceptionDate = DateTime.Now,
-        //        //    ExceptionMsg = ex.Message,
-        //        //    ExceptionSource = ex.Source,
-        //        //    ExceptionType = "UserService",
-        //        //    FullException = ex.StackTrace
-        //        //});
-        //        return null;
-        //    }
-        //}
+        public List<Organization> Get()
+        {
+            try
+            {    //Changed organizationRepository to genericRepository
+                return _genericRepository.Get();
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogException(new ExceptionLog
+                //{
+                //    ExceptionDate = DateTime.Now,
+                //    ExceptionMsg = ex.Message,
+                //    ExceptionSource = ex.Source,
+                //    ExceptionType = "UserService",
+                //    FullException = ex.StackTrace
+                //});
+                return null;
+            }
+        }
+        public List<Organization> Get(SessionContext sessionContext)
+        {
+            try
+            {
+                return _organizationRepository.Get(sessionContext);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogException(new ExceptionLog
+                //{
+                //    ExceptionDate = DateTime.Now,
+                //    ExceptionMsg = ex.Message,
+                //    ExceptionSource = ex.Source,
+                //    ExceptionType = "UserService",
+                //    FullException = ex.StackTrace
+                //});
+                return null;
+            }
+        }
+        public Organization Get(SessionContext sessionContext, int id)
+        {
+            try
+            {
+                return _organizationRepository.Get(sessionContext, id);
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogException(new ExceptionLog
+                //{
+                //    ExceptionDate = DateTime.Now,
+                //    ExceptionMsg = ex.Message,
+                //    ExceptionSource = ex.Source,
+                //    ExceptionType = "UserService",
+                //    FullException = ex.StackTrace
+                //});
+                return null;
+            }
+        }
 
 
         /// <summary>
         /// Get All Records From Organization
         /// </summary>
         /// <returns></returns>
-        public List<Organization> Get()
-        {
-            return _genericRepository.Get();
-        }
+    
         /// <summary>
         /// Insert Record In Organization
         /// </summary>

@@ -9,8 +9,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IOrganizationService
     {
         List<Organization> Get();
-        //List<Organization> Get(SessionContext sessionContext);
-        //Organization Get(SessionContext sessionContext, int id);
+        List<Organization> Get(SessionContext sessionContext);
+        Organization Get(SessionContext sessionContext, int id);
 
         /// <summary>
         /// Get Record By Id From Organization
