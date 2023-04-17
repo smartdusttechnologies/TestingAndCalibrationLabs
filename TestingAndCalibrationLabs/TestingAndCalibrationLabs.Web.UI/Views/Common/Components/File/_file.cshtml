@@ -325,6 +325,11 @@
 <script>
     var fileModel = JSON.parse('@Json.Serialize(Model)');
     let metadataId = fileModel.value.uiPageMetadata.id;
+    
+
+
+
+
     //debugger
     //$(document).ready(function () {
     //    if (fileModel.value.uiPageData != null) {
@@ -389,9 +394,9 @@
         //    filewrapper.append(showfileboxElement);
 
         //}
-    
 
 
+        
 
         $.ajax({
             type: "POST",
@@ -400,9 +405,9 @@
             processData: false,
             data: file,
             success: function (response) {
-                debugger
+             debugger
                 var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
-                $(idNum).val(response.join(", "));
+                $(idNum).val(response);
 
             },
             error: function (req, status, error) {
