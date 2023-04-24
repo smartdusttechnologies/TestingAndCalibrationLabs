@@ -294,10 +294,14 @@
                 
        
           <nav class="bottom-navigation">
-               <div>
+              <div id ="NavbarMenu">
+                       
+              </div>
+               @*<div>
+
                     <span><i class="fa fa-phone symbol fa-2x" style="color:green"></i></span>
                     <a href="">Phone</a>
-                   @* @Model.Contact*@
+                   
                </div>
 
 
@@ -305,7 +309,7 @@
                 <div>
                     <span><i class="fa fa-envelope fa-2x" style="color:orangered"></i></span>
                     <a href="">Email</a>
-                   @* @Model.Email*@
+                  
                 </div>
 
 
@@ -319,8 +323,11 @@
                 <div>
                     <span><i class="fa fa-envelope fa-2x" style="color:hotpink"></i></span>
                     <a href="#">Contact Us</a>
-                </div>
+                </div>*@
                     
+
+
+
                     <div class="test list-container">
                         
 
@@ -363,16 +370,50 @@
         </footer>
         
    </div>
-
+    <p id="BottomNavbarModel">
+    </p>
 </body>
 </html>
 
+
 <script>
+
     var dropdownContainer = document.querySelector('.list-container');
     var dropdownMenu = document.querySelector('.list-menu');
 
     dropdownContainer.addEventListener('click', function () {
         dropdownMenu.classList.toggle('show');
+
+
+
+        
+            
     });
+   
+
+    $(document).ready(function () {
+        var url = "/Dashboard/BottomNavbarModal";
+        $.get(url, null, function (data) {
+            console.log(data.Count)
+            var  Text= data
+            console.log(Text)
+            var html='';
+            for (var i=0;i<data.length;i++){
+
+                html += "<div><span><i class='" + data[i].iconClass.toString() + "'style = \"color:blue\"> </i></span> <a href='" + data[i].url.toString() +"'>" + data[i].icon.toString() + "</a></div>"
+                //$("#NavbarMenu").append(html);
+
+            }
+            console.log(html)
+            $("#NavbarMenu").html(html);
+            
+            //var html = '< div ><span><i class="fa fa-envelope fa-2x" style = "color:orangered" > </i></span > <a href="" > Email < /a>< /div>'
+            //$("#BottomNavbarModel").html(data);
+        });
+    });
+    
+
 
 </script>
+
+

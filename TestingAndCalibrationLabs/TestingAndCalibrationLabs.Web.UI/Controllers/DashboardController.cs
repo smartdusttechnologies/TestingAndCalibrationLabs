@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
+using TestingAndCalibrationLabs.Web.UI.Models.Dashboard;
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1;
 
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV2;
@@ -20,6 +21,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
+
             //var call = new List<ABC>();
             //call.Add(new ABC {Phone="1234567890" });
 
@@ -535,7 +537,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
         }
         /// <summary>
-        /// IT consist the Information of New Memeber joiners
+        /// IT consist the Information of New Member joiners
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -548,51 +550,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return Ok(members);
         }
+        [HttpGet]
+        public IActionResult BottomNavbarModal()
+        {
+            //BottomNavbarModelDTO _BottomNavbarModal = new BottomNavbarModelDTO();
+            List<BottomNavbarModelDTO> _BottomNavbarModal = new List<BottomNavbarModelDTO>()
+                {
+                  new BottomNavbarModelDTO { Title="Phone", Icon= "Phone", IconClass="fa fa-phone symbol fa-2x",URL= "https://www.facebook.com/login" },
+                  new BottomNavbarModelDTO { Title="XYZ", Icon= "Facebook", IconClass="fab fa-facebook fa-2x",URL= "https://www.facebook.com/login" },
+                  new BottomNavbarModelDTO { Title="LMN", Icon = "Email", IconClass="fa fa-envelope fa-2x",URL= "https://www.facebook.com/login" },
+                  new BottomNavbarModelDTO { Title="PQR", Icon = "ContactUs", IconClass="fa fa-envelope fa-2x",URL= "https://www.facebook.com/login" },
+               };
+            //return PartialView("~/wwwroot/css/Bottom.css", _BottomNavbarModal);
+            return Json(_BottomNavbarModal);
+        }
 
-        //public IActionResult ABC()
-        //{
-        //    ABC _ABC = new ABC();
-        //    _ABC.Phone = "1234567890";
-        //    _ABC.Email = "himanshujaiswal292@gmail.com";
-
-        //    _ABC.Facebook = "https://www.facebook.com/login";
-        //    return PartialView("~/Views/Home/_Layout2.cshtml", _ABC);
-
-        //}
-
-
-
-        //public class CustomerController : Controller
-        //{
-        //    private readonly Customer _dbContext;    
-
-            //public CustomerController(Customer dataAccessLayer)
-            //{
-            //    _dataAccessLayer = dataAccessLayer;
-            //}
-
-            public ActionResult Customer()
-            {
-                var Customer = new Customer() { Email = "Hitesh12@gmail.com...!!!" };           
-
-                return View(Customer);
-            }
        
-
     }
 }
 
-
-//public class DashboardController : Controller
-//{
-//    public IActionResult Index()
-//    {
-       
-//        return view();
-//    }
-
-//    private IActionResult view()
-//    {
-//        throw new NotImplementedException();
-//    }
-//}

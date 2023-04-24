@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Web.UI.Models.Dashboard;
 
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
 {
@@ -26,6 +27,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<TestReportDTO,TestReportModel>().ReverseMap();
             CreateMap<AttachmentDTO,AttachmentModel>().ReverseMap();
             CreateMap<UiControlCategoryTypeDTO,UiControlCategoryTypeModel>().ReverseMap();
+            CreateMap<BottomNavbarModelDTO,BottomNavbarModel>().ReverseMap();
         }
     }
 }
