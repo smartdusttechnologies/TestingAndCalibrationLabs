@@ -169,10 +169,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                 claims.Add(new Claim(ClaimTypes.Role, role.Item2));
             }
 
-            //if (sub.ToLower() == "sysadmin")
+            if (sub.ToLower() == "sysadmin")
                 claims.Add(new Claim("OrganizationId", "0"));
-            //else
-            //    claims.Add(new Claim("OrganizationId", roleByOrganizationWithClaims.FirstOrDefault().OrgId.ToString()));
+            else
+                claims.Add(new Claim("OrganizationId", roleByOrganizationWithClaims.FirstOrDefault().OrgId.ToString()));
             return claims;
         }
 
