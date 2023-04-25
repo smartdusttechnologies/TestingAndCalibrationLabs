@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Reflection.Metadata.Ecma335;
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard;
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1;
@@ -555,12 +556,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             //BottomNavbarModelDTO _BottomNavbarModal = new BottomNavbarModelDTO();
             List<BottomNavbarModelDTO> _BottomNavbarModal = new List<BottomNavbarModelDTO>()
-                {
-                  new BottomNavbarModelDTO { Title="Phone", Icon= "Phone", IconClass="fa fa-phone symbol fa-2x",URL= "https://www.facebook.com/login" },
-                  new BottomNavbarModelDTO { Title="XYZ", Icon= "Facebook", IconClass="fab fa-facebook fa-2x",URL= "https://www.facebook.com/login" },
-                  new BottomNavbarModelDTO { Title="LMN", Icon = "Email", IconClass="fa fa-envelope fa-2x",URL= "https://www.facebook.com/login" },
-                  new BottomNavbarModelDTO { Title="PQR", Icon = "ContactUs", IconClass="fa fa-envelope fa-2x",URL= "https://www.facebook.com/login" },
-               };
+               {
+                  new BottomNavbarModelDTO { Title="Phone", Icon= "Phone", IconClass="fa fa-phone symbol fa-2x iconPhone",  URL= "https://github.com/login" },
+                  new BottomNavbarModelDTO { Title="Facebook", Icon= "Facebook", IconClass="fab fa-facebook fa-2x iconFacebook", URL= "https://www.facebook.com/login" },
+                  new BottomNavbarModelDTO { Title="Email", Icon= "Email", IconClass="fa fa-envelope fa-2x iconEmail", URL= "https://mail.google.com/" },
+                  new BottomNavbarModelDTO { Title="ContactUs", Icon= "ContactUs", IconClass="fa fa-address-book iconContactUs", URL= "https://www.facebook.com/login" },
+               
+            };
+
             //return PartialView("~/wwwroot/css/Bottom.css", _BottomNavbarModal);
             return Json(_BottomNavbarModal);
         }

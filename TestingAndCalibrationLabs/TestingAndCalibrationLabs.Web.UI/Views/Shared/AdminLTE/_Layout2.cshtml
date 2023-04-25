@@ -324,14 +324,12 @@
                     <span><i class="fa fa-envelope fa-2x" style="color:hotpink"></i></span>
                     <a href="#">Contact Us</a>
                 </div>*@
-                    
 
-
-
-                    <div class="test list-container">
+                  
+                <div class="test list-container">
                         
 
-                    </div>
+                </div>
                     <div class="list-menu">
                         @*<ul>
                             <li>*@
@@ -388,6 +386,7 @@
 
         
             
+        
     });
    
 
@@ -400,8 +399,8 @@
             var html='';
             for (var i=0;i<data.length;i++){
 
-                html += "<div><span><i class='" + data[i].iconClass.toString() + "'style = \"color:blue\"> </i></span> <a href='" + data[i].url.toString() +"'>" + data[i].icon.toString() + "</a></div>"
-                //$("#NavbarMenu").append(html);
+                html += "<div><span><i class='" + data[i].iconClass.toString() +"'> </i></span> <a href='" + data[i].url.toString() + "'>" + data[i].icon.toString() + "</a></div>"
+               
 
             }
             console.log(html)

@@ -6,7 +6,7 @@
 }
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 500px) {
     .bottom-navigation {
         display: flex; 
         justify-content: space-around; 
@@ -50,7 +50,7 @@
 }
 
 .bottom-navigation a { /*--for text color and text spacing*/
-    display: block;
+   /* display: block;*/
     padding: 1px;
     color: #333;
     text-decoration: none;
@@ -157,7 +157,7 @@
 
 .list-menu {
     /*position: relative !important;*/
-    padding: 10px 40px !important;
+    padding: 10px 30px !important;
     background-color: #D3D3D3 !important;     /*light gray color*/
     color: #ffffff;
 }
@@ -170,6 +170,30 @@
     padding: 8px 0 8px 16px;
     text-decoration: none;
 */
-   
 
+
+#NavbarMenu {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    
+}
+
+.iconPhone {
+                          /* Define the icon's color here */
+    color:forestgreen;    /* Example color: green */
+}
+
+
+.iconFacebook {
+    color:blue;
+}
  
+.iconEmail{
+  color:orangered;
+}
+
+
+
+.iconContactUs {
+    color: hotpink;
+}
