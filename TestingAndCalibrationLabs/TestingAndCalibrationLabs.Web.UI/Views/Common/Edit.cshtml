@@ -23,20 +23,43 @@
                 }
             </div>
         </form>
-        
+        <div class="form-group" style="margin:6px;" id="sub-mt-btn">
+            <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="AjaxFormSubmit()" />
+        </div>
     </div>
 </div>
-<div class="form-group" style="margin:6px;" id="sub-mt-btn">
-    <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="AjaxFormSubmit()" />
-</div>
 
-@await Html.PartialAsync("_SavedSuccessfully")
-@await Html.PartialAsync("_Errormessage")
+<div>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-success" role="alert" id="snackbarsuccess">
+            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert">
+                <div class="MuiAlert-icon css-1l54tgj">
+                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path>
+                    </svg>
+                </div><div class="MuiAlert-message css-1xsto0d">Saved successfully!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div role="alert" id="snackbarerror">
+            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledError MuiAlert-filled css-1ufabz4" role="alert">
+                <div class="MuiAlert-icon css-1l54tgj">
+                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" viewBox="0 0 24 24">
+                        <path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
+                    </svg>
+                </div>
+                <div class="MuiAlert-message css-1xsto0d" id="errormessage">!</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     //This function will display the success snackbar
     function myFunction() {
-      
         var x = document.getElementById("snackbarsuccess");
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
@@ -60,7 +83,6 @@
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
-            
 
             if (!member.children || !member.children.length) {
                 return member.value;
@@ -70,7 +92,6 @@
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
-            
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
@@ -97,7 +118,7 @@
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
-                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
                 }
             }
@@ -114,7 +135,7 @@
                 alert(response.responseText);
             },
             error: function (response) {
-               HideWheelLoader();
+                HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {
