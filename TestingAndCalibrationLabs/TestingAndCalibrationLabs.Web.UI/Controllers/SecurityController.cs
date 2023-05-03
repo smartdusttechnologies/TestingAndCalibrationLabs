@@ -16,6 +16,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+
         public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
@@ -40,13 +41,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method to get the Login details from UI and Process Login.
         /// </summary>
         /// <returns></returns>
-
         [HttpPost]
         public IActionResult Login(LoginDTO loginRequest)
         {
             var loginReq = new LoginRequest { UserName = loginRequest.UserName, Password = loginRequest.Password };
             RequestResult<LoginToken> result = _authenticationService.Login(loginReq);
-
             if (result.IsSuccessful)
             {
                 HttpContext.Session.SetString("Token", result.RequestedObject.AccessToken);

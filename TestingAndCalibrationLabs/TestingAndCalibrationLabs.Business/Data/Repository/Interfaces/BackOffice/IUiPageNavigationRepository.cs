@@ -9,9 +9,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IUiPageNavigationRepository
     {
         /// <summary>
-        /// Get All Records From Ui Page Type
+        /// Get All Records From Ui Page Navigation 
         /// </summary>
         /// <returns></returns>
-        List<UiPageTypeModel> Get();
+        List<UiPageNavigationModel> Get();
     }
 }

@@ -1,10 +1,14 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
-
-@if (@Model.Value.UiControlTypeName != "grid")
-{
-    @await Html.PartialAsync(Model.Value.UiControlCategoryTypeTemplate, Model)
-}
-else if (@Model.Value.UiControlTypeName == "grid")
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+@if (@Model.Value.UiPageMetadata.UiControlTypeId == (int)UiControlType.grid && @Model.Value.UiPageMetadata.UiControlDisplayName != "MultiControlGrid")
 {
     @await Html.PartialAsync("~/Views/Common/Components/Grid/_grid.cshtml", Model)
+
+}
+else if(Model.Value.UiPageMetadata.UiControlTypeName == "ReportTemplate")
+{
+    @await Html.PartialAsync("~/Views/Common/Components/ReportTemplate/_test.cshtml", Model)
+}
+else 
+{
+    @await Html.PartialAsync(Model.Value.UiPageMetadata.UiControlCategoryTypeTemplate, Model)
 }

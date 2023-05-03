@@ -80,6 +80,10 @@
               "target": "Package",
               "version": "[1.17.0, )"
             },
+            "Select.HtmlToPdf.NetCore": {
+              "target": "Package",
+              "version": "[22.2.0, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.2, )"
@@ -173,6 +177,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "FluentAssertions.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.11.0, )"
@@ -303,6 +311,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.5, )"
+            },
+            "smartdusttechnologies.util.raj.logger": {
+              "target": "Package",
+              "version": "[1.1.2, )"
             }
           },
           "imports": [

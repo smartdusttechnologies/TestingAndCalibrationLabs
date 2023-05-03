@@ -1,4 +1,5 @@
-﻿using TestingAndCalibrationLabs.Business.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Hosting;
+using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
@@ -16,7 +17,9 @@ namespace TestingAndCalibrationLabs.Business.Services
               IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
-            IUiPageMetadataRepository uiPageMetadataRepository)
+            IUiPageMetadataRepository uiPageMetadataRepository,
+            IWorkflowActivityService workflowActivityService,IWebHostEnvironment webHostEnvironment,
+            IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
             : base(commonRepository,
                   recordGenericRepository,
                   uiPageTypeGenericRepository,
@@ -24,7 +27,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                   uiPageMetaDataGenericRepository,
                   uiPageValidationTypesGenericRepository,
                   uiPageMetadataCharacteristicsRepository,
-                  uiPageMetadataRepository)
+                  uiPageMetadataRepository,
+                  workflowActivityService,webHostEnvironment,uiPageMetadataCharacteristicsService)
         {
             UI_PAGE_NAME = "SamplePage";
         }
