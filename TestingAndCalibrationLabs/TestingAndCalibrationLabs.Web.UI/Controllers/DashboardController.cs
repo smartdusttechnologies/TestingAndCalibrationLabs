@@ -557,10 +557,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //BottomNavbarModelDTO _BottomNavbarModal = new BottomNavbarModelDTO();
             List<BottomNavbarModelDTO> _BottomNavbarModal = new List<BottomNavbarModelDTO>()
                {
-                  new BottomNavbarModelDTO { Title="Phone", Icon= "Phone", IconClass="fa fa-phone symbol fa-2x iconPhone",  URL= "https://github.com/login" },
+                  new BottomNavbarModelDTO { Title="Phone", Icon= "Phone", IconClass="fa fa-phone symbol fa-2x iconPhone",  URL= "tel:+1234567890" },
                   new BottomNavbarModelDTO { Title="Facebook", Icon= "Facebook", IconClass="fab fa-facebook fa-2x iconFacebook", URL= "https://www.facebook.com/login" },
                   new BottomNavbarModelDTO { Title="Email", Icon= "Email", IconClass="fa fa-envelope fa-2x iconEmail", URL= "https://mail.google.com/" },
-                  new BottomNavbarModelDTO { Title="ContactUs", Icon= "ContactUs", IconClass="fa fa-address-book iconContactUs", URL= "https://www.facebook.com/login" },
+                  new BottomNavbarModelDTO { Title="ContactUs", Icon= "ContactUs", IconClass="fa fa-address-book iconContactUs", URL= "https://example.com/contactUs" },
                
             };
 
