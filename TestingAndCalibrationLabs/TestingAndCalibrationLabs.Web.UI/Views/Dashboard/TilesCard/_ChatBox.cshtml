@@ -1,0 +1,137 @@
+﻿
+<div class="card direct-chat direct-chat-primary">
+    <div class="card-header">
+        <h3 class="card-title">Direct Chat</h3>
+
+        <div class="card-tools">
+            <span title="3 New Messages" class="badge badge-primary">3</span>
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                <i class="fas fa-comments"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="direct-chat-messages" id="ChatBox">
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <form action="#" method="post">
+            <div class="input-group">
+                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-primary">Send</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("ChatBox","Dashboard")",
+        success: function (MessageData) {
+            
+           
+            for ( var item = 0; item < MessageData.inbox.length; item++) {
+               
+
+                if (MessageData.ownerName == MessageData.inbox[item].name  ) {
+                    
+                    let element = document.getElementById('ChatBox');
+
+                    let row = document.createElement('div');
+                    row.className = "direct-chat-msg right";
+
+                    let namediv = document.createElement('div');
+                    namediv.className = "direct-chat-infos clearfix";
+
+
+                    let nameSpan = document.createElement('span');
+                    nameSpan.className = "direct-chat-name float-right";
+                    nameSpan.innerHTML = MessageData.inbox[item].name;
+
+
+
+                    let timeSpan = document.createElement('span');
+                    timeSpan.className = "direct-chat-timestamp float-left";
+                    timeSpan.innerHTML = MessageData.inbox[item].time;
+
+                    namediv.appendChild(nameSpan);
+                    namediv.appendChild(timeSpan);
+                    row.appendChild(namediv);
+
+
+                    let img = document.createElement('img');
+                    img.className = "direct-chat-img";
+                    img.src = MessageData.inbox[item].image;
+                    img.alt = "User Image";
+                    row.appendChild(img);
+
+                    let ChatClass = document.createElement("div");
+                    ChatClass.className = "direct-chat-text";
+                    ChatClass.innerHTML = MessageData.inbox[item].message;
+                    row.appendChild(ChatClass);
+
+                    element.appendChild(row);
+
+                }
+                else  {
+
+                    let element = document.getElementById('ChatBox');
+
+                    let row = document.createElement('div');
+                    row.className = "direct-chat-msg";
+
+                    let namediv = document.createElement('div');
+                    namediv.className = "direct-chat-infos clearfix";
+                    row.appendChild(namediv);
+
+                    let nameSpan = document.createElement('span');
+                    nameSpan.className = "direct-chat-name float-left";
+                    nameSpan.innerHTML = MessageData.inbox[item].name;
+
+
+
+                    let timeSpan = document.createElement('span');
+                    timeSpan.className = "direct-chat-timestamp float-right";
+                    timeSpan.innerHTML = MessageData.inbox[item].time;
+
+                    namediv.appendChild(nameSpan);
+                    namediv.appendChild(timeSpan);
+
+
+                    let img = document.createElement('img');
+                    img.className = "direct-chat-img";
+                    img.src = MessageData.inbox[item].image;
+                    img.alt = "User Image";
+                    row.appendChild(img);
+
+                    let ChatClass = document.createElement("div");
+                    ChatClass.className = "direct-chat-text";
+                    ChatClass.innerHTML = MessageData.inbox[item].message;
+                    row.appendChild(ChatClass);
+
+                    element.appendChild(row);
+
+
+                }
+
+
+
+
+            }
+
+
+        }
+
+    });
+    
+    
+</script>

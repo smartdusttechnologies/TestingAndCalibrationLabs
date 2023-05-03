@@ -1,0 +1,40 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+<div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-frm-input">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" name="@Model.Value.UiControlDisplayName" type="checkbox" value="false" id="checkbox-@Model.Value.Id" />
+        <label class="form-check-label" for="@Model.Value.UiControlDisplayName">
+            @Model.Value.UiControlDisplayName@if (Model.Value.IsRequired)
+            {
+                <span class="red-color">*</span>
+            }
+        </label>
+    </div>
+</div>
+<input type="hidden" id="@Model.Value.UiControlTypeName@Model.Value.Id" value="false">
+<script>
+    window.addEventListener("load", function () { preSelectCheckbox() });
+    var model;
+    $(document).ready(function () {
+        model = JSON.parse('@Json.Serialize(Model)');
+        var checkboxwithoutHash = model.value.uiControlTypeName + model.value.id;
+        var idNum = "#checkbox-" + model.value.id;
+        $(idNum).on('change', function () {
+            if ($(idNum).is(':checked')) {
+                document.getElementById(checkboxwithoutHash).value = "true";
+            } else {
+                document.getElementById(checkboxwithoutHash).value = "false";
+            }
+        });
+    });
+    function preSelectCheckbox() {
+        var actionName = $('#actionNameCommon').val();
+        if (actionName == "Edit") {
+            var inputId = "#" + model.value.uiControlTypeName + model.value.id;
+            var checkboxId = "#checkbox-" + model.value.id;
+            var checkboxValue = $(inputId).val();
+            if (checkboxValue == "true") {
+                $(checkboxId).prop("checked", true);
+            }
+        }
+    }
+</script>

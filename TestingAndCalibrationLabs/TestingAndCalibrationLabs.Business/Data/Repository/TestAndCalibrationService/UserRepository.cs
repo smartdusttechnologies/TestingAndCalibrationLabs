@@ -21,6 +21,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+
         /// <summary>
         ///get the data of the required user with specified role[Admin]
         /// </summary>
@@ -28,28 +29,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         List<string> Interfaces.IUserRepository.Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return (List<string>)db.Query<string>("select Email from [Users] where Role='Admin'");
+            return (List<string>)db.Query<string>("select Email from [User] where UserName='sysadmin'");
         }
         /// <summary>
         /// Get User Based on Id
         /// </summary>
-        public User Get(int id)
+        public UserModel Get(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<User>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
+            return db.Query<UserModel>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
         /// <summary>
         /// Get Iser Based on Name
         /// </summary>
-        public User Get(string userName)
+        public UserModel Get(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<User>("Select top 1 * From [User] where UserName=@userName and IsDeleted=0", new { userName }).FirstOrDefault();
+            return db.Query<UserModel>("Select top 1 * From [User] where UserName=@userName and IsDeleted=0", new { userName }).FirstOrDefault();
         }
         /// <summary>
         /// Method to Insert User Info in DB
         /// </summary>
-        public int Insert(User user, PasswordLogin passwordLogin)
+        public int Insert(UserModel user, PasswordLogin passwordLogin)
         {
             var p = new DynamicParameters();
             p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);

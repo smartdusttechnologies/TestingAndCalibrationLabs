@@ -1,11 +1,8 @@
-﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiControlTypeModel>
-
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiControlTypeDTO>
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Ui Control Type</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -17,14 +14,12 @@
     <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
         <thead>
             <tr>
-
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
                     <h6><b>Display Name</b></h6>
                 </th>
-
                 <th> <h6><b>Actions</b></h6></th>
             </tr>
         </thead>
@@ -32,14 +27,12 @@
             @foreach (var item in Model)
             {
                 <tr>
-
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DisplayName)
                     </td>
-
                     <td>
                         @Html.ActionLink("", "Edit", new {  id=item.Id }, new{@class="fas fa-edit"}) |
                         @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
@@ -49,7 +42,6 @@
         </tbody>
     </table>
 </div>
-
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
 {
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -65,7 +57,6 @@
     </div>
 }
 <script>
-
     oTable = $('#gridui').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -76,5 +67,4 @@
     $('#gridsearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
-
 </script>

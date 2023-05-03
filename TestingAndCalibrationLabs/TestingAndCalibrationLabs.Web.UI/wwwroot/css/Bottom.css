@@ -1,0 +1,199 @@
+﻿
+
+
+.bottom-navigation {
+    display: none;  
+}
+
+
+@media only screen and (max-width: 500px) {
+    .bottom-navigation {
+        display: flex; 
+        justify-content: space-around; 
+        align-items: center; 
+        position: fixed; 
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 5px;
+        box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.2);
+       /* overflow-y: visible;*/
+    }
+}
+
+.bottom-navigation a {
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+}
+
+.bottom-navigation a i {
+    margin-bottom: 50px;
+}
+
+
+.bottom-navigation ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+}
+
+.bottom-navigation li {  /*-- for text align*/
+    flex: 1;
+    text-align: center;
+}
+
+.bottom-navigation a { /*--for text color and text spacing*/
+   /* display: block;*/
+    padding: 1px;
+    color: #333;
+    text-decoration: none;
+    text-align: left;
+   
+}
+
+.bottom-navigation i { /* -- for icon size and space between icon and text */
+    font-size: 20px;
+    margin-bottom: 1px;
+    display: block;
+    text-align: center;
+    
+}
+
+
+/*.kebab for bottom-navigation 
+{
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 16px;
+    top: 12px;
+
+    figure{
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+    background: $cyan;
+    margin: 3px 0;
+          }
+}
+*/
+
+
+
+
+.test:after {             /* this is my three vertical dots*/
+    content: '\2807';
+    font-size: 40px;
+    color: #000000;
+}
+
+.list-menu {
+    display: none !important;
+   
+}
+
+    .list-menu a { /* for keeping all angel tag navbar up down and left right padding */
+        color: #000000 !important;
+        display: block;
+        padding: 0px 0px 2px 5px;
+        text-decoration: none;
+        padding-top: 5px;
+        
+        /*border:1px solid black;*/
+    }
+
+
+        .list-menu a:hover {
+            color: #964B00 !important;
+            cursor: pointer !important;
+        }
+
+
+    @media only screen and (max-width: 700px) {   /* for to space left and bottom of navbar text*/
+        .list-menu.show {
+        display: block !important;
+        margin-bottom: 530px !important;
+        margin-left: 300px !important;
+        }
+    }   
+
+@media only screen and (max-width: 700px) {
+    .list-menu {
+        display: none !important;
+        position: absolute !important;
+        background-color: #ffffff!important;
+        min-width: 250px !important;
+        z-index: 1 !important;
+    }
+}
+
+/*.list-menu a:hover {
+        background-color: #000 !important;
+        color: #fff !important;
+       
+}
+
+ .right-menu:hover .dropdown-menu{
+     display: block !important;
+ }
+*/
+
+
+
+.test list menu-container {
+    position: absolute !important;
+    top:0  !important;
+    right: 0!important;
+    color: #ffffff;
+}
+
+.list-menu {
+    /*position: relative !important;*/
+    padding: 10px 30px !important;
+    background-color: #D3D3D3 !important;     /*light gray color*/
+    color: #ffffff;
+}
+
+
+
+/*ul.vertical li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+*/
+
+
+#NavbarMenu {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    
+}
+
+.iconPhone {
+                          /* Define the icon's color here */
+    color:forestgreen;    /* Example color: green */
+}
+
+
+.iconFacebook {
+    color:blue;
+}
+ 
+.iconEmail{
+  color:orangered;
+}
+
+
+
+.iconContactUs {
+    color: hotpink;
+}

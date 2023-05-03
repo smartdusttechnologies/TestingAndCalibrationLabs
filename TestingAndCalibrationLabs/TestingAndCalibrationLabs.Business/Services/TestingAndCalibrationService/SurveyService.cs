@@ -27,11 +27,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         public SurveyService(ISurveyRepository surveyRepository, IWebHostEnvironment hostingEnvironment, IEmailService emailservice, IUserRepository userRepository, IConfiguration configuration)
         {
             _surveyRepository = surveyRepository;
-            _emailService = emailservice;
+            _emailService =  emailservice;
             _userRepository = userRepository;
             _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
         }
+
         public RequestResult<int> Add(SurveyModel surveymodel)
         {
             var emailsendTo = _userRepository.Get();

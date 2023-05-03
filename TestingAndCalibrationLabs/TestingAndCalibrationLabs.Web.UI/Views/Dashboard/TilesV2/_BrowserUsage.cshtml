@@ -1,0 +1,119 @@
+﻿}<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Browser Usage</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="chart-responsive">
+                    <canvas id="pieChart" height="150"></canvas>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <ul class="chart-legend clearfix" id="DoughnutList">
+                   </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-footer p-0">
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    United States of America
+                    <span class="float-right text-danger">
+                        <i class="fas fa-arrow-down text-sm"></i>
+                        12%
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    India
+                    <span class="float-right text-success">
+                        <i class="fas fa-arrow-up text-sm"></i> 4%
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    China
+                    <span class="float-right text-warning">
+                        <i class="fas fa-arrow-left text-sm"></i> 0%
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("BrowserUse","Dashboard")",
+        success: function (BrowserModelData) {
+
+            var Element = document.getElementById('DoughnutList')
+            for(var item =0; item< BrowserModelData.browserName.length;item++){
+
+            var ListTag = document.createElement('li')
+                var AlertType = document.createElement('i')
+                AlertType.className = "far fa-circle  " + BrowserModelData.dounutAlertType[item];
+                ListTag.appendChild(AlertType)
+            ListTag.innerHTML += BrowserModelData.browserName[item];
+
+                
+            Element.appendChild(ListTag)
+            }
+
+            $(function () {
+                'use strict'
+
+
+                
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+
+                var DoughnutData = [];
+                for (var i = 0; i < BrowserModelData.dounutData.length; i++) {
+                    DoughnutData.push(BrowserModelData.dounutData[i]);
+
+                }
+                var pieData = {
+                    labels: BrowserModelData.browserName,
+                    datasets: DoughnutData
+                }
+                var pieOptions = {
+                    legend: {
+                        display: false
+                    }
+                }
+
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'doughnut',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+
+
+
+            })
+        }
+
+    });
+
+</script>

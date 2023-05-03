@@ -1,0 +1,129 @@
+﻿
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-chart-pie mr-1"></i>
+            Sales
+        </h3>
+        <div class="card-tools">
+            <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content p-0">
+
+            <div class="chart tab-pane active" id="revenue-chart"
+                 style="position: relative; height: 300px;">
+                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+            </div>
+            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("AreaChart","Dashboard")",
+        success: function (SalesModelData) {
+
+            $(function () {
+                'use strict'
+                
+
+
+                var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+                var AreaChartdata = []
+
+                for (var item = 0; item < SalesModelData.areaData.length; item++) {
+
+                    var sale = SalesModelData.areaData[item];
+                    AreaChartdata.push(sale);
+                }
+                
+                var salesChartData = {
+                    labels: SalesModelData.month,
+
+                    datasets: AreaChartdata
+
+                }
+
+
+
+                var salesChartOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                display: false
+                            }
+                        }]
+                    }
+                }
+
+
+                var salesChart = new Chart(salesChartCanvas, {
+                    type: 'line',
+                    data: salesChartData,
+                    options: salesChartOptions
+                })
+
+                // Donut Chart
+                var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+                var DonutData = []
+                var DonutLabelName = []
+                for ( var items = 0; items < SalesModelData.donutData.length; items++) {
+                    DonutLabelName.push(SalesModelData.donutData[items].salesName[items]);
+                    var DataValues = { data: SalesModelData.donutData[items].dataSet, backgroundColor: SalesModelData.donutData[items].background };
+                    DonutData.push(DataValues);
+
+
+                }
+                
+                var pieData = {
+                    labels: DonutLabelName,
+                    datasets: DonutData
+                }
+                var pieOptions = {
+                    legend: {
+                        display: false
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true
+                }
+
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'doughnut',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        }
+
+    });
+
+
+
+</script>

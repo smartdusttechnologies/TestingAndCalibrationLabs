@@ -9,7 +9,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     {
         public int Id { get; set; }
         public int UiPageId { get; set; }
-        public List<UI.Models.UiPageMetadataDTO> Fields { get; set; }
-        public Dictionary<int, List<UI.Models.UiPageDataDTO>> FieldValues { get; set; }
+        public List<UiPageMetadataDTO> Fields { get; set; }
+        public Dictionary<int, List<UiPageDataDTO>> FieldValues { get; set; }
     }
 }

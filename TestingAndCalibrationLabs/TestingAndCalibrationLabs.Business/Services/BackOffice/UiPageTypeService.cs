@@ -13,9 +13,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
        
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
-        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository)
+        private readonly IUiPageTypeRepository _uiPageTypeRepository;
+        public UiPageTypeService( IGenericRepository<UiPageTypeModel> genericRepository, IUiPageTypeRepository uiPageTypeRepository)
         {
             _genericRepository = genericRepository;
+            _uiPageTypeRepository = uiPageTypeRepository;
         }
         /// <summary>
         /// Create Record For Ui Page Type
@@ -24,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            _genericRepository.Insert(uiPageTypeModel);
+            _uiPageTypeRepository.Insert(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -44,15 +46,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update( UiPageTypeModel uiPageTypeModel)
         {
-            _genericRepository.Update(uiPageTypeModel);
+            _uiPageTypeRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
        public List<UiPageTypeModel> Get()
-        {
-            return _genericRepository.Get();
+        {return  _uiPageTypeRepository.Get();;
         }
-        
-        
+       
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>
@@ -60,7 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
-            return _genericRepository.Get(id);
+            return _uiPageTypeRepository.GetById(id);
         }
     }
 }
