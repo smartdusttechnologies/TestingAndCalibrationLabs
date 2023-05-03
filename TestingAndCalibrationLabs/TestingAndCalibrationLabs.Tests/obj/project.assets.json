@@ -8655,19 +8655,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ritesh kumar\\.nuget\\packages\\": {}
+    "C:\\Users\\HIMANSHU\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
       "projectName": "TestingAndCalibrationLabs.Tests",
-      "projectPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
-      "packagesPath": "C:\\Users\\ritesh kumar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
+      "projectPath": "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+      "packagesPath": "C:\\Users\\HIMANSHU\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ritesh kumar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HIMANSHU\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8681,11 +8681,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
-              "projectPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+            "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+              "projectPath": "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
             },
-            "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
-              "projectPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
+            "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+              "projectPath": "C:\\Users\\HIMANSHU\\Pictures\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
             }
           }
         }
@@ -8732,12 +8732,26 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.10, 3.1.10]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[3.1.0, 3.1.0]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[3.1.0, 3.1.0]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   },
