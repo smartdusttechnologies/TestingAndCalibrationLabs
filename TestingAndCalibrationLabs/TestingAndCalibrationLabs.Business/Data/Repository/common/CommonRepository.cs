@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -144,23 +143,42 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 values (@ModuleId,@WorkflowStageId);
                 SELECT @RecordId = @@IDENTITY";
             string singleValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId) 
-                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId)"; 
+                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, p, transaction);  
+            db.Execute(recordInsertQuery, p, transaction);
             int insertedRecordId = p.Get<int>("@RecordId");
             var subRecordId = GenerateNewSubRecordId(insertedRecordId);
-            var singlePageData = record.FieldValues.Where(x=>x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId}).ToList();
+            var singlePageData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
             var multiValueData = record.FieldValues.Where(x => x.MultiValueControl == true).Select(x => new { SubRecordId = subRecordId, RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
-            db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
-            if(multiValueData.Count > 0)
+             db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
+            if (multiValueData.Count > 0)
             {
                 string multiValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId,SubRecordId) 
                 values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId,@SubRecordId)";
                 db.Execute(multiValueDataInsertQuery, multiValueData, transaction);
             }
-           
-         
+
+           // string idUiType = "Select top 1 * From [{0}] where Id=@id and IsDeleted=0", UiPageData;
+
+
+
+
+            var data = singlePageData.Select(x => new {  Value = x.Value }).ToList();
+
+
+
+            db.Execute("InsertDataFromTVP", data,  transaction );
+
+
+            //singlePageData.Add("@Value",);
+            //queryParameters.Add("@parameter2", valueOfparameter2);
+            //var param = new { singlePageData };
+
+            //var result = repository.Exec<Something>(SomethingEnum.InsertDataFromTVP,
+            //new { singlePageData }, commandType: CommandType.StoredProcedure);
+
+
             transaction.Commit();
             return insertedRecordId;
         }
@@ -182,7 +200,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <param name="moduleId"></param>
         /// <returns></returns>
         public int GetPageIdBasedOnOrder(int moduleId)
-        {
+         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<int>(@"Select  ws.UiPageTypeId
                                                     From [Module] m
@@ -253,6 +271,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             {
                 db.Execute(updateQurey, updateList, transaction);
             }
+
+            db.Execute("InsertDataFromTVP", insertQuery,commandType:CommandType.StoredProcedure);
+            
+
             transaction.Commit();
 
             return true;
