@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <a class="eqv-button">Preview Data</a>
-                    <a class="eqv-button">Save Query</a>
+                    <a class="eqv-button" onclick="DataToModel()">Save Query</a>
                     <div id="ChangeLocale">
                         <select class="eqv-select">
                             <option value="en-US">English - English</option>
@@ -165,6 +165,30 @@
 
     var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
     var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
+
+    function DataToModel() {
+        var dataDetail = document.getElementById('ColumnData');
+        
+
+        for (var item = 0; item < dataDetail.children.length; item++) {
+
+            var details = dataDetail.children[item].children[2].innerText;
+            var value = details.split(' ')[0];
+            var obj1 = {ClaimType};
+
+            for (var item = 0; item < obj1.length; item++) {
+                if (obj1[item] != value) {
+                   // obj1;
+                    obj1[ClaimType] = new Array();
+                }
+            }
+
+            var data = details.split(' ')[1];
+            obj1[ClaimType].push(data);
+            
+
+        }
+    }
 </script>
 <script src="~/js/QueryBuilder.js"></script>
 <div class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 721px; top: 193px; z-index: 10000; font-size: 14px;">

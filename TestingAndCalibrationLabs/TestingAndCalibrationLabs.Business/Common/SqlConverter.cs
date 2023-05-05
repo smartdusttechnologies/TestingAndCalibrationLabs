@@ -1,6 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.StaticFiles;
 using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Common
@@ -18,26 +22,27 @@ namespace TestingAndCalibrationLabs.Business.Common
                 StringBuilder query = new StringBuilder(typ);
                 if (ob.head.tables != null)
                 {
-                    foreach (var col in ob.head.tables[0].column)
+                    foreach (var table in ob.head.tables)
                     {
+                        Column( table, ref query);
 
-                        //query.Append($" {col.tableName}.{col.columnName} AS {col.As} ,");
-                        query.Append($" {col.columnName} ,");
 
-                        if (col.As != null && col.columnName != "*")
+
+                        query.Append($" FROM {ob.head.tables[0].tableName.ToString()} ");
+
+                             
+
+                        JoinType(table, ref query);
+
+                        if (table.GroupBy != null)
                         {
-                            query.Remove(query.Length - 1, 1);
-                            query.Append($" As {col.As} ,");
+                            query.Append($" GROUP BY {table.GroupBy} ");
                         }
 
-                    }
-                    query.Remove(query.Length - 1, 1);
+                        OrderType(table, ref query);
 
-                    query.Append($" FROM {ob.head.tables[0].tableName.ToString()} ");
+                        Condition(ref ob, ref query);
 
-                    if (ob.head.tables[0].condition != null)
-                    {
-                        query.Append($" Where {ob.head.tables[0].condition.where} {ob.head.tables[0].condition.operators} '{ob.head.tables[0].condition.value}' ");
                     }
                 }
 
@@ -48,10 +53,82 @@ namespace TestingAndCalibrationLabs.Business.Common
         }
 
 
-        public static string Column(string json)
+        public static void Column( dynamic ob, ref StringBuilder query)
         {
-            
-            return "";
+
+            foreach (var col in ob.column)
+            {
+
+                //query.Append($" {col.tableName}.{col.columnName} AS {col.As} ,");
+                if(col.Aggregation!=null && ob.GroupBy!=null)
+                {
+                    query.Append($" {col.Aggregation}(");
+                }
+                if (col.tableName != null)
+                {
+                    query.Append($" {col.tableName}.");
+                }
+
+                query.Append($"{col.columnName} ,");
+
+                if(col.Aggregation!= null && ob.GroupBy != null)
+                {
+                    query.Remove(query.Length - 1, 1);
+                    query.Append($" ) ,");
+                }
+
+                if (col.As != null && col.columnName != "*")
+                {
+                    query.Remove(query.Length - 1, 1);
+                    query.Append($" As {col.As} ,");
+                }
+                
+            }
+            query.Remove(query.Length - 1, 1);
+
+
+        }
+
+        public static void Condition(ref dynamic ob, ref StringBuilder query)
+        {
+
+
+            if (ob.head.tables[0].condition != null)
+            {
+                query.Append(" where ");
+                foreach (var cond in ob.head.tables[0].condition)
+                {
+                    if (cond.OperatorType != null)
+                    {
+                        query.Append(cond.OperatorType);
+                    }
+                    query.Append($" {cond.where} {cond.operators} '{cond.value}' ");
+
+
+                }
+
+            }
+        }
+        public static void JoinType(dynamic ob, ref StringBuilder query)
+        {
+
+            if (ob.foriegn != null)
+            {
+                foreach (var forign in ob.foriegn)
+                {
+                    query.Append($" {forign.joinType} {forign.tableName} ON {forign.tableName}.{forign.on.pKey} {forign.on.optor} {forign.foriegnTableName}.{forign.on.fKey} ");
+                }
+            }
+        }
+        public static void OrderType(dynamic ob, ref StringBuilder query)
+        {
+            if(ob.OrderBy != null)
+            {
+                foreach (var order in ob.OrderBy)
+                {
+                    query.Append($" ORDER BY  {order.ColumnName}  {order.OrderType}");
+                }
+            }
         }
     }
 }
