@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -142,35 +143,37 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             string recordInsertQuery = @"Insert into [Record](ModuleId,WorkflowStageId) 
                 values (@ModuleId,@WorkflowStageId);
                 SELECT @RecordId = @@IDENTITY";
-            string singleValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId) 
-                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId)";
+            string singleValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, RecordId,UiPageTypeId) 
+                values (@UiPageMetadataId, @RecordId,@UiPageTypeId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(recordInsertQuery, p, transaction);
             int insertedRecordId = p.Get<int>("@RecordId");
             var subRecordId = GenerateNewSubRecordId(insertedRecordId);
-            var singlePageData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
-            var multiValueData = record.FieldValues.Where(x => x.MultiValueControl == true).Select(x => new { SubRecordId = subRecordId, RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
-             db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
-            if (multiValueData.Count > 0)
+            var singlePageData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, UiPageTypeId = x.UiPageTypeId }).ToList();
+            //var multiValueData = record.FieldValues.Where(x => x.MultiValueControl == true).Select(x => new { SubRecordId = subRecordId, RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
+            db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
+            transaction.Commit();
+
+            //var records = GenerateUiDataId(getLatestRecordId());
+            var singleValueData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new {UiPageMetadataId = x.UiPageMetadataId, value = x.Value}).ToList();
+
+            using (var command = new System.Data.SqlClient.SqlCommand("InsertDataFromTVP", (System.Data.SqlClient.SqlConnection)db))
             {
-                string multiValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId,SubRecordId) 
-                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId,@SubRecordId)";
-                db.Execute(multiValueDataInsertQuery, multiValueData, transaction);
+                command.CommandType = CommandType.StoredProcedure;
+                var tvpParameter = command.Parameters.AddWithValue("@Tvp", GetDataTable(singleValueData));
+                tvpParameter.SqlDbType = SqlDbType.Structured;
+                tvpParameter.TypeName = "dbo.MyTableType";                
+                var result = command.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Console.WriteLine("Stored procedure executed successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("Stored procedure did not execute successfully.");
+                }
             }
-
-           // string idUiType = "Select top 1 * From [{0}] where Id=@id and IsDeleted=0", UiPageData;
-
-
-
-
-            var data = singlePageData.Select(x => new {  Value = x.Value }).ToList();
-
-
-
-            db.Execute("InsertDataFromTVP", data,  transaction );
-
-
             //singlePageData.Add("@Value",);
             //queryParameters.Add("@parameter2", valueOfparameter2);
             //var param = new { singlePageData };
@@ -178,9 +181,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             //var result = repository.Exec<Something>(SomethingEnum.InsertDataFromTVP,
             //new { singlePageData }, commandType: CommandType.StoredProcedure);
 
-
             transaction.Commit();
             return insertedRecordId;
+        }
+
+        public static DataTable GetDataTable<T>(IEnumerable<T> list)
+        {
+            var table = new DataTable();
+            var properties = typeof(T).GetProperties();
+            foreach (var property in properties)
+            {
+                table.Columns.Add(property.Name, System.Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
+            }
+            foreach (var item in list)
+            {
+                var row = table.NewRow();
+                foreach (var property in properties)
+                {
+                    row[property.Name] = property.GetValue(item) ?? DBNull.Value;
+                }
+                table.Rows.Add(row);
+            }
+            return table;
         }
         /// <summary>
         /// Get Page Id Based On Current Workflow Stage 
@@ -374,6 +396,19 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection con = _connectionFactory.GetConnection;
             var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId}").First();
             return result + 1;
+        }
+
+        public List<int> GenerateUiDataId(int recordId)
+        {
+            using IDbConnection con = _connectionFactory.GetConnection;
+            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId}").ToList();
+            
+        }
+
+        public int getLatestRecordId() {
+            using IDbConnection con = _connectionFactory.GetConnection;
+            return con.Query<int>($"SELECT Id FROM Record WHERE id = (SELECT MAX(id) FROM Record)").First();
+
         }
         /// <summary>
         /// Delete Multi Record Values
