@@ -120,8 +120,8 @@
     @media only screen and (max-width: 700px) {   /* for to space left and bottom of navbar text*/
         .list-menu.show {
         display: block !important;
-        margin-bottom: 530px !important;
-        margin-left: 300px !important;
+        margin-bottom: 460px !important;
+        margin-left: 340px !important;
         }
     }   
 
@@ -129,7 +129,7 @@
     .list-menu {
         display: none !important;
         position: absolute !important;
-        background-color: #ffffff!important;
+        background-color: #ffffff !important; /*--white color*/
         min-width: 250px !important;
         z-index: 1 !important;
     }
@@ -156,9 +156,8 @@
 }
 
 .list-menu {
-    /*position: relative !important;*/
     padding: 10px 30px !important;
-    background-color: #D3D3D3 !important;     /*light gray color*/
+    background-color: #D3D3D3 !important; /*grey color*/
     color: #ffffff;
 }
 

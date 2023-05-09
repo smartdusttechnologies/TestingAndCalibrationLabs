@@ -43,7 +43,20 @@ hs_err_pid*
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI.csproj.user
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.jfm
 TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.dbmdl
+<<<<<<< HEAD
 *.dll
 *.exe
 *.pdb
+=======
+
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/obj
+*.dll
+*.pdb
+*.exe
+TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin
+*.props
+*.props
+*.nuspec
+*.editorconfig
+>>>>>>> 04d4536d5c791e8622e7b437320619330ae13253
 *.cache

@@ -49,7 +49,7 @@
         type: "POST",
         url: "@Url.Action("VisitorsReport","Dashboard")",
         success: function (VisitorModelData) {
-            debugger;
+            
 
             document.getElementById("vistorslist").innerHTML = VisitorModelData.vistorslist;
             document.getElementById("visitorsAvg").innerHTML = VisitorModelData.visitorsAvg;
@@ -61,7 +61,7 @@
             document.getElementById("organicPercentage").innerHTML = VisitorModelData.organicPercentage;
 
             $(function () {
-                debugger;
+                
                 'use strict'
 
                 $('#world-map-markers').mapael({
