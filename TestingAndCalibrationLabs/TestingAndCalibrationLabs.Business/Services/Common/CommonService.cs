@@ -10,6 +10,8 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Text;
 using System.Threading;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -193,6 +195,7 @@ namespace TestingAndCalibrationLabs.Business.Services
              f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
             f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
              );
+
             var record = new RecordModel
             {
                 ModuleId = moduleId,
@@ -201,6 +204,31 @@ namespace TestingAndCalibrationLabs.Business.Services
             };
             return record;
         }
+
+        public MultiselectDropdownModel Multilectal(List<multiselectvaluesModel> Multi)
+        {
+
+            //List<multivalues3Model> hireriche = new List<multivalues3Model>();
+            //Multi.ForEach(x => hireriche.Add(new multivalues3Model { Subs = x }));
+
+            var hiera = Multi.Hierarchize(
+             0, // The "root level" key. We're using -1 to indicate root level.
+             f => f.Id, // The ID property on your object
+             f => f.ParentId,// The property on your object that points to its parent
+             f => f.Orders // The property on your object that specifies the order within its parent
+             );
+           
+            //ViewBag.jsonData = jsonData;
+            var cat = new MultiselectDropdownModel
+            {
+
+                Layo = hiera
+            };
+
+            return cat;
+
+        }
+       
         /// <summary>
         /// This Method Return Data For Grid
         /// </summary>
@@ -373,6 +401,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(validationMessages);
         }
+
         #endregion
     }
 }

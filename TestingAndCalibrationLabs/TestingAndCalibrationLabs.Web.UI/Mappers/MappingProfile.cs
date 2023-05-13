@@ -32,6 +32,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<WorkflowDTO,WorkflowModel>().ReverseMap();
             CreateMap<WorkflowStageDTO,WorkflowStageModel>().ReverseMap();
             CreateMap<UiPageNavigationModel, UiPageNavigationDTO>().ReverseMap();
+            CreateMap<MultiselectDropdownModel, MultiselectDropdownDTO>().ReverseMap();
+            CreateMap<multivalues3Model, multivalues3DTO>().ReverseMap();
+            CreateMap<multiselectvaluesModel, multiselectvaluesDTO>().ReverseMap();
+
         }
     }
 }

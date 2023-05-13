@@ -1,0 +1,98 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+
+@*@model TestingAndCalibrationLabs.Web.UI.Models.MultiselectDropdownDTO
+*@<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
+
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+    <input class="black-border" type="text" id="justAnInputBox" placeholder="MultipleSelect" rows="1" autocomplete="off"  />
+  
+</div>
+
+<script type="text/javascript">
+
+    
+    //var SampleJSONData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@ViewBag.jsonData));
+    let abc = JSON.parse(@ViewBag.jsonData);
+
+    //var SampleJSONData = @ViewBag.data;
+    //let abc = JSON.Deserialize(@ViewBag.data);
+    //var SampleJSONData = serialize(@ViewBag.data);
+    //var abc = Deserialize(@ViewBag.Data);
+    // var best = SampleJSONData[0].sub[0].title;
+    //$data = serialize(array(@ViewBag.data));
+    //echo $data. "
+    //$test = unserialize($data);
+    //var_dump($test);
+
+    debugger;
+    var info = [
+        {
+            id: 0,
+            title: 'Horse'
+        },{
+            id: 1,
+            title: 'Birds',
+            subs: [
+                {
+                     id: 10,
+                    title: 'Pigeon',
+                }, {
+                    id: 11,
+                    title: 'Parrot'
+                }, {
+                    id: 12,
+                    title: 'Owl'
+                }, {
+                    id: 13,
+                    title: 'Falcon'
+                }
+            ]
+        }, {
+            id: 2,
+            title: 'Rabbit'
+        }, {
+             id: 3,
+            title: 'Fox'
+        }, {
+             id: 5,
+            title: 'Cats',
+            subs: [
+                {
+                    id: 50,
+                    title: 'Kitty'
+                }, {
+                    id: 51,
+                    title: 'Bigs',
+                    subs: [
+                        {
+                            id: 510,
+                            title: 'Cheetah'
+                        }, {
+                            id: 511,
+                            title: 'Jaguar'
+                        }, {
+                            id: 512,
+                            title: 'Leopard'
+                        }
+                    ]
+                }
+            ]
+        }, {
+            id: 6,
+            title: 'Fish'
+        }
+    ];
+    var comboTree1, comboTree2;
+
+    jQuery(document).ready(function ($) {
+
+        comboTree1 = $('#justAnInputBox').comboTree({
+            source: SampleJSONData,
+            isMultiple: true,
+            cascadeSelect: true,
+            withSelectAll: true
+        });
+
+
+    });
+</script>
