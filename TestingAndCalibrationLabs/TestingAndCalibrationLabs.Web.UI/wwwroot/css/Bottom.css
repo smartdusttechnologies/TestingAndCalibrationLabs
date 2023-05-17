@@ -18,7 +18,7 @@
         background-color: #ffffff;
         padding: 5px;
         box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.2);
-       /* overflow-y: visible;*/
+       
     }
 }
 
@@ -67,24 +67,6 @@
 }
 
 
-/*.kebab for bottom-navigation 
-{
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    padding: 0 16px;
-    top: 12px;
-
-    figure{
-    width: 6px;
-    height: 6px;
-    border-radius: 5px;
-    background: $cyan;
-    margin: 3px 0;
-          }
-}
-*/
 
 
 
@@ -98,48 +80,48 @@
 @media only screen and (max-width: 500px) {
     .list-menu {
         display: none !important;
-        height: 85%;
-        
+        height: 65%;
         position: fixed !important;
-        transform: translateX(-50px) !important;
+        transform: translate3d(-50px) !important;
         transition: left 0.5s ease-in-out !important;
         min-width: 250px !important;
-        
         padding: 10px 30px !important;
-        margin-bottom: 40px;
-        background-color: #2f3640; /*greyish color*/
+        /*background-color: #343a40;*/   /*black color*/
+        background-color: #2f3640; /*Darkgreyishblue color*/
     }
 }
 
-#openlist-menu::after#list-menu{
+/*#openlist-menu::after#list-menu{
     transform: translateX(0px);
-}
+}*/
 
 .list-menu a { /* for keeping all angel tag navbar up down and left right padding */
-    color: silver !important; /* --white color*/
+    color: white !important; /* --white color*/
     display: block;
     padding: 0px 0px 2px 5px;
     text-decoration: none;
     padding-bottom: 20px;
     transition: background-color 0.5s ease-in-out;
-    
+    background-color: #2f3640; /*background black color*/
     font-size: 20px;
+    overflow-x: scroll;
+    height: 50px;
 }
 
 
 
-    .list-menu a:hover {
-        color: blue !important;
+   /* .list-menu a:hover {
+       
         cursor: pointer !important;
         
     }
-
+*/
 
     @media only screen and (max-width: 500px) {   /* for  margin space left and bottom of navbar text*/
         .list-menu.show {
             display: block !important;
-            margin-bottom: 460px !important;
-            margin-left: 450px !important;
+            margin-bottom: 350px !important;
+            margin-left: 400px !important;
            
         }
     }   
@@ -154,7 +136,7 @@
     position: absolute !important;
     top: 0 !important;
     right: 0 !important;
-    color: #808080;
+    color: #000000;
 }
 
 
@@ -191,5 +173,18 @@
 }
 
 
+.notification-ui_icon .fa-bell__badge {
+    display: inline-block;
+     
+    width: 13px;
+    border-radius: 40%;
+    background-color: red;
+    position:absolute;
+    color: white;
+    top: -15px;
+    left: 35px;
+    font-size: x-small;
+}
 
+ 
 
