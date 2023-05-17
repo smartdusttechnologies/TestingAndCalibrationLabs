@@ -9,8 +9,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class UiPageDataModel : Entity
     {
         public int UiPageId { get; set; }
-        public int UiControlId { get; set; }
-
+        
+        public int UiPageMetadataId { get; set;}
         private string _value;
         public string Value
         {

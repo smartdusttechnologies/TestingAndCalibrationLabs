@@ -1,13 +1,5 @@
 ﻿
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-nav {
+.navForNavbar {
     display: flex;
     width: 100%;
     background-color: whitesmoke;
@@ -17,25 +9,25 @@ nav {
     padding: 15px 0px;
 }
 
-    nav .icon {
+    .navForNavbar .icon {
         font-size: 35px;
         font-weight: 800;
         color: darkblue;
         cursor: pointer;
     }
 
-    nav ol {
+    .navForNavbar ol {
         display: flex;
         list-style: none;
         margin: auto 0;
     }
 
-        nav ol li {
+        .navForNavbar ol li {
             margin: 0 2px;
         }
 
 
-            nav ol li a {
+            .navForNavbar ol li a {
                 color: darkslategray;
                 font-size: 20px;
                 text-decoration: none;
@@ -44,19 +36,19 @@ nav {
                 padding: 5px 10px;
             }
 
-            nav ol li:hover a {
+            .navForNavbar ol li:hover a {
                 background-color: whitesmoke;
                 color: black;
             }
 
-    nav .search_box {
+    .navForNavbar .search_box {
         display: flex;
         margin: auto;
         height: 40px;
         line-height: 75px;
     }
 
-        nav .search_box input {
+        .navForNavbar .search_box input {
             border: none;
             outline: none;
             background-color: white;
@@ -65,7 +57,7 @@ nav {
             width: 350px;
         }
 
-        nav .search_box span {
+        .navForNavbar .search_box span {
             color: red;
             font-size: 20px;
             background-color: white;
@@ -77,11 +69,11 @@ nav {
             zoom: 1;
         }
 
-            nav .search_box span:hover {
+            .navForNavbar .search_box span:hover {
                 color: aqua;
             }
 
-            nav .search_box span::after {
+            .navForNavbar .search_box span::after {
                 height: 100%;
                 width: 100%;
                 content: '';
@@ -93,17 +85,17 @@ nav {
                 transition: 0.3s;
             }
 
-            nav .search_box span:hover::after {
+            .navForNavbar .search_box span:hover::after {
                 width: 100%;
             }
 
-    nav .bar {
+    .navForNavbar .bar {
         position: relative;
         margin: auto;
         display: none;
     }
 
-        nav .bar span {
+        .navForNavbar .bar span {
             position: absolute;
             color: white;
             font-size: 35px;
@@ -112,8 +104,27 @@ nav {
 
 #footer {
     margin-top: 30px;
-    position: absolute;
+    position:page;
     column-gap: 40px;
-    row-gap: 80px;
+    row-gap: 00px;
     width: 100%;
+    align-content: center;
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 0;
+    margin-top: 200px;
+}
+
+    nav .search_box input {
+        width: 100%;
+    }
+
+nav ol {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-brand-a {
+    font-size: 14px;
 }

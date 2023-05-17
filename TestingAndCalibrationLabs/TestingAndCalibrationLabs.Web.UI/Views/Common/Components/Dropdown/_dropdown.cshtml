@@ -1,0 +1,28 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO>
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+    <label for="testing" class="form-label"></label>
+    <select class="form-input width-full" name="@Model.Value.UiControlTypeName@Model.Value.Id" id="@Model.Value.UiControlTypeName@Model.Value.Id" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiControlDisplayName" />
+   
+    </select>
+</div>
+<script>
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var lookupCategoryId = modelData.value.lookupCategoryId;
+        var id = "#" + modelData.value.uiControlTypeName + modelData.value.id;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("LookupByCategoryId","Lookup")",
+            data: { lookupCategoryId : lookupCategoryId },
+            success: function (response) {
+                for(var i =0; i<response.length; i++){
+                    var lookupId = response[i].id;
+                    var lookupName = response[i].name;
+                    $(id).append("<option value='"+lookupId+"'>"+lookupName+"</option>");
+                }
+            },
+            error: function (req, status, error) {
+            }
+        });
+    });
+</script>

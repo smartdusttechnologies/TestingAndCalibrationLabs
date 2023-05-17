@@ -6,8 +6,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IUserRepository
     {
         List<string> Get();
-        User Get(int id);
-        User Get(string userName);
-        int Insert(User user, PasswordLogin passwordLogin);
+        UserModel Get(int id);
+        UserModel Get(string userName);
+        int Insert(UserModel user, PasswordLogin passwordLogin);
     }
 }

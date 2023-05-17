@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-
+using TestingAndCalibrationLabs.Business.Common;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -13,7 +14,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public int Id { get; set; }
         public int UiPageId { get; set; }
         public List<UiPageMetadataDTO> Fields { get; set; }
-        public List<UI.Models.UiPageDataDTO> FieldValues { get; set; }
+        public List<UiPageDataDTO> FieldValues { get; set; }
+        public IEnumerable<Node<UiPageMetadataDTO>> Layout { get; set; }
         public ValidationMessage ErrorMessage { get; set; } = new ValidationMessage();
       
         #endregion
