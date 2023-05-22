@@ -14,8 +14,8 @@ namespace TestingAndCalibrationLabs.Business.Common
 
         public static string JsonToSql(string json)
         {
-            var str = File.ReadAllText("SqlQuery.json");
-            dynamic ob = JObject.Parse(str);
+            //var str = ReadAllText(json);
+            dynamic ob = JObject.Parse(json);
             if (ob != null)
             {
                 string typ = ob.head.tables[0].type.ToString();

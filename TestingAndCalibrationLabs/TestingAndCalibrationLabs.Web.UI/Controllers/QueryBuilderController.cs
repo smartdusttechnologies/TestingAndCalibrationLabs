@@ -1,10 +1,14 @@
 ﻿
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -25,12 +29,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<Business.Core.Model.QueryBuilder.QueryRecordModel, Models.QueryBuilderRecordDTO>(queryBuilderMetaData);
             return View(records);
         }
-        public IActionResult Index1()
+        [HttpPost]
+       public IActionResult QueryGenerator(List<Array> data)
         {
-            List<Business.Core.Model.QueryBuilder.QueryBuilderModel> tableName = _querybuilderService.GetTableNames();
-            var queryBuilderMetaData = _querybuilderService.GetColoumsNames(tableName);
-            var records = _mapper.Map<Business.Core.Model.QueryBuilder.QueryRecordModel, Models.QueryBuilderRecordDTO>(queryBuilderMetaData);
-            return View(records);
+          // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
+
+            return Ok();
         }
     }
 }
