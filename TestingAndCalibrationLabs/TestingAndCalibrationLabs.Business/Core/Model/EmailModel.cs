@@ -13,7 +13,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It will be used as Email address, where the mail will be sent
         /// </summary>
         public List<string> Email { get; set; }
-          
+
+        /// <summary>
+        /// It will be used as Email address, where the mail will be sent
+        /// </summary>
+        public string EmailTo { get; set; }
+
         /// <summary>
         /// Email Template is used to send a decorative mail message 
         /// </summary>

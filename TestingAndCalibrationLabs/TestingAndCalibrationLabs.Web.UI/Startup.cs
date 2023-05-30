@@ -95,6 +95,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<IForgotPasswordService, ForgotPasswordService>();
+
 
 
             //Repository
@@ -134,6 +136,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<IForgotPasswordRepository, ForgotPasswordRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

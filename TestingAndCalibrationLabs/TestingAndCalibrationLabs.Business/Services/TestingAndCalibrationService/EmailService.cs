@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;
 using System.Net.Mail;
@@ -26,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _configuration = configuration;
         }
-        
+
         /// <summary>
         /// Sends mail using the Email model.
         /// </summary>
@@ -43,7 +44,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                 string userName = _configuration["Smtp:UserName"];
                 string linkpre = _configuration["GoogleCloudStorage:PrefixLink"];
                 string password = _configuration["Smtp:Password"];
-                string emailTo = string.Join(",", emailModel.Email);
+                //string emailTo = string.Join(",", emailModel.Email);
+                string emailTo = string.Join(",", emailModel.EmailTo);
 
                 using (MailMessage mm = new MailMessage(fromAddress, emailTo))
                 {
@@ -68,6 +70,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return false;
             }                           
-        }   
+        }
     }
 }    

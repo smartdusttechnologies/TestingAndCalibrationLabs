@@ -1,12 +1,18 @@
 ﻿using AutoMapper;
+using ClassLibrary1;
+using Google.Apis.Logging;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -16,12 +22,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+        //public readonly IForgotPasswordService _forgotPasswordService;
 
         public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _mapper = mapper;
+            //_forgotPasswordService = isemailsendsuccessfully1;
         }
 
         /// <summary>
@@ -54,5 +62,56 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
+
+        //[HttpGet]
+        //public IActionResult ForgotPassword()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = await userManager.FindByEmailAsync(model.Email);
+        //        if (user != null && await userManager.IsEmailConfirmedAsync(user))
+        //        {
+        //            object userManager = null;
+        //            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+        //            var passwordResetLink = Url.Action("ResetPassword", "Security",
+        //                new { email = model.Email, token = token }, Request.Scheme);
+
+        //            logger.Log(LogLevel.Warning, passwordResetLink);
+        //            return View("ForgotPasswordConfirmation");
+
+        //        }
+        //        return View("ForgotPasswordConfirmation");
+        //    }
+        //    return View(model);
+        //}
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public string SendEmail(EmailModel Email)
+        //{
+        //    EmailModel emailModel = new EmailModel
+        //    {
+        //        EmailTo = Email.EmailTo
+        //    };
+
+        //    var isemailsendsuccessfully1 = _forgotPasswordService.Add(emailModel);
+
+
+        //    return "Email sent sucessfully.";
+        //}
     }
 }
+
+
+        
