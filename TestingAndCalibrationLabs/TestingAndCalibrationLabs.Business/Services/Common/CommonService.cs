@@ -211,18 +211,18 @@ namespace TestingAndCalibrationLabs.Business.Services
             //List<multivalues3Model> hireriche = new List<multivalues3Model>();
             //Multi.ForEach(x => hireriche.Add(new multivalues3Model { Subs = x }));
 
-            var hiera = Multi.Hierarchize(
-             0, // The "root level" key. We're using -1 to indicate root level.
-             f => f.Id, // The ID property on your object
-             f => f.ParentId,// The property on your object that points to its parent
-             f => f.Orders // The property on your object that specifies the order within its parent
-             );
-           
+            //var hiera = Multi.Hierarchize(
+             //0, // The "root level" key. We're using -1 to indicate root level.
+             //f => f.Id, // The ID property on your object
+             //f => f.ParentId// The property on your object that points to its parent
+             //f => f.Orders // The property on your object that specifies the order within its parent
+             //);
+
             //ViewBag.jsonData = jsonData;
             var cat = new MultiselectDropdownModel
             {
 
-                Layo = hiera
+                //    Layo = hiera
             };
 
             return cat;

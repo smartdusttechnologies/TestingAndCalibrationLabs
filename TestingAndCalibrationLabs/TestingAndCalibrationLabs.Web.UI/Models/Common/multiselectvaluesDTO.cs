@@ -10,10 +10,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     {
         public int Id { get; set; }
 
-        public string title { get; set; }
+        public string Name { get; set; }
         public int ParentId { get; set; }
-        public int Orders { get; set; }
-
+        //public int Orders { get; set; }
+       // public int Position { get; set; }
+        //public string Category { get; set; }
 
     }
 }

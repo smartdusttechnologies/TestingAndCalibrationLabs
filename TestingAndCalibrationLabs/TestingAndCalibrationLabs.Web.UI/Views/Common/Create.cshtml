@@ -51,6 +51,7 @@
     </div>
 </div>
 <script>
+    debugger;
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -65,11 +66,13 @@
     }
 </script>
 <script type="text/javascript">
+    debugger;
     var moduleId = parseInt($("#ModuleId").val())
         var uiPageTypeId = parseInt($("#UiPageTypeId").val())
         
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
+        debugger;
         WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
         //createRipple(this);
@@ -84,21 +87,38 @@
             }
             return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
         }
+        debugger;
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
+            
             if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = uiPageMetaData[i].id;
+
+                var listOfLookups;
+                if( metadataId == 3065){
+
+                    let selectedIds = comboTree1.getSelectedIds();
+                          listOfLookups = selectedIds.toString();
+                        //let listOfLookups = selectedIds.join(",");
+                        //Value = listOfLookups;
+                        //document.getElementById('dropDownlist').value = listOfLookups;
+                   
+
+                }
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 keyValuepair.UiPageMetadataId = metadataId;
                 keyValuepair.UiPageTypeId = uiPageTypeId;
                 keyValuepair.Value = fieldValue;
+                if (listOfLookups != null && metadataId == 3065) {
+                    keyValuepair.Value = listOfLookups;
+                }
                 fieldValues.push(keyValuepair)
             }
         }
@@ -133,3 +153,5 @@
         });
     }
 </script>
+@*<script src="comboTreePlugin.js?v2" type="text/javascript"></script>
+*@

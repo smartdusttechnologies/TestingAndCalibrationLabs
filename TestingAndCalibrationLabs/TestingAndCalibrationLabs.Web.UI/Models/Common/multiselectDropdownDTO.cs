@@ -26,8 +26,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         //public string title { get; set; }
         //public int Parentid { get; set; }
         //public IEnumerable<Node<LayoutModel>> Layout { get; set; }
+        public int Id { get; set; }
+        public int ParentId { get; set; }
 
-        public IEnumerable<Node<multiselectvaluesDTO>> Layo { get; set; }
+        public string title { get; set; }
+        public List<MultiselectDropdownDTO> Children { get; set; }
+
+
+        
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -140,11 +141,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@ModuleId", record.ModuleId);
             p.Add("@WorkflowStageId", record.WorkflowStageId);
+           // p.Add("@LookupId", record.LookupId);
             string recordInsertQuery = @"Insert into [Record](ModuleId,WorkflowStageId) 
                 values (@ModuleId,@WorkflowStageId);
                 SELECT @RecordId = @@IDENTITY";
             string singleValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId) 
-                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId)"; 
+                values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId)";
+            string Lookupdat = @"Insert into [Multivalue](Name ,LookupId,ParentId) 
+                               values (@Name ,@LookupId,@ParentId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(recordInsertQuery, p, transaction);  
@@ -152,17 +156,56 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var subRecordId = GenerateNewSubRecordId(insertedRecordId);
             var singlePageData = record.FieldValues.Where(x=>x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId}).ToList();
             var multiValueData = record.FieldValues.Where(x => x.MultiValueControl == true).Select(x => new { SubRecordId = subRecordId, RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
-            db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
-            if(multiValueData.Count > 0)
+            //var ValueData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new { LookupId = x.LookupId, Name = x.Name, ParentId = x.ParentId }).ToList();
+
+            db.Execute(singleValueDataInsertQuery, singlePageData, transaction/* ValueData*/);
+            transaction.Commit();
+
+            if (multiValueData.Count > 0)
             {
                 string multiValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, Value, RecordId,UiPageTypeId,SubRecordId) 
                 values (@UiPageMetadataId, @Value, @RecordId,@UiPageTypeId,@SubRecordId)";
                 db.Execute(multiValueDataInsertQuery, multiValueData, transaction);
             }
-           
-         
-            transaction.Commit();
+            var singleValueData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new {    UiPageMetadataId = x.UiPageMetadataId, value = x.Value }).ToList();
+
+            using (var command = new System.Data.SqlClient.SqlCommand("InsertDataFromTVP1", (System.Data.SqlClient.SqlConnection)db))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                var tvpParameter = command.Parameters.AddWithValue("@Tvp", GetDataTable(singleValueData));
+                tvpParameter.SqlDbType = SqlDbType.Structured;
+                tvpParameter.TypeName = "dbo.MyTableType1";
+                var result = command.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Console.WriteLine("Stored procedure executed successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("Stored procedure did not execute successfully.");
+                }
+            }
+
             return insertedRecordId;
+        }
+        public static DataTable GetDataTable<T>(IEnumerable<T> list)
+        {
+            var table = new DataTable();
+            var properties = typeof(T).GetProperties();
+            foreach (var property in properties)
+            {
+                table.Columns.Add(property.Name, System.Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
+            }
+            foreach (var item in list)
+            {
+                var row = table.NewRow();
+                foreach (var property in properties)
+                {
+                    row[property.Name] = property.GetValue(item) ?? DBNull.Value;
+                }
+                table.Rows.Add(row);
+            }
+            return table;
         }
         /// <summary>
         /// Get Page Id Based On Current Workflow Stage 

@@ -13,6 +13,8 @@
         /// It Contains List Of UiPageData
         /// </summary>
         public UiPageDataModel UiPageData { get; set; }
-       // public multiselectvaluesModel multivalue { get; set; }
+        public ListSorterModel UiPageDatas { get; set; }
+
+        // public multiselectvaluesModel multivalue { get; set; }
     }
 }

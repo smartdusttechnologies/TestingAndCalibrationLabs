@@ -13,6 +13,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <returns></returns>
         List<LookupModel> Get();
+        
+   
         List<LookupModel> GetByLookupCategoryId(int lookupCategoryId);
+        List<LookupModel> GetBY(int lookupCategoryId);
+
     }
+
 }

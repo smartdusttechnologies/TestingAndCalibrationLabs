@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -19,25 +21,29 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class CommonController : Controller
     {
         public string jsonData;
-
+        private readonly ILookupService _lookupService;
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly IGoogleDriveService _googleDriveService;
         private readonly IWorkflowStageService _workflowStageService;
+        private readonly IListSorterService _listSorterService;
+         
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
-        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService)
+        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService, IListSorterService listSorterService, ILookupService lookupService)
         {
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
             _googleDriveService = googleDriveService;
             _workflowStageService = workflowStageService;
+            _listSorterService = listSorterService;
+            _lookupService = lookupService;
         }
 
         /// <summary>
@@ -125,6 +131,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Create Record For Common Page
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="lookupCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int id = 1)
@@ -136,94 +143,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
         }
         [HttpGet]
-        public ActionResult MultipleValue()
+        /// <param name="lookupCategoryId"></param>
+        public ActionResult MultipleValue(int Id = 1005)
         {
-            
-            List<multiselectvaluesModel> Multi = new List<multiselectvaluesModel>();
-            Multi.Add(new multiselectvaluesModel { ParentId = 0,Orders=0,  Id = 4, Name = "Horse" });
-            Multi.Add(new multiselectvaluesModel { ParentId = 4, Orders = 0, Id = 6, Name = "Birds" });
-            //Multi.Add(new multiselectvaluesModel { ParentId = 4, Id = 9, title = "dog" });
-            Multi.Add(new multiselectvaluesModel { ParentId = 0, Orders = 0, Id = 10, Name = "dog" });
-            Multi.Add(new multiselectvaluesModel { ParentId = 10, Orders = 0, Id = 7, Name = "dog" });
-            //Multi.Add(new multiselectvaluesModel { ParentId = 7, Id = 2, title = "dog" });
-           // Multi.Add(new multiselectvaluesModel { ParentId = 7, Id = 8, title = "dog" });
-            //Multi.Add(new multiselectvaluesModel { ParentId = 2, Id = 3, title = "dog" });
-            //Multi.Add(new multiselectvaluesModel { ParentId = 8, Id = 5, title = "dog" });
-
-            //var pageMetadata = _commonService.Multilectal(Multi);
-            jsonData = "[";
-            for (var i = 0; i < Multi.ToArray().Length; i++)
+            var lookupList = _lookupService.GetBY( Id);
+           
+            List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
+            foreach (var item in lookupList)
             {
-                if (Multi[i].ParentId == 0)
-                {
-                    if (jsonData != "[") jsonData += ",";
-                    jsonData += "{id:" + Multi[i].Id + ",title:`" + Multi[i].Name + "`";
-                    for (var j = i + 1; j < Multi.ToArray().Length; j++)
-                    {
-                        if (Multi[i].Id == Multi[j].ParentId)
-                        {
-                            jsonData += ",subs:[";
-                            while (j < Multi.ToArray().Length)
-                            {
-                                if (Multi[i].Id == Multi[j].ParentId)
-                                {
-                                    if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += ",";
-                                    jsonData += "{id:" + Multi[j].Id + ",title:`" + Multi[j].Name + "`";
-                                    //Check for child
-                                    returnChildern(Multi[j].Id, j);
-                                    jsonData += "}";
-                                }
-                                j++;
-                            }
-                            jsonData += "]";
-                        }
-                    }
-                    jsonData += "}";
-                }
-
+                listSorterDTOs.Add(new ListSorterModel { Id = item.Id, Name = item.Name, ParentId = item.ParentId });
             }
-            jsonData += "]";
+            var jsonFormated = _listSorterService.SortListToJson(listSorterDTOs);
+            ViewBag.bag = (jsonFormated);
 
-            ViewBag.jsonData = jsonData;
-
-            //var result = _mapper.Map<MultiselectDropdownModel, MultiselectDropdownDTO>(pageMetadata);
-
-            //string jsonString = JsonSerializer.Serialize(jsonData);
-            //ViewBag.data = jsonData;
-
-            return View(jsonData);
-
-            
-        }
-        public void returnChildern(int id, int index)
-        {
-            List<multiselectvaluesModel> Multi = new List<multiselectvaluesModel>();
-            Multi.Add(new multiselectvaluesModel { ParentId = 0, Orders = 0, Id = 4, Name = "Horse" });
-            Multi.Add(new multiselectvaluesModel { ParentId = 1, Orders = 0, Id = 6, Name = "Birds" });
-            //Multi.Add(new multiselectvaluesModel { ParentId = 4, Id = 9, title = "dog" });
-            Multi.Add(new multiselectvaluesModel { ParentId = 9, Orders = 0, Id = 10, Name = "dog" });
-            Multi.Add(new multiselectvaluesModel { ParentId = 10, Orders = 0, Id = 7, Name = "dog" });
-
-            for (var i = index + 1; i < Multi.ToArray().Length; i++)
-            {
-                if (id == Multi[i].ParentId)
-                {
-                    jsonData += ",subs:[";
-                    while (i < Multi.ToArray().Length)
-                    {
-                        if (Multi[i].ParentId == id)
-                        {
-                            if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += ",";
-                            jsonData += "{id:" + Multi[i].Id + ",title:`" + Multi[i].Name + "`";
-                            //Check for child
-                            returnChildern(Multi[i].Id, index + 1);
-                            jsonData += "}";
-                        }
-                        i++;
-                    }
-                    jsonData += "]";
-                }
-            }
+            return Json(jsonFormated);
         }
         /// <summary>
         /// for creating data

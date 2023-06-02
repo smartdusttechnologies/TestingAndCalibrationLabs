@@ -12,5 +12,8 @@
         public bool MultiValueControl { get; set; }
         public int UiPageTypeId { get; set; }
         public string Value { get; set; }
+        //public string ParentId { get; set; }
+        //public string Name { get; set; }
+
     }
 }

@@ -17,5 +17,9 @@
         /// It Contains Id For Lookup Category
         /// </summary>
         public int LookupCategoryId { get; set; }
+        public int LookupId { get; set; }
+
+        public int ParentId { get; set; }
+       // public string Category { get; set; }
     }
 }

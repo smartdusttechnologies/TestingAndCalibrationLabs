@@ -13,8 +13,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class MultiselectDropdownModel : Entity
     {
         #region Public Properties
-        
-        public IEnumerable<Node<multiselectvaluesModel>> Layo { get; set; }
+        //public int Id { get; set; }
+        public int ParentId { get; set; }
+
+        public string title { get; set; }
+        public List<MultiselectDropdownModel> Children { get; set; }
         #endregion
     }
 
