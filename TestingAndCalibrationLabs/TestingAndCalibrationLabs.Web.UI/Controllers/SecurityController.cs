@@ -1,13 +1,24 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet.Actions;
+using Google.Apis.Logging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using static System.Net.WebRequestMethods;
+using ForgotPasswordModel = TestingAndCalibrationLabs.Web.UI.Models.ForgotPasswordModel;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -15,12 +26,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
+        private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
+        
 
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
+            _emailService = emailService;
             _mapper = mapper;
         }
 
@@ -54,5 +68,33 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
+        ///<summary>
+        /// Methods to Forget Password
+        /// </summary>
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public IActionResult ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        var user = _authenticationService.GenerateTokens(forgotPasswordModel.Email);
+        //        if (user != null)
+        //        {
+
+        //        }
+        //        ModelState.Clear();
+        //        forgotPasswordModel.EmailSent=true;
+        //    }
+
+        //    return View();
+        //}
+
+
     }
 }
