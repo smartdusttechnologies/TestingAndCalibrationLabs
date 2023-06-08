@@ -63,20 +63,34 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+
         public IActionResult FileUpload()
         {
-            AttachmentModel attachmentModel = new AttachmentModel();
-            attachmentModel.DataUrl = Request.Form.Files.FirstOrDefault();
-            var result = _googleDriveService.Upload(attachmentModel);
-            if (result.IsSuccessful)
+
+            List<string> imageId = new List<string>();
+            
+            foreach (var item in Request.Form.Files)
             {
-                var imageId = result.RequestedObject.FilePath;
-                return Ok(imageId);
+                AttachmentModel attachmentModel = new AttachmentModel();
+                attachmentModel.DataUrl = item;
+
+                var result = _googleDriveService.Upload(attachmentModel);
+                imageId.Add(result.RequestedObject.FilePath);
+
+                //if (result.IsSuccessful)
+                //{
+
+
+                    
+                //    return Ok(imageId);
+                //}
+                
+                //else
+                //{
+                //    return BadRequest();
+                //}
             }
-            else
-            {
-                return BadRequest();
-            }
+            return Ok(imageId);
         }
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
@@ -101,6 +115,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+            
+
         }
         [HttpGet]
         public ActionResult TemplateGenerate(int recordId, int metadataId)
@@ -137,16 +153,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Create(int id = 1)
         {
             var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
-            var select = MultipleValue();
+                
+           // var select = MultipleValue();
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
+            
             return base.View(result);
 
         }
         [HttpGet]
         /// <param name="lookupCategoryId"></param>
-        public ActionResult MultipleValue(int Id = 1005)
+        public ActionResult MultipleValue(int lookupCategoryId  )
         {
-            var lookupList = _lookupService.GetBY( Id);
+            var lookupList = _lookupService.GetBY(lookupCategoryId);
            
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in lookupList)
@@ -154,9 +172,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 listSorterDTOs.Add(new ListSorterModel { Id = item.Id, Name = item.Name, ParentId = item.ParentId });
             }
             var jsonFormated = _listSorterService.SortListToJson(listSorterDTOs);
-            ViewBag.bag = (jsonFormated);
+            var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
+            //ViewBag.bag = (jsonObjectConverted);
 
-            return Json(jsonFormated);
+            return Json(jsonObjectConverted);
         }
         /// <summary>
         /// for creating data
@@ -166,6 +185,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public ActionResult Create(RecordDTO record)
         {
+           
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
             var adddata = _commonService.Add(records);
             var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);

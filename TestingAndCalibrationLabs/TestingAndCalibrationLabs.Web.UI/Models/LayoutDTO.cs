@@ -8,7 +8,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public UiPageMetadataDTO UiPageMetadata { get; set; }
         public UiPageDataDTO UiPageData { get; set; }
         //public multivalues3DTO multivalue { get; set; }
-        public ListSorterModel UiPageDatas { get; set; }
+        //public ListSorterModel UiPageDatas { get; set; }
 
 
     }

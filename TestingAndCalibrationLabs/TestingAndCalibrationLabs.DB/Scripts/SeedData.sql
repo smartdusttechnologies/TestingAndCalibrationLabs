@@ -201,7 +201,11 @@ BEGIN
 			  (2007, N'Checkbox', N'~/Views/Common/Components/Question/_checkbox.cshtml', 0, 36),
 			  (2008, N'WorkflowStage', N'~/Views/Common/Components/WorkflowStage/_workflowStage.cshtml', 0, 37),
 			  (2010, N'Download', N'~/Views/Common/Components/Download/_download.cshtml', 0, 38),
-			  (2011, N'MultiControlGrid', N'~/Views/Common/Components/Grid/_gridMultiControl.cshtml', 0, 33)
+			  (2011, N'MultiControlGrid', N'~/Views/Common/Components/Grid/_gridMultiControl.cshtml', 0, 33),
+			  (2014, N'Text', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
+
+			
+
     SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  OFF
 END
 GO
@@ -297,13 +301,13 @@ BEGIN
 			(3012, 1, 0, N'Customer Name', 0, 2, 3, N'cu'),
 			(3013, 1, 0, N'Contant Person', 0, 2, 3, N'cP'),
 			(3014, 1, 0, N'Name', 0, 2, 3, N'name'),
-			(3016, 1, 1, N'Job Serial No', 0, 2, 3, N'jsn'),
-			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd'),
+			(3016, 1, 1, N'Job Serial No', 0, 1, 3, N'jsn'),
+			(3017, 1, 1, N'Department Name', 0, 2, 2014, N'rd'),
 			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df'),
-			(3019, 22, 1, N'Recived On', 0, 3, 1011, N'jklg'),
-			(3020, 1, 1, N'Job Order No / Ref No', 0, 2, 3, N'sdg'),
+			(3019, 22, 1, N'Recived On', 0, 2, 1011, N'jklg'),
+			(3020, 1, 1, N'Job Order No / Ref No', 0, 1, 3, N'sdg'),
 			(3021, 1, 0, N'Contact Person Name', 0, 2, 3, N'ds'),
-			(3024, 22, 0, N'TestReport Release Date', 0, 3, 1011, N'datee'),
+			(3024, 22, 0, N'TestReport Release Date', 0, 2, 1011, N'datee'),
 			(3025, 1, 0, N'Any Other Specific Requirment', 0, 2, 3, N'sdsf'),
 			(3026, 5, 0, N'Attachments', 0, 3, 2004, N'sfsd'),
 			(3027, 1, 0, N'Sample Type', 0, 3, 3, N'dfgf'),
@@ -338,7 +342,9 @@ BEGIN
 			(3060, 1, 0, N'Tax', 0, 2, 3, N'0'),
 			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
 			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
-			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0')
+			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
+			(3064, 1, 0, N'ProgressStatus1', 0, 1, 2014, N'progress')
+
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
 END
 GO
@@ -612,7 +618,12 @@ BEGIN
 			(3126, 3054, 17, 0, 1, 6, 0, NULL, 1),
 			(3127, 3056, 17, 0, 1, 6, 0, NULL, 1),
 			(3129, 3057, 17, 0, 1, 6, 0, NULL, 1),
-			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0)
+			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
+			(3131, 3064, 15, 0, 1, 0, 0, NULL, 0)
+
+
+
+
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  OFF
 END
 GO

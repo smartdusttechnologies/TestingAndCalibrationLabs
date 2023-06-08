@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 if (listOfModels[i].ParentId == 0)
                 {
                     if (jsonData != "[") jsonData += ",";
-                    jsonData += "{id:" + listOfModels[i].Id + ",title:`" + listOfModels[i].Name + "`";
+                    jsonData += "{id:" + listOfModels[i].Id + ",title:'" + listOfModels[i].Name + "'";
                     for (var j = i + 1; j < listOfModels.ToArray().Length; j++)
                     {
                         if (listOfModels[i].Id == listOfModels[j].ParentId)
@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 if (listOfModels[i].Id == listOfModels[j].ParentId)
                                 {
                                     if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += "," ;
-                                    jsonData += "{id:" + listOfModels[j].Id + ",title:`" + listOfModels[j].Name + "`" ;
+                                    jsonData += "{id:" + listOfModels[j].Id + ",title:'" + listOfModels[j].Name + "'" ;
                                     //Check for child
                                     returnChildern(listOfModels[j].Id, j,listOfModels);
                                     jsonData += "}";
@@ -76,7 +76,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                         if (listSorterModels[i].ParentId == id)
                         {
                             if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += ",";
-                            jsonData += "{id:" + listSorterModels[i].Id + ",title:`" + listSorterModels[i].Name + "`";
+                            jsonData += "{id:" + listSorterModels[i].Id + ",title:'" + listSorterModels[i].Name + "'";
                             //Check for child
                             returnChildern(listSorterModels[i].Id, index + 1, listSorterModels);
                             jsonData += "}";

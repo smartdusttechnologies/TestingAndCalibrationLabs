@@ -10,16 +10,20 @@
             <input type="hidden" asp-for="UiPageTypeId" />
             <input type="hidden" asp-for="WorkflowStageId" value="true" />
             <input type="hidden" id="workflowStageChecker" value="false" />
+            <script>
+                var comboTree1;
+
+            </script>
             <div class="row ms-1 me-1">
                 @foreach (var item in Model.Layout)
                 {
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
 
                 }
-            </div>        
+            </div>
         </form>
         <div class="form-group" style="margin-left:2rem;">
-            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()" >Save</button>
+            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()">Save</button>
         </div>
     </div>
 </div>
@@ -68,8 +72,8 @@
 <script type="text/javascript">
     debugger;
     var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-        
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
         debugger;
@@ -78,7 +82,7 @@
         //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
-        
+
         //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
 
@@ -92,41 +96,45 @@
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            
+
             if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = uiPageMetaData[i].id;
-
-                var listOfLookups;
-                if( metadataId == 3065){
-
-                    let selectedIds = comboTree1.getSelectedIds();
-                          listOfLookups = selectedIds.toString();
+                //var listOfLookups;
+                //if( metadataId == 3065){
+                    
+                    //let selectedIds = comboTree1.getSelectedIds();
+                        //  listOfLookups = selectedIds.toString();
                         //let listOfLookups = selectedIds.join(",");
                         //Value = listOfLookups;
                         //document.getElementById('dropDownlist').value = listOfLookups;
-                   
 
-                }
+
+                // }
                 var fieldValue = $(fieldId).val();
+                //var listOfLookups;
+                //if (metadataId == 3065) {
+                //    var selectedId = fieldValue;
+                //    listOfLookups = id + " [value=" + selectedId + "]";
+                //}
                 var keyValuepair = {};
                 keyValuepair.UiPageMetadataId = metadataId;
                 keyValuepair.UiPageTypeId = uiPageTypeId;
                 keyValuepair.Value = fieldValue;
-                if (listOfLookups != null && metadataId == 3065) {
-                    keyValuepair.Value = listOfLookups;
-                }
+                //if (listOfLookups != null && metadataId == 3065) {
+                //    keyValuepair.Value = listOfLookups;
+                //}
                 fieldValues.push(keyValuepair)
             }
         }
-       
+
         $.ajax({
             type: 'POST',
             url: url,
-            data: {  moduleId, workflowStageId, uiPageTypeId, fieldValues },
+            data: { moduleId, workflowStageId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");

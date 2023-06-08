@@ -7,6 +7,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        debugger;
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
@@ -18,7 +19,7 @@
             url: "@Url.Action("LookupByCategoryId","Lookup")",
             data: { lookupCategoryId : lookupCategoryId },
             success: function (response) {
-                debugger;
+                
                 for(var i =0; i<response.length; i++){
                     debugger;
                     var lookupId = response[i].id;
