@@ -80,6 +80,68 @@
                     </div>
 
                 </div>
+                @*For Join Type*@
+                <div class="eqv-columns-block" id="JOINDIV" style="display:none">
+                    <hr class="eqv-columns-hr eqv-hr" />
+                    <div class="eqv-columns-title">JOIN</div>
+                    <div class="" id="JOINTYPE-Main-Div" style=" height: 100px;overflow: auto;">
+
+                        <div id="JoinPartInfo" style="display:inline-block">
+                            <label for="JOINS">Choose JoinType:</label>
+                            <select name="JOINS" id="JOINTYPE">
+                                <option value="INNER JOIN">INNER JOIN</option>
+                                <option value="LEFT JOIN">LEFT JOIN</option>
+                                <option value="RIGHT JOIN">RIGHT JOIN</option>
+                                <option value="FULL JOIN">FULL JOIN</option>
+
+                            </select>
+                            <label for="TabelChoose">Choose TableName:</label>
+                            <select name="TableName" id="JoinTableinfo">
+
+                                <option value="Table">FULL JOIN</option>
+
+                            </select>
+                        </div>
+                        <div style="display:inline-block">
+                            <label for="FromTable">From TableName:</label>
+                            <select name="TableName" id="TableName">
+                            </select>
+                        </div>
+                        <div class="eqjs-qp-row" id="JoinConditionMenu0" style="display:block">
+                            <label for="Columns" style="padding-left:20px" id="ColumnDropDownLabel">Select column</label>
+                            <select name="ColumnDropdown" id="ColumnDropDown" style="width:auto">
+                            </select>
+                            <label for="Columns" style="padding-left:20px">Select Operator</label>
+                            <select name="Operator" id="Operator-Dropdown" style="width:auto">
+                                <option value=">">></option>
+                                <option value="<"> < </option>
+                                <option value=">=">>=</option>
+                                <option value="<="><=</option>
+                                <option value="Like">Like</option>
+                            </select>
+                            <label for="Columns" style="padding-left:20px" id="ColumnDropDown2Label">Select Column2</label>
+
+                            <select name="ColumnDropdown2" id="ColumnDropdown2" onchange="chargeother(this.value)" style=" width:auto">
+                                <option value=""></option>
+                                <option value="input">input</option>
+
+                            </select>
+                            <input type="text" name="InputInfo" style="display:none; width:100px;" />
+                            <div class="eqjs-qp-condition-buttonsBlock" style=" float:right;display: inline-block;">
+                                <div class="eqjs-qp-button-placeholder">
+                                    <div class="eqjs-qp-condition-button eqjs-qp-condition-button-menu eqjs-qp-condition-button-active" onclick="MultipleJoin(this)" tabindex="0" title="Show menu">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+                @* For Condition Block*@
                 <div class="eqv-conditions-block">
                     <hr class="eqv-conditions-hr eqv-hr">
                     <div class="eqv-conditions-title">Conditions</div>
@@ -166,65 +228,150 @@
     var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
     var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
 
+    function chargeother(select) {
+        if (select == "input") {
+            document.getElementById('ColumnDropdown2').style.display="none";
+
+             document.getElementById('ColumnDropdown2').nextElementSibling.style.display="inline-block";
+        }
+    }
+
+    window.onclick = function (event) {
+
+
+    }
+    function JoinConditionAdd() {
+        var newElement = document.getElementById('JOINTYPE-Main-Div');
+        var LabelItem = document.createElement('label');
+        LabelItem.innerHTML = "Condition";
+        const options = ['OR', 'AND', 'NOT'];
+
+        newElement.appendChild(LabelItem);
+
+        var selectMenu = document.createElement('select')
+        newElement.appendChild(LabelItem);
+        options.forEach(option => {
+
+            const newOption = document.createElement('option');
+
+            newOption.text = option;
+
+
+            newOption.value = option;
+
+
+            selectMenu.appendChild(newOption);
+        });
+
+        newElement.appendChild(selectMenu);
+
+        var Data = document.getElementById('JoinConditionMenu0');
+        var datainfo = Data.cloneNode(true);
+        newElement.appendChild(datainfo);
+    }
+    function JoinAdd() {
+
+        var newElement = document.getElementById('JOINTYPE-Main-Div');
+
+
+
+
+        var Data = document.getElementById('JoinPartInfo');
+        var datainfo = Data.cloneNode(true);
+        newElement.appendChild(datainfo);
+
+        Data = (Data.nextElementSibling).nextElementSibling;
+        datainfo = Data.cloneNode(true);
+        newElement.appendChild(datainfo);
+
+
+    }
+    function MultipleJoin(Data) {
+        ParentElementDiv = Data.parentElement.parentElement.parentElement;
+        var stringPosition = Data.getBoundingClientRect();
+        var Aggregates = document.getElementById('JOIN-ADD-MENU')
+        Aggregates.style.display = "block";
+        Aggregates.style.top = (stringPosition.bottom + 5) + "px";
+        Aggregates.style.left = (stringPosition.left + 2) + "px";
+    }
     function DataToModel() {
         var dataDetail = document.getElementById('ColumnData');
+
         var datainfo = {};
+        var arr = [];
+        var TitleStorage = {};
 
         for (var item = 0; item < dataDetail.children.length; item++) {
 
             var details = dataDetail.children[item].children[2].innerText;
+            var Title = dataDetail.children[item].children[3].innerText;
+
             var value = details.split(' ')[0];
+            if (arr.indexOf(value)) {
+
+            }
 
             var info = details.split(' ')[1];
             if (datainfo[value]) {
 
-                datainfo[value].push(info);
+                //datainfo[value].push(info);
+                datainfo[value][info] = Title;
+                TitleStorage[value].push(info);
+
 
             } else {
 
                 datainfo[value] = [];
-                datainfo[value].push(info);
+                datainfo[value][info] = Title;
+
+                TitleStorage[value] = [];
+                TitleStorage[value].push(info);
+
+                // datainfo[value].push(info);
+                //  datainfo[value].[info].['Title']= Title;
+                arr.push(value);
+
+
             }
 
 
         }
 
+        var data = [];
 
 
-        const emptydata = Object.entries(datainfo);
-        var QueryJson = "{ 'head': {  'tables': [      {       'type': 'select',   'tableName': " + '"' + emptydata[0][0] + '"'+ ",    'column': [";
-
-        let column = "";
-        for (var item = 0; item < emptydata.length; item++) {
-            for (var item2 = 0; item2 < emptydata[0][1].length; item2++) {
-                column = column + "{'columnName': " + '"' + emptydata[0][1][item2] + '"' + "},";
+        for (var i = 0; i < arr.length; i++) {
+            var columnValues = [];
+            for (j = 0; j < TitleStorage[arr[i]].length; j++) {
+                //alert()
+                columnValues.push({ Name: TitleStorage[arr[i]][j], Title: datainfo[arr[i]][TitleStorage[arr[i]][j]] });
 
             }
+
+            data.push({ TableName: arr[i], ColumnName: columnValues });
         }
-        column = column.slice(0, -1);
-        column= column+"]";
-        var QueryJsonEnd = " } ] } }";
-        QueryJson = QueryJson+ column + QueryJsonEnd;
-       
-
-
-          //var jsonString = JSON.stringify(datainfo);
-          //////  const listOfArrays = datainfo.map(obj => [...obj.values]);
-          ////  debugger;
-            $.ajax({
-                url: 'JsonToSqlConverter/Index',
-            data: { QueryJson:QueryJson },
-                success: function (response) {
-                    alert('good work bro ') // Handle the response from the function
-                },
-                error: function (xhr, status, error) {
-                    alert('bad work bro');// Handle any errors that occur during the AJAX request
-                }
-            });
 
 
 
-        }
+
+        var jsonData = JSON.stringify(data);
+
+        $.ajax({
+            url: 'QueryBuilder/QueryGenerator',
+            method: 'POST',
+            data: { jsonData },
+            success: function (response) {
+                alert('good work bro ') // Handle the response from the function
+            },
+            error: function (xhr, status, error) {
+                alert('bad work bro');// Handle any errors that occur during the AJAX request
+            }
+        });
+
+
+
+    }
+
 </script>
 <script src="~/js/QueryBuilder.js"></script>
 <div class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 721px; top: 193px; z-index: 10000; font-size: 14px;">
@@ -322,3 +469,13 @@
         <div class="eqjs-menu-itemDiv">Use in JOIN</div>
     </div>
 </div>
+<div id="JOIN-ADD-MENU" class="JoinMenu" style="background: #fff;border: 1px solid silver;padding: 5px 0;position: absolute; display: none; visibility: visible; left: 1018px; top: 395px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="ScrollItemJoin" style="    min-width: 140px; white-space: nowrap;overflow: hidden auto; position: relative; width: auto; height: auto;">
+
+        <div class="eqjs-menu-itemDiv" onclick="JoinConditionAdd()">Add Condition </div>
+        <div class="eqjs-menu-itemDiv" onclick="JoinAdd()">Add JOIN</div>
+        <div class="eqjs-menu-itemDiv" onclick="ButtonBlockMenufunction(2)">Delete</div>
+    </div>
+</div>
+
+
