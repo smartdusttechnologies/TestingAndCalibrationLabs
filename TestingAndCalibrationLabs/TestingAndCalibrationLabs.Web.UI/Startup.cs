@@ -24,6 +24,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -200,8 +202,9 @@ namespace TestingAndCalibrationLabs.Web.UI
                 await next();
             });
             app.UseStaticFiles();
-            app.UseRouting();
+            
             app.UseAuthentication();
+            app.UseRouting();
             app.UseMiddleware<SdtAuthenticationMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthorization();

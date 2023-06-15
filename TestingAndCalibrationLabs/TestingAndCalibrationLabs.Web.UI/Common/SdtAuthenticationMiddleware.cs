@@ -17,7 +17,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
         private readonly RequestDelegate _next;
         private readonly IConfiguration _configuration;
         //TODO: need to pass the roleService instead of creting it local
-        private IRoleService _roleService;
+        //private IRoleService _roleService;
 
         public SdtAuthenticationMiddleware(RequestDelegate requestDelegate, IConfiguration configuration)
         {
@@ -25,12 +25,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
             _next = requestDelegate;
         }
 
-        public async Task Invoke(HttpContext context, IRoleService roleservice)
+        public async Task Invoke(HttpContext context)
         {
-            _roleService = roleservice;
+            //_roleService = roleservice;
             var token = context.Request.Headers["Authorization"].FirstOrDefault();
             JwtSecurityToken validatedToken;
-
+            
             //TODO: token validation should also consider the logged out token not only expired tokens.
             if (token != null && ValidateToken(context, token, out validatedToken))
             {
@@ -41,12 +41,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                     context.User = new SdtPrincipal(userIdentity);
                     await _next(context);
                 }
-
             }
             else if (context.Request.Path.Value.Equals("/Security/Index", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/Login", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RefreshToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RevokeToken", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/", StringComparison.OrdinalIgnoreCase))
             {
