@@ -65,11 +65,14 @@
     }
 </script>
 <script type="text/javascript">
+    debugger;
     var moduleId = parseInt($("#ModuleId").val())
         var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-        
+        debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
+    debugger;
     function AjaxFormSubmit() {
+        debugger;
         WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
         //createRipple(this);
@@ -88,11 +91,36 @@
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
+           // debugger;
+           
             if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
+
+                var againArry;
+                var metadataId = uiPageMetaData[i].id;
+
+                if (metadataId == 3026) {
+                    debugger;
+                    var filddata = $(fieldId).val();
+                    againArry = filddata.split(",");
+                    for (let x = 0; x < againArry.length; x++) {
+                        var keyValuepair = {};
+                        keyValuepair.UiPageMetadataId = metadataId;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        keyValuepair.Value = againArry[x];
+                        fieldValues.push(keyValuepair)
+
+                
+                    }
+
+                }
+         
+                if(metadataId != 3026){
+             
+               
                 var metadataId = uiPageMetaData[i].id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
@@ -100,6 +128,8 @@
                 keyValuepair.UiPageTypeId = uiPageTypeId;
                 keyValuepair.Value = fieldValue;
                 fieldValues.push(keyValuepair)
+                }
+
             }
         }
        
