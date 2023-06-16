@@ -167,63 +167,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@ModuleId", record.ModuleId);
             p.Add("@WorkflowStageId", record.WorkflowStageId);
-            //p.Add("UiPageDataId", 0, DbType.Int32, ParameterDirection.Output);
-
-            //p.Add("@id", record.FieldValues);
-            string recordInsertQuery = @"Insert into [Record](ModuleId,WorkflowStageId) 
-                values (@ModuleId,@WorkflowStageId);
-                SELECT @RecordId = @@IDENTITY";
-            string singleValueDataInsertQuery = @"Insert into [UiPageData](UiPageMetadataId, RecordId,UiPageTypeId) 
-                values (@UiPageMetadataId, @RecordId,@UiPageTypeId)";
-
             using IDbConnection db = _connectionFactory.GetConnection;
-            using var transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, p, transaction);
-            int insertedRecordId = p.Get<int>("@RecordId");
-            //int insertUiPageDataId = p.Get<int>("@Id");
-            //var uiPageData = GenerateUiDataId(insertUiPageDataId);
-            var subRecordId = GenerateNewSubRecordId(insertedRecordId);
-            var singlePageData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new { RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, UiPageTypeId = x.UiPageTypeId }).ToList();
-            //var multiValueData = record.FieldValues.Where(x => x.MultiValueControl == true).Select(x => new { SubRecordId = subRecordId, RecordId = insertedRecordId, UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, UiPageTypeId = x.UiPageTypeId }).ToList();
-            db.Execute(singleValueDataInsertQuery, singlePageData, transaction);
-            transaction.Commit();
-            int data = getLatestRecordId();
-            var insertUiPageDataId = GenerateUiDataId(data);
-            var i = 0;
+            using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
+            {
+                var SingleData = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
 
+                var MultiData = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+                command.CommandType = CommandType.StoredProcedure;
 
+                command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
+                command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
+                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
+                command.ExecuteNonQuery();
 
+            }
 
-
-
-                var singleValueData = record.FieldValues.Where(x => x.MultiValueControl != true).Select(x => new { UiPageMetadataId = x.UiPageMetadataId, value = x.Value, UiPageDataId = insertUiPageDataId[i++], RecordId = insertedRecordId }).ToList();
-
-
-                using (var command = new System.Data.SqlClient.SqlCommand("InsertDataFromTVP", (System.Data.SqlClient.SqlConnection)db))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    var tvpParameter = command.Parameters.AddWithValue("@Tvp", GetDataTable(singleValueData));
-                    tvpParameter.SqlDbType = SqlDbType.Structured;
-                    tvpParameter.TypeName = "dbo.MyTableType";
-                    var result = command.ExecuteNonQuery();
-                }
-            
-            
-            //if (result > 0)
-                    //{
-                    //    Console.WriteLine("Stored procedure executed successfully.");
-
-                    //}
-
-                    //else
-                    //{
-                    //    Console.WriteLine("Stored procedure did not execute successfully.");
-                    //}
-
-                
-            
-         
-            return insertedRecordId;
+            return 1;
         }
 
        public static DataTable GetDataTable<T>(IEnumerable<T> list)

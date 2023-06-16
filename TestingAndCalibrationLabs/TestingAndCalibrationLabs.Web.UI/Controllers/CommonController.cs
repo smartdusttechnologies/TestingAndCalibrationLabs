@@ -153,8 +153,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Create(int id = 1)
         {
             var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
-                
-           // var select = MultipleValue();
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
             
             return base.View(result);
@@ -164,7 +162,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="lookupCategoryId"></param>
         public ActionResult MultipleValue(int lookupCategoryId  )
         {
-            var lookupList = _lookupService.GetBY(lookupCategoryId);
+            var lookupList = _lookupService.GetLookupCategoryId(lookupCategoryId);
            
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in lookupList)
@@ -173,8 +171,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             var jsonFormated = _listSorterService.SortListToJson(listSorterDTOs);
             var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
-            //ViewBag.bag = (jsonObjectConverted);
-
             return Json(jsonObjectConverted);
         }
         /// <summary>

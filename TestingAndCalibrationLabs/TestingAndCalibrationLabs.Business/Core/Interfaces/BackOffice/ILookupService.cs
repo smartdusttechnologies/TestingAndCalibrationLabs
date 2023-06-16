@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         
    
         List<LookupModel> GetByLookupCategoryId(int lookupCategoryId);
-        List<LookupModel> GetBY(int lookupCategoryId);
+        List<LookupModel> GetLookupCategoryId(int lookupCategoryId);
 
     }
 

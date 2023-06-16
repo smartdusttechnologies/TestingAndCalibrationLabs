@@ -97,37 +97,32 @@
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
 
-            if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
+            if (uiPageMetaData[i].controlCategoryName == "DataControl" || uiPageMetaData[i].multiValueControl == true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = uiPageMetaData[i].id;
-                //var listOfLookups;
-                //if( metadataId == 3065){
-                    
-                    //let selectedIds = comboTree1.getSelectedIds();
-                        //  listOfLookups = selectedIds.toString();
-                        //let listOfLookups = selectedIds.join(",");
-                        //Value = listOfLookups;
-                        //document.getElementById('dropDownlist').value = listOfLookups;
-
-
-                // }
+                var List;
+                if (uiPageMetaData[i].multiValueControl == true) {
+                    var filddata = $(fieldId).val();
+                    List = filddata.split(",");
+                    for (let x = 0; x < List.length; x++) {
+                        var keyValuepair = {};
+                        keyValuepair.UiPageMetadataId = metadataId;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        keyValuepair.Value = List[x];
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+                if (uiPageMetaData[i].multiValueControl != true) {
                 var fieldValue = $(fieldId).val();
-                //var listOfLookups;
-                //if (metadataId == 3065) {
-                //    var selectedId = fieldValue;
-                //    listOfLookups = id + " [value=" + selectedId + "]";
-                //}
                 var keyValuepair = {};
                 keyValuepair.UiPageMetadataId = metadataId;
                 keyValuepair.UiPageTypeId = uiPageTypeId;
                 keyValuepair.Value = fieldValue;
-                //if (listOfLookups != null && metadataId == 3065) {
-                //    keyValuepair.Value = listOfLookups;
-                //}
                 fieldValues.push(keyValuepair)
+                }
             }
         }
 
