@@ -1,41 +1,49 @@
 ﻿using AutoMapper;
-using CloudinaryDotNet.Actions;
-using Google.Apis.Logging;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using static System.Net.WebRequestMethods;
-using ForgotPasswordModel = TestingAndCalibrationLabs.Web.UI.Models.ForgotPasswordModel;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using TestingAndCalibrationLabs.Business.Data.Repository;
+using Org.BouncyCastle.Ocsp;
+using System.Reflection;
+using Microsoft.IdentityModel.Tokens;
+using Org.BouncyCastle.Bcpg;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class SecurityController : Controller
     {
+
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
-        
+        private readonly IAuthenticationRepository _authenticationRepository;
 
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IAuthenticationRepository authenticationRepository)
         {
+
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _emailService = emailService;
             _mapper = mapper;
+            _authenticationRepository=authenticationRepository;
         }
 
         /// <summary>
@@ -74,27 +82,61 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordDTO());
         }
 
-        //[HttpPost]
-        //public IActionResult ForgotPassword(ForgotPasswordModel forgotPasswordModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
 
-        //        var user = _authenticationService.GenerateTokens(forgotPasswordModel.Email);
-        //        if (user != null)
-        //        {
+        /// <summary>
+        /// Method for otp and Email validation and Varification Code on Email
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
-        //        }
-        //        ModelState.Clear();
-        //        forgotPasswordModel.EmailSent=true;
-        //    }
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordDTO model)
+        {
+            if (ModelState.IsValid)
+            {
 
-        //    return View();
-        //}
+                var emailreq = new ForgotPasswordModel { Email = model.Email };
 
+                var user = _authenticationService.EmailValidateForgotPassword(emailreq);
+                if (user.IsSuccessful)
+                {
+
+                    _authenticationService.Create(emailreq);
+                }
+
+            }
+
+            return View(model);
+        }
+        /// <summary>
+        /// OTP Validation
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+        public IActionResult ValidateOTP(ForgotPasswordDTO model)
+        {
+        
+        
+            var otpreturn = new ForgotPasswordModel {OTP = model.OTP };
+
+            var user = _authenticationService.ValidateOTP(otpreturn);
+
+            if (ModelState.IsValid)
+            {
+                //var otpreturn = new ForgotPasswordModel { OTP = OTP.OTP };
+
+                //var userid = _authenticationService.ValidateOTP(otpreturn);
+                //var user = _authenticationService.OtpValidation(Otpreq);
+
+            }
+            return View() ;
+        }
 
     }
 }
+

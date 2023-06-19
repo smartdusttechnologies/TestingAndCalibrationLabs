@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+using static System.Net.WebRequestMethods;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -68,7 +72,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //    var passwordPolicy = _securityParameterService.Get(user.OrgId);
                 //    changeIntervalDays = passwordPolicy.ChangeIntervalDays;
                 //}
-                //if(passwordLogin.ChangeDate.AddDays(changeIntervalDays) < DateTime.Today)
+                //if (passwordLogin.ChangeDate.AddDays(changeIntervalDays) < DateTime.Today)
                 //{
                 //    validationMessages.Add(new ValidationMessage { Reason = "Password expired.", Severity = ValidationSeverity.Error });
                 //    return new RequestResult<LoginToken>(validationMessages);
@@ -212,5 +216,130 @@ namespace TestingAndCalibrationLabs.Business.Services
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             return validatePasswordResult;
         }
+
+        // OTP Genrate Code
+        //public string GenerateOTP()
+        //{
+        //    int otpLength = 6;
+        //    string characters = "0123456789";
+        //    StringBuilder otp = new StringBuilder();
+
+        //    Random random = new Random();
+
+        //    for (int i = 0; i < otpLength; i++)
+        //    {
+        //        otp.Append(characters[random.Next(characters.Length)]);
+        //    }
+
+        //    return otp.ToString();
+        //}
+
+
+        /// <summary>
+        /// Method to Validate the Email
+        /// </summary>
+        public RequestResult<bool> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+          ForgotPasswordModel existingUser = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
+            if (existingUser == null)
+            {
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+                validationMessages.Add(error);
+                return new RequestResult<bool>(false, validationMessages);
+            }
+            //var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
+            //return validatePasswordResult;
+            return new RequestResult<bool>(true);  
+        }
+
+        /// <summary>
+        /// Method to validate OTP
+        /// </summary>
+        /// <param name="forgotPasswordModel"></param>
+        /// <returns></returns>
+
+
+        public RequestResult<bool> ValidateOTP(ForgotPasswordModel forgotPasswordModel)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            ForgotPasswordModel existingUser = _authenticationRepository.GetOTP(forgotPasswordModel.OTP);
+            if (existingUser == null)
+            {
+                var error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error };
+                validationMessages.Add(error);
+                return new RequestResult<bool>(false, validationMessages);
+            }
+            return new RequestResult<bool>(true);
+        }
+
+
+        /// <summary>
+        /// Generate OTP AND Save In DataBase.
+        /// </summary>
+        /// <param name="forgotPasswordModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel)
+        {
+
+            var myEmail = "nileshmisrachp@gmail.com";
+
+            var userid = 2;
+            string otp = GenerateOTP(); 
+
+            string smtpServer = "smtp.gmail.com";
+            int smtpPort = 587;
+            string smtpUsername = "sdtfilestorage@gmail.com";
+            string smtpPassword = "SmartdustTech@13";
+
+            // Email configuration
+            string emailFrom = "nileshmisrachp@gmail.com";
+            string subject = "OTP Verification";
+            string body = $"{otp}";
+
+            ForgotPasswordModel otpgenerate = _authenticationRepository.InsertOtp(body,userid);
+
+            try
+            {
+                using (SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort))
+                {
+                    smtpClient.EnableSsl = true;
+                    smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+
+                    using (MailMessage mailMessage = new MailMessage())
+                    {
+                        mailMessage.From = new MailAddress(emailFrom);
+                        mailMessage.To.Add(myEmail);
+                        mailMessage.Subject = subject;
+                        mailMessage.Body = body;
+
+                        smtpClient.Send(mailMessage);
+                        Console.WriteLine("OTP sent successfully.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending OTP: {"Wrong OTP"}");
+            }
+
+
+            return new RequestResult<int>(1);
+        }
+
+        static string GenerateOTP()
+        {
+
+            Random random = new Random();
+            int otp = random.Next(100000, 999999);
+            return otp.ToString();
+
+        }
+
+        
+
+
+
+
     }
 }
