@@ -6,6 +6,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface IListSorter
     {
-        string MethodName(List<multiselectvaluesModel> listSorterModels);
+        //string MethodName(List<multiselectvaluesModel> listSorterModels);
     }
 }

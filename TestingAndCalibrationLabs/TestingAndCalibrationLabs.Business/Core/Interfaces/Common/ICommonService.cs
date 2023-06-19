@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="record"></param>
         /// <returns></returns>
         RequestResult<bool> DeleteMultiValue(RecordModel record);
-        MultiselectDropdownModel Multilectal(List<multiselectvaluesModel> Multi);
+        //MultiselectDropdownModel Multilectal(List<multiselectvaluesModel> Multi);
 
     }
 }
