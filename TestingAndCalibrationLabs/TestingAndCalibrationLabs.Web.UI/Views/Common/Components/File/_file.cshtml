@@ -323,25 +323,43 @@
 <input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
 
 <script>
-   
-  
+
+
     var idOfRecord = $("#Id").val();
     var fileModel = JSON.parse('@Json.Serialize(Model)');
     debugger;
+    var id = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
     var uiPageData = fileModel.value.uiPageData;
     let metadataId = fileModel.value.uiPageMetadata.id;
     debugger;
     if (idOfRecord != undefined && uiPageData != null) {
-        debugger;
-        var lookupCategoryId = fileModel.value.uiPageMetadata.moduleId;
-        var id = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
-        let fileInfo = `<li class="li-parent"><div class="sub-li" tabindex="0" role="button"><svg class="upload-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
-                            </svg><span class="span-txt">${uiPageData.value}</span><svg class="delete-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
-        $(`#file-showcase-${metadataId}`).append(fileInfo);
-        
-        $(id).val(val);
+        let uiPageDataId = uiPageData.id;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetUiPageDataById","Common")",
+            contentType: false,
+            processData: false,
+            data: uiPageDataId,
+            success: function (response) {
+                debugger;
+                for (let i = 0; i < response.length; i++) {
+                    let valx = response[0].value;
+                    let sid = response[0].subPageDataId;
+                    let stn = response[0].subTableName;
+                    let fileInfo = `<li class="li-parent"><div class="sub-li" tabindex="0" role="button"><svg class="upload-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
+                                        </svg><span class="span-txt">${valx}</span><svg class="delete-svg" value="${sid}" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
+                    $(`#file-showcase-${metadataId}`).append(fileInfo);
+
+                    $(id).val(val);
+                }
+            },
+            error: function (req, status, error) {
+
+            }
+        });
+
     }
-    
+
 
     //$(document).ready(function () {
     //    if (fileModel.value.uiPageData != null) {
@@ -350,54 +368,54 @@
     //        $(`#pop-up-${metadataId}`).append(`<img  src="https://drive.google.com/uc?export=view&id=${value}"></img>`);
     //    }
     //});
-   
-    $(`#btn-upload-${metadataId}`).click( function () {
-        
-     $(`#image-${metadataId}`).click();
+
+    $(`#btn-upload-${metadataId}`).click(function () {
+
+        $(`#image-${metadataId}`).click();
 
 
     });
     function validateForImages(input) {
-   
+
         $(`#file-showcase-${metadataId}`).empty();
-  
+
         var file = new FormData();
         for (let i = 0; i < input.files.length; i++) {
-        let fileName = input.files[i].name;
-        var fileExtension = fileName.split('.').pop();
-        switch (fileExtension) {
-            case 'jpg':
-                break;
-            case 'JPG':
-                break;
-            case 'JPEG':
-                break;
-            case 'jpeg':
-                break;
-            case 'png':
-                break;
-            case 'PNG':
-                break;
-            case 'XlSX':
-                break;
-            case 'xlsx':
-                break;
-            case 'pdf':
-                break;
-            case 'PDF':
-                break;
-            default:
-                alert('Wrong File Type!');
-                $(input).val('');
-                break;
-        }
+            let fileName = input.files[i].name;
+            var fileExtension = fileName.split('.').pop();
+            switch (fileExtension) {
+                case 'jpg':
+                    break;
+                case 'JPG':
+                    break;
+                case 'JPEG':
+                    break;
+                case 'jpeg':
+                    break;
+                case 'png':
+                    break;
+                case 'PNG':
+                    break;
+                case 'XlSX':
+                    break;
+                case 'xlsx':
+                    break;
+                case 'pdf':
+                    break;
+                case 'PDF':
+                    break;
+                default:
+                    alert('Wrong File Type!');
+                    $(input).val('');
+                    break;
+            }
             let fileInfo = `<li class="li-parent"><div class="sub-li" tabindex="0" role="button"><svg class="upload-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
-                    </svg><span class="span-txt">${fileName}</span><svg class="delete-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
+                            </svg><span class="span-txt">${fileName}</span><svg class="delete-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
             $(`#file-showcase-${metadataId}`).append(fileInfo);
             file.append(fileName, input.files[i]);
 
-
         }
+
         //const fileshow =(fileName, input.files[i])=>{
         //    const showfileboxElement = document.createElement("div");
         //    const leftElem = document.createElement("upload-Btn")
@@ -412,8 +430,8 @@
         //    filewrapper.append(showfileboxElement);
 
         //}
-       
-        
+
+
 
         $.ajax({
             type: "POST",
@@ -421,19 +439,17 @@
             contentType: false,
             processData: false,
             data: file,
-            success: function (response) { 
-                debugger;
-                var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
-                $(idNum).val(response);
+            success: function (response) {
+                $(id).val(response);
                 var data = response;
 
             },
             error: function (req, status, error) {
-             
+
             }
         });
     }
-   
+
 </script>
 
 @*jk*@

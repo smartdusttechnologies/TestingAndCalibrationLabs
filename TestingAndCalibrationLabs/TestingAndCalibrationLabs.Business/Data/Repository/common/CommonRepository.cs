@@ -197,8 +197,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
           
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             { 
-               var SingleData=record.FieldValues.GroupBy(x=>x.UiPageMetadataId).Select(x=> new { UiPageMetadataId = x.Key,UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
-              
+                var singleData = record.FieldValues.Distinct().Select(x => new {}).ToList();
           
                 
                 var MultiData  = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
@@ -206,9 +205,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
       
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
-                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
+                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(singleData));
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
-                command.ExecuteNonQuery();
+                try { command.ExecuteNonQuery(); }catch(Exception ex) {
+                    var err = ex.Message;
+                }
 
             }
 
@@ -377,6 +378,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
                                         ", new { id }).ToList();
         }
+
+        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId,'UiPageFileAttachType' As uiPageStringType, t2.UiPageDataId, t2.Value,t2.Id As SubPageDataId
+                                               FROM UiPageData t1
+                                                  JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+                                                WHERE t1.Id = @uiPageDataId
+                                                  UNION All
+                                                SELECT t3.UiPageMetadataId,'UiPageIntType' As SubTableName,t4.Id As SubPageDataId , t4.Id, CAST(t4.Value AS varchar)t
+                                               FROM UiPageData t3
+                                             JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+                                               WHERE t3.Id = @uiPageDataId
+                                                   UNION All
+                                             SELECT t3.UiPageMetadataId,'UiPageFileAttachType' As SubTableName ,t4.Id As SubPageDataId, t4.UiPageDataId, CAST(t4.Value AS varchar)t
+                                                     FROM UiPageData t3
+                                                   JOIN [UiPageFileAttachType] t4 ON t3.Id = t4.UiPageDataId
+                                           WHERE t3.Id = @uiPageDataId
+
+                                        ", new { uiPageDataId }).ToList();
+        }
+
         #region Multi Value Control CRUD
         /// <summary>
         /// Get All Page Data Based On Multi Controls

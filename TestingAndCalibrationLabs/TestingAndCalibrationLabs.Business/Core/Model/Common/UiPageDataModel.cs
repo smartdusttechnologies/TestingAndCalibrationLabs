@@ -24,7 +24,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
                 _value = value;
             }
         }
-
+        public int SubPageDataId { get; set; }
+        public string SubTableName { get; set; }
         public int RecordId { get; set; }
     }
 }

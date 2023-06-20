@@ -52,7 +52,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-
         public IActionResult FileUpload()
         {
 
@@ -66,18 +65,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var result = _googleDriveService.Upload(attachmentModel);
                 imageId.Add(result.RequestedObject.FilePath);
 
-                //if (result.IsSuccessful)
-                //{
-
-
-                    
-                //    return Ok(imageId);
-                //}
-                
-                //else
-                //{
-                //    return BadRequest();
-                //}
             }
             return Ok(imageId);
         }
@@ -227,6 +214,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (result.IsSuccessful)
             {
                 return RedirectToAction("Edit", new { id = record.Id });
+            }
+            return BadRequest();
+        }
+        public IActionResult GetUiPageDataById(int uiPageDataId)
+        {
+            var result = _commonService.GetUiPageDataById((int)uiPageDataId);
+            if(result != null)
+            {
+                return Ok(result);
             }
             return BadRequest();
         }

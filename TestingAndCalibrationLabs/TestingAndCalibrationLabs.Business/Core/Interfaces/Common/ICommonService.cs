@@ -1,5 +1,6 @@
 ﻿using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
+using System.Collections.Generic;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -63,5 +64,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="record"></param>
         /// <returns></returns>
         RequestResult<bool> DeleteMultiValue(RecordModel record);
+        List<UiPageDataModel> GetUiPageDataById(int uiPageDataId);
     }
 }

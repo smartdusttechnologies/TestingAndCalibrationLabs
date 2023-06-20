@@ -216,7 +216,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
-
+        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
+        {
+            return _commonRepository.GetUiPageDataById(uiPageDataId);
+        }
         /// <summary>
         /// Get Record By Record Id
         /// </summary>
