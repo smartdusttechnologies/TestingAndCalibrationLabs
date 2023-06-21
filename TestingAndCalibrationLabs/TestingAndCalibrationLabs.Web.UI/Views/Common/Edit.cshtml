@@ -68,12 +68,14 @@
 </script>
 <script type="text/javascript">
     var mainModel = JSON.parse('@Json.Serialize(Model)');
+    debugger
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
     var id = parseInt($("#Id").val())
     var url = $("#commonForm").attr("action");
     AjaxFormSubmit = () => {
+        debugger;
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
@@ -86,6 +88,7 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
+      
         for (let i = 0; i < layout.length; i++) {
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
@@ -93,6 +96,7 @@
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = layout[i].uiPageMetadata.id;
+                debugger;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
@@ -121,7 +125,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues},
             success: function (response) {
                 myFunction();
                 window.location.href = "/common/edit/" + id;
