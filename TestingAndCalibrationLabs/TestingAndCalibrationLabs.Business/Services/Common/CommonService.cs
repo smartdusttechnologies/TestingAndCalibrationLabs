@@ -10,6 +10,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Text;
 using System.Threading;
+using System.Collections;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -92,7 +93,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.SingleOrDefault(y => y.UiPageMetadataId == x.Id)
+                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             }));
             foreach (var item in hirericheys)
             {
@@ -104,7 +105,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                     string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
                     var fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
-                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.Value);
+                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
                 }
             }
             var multiVal = GetMultiControlValue(recordId);
@@ -217,6 +218,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
 
+       
         /// <summary>
         /// Get Record By Record Id
         /// </summary>
@@ -229,14 +231,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
-            //var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
             var uiPageData = _commonRepository.GetPageData(recordId);
+        
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).FirstOrDefault()
-            }));
+                
+
+                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
+            })) ;
             var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object

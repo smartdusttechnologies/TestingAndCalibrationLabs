@@ -15,7 +15,7 @@
         if (idOfRecord != undefined && uiPageData != null) {
         var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
-        var val = uiPageData.value;
+        var val = uiPageData[0].value;
         $(id).val(val);
         }
     });
