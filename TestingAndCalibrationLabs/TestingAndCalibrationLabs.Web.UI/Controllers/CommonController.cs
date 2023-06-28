@@ -258,6 +258,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
+        [HttpGet]
+        /// <param name="uiPageDataId"></param>
+
+        public ActionResult GetUiPageDataById(int uiPageDataId)
+        {
+            var result = _commonService.GetUiPageDataById((int)uiPageDataId);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
     }
 
     

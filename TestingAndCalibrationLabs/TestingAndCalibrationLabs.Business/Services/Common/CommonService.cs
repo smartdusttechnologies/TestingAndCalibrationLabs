@@ -94,7 +94,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.SingleOrDefault(y => y.UiPageMetadataId == x.Id)
+                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)/*.ToList()*/
             }));
             foreach (var item in hirericheys)
             {
@@ -106,11 +106,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                     string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
                     var fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
-                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.Value);
+                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
                 }
             }
             var multiVal = GetMultiControlValue(recordId);
-            if(multiVal.Fields.Count() > 0)
+            if (multiVal.Fields.Count() > 0)
             {
                 var table = new StringBuilder("<table class='multiValueGrid'  cellspacing='0'> <tr>");
                 foreach (var item in multiVal.Fields)
@@ -134,7 +134,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 template = template.Replace("**gridTableMulti**", "");
             }
-            
+
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template);
             var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
@@ -228,7 +228,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         //    return cat;
 
         //}
-       
+
         /// <summary>
         /// This Method Return Data For Grid
         /// </summary>
@@ -243,6 +243,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
+        }
+        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
+        {
+            return _commonRepository.GetUiPageDataById(uiPageDataId);
         }
 
         /// <summary>
@@ -263,8 +267,15 @@ namespace TestingAndCalibrationLabs.Business.Services
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).FirstOrDefault()
+                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             }));
+
+            //List<LayoutModel> hirericheyse = new List<LayoutModel>();
+            //uiPageData.GroupBy(x => x.UiPageMetadataId).ToList()
+            //    .ForEach(x => hirericheyse.Add(new LayoutModel { UiPageMetadata = (UiPageMetadataModel)x, UiPageData = uiPageData.Where(y => y.UiPageMetadataId == y.Id) }.ToList()));
+
+
+
             var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object
@@ -362,7 +373,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 if (string.IsNullOrEmpty(field.Value))
                                 {
                                     string errorMessage = string.Format(validationlist.Message, uipagedata.UiControlDisplayName);
-                                    validationMessages.Add(new ValidationMessage {MessageKey = field.MultiValueControl.ToString(), Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 }
                                 break;
                             case ValidationType.MinPasswordLength:
@@ -383,17 +394,17 @@ namespace TestingAndCalibrationLabs.Business.Services
                             case ValidationType.MobileNumberLength:
                                 int minLengtMobileNumberLength = int.Parse(item.Value);
                                 if (field.Value.Length != minLengtMobileNumberLength)
-                                    validationMessages.Add(new ValidationMessage {MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.Name:
                                 int minLengtName = int.Parse(item.Value);
                                 if (field.Value.Length < minLengtName)
-                                    validationMessages.Add(new ValidationMessage {MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
                             case ValidationType.Year:
                                 int minLengtYear = int.Parse(item.Value);
                                 if (field.Value.Length != minLengtYear)
-                                    validationMessages.Add(new ValidationMessage {MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                    validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
                         }
                     }

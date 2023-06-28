@@ -14,6 +14,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public bool MultiValueControl { get; set; }
         private string _value;
         public int UiPageDataId { get; set; }
+        public int ChildId { get; set; }
+
 
         public string Value
         {

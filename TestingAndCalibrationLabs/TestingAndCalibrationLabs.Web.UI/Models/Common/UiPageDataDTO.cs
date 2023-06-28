@@ -11,7 +11,10 @@
         public int SubRecordId { get; set; }
         public bool MultiValueControl { get; set; }
         public int UiPageTypeId { get; set; }
+        public int UiPageDataId { get; set; }
+        public int ChildId { get; set; }
         public string Value { get; set; }
+
         //public string ParentId { get; set; }
         //public string Name { get; set; }
 

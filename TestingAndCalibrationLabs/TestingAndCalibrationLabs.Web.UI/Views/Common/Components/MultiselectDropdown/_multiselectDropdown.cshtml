@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        debugger;
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
@@ -19,38 +20,30 @@
             url: "@Url.Action("MultipleValue","Common")",
             data: { lookupCategoryId: lookupCategoryId },
             success: function (response) {
-
+                debugger;
+                var value = [];
+                if (idOfRecord != undefined && uiPageData != null) {
+                    debugger;
+                    for (let i = 0; i < uiPageData.length; i++) {
+                        var val = uiPageData[i].value;
+                        value.push(val);
+                    }
+                }
                 comboTree1 = $(ids).comboTree({
                     source: response,
                     isMultiple: true,
                     cascadeSelect: true,
-                    withSelectAll: true
+                    withSelectAll: true,
+                    selected: value
                 });
                 comboTree1.onChange(function () {
-
                     let selectedIds = this.getSelectedIds();
                     let listOfLookups = selectedIds.toString();
                     $(id).val(listOfLookups);
-
                 });
-                var idOfRecord = $("#Id").val();
-                if (idOfRecord != undefined) {
-                    debugger;
-                    var selectedId = uiPageData.value;
-                    var changeId = ids + " [value=" + selectedId + "]";
-                    $(changeId).attr('selected', 'true');
-                    $(id).val(selectedId);
-                }
-
 
             },
-
         });
-        //$(id).change(function () {
-        //    debugger;
-        //    var stageId = this.value;
-        //    $(id).val(stageId);
-        //});
 
     });
 </script>
