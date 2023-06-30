@@ -72,6 +72,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 };
                 _surveyService.Add(getbusinessModel);
                 TempData["IsTrue"] = true;
+                _logger.LogInformation("hi");
                 return RedirectToAction("Survey");
             }
             return View(data);
