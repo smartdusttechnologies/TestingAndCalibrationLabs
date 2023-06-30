@@ -67,25 +67,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordDTO changepasswordRequest)
         {
-
             var psswReq = new ChangePasswordModel { OldPassword= changepasswordRequest.OldPassword, NewPassword=changepasswordRequest.NewPassword, ConfirmPassword=changepasswordRequest.ConfirmPassword, UserId = 2 };
-            //string authorization = HttpContext.Session.GetString("Token").ToString() ;
-
-            //var Token = authorization.Substring(authorization.IndexOf(' ') + 1);
-
-            //JwtSecurityToken jwt = (JwtSecurityToken)new JwtSecurityTokenHandler().ReadToken(refreshToken);
-
             var result = _authenticationService.UpdatePaasword(psswReq);
-            
             if (result.IsSuccessful)
             {
 
                 return Ok(result.RequestedObject);
-
-
             }
             return BadRequest(result.ValidationMessages);
         }
+
+        [HttpGet]
         public IActionResult ChangePassword()
         {
             return View();

@@ -58,19 +58,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             var p = new DynamicParameters();
             p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@UserName", user.UserName);
-            //  p.Add("@FirstName", user.FirstName);
-            p.Add("@FirstName", "Neha");
+            p.Add("@FirstName", user.FirstName);
             p.Add("@LastName", user.LastName);
             p.Add("@Email", user.Email);
-            // p.Add("@Mobile", user.Mobile);
-            p.Add("@Mobile", "7004899589");
+            p.Add("@Mobile", user.Mobile);
             p.Add("@Country", user.Country);
             p.Add("@ISDCode", user.ISDCode);
             p.Add("@TwoFactor", user.TwoFactor);
             p.Add("@Locked", user.Locked);
-            // p.Add("@IsActive", user.IsActive);
-             p.Add("@IsActive", true);
-
+            p.Add("@IsActive", user.IsActive);
             p.Add("@EmailValidationStatus", user.EmailValidationStatus);
             p.Add("@MobileValidationStatus", user.MobileValidationStatus);
             p.Add("@OrgId", user.OrgId);
@@ -104,13 +100,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return insertedUserId;
         }
-       // public bool Update( int userId,string newpassword)
             public int Update(ChangePasswordModel newpassword)
         {
-          //  ChangePasswordModel model = new ChangePasswordModel();
-            //model.UserId = userId;
-            //model.PasswordHash = newpassword;
-            //model.PasswordSalt = newpassword;
             var p = new DynamicParameters();
             p.Add("@PasswordHash", "PasswordHash");
             p.Add("@PasswordSalt", "PasswordSalt");
@@ -122,11 +113,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                 Where UserId = @UserId";
 
                   using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(changepasswordQuery, newpassword);
+               return db.Execute(changepasswordQuery, newpassword);
 
-            // db.Execute(changepasswordQuery , model );
-
-            // return true;
-          }
+            }
     }
 }

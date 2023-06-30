@@ -9,12 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         UserModel Get(int id);
         UserModel Get(string userName);
         int Insert(UserModel user, PasswordLogin passwordLogin);
-        // bool Update(int userId ,string newpassword);
-
-         public int Update(ChangePasswordModel newpassword);
-
-
-
+        public int Update(ChangePasswordModel newpassword);
 
     }
 }

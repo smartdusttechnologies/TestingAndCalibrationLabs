@@ -212,7 +212,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     var validationResult = _securityParameterService.ValidatePasswordPolicy(0, password.NewPassword);
 
-                    var passwordLogin = _authenticationRepository.GetLoginPassword("Apurwa");
+                    var passwordLogin = _authenticationRepository.GetLoginPassword("");
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     string valueHash = string.Empty;
                     if (password != null && !Hasher.ValidateHash(password.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
