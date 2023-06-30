@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
                 _value = value;
             }
         }
-
+        public int ChildId { get; set; }
         public int RecordId { get; set; }
     }
 }

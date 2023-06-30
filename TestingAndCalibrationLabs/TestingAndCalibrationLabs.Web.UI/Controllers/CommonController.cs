@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -57,7 +58,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
 
             List<string> imageId = new List<string>();
-            
+
             foreach (var item in Request.Form.Files)
             {
                 AttachmentModel attachmentModel = new AttachmentModel();
@@ -66,21 +67,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var result = _googleDriveService.Upload(attachmentModel);
                 imageId.Add(result.RequestedObject.FilePath);
 
-                //if (result.IsSuccessful)
-                //{
-
-
-                    
-                //    return Ok(imageId);
-                //}
-                
-                //else
-                //{
-                //    return BadRequest();
-                //}
             }
+
             return Ok(imageId);
         }
+
+        public ActionResult DownloadFile(string fileId)
+        {
+            AttachmentModel attachment = _commonService.DownLoadAttachment(fileId);
+            var attachmentDTO = _mapper.Map<AttachmentModel, Models.AttachmentDTO>(attachment);
+            if (attachmentDTO != null)
+            {
+                return File(attachmentDTO.FileStream, attachmentDTO.ContentType, attachmentDTO.FileName);
+            }
+            else
+            {
+                return new EmptyResult();
+            }
+        }
+        //public ActionResult FileDownload(string imagepath)
+        //{
+        //    var filereport = _commonService.Get((string)imagepath);
+        //    var fileid = filereport.Value;
+        //    return Ok(fileid);
+        //}
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
         /// </summary>
@@ -227,6 +237,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (result.IsSuccessful)
             {
                 return RedirectToAction("Edit", new { id = record.Id });
+            }
+            return BadRequest();
+        }
+
+        public ActionResult GetUiPageDataById(int uiPageDataId)
+        {
+            var result = _commonService.GetUiPageDataById((int)uiPageDataId);
+            if (result != null)
+            {
+                return Ok(result);
             }
             return BadRequest();
         }

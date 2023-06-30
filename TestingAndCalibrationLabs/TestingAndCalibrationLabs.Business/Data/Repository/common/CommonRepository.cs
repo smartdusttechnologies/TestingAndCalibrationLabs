@@ -198,17 +198,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             { 
                var SingleData=record.FieldValues.GroupBy(x=>x.UiPageMetadataId).Select(x=> new { UiPageMetadataId = x.Key,UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
-              
-          
-                
+
+               // var singleData = record.FieldValues.Distinct().Select(x => new { }).ToList();
+
                 var MultiData  = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
       
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
                 command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
+               // command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(singleData));
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
+              
+                //try { command.ExecuteNonQuery(); }
+                //catch (Exception ex)
+                //{
+                //    var err = ex.Message;
+                //}
 
             }
 
@@ -301,44 +308,63 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var subRecordId = GenerateNewSubRecordId(recordModel.Id);
-            var insertList = recordModel.FieldValues.Where(x => x.Id == 0 && x.MultiValueControl != true).ToList();
-            var multiValueInsert = recordModel.FieldValues.Where(x => x.Id == 0 && x.MultiValueControl == true)
-                .Select(x=> new UiPageDataModel{ UiPageMetadataId =x.UiPageMetadataId, RecordId =x.RecordId, Value = x.Value, UiPageTypeId =x.UiPageTypeId,SubRecordId = subRecordId}).ToList();
-            var updateList = recordModel.FieldValues.Where(x => x.Id != 0).ToList();
-            string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate ,
-                                                WorkflowStageId = @WorkflowStageId
-                                            Where Id = @Id";
-            var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,UiPageTypeId)
-                                        Values (@UiPageMetadataId,@RecordId,@Value,@UiPageTypeId)";
-            var multiInsertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,UiPageTypeId,SubRecordId)
-                                        Values (@UiPageMetadataId,@RecordId,@Value,@UiPageTypeId,@SubRecordId)";
-            var updateQurey = @"Update [UiPageData] Set
-                                    UiPageMetadataId = @UiPageMetadataId,
-                                    RecordId = @RecordId,
-                                    UiPageTypeId = @UiPageTypeId,
-                                    Value = @Value
-                                Where Id = @Id";
-            IDbTransaction transaction = db.BeginTransaction();
-            db.Execute(recordInsertQuery, recordModel, transaction);
-            if (insertList.Count > 0)
+            //var subRecordId = GenerateNewSubRecordId(recordModel.Id);
+            //var insertList = recordModel.FieldValues.Where(x => x.Id == 0 && x.MultiValueControl != true).ToList();
+            //var multiValueInsert = recordModel.FieldValues.Where(x => x.Id == 0 && x.MultiValueControl == true)
+            //    .Select(x=> new UiPageDataModel{ UiPageMetadataId =x.UiPageMetadataId, RecordId =x.RecordId, Value = x.Value, UiPageTypeId =x.UiPageTypeId,SubRecordId = subRecordId}).ToList();
+            //var updateList = recordModel.FieldValues.Where(x => x.Id != 0).ToList();
+            //string recordInsertQuery = @"Update [Record] Set
+            //                                    UpdatedDate = @UpdatedDate ,
+            //                                    WorkflowStageId = @WorkflowStageId
+            //                                Where Id = @Id";
+            //var insertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,UiPageTypeId)
+            //                            Values (@UiPageMetadataId,@RecordId,@Value,@UiPageTypeId)";
+            //var multiInsertQuery = @"Insert Into [UiPageData] (UiPageMetadataId,RecordId,Value,UiPageTypeId,SubRecordId)
+            //                            Values (@UiPageMetadataId,@RecordId,@Value,@UiPageTypeId,@SubRecordId)";
+            //var updateQurey = @"Update [UiPageData] Set
+            //                        UiPageMetadataId = @UiPageMetadataId,
+            //                        RecordId = @RecordId,
+            //                        UiPageTypeId = @UiPageTypeId,
+            //                        Value = @Value
+            //                    Where Id = @Id";
+            //IDbTransaction transaction = db.BeginTransaction();
+            //db.Execute(recordInsertQuery, recordModel, transaction);
+            //if (insertList.Count > 0)
+            //{
+            //    db.Execute(insertQuery, insertList, transaction);
+            //}
+            //if (multiValueInsert.Count > 0)
+            //{
+            //    db.Execute(multiInsertQuery, multiValueInsert, transaction);
+            //}
+            //if (updateList.Count > 0)
+            //{
+            //    db.Execute(updateQurey, updateList, transaction);
+            //}
+            using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                db.Execute(insertQuery, insertList, transaction);
-            }
-            if (multiValueInsert.Count > 0)
-            {
-                db.Execute(multiInsertQuery, multiValueInsert, transaction);
-            }
-            if (updateList.Count > 0)
-            {
-                db.Execute(updateQurey, updateList, transaction);
+                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
+
+                // var singleData = record.FieldValues.Distinct().Select(x => new { }).ToList();
+
+                var MultiData = recordModel.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
+                command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
+                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
+                // command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(singleData));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
+                command.ExecuteNonQuery();
+
+               
             }
 
-            db.Execute("store_pro_uipagedata", insertQuery,commandType:CommandType.StoredProcedure);
+
+          //  db.Execute("store_pro_uipagedata", insertQuery,commandType:CommandType.StoredProcedure);
             
 
-            transaction.Commit();
+           // transaction.Commit();
 
             return true;
         }
@@ -377,7 +403,32 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
                                         ", new { id }).ToList();
         }
-        #region Multi Value Control CRUD
+
+        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageDataModel>(@" SELECT t1.UiPageMetadataId,'UiPageFileAttachType' As uiPageType, t2.UiPageDataId, t2.Value
+                                               FROM UiPageData t1
+                                                  JOIN[UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+                                                WHERE t1.Id = @uiPageDataId
+                                                  UNION All
+                                                SELECT t3.UiPageMetadataId,'UiPageIntType' , t4.UiPageDataId, CAST(t4.Value AS varchar)t
+                                               FROM UiPageData t3
+                                             JOIN[UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+                                               WHERE t3.Id = @uiPageDataId
+                                                   UNION All
+                                             SELECT t3.UiPageMetadataId,'UiPageFileAttachType' , t4.UiPageDataId, CAST(t4.Value AS varchar)t
+                                                     FROM UiPageData t3
+                                                   JOIN[UiPageFileAttachType] t4 ON t3.Id = t4.UiPageDataId
+                                           WHERE t3.Id = @uiPageDataId
+                                        ", new { uiPageDataId }).ToList();
+        }
+        //public TestReportModel Get(string imagepath)
+        //{
+        //    using IDbConnection db = _connectionFactory.GetConnection;
+        //    return db.Query<TestReportModel>("Select top 1 * From UiPageFileAttachType where Value =@Value, new { id }).FirstOrDefault();
+        //}
+
         /// <summary>
         /// Get All Page Data Based On Multi Controls
         /// </summary>
@@ -489,7 +540,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
         #endregion
-        #endregion
+        
     }
 }
 

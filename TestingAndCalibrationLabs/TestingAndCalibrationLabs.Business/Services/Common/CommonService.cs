@@ -11,12 +11,24 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Text;
 using System.Threading;
 using System.Collections;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class CommonService : ICommonService
     {
         internal string UI_PAGE_NAME = string.Empty;
+        private ICommonRepository commonRepository;
+        private IGenericRepository<RecordModel> recordGenericRepository;
+        private IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository;
+        private IGenericRepository<UiPageDataModel> uiPageDataGenericRepository;
+        private IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository;
+        private IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository;
+        private IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository;
+        private IUiPageMetadataRepository uiPageMetadataRepository;
+        private IWorkflowActivityService workflowActivityService;
+        private IWebHostEnvironment webHostEnvironment;
+        private IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService;
         private readonly ICommonRepository _commonRepository;
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
@@ -28,6 +40,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
+        private readonly IGoogleDriveService _googleUploadDownloadService;
+
 
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
@@ -39,6 +53,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWorkflowActivityService workflowActivityService,
             IWebHostEnvironment webHostEnvironment,
+             IGoogleDriveService googleUploadDownloadService,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
 
         {
@@ -53,6 +68,23 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowActivityService = workflowActivityService;
             _webHostEnvironment = webHostEnvironment;
             _uiPageMetadataCharacteristicsService = uiPageMetadataCharacteristicsService;
+            _googleUploadDownloadService = googleUploadDownloadService;
+
+        }
+
+        public CommonService(ICommonRepository commonRepository, IGenericRepository<RecordModel> recordGenericRepository, IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository, IGenericRepository<UiPageDataModel> uiPageDataGenericRepository, IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository, IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository, IUiPageMetadataRepository uiPageMetadataRepository, IWorkflowActivityService workflowActivityService, IWebHostEnvironment webHostEnvironment, IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
+        {
+            this.commonRepository=commonRepository;
+            this.recordGenericRepository=recordGenericRepository;
+            this.uiPageTypeGenericRepository=uiPageTypeGenericRepository;
+            this.uiPageDataGenericRepository=uiPageDataGenericRepository;
+            this.uiPageMetaDataGenericRepository=uiPageMetaDataGenericRepository;
+            this.uiPageValidationTypesGenericRepository=uiPageValidationTypesGenericRepository;
+            this.uiPageMetadataCharacteristicsRepository=uiPageMetadataCharacteristicsRepository;
+            this.uiPageMetadataRepository=uiPageMetadataRepository;
+            this.workflowActivityService=workflowActivityService;
+            this.webHostEnvironment=webHostEnvironment;
+            this.uiPageMetadataCharacteristicsService=uiPageMetadataCharacteristicsService;
         }
         #region public methods
         /// <summary>
@@ -218,13 +250,18 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
 
-       
-        /// <summary>
-        /// Get Record By Record Id
-        /// </summary>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public RecordModel GetRecordById(int recordId)
+    
+    public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
+    {
+        return _commonRepository.GetUiPageDataById(uiPageDataId);
+    }
+
+    /// <summary>
+    /// Get Record By Record Id
+    /// </summary>
+    /// <param name="recordId"></param>
+    /// <returns></returns>
+    public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
@@ -250,6 +287,17 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy };
         }
         #region Multi Value Control
+
+
+        public AttachmentModel DownLoadAttachment(string file)
+        {
+            var dataDownloaded = _googleUploadDownloadService.Download(file);
+            return dataDownloaded;
+        }
+        //public UiPageDataModel Get(string imagepath)
+        //{
+        //    return _commonRepository.Get(imagepath);
+        //}
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>
