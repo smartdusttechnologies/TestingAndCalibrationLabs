@@ -39,6 +39,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Hash
         /// </summary>
         public int Status { get; set; }
-
     }
 }

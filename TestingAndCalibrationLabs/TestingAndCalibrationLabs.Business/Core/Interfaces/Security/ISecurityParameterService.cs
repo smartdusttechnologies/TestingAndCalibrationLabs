@@ -7,7 +7,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     {
         RequestResult<bool> ValidatePasswordPolicy( int orgId, string password);
 
-         RequestResult<bool> ChangePaaswordPolicy(ChangePasswordModel password);
-
+         RequestResult<bool> ChangePaaswordPolicy(ChangePasswordModel changepasswordmodel);
     }
 }

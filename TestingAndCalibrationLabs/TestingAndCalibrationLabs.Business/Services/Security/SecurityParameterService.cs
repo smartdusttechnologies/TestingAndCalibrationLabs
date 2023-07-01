@@ -92,39 +92,39 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to validate the Change Password.
         /// </summary>
-        public RequestResult<bool> ChangePaaswordPolicy(ChangePasswordModel password)
+        public RequestResult<bool> ChangePaaswordPolicy(ChangePasswordModel changepasswordmodel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
-            if (password.OldPassword.IsNullOrEmpty())
+            if (changepasswordmodel.OldPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter Old Password", Severity = ValidationSeverity.Error, SourceId = "OldPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
 
             }
-            else if (password.NewPassword.IsNullOrEmpty())
+            else if (changepasswordmodel.NewPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (password.ConfirmPassword.IsNullOrEmpty()){
+            else if (changepasswordmodel.ConfirmPassword.IsNullOrEmpty()){
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (password.OldPassword == password.NewPassword)
+            else if (changepasswordmodel.OldPassword == changepasswordmodel.NewPassword)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "New password must be different from old password.", Severity = ValidationSeverity.Error,SourceId="NewPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
 
             }
-            else if (password.NewPassword != password.ConfirmPassword)
+            else if (changepasswordmodel.NewPassword != changepasswordmodel.ConfirmPassword)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
 
             }
              return new RequestResult<bool>(true);
-      }
+        }
 
     }
 }
