@@ -21,6 +21,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 
         public int WorkflowStageId { get; set; }
 
+        public int RecordId { get; set; }
+
         public DateTime UpdatedDate { get; set; }
 
         public List<UiPageMetadataDTO> Fields { get; set; }

@@ -17,7 +17,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int UiPageTypeId { get; set; }
         public int ModuleId { get; set; }
         public int WorkflowStageId { get; set; }
+
         //public int LookupId { get; set; }
+        public int RecordId { get; set; }
+
         public DateTime UpdatedDate { get; set; }
         public List<UiPageMetadataModel> Fields { get; set; }
         public List<ListSorterModel> UiPage { get; set; }

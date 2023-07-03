@@ -67,6 +67,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (requestResult.IsSuccessful)
             {
                 //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
+                record.UpdatedDate = DateTime.Now;
+
                 record.Id = _commonRepository.Insert(record);
                 // record.WorkflowStageId = workflowStageId;
                 //_workflowActivityService.WorkflowActivity(record);
@@ -282,7 +284,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel. WorkflowStageId, Layout = hierarchy };
         }
         #region Multi Value Control
         /// <summary>

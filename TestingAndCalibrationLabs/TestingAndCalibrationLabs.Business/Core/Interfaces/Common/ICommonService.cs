@@ -65,6 +65,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RequestResult<bool> DeleteMultiValue(RecordModel record);
         //MultiselectDropdownModel Multilectal(List<multiselectvaluesModel> Multi);
+        List<UiPageDataModel> GetUiPageDataById(int uiPageDataId);
 
     }
 }

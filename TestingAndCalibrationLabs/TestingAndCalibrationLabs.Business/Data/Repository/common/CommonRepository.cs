@@ -167,6 +167,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@ModuleId", record.ModuleId);
             p.Add("@WorkflowStageId", record.WorkflowStageId);
+            p.Add("@UpdatedDate", record.UpdatedDate);
+
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
@@ -177,6 +179,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
+                command.Parameters.AddWithValue("@UpdatedDate", record.UpdatedDate);
+
                 command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
@@ -301,17 +305,25 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             //transaction.Commit();
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Recor", (System.Data.SqlClient.SqlConnection)db))
             {
-                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, ChildId = x.First().ChildId, Value = x.First().Value ,Id = x.First().Id }).ToList();
+                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value  }).ToList();
 
                 // var singleData = record.FieldValues.Distinct().Select(x => new { }).ToList();
 
-                var MultiData = recordModel.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+                //var MultiData = recordModel.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
+                command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
+                command.Parameters.AddWithValue("@RecordId", recordModel.Id);
+                command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
 
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(SingleData));
+                //var childTvpTable = GetDataTable(SingleData); // Convert SingleData to DataTable using GetDataTable method
+
+                //var childTvpParam = command.Parameters.AddWithValue("@ChildTvp", childTvpTable);
+                //childTvpParam.SqlDbType = SqlDbType.Structured; // Set the SqlDbType to Structured for table-valued parameters
+                //childTvpParam.TypeName = "dbo.updatechildDatas"; // Set the TypeName to match the user-defined table type in SQL Server
+
+                
                 //command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(singleData));
                 //command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
@@ -339,20 +351,26 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             //                                        and ws.IsDeleted = 0
             //                                        and mmb.IsDeleted = 0 
             //                                        and upd.IsDeleted = 0", new { id }).ToList();
-            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId, t1.Id , t2.Value, t2.Id as ChildId
+            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId, t1.Id , t2.Value, t2.Id as ChildId,t7.WorkflowStageId,t7.Id as RecordId 
                                                      FROM UiPageData t1
                                                         JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+														Join [Record] t7 ON t7.Id  = t2.RecordId
                                                            WHERE t1.RecordId = @Id
+														      and   t7.Id = @Id
                                                         UNION All
-                                                      SELECT t3.UiPageMetadataId, t3.Id, CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId
+                                                      SELECT t3.UiPageMetadataId, t3.Id, CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId , t6.WorkflowStageId, t6.Id as RecordId 
                                                     FROM UiPageData t3
                                                        JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+													   Join [Record] t6 ON t6.Id  = t3.RecordId
                                                           WHERE t3.RecordId = @Id
+														    and t6.Id = @Id
                                                             UNION All
-                                                       SELECT t5.UiPageMetadataId, t5.Id, CAST(t6.Value AS varchar) AS Value, t6.Id as ChildId
+                                                       SELECT t5.UiPageMetadataId, t5.Id, CAST(t6.Value AS varchar) AS Value, t6.Id as ChildId ,t8.WorkflowStageId,t8.Id as RecordId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
+															Join [Record] t8 ON t8.Id  = t5.RecordId
                                                       WHERE t5.RecordId = @Id
+													    and t8.Id = @Id
 
                                         ", new { id }).ToList();
         }
