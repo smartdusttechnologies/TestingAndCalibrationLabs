@@ -17,5 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string PasswordHash { get; set; }
 
         public string PasswordSalt { get; set; }
+
+        public string Username { get; set; }
     }
 }

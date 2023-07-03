@@ -11,5 +11,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public string NewPassword { get; set; }
 
         public string ConfirmPassword { get; set; }
+
+        public int UserId { get; set; } 
     }
 }

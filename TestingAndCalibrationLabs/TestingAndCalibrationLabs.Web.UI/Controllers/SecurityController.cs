@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordDTO changepasswordRequest)
         {
-            var psswReq = new ChangePasswordModel { OldPassword= changepasswordRequest.OldPassword, NewPassword=changepasswordRequest.NewPassword, ConfirmPassword=changepasswordRequest.ConfirmPassword, UserId = 2 };
+            var psswReq = new ChangePasswordModel { OldPassword= changepasswordRequest.OldPassword, NewPassword=changepasswordRequest.NewPassword, ConfirmPassword=changepasswordRequest.ConfirmPassword, UserId = changepasswordRequest.UserId };
             var result = _authenticationService.UpdatePaasword(psswReq);
             if (result.IsSuccessful)
             {

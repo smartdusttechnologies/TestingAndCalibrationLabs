@@ -211,7 +211,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     var validationResult = _securityParameterService.ValidatePasswordPolicy(0, changepasswordmodel.NewPassword);
 
-                    var passwordLogin = _authenticationRepository.GetLoginPassword("");
+                    var passwordLogin = _authenticationRepository.GetLoginPassword(changepasswordmodel.Username);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     string valueHash = string.Empty;
                     if (changepasswordmodel != null && !Hasher.ValidateHash(changepasswordmodel.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
@@ -227,7 +227,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             PasswordLogin newPasswordLogin = Hasher.HashPassword(changepasswordmodel.NewPassword);
                             ChangePasswordModel passwordModel = new ChangePasswordModel();
                             passwordModel.PasswordHash= newPasswordLogin.PasswordHash;
-                            passwordModel.UserId=2;
+                            passwordModel.UserId=changepasswordmodel.UserId;
                             passwordModel.PasswordSalt= newPasswordLogin.PasswordSalt;
 
                             _userRepository.Update(passwordModel);
