@@ -85,12 +85,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return new EmptyResult();
             }
         }
-        //public ActionResult FileDownload(string imagepath)
-        //{
-        //    var filereport = _commonService.Get((string)imagepath);
-        //    var fileid = filereport.Value;
-        //    return Ok(fileid);
-        //}
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
         /// </summary>
@@ -217,7 +211,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        public ActionResult Delete(int? id, int moduleId)
+        public ActionResult Delete(int id, int moduleId)
         {
             if (id == null)
             {

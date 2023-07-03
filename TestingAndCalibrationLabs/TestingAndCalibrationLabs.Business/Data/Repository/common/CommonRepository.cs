@@ -341,20 +341,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             //{
             //    db.Execute(updateQurey, updateList, transaction);
             //}
-            using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
+            using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Recor", (System.Data.SqlClient.SqlConnection)db))
             {
-                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
+                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
 
                 // var singleData = record.FieldValues.Distinct().Select(x => new { }).ToList();
 
-                var MultiData = recordModel.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+               // var MultiData = recordModel.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
-                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
+                command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
+                command.Parameters.AddWithValue("@RecordId", recordModel.Id);
+                command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
+                command.Parameters.AddWithValue("@@ChildTvp", GetDataTable(SingleData));
                 // command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(singleData));
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
+               // command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
 
                
@@ -423,11 +425,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                            WHERE t3.Id = @uiPageDataId
                                         ", new { uiPageDataId }).ToList();
         }
-        //public TestReportModel Get(string imagepath)
-        //{
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-        //    return db.Query<TestReportModel>("Select top 1 * From UiPageFileAttachType where Value =@Value, new { id }).FirstOrDefault();
-        //}
 
         /// <summary>
         /// Get All Page Data Based On Multi Controls

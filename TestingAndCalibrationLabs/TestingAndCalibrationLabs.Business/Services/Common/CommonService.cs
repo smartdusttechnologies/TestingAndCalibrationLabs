@@ -289,9 +289,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         #region Multi Value Control
 
 
-        public AttachmentModel DownLoadAttachment(string file)
+        public AttachmentModel DownLoadAttachment(string fileId)
         {
-            var dataDownloaded = _googleUploadDownloadService.Download(file);
+            var dataDownloaded = _googleUploadDownloadService.Download(fileId);
             return dataDownloaded;
         }
         //public UiPageDataModel Get(string imagepath)
