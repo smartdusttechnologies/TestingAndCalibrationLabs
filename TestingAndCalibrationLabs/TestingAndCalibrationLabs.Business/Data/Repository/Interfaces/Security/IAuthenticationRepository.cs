@@ -1,4 +1,6 @@
-﻿using TestingAndCalibrationLabs.Business.Core.Model;
+﻿using System;
+using System.Numerics;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
@@ -7,14 +9,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         PasswordLogin GetLoginPassword(string userName);
         int SaveLoginToken(LoginToken loginToken);
 
-        ForgotPasswordModel GetLoginEmail(string Email);
-        ForgotPasswordModel InsertOtp(string OTP, int userid);
+        UserModel GetLoginEmail(string Email);
+        ForgotPasswordModel InsertOtp(string OTP, int UserId);
 
         //ForgotPasswordModel SendMail(string Email);
 
-        ForgotPasswordModel GetOTP(string OTP);
+        ForgotPasswordModel GetOTP(int UserId);
+
+       PasswordLogin GetUserIdPassword(int userId);
 
 
 
-    }
+
+
+
+
+
+        }
 }

@@ -6,11 +6,18 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IAuthenticationService
     {
         RequestResult<LoginToken> Login(LoginRequest loginRequest);
+
         RequestResult<bool> Add(UserModel user, string password);
 
-        RequestResult<bool> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel);
-        RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel);
-        RequestResult<bool> ValidateOTP(ForgotPasswordModel forgotPasswordModel);
+        RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel);
 
+        // RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel);
+        RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel, int userId);
+
+        RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel);
+
+        //RequestResult<bool> ChangePaaswordPolicy(ForgotPasswordModel password);
+
+        RequestResult<bool> UpdatePaasword(ForgotPasswordModel password);
     }
 }

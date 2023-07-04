@@ -40,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UserModel>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
         /// <summary>
-        /// Get Iser Based on Name
+        /// Get User Based on Name
         /// </summary>
         public UserModel Get(string userName)
         {
@@ -55,20 +55,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             var p = new DynamicParameters();
             p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
             p.Add("@UserName", user.UserName);
-            p.Add("@FirstName", user.FirstName);
+            //  p.Add("@FirstName", user.FirstName);
+            p.Add("@FirstName", "Nitesh");
             p.Add("@LastName", user.LastName);
             p.Add("@Email", user.Email);
-            p.Add("@Mobile", user.Mobile);
+            // p.Add("@Mobile", user.Mobile);
+            p.Add("@Mobile", "7004899589");
             p.Add("@Country", user.Country);
             p.Add("@ISDCode", user.ISDCode);
             p.Add("@TwoFactor", user.TwoFactor);
             p.Add("@Locked", user.Locked);
-            p.Add("@IsActive", user.IsActive);
+            // p.Add("@IsActive", user.IsActive);
+            p.Add("@IsActive", true);
+
             p.Add("@EmailValidationStatus", user.EmailValidationStatus);
             p.Add("@MobileValidationStatus", user.MobileValidationStatus);
             p.Add("@OrgId", user.OrgId);
             p.Add("@AdminLevel", user.AdminLevel);
-
             string userInsertQuery = @"Insert into [User](UserName, FirstName, LastName, Email, Mobile, Country, ISDCode, TwoFactor, Locked, IsActive, EmailValidationStatus, MobileValidationStatus, OrgId, AdminLevel) 
                 values (@UserName, @FirstName, @LastName, @Email, @Mobile, @Country, @ISDCode, @TwoFactor, @Locked, @IsActive, @EmailValidationStatus, @MobileValidationStatus, @OrgId, @AdminLevel);
                 SELECT @Id = @@IDENTITY";
@@ -94,6 +97,34 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             transaction.Commit();
 
             return insertedUserId;
+
         }
+        /// <summary>
+        /// Method to Update Password
+        /// </summary>
+        /// <param name="newpassword"></param>
+        /// <returns></returns>
+
+        public int Update(ForgotPasswordModel newpassword)
+        {
+   
+            var p = new DynamicParameters();
+            p.Add("@PasswordHash", "PasswordHash");
+            p.Add("@PasswordSalt", "PasswordSalt");
+            p.Add("@ChangeDate", "ChangeDate");
+        
+
+
+            string changepasswordQuery = @"update [PasswordLogin] Set
+                                           PasswordHash = @PasswordHash,
+                                           PasswordSalt = @PasswordSalt,
+                                           ChangeDate =@ChangeDate
+                                                Where UserId = @UserId";
+
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Execute(changepasswordQuery, newpassword);
+
+        }
+
     }
 }

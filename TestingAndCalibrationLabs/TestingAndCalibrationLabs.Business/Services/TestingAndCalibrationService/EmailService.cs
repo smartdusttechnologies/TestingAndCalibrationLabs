@@ -2,6 +2,8 @@
 using System;
 using System.Net;
 using System.Net.Mail;
+using System.Security;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -17,6 +19,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// It is to access the Appsetting.json file.
         /// </summary>
         private readonly IConfiguration _configuration;
+        private readonly string _smtpUsername;
+        private readonly SecureString _smtpPassword;
+        private readonly string _senderEmail;
+        private readonly int _smtpPort;
+        private readonly string _smtpHost;
 
         /// <summary>
         /// Constructor call.
@@ -68,6 +75,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return false;
             }                           
-        }   
+        }
+
+        Task IEmailService.FindByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }    

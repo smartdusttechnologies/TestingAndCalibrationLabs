@@ -14,6 +14,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using static System.Net.WebRequestMethods;
+using Google.Apis.Drive.v3.Data;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -52,6 +53,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 LoginToken token = new LoginToken();
                 var passwordLogin = _authenticationRepository.GetLoginPassword(loginRequest.UserName);
+
                 string valueHash = string.Empty;
                 if (passwordLogin != null && !Hasher.ValidateHash(loginRequest.Password, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
                 {
@@ -217,40 +219,26 @@ namespace TestingAndCalibrationLabs.Business.Services
             return validatePasswordResult;
         }
 
-        // OTP Genrate Code
-        //public string GenerateOTP()
-        //{
-        //    int otpLength = 6;
-        //    string characters = "0123456789";
-        //    StringBuilder otp = new StringBuilder();
-
-        //    Random random = new Random();
-
-        //    for (int i = 0; i < otpLength; i++)
-        //    {
-        //        otp.Append(characters[random.Next(characters.Length)]);
-        //    }
-
-        //    return otp.ToString();
-        //}
-
 
         /// <summary>
         /// Method to Validate the Email
         /// </summary>
-        public RequestResult<bool> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-          ForgotPasswordModel existingUser = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
-            if (existingUser == null)
+           UserModel existingUser1 = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
+            if (existingUser1 == null)
             {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error};
                 validationMessages.Add(error);
-                return new RequestResult<bool>(false, validationMessages);
+                return new RequestResult<int>(0,validationMessages);
             }
+
             //var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             //return validatePasswordResult;
-            return new RequestResult<bool>(true);  
+
+            return new RequestResult<int>(existingUser1.Id);
+
         }
 
         /// <summary>
@@ -259,32 +247,102 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
 
-
-        public RequestResult<bool> ValidateOTP(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            ForgotPasswordModel existingUser = _authenticationRepository.GetOTP(forgotPasswordModel.OTP);
-            if (existingUser == null)
+            ForgotPasswordModel existingUser1 = _authenticationRepository.GetOTP(forgotPasswordModel.UserId);
+        
+           if (forgotPasswordModel.OTP == existingUser1.OTP)
+            {
+                if (forgotPasswordModel.CreatedDate <= existingUser1.CreatedDate.AddMinutes(1))
+                {
+                    return new RequestResult<int>(existingUser1.UserId);
+
+                }
+                else
+                {
+                    var error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error };
+                    validationMessages.Add(error);
+                    return new RequestResult<int>(0, validationMessages);
+                }
+            }
+            
+           else
             {
                 var error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error };
                 validationMessages.Add(error);
-                return new RequestResult<bool>(false, validationMessages);
+                return new RequestResult<int>(0, validationMessages);
             }
-            return new RequestResult<bool>(true);
+           
+
+        }
+
+        /// <summary>
+        /// Method to Reset Password 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+
+        public RequestResult<bool> UpdatePaasword(ForgotPasswordModel password)
+
+        {
+            try
+            {
+                var passworsResult = _securityParameterService.ChangePaaswordPolicy(password);
+                if (passworsResult.IsSuccessful)
+                {
+                    var validationResult = _securityParameterService.ValidatePasswordPolicy( 0,password.NewPassword);
+
+                    var passwordLogin = _authenticationRepository.GetUserIdPassword(password.UserId);
+
+                    List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+                  
+
+                    if (validationResult.IsSuccessful)
+                    {
+                        if (passworsResult.IsSuccessful)
+                        {
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(password.NewPassword);
+                            ForgotPasswordModel passwordModel = new ForgotPasswordModel();
+                            passwordModel.PasswordHash = newPasswordLogin.PasswordHash;
+                            passwordModel.UserId = password.UserId;
+                            passwordModel.ChangeDate = DateTime.Now;
+                            passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
+
+                            _userRepository.Update(passwordModel);
+
+                            return new RequestResult<bool>(true);
+                        }
+
+                    }
+                    return new RequestResult<bool>(false, validationResult.ValidationMessages);
+                }
+                return new RequestResult<bool>(false, passworsResult.ValidationMessages);
+            }
+            catch (Exception ex)
+            {
+
+                return new RequestResult<bool>(false);
+            }
+
         }
 
 
+
         /// <summary>
-        /// Generate OTP AND Save In DataBase.
+        /// Method To Generate OTP .
         /// </summary>
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel, int userId)
         {
 
-            var myEmail = "nileshmisrachp@gmail.com";
+            //var myEmail = "nileshmisrachp@gmail.com";
+            //var UserId = 2;
 
-            var userid = 2;
+            var myEmail = forgotPasswordModel.Email;
+            var UserId = userId;
+                 
             string otp = GenerateOTP(); 
 
             string smtpServer = "smtp.gmail.com";
@@ -293,11 +351,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             string smtpPassword = "SmartdustTech@13";
 
             // Email configuration
-            string emailFrom = "nileshmisrachp@gmail.com";
+           // string emailFrom = "nileshmisrachp@gmail.com";
             string subject = "OTP Verification";
             string body = $"{otp}";
 
-            ForgotPasswordModel otpgenerate = _authenticationRepository.InsertOtp(body,userid);
+            ForgotPasswordModel otpgenerate = _authenticationRepository.InsertOtp(body, UserId);
 
             try
             {
@@ -308,7 +366,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
                     using (MailMessage mailMessage = new MailMessage())
                     {
-                        mailMessage.From = new MailAddress(emailFrom);
+                       // mailMessage.From = new MailAddress(emailFrom);
                         mailMessage.To.Add(myEmail);
                         mailMessage.Subject = subject;
                         mailMessage.Body = body;
@@ -326,20 +384,21 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             return new RequestResult<int>(1);
         }
-
+        /// <summary>
+        /// Method To Generate OTP
+        /// </summary>
+        /// <returns></returns>
         static string GenerateOTP()
         {
 
             Random random = new Random();
             int otp = random.Next(100000, 999999);
+
             return otp.ToString();
 
         }
 
         
-
-
-
 
     }
 }

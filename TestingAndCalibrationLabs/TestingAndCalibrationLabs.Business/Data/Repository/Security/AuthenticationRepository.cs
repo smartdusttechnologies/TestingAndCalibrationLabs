@@ -1,10 +1,12 @@
 ﻿using Dapper;
 using Google.Apis.Drive.v3.Data;
+using Org.BouncyCastle.Math;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -24,6 +26,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<PasswordLogin>("Select top 1  pl.* From [User] u inner join [PasswordLogin] pl on u.id=pl.userId where u.userName=@userName and (u.IsDeleted=0 AND u.Locked=0 AND u.IsActive=1)", new { userName }).FirstOrDefault();
         }
+        /// <summary>
+        /// Save UserId in DB After Reset Password
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public PasswordLogin GetUserIdPassword(int userId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<PasswordLogin>("Select pl.* From [User] u inner join [PasswordLogin] pl on u.id=pl.userId where u.Id = pl.UserId and (u.IsDeleted=0 AND u.Locked=0 AND u.IsActive=1)", new { userId }).FirstOrDefault();
+        }
+
 
         /// <summary>
         /// Save Email Token in DB
@@ -31,10 +44,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <param name="Email"></param>
         /// <returns></returns>
 
-        public ForgotPasswordModel GetLoginEmail(string Email)
+        public UserModel GetLoginEmail(string Email)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<ForgotPasswordModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { Email }).FirstOrDefault();
+            return db.Query<UserModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { Email}).FirstOrDefault();
         }
         /// <summary>
         /// Insert OTP in DB
@@ -42,17 +55,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <param name="OTP"></param>
         /// <param name="userid"></param>
         /// <returns></returns>
-        public ForgotPasswordModel InsertOtp(string OTP,int userid )
+        public ForgotPasswordModel InsertOtp(string OTP,int UserId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-
-            //return db.Query<ForgotPasswordModel>(@"Insert into [UserOtp](OTP , CreatedDate) 
-            //    values (@Otp , GetDate())", new { OTP }).FirstOrDefault();
-
-
-            return db.Query<ForgotPasswordModel>(@"Insert into [UserOtp](UserId,OTP,CreatedDate) 
-            values (@UserId,@Otp ,GetDate())", new { OTP,userid }).FirstOrDefault();
-
+            return db.Query<ForgotPasswordModel>(@"IF EXISTS( Select 1 from [UserOtp] where UserId=@UserId) UPDATE [UserOtp] set Otp=@OTP,CreatedDate = GetDate() where UserId = @UserId
+                  ELSE Insert into [UserOtp](UserId,OTP,CreatedDate) values (@UserId,@Otp ,GetDate())", new { OTP, UserId }).FirstOrDefault();
         }
 
         /// <summary>
@@ -61,12 +68,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <param name="OTP"></param>
         /// <returns></returns>
 
-        public ForgotPasswordModel GetOTP(string OTP)
+        public ForgotPasswordModel GetOTP(int UserId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<ForgotPasswordModel>("SELECT uo.UserId,uo.Otp,u.Email FROM [UserOtp] uo INNER JOIN [User] u ON uo.UserId = u.Id where uo.Otp =@OTP ", new { OTP }).FirstOrDefault();
 
-            //return db.Query<ForgotPasswordModel>("SELECT OTP And UserId FROM [UserOtp] WHERE Email = @Email", new { OTP }).FirstOrDefault();
+            return db.Query<ForgotPasswordModel>("select u.Id ,uo.Otp,u.Email,uo.CreatedDate From [User] u inner join [UserOtp] uo on u.Id =uo.UserId  where uo.UserId =@UserId  ;", new {UserId}).FirstOrDefault();
+
         }
 
         /// <summary>

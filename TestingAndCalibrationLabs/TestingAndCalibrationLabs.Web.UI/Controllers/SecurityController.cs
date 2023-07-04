@@ -24,6 +24,8 @@ using Org.BouncyCastle.Ocsp;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Bcpg;
+using crypto;
+using Google.Apis.Drive.v3.Data;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -100,11 +102,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 var emailreq = new ForgotPasswordModel { Email = model.Email };
 
-                var user = _authenticationService.EmailValidateForgotPassword(emailreq);
-                if (user.IsSuccessful)
-                {
+                var user1 = _authenticationService.EmailValidateForgotPassword(emailreq);
 
-                    _authenticationService.Create(emailreq);
+                if (user1.IsSuccessful)
+                {
+                   model.UserId = user1.RequestedObject;
+                    _authenticationService.Create(emailreq,model.UserId);
+                }
+                else
+                {
+                    model.Email = null;
                 }
 
             }
@@ -114,29 +121,48 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// OTP Validation
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model"></param
         /// <returns></returns>
 
         [HttpPost]
         public IActionResult ValidateOTP(ForgotPasswordDTO model)
         {
-        
-        
-            var otpreturn = new ForgotPasswordModel {OTP = model.OTP };
 
+            var otpreturn = new ForgotPasswordModel {OTP= model.OTP,UserId=model.UserId, CreatedDate =DateTime.Now };
             var user = _authenticationService.ValidateOTP(otpreturn);
 
-            if (ModelState.IsValid)
+            if (user.IsSuccessful)
             {
-                //var otpreturn = new ForgotPasswordModel { OTP = OTP.OTP };
+                
+                return View(new ForgotPasswordDTO { UserId = model.UserId });
+            }
+            else
+            {
+                return BadRequest(user.ValidationMessages);
+            }
+        }
+        /// <summary>
+        /// Reset Password
+        /// </summary>
+        /// <param name="forgotpassswordmodel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult ResetPassword(ForgotPasswordDTO forgotpassswordmodel)
+        {
 
-                //var userid = _authenticationService.ValidateOTP(otpreturn);
-                //var user = _authenticationService.OtpValidation(Otpreq);
+            var psswReq = new ForgotPasswordModel { NewPassword = forgotpassswordmodel.NewPassword, ConfirmPassword = forgotpassswordmodel.ConfirmPassword, UserId = forgotpassswordmodel.UserId};
+            var result = _authenticationService.UpdatePaasword(psswReq);
+
+            if (result.IsSuccessful)
+            {
+
+                return Ok(result.RequestedObject);
+
 
             }
-            return View() ;
+            return BadRequest(result.ValidationMessages);
         }
-
     }
+    
 }
 

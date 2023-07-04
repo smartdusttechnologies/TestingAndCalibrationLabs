@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
@@ -37,7 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var validatePasswordResult = ValidatePassword(password, passwordPolicy);
                 return validatePasswordResult;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
@@ -84,6 +85,40 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Characters which are not allowed in password are " + securityParameter.DisAllowedChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
+            }
+            return new RequestResult<bool>(true);
+        }
+        /// <summary>
+        /// method to Reset Password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public RequestResult<bool> ChangePaaswordPolicy(ForgotPasswordModel password)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+
+            if (password.NewPassword.IsNullOrEmpty())
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            else if (password.ConfirmPassword.IsNullOrEmpty())
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            //else if (password.NewPassword == password.ConfirmPassword)
+            //{
+            //    validationMessages.Add(new ValidationMessage { Reason = "New password is same as Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
+            //    return new RequestResult<bool>(false, validationMessages); ;
+
+            //}
+            else if (password.NewPassword != password.ConfirmPassword)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+
             }
             return new RequestResult<bool>(true);
         }
