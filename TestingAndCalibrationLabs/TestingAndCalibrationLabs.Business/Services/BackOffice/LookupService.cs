@@ -31,5 +31,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _lookupRepository.GetByLookupCategoryId(lookupCategoryId);
         }
+        public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
+        {
+
+            return _lookupRepository.GetLookupCategoryId( lookupCategoryId);
+        }
     }
 }

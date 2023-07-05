@@ -21,6 +21,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="tests"></param>
         /// <returns></returns>
         string SelectedOptionSort(List<ListSorterModel> tests);
+        //string MethodName(List<ListSorterModel> listSorterModels);
         IEnumerable<Node<ListSorterModel>> HirearichyCreate(List<ListSorterModel> listSorterModels);
     }
 }

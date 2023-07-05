@@ -10,16 +10,20 @@
             <input type="hidden" asp-for="UiPageTypeId" />
             <input type="hidden" asp-for="WorkflowStageId" value="true" />
             <input type="hidden" id="workflowStageChecker" value="false" />
+            <script>
+                var comboTree1;
+
+            </script>
             <div class="row ms-1 me-1">
                 @foreach (var item in Model.Layout)
                 {
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
 
                 }
-            </div>        
+            </div>
         </form>
         <div class="form-group" style="margin-left:2rem;">
-            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()" >Save</button>
+            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()">Save</button>
         </div>
     </div>
 </div>
@@ -51,6 +55,7 @@
     </div>
 </div>
 <script>
+    debugger;
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -78,7 +83,7 @@
         //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
-        
+
         //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
 
@@ -87,11 +92,11 @@
             }
             return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
         }
+        debugger;
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
-           // debugger;
 
             if (uiPageMetaData[i].controlCategoryName == "DataControl" || uiPageMetaData[i].multiValueControl == true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
@@ -102,7 +107,6 @@
                 var metadataId = uiPageMetaData[i].id;
                 var List;
                 if (uiPageMetaData[i].multiValueControl == true) {
-
                     var filddata = $(fieldId).val();
                     List = filddata.split(",");
                     for (let x = 0; x < List.length; x++) {
@@ -114,23 +118,20 @@
                     }
                 }
                 if (uiPageMetaData[i].multiValueControl != true) {
-
-                    var fieldValue = $(fieldId).val();
-                    var keyValuepair = {};
-                    keyValuepair.UiPageMetadataId = metadataId;
-                    keyValuepair.UiPageTypeId = uiPageTypeId;
-                    keyValuepair.Value = fieldValue;
-                    fieldValues.push(keyValuepair)
+                var fieldValue = $(fieldId).val();
+                var keyValuepair = {};
+                keyValuepair.UiPageMetadataId = metadataId;
+                keyValuepair.UiPageTypeId = uiPageTypeId;
+                keyValuepair.Value = fieldValue;
+                fieldValues.push(keyValuepair)
                 }
-            
-
             }
         }
-       
+
         $.ajax({
             type: 'POST',
             url: url,
-            data: {  moduleId, workflowStageId, uiPageTypeId, fieldValues },
+            data: { moduleId, workflowStageId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");
@@ -157,3 +158,5 @@
         });
     }
 </script>
+@*<script src="comboTreePlugin.js?v2" type="text/javascript"></script>
+*@

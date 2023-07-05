@@ -17,5 +17,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains List Of UiPageData
         /// </summary>
         public List<UiPageDataModel> UiPageData { get; set; }
+        public ListSorterModel UiPageDatas { get; set; }
+
+        // public multiselectvaluesModel multivalue { get; set; }
     }
 }

@@ -67,19 +67,24 @@
     }
 </script>
 <script type="text/javascript">
+    debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     debugger
     var updatedDate = mainModel.updatedDate;
+    //var workflowStageId = mainModel.workflowStageId;
+    //var RecordId = mainModel.RecordId;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
+    //var workflowStageId = parseInt($("#workflowStageId").val())
     var id = parseInt($("#Id").val())
     var url = $("#commonForm").attr("action");
     AjaxFormSubmit = () => {
         debugger;
         WheelLoader();
-        let workflowStageId = parseInt($("#WorkflowStageId").val())
+       // let workflowStageId = parseInt($("#workflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
+            //debugger;
 
             if (!member.children || !member.children.length) {
                 return member.value;
@@ -90,32 +95,69 @@
         var fieldValues = [];
       
         for (let i = 0; i < layout.length; i++) {
-            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
+            
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
+                debugger;
                 var metadataId = layout[i].uiPageMetadata.id;
                 debugger;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
                 if (layout[i].uiPageData != null) {
-                    var pageDataId = layout[i].uiPageData.id;
-                    var oldValue = layout[i].uiPageData.value;
+                    debugger;
+                    var pageDataId = layout[i].uiPageData[0].id;
+                    var childIds = layout[i].uiPageData[0].childId;
+                    var workflowStageId = layout[i].uiPageData[0].workflowStageId;
+                    var RecordIds = layout[i].uiPageData[0].recordId;
+
+                    var oldValue = layout[i].uiPageData[0].value;
+                    var List;
                     if (oldValue != fieldValue) {
+                        if (layout[i].uiPageMetadata.multiValueControl == true) {
+                            //var uiPageData = layout[i].uiPageData;
+                            var filddata = $(fieldId).val();
+                            List = filddata.split(",");
+                            for (let x = 0; x < List.length; x++) {
+                                var keyValuepair = {};
+                                keyValuepair.Id = pageDataId;
+                               // keyValuepair.childId = childIds;
+                                if (x < uiPageData.length) {
+                                keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
+                               }
+                                keyValuepair.uiPageMetadataId = metadataId;
+                                keyValuepair.RecordId = RecordIds;
+                                keyValuepair.WorkflowStageId = workflowStageId;
+                                keyValuepair.Value = List[x];
+                                keyValuepair.UiPageTypeId = uiPageTypeId;
+                                fieldValues.push(keyValuepair)
+
+                            }
+                        }
+                        debugger;
+                        function findChildId(uiPageData, value) {
+                            var childId = uiPageData.find(item => item.value === value)?.childId;
+                            return childId !== undefined ? childId : null;
+                        }
+                        if (layout[i].uiPageMetadata.multiValueControl != true) {
                         keyValuepair.Id = pageDataId;
+                        keyValuepair.childId = childIds;
                         keyValuepair.uiPageMetadataId = metadataId;
-                        keyValuepair.RecordId = id;
+                            keyValuepair.RecordId = RecordIds;
+                        keyValuepair.WorkflowStageId = workflowStageId;
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
+                        }
                     }
                 }
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
-                    keyValuepair.RecordId = id;
+                    keyValuepair.RecordId = RecordIds;
                     keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)

@@ -16,6 +16,7 @@
 }
 <script>
     $(document).ready(function () {
+        debugger;
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var uiPageData = modelData.value.uiPageData;
         var idOfRecord = $("#Id").val();

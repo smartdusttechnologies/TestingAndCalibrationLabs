@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {

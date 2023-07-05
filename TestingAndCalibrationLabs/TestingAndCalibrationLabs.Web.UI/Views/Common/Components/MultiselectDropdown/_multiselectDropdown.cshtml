@@ -1,0 +1,50 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
+<div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+    <input class="form-input width-full black-border" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" id="Emtd-@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder="MultipleSelect" rows="1" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiPageMetadata.UiControlDisplayName" />
+    <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+</div>
+<input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
+        var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        var uiPageData = modelData.value.uiPageData;
+        var comboTree1;
+        var ids = "#Emtd-" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("MultipleValue","Common")",
+            data: { lookupCategoryId: lookupCategoryId },
+            success: function (response) {
+                debugger;
+                var value = [];
+                if (idOfRecord != undefined && uiPageData != null) {
+                    debugger;
+                    for (let i = 0; i < uiPageData.length; i++) {
+                        var val = uiPageData[i].value;
+                        value.push(val);
+                    }
+                }
+                comboTree1 = $(ids).comboTree({
+                    source: response,
+                    isMultiple: true,
+                    cascadeSelect: true,
+                    withSelectAll: true,
+                    selected: value
+                });
+                comboTree1.onChange(function () {
+                    let selectedIds = this.getSelectedIds();
+                    let listOfLookups = selectedIds.toString();
+                    $(id).val(listOfLookups);
+                });
+
+            },
+        });
+
+    });
+</script>
+

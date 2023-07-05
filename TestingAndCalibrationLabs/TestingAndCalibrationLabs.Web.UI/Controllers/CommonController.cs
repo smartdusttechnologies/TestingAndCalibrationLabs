@@ -1,13 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Org.BouncyCastle.Asn1.Ocsp;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -16,24 +20,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     /// </summary>
     public class CommonController : Controller
     {
+        public string jsonData;
+        private readonly ILookupService _lookupService;
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly IGoogleDriveService _googleDriveService;
         private readonly IWorkflowStageService _workflowStageService;
+        private readonly IListSorterService _listSorterService;
+         
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
-        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService)
+        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService, IListSorterService listSorterService, ILookupService lookupService)
         {
             _logger = logger;
             _commonService = commonService;
             _mapper = mapper;
             _googleDriveService = googleDriveService;
             _workflowStageService = workflowStageService;
+            _listSorterService = listSorterService;
+            _lookupService = lookupService;
         }
 
         /// <summary>
@@ -58,7 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
 
             List<string> imageId = new List<string>();
-
+            
             foreach (var item in Request.Form.Files)
             {
                 AttachmentModel attachmentModel = new AttachmentModel();
@@ -67,23 +77,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var result = _googleDriveService.Upload(attachmentModel);
                 imageId.Add(result.RequestedObject.FilePath);
 
-            }
+                //if (result.IsSuccessful)
+                //{
 
+
+                    
+                //    return Ok(imageId);
+                //}
+                
+                //else
+                //{
+                //    return BadRequest();
+                //}
+            }
             return Ok(imageId);
-        }
-
-        public ActionResult DownloadFile(string fileId)
-        {
-            AttachmentModel attachment = _commonService.DownLoadAttachment(fileId);
-            var attachmentDTO = _mapper.Map<AttachmentModel, Models.AttachmentDTO>(attachment);
-            if (attachmentDTO != null)
-            {
-                return File(attachmentDTO.FileStream, attachmentDTO.ContentType, attachmentDTO.FileName);
-            }
-            else
-            {
-                return new EmptyResult();
-            }
         }
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
@@ -140,15 +147,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Create Record For Common Page
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="lookupCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int id = 1)
         {
             var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
+            
             return base.View(result);
-        }
 
+        }
+        [HttpGet]
+        /// <param name="lookupCategoryId"></param>
+        public ActionResult MultipleValue(int lookupCategoryId  )
+        {
+            var lookupList = _lookupService.GetLookupCategoryId(lookupCategoryId);
+           
+            List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
+            foreach (var item in lookupList)
+            {
+                listSorterDTOs.Add(new ListSorterModel { Id = item.Id, Name = item.Name, ParentId = item.ParentId });
+            }
+            var jsonFormated = _listSorterService.SortListToJson(listSorterDTOs);
+            var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
+            return Json(jsonObjectConverted);
+        }
         /// <summary>
         /// for creating data
         /// </summary>
@@ -234,6 +258,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
+        [HttpGet]
+        /// <param name="uiPageDataId"></param>
 
         public ActionResult GetUiPageDataById(int uiPageDataId)
         {
@@ -245,4 +271,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return BadRequest();
         }
     }
+
+    
 }
