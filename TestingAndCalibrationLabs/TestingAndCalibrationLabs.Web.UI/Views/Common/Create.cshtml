@@ -55,7 +55,6 @@
     </div>
 </div>
 <script>
-    debugger;
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -70,14 +69,11 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var moduleId = parseInt($("#ModuleId").val())
         var uiPageTypeId = parseInt($("#UiPageTypeId").val())
         debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
-    debugger;
     function AjaxFormSubmit() {
-        debugger;
         WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
         //createRipple(this);
@@ -92,7 +88,6 @@
             }
             return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
         }
-        debugger;
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];

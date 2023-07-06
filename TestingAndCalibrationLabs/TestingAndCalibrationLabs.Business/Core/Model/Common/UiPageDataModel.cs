@@ -17,8 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         private string _value;
         public int UiPageDataId { get; set; }
         public int ChildId { get; set; }
-
-
         public string Value
         {
             get
@@ -30,11 +28,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
                 _value = value;
             }
         }
-        public int ChildId { get; set; }
         public int RecordId { get; set; }
-        //public string ParentId { get; set; }
-        //public string Name { get; set; }
     }
-   
-
 }

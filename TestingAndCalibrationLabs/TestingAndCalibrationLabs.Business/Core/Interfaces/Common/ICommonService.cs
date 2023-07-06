@@ -67,10 +67,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 
          AttachmentModel DownLoadAttachment(string fileId);
 
-        // UiPageDataModel Get(string imagepath);
-
-        List<UiPageDataModel> GetUiPageDataById(int uiPageDataId);
-
-
     }
 }

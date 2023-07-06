@@ -238,30 +238,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             return record;
         }
 
-        //public MultiselectDropdownModel Multilectal(List<multiselectvaluesModel> Multi)
-        //{
-
-        //    //List<multivalues3Model> hireriche = new List<multivalues3Model>();
-        //    //Multi.ForEach(x => hireriche.Add(new multivalues3Model { Subs = x }));
-
-        //    //var hiera = Multi.Hierarchize(
-        //     //0, // The "root level" key. We're using -1 to indicate root level.
-        //     //f => f.Id, // The ID property on your object
-        //     //f => f.ParentId// The property on your object that points to its parent
-        //     //f => f.Orders // The property on your object that specifies the order within its parent
-        //     //);
-
-        //    //ViewBag.jsonData = jsonData;
-        //    var cat = new MultiselectDropdownModel
-        //    {
-
-        //        //    Layo = hiera
-        //    };
-
-        //    return cat;
-
-        //}
-
         /// <summary>
         /// This Method Return Data For Grid
         /// </summary>
@@ -277,16 +253,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
-        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
-        {
-            return _commonRepository.GetUiPageDataById(uiPageDataId);
-        }
-
-    
-    public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
-    {
-        return _commonRepository.GetUiPageDataById(uiPageDataId);
-    }
 
     /// <summary>
     /// Get Record By Record Id
@@ -296,8 +262,8 @@ namespace TestingAndCalibrationLabs.Business.Services
     public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
-            var recordMdel = _recordGenericRepository.Get(recordId);
-            var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
+            var recordModel = _recordGenericRepository.Get(recordId);
+            var uiMetadata = GetMetadata(recordModel.ModuleId, recordModel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
             var uiPageData = _commonRepository.GetPageData(recordId);
@@ -309,19 +275,13 @@ namespace TestingAndCalibrationLabs.Business.Services
                 UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             }));
 
-            //List<LayoutModel> hirericheyse = new List<LayoutModel>();
-            //uiPageData.GroupBy(x => x.UiPageMetadataId).ToList()
-            //    .ForEach(x => hirericheyse.Add(new LayoutModel { UiPageMetadata = (UiPageMetadataModel)x, UiPageData = uiPageData.Where(y => y.UiPageMetadataId == y.Id) }.ToList()));
-
-
-
-            var hierarchy = hirericheys.Hierarchize(
+        var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel. WorkflowStageId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordModel.UpdatedDate, ModuleId = recordModel.ModuleId, WorkflowStageId = recordModel. WorkflowStageId, Layout = hierarchy };
         }
         #region Multi Value Control
 
@@ -331,10 +291,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var dataDownloaded = _googleUploadDownloadService.Download(fileId);
             return dataDownloaded;
         }
-        //public UiPageDataModel Get(string imagepath)
-        //{
-        //    return _commonRepository.Get(imagepath);
-        //}
+      
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>
