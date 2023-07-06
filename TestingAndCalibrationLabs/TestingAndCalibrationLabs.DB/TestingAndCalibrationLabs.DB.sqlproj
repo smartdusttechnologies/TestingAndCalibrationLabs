@@ -56,6 +56,8 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\User Defined Types\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Record.sql" />
@@ -106,6 +108,16 @@
     <Build Include="dbo\Tables\Application.sql" />
     <Build Include="dbo\Tables\Activity.sql" />
     <Build Include="dbo\Tables\ActivityMetadata.sql" />
+    <Build Include="dbo\Tables\UiPageStringType.sql" />
+    <Build Include="dbo\Tables\UiPageIntType.sql" />
+    <Build Include="dbo\Tables\UiPageFileAttachType.sql" />
+    <Build Include="dbo\Stored Procedures\update_store_proc_Record.sql" />
+    <Build Include="dbo\Stored Procedures\store_proc_Record.sql" />
+    <Build Include="dbo\User Defined Types\updatechildDatas.sql" />
+    <Build Include="dbo\User Defined Types\UiPageDataTVP.sql" />
+    <Build Include="dbo\User Defined Types\childData.sql" />
+    <Build Include="dbo\Tables\UiPageDecimalType.sql" />
+    <Build Include="dbo\Tables\UiPageDateType.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />
