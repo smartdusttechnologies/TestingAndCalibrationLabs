@@ -70,7 +70,6 @@
     debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
-    //var workflowStageId = mainModel.workflowStageId;
     //var RecordId = mainModel.RecordId;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
@@ -79,10 +78,9 @@
     var url = $("#commonForm").attr("action");
     AjaxFormSubmit = () => {
         WheelLoader();
-       // let workflowStageId = parseInt($("#workflowStageId").val())
+        let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
-            //debugger;
 
             if (!member.children || !member.children.length) {
                 return member.value;
@@ -107,9 +105,8 @@
                     debugger;
                     var pageDataId = layout[i].uiPageData[0].id;
                     var childIds = layout[i].uiPageData[0].childId;
-                    var workflowStageId = layout[i].uiPageData[0].workflowStageId;
+                    //var workflowStageId = layout[i].uiPageData[0].workflowStageId;
                     var RecordIds = layout[i].uiPageData[0].recordId;
-
                     var oldValue = layout[i].uiPageData[0].value;
                     var List;
                     if (oldValue != fieldValue) {
@@ -118,6 +115,7 @@
                             var filddata = $(fieldId).val();
                             List = filddata.split(",");
                             for (let x = 0; x < List.length; x++) {
+                               // if(){}
                                 var keyValuepair = {};
                                 keyValuepair.Id = pageDataId;
                                // keyValuepair.childId = childIds;
@@ -125,8 +123,8 @@
                                 keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
                                }
                                 keyValuepair.uiPageMetadataId = metadataId;
-                                keyValuepair.RecordId = RecordIds;
-                                keyValuepair.WorkflowStageId = workflowStageId;
+                                keyValuepair.RecordId = id;
+                               // keyValuepair.WorkflowStageId = workflowStageId;
                                 keyValuepair.Value = List[x];
                                 keyValuepair.UiPageTypeId = uiPageTypeId;
                                 fieldValues.push(keyValuepair)
@@ -142,8 +140,8 @@
                         keyValuepair.Id = pageDataId;
                         keyValuepair.childId = childIds;
                         keyValuepair.uiPageMetadataId = metadataId;
-                            keyValuepair.RecordId = RecordIds;
-                        keyValuepair.WorkflowStageId = workflowStageId;
+                        keyValuepair.RecordId = id;
+                        //keyValuepair.WorkflowStageId = workflowStageId;
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
@@ -155,7 +153,7 @@
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = RecordIds;
                     keyValuepair.Value = fieldValue;
-                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
                 }
             }
