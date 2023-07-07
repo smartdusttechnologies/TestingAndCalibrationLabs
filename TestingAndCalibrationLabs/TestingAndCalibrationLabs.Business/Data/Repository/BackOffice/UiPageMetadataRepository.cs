@@ -67,7 +67,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
-                                                    and dt.IsDeleted = 0").ToList();
+                                                    and dt.IsDeleted = 0
+                                                    and lc.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0
+                                                    and l.IsDeleted = 0").ToList();
         }
 
         /// <summary>

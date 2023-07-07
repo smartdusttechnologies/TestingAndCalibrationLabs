@@ -48,7 +48,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     inner join[Module] pt on upt.ModuleId = pt.Id
 											  where
                                                     upt.IsDeleted = 0
-                                                    and unc.IsDeleted = 0 ").ToList();
+                                                    and unc.IsDeleted = 0
+                                                    and pt.IsDeleted = 0").ToList();
         }
 
         /// <summary>

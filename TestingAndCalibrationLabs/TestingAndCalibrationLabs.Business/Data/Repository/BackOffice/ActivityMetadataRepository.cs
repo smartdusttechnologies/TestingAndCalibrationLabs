@@ -30,7 +30,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection con = _connectionFactory.GetConnection;
             return con.Query<ActivityMetadataModel>(@"select * from ActivityMetadata
                                                         where ActivityId = @activityId  
-                                                        and WorkflowStageId = @workflowStageId", new { activityId, workflowStageId }).ToList();
+                                                        and WorkflowStageId = @workflowStageId 
+                                                        and IsDeleted = 0", new { activityId, workflowStageId }).ToList();
            
         }
     }

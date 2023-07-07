@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                 where
                                                      upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    ").ToList();
+                                                    and lc.IsDeleted = 0").ToList();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     upm.UiPageMetadataId = @metadataId
                                                     and upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    ", new { metadataId = id }).First();
+                                                    and lc.IsDeleted = 0", new { metadataId = id }).First();
         }
     }
 }
