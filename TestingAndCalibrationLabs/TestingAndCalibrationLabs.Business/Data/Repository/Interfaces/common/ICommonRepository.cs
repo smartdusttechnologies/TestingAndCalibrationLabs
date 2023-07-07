@@ -88,6 +88,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="record"></param>
         /// <returns></returns>
         bool DeleteMultiValue(RecordModel record);
+        /// <summary>
+        /// get all data in UiPageData based on uiPageDataId
+        /// </summary>
+        /// <param name="uiPageDataId"></param>
+        /// <returns></returns>
         List<UiPageDataModel> GetUiPageDataById(int uiPageDataId);
     }
 }

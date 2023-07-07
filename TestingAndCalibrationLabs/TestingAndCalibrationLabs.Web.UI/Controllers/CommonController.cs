@@ -76,19 +76,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 var result = _googleDriveService.Upload(attachmentModel);
                 imageId.Add(result.RequestedObject.FilePath);
-
-                //if (result.IsSuccessful)
-                //{
-
-
-                    
-                //    return Ok(imageId);
-                //}
-                
-                //else
-                //{
-                //    return BadRequest();
-                //}
             }
             return Ok(imageId);
         }
@@ -159,7 +146,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
         }
         [HttpGet]
+        /// <summary>
+        /// To Create Record For multiplevalues in Common Page
+        /// </summary>
         /// <param name="lookupCategoryId"></param>
+        /// <returns></returns>
         public ActionResult MultipleValue(int lookupCategoryId  )
         {
             var lookupList = _lookupService.GetLookupCategoryId(lookupCategoryId);

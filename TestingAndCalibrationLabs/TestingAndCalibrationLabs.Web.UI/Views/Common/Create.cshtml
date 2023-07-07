@@ -70,19 +70,15 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var moduleId = parseInt($("#ModuleId").val())
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
-        debugger;
         WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
         //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
-
         //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
 

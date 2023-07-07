@@ -16,13 +16,11 @@
 }
 <script>
     $(document).ready(function () {
-        debugger;
         var modelData = JSON.parse('@Json.Serialize(Model)');
         var uiPageData = modelData.value.uiPageData;
         var idOfRecord = $("#Id").val();
         if (idOfRecord != undefined && uiPageData != null) {
             var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
-           
             var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
             var val = uiPageData[0].value;
             $(id).val(val);

@@ -66,12 +66,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             RequestResult<bool> requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
-                //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
                 record.UpdatedDate = DateTime.Now;
-
                 record.Id = _commonRepository.Insert(record);
-                // record.WorkflowStageId = workflowStageId;
-                //_workflowActivityService.WorkflowActivity(record);
                 return new RequestResult<bool>(true);
             }
             return requestResult;
@@ -170,13 +166,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
-                    //record.WorkflowStageId = oldRecord.WorkflowStageId;
-                    //_workflowActivityService.WorkflowActivity(record);
-                    return new RequestResult<bool>(true);
                 }
-                return new RequestResult<bool>(false);
+                return new RequestResult<bool>(true);
+
             }
-            return requestResult;
+            return new RequestResult<bool>(false);
         }
         /// <summary>
         /// Get By Module Id For Create
@@ -206,30 +200,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             };
             return record;
         }
-
-        //public MultiselectDropdownModel Multilectal(List<multiselectvaluesModel> Multi)
-        //{
-
-        //    //List<multivalues3Model> hireriche = new List<multivalues3Model>();
-        //    //Multi.ForEach(x => hireriche.Add(new multivalues3Model { Subs = x }));
-
-        //    //var hiera = Multi.Hierarchize(
-        //     //0, // The "root level" key. We're using -1 to indicate root level.
-        //     //f => f.Id, // The ID property on your object
-        //     //f => f.ParentId// The property on your object that points to its parent
-        //     //f => f.Orders // The property on your object that specifies the order within its parent
-        //     //);
-
-        //    //ViewBag.jsonData = jsonData;
-        //    var cat = new MultiselectDropdownModel
-        //    {
-
-        //        //    Layo = hiera
-        //    };
-
-        //    return cat;
-
-        //}
 
         /// <summary>
         /// This Method Return Data For Grid
@@ -263,7 +233,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
-            //var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
             var uiPageData = _commonRepository.GetPageData(recordId);
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
@@ -271,12 +240,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 UiPageMetadata = x,
                 UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             }));
-
-            //List<LayoutModel> hirericheyse = new List<LayoutModel>();
-            //uiPageData.GroupBy(x => x.UiPageMetadataId).ToList()
-            //    .ForEach(x => hirericheyse.Add(new LayoutModel { UiPageMetadata = (UiPageMetadataModel)x, UiPageData = uiPageData.Where(y => y.UiPageMetadataId == y.Id) }.ToList()));
-
-
 
             var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.

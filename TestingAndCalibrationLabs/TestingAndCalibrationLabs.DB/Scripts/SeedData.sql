@@ -166,7 +166,8 @@ BEGIN
 		   (35, N'year', N'Year', 0, 8),
 		   (36, N'question', N'Question - Checkbox', 0, 9),
 		   (37, N'workflowStage', N'Workflow Stage', 0, 8),
-		   (38, N'Download', N'ReportTemplate', 0, 9)
+		   (38, N'Download', N'ReportTemplate', 0, 9),
+		   (39,N'multivalue',N'MultiselectDropdown',0,8)
     SET IDENTITY_INSERT [dbo].[UiControlType]  OFF
 END
 GO
@@ -202,7 +203,9 @@ BEGIN
 			  (2008, N'WorkflowStage', N'~/Views/Common/Components/WorkflowStage/_workflowStage.cshtml', 0, 37),
 			  (2010, N'Download', N'~/Views/Common/Components/Download/_download.cshtml', 0, 38),
 			  (2011, N'MultiControlGrid', N'~/Views/Common/Components/Grid/_gridMultiControl.cshtml', 0, 33),
+			  (2012, N'MultiselectDropdown',N'~/Views/Common/Components/MultiselectDropdown/_multiselectDropdown.cshtml',0,39),
 			  (2014, N'Text', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
+
 
 			
 
@@ -343,7 +346,8 @@ BEGIN
 			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
 			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
 			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
-			(3064, 1, 0, N'ProgressStatus1', 0, 1, 2014, N'progress')
+			(3064, 1, 0, N'ProgressStatus1', 0, 1, 2014, N'progress'),
+			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0')
 
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
 END
@@ -357,7 +361,8 @@ BEGIN
 			   VALUES
               (1, 1019, 1005, 0),
 			  (3, 3058, 1007, 0),
-			  (4, 3062, 1008, 0)
+			  (4, 3062, 1008, 0),
+			  (5, 3065,1005,0)
     SET IDENTITY_INSERT [dbo].[UiPageMetadataCharacteristics]  OFF
 END
 GO
@@ -619,7 +624,8 @@ BEGIN
 			(3127, 3056, 17, 0, 1, 6, 0, NULL, 1),
 			(3129, 3057, 17, 0, 1, 6, 0, NULL, 1),
 			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
-			(3131, 3064, 15, 0, 1, 0, 0, NULL, 0)
+			(3131,3065, 15, 0, 1, 4,0, NULL, 0),
+			(3132, 3064, 15, 0, 1, 0, 0, NULL, 0)
 
 
 

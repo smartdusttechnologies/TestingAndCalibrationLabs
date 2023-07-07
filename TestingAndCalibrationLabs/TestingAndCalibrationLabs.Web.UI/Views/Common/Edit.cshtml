@@ -70,10 +70,8 @@
     debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
-    //var RecordId = mainModel.RecordId;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
-    //var workflowStageId = parseInt($("#workflowStageId").val())
     var id = parseInt($("#Id").val())
     var url = $("#commonForm").attr("action");
     AjaxFormSubmit = () => {
@@ -105,26 +103,21 @@
                     debugger;
                     var pageDataId = layout[i].uiPageData[0].id;
                     var childIds = layout[i].uiPageData[0].childId;
-                    //var workflowStageId = layout[i].uiPageData[0].workflowStageId;
                     var RecordIds = layout[i].uiPageData[0].recordId;
                     var oldValue = layout[i].uiPageData[0].value;
                     var List;
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
-                            //var uiPageData = layout[i].uiPageData;
                             var filddata = $(fieldId).val();
                             List = filddata.split(",");
                             for (let x = 0; x < List.length; x++) {
-                               // if(){}
                                 var keyValuepair = {};
                                 keyValuepair.Id = pageDataId;
-                               // keyValuepair.childId = childIds;
                                 if (x < uiPageData.length) {
                                 keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
                                }
                                 keyValuepair.uiPageMetadataId = metadataId;
                                 keyValuepair.RecordId = id;
-                               // keyValuepair.WorkflowStageId = workflowStageId;
                                 keyValuepair.Value = List[x];
                                 keyValuepair.UiPageTypeId = uiPageTypeId;
                                 fieldValues.push(keyValuepair)
@@ -141,7 +134,6 @@
                         keyValuepair.childId = childIds;
                         keyValuepair.uiPageMetadataId = metadataId;
                         keyValuepair.RecordId = id;
-                        //keyValuepair.WorkflowStageId = workflowStageId;
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
