@@ -1,0 +1,54 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.LookupDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Lookup</h1>
+
+<h4>Edit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="Lookup" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <label class="form-label" for="Name">Name</label>
+                </div>
+
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+
+                    <select class="form-input width-full black-border" name="LookupCategoryId" id="LookupCategory" onchange="this.setAttribute('value',this.value)" asp-for="LookupCategoryId">
+                        <option disabled="disabled" selected>....</option>
+                        @foreach (var item in ViewBag.LookupCategory)
+                        {
+
+                            <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                    <label class="form-label" for="LookupCategory">LookupCategoryName</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
