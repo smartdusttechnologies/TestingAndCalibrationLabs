@@ -23,14 +23,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <summary>
         /// Insert Record In Ui Page Navigation 
         /// </summary>
-        /// <param name="uiPageNavigationModel"></param>
+        /// <param name="UiPageNavigationModel"></param>
         /// <returns></returns>
-        public int Create(UiPageNavigationModel uiPageNavigationModel)
+        public int Create(UiPageNavigationModel UiPageNavigationModel)
         {
             string query = @"Insert into [UiPageNavigation] (Url,ModuleId,UiNavigationCategoryId)
                                 values (@Url,@ModuleId,@UiNavigationCategoryId)";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uiPageNavigationModel);
+            return db.Execute(query, UiPageNavigationModel);
         }
 
        
@@ -66,6 +66,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     inner join[Module] pt on upt.ModuleId = pt.Id
 											  where
                                                     upt.Id=@Id and
+
                                                     upt.IsDeleted = 0
                                                     and unc.IsDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
             
@@ -74,19 +75,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <summary>
         /// Edit Record From Ui Page Navigation 
         /// </summary>
-        /// <param name="uipageNavigationModel"></param>
+        /// <param name="UiPageNavigationModel"></param>
         /// <returns></returns>
-        public int Update(UiPageNavigationModel uipageNavigationModel)
+        public int Update(UiPageNavigationModel UiPageNavigationModel)
         {
             string query = @"update [UiPageNavigation] Set 
                                     Url=@Url,
                                ModuleId = @ModuleId,
                                 UiNavigationCategoryId = @UiNavigationCategoryId
-                               Where Id = @Id";
+                               Where
+                               IsDeleted = 0 and
+                               Id = @Id";
 
             using IDbConnection db = _connectionFactory.GetConnection;
-           
-            return db.Execute(query, uipageNavigationModel);
+
+            return db.Execute(query, UiPageNavigationModel);
         }
     }
 }

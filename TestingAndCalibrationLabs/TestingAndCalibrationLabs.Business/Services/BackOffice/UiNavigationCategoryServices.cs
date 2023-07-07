@@ -23,9 +23,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiNavigationCategoryModel uiPageTypeModel)
+        public RequestResult<int> Create(UiNavigationCategoryModel UiNavigationCategoryModel)
         {
-            _genericRepository.Insert(uiPageTypeModel);
+            _genericRepository.Insert(UiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
 
@@ -45,9 +45,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id ,UiNavigationCategoryModel uiPageTypeModel)
+        public RequestResult<int> Update(int id ,UiNavigationCategoryModel UiNavigationCategoryModel)
         {
-            _genericRepository.Update(uiPageTypeModel);
+            _genericRepository.Update(UiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
 
@@ -69,14 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get(id);
         }
-
-       
-
-
-
-        #endregion
-        #region Private Methods
-
+     
         #endregion
     }
 }

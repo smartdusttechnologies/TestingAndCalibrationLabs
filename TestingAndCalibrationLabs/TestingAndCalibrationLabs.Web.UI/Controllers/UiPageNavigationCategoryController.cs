@@ -64,17 +64,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] UiNavigationCategoryDTO uiPageNavigationCategoryDTO)
+        public IActionResult Edit(int id, [Bind] UiNavigationCategoryDTO UiNavigationCategoryDto)
         {
 
             if (ModelState.IsValid)
             {
-                var pageNavigation = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(uiPageNavigationCategoryDTO);
+                var pageNavigation = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(UiNavigationCategoryDto);
                 _uiPageNavigationCategoryServics.Update(id, pageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageNavigationCategoryDTO);
+            return View(UiNavigationCategoryDto);
         }
 
         /// <summary>
@@ -95,17 +95,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] UiNavigationCategoryDTO uiNavigationCategoryDTO)
+        public IActionResult Create([Bind] UiNavigationCategoryDTO UiNavigationCategoryDto)
         {
             if (ModelState.IsValid)
             {
-
-                var pageModel = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(uiNavigationCategoryDTO);
-                _uiPageNavigationCategoryServics.Create(pageModel);
+                var NavigationPageModel = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(UiNavigationCategoryDto);
+                _uiPageNavigationCategoryServics.Create(NavigationPageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiNavigationCategoryDTO);
+            return View(UiNavigationCategoryDto);
         }
 
         /// <summary>

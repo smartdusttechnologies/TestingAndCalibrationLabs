@@ -35,11 +35,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult GetAllPagesWithNavigation()
         {
             var pageWithNavigationCategoryList = _uiPageNavigationService.Get();
-            var pageTypeList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageWithNavigationCategoryList);
+            var pagenavigationList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageWithNavigationCategoryList);
 
-            if (pageTypeList != null && pageTypeList.Count > 0)
+            if (pagenavigationList != null && pagenavigationList.Count > 0)
             {
-                var dataAfterSorting = pageTypeList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, Childrens = x.ToList() });
+                var dataAfterSorting = pagenavigationList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, Childrens = x.ToList() });
                 return Ok(dataAfterSorting);
             }
             return BadRequest();
@@ -80,20 +80,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// To Create Record In Ui Page Navigation
         /// </summary>
-        /// <param name="uiPageNavigationDTO"></param>
+        /// <param name="UiPageNavigationDto"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] UiPageNavigationDTO uiPageNavigationDTO)
+        public IActionResult Create([Bind] UiPageNavigationDTO UiPageNavigationDto)
         {
             if (ModelState.IsValid)
             {
-                var createPageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
+                var createPageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(UiPageNavigationDto);
                 _uiPageNavigationService.Create(createPageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageNavigationDTO);
+            return View(UiPageNavigationDto);
         }
 
         /// <summary>
@@ -140,17 +140,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
     
-        public IActionResult Edit(int id, [Bind] UiPageNavigationDTO uiPageNavigationDTO)
+        public IActionResult Edit(int id, [Bind] UiPageNavigationDTO UiPageNavigationDto)
         {
 
             if (ModelState.IsValid)
             {
-                var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDTO);
+                var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(UiPageNavigationDto);
                 _uiPageNavigationService.Update(id, pageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageNavigationDTO);
+            return View(UiPageNavigationDto);
         }
 
         /// <summary>

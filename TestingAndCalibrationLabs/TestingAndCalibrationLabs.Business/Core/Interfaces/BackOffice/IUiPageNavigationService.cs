@@ -12,8 +12,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Get All Record From Ui Page Navigation Service
         /// </summary>
-
-
         List<UiPageNavigationModel> Get();
 
         /// <summary>
@@ -27,13 +25,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        RequestResult<int> Create(UiPageNavigationModel uiPageNavigationModel);
+        RequestResult<int> Create(UiPageNavigationModel UiPageNavigationModel);
         /// <summary>
         /// Edit Record From Ui Page Navigation
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
+        /// <param Id="id"></param>
         /// <returns></returns>
-        RequestResult<int> Update(int id, UiPageNavigationModel uiPageNavigationModel);
+        RequestResult<int> Update(int id, UiPageNavigationModel UiPageNavigationModel);
         /// <summary>
         /// Delete Record From Ui Page Navigation
         /// </summary>

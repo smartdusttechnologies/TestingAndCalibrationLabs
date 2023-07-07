@@ -30,7 +30,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (IgnoreNone)
             {
                 pageNavigation = pageNavigation.Where(x => x.Id != (int)Helpers.None.Id).ToList();
-                ////// ////////        // write code to hide None element.
+                      // write code to hide None element.
             }
             pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.ModuleId));
             return pageNavigation;
@@ -41,15 +41,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="pageControl"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageNavigationModel pageControl)
+        public RequestResult<int> Create(UiPageNavigationModel UiPageNavigationModel)
         {
-            _uiPageNavigationTypeRepository.Create(pageControl);
+            _uiPageNavigationTypeRepository.Create(UiPageNavigationModel);
             return new RequestResult<int>(1);
-        }
-
-        public RequestResult<int> Create(int id, UiPageNavigationModel uiPageNavigationModel)
-        {
-            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -61,16 +56,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
+     
         /// <summary>
-        /// Get All Record From Ui Page Validation 
-        /// </summary>
-        /// <returns></returns>
-        //public List<UiPageNavigationModel> Get()
-        //{
-        //    return _uiPageNavigationTypeRepository.Get();
-        //}
-        /// <summary>
-        /// Get Record By Id From Ui Page Valdation 
+        /// Get Record By Id From Ui Page Navigation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -84,16 +72,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="pageControl"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageNavigationModel pageControl)
+        public RequestResult<int> Update(int id, UiPageNavigationModel UiPageNavigationModel)
         {
-            _uiPageNavigationTypeRepository.Update(pageControl);
+            _uiPageNavigationTypeRepository.Update(UiPageNavigationModel);
             return new RequestResult<int>(1);
         }
-
-        #endregion
-
-        #region Private Methods
-
         #endregion
     }
 }

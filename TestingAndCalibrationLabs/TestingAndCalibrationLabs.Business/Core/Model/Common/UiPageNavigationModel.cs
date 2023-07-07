@@ -15,17 +15,17 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string Url { get; set; }
 
         /// <summary>
-        /// Ui Page Type Id reference from Ui page type.
+        /// Ui Page module id refer to ui page type
         /// </summary>
         public int ModuleId { get; set; }
 
         /// <summary>
-        /// Ui Page Type Name
+        /// Module  Name
         /// </summary>
         public string ModuleName { get; set; }
 
         /// <summary>
-        /// Ui Navigation Category Id reference from UiNavigationCategory.
+        /// Ui Navigation Category Id.
         /// </summary>
         public int UiNavigationCategoryId { get; set; }
 
@@ -41,7 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 
         //TODO: the orders field should be int, it seems.
         /// <summary>
-        /// Order in which navigation item will appear.
+        /// Order is uinavigationcategory use.
         /// </summary>
         public string Orders { get; set; }
     }
