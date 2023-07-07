@@ -80,38 +80,30 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                 values (@PasswordHash, @PasswordSalt, @UserId, @ChangeDate)";
 
             string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
-
-           
-
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(userInsertQuery, p, transaction);
-
-
             int insertedUserId = p.Get<int>("@Id");
-
             passwordLogin.UserId = insertedUserId;
             passwordLogin.ChangeDate = DateTime.Now;
             db.Execute(passwordLoginInsertQuery, passwordLogin, transaction);
-
             // assign the general user role by default.
             db.Execute(userRoleInsertQuery, new { UserId = insertedUserId, RoleId = 2 }, transaction);
             transaction.Commit();
-
             return insertedUserId;
         }
-            public int Update(ChangePasswordModel changepasswordmodel)
+            public int Update(ChangePasswordModel ChangePasswordModel)
             {
             var p = new DynamicParameters();
             p.Add("@PasswordHash", "PasswordHash");
             p.Add("@PasswordSalt", "PasswordSalt");
 
-               string changepasswordQuery = @"update [PasswordLogin] Set
+               string ChangePasswordQuery = @"update [PasswordLogin] Set
                                            PasswordHash = @PasswordHash,
                                            PasswordSalt = @PasswordSalt
                                                 Where UserId = @UserId";
                using IDbConnection db = _connectionFactory.GetConnection;
-               return db.Execute(changepasswordQuery, changepasswordmodel);
+               return db.Execute(ChangePasswordQuery, ChangePasswordModel);
             }
     }
 }

@@ -65,10 +65,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordDTO changepasswordRequest)
+        public IActionResult ChangePassword(ChangePasswordDTO ChangePasswordDto)
         {
-            var psswReq = new ChangePasswordModel { OldPassword= changepasswordRequest.OldPassword, NewPassword=changepasswordRequest.NewPassword, ConfirmPassword=changepasswordRequest.ConfirmPassword, UserId = changepasswordRequest.UserId };
-            var result = _authenticationService.UpdatePaasword(psswReq);
+            var PassswordRequest = new ChangePasswordModel { OldPassword= ChangePasswordDto.OldPassword, NewPassword=ChangePasswordDto.NewPassword, ConfirmPassword=ChangePasswordDto.ConfirmPassword, UserId = ChangePasswordDto.UserId };
+            var result = _authenticationService.UpdatePaasword(PassswordRequest);
             if (result.IsSuccessful)
             {
 

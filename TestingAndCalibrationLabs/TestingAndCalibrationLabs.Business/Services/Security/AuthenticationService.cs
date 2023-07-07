@@ -201,20 +201,20 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate Of Change Password
         /// </summary>
-        public RequestResult<bool> UpdatePaasword(ChangePasswordModel changepasswordmodel)
+        public RequestResult<bool> UpdatePaasword(ChangePasswordModel ChangePasswordModel)
 
         {
             try
             {
-                var passworsResult = _securityParameterService.ChangePaaswordPolicy(changepasswordmodel);
-                if (passworsResult.IsSuccessful)
+                var PassworsResult = _securityParameterService.ChangePaaswordPolicy(ChangePasswordModel);
+                if (PassworsResult.IsSuccessful)
                 {
-                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, changepasswordmodel.NewPassword);
+                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, ChangePasswordModel.NewPassword);
 
-                    var passwordLogin = _authenticationRepository.GetLoginPassword(changepasswordmodel.Username);
+                    var PasswordLogin = _authenticationRepository.GetLoginPassword(ChangePasswordModel.Username);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     string valueHash = string.Empty;
-                    if (changepasswordmodel != null && !Hasher.ValidateHash(changepasswordmodel.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                    if (ChangePasswordModel != null && !Hasher.ValidateHash(ChangePasswordModel.OldPassword, PasswordLogin.PasswordSalt, PasswordLogin.PasswordHash, out valueHash))
                     {
                         validationMessages.Add(new ValidationMessage { Reason = "Old password is incorrect.", Severity = ValidationSeverity.Error, SourceId="OldPassword" });
                         return new RequestResult<bool>(validationMessages);
@@ -222,30 +222,28 @@ namespace TestingAndCalibrationLabs.Business.Services
 
                     if (validationResult.IsSuccessful)
                     {
-                        if (passworsResult.IsSuccessful)
+                        if (PassworsResult.IsSuccessful)
                         {
-                            PasswordLogin newPasswordLogin = Hasher.HashPassword(changepasswordmodel.NewPassword);
-                            ChangePasswordModel passwordModel = new ChangePasswordModel();
-                            passwordModel.PasswordHash= newPasswordLogin.PasswordHash;
-                            passwordModel.UserId=changepasswordmodel.UserId;
-                            passwordModel.PasswordSalt= newPasswordLogin.PasswordSalt;
+                            PasswordLogin NewPasswordLogin = Hasher.HashPassword(ChangePasswordModel.NewPassword);
+                            ChangePasswordModel PasswordModel = new ChangePasswordModel();
+                            PasswordModel.PasswordHash= NewPasswordLogin.PasswordHash;
+                            PasswordModel.UserId=ChangePasswordModel.UserId;
+                            PasswordModel.PasswordSalt= NewPasswordLogin.PasswordSalt;
 
-                            _userRepository.Update(passwordModel);
+                            _userRepository.Update(PasswordModel);
 
                             return new RequestResult<bool>(true);
                         }
-                     
                     }
                     return new RequestResult<bool>(false, validationResult.ValidationMessages);
                 }
-                return new RequestResult<bool>(false,passworsResult.ValidationMessages);
+                return new RequestResult<bool>(false, PassworsResult.ValidationMessages);
             }
             catch (Exception ex)
             {
 
                 return new RequestResult<bool>(false);
             }
-          
         }
         /// <summary>
         /// Method to Validate the New User Registation
