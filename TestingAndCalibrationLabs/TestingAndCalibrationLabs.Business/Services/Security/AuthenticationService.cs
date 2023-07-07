@@ -15,6 +15,8 @@ using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using static System.Net.WebRequestMethods;
 using Google.Apis.Drive.v3.Data;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -27,9 +29,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly ISecurityParameterService _securityParameterService;
         private readonly ILoggerRepository _loggerRepository;
         private readonly IRoleRepository _roleRepository;
+        private readonly IEmailService _emailService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             ILogger logger,
+            IEmailService emailservice,
+            IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
               IRoleRepository roleRepository)
@@ -41,6 +47,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             _securityParameterService = securityParameterService;
             _loggerRepository = loggerRepository;
             _roleRepository = roleRepository;
+            _emailService = emailservice;
+            _hostingEnvironment = hostingEnvironment;
+
 
         }
         /// <summary>
@@ -254,8 +263,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         
            if (forgotPasswordModel.OTP == existingUser1.OTP)
             {
-                if (forgotPasswordModel.CreatedDate <= existingUser1.CreatedDate.AddMinutes(1))
+                double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
+                if (forgotPasswordModel.CreatedDate <= existingUser1.CreatedDate.AddMinutes(OTPTime))
                 {
+              
+
+
                     return new RequestResult<int>(existingUser1.UserId);
 
                 }
@@ -330,51 +343,45 @@ namespace TestingAndCalibrationLabs.Business.Services
 
 
         /// <summary>
-        /// Method To Generate OTP .
+        /// Method To Creat OTP though user email 
         /// </summary>
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
         public RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel, int userId)
+       
         {
 
-            //var myEmail = "nileshmisrachp@gmail.com";
-            //var UserId = 2;
-
-            var myEmail = forgotPasswordModel.Email;
+            var myEmail = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
             var UserId = userId;
-                 
-            string otp = GenerateOTP(); 
-
-            string smtpServer = "smtp.gmail.com";
-            int smtpPort = 587;
-            string smtpUsername = "sdtfilestorage@gmail.com";
-            string smtpPassword = "SmartdustTech@13";
-
-            // Email configuration
-           // string emailFrom = "nileshmisrachp@gmail.com";
+            string otp = GenerateOTP();
             string subject = "OTP Verification";
             string body = $"{otp}";
+
+            EmailModel model = new EmailModel();
+            model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
+
+            model.Email = new List<string>();
+            model.Email.Add(forgotPasswordModel.Email);
+
+
+            model.HtmlMsg = CreateBody(model.EmailTemplate);
+            model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
+
+            var isemailsendsuccessfully1 = _emailService.Sendemail(model);
 
             ForgotPasswordModel otpgenerate = _authenticationRepository.InsertOtp(body, UserId);
 
             try
             {
-                using (SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort))
-                {
-                    smtpClient.EnableSsl = true;
-                    smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+           
 
                     using (MailMessage mailMessage = new MailMessage())
                     {
-                       // mailMessage.From = new MailAddress(emailFrom);
-                        mailMessage.To.Add(myEmail);
+                       
                         mailMessage.Subject = subject;
                         mailMessage.Body = body;
-
-                        smtpClient.Send(mailMessage);
                         Console.WriteLine("OTP sent successfully.");
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -397,8 +404,20 @@ namespace TestingAndCalibrationLabs.Business.Services
             return otp.ToString();
 
         }
+        /// <summary>
+        /// To use the email Template to send OTP to the User participated.
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        /// <returns></returns>
 
-        
-
+        private string CreateBody(string emailTemplate)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["ForgotPassOTP:EmailTemplate"])))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
+        }
     }
 }

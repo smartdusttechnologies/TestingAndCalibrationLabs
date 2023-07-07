@@ -29,6 +29,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public string PasswordSalt { get; set; }
 
 
+        public string EmailTemplate { get; set; }
+
+        public string OTPTemplate { get; set; }
+
+        public string HtmlMsg { get; set; }
+
 
 
 

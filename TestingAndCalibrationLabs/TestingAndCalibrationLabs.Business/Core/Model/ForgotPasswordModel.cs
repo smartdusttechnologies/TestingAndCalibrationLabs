@@ -28,6 +28,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 
         public DateTime ChangeDate { get; set; }
 
+        public string EmailTemplate { get; set; }
+
+        public string OTPTemplate { get; set; }
+
+        public string HtmlMsg { get; set; }
+
+
+
 
 
 

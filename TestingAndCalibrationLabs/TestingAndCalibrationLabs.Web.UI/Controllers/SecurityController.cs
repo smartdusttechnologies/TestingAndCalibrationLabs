@@ -150,7 +150,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ResetPassword(ForgotPasswordDTO forgotpassswordmodel)
         {
 
-            var psswReq = new ForgotPasswordModel { NewPassword = forgotpassswordmodel.NewPassword, ConfirmPassword = forgotpassswordmodel.ConfirmPassword, UserId = forgotpassswordmodel.UserId};
+           //var psswReq = new ForgotPasswordModel { NewPassword = forgotpassswordmodel.NewPassword, ConfirmPassword = forgotpassswordmodel.ConfirmPassword, UserId = forgotpassswordmodel.UserId};
+            var psswReq = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotpassswordmodel);
             var result = _authenticationService.UpdatePaasword(psswReq);
 
             if (result.IsSuccessful)

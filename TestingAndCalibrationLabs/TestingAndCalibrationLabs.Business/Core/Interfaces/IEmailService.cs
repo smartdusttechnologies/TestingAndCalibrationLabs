@@ -14,6 +14,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         bool Sendemail(EmailModel emailModel);
 
-        //object Sendemail(ForgotPasswordModel mailreq);
+        //bool Sendemail(ForgotPasswordModel forgotPasswordModel);
     }
 }
