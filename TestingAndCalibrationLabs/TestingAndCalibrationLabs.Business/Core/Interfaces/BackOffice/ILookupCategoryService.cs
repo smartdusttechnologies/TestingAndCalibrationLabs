@@ -15,10 +15,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         List<LookupCategoryModel> Get();
         /// <summary>
-        /// Get All Records From LookupCategory
+        /// Get All Records From LookupCategory based on id
         /// </summary>
         /// <returns></returns>
-       
         LookupCategoryModel GetById(int id);
         /// <summary>
         /// Insert Record In LookupCategory
@@ -27,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RequestResult<int> Create(LookupCategoryModel lookupCategoryModel);
         /// <summary>
-        /// Edit Record From LookupCategory
+        /// Update Record From LookupCategory
         /// </summary>
         /// <param name="lookupCategoryModel"></param>
         /// <returns></returns>

@@ -10,29 +10,29 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ILookupService
     {
         /// <summary>
-        /// Get All Record From Module
+        /// Get All Record From Lookup
         /// </summary>
         List<LookupModel> Get();
         /// <summary>
-        /// Get Record By Id From Module
+        /// Get Record By Id From Lookup
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         LookupModel GetById(int id);
         /// <summary>
-        /// Update Record In Module
+        /// Update Record In Lookup
         /// </summary>    
         /// <param name="lookupModel"></param>
         /// <returns></returns>
         RequestResult<int> Update(LookupModel lookupModel);
         /// <summary>
-        /// Insert Record In Module
+        /// Insert Record In Lookup
         /// </summary>
         /// <param name="lookupModel"></param>
         /// <returns></returns>
         RequestResult<int> Create(LookupModel lookupModel);
         /// <summary>
-        /// Delete Record In Module
+        /// Delete Record In Lookup
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
