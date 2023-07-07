@@ -1,0 +1,283 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+
+<style>
+    .non-clickable{
+        
+    }
+    h2 {
+        color: #2F8D46;
+    }
+    #form {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+        #form fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 20px;
+            position: relative
+        }
+    .finish {
+        text-align: center
+    }
+    #form .previous-step, .next-step {
+        width: 100px;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px 10px 0px;
+        float: right
+    }
+    .form, .previous-step {
+        width: 110px;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px 10px 0px;
+        float: left;
+        background: #2F8D46;
+        margin-top : 10px;
+    }
+    .form, .next-step {
+        background: #2F8D46;
+    }
+    #form .previous-step:hover,
+    #form .previous-step:focus {
+        background-color: #fa9e4d;
+    }
+    #form .next-step:hover,
+    #form .next-step:focus {
+        background-color: #2F8D46;
+    }
+    .text {
+        color: #2F8D46;
+        font-weight: normal
+    }
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey;
+    }
+        #progressbar .active {
+            color: #2F8D46
+        }
+        #progressbar li:before {
+            text-align: center;
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 20px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px
+        }
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1
+        }
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: #2F8D46
+        }
+    .progress {
+        height: 20px
+    }
+    .progress-bar {
+        background-color: #2F8D46
+    }
+    /* Scroll Start*/
+    #progressbar {
+        display: flex;
+        padding: 1rem;
+        margin-left: 10px;
+        overflow-x: visible;
+    }
+
+        #progressbar li {
+            flex: none;
+            width: 200px;
+            height: 100px;
+            margin-right: 0px;
+        }
+    /* End*/
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="">
+            <div class="px-0 pt-4 pb-0 mt-3 mb-3">
+                <form id="form">
+                    <ul id="progressbar">
+                        @{
+                            int count = 1;
+                        }
+                        @foreach (var item in Model.Children)
+                        {
+                            @if (item.Children.Count() > 0)
+                            {
+                                <li class="active btn-step" id="step-@item.Value.UiPageMetadata.Id">
+                                    <input class="btn-select" type="hidden" value="fieldset_@item.Value.UiPageMetadata.Id" name="@count">
+                                    <strong>@item.Value.UiPageMetadata.UiControlDisplayName</strong>
+                                </li>
+                                ++count;
+                            }
+                            else
+                            {
+                                <li id="step-@item.Value.UiPageMetadata.Id" class="btn-step">
+                                    <input class="btn-select" type="hidden" value="fieldset_@item.Value.UiPageMetadata.Id" name="@count">
+                                    <strong>@item.Value.UiPageMetadata.UiControlDisplayName</strong>
+                                </li>
+                                ++@count;
+                            }
+                        }
+                    </ul>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div> <br>
+                    @foreach (var item in Model.Children)
+                    {
+                        <fieldset id="fieldset_@item.Value.UiPageMetadata.Id">
+                            <div class="row ms-1 me-1">
+                            @foreach (var node in item.Children)
+                            {
+                                @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                            }
+                            </div>
+                        </fieldset>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var currentGfgStep, nextGfgStep, previousGfgStep;
+        var opacity;
+        var current = 1;
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var steps = modelData.children.length;
+        var percentofWidth = parseFloat(100 / steps)  ;
+        percentofWidth = percentofWidth;
+        var str = "#progressbar li {list-style-type:none;font-size:15px;float:left;position: relative;font-weight:400; text-align:center;}";
+        var utrstyle = document.createElement("style")
+        utrstyle.innerText = str;
+        document.head.appendChild(utrstyle);
+        for (var i = 0; steps > i; i++) {
+           
+            var stepId = "#step-" + modelData.children[i].value.uiPageMetadata.id;
+            var contentCount = i + 1;
+            var styleOfStep = "#progressbar " + stepId + ":before{content:'" + contentCount + "'} ";
+            var styleSheet = document.createElement("style")
+            styleSheet.innerText = styleOfStep;
+            document.head.appendChild(styleSheet)
+            if (modelData.children[i].children.length > 0) {
+                var fieldId = "#fieldset_" + modelData.children[i].value.uiPageMetadata.id;
+                currentGfgStep = $(fieldId);
+                currentGfgStep.show();
+                current = i + 1;
+                activeCurrentStep(current)
+            }
+            else {
+                var fieldId = "#fieldset_" + modelData.children[i].value.uiPageMetadata.id;
+                $(fieldId).hide();
+            }
+        }
+        setProgressBar(current);
+        var workflow = $("#workflowStageChecker");
+        //var isWorkflowWorking
+        //Function To Set Progress Status Active
+        function activeCurrentStep(stepNumber){
+            for (var ind = 0; steps > ind; ind++) {
+                var addInStep = stepNumber-1;
+                if(ind<stepNumber){
+                    var idOfStep = "#step-" + modelData.children[ind].value.uiPageMetadata.id;
+                    var stepMakeActive = $(idOfStep);
+                    stepMakeActive.addClass("active");
+                } else if (ind > addInStep) {
+                    var idOfStep = "#step-" + modelData.children[ind].value.uiPageMetadata.id;
+                    var stepMakeActive = $(idOfStep);
+                    stepMakeActive.removeClass("active");
+                }
+            }
+        }
+        //Function To Handle Progress Status Clicks
+        //$(".btn-step").click(function () {
+        //    var btnOfStep = $(this).children(".btn-select");
+        //    var currentFieldSetId = btnOfStep[0].value;
+        //    var stepCount = btnOfStep[0].name;
+        //    var x = parseInt(stepCount, 10); // you want to use radix 10
+        //    var idModifiewithHash = "#"+currentFieldSetId;
+        //    nextGfgStep = $(idModifiewithHash);
+        //    activeCurrentStep(x);
+        //            currentGfgStep.css({
+        //                'display': 'none',
+        //                'position': 'relative',
+        //                'opacity' : 0
+        //            });
+        //    nextGfgStep.css({ 'display': 'block', 'opacity': 1 });
+        //    setProgressBar(x);
+        //    current= x;
+        //    currentGfgStep = nextGfgStep;
+        //});
+        ////Fuction To Handle Next Button Click
+        //$(".next-step").click(function () {
+        //    currentGfgStep = $(this).parent();
+        //    nextGfgStep = $(this).parent().next();
+        //    $("#progressbar li").eq($("fieldset")
+        //        .index(nextGfgStep)).addClass("active");
+        //    currentGfgStep.css({
+        //        'display': 'none',
+        //        'position': 'relative',
+        //        'opacity': 0
+        //    });
+        //    nextGfgStep.css({ 'display': 'block', 'opacity': 1 });
+        //    setProgressBar(++current);
+        //    currentGfgStep = nextGfgStep;
+        //});
+        ////Function To Handle Previous Button
+        //$(".previous-step").click(function () {
+        //    currentGfgStep = $(this).parent();
+        //    previousGfgStep = $(this).parent().prev();
+        //    $("#progressbar li").eq($("fieldset")
+        //        .index(currentGfgStep)).removeClass("active");
+        //            currentGfgStep.css({
+        //                'display': 'none',
+        //                'position': 'relative',
+        //                'opacity' : 0
+        //            });
+        //            previousGfgStep.css({ 'display' : 'block', 'opacity': 1 });
+        //    setProgressBar(--current);
+        //    currentGfgStep = previousGfgStep;
+        //});
+        //Fuction To Manage Progress Bar Line
+        function setProgressBar(currentStep) {
+            var percent = parseFloat(100 / steps) * currentStep;
+            percent = percent.toFixed();
+            $(".progress-bar")
+                .css("width", percent + "%")
+        }
+        $(".submit").click(function () {
+            return false;
+        })
+    });
+</script>
