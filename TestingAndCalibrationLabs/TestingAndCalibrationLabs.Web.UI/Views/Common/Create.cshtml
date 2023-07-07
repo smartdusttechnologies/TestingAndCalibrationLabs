@@ -55,7 +55,6 @@
     </div>
 </div>
 <script>
-    debugger;
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -87,7 +86,6 @@
             }
             return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
         }
-        debugger;
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
@@ -98,6 +96,7 @@
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
+
                 var metadataId = uiPageMetaData[i].id;
                 var List;
                 if (uiPageMetaData[i].multiValueControl == true) {

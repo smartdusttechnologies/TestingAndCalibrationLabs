@@ -80,6 +80,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return Ok(imageId);
         }
         /// <summary>
+        /// Method To download Images in Google Drive 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownloadFile(string fileId)
+        {
+            AttachmentModel attachment = _commonService.DownLoadAttachment(fileId);
+            var attachmentDTO = _mapper.Map<AttachmentModel, Models.AttachmentDTO>(attachment);
+            if (attachmentDTO != null)
+            {
+                return File(attachmentDTO.FileStream, attachmentDTO.ContentType, attachmentDTO.FileName);
+            }
+            else
+            {
+                return new EmptyResult();
+            }
+        }
+        /// <summary>
         /// Method To load Grid by given page Id And Template Details
         /// </summary>
         /// <param name="id"></param>
@@ -211,6 +228,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var adddata = _commonService.Save(records);
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
+
             if (adddata.IsSuccessful)
             {
                 return Ok(recordModel);
@@ -226,7 +244,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        public ActionResult Delete(int? id, int moduleId)
+        public ActionResult Delete(int id, int moduleId)
         {
             if (id == null)
             {
@@ -249,19 +267,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
-        [HttpGet]
-        /// <param name="uiPageDataId"></param>
-
-        public ActionResult GetUiPageDataById(int uiPageDataId)
-        {
-            var result = _commonService.GetUiPageDataById((int)uiPageDataId);
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return BadRequest();
-        }
     }
-
-    
 }

@@ -4,6 +4,9 @@ using Org.BouncyCastle.Utilities.Zlib;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -32,12 +35,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return db.Query<UiPageDataModel>(@" Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId , updst.Value From[UiPageData] upd
                 INNER JOIN[Record] r ON upd.RecordId = r.Id
                 INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
-
-
                 and r.IsDeleted = 0
-            where r.ModuleId=ModuleId  and updst.RecordId = r.Id
+               where r.ModuleId=ModuleId  
+               and updst.RecordId = r.Id
+             and upd.IsDeleted=0", new { moduleId }).ToList();
+            //return db.Query<UiPageDataModel>(@"Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId ,updst.Value,updt.Value From[UiPageData] upd
+            //    INNER JOIN[Record] r ON upd.RecordId = r.Id
+            //    fet JOIN[UiPageStringType] updst on r.Id = updst.RecordId
 
-            and upd.IsDeleted=0", new { moduleId }).ToList();
+            //    INNER JOIN[UiPageDateType] updt on r.Id= updst.RecordId
+            //    and r.IsDeleted = 0
+            //   where r.ModuleId=ModuleId
+            //   and updst.RecordId = r.Id
+
+            //   and updt.RecordId=r.Id
+            //  and upd.IsDeleted=0", new { moduleId }).ToList();
 
 
         }
@@ -166,14 +178,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
                 var SingleData = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
-
                 var MultiData = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
-
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
                 command.Parameters.AddWithValue("@UpdatedDate", record.UpdatedDate);
-
                 command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
@@ -220,7 +229,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <param name="moduleId"></param>
         /// <returns></returns>
         public int GetPageIdBasedOnOrder(int moduleId)
-        {
+         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<int>(@"Select  ws.UiPageTypeId
                                                     From [Module] m
@@ -271,7 +280,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.ExecuteNonQuery();
 
             }
-
             return true;
         }
         /// <summary>
@@ -299,6 +307,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                        SELECT t5.UiPageMetadataId, t5.Id, CAST(t6.Value AS varchar) AS Value, t6.Id as ChildId ,t8.Id as RecordId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
+															Join [Record] t8 ON t8.Id  = t5.RecordId
+                                                      WHERE t5.RecordId = @Id
+													    and t8.Id = @Id
+														  UNION All
+														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId 
+                                                            FROM UiPageData t5
+                                                            JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
                                                       WHERE t5.RecordId = @Id
 													    and t8.Id = @Id
@@ -436,7 +451,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
         #endregion
-        #endregion
+        
     }
 }
 

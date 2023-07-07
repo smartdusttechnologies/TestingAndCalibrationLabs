@@ -30,6 +30,4 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int RecordId { get; set; }
        
     }
-   
-
 }

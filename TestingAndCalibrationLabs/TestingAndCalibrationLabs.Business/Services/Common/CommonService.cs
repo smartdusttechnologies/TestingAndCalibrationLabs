@@ -18,6 +18,17 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class CommonService : ICommonService
     {
         internal string UI_PAGE_NAME = string.Empty;
+        private ICommonRepository commonRepository;
+        private IGenericRepository<RecordModel> recordGenericRepository;
+        private IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository;
+        private IGenericRepository<UiPageDataModel> uiPageDataGenericRepository;
+        private IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository;
+        private IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository;
+        private IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository;
+        private IUiPageMetadataRepository uiPageMetadataRepository;
+        private IWorkflowActivityService workflowActivityService;
+        private IWebHostEnvironment webHostEnvironment;
+        private IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService;
         private readonly ICommonRepository _commonRepository;
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
@@ -29,6 +40,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
+        private readonly IGoogleDriveService _googleUploadDownloadService;
+
 
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
@@ -40,6 +53,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWorkflowActivityService workflowActivityService,
             IWebHostEnvironment webHostEnvironment,
+             IGoogleDriveService googleUploadDownloadService,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
 
         {
@@ -54,6 +68,23 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowActivityService = workflowActivityService;
             _webHostEnvironment = webHostEnvironment;
             _uiPageMetadataCharacteristicsService = uiPageMetadataCharacteristicsService;
+            _googleUploadDownloadService = googleUploadDownloadService;
+
+        }
+
+        public CommonService(ICommonRepository commonRepository, IGenericRepository<RecordModel> recordGenericRepository, IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository, IGenericRepository<UiPageDataModel> uiPageDataGenericRepository, IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository, IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository, IUiPageMetadataRepository uiPageMetadataRepository, IWorkflowActivityService workflowActivityService, IWebHostEnvironment webHostEnvironment, IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
+        {
+            this.commonRepository=commonRepository;
+            this.recordGenericRepository=recordGenericRepository;
+            this.uiPageTypeGenericRepository=uiPageTypeGenericRepository;
+            this.uiPageDataGenericRepository=uiPageDataGenericRepository;
+            this.uiPageMetaDataGenericRepository=uiPageMetaDataGenericRepository;
+            this.uiPageValidationTypesGenericRepository=uiPageValidationTypesGenericRepository;
+            this.uiPageMetadataCharacteristicsRepository=uiPageMetadataCharacteristicsRepository;
+            this.uiPageMetadataRepository=uiPageMetadataRepository;
+            this.workflowActivityService=workflowActivityService;
+            this.webHostEnvironment=webHostEnvironment;
+            this.uiPageMetadataCharacteristicsService=uiPageMetadataCharacteristicsService;
         }
         #region public methods
         /// <summary>
@@ -216,24 +247,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
-        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
-        {
-            return _commonRepository.GetUiPageDataById(uiPageDataId);
-        }
 
-        /// <summary>
-        /// Get Record By Record Id
-        /// </summary>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public RecordModel GetRecordById(int recordId)
+    /// <summary>
+    /// Get Record By Record Id
+    /// </summary>
+    /// <param name="recordId"></param>
+    /// <returns></returns>
+    public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
-            var recordMdel = _recordGenericRepository.Get(recordId);
-            var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
+            var recordModel = _recordGenericRepository.Get(recordId);
+            var uiMetadata = GetMetadata(recordModel.ModuleId, recordModel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
             var uiPageData = _commonRepository.GetPageData(recordId);
+        
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
@@ -247,9 +275,17 @@ namespace TestingAndCalibrationLabs.Business.Services
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel. WorkflowStageId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordModel.UpdatedDate, ModuleId = recordModel.ModuleId, WorkflowStageId = recordModel. WorkflowStageId, Layout = hierarchy };
         }
         #region Multi Value Control
+
+
+        public AttachmentModel DownLoadAttachment(string fileId)
+        {
+            var dataDownloaded = _googleUploadDownloadService.Download(fileId);
+            return dataDownloaded;
+        }
+      
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>

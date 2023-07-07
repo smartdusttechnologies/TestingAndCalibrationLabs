@@ -67,7 +67,6 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
@@ -87,6 +86,7 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
+      
         for (let i = 0; i < layout.length; i++) {
             
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
@@ -94,7 +94,6 @@
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
-                debugger;
                 var metadataId = layout[i].uiPageMetadata.id;
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
@@ -124,7 +123,6 @@
 
                             }
                         }
-                        debugger;
                         function findChildId(uiPageData, value) {
                             var childId = uiPageData.find(item => item.value === value)?.childId;
                             return childId !== undefined ? childId : null;
@@ -139,7 +137,9 @@
                         fieldValues.push(keyValuepair)
                         }
                     }
-                }
+                    
+                  }
+                
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
@@ -153,10 +153,10 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues},
             success: function (response) {
                 myFunction();
-                window.location.href = "/common/edit/" + id;
+                window.location.href = "/common/index/" + moduleId;
             },
             failure: function (response) {
                 alert(response.responseText);
