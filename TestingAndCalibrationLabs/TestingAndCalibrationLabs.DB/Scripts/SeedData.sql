@@ -5,7 +5,7 @@ BEGIN
     INSERT INTO [dbo].[Application]
                ([Id], [Name], [Description], [IsDeleted])
          VALUES
-               (1, N'Laboratory Management Application', N'Laboratory Management Application', 0)
+               (1, N'Laboratory Management Application', N'Laboratory Management Application', 0) 
 
     SET IDENTITY_INSERT [dbo].[Application]  OFF
 END
