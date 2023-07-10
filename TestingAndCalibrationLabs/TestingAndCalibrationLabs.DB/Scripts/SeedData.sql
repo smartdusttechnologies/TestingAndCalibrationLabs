@@ -80,8 +80,9 @@ BEGIN
               (1, N'int', 0),
 			  (2, N'string', 0),
 			  (3, N'bit', 0),
-			   (4, N'Decimal', 0),
+			  (4, N'Decimal', 0),
 			    (5, N'Date', 0)
+			  
     SET IDENTITY_INSERT [dbo].[DataType]  OFF
 END
 GO
