@@ -10,8 +10,7 @@ using TestingAndCalibrationLabs.Web.UI.Models;
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class WorkflowStageController : Controller
-    {
-        
+    {      
         private readonly IWorkflowStageService _workflowStageService;
         private readonly IWorkflowService _workflowService;
         private readonly IUiPageTypeService _uiPageTypeService;
@@ -23,23 +22,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiPageTypeService = uiPageTypeService;
             _workflowService = workflowService;
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public IActionResult GetByModuleId(int moduleId)
-        //{
-        //    var stages = _workflowStageService.GetByWorkflowId(moduleId);
-        //    var stagesDTO = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(stages);
-        //    var orderdStage = stagesDTO.OrderBy(x => x.Orders);
-        //    if(orderdStage != null)
-        //    {
-        //        return Ok(orderdStage);
-        //    }
-        //    return BadRequest();
-        //}
-
+        [HttpPost]
+        public IActionResult GetByModuleId(int moduleId)
+        {
+            var stages = _workflowStageService.GetByWorkflowId(moduleId);
+            var stagesDTO = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(stages);
+            var orderdStage = stagesDTO.OrderBy(x => x.Orders);
+            if (orderdStage != null)
+            {
+                return Ok(orderdStage);
+            }
+            return BadRequest();
+        }
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -63,12 +57,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageList = _uiPageTypeService.Get();
             var workflowList = _workflowService.Get();
             var pages = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageList);
-            var workflowLists = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(workflowList);
-           
-            // var dropdownssss =    categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            var workflowLists = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(workflowList);         
+            //var dropdownssss =    categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
             ViewBag.UiPageTypes = pages;
-            ViewBag.Workflow = workflowLists;
-            
+            ViewBag.Workflow = workflowLists;        
             return base.View(new Models.WorkflowStageDTO { Id = id });
         }
         /// <summary>
@@ -82,9 +74,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var createWorkflowStageModel = _mapper.Map<Models.WorkflowStageDTO, Business.Core.Model.WorkflowStageModel>(workflowStageDTO);
-
                 _workflowStageService.Create(createWorkflowStageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -102,17 +92,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (id == null)
             {
                 return NotFound();
-            }
-                     
+            }                   
             var pages = _uiPageTypeService.Get();
             var flow = _workflowService.Get();  
-
             var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pages);
-            var flowList = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(flow);        
-           
+            var flowList = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(flow);                 
             ViewBag.UiPageTypes = pageList;
             ViewBag.Workflow = flowList;
-
             WorkflowStageModel flowStageModel = _workflowStageService.GetById((int)id);
             var flowStage = _mapper.Map<WorkflowStageModel, WorkflowStageDTO>(flowStageModel);
             return View(flowStage);
@@ -131,7 +117,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             if (ModelState.IsValid)
             {
-
                 var editWorkflowStage = _mapper.Map<Models.WorkflowStageDTO, Business.Core.Model.WorkflowStageModel>(workflowStageDTO);
                 _workflowStageService.Update(id, editWorkflowStage);
                 TempData["IsTrue"] = true;
@@ -171,8 +156,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
-
-
-
     }
 }

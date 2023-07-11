@@ -18,15 +18,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="applicationService"></param>
         /// <param name="mapper"></param>
-        /// <param name="uiNavigationCategoryService"></param>
-       
+        /// <param name="uiNavigationCategoryService"></param>    
         public ApplicationController(IApplicationService applicationService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _applicationService = applicationService;
             _mapper = mapper;
             _uiNavigationCategoryService = uiNavigationCategoryService;
         }
-
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -39,7 +37,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<ApplicationModel>, List<ApplicationDTO>>(page);
             return View(pageData.AsEnumerable());
         }
-
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -58,10 +55,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             var pageData = _mapper.Map<ApplicationModel, ApplicationDTO>(getByIdPageModel);
-
             return View(pageData);
         }
-
         /// <summary>
         /// To Edit Record In Application
         /// </summary>
@@ -70,7 +65,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit([Bind] ApplicationDTO applicationDTO)
         {
-
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<ApplicationDTO, ApplicationModel>(applicationDTO);
@@ -80,7 +74,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(applicationDTO);
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -91,7 +84,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new Models.ApplicationDTO { Id = id });
         }
-
         /// <summary>
         /// To Create Record In Application
         /// </summary>
@@ -111,8 +103,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(applicationDTO);
         }
-
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -132,7 +122,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageModel = _mapper.Map<ApplicationModel, ApplicationDTO>(getByIdPageModel);
             return View(pageModel);
         }
-
         /// <summary>
         /// To Delete Record In Application
         /// </summary>

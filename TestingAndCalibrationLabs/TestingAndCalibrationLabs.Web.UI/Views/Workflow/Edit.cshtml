@@ -1,11 +1,8 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.WorkflowDTO
-
 @{
     ViewData["Title"] = "Edit";
 }
-
 <h1>Workflow</h1>
-
 <h4>Edit</h4>
 <hr />
 <div class="row">
@@ -18,15 +15,12 @@
                     <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
-
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                 <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
                     <option disabled="disabled" selected>....</option>
                     @foreach (var item in ViewBag.Module)
-                    {
-                   
+                    {                 
                     <option value=@item.Id>@item.Name</option>
-
                     }
                 </select>
                     <label class="form-label" for="ModuleId">Module Name</label>
@@ -40,13 +34,11 @@
         </form>
     </div>
 </div>
-
 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

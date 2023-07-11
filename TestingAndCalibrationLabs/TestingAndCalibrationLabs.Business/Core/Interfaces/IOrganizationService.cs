@@ -11,7 +11,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         List<Organization> Get();
         List<Organization> Get(SessionContext sessionContext);
         Organization Get(SessionContext sessionContext, int id);
-
         /// <summary>
         /// Get Record By Id From Organization
         /// </summary>
@@ -23,7 +22,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-
         RequestResult<int> Create(Organization organization);
         /// <summary>
         /// Update Record In Organization
@@ -37,6 +35,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
     }
 }

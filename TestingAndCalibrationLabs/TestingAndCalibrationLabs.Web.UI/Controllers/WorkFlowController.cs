@@ -26,7 +26,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _workflowService = workflowService;
             _moduleService = moduleService;
             _mapper = mapper;
-
         }
         /// <summary>
         /// Get All The Pages From Database
@@ -39,10 +38,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var workflowPage = _workflowService.Get();
             var workflowPages = _mapper.Map<List<WorkflowModel>, List<WorkflowDTO>>(workflowPage);
             return View(workflowPages.AsEnumerable());
-
-
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -55,7 +51,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
            pages = pages.Where(x => x.Id != (int)Helpers.None.Id).ToList();
             ViewBag.module= pages;
-
             return base.View(new WorkflowDTO { Id = id });
         }
         /// <summary>
@@ -87,12 +82,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
            if (id == null)
             {
                 return NotFound();
-            }
-         
+            }        
             var pages = _moduleService.Get();
            var pageList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pages);
            ViewBag.Module = pageList;
-
            WorkflowModel module = _workflowService.GetById((int)id);
            var workflowData = _mapper.Map<WorkflowModel, WorkflowDTO>(module);
            return View(workflowData);

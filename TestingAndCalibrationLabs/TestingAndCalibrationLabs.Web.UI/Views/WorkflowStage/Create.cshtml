@@ -10,27 +10,21 @@
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkflowStage" novalidate>
             <div asp-validation-summary="All"></div>
            <div class="row ms-1 me-1">
-
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
-
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                   
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">                  
                     <select class="form-input " name="WorkflowId" id="Workflow" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowId">
                         <option disabled="disabled" selected>....</option>
                         @foreach (var item in ViewBag.Workflow)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
-                    </select>
-                
+                    </select>              
                     <label class="form-label" for="WorkflowId">WorkflowName</label>
                 </div>
-
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                   
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">                  
                     <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         <option disabled="disabled" selected>....</option>
                         @foreach (var item in ViewBag.UiPageTypes)
@@ -39,15 +33,11 @@
                         }
                     </select>
                     <label class="form-label" for="UiPageTypeId">UiPageTypeName</label>
-                </div>
-
-              
-               
+                </div>                         
                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
                     <label class="form-label" for="Orders">Orders</label>
                 </div>
-
                 <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
@@ -55,11 +45,9 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

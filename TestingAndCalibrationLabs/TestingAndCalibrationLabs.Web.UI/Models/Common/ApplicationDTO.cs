@@ -16,7 +16,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         [Required(ErrorMessage = "Please Enter Name")]
         public string Name { get; set; }
-
         /// <summary>
         /// It Contains The Description of Application
         /// </summary>

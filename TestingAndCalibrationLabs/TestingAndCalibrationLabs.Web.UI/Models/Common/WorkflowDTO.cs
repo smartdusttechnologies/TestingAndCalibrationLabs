@@ -17,13 +17,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The Id of Module
         /// </summary>
-
         [Required(ErrorMessage = "Please Choose Module Name")]
         public int ModuleId { get; set; }
         /// <summary>
         /// It Contains The Name of Module
         /// </summary>
-
         public string ModuleName { get; set; }
     }
 }

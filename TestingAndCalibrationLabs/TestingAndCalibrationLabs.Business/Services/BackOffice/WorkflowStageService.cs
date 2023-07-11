@@ -14,14 +14,23 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
         private readonly IWorkflowStageRepository _workflowStageRepository;
         private readonly IGenericRepository<WorkflowStageModel> _genericRepository;
+        private readonly IWorkflowService _workflowService;
 
-        public WorkflowStageService(IWorkflowStageRepository workflowStageRepository, IGenericRepository<WorkflowStageModel> genericRepository)
+        public WorkflowStageService(IWorkflowStageRepository workflowStageRepository, IGenericRepository<WorkflowStageModel> genericRepository, IWorkflowService workflowService)
         {
             _workflowStageRepository = workflowStageRepository;
             _genericRepository = genericRepository;
+            _workflowService = workflowService;
         }
-
-
+        /// <summary>
+        /// Get All Records From Data Type
+        /// </summary>
+        /// <returns></returns>
+        public List<WorkflowStageModel> GetByWorkflowId(int moduleId)
+        {
+            var workflowData = _workflowService.GetByModuleId(moduleId);
+            return _workflowStageRepository.GetByWorkflowId(workflowData.Id);
+        }
         /// <summary>
         /// Insert Record In WorkflowStage
         /// </summary>
@@ -48,7 +57,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public WorkflowStageModel GetById(int id)
         {
-
             return _workflowStageRepository.GetById(id);
         }
         /// <summary>

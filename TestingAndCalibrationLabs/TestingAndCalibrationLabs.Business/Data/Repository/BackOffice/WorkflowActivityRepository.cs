@@ -14,7 +14,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
     public class WorkflowActivityRepository : IWorkflowActivityRepository
     {
         private readonly IConnectionFactory _connectionFactory;
-        public WorkflowActivityRepository(IConnectionFactory connectionFactory) {
+        public WorkflowActivityRepository(IConnectionFactory connectionFactory)
+        {
             _connectionFactory = connectionFactory;
         }
         /// <summary>
@@ -30,9 +31,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                          inner join [Activity] a on wa.ActivityId = a.Id
 			                                             where wa.WorkflowStageId = @stageId
                                                          AND wa.IsDeleted = 0
-                                                         AND a.IsDeleted = 0", new {stageId}).ToList();
+                                                         AND a.IsDeleted = 0", new { stageId }).ToList();
         }
-
         /// <summary>
         /// Insert Record in WorkflowActivity
         /// </summary>
@@ -43,7 +43,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
             string query = @"Insert into [WorkflowActivity] (Name,WorkflowStageId,ActivityId)
                                                   values (@Name,@WorkflowStageId,@ActivityId)";
             using IDbConnection db = _connectionFactory.GetConnection;
-
             return db.Execute(query, workflowActivityModel);
         }
         /// <summary>
@@ -58,8 +57,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                             wfs.[Name] as WorkflowStageName,
                                                             wfa.ActivityId,
                                                             a.[Name] as ActivityName,                                                         
-                                                            wfa.Name
-                                                                                                                   
+                                                            wfa.Name                                                                                                                  
                                                     From [WorkflowActivity] wfa
                                                    inner join [WorkflowStage] wfs on wfa.WorkflowStageId = wfs.Id
                                                    inner join [Activity] a on wfa.ActivityId = a.Id
@@ -89,7 +87,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                                         wfa.Id=@Id
                                                      and wfs.IsDeleted = 0 
                                                     and a.IsDeleted = 0", new { Id = id }).FirstOrDefault();
-
             return workflowActivityById;
         }
         /// <summary>
@@ -104,24 +101,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
                                 ActivityId=@ActivityId,
                                 Name = @Name                              
                                 Where Id = @Id";
-            using IDbConnection db = _connectionFactory.GetConnection;
-
-           
+            using IDbConnection db = _connectionFactory.GetConnection;          
             return db.Execute(query, workflowActivityModel);
-        }
-        /// <summary>
-        /// Delete Record From WorkflowActivity
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //public bool Delete(int id)
-        //{
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-
-        //    db.Execute(@"update [WorkflowActivity] Set 
-        //                            IsDeleted = 1
-        //                            Where Id = @Id", new { Id = id });
-        //    return true;
-        //}
+        }     
     }
 }

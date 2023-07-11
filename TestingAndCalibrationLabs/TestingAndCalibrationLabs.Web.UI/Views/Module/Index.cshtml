@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.ModuleDTO>
-
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Module</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -22,27 +19,23 @@
                 </th>
                 <th>
                     <h6><b>ApplicationName</b></h6>
-                </th>
-               
+                </th>           
                 <th> <h6><b>Actions</b></h6></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                
+                <tr>               
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    
+                    </td>                  
                     <td>
                         @Html.DisplayFor(modelItem => item.ApplicationName)
                     </td>
                     <td>
                         <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="Module" asp-action="Edit" asp-route-id="@item.Id"></a>|
                         <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="Module" asp-action="Delete" asp-route-id="@item.Id"></a>
-
                     </td>
                 </tr>
             }

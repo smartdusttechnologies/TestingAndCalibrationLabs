@@ -17,15 +17,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="organizationService"></param>
-        
-
         public OrganizationController(IOrganizationService organizationService, IMapper mapper)
         {
             _organizationService = organizationService;
-            _mapper = mapper;
-           
+            _mapper = mapper;          
         }
-
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -38,7 +34,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var organizationData = _mapper.Map<List<Organization>, List<OrganizationDTO>>(organizationPage);
             return View(organizationData.AsEnumerable());
         }
-
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -57,10 +52,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             var pageData = _mapper.Map<Organization, OrganizationDTO>(getByIdPageModel);
-
             return View(pageData);
         }
-
         /// <summary>
         /// To Edit Record In Organization
         /// </summary>
@@ -69,7 +62,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit([Bind] OrganizationDTO organizationDTO)
         {
-
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<OrganizationDTO, Organization>(organizationDTO);
@@ -79,7 +71,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(organizationDTO);
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -90,7 +81,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new Models.OrganizationDTO { Id = id });
         }
-
         /// <summary>
         /// To Create Record In Organization
         /// </summary>
@@ -102,7 +92,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var pageModel = _mapper.Map<OrganizationDTO, Organization>(organizationDTO);
                 _organizationService.Create(pageModel);
                 TempData["IsTrue"] = true;
@@ -110,7 +99,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(organizationDTO);
         }
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -134,7 +122,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Delete Record In Organization
         /// </summary>
         /// <returns></returns>
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

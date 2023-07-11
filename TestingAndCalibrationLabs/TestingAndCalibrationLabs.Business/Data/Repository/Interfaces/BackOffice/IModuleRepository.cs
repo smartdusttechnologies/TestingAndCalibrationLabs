@@ -8,8 +8,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// Repository interface for Module
     /// </summary>
     public interface IModuleRepository
-    {
-       
+    { 
         /// <summary>
         /// Get All Records From Module
         /// </summary>
@@ -33,13 +32,5 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="moduleModel"></param>
         /// <returns></returns>
         int Update(ModuleModel moduleModel);
-        /// <summary>
-        /// Delete Record From Module By Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-    
-
-
     }
 }

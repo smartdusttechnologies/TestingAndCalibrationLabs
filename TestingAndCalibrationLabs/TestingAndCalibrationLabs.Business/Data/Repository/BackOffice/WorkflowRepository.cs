@@ -38,7 +38,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             string query = @"Insert into [Workflow] (Name,ModuleId)
                                                   values (@Name,@ModuleId)";
             using IDbConnection db = _connectionFactory.GetConnection;
-
             return db.Execute(query, workflowModel);
         }
         /// <summary>
@@ -48,14 +47,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<WorkflowModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<WorkflowModel>(@"Select   wf.Id,
+            return db.Query<WorkflowModel>(@"Select         wf.Id,
                                                             wf.ModuleId,
-                                                            m.[Name] as ModuleName, 
-                                                            
-                                                            wf.Name
-                                                                                                                   
-                                                    From [Workflow] wf
-                                                    
+                                                            m.[Name] as ModuleName,                                                          
+                                                            wf.Name                                                                                                                 
+                                                    From [Workflow] wf                                                  
                                                    inner join [Module] m on wf.ModuleId = m.Id
                                                 where 
                                                     wf.IsDeleted = 0 
@@ -79,7 +75,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         wf.Id=@Id
                                                      and wf.IsDeleted = 0 
                                                     and m.IsDeleted = 0", new { Id = id }).FirstOrDefault();
-
             return workflowById;
         }
         /// <summary>
@@ -93,25 +88,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 ModuleId = @ModuleId,                                
                                 Name = @Name                              
                                 Where Id = @Id";
-            using IDbConnection db = _connectionFactory.GetConnection;
-
-          
+            using IDbConnection db = _connectionFactory.GetConnection;        
             return db.Execute(query, workflowModel);
         }
-        /// <summary>
-        /// Delete Record From Workflow
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //public bool Delete(int id)
-        //{
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-
-        //    db.Execute(@"update [Workflow] Set 
-        //                            IsDeleted = 1
-        //                            Where Id = @Id", new { Id = id });
-        //    return true;
-        //}
     }
-
 }

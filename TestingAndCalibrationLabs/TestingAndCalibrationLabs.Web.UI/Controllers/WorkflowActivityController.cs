@@ -9,8 +9,7 @@ using TestingAndCalibrationLabs.Web.UI.Models;
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class WorkflowActivityController : Controller
-    {
-       
+    {    
         private readonly IActivityService _activityService;
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IMapper _mapper;
@@ -55,7 +54,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var stagePages = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(stageList);
             ViewBag.Activity = activityPages;
             ViewBag.WorkflowStage = stagePages;
-
             return base.View(new WorkflowActivityDTO { Id = id });
         }
         /// <summary>
@@ -88,15 +86,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            
-
             var pages = _activityService.Get();
             var pagess = _workflowStageService.Get();
             var pageList = _mapper.Map<List<ActivityModel>, List<ActivityDTO>>(pages);
             var pageLists = _mapper.Map<List<WorkflowStageModel>, List<WorkflowStageDTO>>(pagess);
             ViewBag.Activity = pageList;
             ViewBag.WorkflowStage = pageLists;
-
             WorkflowActivityModel workflowActivity = _workflowActivityService.GetById((int)id);
             var workflowActivityData = _mapper.Map<WorkflowActivityModel, WorkflowActivityDTO>(workflowActivity);
             return View(workflowActivityData);

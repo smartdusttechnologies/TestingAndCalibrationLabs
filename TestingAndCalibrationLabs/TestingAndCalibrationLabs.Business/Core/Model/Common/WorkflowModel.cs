@@ -5,8 +5,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     /// <summary>
     /// It Contains Properties Of Workflow
     /// </summary>
-    [DbTable("Workflow")]
-    
+    [DbTable("Workflow")]  
     public class WorkflowModel : Entity
     {
         /// <summary>

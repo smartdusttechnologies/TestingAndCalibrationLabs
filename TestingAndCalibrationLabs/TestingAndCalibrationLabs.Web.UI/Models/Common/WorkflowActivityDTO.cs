@@ -28,7 +28,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         [Required(ErrorMessage = "Please Choose WorkflowStageName")]
         public int WorkflowStageId { get; set; }
-
         /// <summary>
         /// It Contains The Name of WorkflowStage
         /// </summary>

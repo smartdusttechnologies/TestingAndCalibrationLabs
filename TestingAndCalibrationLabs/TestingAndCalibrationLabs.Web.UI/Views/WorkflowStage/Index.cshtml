@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.WorkflowStageDTO>
-
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>WorkflowStage</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,8 +11,7 @@
         </div>
     </div>
 <div class="table-responsive simple-pagination card shadow border-radius-grid">
-<table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
-    
+<table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">  
     <thead>
         <tr>
             <th>
@@ -30,7 +26,6 @@
                 <th>
                     <h6><b>Orders</b></h6>
                 </th>
-  
             <th>
                     <h6><b>Actions</b></h6>
             </th>
@@ -50,8 +45,7 @@
             </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Orders)
-                    </td>
-                
+                    </td>               
             <td>
                         <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="WorkflowStage" asp-action="Edit" asp-route-id="@item.Id"></a>|
                         <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="WorkflowStage" asp-action="Delete" asp-route-id="@item.Id"></a>
@@ -61,7 +55,6 @@
     </tbody>
 </table>
 </div>
-
  @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
  {
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -76,8 +69,7 @@
         </div>
     </div>
 }
-               <script>
-     
+               <script>   
       oTable = $('#gridui').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -88,5 +80,4 @@
     $('#gridui').keyup(function () {
             oTable.search($(this).val()).draw();
         })
-
 </script>

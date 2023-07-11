@@ -16,14 +16,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
     /// </summary>
     public class ModuleRepository : IModuleRepository
     {
-        private readonly IConnectionFactory _connectionFactory;
-        
+        private readonly IConnectionFactory _connectionFactory;       
         public ModuleRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
-        }
-
-      
+        } 
         /// <summary>
         /// Insert Record in Module
         /// </summary>
@@ -34,7 +31,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             string query = @"Insert into [Module] (ApplicationId,Name)
                                                   values (@ApplicationId,@Name)";
             using IDbConnection db = _connectionFactory.GetConnection;
-
             return db.Execute(query, moduleModel);
         }
         /// <summary>
@@ -44,15 +40,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<ModuleModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<ModuleModel>(@"Select   m.Id,
+            return db.Query<ModuleModel>(@"Select           m.Id,
                                                             m.ApplicationId,
-                                                            a.[Name] as ApplicationName, 
-                                                            
-                                                            m.Name
-                                                                                                                   
+                                                            a.[Name] as ApplicationName,                                                             
+                                                            m.Name                                                                                                                
                                                     From [Module] m
-                                                    inner join [Application] a on m.ApplicationId = a.Id
-                                                    
+                                                    inner join [Application] a on m.ApplicationId = a.Id                                                
                                                 where 
                                                     m.IsDeleted = 0 
                                                     and a.IsDeleted = 0").ToList();
@@ -75,7 +68,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                         m.Id=@Id
                                                      and m.IsDeleted = 0 
                                                     and a.IsDeleted = 0", new { Id = id }).FirstOrDefault();
-
             return moduleById;
         }
         /// <summary>
@@ -89,17 +81,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 ApplicationId = @ApplicationId,                                
                                 Name = @Name                              
                                 Where Id = @Id";
-            using IDbConnection db = _connectionFactory.GetConnection;
-
-            //workflowStageModel.ControlCategoryId = null;
+            using IDbConnection db = _connectionFactory.GetConnection;         
             return db.Execute(query, moduleModel);
         }
-        /// <summary>
-        /// Delete Record From Module
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-       
-
     }
 }

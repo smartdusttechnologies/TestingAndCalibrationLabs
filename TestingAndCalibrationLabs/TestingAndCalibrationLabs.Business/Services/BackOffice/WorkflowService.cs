@@ -21,12 +21,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowRepository = workflowRepository;
             _genericRepository = genericRepository;
         }
-      
+        /// <summary>
+        /// Get All Records From 
+        /// </summary>
+        /// <returns></returns>
         public WorkflowModel GetByModuleId(int moduleId)
         {
             return _workflowRepository.GetByModuleId(moduleId);
         }
-
         /// <summary>
         /// Get All Records From Workflow
         /// </summary>
@@ -73,6 +75,5 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
     }
 }

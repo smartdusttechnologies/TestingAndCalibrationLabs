@@ -54,7 +54,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public ModuleModel GetById(int id)
         {
-
             return _moduleRepository.GetById(id);
         }
         /// <summary>
@@ -66,6 +65,5 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
     }
 }

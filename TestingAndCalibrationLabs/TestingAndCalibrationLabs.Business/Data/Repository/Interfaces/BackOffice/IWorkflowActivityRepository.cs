@@ -8,12 +8,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface IWorkflowActivityRepository
     {
-     /// <summary>
-     /// Get All Records From 
-     /// </summary>
-     /// <returns></returns>
-     List<WorkflowActivityModel> GetByWorkflowStageId(int uiPageTypeId);
-
+        /// <summary>
+        /// Get All Records From 
+       /// </summary>
+       /// <returns></returns>
+       List<WorkflowActivityModel> GetByWorkflowStageId(int uiPageTypeId);
         /// <summary>
         /// Get All Records From WorkflowActivity
         /// </summary>
@@ -37,12 +36,5 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="workflowActivityModel"></param>
         /// <returns></returns>
         int Update(WorkflowActivityModel workflowActivityModel);
-        /// <summary>
-        /// Delete Record From WorkflowActivity By Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-      //  bool Delete(int id);
-
     }
 }

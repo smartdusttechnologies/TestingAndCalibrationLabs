@@ -7,25 +7,20 @@
 <div>
     <h4>Workflow</h4>
     <hr />
-    <dl class="row">
-
-    
+    <dl class="row">   
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ModuleName)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ModuleName)
-        </dd>
-       
+        </dd>      
     </dl>
-
     <form asp-action="Delete">
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>

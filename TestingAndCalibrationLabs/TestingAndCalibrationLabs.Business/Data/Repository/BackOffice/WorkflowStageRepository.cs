@@ -18,8 +18,26 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-       
-
+        /// <summary>
+        /// Get Record Based On WorkflowId
+        /// </summary>
+        /// <param name="workflowId"></param>
+        /// <returns></returns>
+        public List<WorkflowStageModel> GetByWorkflowId(int workflowId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<WorkflowStageModel>(@"select * from WorkflowStage where WorkflowId = @WorkflowId and IsDeleted = 0", new { WorkflowId = workflowId }).ToList();
+        }
+        /// <summary>
+        /// Get Record By ModuleId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public WorkflowModel GetByModuleId(int moduleId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<WorkflowModel>(@"select * from Workflow where ModuleId = @ModuleId and IsDeleted = 0", new { ModuleId = moduleId }).FirstOrDefault();
+        }
         /// <summary>
         /// Insert Record in Workflow Stage
         /// </summary>
@@ -30,14 +48,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             string query = @"Insert into [WorkflowStage] (WorkflowId,Name,UiPageTypeId,Orders)
                                                   values (@WorkflowId,@Name,@UiPageTypeId,@Orders)";
             using IDbConnection db = _connectionFactory.GetConnection;
-
             return db.Execute(query, workflowStageModel);
         }
         /// <summary>
         /// Getting All Records From Workflow Stage
         /// </summary>
         /// <returns></returns>
-
         public List<WorkflowStageModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -51,7 +67,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     From [WorkflowStage] wfs
                                                     inner join [UiPageType] upt on wfs.UiPageTypeId = upt.Id
                                                     inner join [Workflow] wf on  wfs.WorkflowId = wf.Id
-
                                                 where 
                                                     wfs.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
@@ -72,16 +87,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 													 wf.[Name] as WorkflowName,
                                                      wfs.Name,
                                                      wfs.Orders
-                                                    From [WorkflowStage] wfs
-													
+                                                    From [WorkflowStage] wfs												
                                                     inner join [UiPageType] upt on wfs.UiPageTypeId = upt.Id
-                                                    inner join [Workflow] wf on wfs.WorkflowId = wf.Id
-                                                   
+                                                    inner join [Workflow] wf on wfs.WorkflowId = wf.Id                                                 
                                                 where 
                                                         wfs.Id=@Id
                                                      and wfs.IsDeleted = 0 
                                                     and upt.IsDeleted = 0", new { Id = id }).FirstOrDefault();
-
             return workflowStageById;
         }
         /// <summary>
@@ -98,24 +110,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                Orders=@Orders
                                 Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
-
-            //workflowStageModel.ControlCategoryId = null;
             return db.Execute(query, workflowStageModel);
-        }
-        /// <summary>
-        /// Delete Record From Workflow Stage 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //public bool Delete(int id)
-        //{
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-
-        //    db.Execute(@"update [WorkflowStage] Set 
-        //                            IsDeleted = 1
-        //                            Where Id = @Id", new { Id = id });
-        //    return true;
-        //}
+        }    
     }
-
 }

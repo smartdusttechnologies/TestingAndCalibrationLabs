@@ -10,6 +10,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IWorkflowActivityService
     {
         /// <summary>
+        /// To Run All Activity here Which Are Given To A Stage
+        /// </summary>
+        /// <param name="recordModel"></param>
+        /// <returns></returns>
+        bool WorkflowActivity(RecordModel recordModel);
+        /// <summary>
         /// Get All Records From WorkflowActivity
         /// </summary>
         /// <returns></returns>

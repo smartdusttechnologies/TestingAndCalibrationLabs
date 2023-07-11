@@ -23,6 +23,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Name of Application
         /// </summary>
         public string ApplicationName { get; set; }
-
     }
 }

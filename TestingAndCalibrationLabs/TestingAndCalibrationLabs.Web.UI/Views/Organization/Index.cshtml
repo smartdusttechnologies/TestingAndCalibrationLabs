@@ -19,8 +19,7 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.OrgName)
-                </th>
-                
+                </th>              
                 <th>
                     Actions
                 </th>
@@ -35,12 +34,10 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.OrgName)
-                    </td>
-                    
+                    </td>                   
                     <td>
                         <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="Organization" asp-action="Edit" asp-route-id="@item.Id"></a>|
                         <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="Organization" asp-action="Delete" asp-route-id="@item.Id"></a>
-
                     </td>
                 </tr>
             }

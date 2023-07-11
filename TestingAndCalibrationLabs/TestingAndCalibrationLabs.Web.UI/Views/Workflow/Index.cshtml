@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.WorkflowDTO>
-
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Workflow</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -15,17 +12,14 @@
 </div>
 <div class="table-responsive simple-pagination card shadow border-radius-grid">
     <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
-
         <thead>
-            <tr>
-                
+            <tr>             
                 <th>
                     <h6><b>Name</b></h6>
                 </th>
                 <th>
                     <h6><b>ModuleName</b></h6>
-                </th>
-               
+                </th>            
                 <th>
                     <h6><b>Actions</b></h6>
                 </th>
@@ -34,15 +28,13 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                  
+                <tr>                
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ModuleName)
-                    </td>
-                 
+                    </td>                
                     <td>
                         <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="WorkFlow" asp-action="Edit" asp-route-id="@item.Id"></a>|
                         <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="WorkFlow" asp-action="Delete" asp-route-id="@item.Id"></a>
@@ -52,7 +44,6 @@
         </tbody>
     </table>
 </div>
-
 @if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
 {
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -68,7 +59,6 @@
     </div>
 }
 <script>
-
     oTable = $('#gridui').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -79,5 +69,4 @@
     $('#gridui').keyup(function () {
         oTable.search($(this).val()).draw();
     })
-
 </script>

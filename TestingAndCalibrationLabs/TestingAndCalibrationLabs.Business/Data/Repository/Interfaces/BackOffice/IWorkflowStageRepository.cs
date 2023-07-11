@@ -12,8 +12,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Get All Records From 
         /// </summary>
         /// <returns></returns>
-          //List<WorkflowStageModel> GetByWorkflowId(int workflowId);
-
+        List<WorkflowStageModel> GetByWorkflowId(int workflowId);
+        /// <summary>
+        /// Get All Records From 
+        /// </summary>
+        /// <returns></returns>
+        WorkflowModel GetByModuleId(int moduleId);
         /// <summary>
         /// Get All Records From WorkflowStage
         /// </summary>
@@ -37,13 +41,5 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="workflowStageModel"></param>
         /// <returns></returns>
         int Update(WorkflowStageModel workflowStageModel);
-        /// <summary>
-        /// Delete Record From WorkflowStage By Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-      //  bool Delete(int id);
-
-
     }
 }

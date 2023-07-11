@@ -1,26 +1,19 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.OrganizationDTO
-
 @{
     ViewData["Title"] = "Create";
-
 }
-
 <h1>Organization</h1>
-
 <h4>Create</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-      
+    <div class="col-md-4">     
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="Organization" novalidate>
                 <div asp-validation-summary="All"></div>
                 <div class="row ms-1 me-1">
-
           <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <input class="form-input width-full black-border" type="text" id="OrgCode" name="OrgCode" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="OrgCode">
                 <label class="form-label" for="OrgCode">OrgCode</label>
             </div>
-
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <input class="form-input width-full black-border" type="text" id="OrgName" name="OrgName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="OrgName">
                 <label class="form-label" for="OrgName">OrgName</label>
@@ -34,11 +27,9 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

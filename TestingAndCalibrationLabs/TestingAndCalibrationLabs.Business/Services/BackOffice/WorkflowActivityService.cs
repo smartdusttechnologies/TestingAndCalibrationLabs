@@ -34,14 +34,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             _configuration = configuration;
             _genericRepository = genericRepository;
         }
-
         /// <summary>
         /// To Run All Activity here Which Are Given To A Stage
         /// </summary>
         /// <param name="recordModel"></param>
         /// <returns></returns>
-        //public bool WorkflowActivity(RecordModel recordModel)
-        //{
+        public bool WorkflowActivity(RecordModel recordModel)
+        {
         //    ///In Future I Have To Redesign Structure of Activity
         //    //var activityList = _workflowActivityRepository.GetByWorkflowStageId(recordModel.WorkflowStageId);
         //    //var pageDataList = _pageDataGenericRepository.Get("RecordId", recordModel.Id);
@@ -52,11 +51,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         //    //       SendEmail(pageDataList,activity.ActivityId,recordModel.WorkflowStageId);
         //    //    }
         //    //}
-        //    return true;
-        //}
-        //#endregion
-
-
+           return true;
+        }
+      //  #endregion
         /// <summary>
         /// Get All Records From WorkflowActivity
         /// </summary>
@@ -102,9 +99,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public bool Delete(int id)
         {
             return _genericRepository.Delete(id);
-        }
-
-      
+        }    
         /// <summary>
         /// Sending Email With Dynamic And Static Parameters 
         /// </summary>
@@ -158,8 +153,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         //    }
         //    emailModel.HtmlMsg = template;
         //   _emailService.Sendemail(emailModel);
-        //}
-       
+        //}       
     }
 }
 

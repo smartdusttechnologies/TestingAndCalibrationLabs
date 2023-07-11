@@ -3,8 +3,7 @@
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {   /// <summary>
     /// It Conatains The Properties for Organization
-    /// </summary>
-    
+    /// </summary> 
     [DbTable("Organization")]
     public class Organization : Entity
     {    /// <summary>
