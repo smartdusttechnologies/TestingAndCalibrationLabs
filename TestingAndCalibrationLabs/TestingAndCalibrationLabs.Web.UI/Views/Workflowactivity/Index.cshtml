@@ -22,20 +22,17 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ActivityName)
-                </th>
-             
+                </th>           
                 <th> <h6><b>Actions</b></h6></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                   
+                <tr>                 
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => item.WorkflowStageName)
                     </td>
