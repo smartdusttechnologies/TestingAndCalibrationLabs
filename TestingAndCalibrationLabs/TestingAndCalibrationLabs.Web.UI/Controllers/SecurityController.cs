@@ -47,7 +47,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
             _authenticationRepository=authenticationRepository;
         }
-
         /// <summary>
         /// UI Shows the Orgnizations names in dropdown list
         /// </summary>
@@ -60,7 +59,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.Organizations = organizationNames;
             return View();
         }
-
         /// <summary>
         /// Method to get the Login details from UI and Process Login.
         /// </summary>
@@ -86,8 +84,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return View(new ForgotPasswordDTO());
         }
-
-
         /// <summary>
         /// Method for otp and Email validation and Varification Code on Email
         /// </summary>
@@ -150,7 +146,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ResetPassword(ForgotPasswordDTO forgotpassswordmodel)
         {
 
-           //var psswReq = new ForgotPasswordModel { NewPassword = forgotpassswordmodel.NewPassword, ConfirmPassword = forgotpassswordmodel.ConfirmPassword, UserId = forgotpassswordmodel.UserId};
             var psswReq = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotpassswordmodel);
             var result = _authenticationService.UpdatePaasword(psswReq);
 
@@ -162,6 +157,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             }
             return BadRequest(result.ValidationMessages);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="forgotpassword"></param>
+        /// <returns></returns>
+        public IActionResult ResendOTP(ForgotPasswordDTO forgotpassword)
+        {
+            return Ok(ValidateOTP(forgotpassword));
         }
     }
     
