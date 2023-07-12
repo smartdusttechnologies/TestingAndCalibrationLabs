@@ -1,6 +1,7 @@
 ﻿using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -51,7 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="uiPageTypeId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-		byte[] TemplateGenerate(int uiPageTypeId,int metadataId);
+		byte[] TemplateGenerate(int uiPageTypeId, int metadataId);
         /// <summary>
         /// To Get multi Value Records For Creating Grid
         /// </summary>
@@ -65,7 +66,13 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RequestResult<bool> DeleteMultiValue(RecordModel record);
 
-         AttachmentModel DownLoadAttachment(string fileId);
+        //AttachmentModel DownLoadAttachment(string fileId);
+        int ImageUpload(FileUploadModel fileUpload);
 
-    }
-}
+        FileUploadModel DownloadImage(string fileId);
+        
+
+
+
+        }
+}  

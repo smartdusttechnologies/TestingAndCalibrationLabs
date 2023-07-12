@@ -103,11 +103,9 @@
                    for (let j = 0; j < uiPageData.length; j++) {
                        var pageDataId = layout[i].uiPageData[j].id;
                        var childIds = layout[i].uiPageData[j].childId;
-                       //var workflowStageId = layout[i].uiPageData[j].workflowStageId;
                        var RecordIds = layout[i].uiPageData[j].recordId;
                        var oldValue = layout[i].uiPageData[j].value;
                        var List;
-                      debugger
                    }
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
@@ -120,13 +118,10 @@
                                 keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
                                }
                                 keyValuepair.uiPageMetadataId = metadataId;
-                                //keyValuepair.RecordId = RecordIds;
-                                //keyValuepair.WorkflowStageId = workflowStageId;
                                     keyValuepair.RecordId = id;
                                 keyValuepair.Value = List[x];
                                 keyValuepair.UiPageTypeId = uiPageTypeId;
                                 fieldValues.push(keyValuepair)
-
                             }
                         }
                         function findChildId(uiPageData, value) {
@@ -138,7 +133,6 @@
                                 keyValuepair.childId = childIds;
                                 keyValuepair.uiPageMetadataId = metadataId;
                                 keyValuepair.RecordId = id;
-                                //keyValuepair.WorkflowStageId = workflowStageId;
                                 keyValuepair.Value = fieldValue;
                                 keyValuepair.UiPageTypeId = uiPageTypeId;
                                 fieldValues.push(keyValuepair)
@@ -146,7 +140,6 @@
                     }
                     
                   }
-                
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;

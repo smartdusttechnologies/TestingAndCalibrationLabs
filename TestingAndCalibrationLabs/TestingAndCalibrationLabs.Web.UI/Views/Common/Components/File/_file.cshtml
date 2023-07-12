@@ -357,7 +357,6 @@
         });
     });
 
-
     $(`#btn-upload-${metadataId}`).click(function () {
        
         $(`#image-${metadataId}`).click();
@@ -410,8 +409,6 @@
                     $(this).parent().remove();
                 });
             });
-
-
             }
             $.ajax({
                 type: "POST",
@@ -433,8 +430,7 @@
 </script>
 <script type="text/javascript">
     function Download(e) {
-        debugger
-                location.href = '@Url.Action("DownloadFile", "Common")?fileId=' + e;
+        location.href = '@Url.Action("DownloadImage", "Common")?fileId=' + e;
         }
  </script>
 

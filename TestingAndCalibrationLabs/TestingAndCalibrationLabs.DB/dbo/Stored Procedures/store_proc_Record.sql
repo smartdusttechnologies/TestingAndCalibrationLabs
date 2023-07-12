@@ -37,7 +37,7 @@ where upmd.DataTypeId=2 and
 
 
  INSERT INTO UiPageFileAttachType (UiPageMetadataId, Value,UiPageDataId,RecordId)
-	select  temp.UiPageMetadataId,cast(ctvp.Value as varbinary(max)), @UId, @Id from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=3 and
+	select  temp.UiPageMetadataId,ctvp.Value, @UId, @Id from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=3 and
 		temp.Id=@ind
 
 

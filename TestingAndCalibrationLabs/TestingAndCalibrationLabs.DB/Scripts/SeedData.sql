@@ -81,7 +81,8 @@ BEGIN
 			  (2, N'string', 0),
 			  (3, N'bit', 0),
 			  (4, N'Decimal', 0),
-			    (5, N'Date', 0)
+			    (5, N'DateTime', 0),
+				 (6, N'Boolean', 0)
 			  
     SET IDENTITY_INSERT [dbo].[DataType]  OFF
 END
