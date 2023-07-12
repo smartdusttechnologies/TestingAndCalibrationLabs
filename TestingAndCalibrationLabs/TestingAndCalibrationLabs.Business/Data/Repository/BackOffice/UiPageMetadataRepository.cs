@@ -18,8 +18,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+
         /// <summary>
-        /// Insert Record in Ui Page Metadata Type
+        /// Insert Record in Ui Page Metadata 
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
@@ -30,8 +31,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiPageMetadataModel);
         }
+
         /// <summary>
-        /// Getting All Records From Ui Page Metadata Type
+        /// Getting All Records From Ui Page Metadata 
         /// </summary>
         /// <returns></returns>
         public List<UiPageMetadataModel> Get()
@@ -50,6 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and uct.IsDeleted = 0
                                                     and udt.isDeleted = 0").ToList();
         }
+
         /// <summary>
         /// Getting Record By Id For Ui Page Metadata
         /// </summary>
@@ -66,15 +69,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join[DataType] udt on upm.DataTypeId = udt.Id
                                                 where
-
                                                     upm.Id = @Id and
                                                      upm.IsDeleted = @isDeleted
                                                     and upt.IsDeleted = @isDeleted
                                                     and uct.IsDeleted = @isDeleted
                                                     and udt.isDeleted = @isDeleted", new { isDeleted = 0, Id = id }).FirstOrDefault();
         }
+
         /// <summary>
-        /// Edit Record For Ui Page Metadata Type
+        /// Edit Record For Ui Page Metadata 
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>

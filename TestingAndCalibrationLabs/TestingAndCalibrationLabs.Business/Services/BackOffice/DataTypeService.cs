@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
@@ -18,8 +19,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="genericRepository"></param>
         public DataTypeService(IGenericRepository<DataTypeModel> genericRepository)
         {
-            _genericRepository = genericRepository; 
+            _genericRepository = genericRepository;
         }
+
+        
         /// <summary>
         /// To Create Record DataType
         /// </summary>
@@ -37,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-          return _genericRepository.Delete(id);
+            return _genericRepository.Delete(id);
         }
         /// <summary>
         /// To Edit a record Datatype
@@ -58,11 +61,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-       /// <summary>
-       /// Get Record of dataType By Id
-       /// </summary>
-       /// <param name="id"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Get Record of dataType By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public DataTypeModel GetById(int id)
         {

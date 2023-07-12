@@ -1,21 +1,16 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
-
+﻿
 .width-full {
     width: 100%;
 }
 
-body {
-    font-family: 'Roboto';
-}
-
-.form-element {
+.form-element-for-common-control {
     height: 50px;
     position: relative;
     padding-left: 2px;
     padding-right: 2px;
 }
 
-    .form-element .form-input {
+    .form-element-for-common-control .form-input {
         width: 100%;
         height: 100%;
         background: white;
@@ -23,11 +18,11 @@ body {
         border-radius: 5px;
         outline: none;
         padding: 0;
-        padding-left: 15px;
+        padding-left: 3px;
         font-size: 20px;
     }
 
-    .form-element .form-label {
+    .form-element-for-common-control .form-label {
         position: absolute;
         top: 15px;
         left: 15px;
@@ -39,7 +34,7 @@ body {
         padding-left: 15px;
     }
 
-    .form-element .form-input:focus ~ .form-label {
+    .form-element-for-common-control .form-input:focus ~ .form-label {
         top: -6px;
         padding-left: 5px;
         padding-right: 5px;
@@ -47,7 +42,7 @@ body {
         font-size: 12px;
     }
 
-    .form-element .form-input:not(:focus) ~ .form-label {
+    .form-element-for-common-control .form-input:not(:focus) ~ .form-label {
         top: 15px;
         background-color: white;
         padding-left: 5px;
@@ -55,7 +50,7 @@ body {
         font-size: 18px;
     }
 
-    .form-element .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
+    .form-element-for-common-control .form-input:not(:focus):not(:placeholder-shown) ~ .form-label {
         top: -6px;
         background-color: white;
         padding-left: 5px;
@@ -70,19 +65,20 @@ body {
     padding-right: 2px;
 }
 
-.form-element input:focus {
+.form-element-for-common-control input:focus {
     border-color: dodgerblue;
     box-shadow: 0 0 3px 0 dodgerblue;
     transition: 0.3s all;
 }
 
-.form-element input:hover {
+.form-element-for-common-control input:hover {
     border-color: dodgerblue;
     box-shadow: 0 0 1px 0 dodgerblue;
 }
 
 .btn-submit-print {
     background-color: blue;
+    width: 200px;
     font-size: 20px;
     padding: 20px;
     border-radius: 15px;
@@ -90,10 +86,6 @@ body {
     color: magenta;
     text-align: center;
     position: relative;
-}
-
-#TestDetailsSubmit {
-    width: 260px;
 }
 
 .container-testing-material {
@@ -105,30 +97,48 @@ body {
     display: inline-block;
 }
 
-    .container-testing-material .container-chip {
-        background-color: #e5ebee;
-        border-radius: 15px;
-        display: inline-block;
-        top: -6px;
-    }
-
-form-group > label {
-    top: 12px;
-    left: 6px;
-    position: relative;
-    background-color: white;
-    padding: 0px 0px 0px 0px;
+.container-testing-material .container-chip {
+    background-color: #e5ebee;
+    border-radius: 15px;
+    display: inline-block;
+    top: -6px;
 }
 
-
-#select {
-    margin: 0;
-    padding: 0;
+.field-validation-error.form-input.width-full {
+    color: orangered;
+    font-weight: bold;
 }
 
+.field-validation-valid .form-input.width-full {
+    display: none;
+}
+
+input.input-validation-error.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#Comments.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TestingType.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#State.form-input.width-full {
+    border: 2px solid red;
+}
+
+textarea.input-validation-error#Comments {
+    border: 2px solid red;
+}
+
+select.input-validation-error#TestingType {
+    border: 2px solid red;
+}
 
 .submit-progress-bg {
-    background-color: lightcoral;
+    background-color: lightgrey;
     opacity: .5;
 }
 
@@ -183,53 +193,6 @@ form-group > label {
         animation: fadein 0.5s, fadeout 0.5s 2.5s;
     }
 
-@-webkit-keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
-}
-
-@keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
-}
-
-@keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
-}
 
 .inputWithIconSearch {
     width: 100%;
@@ -239,9 +202,9 @@ form-group > label {
     transition: 0.3s;
 }
 
-    .inputWithIconSearch:focus {
-        border-bottom: 2px solid black;
-    }
+.inputWithIconSearch:focus {
+    border-bottom: 2px solid black;
+}
 
 .inputSearchGrid .inputWithIconSearch {
     padding-left: 30px;
@@ -252,29 +215,29 @@ form-group > label {
     position: relative;
 }
 
-    .inputSearchGrid .iconForSearchLeft {
-        position: absolute;
-        left: 10px;
-        top: 4px;
-        color: black;
-        transition: 0.3s;
-    }
+.inputSearchGrid .iconForSearchLeft {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+    color: black;
+    transition: 0.3s;
+}
 
-    .inputSearchGrid .iconForSearchRight {
-        position: absolute;
-        right: 20px;
-        top: 4px;
-        color: #aaa;
-        transition: 0.3s;
-    }
+.inputSearchGrid .iconForSearchRight {
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    color: #aaa;
+    transition: 0.3s;
+}
 
-        .inputSearchGrid .iconForSearchRight:hover {
-            position: absolute;
-            right: 20px;
-            top: 4px;
-            color: black;
-            transition: 0.3s;
-        }
+.inputSearchGrid .iconForSearchRight:hover {
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    color: black;
+    transition: 0.3s;
+}
 
 .inputWithIcon.inputIconBg .iconForSignIn {
     background-color: #aaa;
@@ -283,10 +246,9 @@ form-group > label {
     border-radius: 4px 0 0 4px;
 }
 
-/*The following few were display hidden bcs of using the datatable things*/
+/*The following few ID were display hidden bcs of using the datatable things*/
 #testDetailsGrid_length {
     display: none;
-    border: 1px solid black;
 }
 
 #testDetailsGrid_wrapper {
@@ -335,3 +297,5 @@ form-group > label {
         padding-left: 20px;
     }
 }
+
+

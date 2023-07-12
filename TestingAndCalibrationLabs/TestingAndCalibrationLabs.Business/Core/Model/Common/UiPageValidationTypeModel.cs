@@ -14,14 +14,17 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name of The Ui Page Validation Type
         /// </summary>
+        [DbColumn]
         public string Name { get; set; }
         /// <summary>
         /// It Contains The Value of The Ui Page Validation Type
         /// </summary>
+        [DbColumn]
         public string Value { get; set; }
         /// <summary>
         /// It Contains The Messege of The Ui Page Validation Type
         /// </summary>
+        [DbColumn]
         public string Message { get; set; }
     }
 }

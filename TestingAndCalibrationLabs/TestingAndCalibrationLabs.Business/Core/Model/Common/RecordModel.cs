@@ -13,6 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class RecordModel : Entity
     {
         #region Public Properties
+        [DbColumn]
         public int UiPageId { get; set; }
 
         public List<UiPageMetadataModel> Fields { get; set; }

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
-namespace TestingAndCalibrationLabs.Business.Core.Interfaces
+namespace TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice
 {
-    /// <summary>
-    /// Service interface for Data Type
-    /// </summary>
     public interface IDataTypeService
     {
         /// <summary>
@@ -37,7 +36,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
-
     }
 }

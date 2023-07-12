@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using TestingAndCalibrationLabs.Business.Core.Interfaces;
-
+using TestingAndCalibrationLabs.Business.Services;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -34,7 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             var dataTypes = _dataTypeService.Get();
-            var dataTypeList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<Models.DataTypeModel>>(dataTypes);
+            var dataTypeList = _mapper.Map<List<Business.Core.Model.DataTypeModel>, List<DataTypeDTO>>(dataTypes);
 
             return View(dataTypeList.AsEnumerable());
         }
@@ -44,11 +47,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        
+
 
         public IActionResult Create(int id)
         {
-            return base.View(new Models.DataTypeModel { Id=id});
+            return base.View(new DataTypeDTO { Id = id });
         }
         /// <summary>
         /// To Create Record in DataType
@@ -56,13 +59,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="dataTypeModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create([Bind] Models.DataTypeModel dataTypeModel)
+        public IActionResult Create([Bind] DataTypeDTO dataTypeModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var dataType= _mapper.Map<Models.DataTypeModel,Business.Core.Model.DataTypeModel>(dataTypeModel);
+                var dataType = _mapper.Map<DataTypeDTO, Business.Core.Model.DataTypeModel>(dataTypeModel);
                 _dataTypeService.Create(dataType);
-                TempData["IsTrue"]= true;
+                TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(dataTypeModel);
@@ -80,7 +83,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var dataType = _dataTypeService.GetById((int)id);
             if (dataType == null)
             { return NotFound(); }
-            var dataTypeById = _mapper.Map<Business.Core.Model.DataTypeModel, Models.DataTypeModel>(dataType);
+            var dataTypeById = _mapper.Map<Business.Core.Model.DataTypeModel, DataTypeDTO>(dataType);
             return View(dataTypeById);
         }
         /// <summary>
@@ -89,11 +92,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="dataTypeModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Edit([Bind] Models.DataTypeModel dataTypeModel)
+        public IActionResult Edit([Bind] DataTypeDTO dataTypeModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var dataType = _mapper.Map<Models.DataTypeModel, Business.Core.Model.DataTypeModel>(dataTypeModel);
+                var dataType = _mapper.Map<DataTypeDTO, Business.Core.Model.DataTypeModel>(dataTypeModel);
                 _dataTypeService.Edit(dataType);
                 return RedirectToAction("Index");
             }
@@ -106,12 +109,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult Delete(int? id)
         {
-            if(id==null)
+            if (id == null)
             { return NotFound(); }
-            var dataType = _dataTypeService.GetById((int) id);
-            if(dataType == null)
+            var dataType = _dataTypeService.GetById((int)id);
+            if (dataType == null)
             { return NotFound(); }
-            var dataTypeById = _mapper.Map<Business.Core.Model.DataTypeModel, Models.DataTypeModel>(dataType);
+            var dataTypeById = _mapper.Map<Business.Core.Model.DataTypeModel, DataTypeDTO>(dataType);
             return View(dataTypeById);
 
         }
@@ -120,14 +123,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost,ActionName("delete")]
+        [HttpPost, ActionName("delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            if(id==null)
-            {    return NotFound();  }
+            if (id == null)
+            { return NotFound(); }
 
             _dataTypeService.Delete((int)id);
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Index");
         }
-     }
+    }
 }
