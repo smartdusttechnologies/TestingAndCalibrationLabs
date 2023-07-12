@@ -310,7 +310,7 @@ BEGIN
 			(3013, 1, 0, N'Contant Person', 0, 2, 3, N'cP'),
 			(3014, 1, 0, N'Name', 0, 2, 3, N'name'),
 			(3016, 1, 1, N'Job Serial No', 0, 1, 3, N'jsn'),
-			(3017, 1, 1, N'Department Name', 0, 2, 2014, N'rd'),
+			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd'),
 			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df'),
 			(3019, 22, 1, N'Recived On', 0, 5, 1011, N'jklg'),
 
@@ -352,7 +352,6 @@ BEGIN
 			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
 			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
 			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
-			(3064, 1, 0, N'ProgressStatus1', 0, 1, 2014, N'progress'),
 			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0')
 
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
