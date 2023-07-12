@@ -40,6 +40,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         
    
         List<LookupModel> GetByLookupCategoryId(int lookupCategoryId);
+        /// <summary>
+        /// To Get All Records Of Lookup
+        /// </summary>
+        /// <returns></returns>
         List<LookupModel> GetLookupCategoryId(int lookupCategoryId);
 
     }

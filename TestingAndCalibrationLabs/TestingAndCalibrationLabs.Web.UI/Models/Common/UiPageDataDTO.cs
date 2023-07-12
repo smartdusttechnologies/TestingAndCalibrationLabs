@@ -13,7 +13,8 @@
         public int WorkflowStageId { get; set; }
         public int UiPageTypeId { get; set; }
         public int UiPageDataId { get; set; }
-        public int ChildId { get; set; }
+        public int? ChildId { get; set; }
         public string Value { get; set; }
+
     }
 }

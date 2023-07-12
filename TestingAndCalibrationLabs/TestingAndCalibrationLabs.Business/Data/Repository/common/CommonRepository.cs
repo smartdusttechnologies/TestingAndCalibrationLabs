@@ -257,10 +257,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
+            using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Recor", (System.Data.SqlClient.SqlConnection)db))
             {
-               var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value  }).ToList();
-               var MultiData = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
+                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value  }).ToList();
+                var MultiData = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
@@ -268,6 +268,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
+
             }
             return true;
         }
@@ -309,7 +310,26 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
                                         ", new { id }).ToList();
         }
-
+        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageDataModel>(@" SELECT t1.UiPageMetadataId,'UiPageFileAttachType' As uiPageType, t2.UiPageDataId, t2.Value
+                                               FROM UiPageData t1
+                                                  JOIN[UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+                                                WHERE t1.Id = @uiPageDataId
+                                                  UNION All
+                                                SELECT t3.UiPageMetadataId,'UiPageIntType' , t4.UiPageDataId, CAST(t4.Value AS varchar)t
+                                               FROM UiPageData t3
+                                             JOIN[UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+                                               WHERE t3.Id = @uiPageDataId
+                                                   UNION All
+                                             SELECT t3.UiPageMetadataId,'UiPageFileAttachType' , t4.UiPageDataId, CAST(t4.Value AS varchar)t
+                                                     FROM UiPageData t3
+                                                   JOIN[UiPageFileAttachType] t4 ON t3.Id = t4.UiPageDataId
+                                           WHERE t3.Id = @uiPageDataId
+                                        ", new { uiPageDataId }).ToList();
+        }
+        #region Multi Value Control CRUD
         /// <summary>
         /// Get All Page Data Based On Multi Controls
         /// </summary>

@@ -200,13 +200,11 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
-                    //record.WorkflowStageId = oldRecord.WorkflowStageId;
-                    //_workflowActivityService.WorkflowActivity(record);
-                    return new RequestResult<bool>(true);
                 }
-                return new RequestResult<bool>(false);
+                return new RequestResult<bool>(true);
+
             }
-            return requestResult;
+            return new RequestResult<bool>(false);
         }
         /// <summary>
         /// Get By Module Id For Create
@@ -274,7 +272,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             }));
 
-        var hierarchy = hirericheys.Hierarchize(
+            var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent

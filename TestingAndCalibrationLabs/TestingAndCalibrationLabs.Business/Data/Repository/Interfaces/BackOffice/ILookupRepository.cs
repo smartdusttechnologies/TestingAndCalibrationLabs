@@ -10,6 +10,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
      /// </summary>
      /// <returns></returns>
      List<LookupModel> GetByLookupCategoryId(int lookupCategoryId);
-     List<LookupModel> GetLookupCategoryId(int lookupCategoryId);
+        /// <summary>
+        /// Get All Records From Lookup
+        /// </summary>
+        /// <returns></returns>
+        List<LookupModel> GetLookupCategoryId(int lookupCategoryId);
     }
 }

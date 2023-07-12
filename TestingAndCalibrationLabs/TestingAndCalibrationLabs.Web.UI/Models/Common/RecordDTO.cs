@@ -29,6 +29,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 
         public List<UiPageDataDTO> FieldValues { get; set; }
 
+
         public IEnumerable<Node<LayoutDTO>> Layout { get; set; }
 
         public IList<ValidationMessage> ErrorMessage { get; set; }
