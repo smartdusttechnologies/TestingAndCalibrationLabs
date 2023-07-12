@@ -65,14 +65,17 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="record"></param>
         /// <returns></returns>
         RequestResult<bool> DeleteMultiValue(RecordModel record);
-
-        //AttachmentModel DownLoadAttachment(string fileId);
+        /// <summary>
+        /// Image Upload 
+        /// </summary>
+        /// <param name="fileUpload"></param>
+        /// <returns></returns>
         int ImageUpload(FileUploadModel fileUpload);
-
+        /// <summary>
+        /// Image Download
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
         FileUploadModel DownloadImage(string fileId);
-        
-
-
-
-        }
+     }
 }  

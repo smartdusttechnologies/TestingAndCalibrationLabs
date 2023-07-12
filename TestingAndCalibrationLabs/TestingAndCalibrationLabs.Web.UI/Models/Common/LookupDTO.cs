@@ -32,5 +32,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
 
         public int ParentId { get; set; }
+
+
+        public string LookupCategoryName { get; set; }
+
     }
 }
