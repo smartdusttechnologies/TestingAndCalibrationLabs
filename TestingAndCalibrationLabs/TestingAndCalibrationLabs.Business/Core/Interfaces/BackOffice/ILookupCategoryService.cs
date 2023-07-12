@@ -15,9 +15,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         List<LookupCategoryModel> Get();
         /// <summary>
-        /// Get Record By Id From LookupCategory
+        /// Get All Records From LookupCategory based on id
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         LookupCategoryModel GetById(int id);
         /// <summary>
@@ -27,17 +26,18 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         RequestResult<int> Create(LookupCategoryModel lookupCategoryModel);
         /// <summary>
-        /// Edit Record From LookupCategory
+        /// Update Record From LookupCategory
         /// </summary>
         /// <param name="lookupCategoryModel"></param>
         /// <returns></returns>
         RequestResult<int> Update(LookupCategoryModel lookupCategoryModel);
         /// <summary>
-        /// Delete Record From Ui Page Type
+        /// Delete Record From LookupCategory
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+
 
     }
 }
