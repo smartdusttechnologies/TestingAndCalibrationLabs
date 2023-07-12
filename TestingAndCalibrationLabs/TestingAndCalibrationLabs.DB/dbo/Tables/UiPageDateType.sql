@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[UiPageDateType] (
     [Id]               INT      IDENTITY (1, 1) NOT NULL,
     [UiPageMetadataId] INT      NULL,
-    [Value]            DATETIME NULL,
+    [Value]            DATE NULL,
     [UiPageDataId]     INT      NULL,
     [RecordId]         INT      NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
