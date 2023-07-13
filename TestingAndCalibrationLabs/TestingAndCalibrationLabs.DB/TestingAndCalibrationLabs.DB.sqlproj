@@ -77,6 +77,18 @@
     <Build Include="dbo\Tables\Role.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\UiNavigationCategory.sql" />
+    <Build Include="dbo\Tables\Lookup.sql" />
+    <Build Include="dbo\Tables\UiPageMetadataCharacteristics.sql" />
+    <Build Include="dbo\Tables\LookupCategory.sql" />
+    <Build Include="dbo\Tables\UserRoleClaim.sql" />
+    <Build Include="dbo\Tables\UserClaim.sql" />
+    <Build Include="dbo\Tables\UiControlCategoryType.sql" />
+    <Build Include="dbo\Tables\TestReport.sql" />
+    <Build Include="dbo\Tables\Survey.sql" />
+    <Build Include="dbo\Tables\PermissionType.sql" />
+    <Build Include="dbo\Tables\PermissionModuleType.sql" />
+    <Build Include="dbo\Tables\Permission.sql" />
+    <Build Include="dbo\Tables\ClaimType.sql" />
     <Build Include="dbo\Tables\TestReport.sql" />
     <Build Include="dbo\Tables\UserRoleClaim.sql" />
     <Build Include="dbo\Tables\UserClaim.sql" />
@@ -86,6 +98,14 @@
     <Build Include="dbo\Tables\ClaimType.sql" />
     <Build Include="dbo\Tables\Survey.sql" />
     <Build Include="dbo\Tables\UiPageNavigation.sql" />
+    <Build Include="dbo\Tables\WorkflowStage.sql" />
+    <Build Include="dbo\Tables\WorkflowActivity.sql" />
+    <Build Include="dbo\Tables\Workflow.sql" />
+    <Build Include="dbo\Tables\Module.sql" />
+    <Build Include="dbo\Tables\UiPageMetadataModuleBridge.sql" />
+    <Build Include="dbo\Tables\Application.sql" />
+    <Build Include="dbo\Tables\Activity.sql" />
+    <Build Include="dbo\Tables\ActivityMetadata.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

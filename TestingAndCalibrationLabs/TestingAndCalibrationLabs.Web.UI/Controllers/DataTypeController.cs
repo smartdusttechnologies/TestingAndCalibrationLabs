@@ -7,6 +7,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Core.Interfaces;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -124,13 +125,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost, ActionName("delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
         {
             if (id == null)
             { return NotFound(); }
 
             _dataTypeService.Delete((int)id);
+            TempData["IsTrue"] = false;
             return RedirectToAction("Index");
         }
+
+
+
+
     }
 }

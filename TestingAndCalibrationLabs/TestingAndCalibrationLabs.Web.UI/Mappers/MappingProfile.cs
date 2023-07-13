@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
 {
@@ -20,9 +21,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<UiPageValidationDTO, UiPageValidationModel>().ReverseMap();
             CreateMap<UiPageValidationType, UiPageValidationTypeModel>().ReverseMap();
             CreateMap<UiNavigationCategoryDTO, UiNavigationCategoryModel>().ReverseMap();
+            CreateMap<LookupDTO, LookupModel>().ReverseMap();
+            CreateMap<LookupCategoryDTO, LookupCategoryModel>().ReverseMap();
+            CreateMap<Node<LayoutDTO>, Business.Common.Node<LayoutModel>>().ReverseMap();
+            CreateMap<LayoutDTO, LayoutModel>().ReverseMap();
             CreateMap<TestReportDTO,TestReportModel>().ReverseMap();
             CreateMap<AttachmentDTO,AttachmentModel>().ReverseMap();
-            CreateMap<UiPageNavigationModel,UiPageNavigationDTO>().ReverseMap();
+            CreateMap<UiControlCategoryTypeDTO,UiControlCategoryTypeModel>().ReverseMap();
+            CreateMap<ModuleDTO,ModuleModel>().ReverseMap();
+            CreateMap<WorkflowDTO,WorkflowModel>().ReverseMap();
+            CreateMap<WorkflowStageDTO,WorkflowStageModel>().ReverseMap();
+            CreateMap<UiPageNavigationModel, UiPageNavigationDTO>().ReverseMap();
         }
     }
 }

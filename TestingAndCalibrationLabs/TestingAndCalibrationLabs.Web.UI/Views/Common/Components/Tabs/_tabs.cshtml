@@ -1,0 +1,41 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        @foreach (var item in Model.Children)
+        {
+            if (Model.Children.First() == item)
+            {
+                <button class="nav-link active" id="nav-@item.Value.UiPageMetadata.Id-tab" data-bs-toggle="tab" data-bs-target="#nav-@item.Value.UiPageMetadata.Id" type="button" role="tab" aria-controls="nav-@item.Value.UiPageMetadata.Id" aria-selected="false">@item.Value.UiPageMetadata.UiControlDisplayName</button>
+            }
+            else
+            {
+                <button class="nav-link " id="nav-@item.Value.UiPageMetadata.Id-tab" data-bs-toggle="tab" data-bs-target="#nav-@item.Value.UiPageMetadata.Id" type="button" role="tab" aria-controls="nav-@item.Value.UiPageMetadata.Id" aria-selected="false">@item.Value.UiPageMetadata.UiControlDisplayName</button>
+            }
+        }
+
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+
+    @foreach (var item in Model.Children)
+    {
+        @if (Model.Children.First() == item)
+        {
+            <div class="tab-pane fade show active " id="nav-@item.Value.UiPageMetadata.Id" role="tabpanel" aria-labelledby="nav-@item.Value.UiPageMetadata.Id-tab">
+                @foreach (var node in item.Children)
+                {
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                }
+            </div>
+        }
+        else
+        {
+            <div class="tab-pane fade " id="nav-@item.Value.UiPageMetadata.Id" role="tabpanel" aria-labelledby="nav-@item.Value.UiPageMetadata.Id-tab">
+                @foreach (var node in item.Children)
+                {
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                }
+            </div>
+        }
+    }
+</div>

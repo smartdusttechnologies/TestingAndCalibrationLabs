@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult Add(UserDTO userRequest)
         {
-            var userModel = _mapper.Map<UserDTO,User>(userRequest);
+            var userModel = _mapper.Map<UserDTO,UserModel>(userRequest);
             var result = _authenticationService.Add(userModel, userRequest.Password);
             if (result.IsSuccessful)
                 return Ok(result.RequestedObject);

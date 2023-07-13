@@ -1,7 +1,10 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -13,13 +16,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly string _tableName;
-        private readonly List<string> _columnName;
         #region Public Methods
         public GenericRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
             _tableName = GenericUtils.GetDbTableName<T>();
-            _columnName = GenericUtils.GetDbColumnName<T>();
         }
 
         public bool Delete(int id)
@@ -85,34 +86,50 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         #region Private Methods
         private string GenerateInsertQuery()
         {
-            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} (");
-            var columnValues = new StringBuilder();
+            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
 
-            _columnName.ForEach(colName => {
-                insertQuery.Append($"{colName},");
-                columnValues.Append($"@{colName},");
-            });
+            insertQuery.Append("(");
+
+            var properties = GenerateListOfProperties(typeof(T).GetProperties());
+            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(") VALUES (");
+            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"@{prop},"); } });
 
-            columnValues
-                .Remove(columnValues.Length - 1, 1)
+            insertQuery
+                .Remove(insertQuery.Length - 1, 1)
                 .Append(")");
 
-            return insertQuery.Append(columnValues).ToString();
+            return insertQuery.ToString();
         }
+
         private string GenerateUpdateQuery()
         {
             var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
-            _columnName.ForEach(property =>
+            var properties = GenerateListOfProperties(typeof(T).GetProperties());
+
+            properties.ForEach(property =>
             {
+                if (!property.Equals("Id"))
+                {
                     updateQuery.Append($"{property}=@{property},");
+                }
             });
+
             updateQuery.Remove(updateQuery.Length - 1, 1); //remove last comma
             updateQuery.Append(" WHERE Id=@Id");
+
             return updateQuery.ToString();
+        }
+
+        private static List<string> GenerateListOfProperties(IEnumerable<PropertyInfo> listOfProperties)
+        {
+            return (from prop in listOfProperties
+                    let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
+                    select prop.Name).ToList();
         }
         #endregion
     }

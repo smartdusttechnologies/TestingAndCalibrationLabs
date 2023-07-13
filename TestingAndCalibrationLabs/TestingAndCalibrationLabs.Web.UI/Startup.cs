@@ -15,9 +15,12 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
+using Newtonsoft.Json.Serialization;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -66,8 +69,10 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleDriveService, GoogleDriveService>();
             services.AddScoped<IEmailService, EmailService >();
-            
- 
+
+            services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
@@ -79,17 +84,38 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IDataTypeService, DataTypeService>();
             services.AddScoped<IFileCompressionService, FileCompressionService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
+            services.AddScoped<IUiControlCategoryTypeService, UiControlCategoryTypeService>();
 
+            services.AddScoped<ILookupService, LookupService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<ILookupCategoryService, LookupCategoryService>();
+            services.AddScoped<IListSorterService, ListSorterService>();
+            services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped<IWorkflowService, WorkflowService>();
+            services.AddScoped<IWorkflowStageService, WorkflowStageService>();
+            services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
 
 
             //Repository
-
+            services.AddScoped<IModuleRepository, ModuleRepository>();
+            services.AddScoped<ILookupRepository, LookupRepository>();
+            services.AddScoped<IActivityMetadataRepository, ActivityMetadataRepository>();
+            services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();
+            services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+            services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
+            services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            services.AddScoped<IGenericRepository<UiControlCategoryTypeModel>, GenericRepository<UiControlCategoryTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageTypeModel>, GenericRepository<UiPageTypeModel>>();
+            services.AddScoped<IGenericRepository<ActivityMetadataModel>, GenericRepository<ActivityMetadataModel>>();
+            services.AddScoped<IGenericRepository<ModuleModel>, GenericRepository<ModuleModel>>();
+            services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
+            services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();

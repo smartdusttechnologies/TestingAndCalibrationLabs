@@ -1,0 +1,57 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+    <p>@Model.Value.UiPageMetadata.UiControlDisplayName</p>
+    <input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
+    @foreach (var item in Model.Children)
+    {
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" onclick="setValueToParent(this)" for="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" id="rad-@item.Value.UiPageMetadata.Id">
+            <label class="form-check-label" for="@item.Value.UiPageMetadata.UiControlTypeName">
+                @item.Value.UiPageMetadata.UiControlDisplayName
+            </label>
+        </div>
+    }
+</div>
+<script>
+    //window.addEventListener("load", function () { preSelectRadio() });
+    
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var uiPageData = modelData.value.uiPageData;
+        var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
+        var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("LookupByCategoryId","Lookup")",
+            data: { lookupCategoryId: lookupCategoryId },
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+
+                    var lookupId = response[i].id;
+                    var lookupName = response[i].name;
+                    var childId = "#rad-" + modelData.children[i].value.uiPageMetadata.id;
+                    $(childId).val(lookupId);
+                }
+            },
+            error: function (req, status, error) {
+            }
+        });
+        var idVal = $('#Id').val();
+        if (idVal != undefined && uiPageData != null) {
+            var selectedValue = modelData.value.uiPageData.value;
+            for (var i = 0; i < modelData.children.length; i++) {
+                var radioInput = "#rad-" + modelData.children[i].value.uiPageMetadata.id;
+                var valueOfRadio = $(radioInput).val();
+                if (valueOfRadio == selectedValue) {
+                    $(radioInput).prop("checked", true);
+                }
+            }
+        }
+    });
+</script>
+<script>
+    function setValueToParent(elementClicked) {
+        var idNum = modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+        document.getElementById(idNum).value = elementClicked.value;
+    }
+</script>

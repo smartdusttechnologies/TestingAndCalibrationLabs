@@ -1,0 +1,23 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+    <input class="form-input width-full black-border" type="email" placeholder=" " id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" onchange="this.setAttribute('value',this.value)" />
+    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id">@Model.Value.UiPageMetadata.UiControlDisplayName@if (Model.Value.UiPageMetadata.IsRequired)
+        {
+            <span class="red-color">*</span>
+        }</label>
+    <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+</div>
+<script>
+    $(document).ready(function () {
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var idOfRecord = $("#Id").val();
+        var uiPageData = modelData.value.uiPageData;
+        if (idOfRecord != undefined && uiPageData != null) {
+            var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
+
+            var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+            var val = uiPageData.value;
+            $(id).val(val);
+        }
+    });
+</script>

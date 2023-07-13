@@ -13,12 +13,12 @@
         /// <summary>
         /// Ui Page Type Id reference from Ui page type.
         /// </summary>
-        public int UiPageTypeId { get; set; }
+        public int ModuleId { get; set; }
 
         /// <summary>
         /// Ui Page Type Name
         /// </summary>
-        public string UiPageTypeName { get; set; }
+        public string ModuleName { get; set; }
 
         /// <summary>
         /// Ui Navigation Category Id reference from UiNavigationCategory.

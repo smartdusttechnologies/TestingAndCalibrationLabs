@@ -11,12 +11,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class UiControlTypeController : Controller
     {
         public readonly IUiControlTypeService _uiControlTypeServices;
+        public readonly IListSorterService _listSorterService;
         public readonly IMapper _mapper;
-
-        public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper)
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="uiControlTypeServices"></param>
+        /// <param name="mapper"></param>
+        public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper, IListSorterService listSorterService)
         {
             _uiControlTypeServices = uiControlTypeServices;
             _mapper = mapper;
+            _listSorterService = listSorterService;
         }
 
         /// <summary>
@@ -26,6 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
             var controlTypeList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlTypeListModel);

@@ -1,0 +1,46 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<div class="accordion" id="accordionExample" style="margin-top:2px;">
+    @foreach (var item in Model.Children)
+    {
+        @if (Model.Children.First() == item)
+        {
+            <div class="card">
+                <div class="card-header" id="@item.Value.UiPageMetadata.UiControlTypeName@item.Value.UiPageMetadata.Id">
+                    <h2 class="mb-0">
+                        <button class="btn " type="button" data-toggle="collapse" data-target="#collapse-@item.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="collapse-@item.Value.UiPageMetadata.Id">
+                            @item.Value.UiPageMetadata.UiControlDisplayName 
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapse-@item.Value.UiPageMetadata.Id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        @foreach (var node in item.Children)
+                        {
+                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header" id="@item.Value.UiPageMetadata.UiControlTypeName@item.Value.UiPageMetadata.Id">
+                    <h2 class="mb-0">
+                        <button class="btn  collapsed" type="button" data-toggle="collapse" data-target="#collapse-@item.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="collapse-@item.Value.UiPageMetadata.Id">
+                            @item.Value.UiPageMetadata.UiControlDisplayName
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapse-@item.Value.UiPageMetadata.Id" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        @foreach (var node in item.Children)
+                        {
+                            @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", node)
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

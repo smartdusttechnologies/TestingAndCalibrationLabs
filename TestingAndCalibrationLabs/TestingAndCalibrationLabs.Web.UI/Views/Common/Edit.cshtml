@@ -1,53 +1,42 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordDTO
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "CreateLayout";
 }
-<h1>Edit</h1>
-<hr />
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" id="Id" name="Id" />
-            <input type="hidden" asp-for="UiPageId" id="UiPageId" name="UiPageId" />
-            <div class="row">
-            @foreach (var item in Model.Fields)
-            {
-                var Controlvalue = Model.FieldValues.Where(x => x.UiPageMetadataId == item.Id).FirstOrDefault()?.Value;
-                 <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
-                  <input class="form-input width-full" type="@item.UiControlTypeName" id="@item.Id"  placeholder=" " name="@item.UiControlDisplayName" onchange="this.setAttribute('value',this.value)" value="@Controlvalue">
-                  <label class="form-label" for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-               </div>
-
-                    @*  <div class="form-group-for-common">
-                        <label asp-for="@item.UiControlDisplayName">@item.UiControlDisplayName</label>
-                        <input type="@item.UiControlType" id="@item.Id" title="@item.UiControlDisplayName" value="@Controlvalue" />
-                        <span asp-validation-for="@item.UiControlDisplayName" class="text-danger"></span>
-                        </div>*@
+            <input type="hidden" asp-for="ModuleId" />
+            <input type="hidden" asp-for="UiPageTypeId" />
+            <input type="hidden" asp-for="WorkflowStageId" />
+            <input type="hidden" asp-for="UpdatedDate" />
+            <div class="row ms-1 me-1">
+                @foreach (var item in Model.Layout)
+                {
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
                 }
             </div>
-            <div class="form-group-for-common">
-                <input type="button" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
-            </div>
-
         </form>
-        <input type="hidden" value="" name="lefid" id="lefid" />
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index" asp-route-id="@Model.UiPageId">Back to List</a>
-</div>
-<div>
-    <div class="d-flex justify-content-center fixed-bottom">
-        <div class="alert alert-success" role="alert" id="snackbarsuccess">
-
-            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert"><div class="MuiAlert-icon css-1l54tgj"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SuccessOutlinedIcon"><path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path></svg></div><div class="MuiAlert-message css-1xsto0d">This is a success message!</div></div>
+        <div class="form-group" style="margin:6px;" id="sub-mt-btn">
+            <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="AjaxFormSubmit()" />
         </div>
     </div>
 </div>
 
+<div>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-success" role="alert" id="snackbarsuccess">
+            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-filledSuccess MuiAlert-filled css-1lgz3mj" role="alert">
+                <div class="MuiAlert-icon css-1l54tgj">
+                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1cw4hi4" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path>
+                    </svg>
+                </div><div class="MuiAlert-message css-1xsto0d">Saved successfully!</div>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div role="alert" id="snackbarerror">
@@ -59,67 +48,101 @@
                 </div>
                 <div class="MuiAlert-message css-1xsto0d" id="errormessage">!</div>
             </div>
-
         </div>
     </div>
 </div>
 
- <script>
+<script>
+    //This function will display the success snackbar
     function myFunction() {
-          var x = document.getElementById("snackbarsuccess");
+        var x = document.getElementById("snackbarsuccess");
         x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
-      function myFunctionError() {
+    //This function will display the Failure snackbar
+    function myFunctionError() {
         var x = document.getElementById("snackbarerror");
         x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-     }
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    }
 </script>
-
 <script type="text/javascript">
+    var mainModel = JSON.parse('@Json.Serialize(Model)');
+    var updatedDate = mainModel.updatedDate;
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+    var moduleId = parseInt($("#ModuleId").val())
+    var id = parseInt($("#Id").val())
+    var url = $("#commonForm").attr("action");
+    AjaxFormSubmit = () => {
+        WheelLoader();
+        let workflowStageId = parseInt($("#WorkflowStageId").val())
+        //here I am flatting the hirarchy of Node<Layout> To A List of Layout
+        const getMembers = (member) => {
 
-    function AjaxFormSubmit() {
-         var x = document.getElementById("lefid").value;
-         if( document.getElementById(x) !=null && document.getElementById(x) !=undefined){
-          document.getElementById(x).style.border = "1px solid black ";
-         }
-
-        //Set the URL.
-        var url = $("#commonForm").attr("action");
-        var uiPageMetaData = JSON.parse('@Json.Serialize(Model.Fields)');
-        var fieldValues = [];
-
-        for (let i = 0; i < uiPageMetaData.length; i++) {
-            var fieldId = uiPageMetaData[i].id;
-            var fieldValue = $('#' + fieldId).val();
-            var keyValuepair = {};
-            keyValuepair.UiPageMetadataId = fieldId;
-            keyValuepair.Value = fieldValue;
-            fieldValues.push(keyValuepair)
+            if (!member.children || !member.children.length) {
+                return member.value;
+            }
+            return [member.value, _.flatMapDeep(member.children, getMembers)];
         }
-        var uiPageId = parseInt($("#UiPageId").val())
-        var id = parseInt($("#Id").val())
-
+        var layout = _.flatMapDeep(mainModel.layout, getMembers);
+        var fieldValues = [];
+        for (let i = 0; i < layout.length; i++) {
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
+                var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
+                var metadataId = layout[i].uiPageMetadata.id;
+                var fieldValue = $(fieldId).val();
+                var keyValuepair = {};
+                var uiPageData = layout[i].uiPageData;
+                if (layout[i].uiPageData != null) {
+                    var pageDataId = layout[i].uiPageData.id;
+                    var oldValue = layout[i].uiPageData.value;
+                    if (oldValue != fieldValue) {
+                        keyValuepair.Id = pageDataId;
+                        keyValuepair.uiPageMetadataId = metadataId;
+                        keyValuepair.RecordId = id;
+                        keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+                else {
+                    keyValuepair.Id = 0;
+                    keyValuepair.uiPageMetadataId = metadataId;
+                    keyValuepair.RecordId = id;
+                    keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                    fieldValues.push(keyValuepair)
+                }
+            }
+        }
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "Id" : id, "UiPageId" : uiPageId, "FieldValues" : fieldValues},
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
-
-                  window.location.href = "/";
-                },
+                myFunction();
+                window.location.href = "/common/edit/" + id;
+            },
             failure: function (response) {
                 alert(response.responseText);
             },
             error: function (response) {
-             var newresponseJSON = response.responseJSON;
-                var newErrorMessage=newresponseJSON.errorMessage;
-                 myFunctionError();
-                document.getElementById("errormessage").innerHTML = newErrorMessage.reason;
-                ErrorMessage(NotificationNumbers++, newErrorMessage.reason);  //To pass the NotificatonContent to BellIcon
-                document.getElementById(newErrorMessage.fid).style.border = "2px solid red";
-                  document.getElementById("lefid").value = newErrorMessage.sourceId;
+               HideWheelLoader();
+                var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+                var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                for (var i = 0; i < newErrorMessage.length; i++) {
+                    var sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    myFunctionError();                                              //Calling myFunctionError javacript function
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    if (i == 0) {
+                        document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+                    }
+
+                }
             }
         });
     }

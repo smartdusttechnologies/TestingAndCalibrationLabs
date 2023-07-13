@@ -1,0 +1,505 @@
+[
+  {
+    "Value": {
+      "UiPageTypeId": 1,
+      "UiPageTypeName": "Hierarchical View",
+      "UiControlTypeId": 25,
+      "UiControlTypeName": "processStatus",
+      "IsRequired": false,
+      "UiControlDisplayName": "Hierarchical View with Process status",
+      "DataTypeId": 0,
+      "DataTypeName": "NA",
+      "ControlCategoryName": "NonDataControl",
+      "ControlCategoryId": 9,
+      "ParentId": 0,
+      "Position": 0,
+      "uiPageMetadataCharacteristics": null,
+      "Id": 1
+    },
+    "Children": [
+      {
+        "Value": {
+          "UiPageTypeId": 1,
+          "UiPageTypeName": "Hierarchical View",
+          "UiControlTypeId": 26,
+          "UiControlTypeName": "subLevel1ProcessStatus",
+          "IsRequired": false,
+          "UiControlDisplayName": "Sample Receiving",
+          "DataTypeId": 0,
+          "DataTypeName": "NA",
+          "ControlCategoryName": "SubLevel1Control",
+          "ControlCategoryId": 10,
+          "ParentId": 1,
+          "Position": 0,
+          "uiPageMetadataCharacteristics": null,
+          "Id": 2
+        },
+        "Children": [
+          {
+            "Value": {
+              "UiPageTypeId": 1,
+              "UiPageTypeName": "Hierarchical View",
+              "UiControlTypeId": 28,
+              "UiControlTypeName": "tabs",
+              "IsRequired": false,
+              "UiControlDisplayName": "Tabs under Sample Receiving",
+              "DataTypeId": 0,
+              "DataTypeName": "NA",
+              "ControlCategoryName": "NonDataControl",
+              "ControlCategoryId": 9,
+              "ParentId": 2,
+              "Position": 0,
+              "uiPageMetadataCharacteristics": null,
+              "Id": 8
+            },
+            "Children": [
+              {
+                "Value": {
+                  "UiPageTypeId": 1,
+                  "UiPageTypeName": "Hierarchical View",
+                  "UiControlTypeId": 29,
+                  "UiControlTypeName": "subLevel1Tabs",
+                  "IsRequired": false,
+                  "UiControlDisplayName": "Customer Details",
+                  "DataTypeId": 0,
+                  "DataTypeName": "NA",
+                  "ControlCategoryName": "SubLevel1Control",
+                  "ControlCategoryId": 10,
+                  "ParentId": 8,
+                  "Position": 0,
+                  "uiPageMetadataCharacteristics": null,
+                  "Id": 11
+                },
+                "Children": [
+                  {
+                    "Value": {
+                      "UiPageTypeId": 1,
+                      "UiPageTypeName": "Hierarchical View",
+                      "UiControlTypeId": 1,
+                      "UiControlTypeName": "text",
+                      "IsRequired": false,
+                      "UiControlDisplayName": "Client Name",
+                      "DataTypeId": 2,
+                      "DataTypeName": "string",
+                      "ControlCategoryName": "DataControl",
+                      "ControlCategoryId": 8,
+                      "ParentId": 11,
+                      "Position": 0,
+                      "uiPageMetadataCharacteristics": null,
+                      "Id": 16
+                    },
+                    "Children": []
+                  },
+                  {
+                    "Value": {
+                      "UiPageTypeId": 1,
+                      "UiPageTypeName": "Hierarchical View",
+                      "UiControlTypeId": 1,
+                      "UiControlTypeName": "text",
+                      "IsRequired": false,
+                      "UiControlDisplayName": "Address",
+                      "DataTypeId": 2,
+                      "DataTypeName": "string",
+                      "ControlCategoryName": "DataControl",
+                      "ControlCategoryId": 8,
+                      "ParentId": 11,
+                      "Position": 0,
+                      "uiPageMetadataCharacteristics": null,
+                      "Id": 17
+                    },
+                    "Children": []
+                  },
+                  {
+                    "Value": {
+                      "UiPageTypeId": 1,
+                      "UiPageTypeName": "Hierarchical View",
+                      "UiControlTypeId": 30,
+                      "UiControlTypeName": "collapsableSection",
+                      "IsRequired": false,
+                      "UiControlDisplayName": "Collapsable Sections",
+                      "DataTypeId": 0,
+                      "DataTypeName": "NA",
+                      "ControlCategoryName": "NonDataControl",
+                      "ControlCategoryId": 9,
+                      "ParentId": 11,
+                      "Position": 0,
+                      "uiPageMetadataCharacteristics": null,
+                      "Id": 23
+                    },
+                    "Children": [
+                      {
+                        "Value": {
+                          "UiPageTypeId": 1,
+                          "UiPageTypeName": "Hierarchical View",
+                          "UiControlTypeId": 31,
+                          "UiControlTypeName": "subLevel1CollapsableSection",
+                          "IsRequired": false,
+                          "UiControlDisplayName": "Customer Office Information",
+                          "DataTypeId": 0,
+                          "DataTypeName": "NA",
+                          "ControlCategoryName": "SubLevel1Control",
+                          "ControlCategoryId": 10,
+                          "ParentId": 23,
+                          "Position": 0,
+                          "uiPageMetadataCharacteristics": null,
+                          "Id": 26
+                        },
+                        "Children": [
+                          {
+                            "Value": {
+                              "UiPageTypeId": 1,
+                              "UiPageTypeName": "Hierarchical View",
+                              "UiControlTypeId": 1,
+                              "UiControlTypeName": "text",
+                              "IsRequired": false,
+                              "UiControlDisplayName": "Office Name",
+                              "DataTypeId": 2,
+                              "DataTypeName": "string",
+                              "ControlCategoryName": "DataControl",
+                              "ControlCategoryId": 8,
+                              "ParentId": 26,
+                              "Position": 0,
+                              "uiPageMetadataCharacteristics": null,
+                              "Id": 28
+                            },
+                            "Children": []
+                          },
+                          {
+                            "Value": {
+                              "UiPageTypeId": 1,
+                              "UiPageTypeName": "Hierarchical View",
+                              "UiControlTypeId": 1,
+                              "UiControlTypeName": "text",
+                              "IsRequired": false,
+                              "UiControlDisplayName": "Office Address",
+                              "DataTypeId": 2,
+                              "DataTypeName": "string",
+                              "ControlCategoryName": "DataControl",
+                              "ControlCategoryId": 8,
+                              "ParentId": 26,
+                              "Position": 0,
+                              "uiPageMetadataCharacteristics": null,
+                              "Id": 29
+                            },
+                            "Children": []
+                          }
+                        ]
+                      },
+                      {
+                        "Value": {
+                          "UiPageTypeId": 1,
+                          "UiPageTypeName": "Hierarchical View",
+                          "UiControlTypeId": 31,
+                          "UiControlTypeName": "subLevel1CollapsableSection",
+                          "IsRequired": false,
+                          "UiControlDisplayName": "Customer Contact Information",
+                          "DataTypeId": 0,
+                          "DataTypeName": "NA",
+                          "ControlCategoryName": "SubLevel1Control",
+                          "ControlCategoryId": 10,
+                          "ParentId": 23,
+                          "Position": 0,
+                          "uiPageMetadataCharacteristics": null,
+                          "Id": 27
+                        },
+                        "Children": [
+                          {
+                            "Value": {
+                              "UiPageTypeId": 1,
+                              "UiPageTypeName": "Hierarchical View",
+                              "UiControlTypeId": 1,
+                              "UiControlTypeName": "text",
+                              "IsRequired": false,
+                              "UiControlDisplayName": "Primary Contact Name",
+                              "DataTypeId": 2,
+                              "DataTypeName": "string",
+                              "ControlCategoryName": "DataControl",
+                              "ControlCategoryId": 8,
+                              "ParentId": 27,
+                              "Position": 0,
+                              "uiPageMetadataCharacteristics": null,
+                              "Id": 30
+                            },
+                            "Children": []
+                          },
+                          {
+                            "Value": {
+                              "UiPageTypeId": 1,
+                              "UiPageTypeName": "Hierarchical View",
+                              "UiControlTypeId": 1,
+                              "UiControlTypeName": "text",
+                              "IsRequired": false,
+                              "UiControlDisplayName": "Secondary Contact Name",
+                              "DataTypeId": 2,
+                              "DataTypeName": "string",
+                              "ControlCategoryName": "DataControl",
+                              "ControlCategoryId": 8,
+                              "ParentId": 27,
+                              "Position": 0,
+                              "uiPageMetadataCharacteristics": null,
+                              "Id": 31
+                            },
+                            "Children": []
+                          },
+                          {
+                            "Value": {
+                              "UiPageTypeId": 1,
+                              "UiPageTypeName": "Hierarchical View",
+                              "UiControlTypeId": 1,
+                              "UiControlTypeName": "text",
+                              "IsRequired": false,
+                              "UiControlDisplayName": "Primary Contact Email",
+                              "DataTypeId": 2,
+                              "DataTypeName": "string",
+                              "ControlCategoryName": "DataControl",
+                              "ControlCategoryId": 8,
+                              "ParentId": 27,
+                              "Position": 0,
+                              "uiPageMetadataCharacteristics": null,
+                              "Id": 32
+                            },
+                            "Children": []
+                          },
+                          {
+                            "Value": {
+                              "UiPageTypeId": 1,
+                              "UiPageTypeName": "Hierarchical View",
+                              "UiControlTypeId": 1,
+                              "UiControlTypeName": "text",
+                              "IsRequired": false,
+                              "UiControlDisplayName": "Secondary Contact Email",
+                              "DataTypeId": 2,
+                              "DataTypeName": "string",
+                              "ControlCategoryName": "DataControl",
+                              "ControlCategoryId": 8,
+                              "ParentId": 27,
+                              "Position": 0,
+                              "uiPageMetadataCharacteristics": null,
+                              "Id": 33
+                            },
+                            "Children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Value": {
+                  "UiPageTypeId": 1,
+                  "UiPageTypeName": "Hierarchical View",
+                  "UiControlTypeId": 29,
+                  "UiControlTypeName": "subLevel1Tabs",
+                  "IsRequired": false,
+                  "UiControlDisplayName": "Sample details",
+                  "DataTypeId": 0,
+                  "DataTypeName": "NA",
+                  "ControlCategoryName": "SubLevel1Control",
+                  "ControlCategoryId": 10,
+                  "ParentId": 8,
+                  "Position": 0,
+                  "uiPageMetadataCharacteristics": null,
+                  "Id": 12
+                },
+                "Children": [
+                  {
+                    "Value": {
+                      "UiPageTypeId": 1,
+                      "UiPageTypeName": "Hierarchical View",
+                      "UiControlTypeId": 1,
+                      "UiControlTypeName": "text",
+                      "IsRequired": false,
+                      "UiControlDisplayName": "Sample Type",
+                      "DataTypeId": 2,
+                      "DataTypeName": "string",
+                      "ControlCategoryName": "DataControl",
+                      "ControlCategoryId": 8,
+                      "ParentId": 12,
+                      "Position": 0,
+                      "uiPageMetadataCharacteristics": null,
+                      "Id": 18
+                    },
+                    "Children": []
+                  },
+                  {
+                    "Value": {
+                      "UiPageTypeId": 1,
+                      "UiPageTypeName": "Hierarchical View",
+                      "UiControlTypeId": 1,
+                      "UiControlTypeName": "text",
+                      "IsRequired": false,
+                      "UiControlDisplayName": "Date",
+                      "DataTypeId": 2,
+                      "DataTypeName": "string",
+                      "ControlCategoryName": "DataControl",
+                      "ControlCategoryId": 8,
+                      "ParentId": 12,
+                      "Position": 0,
+                      "uiPageMetadataCharacteristics": null,
+                      "Id": 19
+                    },
+                    "Children": []
+                  },
+                  {
+                    "Value": {
+                      "UiPageTypeId": 1,
+                      "UiPageTypeName": "Hierarchical View",
+                      "UiControlTypeId": 1,
+                      "UiControlTypeName": "text",
+                      "IsRequired": false,
+                      "UiControlDisplayName": "Quantity",
+                      "DataTypeId": 2,
+                      "DataTypeName": "string",
+                      "ControlCategoryName": "DataControl",
+                      "ControlCategoryId": 8,
+                      "ParentId": 12,
+                      "Position": 0,
+                      "uiPageMetadataCharacteristics": null,
+                      "Id": 20
+                    },
+                    "Children": []
+                  }
+                ]
+              },
+              {
+                "Value": {
+                  "UiPageTypeId": 1,
+                  "UiPageTypeName": "Hierarchical View",
+                  "UiControlTypeId": 1,
+                  "UiControlTypeName": "text",
+                  "IsRequired": false,
+                  "UiControlDisplayName": "Job Code",
+                  "DataTypeId": 2,
+                  "DataTypeName": "string",
+                  "ControlCategoryName": "DataControl",
+                  "ControlCategoryId": 8,
+                  "ParentId": 8,
+                  "Position": 0,
+                  "uiPageMetadataCharacteristics": null,
+                  "Id": 13
+                },
+                "Children": []
+              },
+              {
+                "Value": {
+                  "UiPageTypeId": 1,
+                  "UiPageTypeName": "Hierarchical View",
+                  "UiControlTypeId": 1,
+                  "UiControlTypeName": "text",
+                  "IsRequired": false,
+                  "UiControlDisplayName": "Email",
+                  "DataTypeId": 2,
+                  "DataTypeName": "string",
+                  "ControlCategoryName": "DataControl",
+                  "ControlCategoryId": 8,
+                  "ParentId": 8,
+                  "Position": 0,
+                  "uiPageMetadataCharacteristics": null,
+                  "Id": 14
+                },
+                "Children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Value": {
+          "UiPageTypeId": 1,
+          "UiPageTypeName": "Hierarchical View",
+          "UiControlTypeId": 26,
+          "UiControlTypeName": "subLevel1ProcessStatus",
+          "IsRequired": false,
+          "UiControlDisplayName": "Test Plan",
+          "DataTypeId": 0,
+          "DataTypeName": "NA",
+          "ControlCategoryName": "SubLevel1Control",
+          "ControlCategoryId": 10,
+          "ParentId": 1,
+          "Position": 0,
+          "uiPageMetadataCharacteristics": null,
+          "Id": 3
+        },
+        "Children": [
+          {
+            "Value": {
+              "UiPageTypeId": 1,
+              "UiPageTypeName": "Hierarchical View",
+              "UiControlTypeId": 1,
+              "UiControlTypeName": "text",
+              "IsRequired": false,
+              "UiControlDisplayName": "Test Plan Name",
+              "DataTypeId": 2,
+              "DataTypeName": "string",
+              "ControlCategoryName": "DataControl",
+              "ControlCategoryId": 8,
+              "ParentId": 3,
+              "Position": 0,
+              "uiPageMetadataCharacteristics": null,
+              "Id": 21
+            },
+            "Children": []
+          },
+          {
+            "Value": {
+              "UiPageTypeId": 1,
+              "UiPageTypeName": "Hierarchical View",
+              "UiControlTypeId": 1,
+              "UiControlTypeName": "text",
+              "IsRequired": false,
+              "UiControlDisplayName": "Test Plan Code",
+              "DataTypeId": 2,
+              "DataTypeName": "string",
+              "ControlCategoryName": "DataControl",
+              "ControlCategoryId": 8,
+              "ParentId": 3,
+              "Position": 0,
+              "uiPageMetadataCharacteristics": null,
+              "Id": 22
+            },
+            "Children": []
+          }
+        ]
+      },
+      {
+        "Value": {
+          "UiPageTypeId": 1,
+          "UiPageTypeName": "Hierarchical View",
+          "UiControlTypeId": 26,
+          "UiControlTypeName": "subLevel1ProcessStatus",
+          "IsRequired": false,
+          "UiControlDisplayName": "Lab Analysis",
+          "DataTypeId": 0,
+          "DataTypeName": "NA",
+          "ControlCategoryName": "SubLevel1Control",
+          "ControlCategoryId": 10,
+          "ParentId": 1,
+          "Position": 0,
+          "uiPageMetadataCharacteristics": null,
+          "Id": 4
+        },
+        "Children": []
+      },
+      {
+        "Value": {
+          "UiPageTypeId": 1,
+          "UiPageTypeName": "Hierarchical View",
+          "UiControlTypeId": 26,
+          "UiControlTypeName": "subLevel1ProcessStatus",
+          "IsRequired": false,
+          "UiControlDisplayName": "Test Reports",
+          "DataTypeId": 0,
+          "DataTypeName": "NA",
+          "ControlCategoryName": "SubLevel1Control",
+          "ControlCategoryId": 10,
+          "ParentId": 1,
+          "Position": 0,
+          "uiPageMetadataCharacteristics": null,
+          "Id": 5
+        },
+        "Children": []
+      }
+    ]
+  }
+]

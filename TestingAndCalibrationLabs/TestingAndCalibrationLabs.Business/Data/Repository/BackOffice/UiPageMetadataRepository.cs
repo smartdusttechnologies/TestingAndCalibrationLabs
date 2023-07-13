@@ -20,60 +20,101 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         }
 
         /// <summary>
-        /// Insert Record in Ui Page Metadata 
+        /// Insert Record in Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
         public int Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName)
-                                values (@UiPageTypeId,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName)";
+            string query = @"Insert into [UiPageMetadata] (UiPageTypeId,Name,UiControlTypeId,DataTypeId,IsRequired,UiControlDisplayName,UiControlCategoryTypeId,ParentId)
+                                                  values (@UiPageTypeId,@Name,@UiControlTypeId,@DataTypeId,@IsRequired,@UiControlDisplayName,@UiControlCategoryTypeId,@ParentId)";
             using IDbConnection db = _connectionFactory.GetConnection;
+            
             return db.Execute(query, uiPageMetadataModel);
         }
 
         /// <summary>
-        /// Getting All Records From Ui Page Metadata 
+        /// Getting All Records From Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
         /// <returns></returns>
         public List<UiPageMetadataModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-           return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
-                                                    udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
-                                                    uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
-                                                From[UiPageMetadata] upm
-                                                    inner join[UiPageType] upt on upm.UiPageTypeId = upt.Id
-                                                    inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id
-                                                    inner join[DataType] udt on upm.DataTypeId = udt.Id
-                                                where
-                                                     upm.IsDeleted = 0
-                                                    and upt.IsDeleted = 0
+            return db.Query<UiPageMetadataModel>(@"Select upm.Id,
+                                                        upm.UiPageTypeId,
+                                                        upt.[Name] as UiPageTypeName,
+                                                        upm.IsRequired,
+                                                        upm.UiControlTypeId,
+                                                        uct.[Name] as UiControlTypeName,
+                                                        upm.UiControlDisplayName,
+                                                        upm.ParentId,
+                                                        upm.DataTypeId,
+														l.Id as LookupCategoryId,
+														upm.Name,
+														lc.Name as lookupCategoryName,
+                                                        dt.Name as DataTypeName,
+                                                        uct.ControlCategoryId,
+														ucct.Id as UiControlCategoryTypeId,ucct.Name as UiControlCategoryTypeName
+                                                    From [UiPageMetadata] upm
+                                                    inner join [UiPageType] upt on upm.UiPageTypeId = upt.Id
+                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
+                                                    inner join [DataType] dt on upm.DataTypeId = dt.Id
+                                                    
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] l on l.UiPageMetadataId = upm.Id and l.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = l.LookupCategoryId and lc.IsDeleted = 0
+                                                where 
+                                                    upm.IsDeleted = 0 
+                                                    and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
-                                                    and udt.isDeleted = 0").ToList();
+                                                    and dt.IsDeleted = 0
+                                                    and lc.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0
+                                                    and l.IsDeleted = 0").ToList();
         }
 
         /// <summary>
-        /// Getting Record By Id For Ui Page Metadata
+        /// Getting Record By Id For Ui Page Metadata And Ui Page MetadataCharacteristics
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public UiPageMetadataModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageMetadataModel>(@"Select upm.Id, upt.[Id] as UiPageTypeId, upt.[Name] as UiPageTypeName, upm.IsRequired, uct.[Id] as UiControlTypeId,
-                                                    udt.[Id] as DataTypeId, udt.[Name] as DataTypeName,
-                                                    uct.[Name] as UiControlTypeName, upm.UiControlDisplayName
-                                                From[UiPageMetadata] upm
-                                                    inner join[UiPageType] upt on upm.UiPageTypeId = upt.Id
-                                                    inner join[UiControlType] uct on upm.UiControlTypeId = uct.Id
-                                                    inner join[DataType] udt on upm.DataTypeId = udt.Id
-                                                where
-                                                    upm.Id = @Id and
-                                                     upm.IsDeleted = @isDeleted
-                                                    and upt.IsDeleted = @isDeleted
-                                                    and uct.IsDeleted = @isDeleted
-                                                    and udt.isDeleted = @isDeleted", new { isDeleted = 0, Id = id }).FirstOrDefault();
+            var uiPageMetadataById = db.Query<UiPageMetadataModel>(@"Select upm.Id,
+                                                        mmb.UiPageTypeId,
+														mmb.Orders,
+														mmb.ParentId,
+														mmb.ModuleId,
+                                                        upt.[Name] as UiPageTypeName,
+                                                         upm.IsRequired,
+                                                        upm.UiControlTypeId,
+                                                        uct.[Name] as UiControlTypeName,
+                                                        upm.UiControlDisplayName,
+                                                        upm.DataTypeId,
+                                                        dt.Name as DataTypeName,
+                                                        uct.ControlCategoryId,
+                                                        lc.Id as LookupCategoryId,
+                                                        l.Name as ControlCategoryName,
+														ucct.Template as UiControlCategoryTypeTemplate
+                                                    From [UiPageMetadataModuleBridge] mmb
+													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
+                                                    inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
+                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
+                                                    inner join [DataType] dt on upm.DataTypeId = dt.Id
+                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
+                                                where mmb.UiPageMetadataId = @Id
+                                                    and upm.IsDeleted = 0 
+                                                    and upt.IsDeleted = 0 
+                                                    and uct.IsDeleted = 0
+                                                    and dt.IsDeleted = 0
+                                                    and l.IsDeleted = 0
+													and mmb.IsDeleted = 0", new { Id = id }).FirstOrDefault();
+           
+            return uiPageMetadataById;
         }
 
         /// <summary>
@@ -88,10 +129,29 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 UiControlTypeId = @UiControlTypeId,
                                 IsRequired = @IsRequired,
                                 DataTypeId = @DataTypeId,
-                                UiControlDisplayName = @UiControlDisplayName
+                                UiControlDisplayName = @UiControlDisplayName,
+                                Name = @Name,
+                                UiControlCategoryTypeId = @UiControlCategoryTypeId,
+                                ParentId = @ParentId
                                 Where Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uiPageMetadataModel);
+           
+                uiPageMetadataModel.ControlCategoryId = null;
+              return  db.Execute(query, uiPageMetadataModel);
+        }
+        /// <summary>
+        /// Delete Record From Ui PageMetadata And UiPageMetadataCharacteristics
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Delete(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            
+            db.Execute(@"update [UiPageMetadata] Set 
+                                    IsDeleted = 1
+                                    Where Id = @Id", new { Id = id });
+            return true;
         }
     }
 }

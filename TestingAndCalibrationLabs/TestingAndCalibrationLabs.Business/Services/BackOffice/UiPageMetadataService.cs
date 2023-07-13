@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -11,12 +14,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageMetadataService : IUiPageMetadataService
     {
-        private readonly IGenericRepository<UiPageMetadataModel> _genericRepository;
+        private readonly IUiPageMetadataCharacteristicsRepository _uiPageMetadataCharacteristicsRepository;
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
-        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository)
+        public UiPageMetadataService(IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository)
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
-            _genericRepository = genericRepository;
+            _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
+           
         }
 
         #region Public methods
@@ -27,7 +31,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageMetadataModel pageControl)
         {
-            _uiPageMetadataRepository.Create(pageControl);
+            int id = _uiPageMetadataRepository.Create(pageControl);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -37,7 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _genericRepository.Delete(id);
+            return _uiPageMetadataRepository.Delete(id);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
@@ -46,17 +50,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageMetadataModel GetById(int id)
         {
+
             return _uiPageMetadataRepository.GetById(id);
         }
         /// <summary>
         /// Edit Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pageControl"></param>
+        /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageMetadataModel pageControl)
+        public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
         {
-            _uiPageMetadataRepository.Update(pageControl);
+            _uiPageMetadataRepository.Update(uiPageMetadataModel);
             return new RequestResult<int>(1);
         }
         /// <summary>

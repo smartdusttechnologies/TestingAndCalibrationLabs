@@ -1,0 +1,257 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
+<input type="hidden" asp-for="ModuleId" />
+
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@Model.Fields.First().UiPageTypeName</h2>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
+            <a data-toggle="modal" data-target="#saveModal" onclick="UpdateFieldsWithValue('Create',0)"><i class="fa fa-plus icon-plus"></i></a>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-3">
+            <div class="inputSearchGrid text-right">
+                <input type="text" id="MultiValueGridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+                <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
+                <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive simple-pagination card shadow border-radius-grid">
+        <table id="multiValueGrid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    @foreach (var item in Model.Fields)
+                    {
+                        <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
+                    }
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FieldValues)
+                {
+                    <tr>
+                        @foreach (var itemValue in item.Value)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => itemValue.Value)
+                            </td>
+                        }
+                        <td>
+                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@item.Key)"></a> |
+                            <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@item.Key)"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    let recordId = parseInt($("#Id").val());
+    let model = JSON.parse('@Json.Serialize(Model)');
+    let metadata = model.fields;
+    let multiPageData = model.fieldValues;
+    oTable = $('#multiValueGrid').DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
+        scrollX: true,
+    });
+    $('#MultiValueGridSearch').keyup(function () {
+        oTable.search($(this).val()).draw();
+    })
+    const clearText = () => {
+        const inputID = document.querySelector("#MultiValueGridSearch");
+        inputID.value = "";
+    }
+
+
+    //Call the DeleteMultiValue Method Of Common Page
+    let deleteFun = (id) => {
+        WheelLoader();
+        let fieldValues = [];
+        let keyValuepair = {};
+        keyValuepair.RecordId = recordId;
+        keyValuepair.SubRecordId = id;
+        fieldValues.push(keyValuepair)
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("DeleteMultiValue","Common")",
+            data: { "Id": recordId, fieldValues, updatedDate },
+            success: function (response) {
+                myFunction();
+                window.location.href = "/common/edit/" + recordId;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+    //In This Function I am Creating Controls For Save Popup
+    $(document).ready(function () {
+        for (let i = 0; i < metadata.length; i++) {
+            let metadataId = metadata[i].id;
+            let controlTypeName = metadata[i].uiControlTypeName;
+            let star;
+            if (metadata[i].isRequired){
+                star = "<span class='red-color'>*</span>";
+            }else{
+                star = "";
+            }
+            let controlId = `${controlTypeName}${metadataId}`;
+            let uiControlDisplayName = metadata[i].uiControlDisplayName;
+            let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                                                                                                        <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                                                                                                    <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
+            $("#gridPopup").append(insertElement);
+        }
+    });
+    //Inserting Record
+    let saveRecords = (subRId) => {
+        WheelLoader();
+        let workflowStageId = parseInt($("#WorkflowStageId").val())
+        const getMembers = (member) => {
+
+            if (!member.children || !member.children.length) {
+                return member.value;
+            }
+            return [member.value, _.flatMapDeep(member.children, getMembers)];
+        }
+        var layout = _.flatMapDeep(mainModel.layout, getMembers);
+        var fieldValues = [];
+        for (let i = 0; i < layout.length; i++) {
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
+                var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
+                var metadataId = layout[i].uiPageMetadata.id;
+                var fieldValue = $(fieldId).val();
+                var keyValuepair = {};
+                var uiPageData = layout[i].uiPageData;
+                if (layout[i].uiPageData != null) {
+                    var pageDataId = layout[i].uiPageData.id;
+                    var oldValue = layout[i].uiPageData.value;
+                    if (oldValue != fieldValue) {
+                        keyValuepair.Id = pageDataId;
+                        keyValuepair.uiPageMetadataId = metadataId;
+                        keyValuepair.RecordId = id;
+                        keyValuepair.Value = fieldValue;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+                else {
+                    keyValuepair.Id = 0;
+                    keyValuepair.UiPageMetadataId = metadataId;
+                    keyValuepair.RecordId = id;
+                    keyValuepair.Value = fieldValue;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
+                    fieldValues.push(keyValuepair)
+                }
+            }
+        }
+        for (let y = 0; y < metadata.length; y++) {
+            var value;
+            var keyValuepair = {};
+            let mId = metadata[y].id;
+            let controlType = metadata[y].uiControlTypeName;
+            let val = $(`#${controlType}${mId}`).val();
+            if (subRId == 0) {
+                keyValuepair.Id = 0;
+                keyValuepair.UiPageMetadataId = mId;
+                keyValuepair.RecordId = id;
+                keyValuepair.Value = val;
+                keyValuepair.UiPageTypeId = uiPageTypeId;
+                keyValuepair.MultiValueControl = true;
+                fieldValues.push(keyValuepair)
+            }
+            else {
+                for (let i = 0; i < multiPageData[subRId].length; i++) {
+                    if (metadata[y].id == multiPageData[subRId][i].uiPageMetadataId) {
+                        value = multiPageData[subRId][i];
+                        keyValuepair.Id = value.id;
+                        keyValuepair.uiPageMetadataId = mId;
+                        keyValuepair.RecordId = id;
+                        keyValuepair.Value = val;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        keyValuepair.MultiValueControl = true;
+                        keyValuepair.SubRecordId = value.subRecordId;
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
+            success: function (response) {
+                myFunction();
+                window.location.href = "/common/edit/" + id;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                HideWheelLoader();
+                let newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+                let newErrorMessage = newresponseJSON.errorMessage;            //assiging the values of errorMessage to  newErrorMessage
+                let ele = "";
+                for (let i = 0; i < newErrorMessage.length; i++) {
+                    let msg = newErrorMessage[i].reason;
+                    let sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    if (newErrorMessage[i].messageKey == "True") {
+                        ele += `<div class="alert"><span onclick="this.parentElement.style.display='none';" class="closebtn">&times;</span>${msg}</div>`;
+                       
+                    }
+                    else {
+                        myFunctionError();                                              //Calling myFunctionError javacript function
+                        if (i == 0) {
+                            document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+                        }
+                    }
+                    ErrorMessage(NotificationNumbers++, msg); 
+                }
+                $("#alert-box").html(ele);
+            }
+        });
+    }
+    //Set Value To Element eId Is Element Id and sId Is Value Id
+    let setValue = (eId, sId) => $(`#${eId}`).val(sId);
+    //Set Modal Header
+    let SetHeader = (headerName, rId) => {
+        $("#multiGridHeader").text(headerName);
+        $("#savebtn").val(rId);
+    }
+    //Set PreValues To Update Dailog
+    let UpdateFieldsWithValue = (headerName, id) => {
+        SetHeader(headerName, id);
+        for (let x = 0; x < metadata.length; x++) {
+            var value;
+            let metadataId = metadata[x].id;
+            let controlType = metadata[x].uiControlTypeName;
+            if (id == 0) {
+                $(`#${controlType}${metadataId}`).val("");
+
+            } else {
+                for (let i = 0; i < multiPageData[id].length; i++) {
+                    if (metadata[x].id == multiPageData[id][i].uiPageMetadataId) {
+                        value = multiPageData[id][i].value;
+                        $(`#${controlType}${metadataId}`).val(value);
+                    }
+                }
+            }
+        }
+    }
+
+</script>

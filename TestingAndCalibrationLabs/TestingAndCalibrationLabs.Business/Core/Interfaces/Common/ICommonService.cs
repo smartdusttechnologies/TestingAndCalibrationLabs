@@ -14,40 +14,54 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="record"></param>
         /// <returns></returns>
         RequestResult<bool> Add(RecordModel record);
-
         /// <summary>
         /// Implimenting interface for  Update Class
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        RequestResult<bool> Update(RecordModel record);
-
+        RequestResult<bool> Save(RecordModel record);
         /// <summary>
         /// Implimenting Delete for Class.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-        
         /// <summary>
         /// Implimenting for  GetUiPageMetadata
         /// </summary>
         /// <param name="uiPageId"></param>
         /// <returns></returns>
-        RecordModel GetUiPageMetadata(int uiPageId);
-
+        RecordModel GetUiPageMetadataCreate(int uiPageId);
         /// <summary>
         /// Implimenting interface dor GetRecords
         /// </summary>
         /// <param name="uiPageId"></param>
         /// <returns></returns>
         RecordsModel GetRecords(int uiPageId);
-
         /// <summary>
         /// Implimenting interface for GetRecordById
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
         RecordModel GetRecordById(int recordId);
+        /// <summary>
+        /// To Generate Template
+        /// </summary>
+        /// <param name="uiPageTypeId"></param>
+        /// <param name="metadataId"></param>
+        /// <returns></returns>
+		byte[] TemplateGenerate(int uiPageTypeId,int metadataId);
+        /// <summary>
+        /// To Get multi Value Records For Creating Grid
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
+        RecordsModel GetMultiControlValue(int recordId);
+        /// <summary>
+        /// To Delete Multi Value Records
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        RequestResult<bool> DeleteMultiValue(RecordModel record);
     }
 }
