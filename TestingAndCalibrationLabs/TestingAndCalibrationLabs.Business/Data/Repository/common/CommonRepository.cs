@@ -85,7 +85,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
                                                     From [UiPageMetadataModuleBridge] mmb
-                                          	
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
@@ -117,13 +116,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         mmb.MultiValueControl,
 														mmb.ParentId,
 														mmb.ModuleId,
-                                                      
-													     
                                                         upt.[Name] as UiPageTypeName,
                                                          upm.IsRequired,
                                                         upm.UiControlTypeId,
                                                         uct.[Name] as UiControlTypeName,
-                                                       
                                                         upm.UiControlDisplayName,
                                                         upm.DataTypeId,
                                                         dt.Name as DataTypeName,
@@ -132,7 +128,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
                                                     From [UiPageMetadataModuleBridge] mmb
-			                                  
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
@@ -141,7 +136,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                where mmb.ModuleId = @moduleId
+                                                    where mmb.ModuleId = @moduleId
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
@@ -175,12 +170,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
-
             }
-
             return 1;
         }
-
         public static DataTable GetDataTable<T>(IEnumerable<T> list)
         {
             var table = new DataTable();
@@ -364,8 +356,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-													
-                                                where r.Id = @recordId and mmb.MultiValueControl = 'true'
+                                                    where r.Id = @recordId and mmb.MultiValueControl = 'true'
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0

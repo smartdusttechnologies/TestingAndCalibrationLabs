@@ -209,7 +209,7 @@ BEGIN
 			  (2010, N'Download', N'~/Views/Common/Components/Download/_download.cshtml', 0, 38),
 			  (2011, N'MultiControlGrid', N'~/Views/Common/Components/Grid/_gridMultiControl.cshtml', 0, 33),
 			  (2012, N'MultiselectDropdown',N'~/Views/Common/Components/MultiselectDropdown/_multiselectDropdown.cshtml',0,39),
-			  (2014, N'Text', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
+			  (2014, N'Text Design', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
 
 
 			
@@ -313,7 +313,6 @@ BEGIN
 			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd'),
 			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df'),
 			(3019, 22, 1, N'Recived On', 0, 5, 1011, N'jklg'),
-
 			(3020, 1, 1, N'Job Order No / Ref No', 0, 1, 3, N'sdg'),
 			(3021, 1, 0, N'Contact Person Name', 0, 2, 3, N'ds'),
 			(3024, 22, 0, N'TestReport Release Date', 0, 5, 1011, N'datee'),
@@ -352,6 +351,7 @@ BEGIN
 			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
 			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
 			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
+			(3064,0,0,N'ProgressStatus1',0,1,2014,N'0'),
 			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0')
 
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
@@ -631,8 +631,8 @@ BEGIN
 			(3127, 3056, 17, 0, 1, 6, 0, NULL, 1),
 			(3129, 3057, 17, 0, 1, 6, 0, NULL, 1),
 			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
-			(3131,3065, 15, 0, 1, 4,0, NULL, 0),
-			(3132, 3064, 15, 0, 1, 0, 0, NULL, 0)
+			(3131,3064, 15, 0, 1, 0,0, NULL, 0),
+			(3132, 3065, 15, 0, 4, 0, 0, NULL, 0)
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  OFF
 END
 GO
