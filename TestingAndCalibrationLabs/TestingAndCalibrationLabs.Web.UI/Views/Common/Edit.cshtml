@@ -78,7 +78,6 @@
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
-
             if (!member.children || !member.children.length) {
                 return member.value;
             }
@@ -86,9 +85,7 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
-      
         for (let i = 0; i < layout.length; i++) {
-            
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
@@ -98,13 +95,14 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-                if (layout[i].uiPageData != null) {
-                    debugger;
-                    var pageDataId = layout[i].uiPageData[0].id;
-                    var childIds = layout[i].uiPageData[0].childId;
-                    var RecordIds = layout[i].uiPageData[0].recordId;
-                    var oldValue = layout[i].uiPageData[0].value;
-                    var List;
+                  if (layout[i].uiPageData != null) {
+                   for (let j = 0; j < uiPageData.length; j++) {
+                       var pageDataId = layout[i].uiPageData[j].id;
+                       var childIds = layout[i].uiPageData[j].childId;
+                       var RecordIds = layout[i].uiPageData[j].recordId;
+                       var oldValue = layout[i].uiPageData[j].value;
+                       var List;
+                   }
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
                             var filddata = $(fieldId).val();
@@ -120,26 +118,24 @@
                                 keyValuepair.Value = List[x];
                                 keyValuepair.UiPageTypeId = uiPageTypeId;
                                 fieldValues.push(keyValuepair)
-
                             }
                         }
                         function findChildId(uiPageData, value) {
                             var childId = uiPageData.find(item => item.value === value)?.childId;
                             return childId !== undefined ? childId : null;
                         }
-                        if (layout[i].uiPageMetadata.multiValueControl != true) {
-                        keyValuepair.Id = pageDataId;
-                        keyValuepair.childId = childIds;
-                        keyValuepair.uiPageMetadataId = metadataId;
-                        keyValuepair.RecordId = id;
-                        keyValuepair.Value = fieldValue;
-                        keyValuepair.UiPageTypeId = uiPageTypeId;
-                        fieldValues.push(keyValuepair)
-                        }
+                            if (layout[i].uiPageMetadata.multiValueControl != true) {
+                                keyValuepair.Id = pageDataId;
+                                keyValuepair.childId = childIds;
+                                keyValuepair.uiPageMetadataId = metadataId;
+                                keyValuepair.RecordId = id;
+                                keyValuepair.Value = fieldValue;
+                                keyValuepair.UiPageTypeId = uiPageTypeId;
+                                fieldValues.push(keyValuepair)
+                            }
                     }
                     
                   }
-                
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;

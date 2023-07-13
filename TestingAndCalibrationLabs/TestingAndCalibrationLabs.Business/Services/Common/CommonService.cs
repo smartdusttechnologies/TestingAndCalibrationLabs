@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -98,8 +101,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (requestResult.IsSuccessful)
             {
                 record.UpdatedDate = DateTime.Now;
-                record.Id = _commonRepository.Insert(record);
-                return new RequestResult<bool>(true);
+               record.Id = _commonRepository.Insert(record);
+               return new RequestResult<bool>(true);
             }
             return requestResult;
         }
@@ -279,10 +282,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         #region Multi Value Control
 
 
-        public AttachmentModel DownLoadAttachment(string fileId)
+        public int ImageUpload (FileUploadModel fileUpload)
         {
-            var dataDownloaded = _googleUploadDownloadService.Download(fileId);
-            return dataDownloaded;
+           var dataDownloaded = _commonRepository.FileUpload(fileUpload);
+              return dataDownloaded;
+            
+        }
+
+        public FileUploadModel  DownloadImage(string fileId)
+        { 
+             var image = _commonRepository.ImageDownload(fileId);
+            return image;
+        
         }
       
         /// <summary>

@@ -27,8 +27,9 @@ BEGIN
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
-
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'Lookup Category',1,0),
+			   (9, N'Lookup',1,0)
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -81,7 +82,8 @@ BEGIN
 			  (2, N'string', 0),
 			  (3, N'bit', 0),
 			  (4, N'Decimal', 0),
-			    (5, N'Date', 0)
+			    (5, N'Date', 0),
+				 (6, N'Boolean', 0)
 			  
     SET IDENTITY_INSERT [dbo].[DataType]  OFF
 END
@@ -308,7 +310,7 @@ BEGIN
 			(3013, 1, 0, N'Contant Person', 0, 2, 3, N'cP'),
 			(3014, 1, 0, N'Name', 0, 2, 3, N'name'),
 			(3016, 1, 1, N'Job Serial No', 0, 1, 3, N'jsn'),
-			(3017, 1, 1, N'Department Name', 0, 2, 2014, N'rd'),
+			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd'),
 			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df'),
 			(3019, 22, 1, N'Recived On', 0, 5, 1011, N'jklg'),
 
@@ -350,7 +352,6 @@ BEGIN
 			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
 			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
 			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
-			(3064, 1, 0, N'ProgressStatus1', 0, 1, 2014, N'progress'),
 			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0')
 
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
@@ -400,7 +401,9 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+			  (11,N'/LookupCategory/Index/',8,1002,0),
+			  (12,N'/Lookup/Index/',9,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
@@ -630,10 +633,6 @@ BEGIN
 			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
 			(3131,3065, 15, 0, 1, 4,0, NULL, 0),
 			(3132, 3064, 15, 0, 1, 0, 0, NULL, 0)
-
-
-
-
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  OFF
 END
 GO

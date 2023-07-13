@@ -12,9 +12,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int UiPageTypeId { get; set; }
         public int UiPageMetadataId { get; set;}
         public bool MultiValueControl { get; set; }
-        public int WorkflowStageId { get; set; }
+
         private string _value;
-        public int UiPageDataId { get; set; }
         public int? ChildId { get; set; }
         public string Value
         {

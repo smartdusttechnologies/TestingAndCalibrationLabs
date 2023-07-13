@@ -118,6 +118,8 @@
     <Build Include="dbo\User Defined Types\childData.sql" />
     <Build Include="dbo\Tables\UiPageDecimalType.sql" />
     <Build Include="dbo\Tables\UiPageDateType.sql" />
+    <Build Include="dbo\Tables\UiPageBoolType.sql" />
+    <Build Include="dbo\Tables\ImageUpload.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

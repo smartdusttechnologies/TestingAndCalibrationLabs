@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Http;
 using Org.BouncyCastle.Math.EC;
 using Org.BouncyCastle.Utilities.Zlib;
 using System;
@@ -9,6 +10,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Transactions;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -33,25 +35,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>(@" Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId , updst.Value From[UiPageData] upd
-                INNER JOIN[Record] r ON upd.RecordId = r.Id
-                INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
-                and r.IsDeleted = 0
-               where r.ModuleId=ModuleId  
-               and updst.RecordId = r.Id
-             and upd.IsDeleted=0", new { moduleId }).ToList();
-            //return db.Query<UiPageDataModel>(@"Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId ,updst.Value,updt.Value From[UiPageData] upd
-            //    INNER JOIN[Record] r ON upd.RecordId = r.Id
-            //    fet JOIN[UiPageStringType] updst on r.Id = updst.RecordId
-
-            //    INNER JOIN[UiPageDateType] updt on r.Id= updst.RecordId
-            //    and r.IsDeleted = 0
-            //   where r.ModuleId=ModuleId
-            //   and updst.RecordId = r.Id
-
-            //   and updt.RecordId=r.Id
-            //  and upd.IsDeleted=0", new { moduleId }).ToList();
-
-
+                 INNER JOIN[Record] r ON upd.RecordId = r.Id
+                 INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
+                 where r.ModuleId=ModuleId  
+                 and updst.RecordId = r.Id
+                 and r.IsDeleted = 0
+                 and upd.IsDeleted=0", new { moduleId }).ToList();
         }
         /// <summary>
         /// Get All Validations Based On UiPageTypeId
@@ -267,7 +256,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Recor", (System.Data.SqlClient.SqlConnection)db))
+            using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
                 var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
                 var MultiData = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
@@ -278,8 +267,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
-
             }
+      
             return true;
         }
         /// <summary>
@@ -304,35 +293,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                           WHERE t3.RecordId = @Id
 														    and t6.Id = @Id
                                                             UNION All
-                                                       SELECT t5.UiPageMetadataId, t5.Id, CAST(t6.Value AS varchar) AS Value, t6.Id as ChildId ,t8.Id as RecordId 
+                                                       SELECT t5.UiPageMetadataId, t5.Id, t6.Value, t6.Id as ChildId ,t8.Id as RecordId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
                                                       WHERE t5.RecordId = @Id
 													    and t8.Id = @Id
+														  UNION All
+														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId 
+                                                            FROM UiPageData t5
+                                                            JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
+															Join [Record] t8 ON t8.Id  = t5.RecordId
+                                                          WHERE t5.RecordId = @Id
+													      and t8.Id = @Id ", new { id }).ToList();
 
-                                        ", new { id }).ToList();
+                                      
         }
-        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageDataModel>(@" SELECT t1.UiPageMetadataId,'UiPageFileAttachType' As uiPageType, t2.UiPageDataId, t2.Value
-                                               FROM UiPageData t1
-                                                  JOIN[UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
-                                                WHERE t1.Id = @uiPageDataId
-                                                  UNION All
-                                                SELECT t3.UiPageMetadataId,'UiPageIntType' , t4.UiPageDataId, CAST(t4.Value AS varchar)t
-                                               FROM UiPageData t3
-                                             JOIN[UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
-                                               WHERE t3.Id = @uiPageDataId
-                                                   UNION All
-                                             SELECT t3.UiPageMetadataId,'UiPageFileAttachType' , t4.UiPageDataId, CAST(t4.Value AS varchar)t
-                                                     FROM UiPageData t3
-                                                   JOIN[UiPageFileAttachType] t4 ON t3.Id = t4.UiPageDataId
-                                           WHERE t3.Id = @uiPageDataId
-                                        ", new { uiPageDataId }).ToList();
-        }
-        #region Multi Value Control CRUD
+
         /// <summary>
         /// Get All Page Data Based On Multi Controls
         /// </summary>
@@ -409,19 +386,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId}").First();
             return result + 1;
         }
-
         public List<int> GenerateUiDataId(int recordId)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
             return con.Query<int>($"select Id from UiPageData where RecordId = {recordId}").ToList();
-
-        }
-
-        public int getLatestRecordId()
-        {
-            using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<int>($"SELECT Id FROM Record WHERE id = (SELECT MAX(id) FROM Record)").First();
-
         }
         /// <summary>
         /// Delete Multi Record Values
@@ -443,8 +411,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             transaction.Commit();
             return true;
         }
+        /// <summary>
+        /// Image Upload in DB
+        /// </summary>
+        public int FileUpload(FileUploadModel File)
+        {
+            string query = @"INSERT INTO [ImageUpload](Name,FileType,DataFiles,CreatedOn)
+                             VALUES (@Name,@FileType,@DataFiles,@CreatedOn)";
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Execute(query, File);
+        }
+        /// <summary>
+        /// Image download
+        /// </summary>
+        public FileUploadModel ImageDownload(string fileId)
+        {
+            using IDbConnection con = _connectionFactory.GetConnection;
+            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Name = @Name ", new { Name = fileId }).FirstOrDefault();
+        }
         #endregion
-
     }
 }
-#endregion

@@ -325,12 +325,9 @@
 <script>
     var idOfRecord = $("#Id").val();
     var fileModel = JSON.parse('@Json.Serialize(Model)');
-    debugger;
     var id = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
     var uiPageData = fileModel.value.uiPageData;
-    let metadataId = fileModel.value.uiPageMetadata.id;
-    debugger;
-  
+    let metadataId = fileModel.value.uiPageMetadata.id;  
     if (idOfRecord != undefined && uiPageData != null) {
         var value = [];
         var lookupCategoryId = fileModel.value.uiPageMetadata.moduleId;
@@ -352,11 +349,9 @@
        
         // Remove the parent element when a button is clicked
         $('.delete-svg').click(function () {
-            debugger
             $(this).parent().remove();
         });
     });
-
 
     $(`#btn-upload-${metadataId}`).click(function () {
        
@@ -364,9 +359,7 @@
 
     });
         function validateForImages(input) {
-
             $(`#file-showcase-${metadataId}`).empty();
-
             var file = new FormData();
             for (let i = 0; i < input.files.length; i++) {
                 let fileName = input.files[i].name;
@@ -403,15 +396,11 @@
             file.append(fileName, input.files[i]);
 
             $(document).ready(function () {
-
                 // Remove the parent element when a button is clicked
                 $('.delete-svg').click(function () {
-                    debugger
                     $(this).parent().remove();
                 });
             });
-
-
             }
             $.ajax({
                 type: "POST",
@@ -423,7 +412,6 @@
                       debugger
                     var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
                     $(idNum).val(response);
-
                 },
                 error: function (req, status, error) {
 
@@ -433,8 +421,7 @@
 </script>
 <script type="text/javascript">
     function Download(e) {
-        debugger
-                location.href = '@Url.Action("DownloadFile", "Common")?fileId=' + e;
+        location.href = '@Url.Action("DownloadImage", "Common")?fileId=' + e;
         }
  </script>
 

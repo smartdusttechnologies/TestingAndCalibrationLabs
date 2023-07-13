@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Services;
@@ -59,42 +62,58 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(records);
         }
         /// <summary>
-        /// Method To Upload Images in Google Drive And Return The Url Of File
+        /// Method To Upload Images in Database
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-
         public IActionResult FileUpload()
         {
-
             List<string> imageId = new List<string>();
-            
+
             foreach (var item in Request.Form.Files)
             {
-                AttachmentModel attachmentModel = new AttachmentModel();
-                attachmentModel.DataUrl = item;
-
-                var result = _googleDriveService.Upload(attachmentModel);
-                imageId.Add(result.RequestedObject.FilePath);
+                if (item != null)
+                {
+                    if (item.Length > 0)
+                    {
+                        //Getting FileName
+                        var fileName = Path.GetFileName(item.FileName);
+                        //Getting file Extension
+                        var fileExtension = Path.GetExtension(fileName);
+                        // concatenating  FileName + FileExtension
+                        var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+                        var objfiles = new FileUploadModel()
+                        {
+                            Name= newFileName,
+                            FileType = fileExtension,
+                            CreatedOn = DateTime.Now
+                        };
+                        using (var target = new MemoryStream())
+                        {
+                            item.CopyTo(target);
+                            objfiles.DataFiles = target.ToArray();
+                        }
+                       var result = _commonService.ImageUpload(objfiles);
+                        imageId.Add(newFileName.ToString());
+                    }
+                }
             }
             return Ok(imageId);
         }
         /// <summary>
-        /// Method To download Images in Google Drive 
+        /// Method To download Images 
         /// </summary>
         /// <returns></returns>
-        public ActionResult DownloadFile(string fileId)
+        public IActionResult DownloadImage(string fileId)
         {
-            AttachmentModel attachment = _commonService.DownLoadAttachment(fileId);
-            var attachmentDTO = _mapper.Map<AttachmentModel, Models.AttachmentDTO>(attachment);
-            if (attachmentDTO != null)
+           
+            FileUploadModel attachment = _commonService.DownloadImage(fileId);
+           
+            if (attachment != null)
             {
-                return File(attachmentDTO.FileStream, attachmentDTO.ContentType, attachmentDTO.FileName);
+                 return File(new MemoryStream(attachment.DataFiles),Helpers.GetMimeTypes()[attachment.FileType] , attachment.Name);
             }
-            else
-            {
-                return new EmptyResult();
-            }
+            return Ok("Can't find the Image");
         }
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
@@ -244,7 +263,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        public ActionResult Delete(int id, int moduleId)
+        public ActionResult Delete(int? id, int moduleId)
         {
             if (id == null)
             {

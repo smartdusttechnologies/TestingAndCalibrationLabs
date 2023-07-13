@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<LookupModel> Get()
         {
-            
+
             return _genericRepository.Get();
         }
         public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
@@ -34,7 +34,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
         {
 
-            return _lookupRepository.GetLookupCategoryId( lookupCategoryId);
+            return _lookupRepository.GetLookupCategoryId(lookupCategoryId);
         }
     }
 }
