@@ -386,12 +386,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId}").First();
             return result + 1;
         }
-
         public List<int> GenerateUiDataId(int recordId)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
             return con.Query<int>($"select Id from UiPageData where RecordId = {recordId}").ToList();
-
         }
         /// <summary>
         /// Delete Multi Record Values
