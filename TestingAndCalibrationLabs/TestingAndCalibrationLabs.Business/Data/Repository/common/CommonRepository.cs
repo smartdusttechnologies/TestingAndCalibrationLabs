@@ -306,8 +306,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 															Join [Record] t8 ON t8.Id  = t5.RecordId
                                                           WHERE t5.RecordId = @Id
 													      and t8.Id = @Id ", new { id }).ToList();
-
-                                      
         }
 
         /// <summary>

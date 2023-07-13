@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[UiPageDate] (
+﻿CREATE TABLE [dbo].[UiPageDateType] (
     [Id]               INT      IDENTITY (1, 1) NOT NULL,
     [UiPageMetadataId] INT      NULL,
     [Value]            DATE NULL,
