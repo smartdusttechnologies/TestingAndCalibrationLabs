@@ -229,7 +229,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <param name="moduleId"></param>
         /// <returns></returns>
         public int GetPageIdBasedOnOrder(int moduleId)
-         {
+        {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<int>(@"Select  ws.UiPageTypeId
                                                     From [Module] m
@@ -269,7 +269,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Recor", (System.Data.SqlClient.SqlConnection)db))
             {
-                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value  }).ToList();
+                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
                 var MultiData = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
@@ -307,13 +307,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                        SELECT t5.UiPageMetadataId, t5.Id, CAST(t6.Value AS varchar) AS Value, t6.Id as ChildId ,t8.Id as RecordId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
-															Join [Record] t8 ON t8.Id  = t5.RecordId
-                                                      WHERE t5.RecordId = @Id
-													    and t8.Id = @Id
-														  UNION All
-														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId 
-                                                            FROM UiPageData t5
-                                                            JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
                                                       WHERE t5.RecordId = @Id
 													    and t8.Id = @Id
@@ -451,7 +444,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
         #endregion
-        
+
     }
 }
-
+#endregion

@@ -69,7 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="uiPageDataId"></param>
         /// <returns></returns>
-        List<UiPageDataModel> GetUiPageDataById(int uiPageDataId);
-
+       // List<UiPageDataModel> GetUiPageDataById(int uiPageDataId);
+        AttachmentModel DownLoadAttachment(string fileId);
     }
 }
