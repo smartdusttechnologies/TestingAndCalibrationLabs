@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Transactions;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -34,14 +35,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageDataModel>(@" Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId , updst.Value From[UiPageData] upd
-                INNER JOIN[Record] r ON upd.RecordId = r.Id
-                INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
-                and r.IsDeleted = 0
-               where r.ModuleId=ModuleId  
-               and updst.RecordId = r.Id
-             and upd.IsDeleted=0", new { moduleId }).ToList();
-
-
+                 INNER JOIN[Record] r ON upd.RecordId = r.Id
+                 INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
+                 where r.ModuleId=ModuleId  
+                 and updst.RecordId = r.Id
+                 and r.IsDeleted = 0
+                 and upd.IsDeleted=0", new { moduleId }).ToList();
         }
         /// <summary>
         /// Get All Validations Based On UiPageTypeId
@@ -269,6 +268,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
                 command.ExecuteNonQuery();
             }
+      
             return true;
         }
         /// <summary>
@@ -304,8 +304,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                             FROM UiPageData t5
                                                             JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
-                                                      WHERE t5.RecordId = @Id
-													    and t8.Id = @Id ", new { id }).ToList();
+                                                          WHERE t5.RecordId = @Id
+													      and t8.Id = @Id ", new { id }).ToList();
 
                                       
         }
@@ -391,13 +391,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         {
             using IDbConnection con = _connectionFactory.GetConnection;
             return con.Query<int>($"select Id from UiPageData where RecordId = {recordId}").ToList();
-
-        }
-
-        public int getLatestRecordId()
-        {
-            using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<int>($"SELECT Id FROM Record WHERE id = (SELECT MAX(id) FROM Record)").First();
 
         }
         /// <summary>

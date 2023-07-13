@@ -633,10 +633,6 @@ BEGIN
 			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
 			(3131,3065, 15, 0, 1, 4,0, NULL, 0),
 			(3132, 3064, 15, 0, 1, 0, 0, NULL, 0)
-
-
-
-
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  OFF
 END
 GO

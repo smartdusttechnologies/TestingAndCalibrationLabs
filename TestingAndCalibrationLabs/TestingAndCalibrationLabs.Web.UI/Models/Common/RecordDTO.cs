@@ -14,26 +14,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     {
         #region Public Properties
         public int Id { get; set; }
-
         public int UiPageTypeId { get; set; }
-
         public int ModuleId { get; set; }
-
         public int WorkflowStageId { get; set; }
-
         public int RecordId { get; set; }
-
         public DateTime UpdatedDate { get; set; }
-
         public List<UiPageMetadataDTO> Fields { get; set; }
-
         public List<UiPageDataDTO> FieldValues { get; set; }
-
-
         public IEnumerable<Node<LayoutDTO>> Layout { get; set; }
-
         public IList<ValidationMessage> ErrorMessage { get; set; }
-      
         #endregion
     }
 }

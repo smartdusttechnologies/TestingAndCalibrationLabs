@@ -66,7 +66,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult FileUpload(object fileStream)
+        public IActionResult FileUpload()
         {
             List<string> imageId = new List<string>();
 
@@ -88,13 +88,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                             FileType = fileExtension,
                             CreatedOn = DateTime.Now
                         };
-
                         using (var target = new MemoryStream())
                         {
                             item.CopyTo(target);
                             objfiles.DataFiles = target.ToArray();
                         }
-
                        var result = _commonService.ImageUpload(objfiles);
                         imageId.Add(newFileName.ToString());
                     }
@@ -265,7 +263,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
 
-        public ActionResult Delete(int id, int moduleId)
+        public ActionResult Delete(int? id, int moduleId)
         {
             if (id == null)
             {

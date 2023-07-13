@@ -78,7 +78,6 @@
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
-
             if (!member.children || !member.children.length) {
                 return member.value;
             }
@@ -86,9 +85,7 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
-      
         for (let i = 0; i < layout.length; i++) {
-            
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
@@ -98,7 +95,6 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-
                   if (layout[i].uiPageData != null) {
                    for (let j = 0; j < uiPageData.length; j++) {
                        var pageDataId = layout[i].uiPageData[j].id;
@@ -118,7 +114,7 @@
                                 keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
                                }
                                 keyValuepair.uiPageMetadataId = metadataId;
-                                    keyValuepair.RecordId = id;
+                                keyValuepair.RecordId = id;
                                 keyValuepair.Value = List[x];
                                 keyValuepair.UiPageTypeId = uiPageTypeId;
                                 fieldValues.push(keyValuepair)
