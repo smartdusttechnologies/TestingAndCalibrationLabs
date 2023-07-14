@@ -12,13 +12,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiNavigationCategoryServices _uiPageNavigationCategoryServics;
         public readonly IMapper _mapper;
-       private readonly IUiPageNavigationService _uiNavigationCategoryService;
-
         public UiPageNavigationCategoryController(IUiNavigationCategoryServices uiPageNavigationCategoryServics, IMapper mapper)
         {
             _uiPageNavigationCategoryServics = uiPageNavigationCategoryServics;
             _mapper = mapper;
-           
         }
 
         /// <summary>
@@ -29,11 +26,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<UiNavigationCategoryModel> page = _uiPageNavigationCategoryServics.Get();
-            var pageData = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(page);
-            return View(pageData.AsEnumerable());
+            List<UiNavigationCategoryModel> UiPageNavigationCategory = _uiPageNavigationCategoryServics.Get();
+            var NavigationCategoryData = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(UiPageNavigationCategory);
+            return View(NavigationCategoryData.AsEnumerable());
         }
-
         /// <summary>
         /// For Edit Record View
         /// </summary>
@@ -52,11 +48,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var pageData = _mapper.Map<UiNavigationCategoryModel,UiNavigationCategoryDTO>(getByIdPageModel);
+            var PageNavigationCategoryData = _mapper.Map<UiNavigationCategoryModel,UiNavigationCategoryDTO>(getByIdPageModel);
 
-            return View(pageData);
+            return View(PageNavigationCategoryData);
         }
-
         /// <summary>
         /// To Edit Record In Ui Page Navigation Category
         /// </summary>
@@ -66,17 +61,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] UiNavigationCategoryDTO UiNavigationCategoryDto)
         {
-
             if (ModelState.IsValid)
             {
-                var pageNavigation = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(UiNavigationCategoryDto);
-                _uiPageNavigationCategoryServics.Update(id, pageNavigation);
+                var PageNavigation = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(UiNavigationCategoryDto);
+                _uiPageNavigationCategoryServics.Update(id, PageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
             return View(UiNavigationCategoryDto);
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -87,11 +80,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new Models.UiNavigationCategoryDTO { Id = id });
         }
-
         /// <summary>
         /// To Create Record In Ui Page Type
         /// </summary>
-        /// <param name="uiPageTypeDTO"></param>
+        /// <param name="UiNavigationCategoryDto"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,7 +98,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(UiNavigationCategoryDto);
         }
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -126,7 +117,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageModel = _mapper.Map<UiNavigationCategoryModel, UiNavigationCategoryDTO>(getByIdPageModel);
             return View(pageModel);
         }
-
         /// <summary>
         /// To Delete Record From Ui Control Type
         /// </summary>
@@ -146,4 +136,3 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
     }
 }
-

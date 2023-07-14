@@ -21,14 +21,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Create Record For Ui Page Navigation Category
         /// </summary>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="UiNavigationCategoryModel"></param>
         /// <returns></returns>
         public RequestResult<int> Create(UiNavigationCategoryModel UiNavigationCategoryModel)
         {
             _genericRepository.Insert(UiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Delete Record From Ui Page Navigation Category
         /// </summary>
@@ -38,7 +37,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
         /// <summary>
         /// Edit Record For Ui Navigation Category
         /// </summary>
@@ -50,7 +48,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Update(UiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Get All Records From Ui Page Navigation Category
         /// </summary>
@@ -59,7 +56,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-
         /// <summary>
         /// Get Record By Id From Ui Page Navigation Category
         /// </summary>
@@ -69,7 +65,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get(id);
         }
-     
         #endregion
     }
 }

@@ -62,17 +62,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageNavigationModel>(@"SELECT upt.Id,upt.ModuleId, upt.UiNavigationCategoryId , unc.[Name] as UiNavigationCategoryName, 
                                                     pt.Name as ModuleName, upt.Url, unc.[Orders] as Orders
-                                                From[UiPageNavigation] upt
+                                                    From[UiPageNavigation] upt
                                                     inner join[UiNavigationCategory] unc on upt.UiNavigationCategoryId = unc.Id
                                                     inner join[Module] pt on upt.ModuleId = pt.Id
-											  where
+											        where
                                                     upt.Id=@Id and
-
+                                                    pt.IsDeleted=0 and
                                                     upt.IsDeleted = 0
                                                     and unc.IsDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
-            
         }
-
         /// <summary>
         /// Edit Record From Ui Page Navigation 
         /// </summary>
@@ -82,12 +80,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             string query = @"update [UiPageNavigation] Set 
                                     Url=@Url,
-                               ModuleId = @ModuleId,
-                                UiNavigationCategoryId = @UiNavigationCategoryId
-                               Where
-                               IsDeleted = 0 and
-                               Id = @Id";
-
+                                  ModuleId = @ModuleId,
+                                 UiNavigationCategoryId = @UiNavigationCategoryId
+                                 Where
+                                IsDeleted = 0 and
+                                Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
 
             return db.Execute(query, UiPageNavigationModel);

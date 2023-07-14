@@ -8,7 +8,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     /// </summary>
     public class UiPageNavigationModel : Entity
     {
-
         /// <summary>
         /// Configured Url of page.
         /// </summary>
