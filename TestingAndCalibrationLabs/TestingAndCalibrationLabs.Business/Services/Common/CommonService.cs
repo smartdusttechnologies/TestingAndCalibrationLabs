@@ -259,12 +259,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
-            var recordModel = _recordGenericRepository.Get(recordId);
-            var uiMetadata = GetMetadata(recordModel.ModuleId, recordModel.WorkflowStageId, out uiPageTypeId);
+            var recordMdel = _recordGenericRepository.Get(recordId);
+            var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
             var uiPageData = _commonRepository.GetPageData(recordId);
-        
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
@@ -278,7 +277,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordModel.UpdatedDate, ModuleId = recordModel.ModuleId, WorkflowStageId = recordModel. WorkflowStageId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel.WorkflowStageId, Layout = hierarchy };
         }
         #region Multi Value Control
 
