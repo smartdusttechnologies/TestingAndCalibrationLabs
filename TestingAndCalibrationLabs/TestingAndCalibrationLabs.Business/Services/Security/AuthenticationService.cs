@@ -266,8 +266,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
                 if (forgotPasswordModel.CreatedDate <= existingUser1.CreatedDate.AddMinutes(OTPTime))
                 {
-              
-
 
                     return new RequestResult<int>(existingUser1.UserId);
 
@@ -340,10 +338,8 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         }
 
-
-
         /// <summary>
-        /// Method To Creat OTP though user email 
+        /// Method To Create OTP though user email 
         /// </summary>
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
@@ -373,15 +369,12 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             try
             {
-           
-
-                    using (MailMessage mailMessage = new MailMessage())
-                    {
-                       
-                        mailMessage.Subject = subject;
-                        mailMessage.Body = body;
-                        Console.WriteLine("OTP sent successfully.");
-                    }
+                using (MailMessage mailMessage = new MailMessage())
+                {
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body;
+                    Console.WriteLine("OTP sent successfully.");
+                }
             }
             catch (Exception ex)
             {
@@ -395,7 +388,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method To Generate OTP
         /// </summary>
         /// <returns></returns>
-        static string GenerateOTP()
+        public string GenerateOTP()
         {
 
             Random random = new Random();

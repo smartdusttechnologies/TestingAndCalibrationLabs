@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Org.BouncyCastle.Bcpg;
 using crypto;
 using Google.Apis.Drive.v3.Data;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -119,7 +120,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="model"></param
         /// <returns></returns>
-
         [HttpPost]
         public IActionResult ValidateOTP(ForgotPasswordDTO model)
         {
@@ -163,10 +163,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="forgotpassword"></param>
         /// <returns></returns>
-        public IActionResult ResendOTP(ForgotPasswordDTO forgotpassword)
+        public IActionResult ResendOTP(ForgotPasswordDTO  model)
         {
-            return Ok(ValidateOTP(forgotpassword));
+          return Ok(ForgotPassword(model));
         }
+       
     }
     
 }

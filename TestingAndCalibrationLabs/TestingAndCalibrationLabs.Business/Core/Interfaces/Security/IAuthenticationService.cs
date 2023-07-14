@@ -11,7 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 
         RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel);
 
-        // RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel);
+        //RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel,string Email);
         RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel, int userId);
 
         RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel);
