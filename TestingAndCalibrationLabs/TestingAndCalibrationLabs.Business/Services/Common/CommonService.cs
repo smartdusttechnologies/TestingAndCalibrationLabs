@@ -101,8 +101,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (requestResult.IsSuccessful)
             {
                 record.UpdatedDate = DateTime.Now;
-               record.Id = _commonRepository.Insert(record);
-               return new RequestResult<bool>(true);
+                //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
+                record.Id = _commonRepository.Insert(record);
+                // record.WorkflowStageId = workflowStageId;
+                //_workflowActivityService.WorkflowActivity(record)
+                return new RequestResult<bool>(true);
             }
             return requestResult;
         }
@@ -126,7 +129,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)/*.ToList()*/
+                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)
             }));
             foreach (var item in hirericheys)
             {

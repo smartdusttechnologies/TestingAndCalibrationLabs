@@ -344,8 +344,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         uct.ControlCategoryId,
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
-														ucct.Template as UiControlCategoryTypeTemplate
-                                                    From [Record] r 
+												        ucct.Template as UiControlCategoryTypeTemplate
+                                                       From [Record] r 
 													inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
 													inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
 													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
@@ -401,7 +401,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
         /// <summary>
-        /// Image Upload in DB
+        /// Image Upload in Database
         /// </summary>
         public int FileUpload(FileUploadModel File)
         {
@@ -411,7 +411,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return db.Execute(query, File);
         }
         /// <summary>
-        /// Image download
+        /// Image download in Your Local System
         /// </summary>
         public FileUploadModel ImageDownload(string fileId)
         {
