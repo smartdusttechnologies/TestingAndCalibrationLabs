@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[UiPageData] (
     [Id]               INT           IDENTITY (1, 1) NOT NULL,
     [UiPageMetadataId] INT           NOT NULL,
-    [Value]            VARCHAR (500) NULL,
     [IsDeleted]        BIT           CONSTRAINT [DF_UiPageData_IsDeleted] DEFAULT ((0)) NOT NULL,
     [RecordId]         INT           NOT NULL,
     [UiPageTypeId]     INT           NULL,
