@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-sm">
                     <h6>Title</h6>
-                    <div id="checkboxvalue"></div>                  
+                    <div id="checkboxvalue"></div>
                 </div>
             </div>
         </div>
@@ -60,14 +60,14 @@
     $("input[id]").click(function () {
         //if (this.checked) {
         //    $("input[data-select-all]").each(function () {
-               
+
         //        this.checked = true;
         //    });
         //} else {
-            $(':checkbox').each(function () {
-                this.checked = false;
-            });
-       // }
+        $(':checkbox').each(function () {
+            this.checked = false;
+        });
+        // }
     });
 
     function getSelectedCheckboxesArray() {
@@ -78,7 +78,7 @@
             document.getElementById('checkboxvalue').innerHTML += '<a href="' + checkboxes[i].value + '">' + checkboxes[i].value + '</a></br>';
         }
         //document.getElementById("checkboxvalue").innerHTML = array;
-   
+
     }
 </script>
 
@@ -95,3 +95,16 @@
         padding: 0px;
     }
 </style>
+
+
+<div class="eqjs-column-buttonsBlock eqjs-qc-buttonsBlock">
+    <div class="eqjs-button-placeholder eqjs-qc-button-placeholder eqjs-qc-enablebutton-placeholder eqjs-qc-button-active" data-btnplaceholder="">
+        <div class="eqjs-button eqjs-column-button eqjs-column-button-enable enabled" title="Toggle enable" tabindex="0"></div>
+    </div>
+    <div class="eqjs-button-placeholder eqjs-qc-button-placeholder eqjs-qc-typebutton-placeholder eqjs-qc-button-active" data-btnplaceholder="">
+        <div class="eqjs-button eqjs-column-button eqjs-column-button-type" title="Change to aggregate column" tabindex="0"></div>
+    </div>
+    <div class="eqjs-button-placeholder eqjs-qc-button-placeholder eqjs-qc-deletebutton-placeholder" data-btnplaceholder="">
+        <div class="eqjs-button eqjs-column-button eqjs-column-button-delete" title="Delete" tabindex="0"></div>
+    </div>
+</div>

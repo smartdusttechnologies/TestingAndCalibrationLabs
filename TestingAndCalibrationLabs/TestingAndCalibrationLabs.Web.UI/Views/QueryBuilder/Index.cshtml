@@ -58,7 +58,7 @@
 
                 </div>
             </div>
-            <div class="eqv-central-block">
+            <div class="eqv-central-block" style="overflow: auto;">
 
                 <div class="eqv-columns-block">
                     <hr class="eqv-columns-hr eqv-hr" />
@@ -87,46 +87,55 @@
                     <div class="" id="JOINTYPE-Main-Div" style=" height: 100px;overflow: auto;">
 
                         <div id="JoinPartInfo" style="display:inline-block">
-                            <label for="JOINS">Choose JoinType:</label>
-                            <select name="JOINS" id="JOINTYPE">
+                            <label for="JoinType">Choose JoinType:</label>
+                            <select name="JOINS" id="JOINTYPE" >
+                                <option value="">Select</option>
                                 <option value="INNER JOIN">INNER JOIN</option>
                                 <option value="LEFT JOIN">LEFT JOIN</option>
                                 <option value="RIGHT JOIN">RIGHT JOIN</option>
                                 <option value="FULL JOIN">FULL JOIN</option>
 
                             </select>
-                            <label for="TabelChoose">Choose TableName:</label>
-                            <select name="TableName" id="JoinTableinfo">
-
-                                <option value="Table">FULL JOIN</option>
-
+                            <label for="TableChoice">Choose TableName:</label>
+                            <select name="TableName" id="JoinTableinfo" >
+                                <option value="">Select</option>
                             </select>
-                        </div>
-                        <div style="display:inline-block">
-                            <label for="FromTable">From TableName:</label>
+                            <label for="TableFrom">From Table:</label>
                             <select name="TableName" id="TableName">
+                                <option value="">Select</option>
                             </select>
                         </div>
+                        @* <div style="display:inline-block">
+
+                        </div>*@
                         <div class="eqjs-qp-row" id="JoinConditionMenu0" style="display:block">
                             <label for="Columns" style="padding-left:20px" id="ColumnDropDownLabel">Select column</label>
-                            <select name="ColumnDropdown" id="ColumnDropDown" style="width:auto">
+                            <select name="ColumnDropdown" id="ColumnDropDown" style="width:auto" onchange-required>
+                                <option value="">Select</option>
                             </select>
-                            <label for="Columns" style="padding-left:20px">Select Operator</label>
-                            <select name="Operator" id="Operator-Dropdown" style="width:auto">
+                            <label for="Operator" style="padding-left:20px">Select Operator</label>
+                            <select name="Operator" id="Operator-Dropdown" style="width:auto" onchange-required>
+                                <option  selected>Select</option>
                                 <option value=">">></option>
                                 <option value="<"> < </option>
                                 <option value=">=">>=</option>
                                 <option value="<="><=</option>
                                 <option value="Like">Like</option>
                             </select>
-                            <label for="Columns" style="padding-left:20px" id="ColumnDropDown2Label">Select Column2</label>
+                            <label for="Column2" style="padding-left:20px" id="ColumnDropDown2Label">Select Column2</label>
 
-                            <select name="ColumnDropdown2" id="ColumnDropdown2" onchange="chargeother(this.value)" style=" width:auto">
-                                <option value=""></option>
+                            <select name="ColumnDropdown2" id="ColumnDropdown2" onchange="chargeother(this)" style=" width:auto" onchange-required>
+                                <option selected>Select</option>
+                                
                                 <option value="input">input</option>
 
                             </select>
-                            <input type="text" name="InputInfo" style="display:none; width:100px;" />
+                            <div class="input-dropdown" style="display:none; ">
+                                <input type="text" name="InputInfo" style=" width:100px;">
+                                <select style="margin-left:-5.1px; height:21px" onclick="chargeother(this.parentElement)" onchange-required>
+                                    <option selected>Select</option>
+                                </select>
+                            </div>
                             <div class="eqjs-qp-condition-buttonsBlock" style=" float:right;display: inline-block;">
                                 <div class="eqjs-qp-button-placeholder">
                                     <div class="eqjs-qp-condition-button eqjs-qp-condition-button-menu eqjs-qp-condition-button-active" onclick="MultipleJoin(this)" tabindex="0" title="Show menu">
@@ -224,31 +233,34 @@
 
 
 <script>
-
+    var input = document.getElementById('')
     var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
     var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
 
     function chargeother(select) {
-        if (select == "input") {
-            document.getElementById('ColumnDropdown2').style.display="none";
+        if (select.value == "input") {
+            select.style.display = "none";
 
-             document.getElementById('ColumnDropdown2').nextElementSibling.style.display="inline-block";
+            select.nextElementSibling.style.display = "inline-block";
+        }
+        if (select.className == "input-dropdown") {
+            select.style.display = "none";
+            select.previousElementSibling.style.display = "inline-block";
         }
     }
 
-    window.onclick = function (event) {
 
-
-    }
     function JoinConditionAdd() {
         var newElement = document.getElementById('JOINTYPE-Main-Div');
         var LabelItem = document.createElement('label');
+        LabelItem.name = "Condition";
         LabelItem.innerHTML = "Condition";
         const options = ['OR', 'AND', 'NOT'];
 
         newElement.appendChild(LabelItem);
 
-        var selectMenu = document.createElement('select')
+        var selectMenu = document.createElement('select');
+        selectMenu.name = "Condition";
         newElement.appendChild(LabelItem);
         options.forEach(option => {
 
@@ -278,9 +290,12 @@
 
         var Data = document.getElementById('JoinPartInfo');
         var datainfo = Data.cloneNode(true);
+        datainfo.lastElementChild.remove();
+        datainfo.lastElementChild.remove();
+
         newElement.appendChild(datainfo);
 
-        Data = (Data.nextElementSibling).nextElementSibling;
+        Data = (Data.nextElementSibling);
         datainfo = Data.cloneNode(true);
         newElement.appendChild(datainfo);
 
@@ -294,7 +309,101 @@
         Aggregates.style.top = (stringPosition.bottom + 5) + "px";
         Aggregates.style.left = (stringPosition.left + 2) + "px";
     }
+    function JoinRowDel() {
+
+
+        if (ParentElementDiv.previousElementSibling.previousElementSibling.innerHTML == "Condition") {
+            $(ParentElementDiv.previousElementSibling).remove();
+            $(ParentElementDiv.previousElementSibling).remove();
+            $(ParentElementDiv).remove();
+            ParentElementDiv = null;
+        }
+        else if (ParentElementDiv.previousElementSibling.previousElementSibling.previousElementSibling != null) {
+            $(ParentElementDiv.previousElementSibling).remove();
+            $(ParentElementDiv).remove();
+            ParentElementDiv = null;
+        }
+    }
     function DataToModel() {
+
+        var DataItem = document.getElementById('JOINTYPE-Main-Div');
+        var JoinValue = [];
+        var JoinObject = {};
+        var JoinObject1 = null;
+        var JoinObject2 = {}  ;
+
+        for (var JoinItem = 0; JoinItem <= DataItem.children.length; JoinItem++) {
+            //debugger;
+
+            ////if (DataItem.children[JoinItem].name == "Condition" && DataItem.children[JoinItem].name!=null) {
+            ////    JoinItem = JoinItem + 1;
+            ////}
+
+            ////if (DataItem.children[JoinItem].name != "Condition") {
+
+            ////    var JoinObject2 = {};
+
+            ////}
+
+            if (DataItem.children[JoinItem] != null && DataItem.children[JoinItem].id == "JoinPartInfo") {
+                if (JoinObject1 != null) {
+                    
+                    JoinValue.push(JoinObject1);
+                    JoinObject1 = {};
+                    JoinObject2 = {};
+
+                }
+                else{
+                    JoinObject1 = {};
+                }
+
+                for (var item = 0; item < DataItem.children[JoinItem].children.length; item = (item + 2)) {
+
+                    JoinObject1[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 1].value;
+                }
+
+
+            }
+            else if (DataItem.children[JoinItem] != null && DataItem.children[JoinItem].id == "JoinConditionMenu0") {
+                for (var item = 0; item < DataItem.children[JoinItem].children.length; item = item + 2) {
+                    if (DataItem.children[JoinItem].children[item + 1].value == "input") {
+                        JoinObject2[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 2].children[0].value;
+
+                    }
+                    else {
+                        JoinObject2[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 1].value;
+
+                    }
+
+                }
+                if (DataItem.children[JoinItem + 1] != null && DataItem.children[JoinItem + 1].name == "Condition") {
+                    JoinObject2[DataItem.children[JoinItem + 1].name] = DataItem.children[JoinItem + 2].value;
+
+                    JoinItem = JoinItem + 2;
+                }
+
+                if (JoinObject1['JoinInfo']){
+                    JoinObject1['JoinInfo'].push(JoinObject2);
+                    JoinObject2 = {};
+
+                }
+                else{ 
+               JoinObject1['JoinInfo' ]= [];
+                JoinObject1['JoinInfo' ].push(JoinObject2);
+                JoinObject2={};
+                }
+                
+            }
+
+
+
+        }
+        if (JoinObject1 != null) {
+            JoinValue.push(JoinObject1);
+            JoinObject1 = {};
+            JoinObject2 = {};
+
+        }
         var dataDetail = document.getElementById('ColumnData');
 
         var datainfo = {};
@@ -307,9 +416,9 @@
             var Title = dataDetail.children[item].children[3].innerText;
 
             var value = details.split(' ')[0];
-            if (arr.indexOf(value)) {
+            //if (arr.indexOf(value)) {
 
-            }
+            //}
 
             var info = details.split(' ')[1];
             if (datainfo[value]) {
@@ -351,15 +460,21 @@
             data.push({ TableName: arr[i], ColumnName: columnValues });
         }
 
+       
+
+
 
 
 
         var jsonData = JSON.stringify(data);
 
+        var JoinData = JSON.stringify(JoinValue);
+        
+
         $.ajax({
             url: 'QueryBuilder/QueryGenerator',
             method: 'POST',
-            data: { jsonData },
+            data: { jsonData, JoinData },
             success: function (response) {
                 alert('good work bro ') // Handle the response from the function
             },
@@ -371,6 +486,7 @@
 
 
     }
+
 
 </script>
 <script src="~/js/QueryBuilder.js"></script>
@@ -474,7 +590,7 @@
 
         <div class="eqjs-menu-itemDiv" onclick="JoinConditionAdd()">Add Condition </div>
         <div class="eqjs-menu-itemDiv" onclick="JoinAdd()">Add JOIN</div>
-        <div class="eqjs-menu-itemDiv" onclick="ButtonBlockMenufunction(2)">Delete</div>
+        <div class="eqjs-menu-itemDiv" onclick="JoinRowDel()">Delete</div>
     </div>
 </div>
 

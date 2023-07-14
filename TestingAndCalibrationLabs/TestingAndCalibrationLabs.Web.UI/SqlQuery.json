@@ -57,12 +57,17 @@
         "tableName": "persons",
         "column": [
           {
-            "columnName": "*",
-            "As": "rittt"
+            "columnName": "Student",
+            "As": "rittt",
+            "tableName": "persons",
+            "Aggregation": "sum"
+
           },
           {
             "columnName": "Name",
-            "As": null
+            "As": null,
+            "tableName": null,
+            "Aggregation": null
 
           },
           {
@@ -70,26 +75,65 @@
             "As": "Mr"
 
           },
+          
           {
             "columnName": "FirstName",
             "As": "Ritesh"
 
           }
         ],
-        "condition": {
+        "condition": [
+          {
+            "OperatorType": null,
+            "where": "lastName",
+            "operators": "=",
+            "value": "Kumar"
 
-          "where": "lastName",
-          "operators": "=",
-          "value": "Kumar"
-            
-        }
+          },
+
+          {
+            "OperatorType": "And",
+            "where": "FirstName",
+            "operators": "=",
+            "value": "Kumar"
+
+          },
+          {
+            "OperatorType": "OR",
+            "where": "FirstName",
+            "operators": "=",
+            "value": "Raj"
+
+          }
+
+        ],
+        "GroupBy": null,
+        "OrderBy": [
+          {
+            "ColumnName": "CustomerName",
+            "OrderType": "Asc"
+          }
+        ],
+        "foriegn": [
+          {
+            "joinType": "InnerJoin",
+            "tableName": "persons2",
+            "foriegnTableName": "persons",
+            "on": {
+              "pKey": "Id",
+              "optor": "=",
+              "fKey": "GroupId"
+            }
+
+          }
+        ]
 
       }
 
-     
+
+
     ]
   }
- 
-  
-}
 
+
+} 

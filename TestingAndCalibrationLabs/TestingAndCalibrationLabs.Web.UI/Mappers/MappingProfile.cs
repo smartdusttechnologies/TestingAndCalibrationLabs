@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
@@ -23,8 +24,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<Models.QueryBuilderDTO, Business.Core.Model.QueryBuilder.QueryBuilderModel>().ReverseMap();
             CreateMap<Models.QueryBuilderRecordDTO, Business.Core.Model.QueryBuilder.QueryRecordModel>().ReverseMap();
             CreateMap<Models.QueryBuilderColNamesDTO, Business.Core.Model.QueryBuilder.QueryBuilderColNames>().ReverseMap();
-
-
+            CreateMap<Models.UiQueryBuilderColumn, Business.Core.Model.UiQueryGenerator>().ReverseMap();
+            CreateMap<Models.QueryGenerator, Business.Core.Model.UiQueryBuilder>().ReverseMap();
+            CreateMap<Models.JoinChildModel, JoinChildModelDTO>().ReverseMap();
+            CreateMap<Models.JoinModel, JoinModelDTO>().ReverseMap();
 
         }
     }

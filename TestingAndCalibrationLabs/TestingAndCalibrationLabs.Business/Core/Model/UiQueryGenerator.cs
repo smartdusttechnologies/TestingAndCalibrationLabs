@@ -7,6 +7,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class UiQueryGenerator
     {
         public string TableName { get; set; }
+        public char Alias { get; set; }
         public List<UiQueryBuilder> ColumnName { get; set; }
     }
 }

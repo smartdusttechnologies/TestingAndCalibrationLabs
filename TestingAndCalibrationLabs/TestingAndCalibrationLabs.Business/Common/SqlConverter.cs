@@ -69,7 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Common
                     query.Append($" {col.tableName}.");
                 }
 
-                query.Append($"{col.columnName} ,");
+                query.Append($" {col.columnName} ,");
 
                 if(col.Aggregation!= null && ob.GroupBy != null)
                 {
@@ -115,8 +115,33 @@ namespace TestingAndCalibrationLabs.Business.Common
             if (ob.foriegn != null)
             {
                 foreach (var forign in ob.foriegn)
-                {
-                    query.Append($" {forign.joinType} {forign.tableName} ON {forign.tableName}.{forign.on.pKey} {forign.on.optor} {forign.foriegnTableName}.{forign.on.fKey} ");
+                {    
+                    if (forign.on.Count >1) {
+                        query.Append($" {forign.joinType} {forign.tableName} ON  ");
+                        
+                        foreach (var eachign in forign.on)
+                        {
+                            if(eachign.pKey!=null)
+                            {
+                                query.Append($"  {eachign.pKey} {eachign.optor} {eachign.fKey} ");
+                            }
+
+
+                            else
+                            {
+                                query.Append($"  {eachign.Condition} ");
+
+                            }
+                        }
+                    
+                    }
+                    else
+                    {
+                        query.Append($" {forign.joinType} {forign.tableName} ON {forign.on.pKey} {forign.on.optor} {forign.on.fKey} ");
+
+
+                    }
+
                 }
             }
         }

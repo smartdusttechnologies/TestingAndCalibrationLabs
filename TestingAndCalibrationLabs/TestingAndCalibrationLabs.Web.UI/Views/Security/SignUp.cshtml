@@ -4,7 +4,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div class="padding-login bg-white">
-    <form asp-controller="User" asp-action="Add" method="post">
+    <form >
         <div class="inputWithIcon">
             <input class="inputForSignIn" type="text" asp-for="UserName" placeholder="Enter Username">
             <i class="fa-solid fa-user iconForSignIn"></i>
@@ -26,7 +26,7 @@
             <input class="inputForSignIn" type="password" asp-for="ReEnterPassword" placeholder="Re-Enter Password">
             <i class="fa-solid fa-key iconForSignIn"></i>
         </div>
-        <button type="submit" class="btn btn-success text-center btn-block">Sign-Up</button>
+        <button type="submit" class="btn btn-success text-center btn-block"onclick="validation()">Sign-Up</button>
     </form>
     <div class="row">
         <div class="col login-padding-left"><hr></div>
@@ -59,3 +59,19 @@
         </div>
     </div>
 </div>
+<script>
+    function validation(){
+        
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("Add","User")",
+        success: function (response) {
+            
+            alert(response.reason)
+
+
+        }
+
+    });
+    }
+</script>
