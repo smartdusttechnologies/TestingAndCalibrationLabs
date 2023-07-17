@@ -287,13 +287,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
            var dataDownloaded = _commonRepository.FileUpload(fileUpload);
               return dataDownloaded;
-            
         }
         public FileUploadModel  DownloadImage(string ImageValue)
         { 
              var image = _commonRepository.ImageDownload(ImageValue);
             return image;
-        
         }
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
