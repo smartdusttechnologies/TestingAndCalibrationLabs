@@ -7,8 +7,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     /// </summary>
     public class LayoutModel
     {
-        internal int UiPageMetadataId;
-
         /// <summary>
         /// It Contains List Of UiPageMetadata
         /// </summary>
