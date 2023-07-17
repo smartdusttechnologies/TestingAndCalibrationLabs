@@ -283,22 +283,18 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel.WorkflowStageId, Layout = hierarchy };
         }
         #region Multi Value Control
-
-
         public int ImageUpload (FileUploadModel fileUpload)
         {
            var dataDownloaded = _commonRepository.FileUpload(fileUpload);
               return dataDownloaded;
             
         }
-
-        public FileUploadModel  DownloadImage(string fileId)
+        public FileUploadModel  DownloadImage(string ImageValue)
         { 
-             var image = _commonRepository.ImageDownload(fileId);
+             var image = _commonRepository.ImageDownload(ImageValue);
             return image;
         
         }
-      
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>

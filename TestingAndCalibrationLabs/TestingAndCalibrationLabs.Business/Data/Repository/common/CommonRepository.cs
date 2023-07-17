@@ -152,23 +152,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public int Insert(RecordModel record)
         {
-            var p = new DynamicParameters();
-            p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
-            p.Add("@ModuleId", record.ModuleId);
-            p.Add("@WorkflowStageId", record.WorkflowStageId);
-            p.Add("@UpdatedDate", record.UpdatedDate);
+            //var p = new DynamicParameters();
+            //p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
+            //p.Add("@ModuleId", record.ModuleId);
+            //p.Add("@WorkflowStageId", record.WorkflowStageId);
+            //p.Add("@UpdatedDate", record.UpdatedDate);
 
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var SingleData = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
-                var MultiData = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+                var SingleValueData = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
+                var MultiValueData = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
                 command.Parameters.AddWithValue("@UpdatedDate", record.UpdatedDate);
-                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleData));
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
+                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleValueData));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiValueData));
                 command.ExecuteNonQuery();
             }
             return 1;
@@ -250,17 +250,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var SingleData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
-                var MultiData = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
+                //var SingleValeData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
+                var EditValue = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@RecordId", recordModel.Id);
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiData));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(EditValue));
                 command.ExecuteNonQuery();
             }
-      
             return true;
         }
         /// <summary>
@@ -413,10 +412,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <summary>
         /// Image download in Your Local System
         /// </summary>
-        public FileUploadModel ImageDownload(string fileId)
+        public FileUploadModel ImageDownload(string ImageValue)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Name = @Name ", new { Name = fileId }).FirstOrDefault();
+            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Name = @Name ", new { Name = ImageValue }).FirstOrDefault();
         }
         #endregion
     }

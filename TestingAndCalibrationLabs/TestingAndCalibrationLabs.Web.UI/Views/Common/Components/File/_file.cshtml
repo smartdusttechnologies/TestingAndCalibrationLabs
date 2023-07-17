@@ -301,8 +301,6 @@
     }
 </style>
 
-
-
 <div class="Box-Parent">
     <div class="Form-Control">
         <input multiple="" type="file" autocomplete="off" tabindex="-1" style="display: none;" id="image-@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF">
@@ -346,17 +344,13 @@
         $(id).val(val);
     }
     $(document).ready(function () {
-       
         // Remove the parent element when a button is clicked
         $('.delete-svg').click(function () {
             $(this).parent().remove();
         });
     });
-
     $(`#btn-upload-${metadataId}`).click(function () {
-       
         $(`#image-${metadataId}`).click();
-
     });
         function validateForImages(input) {
             $(`#file-showcase-${metadataId}`).empty();
@@ -421,7 +415,7 @@
 </script>
 <script type="text/javascript">
     function Download(e) {
-        location.href = '@Url.Action("DownloadImage", "Common")?fileId=' + e;
+        location.href = '@Url.Action("DownloadImage", "Common")?ImageValue=' + e;
         }
  </script>
 

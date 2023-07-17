@@ -90,14 +90,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         bool DeleteMultiValue(RecordModel record);
         // <summary>
-        // Image Upload
+        // Image Upload in database
         //</summary>
         int FileUpload(FileUploadModel File);
         // <summary>
-        // Image Download 
+        // Image Download  in database
         //</summary>
-        FileUploadModel ImageDownload(string fileId);
-
-
+        FileUploadModel ImageDownload(string ImageValue);
     }
 }

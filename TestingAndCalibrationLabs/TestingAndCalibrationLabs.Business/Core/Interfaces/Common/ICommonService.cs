@@ -76,6 +76,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        FileUploadModel DownloadImage(string fileId);
+        FileUploadModel DownloadImage(string ImageValue);
      }
 }  

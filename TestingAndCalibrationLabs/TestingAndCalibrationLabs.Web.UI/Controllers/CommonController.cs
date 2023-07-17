@@ -70,31 +70,31 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             List<string> imageId = new List<string>();
 
-            foreach (var item in Request.Form.Files)
+            foreach (var imagelenth in Request.Form.Files)
             {
-                if (item != null)
+                if (imagelenth != null)
                 {
-                    if (item.Length > 0)
+                    if (imagelenth.Length > 0)
                     {
                         //Getting FileName
-                        var fileName = Path.GetFileName(item.FileName);
+                        var ImageName = Path.GetFileName(imagelenth.FileName);
                         //Getting file Extension
-                        var fileExtension = Path.GetExtension(fileName);
+                        var ImageExtension = Path.GetExtension(ImageName);
                         // concatenating  FileName + FileExtension
-                        var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
-                        var objfiles = new FileUploadModel()
+                        var NewImageName = String.Concat(Convert.ToString(Guid.NewGuid()), ImageExtension);
+                        var ObjImage = new FileUploadModel()
                         {
-                            Name= newFileName,
-                            FileType = fileExtension,
+                            Name= NewImageName,
+                            FileType = ImageExtension,
                             CreatedOn = DateTime.Now
                         };
                         using (var target = new MemoryStream())
                         {
-                            item.CopyTo(target);
-                            objfiles.DataFiles = target.ToArray();
+                            imagelenth.CopyTo(target);
+                            ObjImage.DataFiles = target.ToArray();
                         }
-                       var result = _commonService.ImageUpload(objfiles);
-                        imageId.Add(newFileName.ToString());
+                       var result = _commonService.ImageUpload(ObjImage);
+                        imageId.Add(NewImageName.ToString());
                     }
                 }
             }
@@ -104,10 +104,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method To download Images 
         /// </summary>
         /// <returns></returns>
-        public IActionResult DownloadImage(string fileId)
+        public IActionResult DownloadImage(string ImageValue)
         {
            
-            FileUploadModel attachment = _commonService.DownloadImage(fileId);
+            FileUploadModel attachment = _commonService.DownloadImage(ImageValue);
            
             if (attachment != null)
             {

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
-    public  class FileUploadModel :Entity
+    public  class FileUploadModel
     {
         // Image Name 
         public string Name { get; set; }

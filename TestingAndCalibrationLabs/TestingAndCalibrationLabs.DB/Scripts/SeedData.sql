@@ -18,11 +18,8 @@ BEGIN
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
                (0, N'none', 1, 0),
-			   
 			   (1, N'Cube Testing', 1, 0),
-			   
 			   (2, N'Water Testing', 1, 0),
-			   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
@@ -210,10 +207,6 @@ BEGIN
 			  (2011, N'MultiControlGrid', N'~/Views/Common/Components/Grid/_gridMultiControl.cshtml', 0, 33),
 			  (2012, N'MultiselectDropdown',N'~/Views/Common/Components/MultiselectDropdown/_multiselectDropdown.cshtml',0,39),
 			  (2014, N'Text Design', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
-
-
-			
-
     SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  OFF
 END
 GO
