@@ -107,13 +107,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
-            }
-            //else if (password.NewPassword == password.ConfirmPassword)
-            //{
-            //    validationMessages.Add(new ValidationMessage { Reason = "New password is same as Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
-            //    return new RequestResult<bool>(false, validationMessages); ;
 
-            //}
+            }
+          
             else if (password.NewPassword != password.ConfirmPassword)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
@@ -122,5 +118,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(true);
         }
+        
     }
 }
