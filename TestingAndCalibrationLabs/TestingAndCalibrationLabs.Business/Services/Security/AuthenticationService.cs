@@ -332,6 +332,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             string body = $"{otp}";
             EmailModel model = new EmailModel();
             model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
+            model.Subject = _configuration["ForgotPassOTP:Subject"];
             model.Email = new List<string>();
             model.Email.Add(ForgotPasswordModel.Email);
             model.HtmlMsg = CreateBody(model.EmailTemplate);
