@@ -93,7 +93,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                             imagelenth.CopyTo(target);
                             ObjImage.DataFiles = target.ToArray();
                         }
-                       var result = _commonService.ImageUpload(ObjImage);
+                       var Imagecollection = _commonService.ImageUpload(ObjImage);
                         imageId.Add(NewImageName.ToString());
                     }
                 }
@@ -138,8 +138,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
-            
-
         }
         [HttpGet]
         public ActionResult TemplateGenerate(int recordId, int metadataId)
