@@ -23,13 +23,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
             _lookupCategoryService = lookupCategoryService;
         }
-        //[HttpPost]
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -42,12 +35,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<LookupModel>, List<LookupDTO>>(page);
             return View(pageData.AsEnumerable());
         }
-
-
+        /// <summary>
+        /// Get All Category Based Lookup Name
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult LookupByCategory(int categoryName)
         {
-            var lookupList = _lookupService.Get();
+            var lookupList = _lookupService.GetLookup();
             var lookupByCategory = lookupList.Where(x => x.LookupCategoryId == categoryName).ToList();
             List<ListSorterModel> listSorterDTO = new List<ListSorterModel>();
             foreach (var item in lookupByCategory)
@@ -58,6 +53,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
             return Ok(jsonObjectConverted);
         }
+        /// <summary>
+        /// Get All lookup data based on lookupCategoryId
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult LookupByCategoryId(int lookupCategoryId)
         {

@@ -16,7 +16,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
+        /// <summary>
+        /// Get Record in Lookup based on lookupCategoryId
+        /// </summary>
+        /// <returns></returns>
         public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -46,9 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<LookupModel>(@"Select   l.Id,
                                                             l.LookupCategoryId,
                                                             lc.[Name] as LookupCategoryName, 
-                                                            
                                                             l.Name
-                                                                                                                   
                                                     From [Lookup] l
                                                     inner join [LookupCategory] lc on l.LookupCategoryId = lc.Id
                                                     
