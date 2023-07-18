@@ -227,48 +227,40 @@ namespace TestingAndCalibrationLabs.Business.Services
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             return validatePasswordResult;
         }
-
-
         /// <summary>
         /// Method to Validate the Email
         /// </summary>
-        public RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel ForgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-           UserModel existingUser1 = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
-            if (existingUser1 == null)
+           UserModel ExistingUser = _authenticationRepository.GetLoginEmail(ForgotPasswordModel.Email);
+            if (ExistingUser == null)
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error};
                 validationMessages.Add(error);
                 return new RequestResult<int>(0,validationMessages);
             }
-
             //var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             //return validatePasswordResult;
 
-            return new RequestResult<int>(existingUser1.Id);
-
+            return new RequestResult<int>(ExistingUser.Id);
         }
-
         /// <summary>
         /// Method to validate OTP
         /// </summary>
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
-
-        public RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<int> ValidateOTP(ForgotPasswordModel ForgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            ForgotPasswordModel existingUser1 = _authenticationRepository.GetOTP(forgotPasswordModel.UserId);
+            ForgotPasswordModel ExistingUser = _authenticationRepository.GetOTP(ForgotPasswordModel.UserId);
         
-           if (forgotPasswordModel.OTP == existingUser1.OTP)
+           if (ForgotPasswordModel.OTP == ExistingUser.OTP)
             {
                 double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
-                if (forgotPasswordModel.CreatedDate <= existingUser1.CreatedDate.AddMinutes(OTPTime))
+                if (ForgotPasswordModel.CreatedDate <= ExistingUser.CreatedDate.AddMinutes(OTPTime))
                 {
-
-                    return new RequestResult<int>(existingUser1.UserId);
-
+                    return new RequestResult<int>(ExistingUser.UserId);
                 }
                 else
                 {
@@ -277,96 +269,77 @@ namespace TestingAndCalibrationLabs.Business.Services
                     return new RequestResult<int>(0, validationMessages);
                 }
             }
-            
            else
             {
                 var error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error };
                 validationMessages.Add(error);
                 return new RequestResult<int>(0, validationMessages);
             }
-           
-
         }
-
         /// <summary>
         /// Method to Reset Password 
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-
-        public RequestResult<bool> UpdatePaasword(ForgotPasswordModel password)
+        public RequestResult<bool> UpdatePassword(ForgotPasswordModel ForgotPasswordModel)
 
         {
             try
             {
-                var passworsResult = _securityParameterService.ChangePaaswordPolicy(password);
-                if (passworsResult.IsSuccessful)
+                var PasswordResult = _securityParameterService.ChangePasswordPolicy(ForgotPasswordModel);
+                if (PasswordResult.IsSuccessful)
                 {
-                    var validationResult = _securityParameterService.ValidatePasswordPolicy( 0,password.NewPassword);
+                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, ForgotPasswordModel.NewPassword);
 
-                    var passwordLogin = _authenticationRepository.GetUserIdPassword(password.UserId);
+                    var PasswordLogin = _authenticationRepository.GetUserIdPassword(ForgotPasswordModel.UserId);
 
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-                  
-
-                    if (validationResult.IsSuccessful)
+                    if (ValidationResult.IsSuccessful)
                     {
-                        if (passworsResult.IsSuccessful)
+                        if (PasswordResult.IsSuccessful)
                         {
-                            PasswordLogin newPasswordLogin = Hasher.HashPassword(password.NewPassword);
-                            ForgotPasswordModel passwordModel = new ForgotPasswordModel();
-                            passwordModel.PasswordHash = newPasswordLogin.PasswordHash;
-                            passwordModel.UserId = password.UserId;
-                            passwordModel.ChangeDate = DateTime.Now;
-                            passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
-
-                            _userRepository.Update(passwordModel);
-
+                            PasswordLogin NewPasswordLogin = Hasher.HashPassword(ForgotPasswordModel.NewPassword);
+                            ForgotPasswordModel PasswordModel = new ForgotPasswordModel();
+                            PasswordModel.PasswordHash = NewPasswordLogin.PasswordHash;
+                            PasswordModel.UserId = ForgotPasswordModel.UserId;
+                            PasswordModel.ChangeDate = DateTime.Now;
+                            PasswordModel.PasswordSalt = NewPasswordLogin.PasswordSalt;
+                            _userRepository.Update(PasswordModel);
                             return new RequestResult<bool>(true);
                         }
 
                     }
-                    return new RequestResult<bool>(false, validationResult.ValidationMessages);
+                    return new RequestResult<bool>(false, ValidationResult.ValidationMessages);
                 }
-                return new RequestResult<bool>(false, passworsResult.ValidationMessages);
+                return new RequestResult<bool>(false, PasswordResult.ValidationMessages);
             }
             catch (Exception ex)
             {
-
                 return new RequestResult<bool>(false);
             }
-
         }
-
         /// <summary>
         /// Method To Create OTP though user email 
         /// </summary>
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(ForgotPasswordModel forgotPasswordModel, int userId)
-       
+        public RequestResult<int> Create(ForgotPasswordModel ForgotPasswordModel, int userId)
         {
-
-            var myEmail = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
+            var myEmail = _authenticationRepository.GetLoginEmail(ForgotPasswordModel.Email);
             var UserId = userId;
             string otp = GenerateOTP();
             string subject = "OTP Verification";
             string body = $"{otp}";
-
             EmailModel model = new EmailModel();
             model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
-
             model.Email = new List<string>();
-            model.Email.Add(forgotPasswordModel.Email);
-
-
+            model.Email.Add(ForgotPasswordModel.Email);
             model.HtmlMsg = CreateBody(model.EmailTemplate);
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
 
-            var isemailsendsuccessfully1 = _emailService.Sendemail(model);
+            var EmailSend = _emailService.Sendemail(model);
 
-            ForgotPasswordModel otpgenerate = _authenticationRepository.InsertOtp(body, UserId);
-
+            ForgotPasswordModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
             try
             {
                 using (MailMessage mailMessage = new MailMessage())
@@ -390,19 +363,15 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public string GenerateOTP()
         {
-
             Random random = new Random();
             int otp = random.Next(100000, 999999);
-
             return otp.ToString();
-
         }
         /// <summary>
         /// To use the email Template to send OTP to the User participated.
         /// </summary>
         /// <param name="emailTemplate"></param>
         /// <returns></returns>
-
         private string CreateBody(string emailTemplate)
         {
             string body = string.Empty;

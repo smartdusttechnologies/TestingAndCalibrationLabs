@@ -93,31 +93,25 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public RequestResult<bool> ChangePaaswordPolicy(ForgotPasswordModel password)
+        public RequestResult<bool> ChangePasswordPolicy(ForgotPasswordModel ForgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-
-            if (password.NewPassword.IsNullOrEmpty())
+            if (ForgotPasswordModel.NewPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (password.ConfirmPassword.IsNullOrEmpty())
+            else if (ForgotPasswordModel.ConfirmPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
-          
-            else if (password.NewPassword != password.ConfirmPassword)
+            else if (ForgotPasswordModel.NewPassword != ForgotPasswordModel.ConfirmPassword)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
             return new RequestResult<bool>(true);
         }
-        
     }
 }

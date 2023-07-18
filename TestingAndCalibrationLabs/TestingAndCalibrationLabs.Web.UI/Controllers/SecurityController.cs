@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -96,15 +95,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
+                var EmailResult = new ForgotPasswordModel { Email = model.Email };
 
-                var emailreq = new ForgotPasswordModel { Email = model.Email };
+                var UserVerify = _authenticationService.EmailValidateForgotPassword(EmailResult);
 
-                var user1 = _authenticationService.EmailValidateForgotPassword(emailreq);
-
-                if (user1.IsSuccessful)
+                if (UserVerify.IsSuccessful)
                 {
-                   model.UserId = user1.RequestedObject;
-                    _authenticationService.Create(emailreq,model.UserId);
+                   model.UserId = UserVerify.RequestedObject;
+                    _authenticationService.Create(EmailResult, model.UserId);
                 }
                 else
                 {
@@ -143,20 +141,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="forgotpassswordmodel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ResetPassword(ForgotPasswordDTO forgotpassswordmodel)
+        public IActionResult ResetPassword(ForgotPasswordDTO ForgotPasswordModel)
         {
-
-            var psswReq = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotpassswordmodel);
-            var result = _authenticationService.UpdatePaasword(psswReq);
-
-            if (result.IsSuccessful)
+            var PasswordRequest = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(ForgotPasswordModel);
+            var Result = _authenticationService.UpdatePassword(PasswordRequest);
+            if (Result.IsSuccessful)
             {
-
-                return Ok(result.RequestedObject);
-
-
+                return Ok(Result.RequestedObject);
             }
-            return BadRequest(result.ValidationMessages);
+            return BadRequest(Result.ValidationMessages);
         }
         /// <summary>
         /// 
@@ -167,8 +160,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
           return Ok(ForgotPassword(model));
         }
-       
     }
-    
 }
-
