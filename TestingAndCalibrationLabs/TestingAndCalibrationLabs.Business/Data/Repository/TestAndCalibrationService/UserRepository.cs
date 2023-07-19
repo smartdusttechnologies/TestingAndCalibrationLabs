@@ -92,7 +92,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             transaction.Commit();
             return insertedUserId;
         }
-            public int Update(ChangePasswordModel ChangePasswordModel)
+            public int Update(ChangePasswordModel changePasswordModel)
             {
             var DynamicPara = new DynamicParameters();
             DynamicPara.Add("@PasswordHash", "PasswordHash");
@@ -103,7 +103,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                            PasswordSalt = @PasswordSalt
                                                 Where UserId = @UserId";
                using IDbConnection db = _connectionFactory.GetConnection;
-               return db.Execute(ChangePasswordQuery, ChangePasswordModel);
+               return db.Execute(ChangePasswordQuery, changePasswordModel);
             }
     }
 }

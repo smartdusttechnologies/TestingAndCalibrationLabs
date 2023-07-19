@@ -201,47 +201,41 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate Of Change Password
         /// </summary>
-        public RequestResult<bool> UpdatePaasword(ChangePasswordModel ChangePasswordModel)
-
+        public RequestResult<bool> UpdatePassword(ChangePasswordModel changePasswordModel)
         {
             try
             {
-                var PassworsResult = _securityParameterService.ChangePaaswordPolicy(ChangePasswordModel);
-                if (PassworsResult.IsSuccessful)
+                var passwordResult = _securityParameterService.ChangePasswordPolicy(changePasswordModel);
+                if (passwordResult.IsSuccessful)
                 {
-                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, ChangePasswordModel.NewPassword);
-
-                    var PasswordLogin = _authenticationRepository.GetLoginPassword(ChangePasswordModel.Username);
+                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, changePasswordModel.NewPassword);
+                    var passwordLogin = _authenticationRepository.GetLoginPassword(changePasswordModel.Username);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     string valueHash = string.Empty;
-                    if (ChangePasswordModel != null && !Hasher.ValidateHash(ChangePasswordModel.OldPassword, PasswordLogin.PasswordSalt, PasswordLogin.PasswordHash, out valueHash))
+                    if (changePasswordModel != null && !Hasher.ValidateHash(changePasswordModel.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
                     {
                         validationMessages.Add(new ValidationMessage { Reason = "Old password is incorrect.", Severity = ValidationSeverity.Error, SourceId="OldPassword" });
                         return new RequestResult<bool>(validationMessages);
                     }
-
                     if (validationResult.IsSuccessful)
                     {
-                        if (PassworsResult.IsSuccessful)
+                        if (passwordResult.IsSuccessful)
                         {
-                            PasswordLogin NewPasswordLogin = Hasher.HashPassword(ChangePasswordModel.NewPassword);
-                            ChangePasswordModel PasswordModel = new ChangePasswordModel();
-                            PasswordModel.PasswordHash= NewPasswordLogin.PasswordHash;
-                            PasswordModel.UserId=ChangePasswordModel.UserId;
-                            PasswordModel.PasswordSalt= NewPasswordLogin.PasswordSalt;
-
-                            _userRepository.Update(PasswordModel);
-
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(changePasswordModel.NewPassword);
+                            ChangePasswordModel passwordModel = new ChangePasswordModel();
+                            passwordModel.PasswordHash= newPasswordLogin.PasswordHash;
+                            passwordModel.UserId=changePasswordModel.UserId;
+                            passwordModel.PasswordSalt= newPasswordLogin.PasswordSalt;
+                            _userRepository.Update(passwordModel);
                             return new RequestResult<bool>(true);
                         }
                     }
                     return new RequestResult<bool>(false, validationResult.ValidationMessages);
                 }
-                return new RequestResult<bool>(false, PassworsResult.ValidationMessages);
+                return new RequestResult<bool>(false, passwordResult.ValidationMessages);
             }
             catch (Exception ex)
             {
-
                 return new RequestResult<bool>(false);
             }
         }

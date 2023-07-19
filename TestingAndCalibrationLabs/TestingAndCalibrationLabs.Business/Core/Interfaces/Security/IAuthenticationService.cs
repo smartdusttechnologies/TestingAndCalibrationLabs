@@ -7,6 +7,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     {
         RequestResult<LoginToken> Login(LoginRequest loginRequest);
         RequestResult<bool> Add(UserModel user, string password);
-        RequestResult<bool> UpdatePaasword(ChangePasswordModel ChangePasswordModel);
+        RequestResult<bool> UpdatePassword(ChangePasswordModel cangePasswordModel);
     }
 }

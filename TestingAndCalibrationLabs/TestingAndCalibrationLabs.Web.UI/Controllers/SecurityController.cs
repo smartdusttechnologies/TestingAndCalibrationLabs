@@ -65,18 +65,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ChangePassword(ChangePasswordDTO ChangePasswordDto)
+        public IActionResult ChangePassword(ChangePasswordDTO changePasswordDto)
         {
-            var PassswordRequest = new ChangePasswordModel { OldPassword= ChangePasswordDto.OldPassword, NewPassword=ChangePasswordDto.NewPassword, ConfirmPassword=ChangePasswordDto.ConfirmPassword, UserId = ChangePasswordDto.UserId };
-            var result = _authenticationService.UpdatePaasword(PassswordRequest);
+            var passwordRequest = new ChangePasswordModel { OldPassword= changePasswordDto.OldPassword, NewPassword=changePasswordDto.NewPassword, ConfirmPassword=changePasswordDto.ConfirmPassword, UserId = changePasswordDto.UserId };
+            var result = _authenticationService.UpdatePassword(passwordRequest);
             if (result.IsSuccessful)
             {
-
                 return Ok(result.RequestedObject);
             }
             return BadRequest(result.ValidationMessages);
         }
-
         [HttpGet]
         public IActionResult ChangePassword()
         {
