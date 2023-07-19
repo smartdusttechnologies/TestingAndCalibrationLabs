@@ -233,8 +233,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(error);
                 return new RequestResult<int>(0,validationMessages);
             }
-            //var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-            //return validatePasswordResult;
             return new RequestResult<int>(existingUser.Id);
         }
         /// <summary>
@@ -246,7 +244,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             ForgotPasswordModel existingUser = _authenticationRepository.GetOTP(forgotPasswordModel.UserId);
-        
            if (forgotPasswordModel.OTP == existingUser.OTP)
             {
                 double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
