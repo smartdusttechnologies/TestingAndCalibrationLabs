@@ -403,7 +403,6 @@
                 processData: false,
                 data: file,
                 success: function (response) {
-                      debugger
                     var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
                     $(idNum).val(response);
                 },

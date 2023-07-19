@@ -251,13 +251,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
                 //var SingleValeData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
-                var EditValue = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
+                var ListofValue = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@RecordId", recordModel.Id);
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(EditValue));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(ListofValue));
                 command.ExecuteNonQuery();
             }
             return true;
@@ -274,29 +274,38 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                      FROM UiPageData t1
                                                         JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
 														Join [Record] t7 ON t7.Id  = t2.RecordId
-                                                           WHERE t1.RecordId = @Id
-														      and   t7.Id = @Id
+                                                           WHERE t1.RecordId = 12071
+														      and   t7.Id = 12071
+															  and t1.IsDeleted = 0
+															  and t7.IsDeleted = 0
                                                         UNION All
                                                       SELECT t3.UiPageMetadataId, t3.Id, CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId ,t6.Id as RecordId 
                                                     FROM UiPageData t3
                                                        JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
 													   Join [Record] t6 ON t6.Id  = t3.RecordId
-                                                          WHERE t3.RecordId = @Id
-														    and t6.Id = @Id
+                                                          WHERE t3.RecordId = 12071
+														    and t6.Id = 12071
+															and t3.IsDeleted = 0
+															and t6.IsDeleted = 0
                                                             UNION All
                                                        SELECT t5.UiPageMetadataId, t5.Id, t6.Value, t6.Id as ChildId ,t8.Id as RecordId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
-                                                      WHERE t5.RecordId = @Id
-													    and t8.Id = @Id
+                                                      WHERE t5.RecordId = 12071
+													    and t8.Id = 12071
+														and t5.IsDeleted = 0
+															and t8.IsDeleted = 0
 														  UNION All
 														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
-                                                          WHERE t5.RecordId = @Id
-													      and t8.Id = @Id ", new { id }).ToList();
+                                                          WHERE t5.RecordId = 12071
+													      and t8.Id = 12071 
+														  and t5.IsDeleted = 0
+															and t8.IsDeleted = 0", new { id }).ToList();
+														   
         }
 
         /// <summary>
