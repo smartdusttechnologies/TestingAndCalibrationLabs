@@ -91,6 +91,9 @@ select.input-validation-error#UiControlType {
 select.input-validation-error#UiPageType {
     border: 2px solid red;
 }
+select.input-validation-error#Lookup {
+    border: 2px solid red;
+}
 select.input-validation-error#DataType {
     border: 2px solid red;
 }
