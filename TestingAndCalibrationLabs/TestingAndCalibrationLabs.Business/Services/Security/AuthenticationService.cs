@@ -49,8 +49,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _roleRepository = roleRepository;
             _emailService = emailservice;
             _hostingEnvironment = hostingEnvironment;
-
-
         }
         /// <summary>
         /// Method to Authenticate for Login
@@ -120,10 +118,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private LoginToken GenerateTokens(string userName)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
             DateTime now = DateTime.Now;
             var claims = GetTokenClaims(userName, now);
-
             var accessJwt = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -132,9 +128,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 expires: now.AddDays(1),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
-
             var encodedAccessJwt = new JwtSecurityTokenHandler().WriteToken(accessJwt);
-
             var refreshJwt = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -144,7 +138,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
             var encodedRefreshJwt = new JwtSecurityTokenHandler().WriteToken(refreshJwt);
-
             var loginToken = new LoginToken
             {
                 UserName = userName,
@@ -290,9 +283,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 if (PasswordResult.IsSuccessful)
                 {
                     var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, ForgotPasswordModel.NewPassword);
-
                     var PasswordLogin = _authenticationRepository.GetUserIdPassword(ForgotPasswordModel.UserId);
-
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     if (ValidationResult.IsSuccessful)
                     {
@@ -337,9 +328,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             model.Email.Add(ForgotPasswordModel.Email);
             model.HtmlMsg = CreateBody(model.EmailTemplate);
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
-
             var EmailSend = _emailService.Sendemail(model);
-
             ForgotPasswordModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
             try
             {
@@ -354,8 +343,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 Console.WriteLine($"Error sending OTP: {"Wrong OTP"}");
             }
-
-
             return new RequestResult<int>(1);
         }
         /// <summary>

@@ -57,7 +57,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                     mm.Subject = emailModel.Subject;
                     mm.Body = emailModel.HtmlMsg;
                     mm.IsBodyHtml = true;
-
                     using (SmtpClient smtp = new SmtpClient())
                     {
                         smtp.Host = host;
@@ -76,7 +75,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return false;
             }                           
         }
-
         Task IEmailService.FindByEmailAsync(string email)
         {
             throw new NotImplementedException();

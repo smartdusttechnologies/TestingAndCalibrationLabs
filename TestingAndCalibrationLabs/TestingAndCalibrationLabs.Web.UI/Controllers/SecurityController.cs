@@ -31,16 +31,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class SecurityController : Controller
     {
-
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
         private readonly IAuthenticationRepository _authenticationRepository;
-
         public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IAuthenticationRepository authenticationRepository)
         {
-
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _emailService = emailService;
@@ -96,9 +93,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var EmailResult = new ForgotPasswordModel { Email = model.Email };
-
                 var UserVerify = _authenticationService.EmailValidateForgotPassword(EmailResult);
-
                 if (UserVerify.IsSuccessful)
                 {
                    model.UserId = UserVerify.RequestedObject;
@@ -108,9 +103,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 {
                     model.Email = null;
                 }
-
             }
-
             return View(model);
         }
         /// <summary>
@@ -121,10 +114,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ValidateOTP(ForgotPasswordDTO model)
         {
-
             var otpreturn = new ForgotPasswordModel {OTP= model.OTP,UserId=model.UserId, CreatedDate =DateTime.Now };
             var user = _authenticationService.ValidateOTP(otpreturn);
-
             if (user.IsSuccessful)
             {
                 
