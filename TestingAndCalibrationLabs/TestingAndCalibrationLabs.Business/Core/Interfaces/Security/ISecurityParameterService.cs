@@ -6,6 +6,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ISecurityParameterService
     {
         RequestResult<bool> ValidatePasswordPolicy( int orgId, string Password);
-        RequestResult<bool> ChangePasswordPolicy(ForgotPasswordModel ForgotPasswordModel);
+        RequestResult<bool> ChangePasswordPolicy(ForgotPasswordModel forgotPasswordModel);
     }
 }

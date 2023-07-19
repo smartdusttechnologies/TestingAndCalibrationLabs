@@ -15,9 +15,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public DateTime ChangeDate { get; set; }
-        public string EmailTemplate { get; set; }
-        public string OTPTemplate { get; set; }
-        public string HtmlMsg { get; set; }
     }
 }
-

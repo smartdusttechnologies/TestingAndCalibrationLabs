@@ -6,8 +6,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         PasswordLogin GetLoginPassword(string userName);
         int SaveLoginToken(LoginToken loginToken);
         UserModel GetLoginEmail(string Email);
-        ForgotPasswordModel InsertOtp(string OTP, int UserId);
-        ForgotPasswordModel GetOTP(int UserId);
+        ForgotPasswordModel InsertOtp(string Otp, int userId);
+        ForgotPasswordModel GetOTP(int userId);
        PasswordLogin GetUserIdPassword(int userId);
     }
 }

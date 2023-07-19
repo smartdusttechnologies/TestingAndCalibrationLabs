@@ -55,11 +55,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <param name="OTP"></param>
         /// <param name="userid"></param>
         /// <returns></returns>
-        public ForgotPasswordModel InsertOtp(string OTP,int UserId)
+        public ForgotPasswordModel InsertOtp(string Otp,int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<ForgotPasswordModel>(@"IF EXISTS( Select 1 from [UserOtp] where UserId=@UserId) UPDATE [UserOtp] set Otp=@OTP,CreatedDate = GetDate() where UserId = @UserId
-                  ELSE Insert into [UserOtp](UserId,OTP,CreatedDate) values (@UserId,@Otp ,GetDate())", new { OTP, UserId }).FirstOrDefault();
+                  ELSE Insert into [UserOtp](UserId,OTP,CreatedDate) values (@UserId,@Otp ,GetDate())", new { Otp, userId }).FirstOrDefault();
         }
 
         /// <summary>
@@ -68,11 +68,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <param name="OTP"></param>
         /// <returns></returns>
 
-        public ForgotPasswordModel GetOTP(int UserId)
+        public ForgotPasswordModel GetOTP(int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
 
-            return db.Query<ForgotPasswordModel>("select u.Id ,uo.Otp,u.Email,uo.CreatedDate From [User] u inner join [UserOtp] uo on u.Id =uo.UserId  where uo.UserId =@UserId  ;", new {UserId}).FirstOrDefault();
+            return db.Query<ForgotPasswordModel>("select u.Id ,uo.Otp,u.Email,uo.CreatedDate From [User] u inner join [UserOtp] uo on u.Id =uo.UserId  where uo.UserId =@UserId  ;", new {userId}).FirstOrDefault();
 
         }
 
