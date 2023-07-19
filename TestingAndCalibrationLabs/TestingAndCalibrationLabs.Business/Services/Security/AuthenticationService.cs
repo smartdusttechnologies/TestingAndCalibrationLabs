@@ -235,7 +235,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             //var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             //return validatePasswordResult;
-
             return new RequestResult<int>(ExistingUser.Id);
         }
         /// <summary>
@@ -257,15 +256,15 @@ namespace TestingAndCalibrationLabs.Business.Services
                 }
                 else
                 {
-                    var error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error };
-                    validationMessages.Add(error);
+                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error };
+                    validationMessages.Add(Error);
                     return new RequestResult<int>(0, validationMessages);
                 }
             }
            else
             {
-                var error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error };
-                validationMessages.Add(error);
+                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error };
+                validationMessages.Add(Error);
                 return new RequestResult<int>(0, validationMessages);
             }
         }
@@ -314,7 +313,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(ForgotPasswordModel ForgotPasswordModel, int userId)
+        public RequestResult<int> CreateOtp(ForgotPasswordModel ForgotPasswordModel, int userId)
         {
             var myEmail = _authenticationRepository.GetLoginEmail(ForgotPasswordModel.Email);
             var UserId = userId;

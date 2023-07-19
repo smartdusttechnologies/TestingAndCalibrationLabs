@@ -3,7 +3,6 @@ using System;
 using System.Net;
 using System.Net.Mail;
 using System.Security;
-using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -75,9 +74,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return false;
             }                           
         }
-        Task IEmailService.FindByEmailAsync(string email)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }    

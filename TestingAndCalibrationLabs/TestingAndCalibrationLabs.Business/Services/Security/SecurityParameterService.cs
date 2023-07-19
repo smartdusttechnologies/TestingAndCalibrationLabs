@@ -1,7 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -11,38 +10,29 @@ namespace TestingAndCalibrationLabs.Business.Services
 {
     public class SecurityParameterService : ISecurityParameterService
     {
-
         private readonly ISecurityParameterRepository _securityParameterRepository;
         private readonly ILogger _logger;
-
-        public SecurityParameterService()
-        {
-
-        }
         public SecurityParameterService(ISecurityParameterRepository securityParameterRepository, ILogger logger)
         {
             _securityParameterRepository = securityParameterRepository;
             _logger = logger;
-
         }
-
         /// <summary>
         /// Method to validate Password Policy
         /// </summary>
-        public RequestResult<bool> ValidatePasswordPolicy( int orgId, string password)
+        public RequestResult<bool> ValidatePasswordPolicy( int orgId, string Password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             try
             {
                 var passwordPolicy = _securityParameterRepository.Get(orgId);
-                var validatePasswordResult = ValidatePassword(password, passwordPolicy);
+                var validatePasswordResult = ValidatePassword(Password, passwordPolicy);
                 return validatePasswordResult;
             }
             catch (Exception)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
         }
         /// <summary>
@@ -51,7 +41,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> ValidatePassword(string password, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
             if (password.Length < securityParameter.MinLength)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error });
@@ -62,25 +51,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of small characters the password should have is " + securityParameter.MinSmallChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumCapsChars(password, securityParameter.MinCaps))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of capital characters the password should have is " + securityParameter.MinCaps, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumDigits(password, securityParameter.MinNumber))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of numeric characters the password should have is " + securityParameter.MinNumber, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumSpecialChars(password, securityParameter.MinSpecialChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the password should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateDisallowedChars(password, securityParameter.DisAllowedChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Characters which are not allowed in password are " + securityParameter.DisAllowedChars, Severity = ValidationSeverity.Error });

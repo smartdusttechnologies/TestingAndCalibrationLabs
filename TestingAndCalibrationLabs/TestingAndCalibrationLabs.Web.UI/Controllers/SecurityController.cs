@@ -5,27 +5,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using TestingAndCalibrationLabs.Business.Data.Repository.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using TestingAndCalibrationLabs.Business.Data.Repository;
-using Org.BouncyCastle.Ocsp;
-using System.Reflection;
-using Microsoft.IdentityModel.Tokens;
-using Org.BouncyCastle.Bcpg;
-using crypto;
-using Google.Apis.Drive.v3.Data;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -88,23 +73,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        public IActionResult ForgotPassword(ForgotPasswordDTO model)
+        public IActionResult ForgotPassword(ForgotPasswordDTO forgotPasswordModel)
         {
             if (ModelState.IsValid)
             {
-                var EmailResult = new ForgotPasswordModel { Email = model.Email };
+                var EmailResult = new ForgotPasswordModel { Email = forgotPasswordModel.Email };
                 var UserVerify = _authenticationService.EmailValidateForgotPassword(EmailResult);
                 if (UserVerify.IsSuccessful)
                 {
-                   model.UserId = UserVerify.RequestedObject;
-                    _authenticationService.Create(EmailResult, model.UserId);
+                    forgotPasswordModel.UserId = UserVerify.RequestedObject;
+                    _authenticationService.CreateOtp(EmailResult, forgotPasswordModel.UserId);
                 }
                 else
                 {
-                    model.Email = null;
+                    forgotPasswordModel.Email = null;
                 }
             }
-            return View(model);
+            return View(forgotPasswordModel);
         }
         /// <summary>
         /// OTP Validation
@@ -112,14 +97,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="model"></param
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ValidateOTP(ForgotPasswordDTO model)
+        public IActionResult ValidateOTP(ForgotPasswordDTO ForgotPasswordModel)
         {
-            var otpreturn = new ForgotPasswordModel {OTP= model.OTP,UserId=model.UserId, CreatedDate =DateTime.Now };
-            var user = _authenticationService.ValidateOTP(otpreturn);
+            var OTPReturn = new ForgotPasswordModel {OTP= ForgotPasswordModel.OTP,UserId= ForgotPasswordModel.UserId, CreatedDate =DateTime.Now };
+            var user = _authenticationService.ValidateOTP(OTPReturn);
             if (user.IsSuccessful)
             {
                 
-                return View(new ForgotPasswordDTO { UserId = model.UserId });
+                return View(new ForgotPasswordDTO { UserId = ForgotPasswordModel.UserId });
             }
             else
             {
@@ -147,9 +132,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="forgotpassword"></param>
         /// <returns></returns>
-        public IActionResult ResendOTP(ForgotPasswordDTO  model)
+        public IActionResult ResendOTP(ForgotPasswordDTO ForgotPasswordModel)
         {
-          return Ok(ForgotPassword(model));
+          return Ok(ForgotPassword(ForgotPasswordModel));
         }
     }
 }
