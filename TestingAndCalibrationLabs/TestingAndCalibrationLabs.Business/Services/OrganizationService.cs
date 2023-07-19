@@ -78,14 +78,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //});
                 return null;
             }
-        }
-
-
-        /// <summary>
-        /// Get All Records From Organization
-        /// </summary>
-        /// <returns></returns>
-    
+        } 
         /// <summary>
         /// Insert Record In Organization
         /// </summary>
@@ -96,7 +89,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Insert(organization);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Delete Record From Organization
         /// </summary>
@@ -106,7 +98,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
         /// <summary>
         /// Edit Record From Organization
         /// </summary>
@@ -117,7 +108,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Update(organization);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Get Record by Id For Organization
         /// </summary>
