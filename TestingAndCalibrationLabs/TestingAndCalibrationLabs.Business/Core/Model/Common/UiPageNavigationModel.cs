@@ -14,7 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string Url { get; set; }
 
         /// <summary>
-        /// Ui Page module id refer to ui page type
+        /// Ui Page module id reference from Module
         /// </summary>
         public int ModuleId { get; set; }
 

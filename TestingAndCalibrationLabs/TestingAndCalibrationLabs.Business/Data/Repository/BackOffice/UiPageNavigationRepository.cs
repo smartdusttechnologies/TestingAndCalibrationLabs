@@ -23,17 +23,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <summary>
         /// Insert Record In Ui Page Navigation 
         /// </summary>
-        /// <param name="UiPageNavigationModel"></param>
+        /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        public int Create(UiPageNavigationModel UiPageNavigationModel)
+        public int Create(UiPageNavigationModel uiPageNavigationModel)
         {
             string query = @"Insert into [UiPageNavigation] (Url,ModuleId,UiNavigationCategoryId)
                                 values (@Url,@ModuleId,@UiNavigationCategoryId)";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, UiPageNavigationModel);
+            return db.Execute(query, uiPageNavigationModel);
         }
-
-       
          /// <summary>
         /// Getting all records from Ui Page Navigation
         /// </summary>
