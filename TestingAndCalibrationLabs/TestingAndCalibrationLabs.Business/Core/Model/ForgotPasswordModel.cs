@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Numerics;
-
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class ForgotPasswordModel : Entity

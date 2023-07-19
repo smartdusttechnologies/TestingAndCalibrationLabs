@@ -271,10 +271,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Reset Password 
         /// </summary>
-        /// <param name="password"></param>
+        /// <param name="forgotPasswordModel"></param>
         /// <returns></returns>
         public RequestResult<bool> UpdatePassword(ForgotPasswordModel forgotPasswordModel)
-
         {
             try
             {

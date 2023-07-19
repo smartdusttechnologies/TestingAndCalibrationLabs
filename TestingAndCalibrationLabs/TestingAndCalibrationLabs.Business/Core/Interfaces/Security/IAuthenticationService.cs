@@ -1,6 +1,5 @@
 ﻿using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
-
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface IAuthenticationService
