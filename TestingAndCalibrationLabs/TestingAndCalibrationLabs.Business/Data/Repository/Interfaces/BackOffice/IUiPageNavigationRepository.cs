@@ -23,14 +23,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <summary>
         /// Insert Record In Ui Page navigation
         /// </summary>
-        /// <param name="UiPageNavigationModel"></param>
+        /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        int Create(UiPageNavigationModel UiPageNavigationModel);
+        int Create(UiPageNavigationModel uiPageNavigationModel);
         /// <summary>
         /// Update Record In Ui Page Validation 
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        int Update(UiPageNavigationModel UiPageNavigationModel);
+        int Update(UiPageNavigationModel uiPageNavigationModel);
     }
 }

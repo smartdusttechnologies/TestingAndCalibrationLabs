@@ -21,11 +21,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Create Record For Ui Page Navigation Category
         /// </summary>
-        /// <param name="UiNavigationCategoryModel"></param>
+        /// <param name="uiNavigationCategoryModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiNavigationCategoryModel UiNavigationCategoryModel)
+        public RequestResult<int> Create(UiNavigationCategoryModel uiNavigationCategoryModel)
         {
-            _genericRepository.Insert(UiNavigationCategoryModel);
+            _genericRepository.Insert(uiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -41,11 +41,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Edit Record For Ui Navigation Category
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="uiNavigationCategoryModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id ,UiNavigationCategoryModel UiNavigationCategoryModel)
+        public RequestResult<int> Update(int id ,UiNavigationCategoryModel uiNavigationCategoryModel)
         {
-            _genericRepository.Update(UiNavigationCategoryModel);
+            _genericRepository.Update(uiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
         /// <summary>

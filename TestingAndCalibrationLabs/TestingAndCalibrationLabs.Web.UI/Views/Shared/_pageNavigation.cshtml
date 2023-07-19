@@ -47,7 +47,6 @@
             url: "@Url.Action("GetAllPagesWithNavigation","UiPageNavigation")",
             success: function (response) {
                 response.sort(function (a, b) {
-                   // debugger;
                     if (a.orders < b.orders) { return 1; }
                     if (a.orders > b.orders) { return -1; }
                     return 0;

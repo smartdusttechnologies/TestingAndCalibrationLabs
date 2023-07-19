@@ -40,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 
         //TODO: the orders field should be int, it seems.
         /// <summary>
-        /// Order is uinavigationcategory use.
+        /// Order in which navigation item will appear.
         /// </summary>
         public string Orders { get; set; }
     }

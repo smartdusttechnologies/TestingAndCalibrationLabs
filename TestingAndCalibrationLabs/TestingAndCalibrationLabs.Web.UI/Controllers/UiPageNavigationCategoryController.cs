@@ -83,20 +83,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// To Create Record In Ui Page Type
         /// </summary>
-        /// <param name="UiNavigationCategoryDto"></param>
+        /// <param name="uiNavigationCategoryDto"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] UiNavigationCategoryDTO UiNavigationCategoryDto)
+        public IActionResult Create([Bind] UiNavigationCategoryDTO uiNavigationCategoryDto)
         {
             if (ModelState.IsValid)
             {
-                var NavigationPageModel = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(UiNavigationCategoryDto);
-                _uiPageNavigationCategoryServics.Create(NavigationPageModel);
+                var navigationPage = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(uiNavigationCategoryDto);
+                _uiPageNavigationCategoryServics.Create(navigationPage);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(UiNavigationCategoryDto);
+            return View(uiNavigationCategoryDto);
         }
         /// <summary>
         /// For Delete Record View

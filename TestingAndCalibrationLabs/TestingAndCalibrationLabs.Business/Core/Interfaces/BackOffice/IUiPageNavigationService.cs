@@ -25,14 +25,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        RequestResult<int> Create(UiPageNavigationModel UiPageNavigationModel);
+        RequestResult<int> Create(UiPageNavigationModel uiPageNavigationModel);
         /// <summary>
         /// Edit Record From Ui Page Navigation
         /// </summary>
         /// <param name="uiPageNavigationModel"></param>
         /// <param Id="id"></param>
         /// <returns></returns>
-        RequestResult<int> Update(int id, UiPageNavigationModel UiPageNavigationModel);
+        RequestResult<int> Update(int id, UiPageNavigationModel uiPageNavigationModel);
         /// <summary>
         /// Delete Record From Ui Page Navigation
         /// </summary>

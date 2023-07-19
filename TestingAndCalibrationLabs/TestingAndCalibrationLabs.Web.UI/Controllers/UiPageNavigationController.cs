@@ -22,11 +22,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiModuleService = uiModuleService;
             _mapper = mapper;
             _uiPageNavigationCategoryServics = uiPageNavigationCategoryServics;
-
         }
-
-
-
+        #region Public methods
         /// <summary>
         /// Get All Records From Ui Page Type With Navigation Category And Pass It TO Ajax Call
         /// </summary>
@@ -35,16 +32,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult GetAllPagesWithNavigation()
         {
             var pageWithNavigationCategoryList = _uiPageNavigationService.Get();
-            var pagenavigationList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageWithNavigationCategoryList);
+            var pageNavigationList = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageWithNavigationCategoryList);
 
-            if (pagenavigationList != null && pagenavigationList.Count > 0)
+            if (pageNavigationList != null && pageNavigationList.Count > 0)
             {
-                var dataAfterSorting = pagenavigationList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, Childrens = x.ToList() });
+                var dataAfterSorting = pageNavigationList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, Childrens = x.ToList() });
                 return Ok(dataAfterSorting);
             }
             return BadRequest();
         }
-
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
@@ -57,7 +53,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageNavigationModel = _mapper.Map<List<UiPageNavigationModel>, List<UiPageNavigationDTO>>(pageNavigationList);
             return View(pageNavigationModel.AsEnumerable());
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -69,33 +64,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<ModuleModel> moduleType = _uiModuleService.Get();
             moduleType = moduleType.Where(x => x.Id != (int)Helpers.None.Id).ToList();
             List<UiNavigationCategoryModel> navigationCategoryType = _uiPageNavigationCategoryServics.Get();
-            var metadataList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(moduleType);
+            var metaDataList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(moduleType);
             var validationList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(navigationCategoryType);
-            ViewBag.Module = metadataList;
+            ViewBag.Module = metaDataList;
             ViewBag.UiNavigationCategory = validationList;
-
             return base.View(new UiPageNavigationDTO { Id = id });
         }
-
         /// <summary>
         /// To Create Record In Ui Page Navigation
         /// </summary>
-        /// <param name="UiPageNavigationDto"></param>
+        /// <param name="uiPageNavigationDto"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] UiPageNavigationDTO UiPageNavigationDto)
+        public IActionResult Create([Bind] UiPageNavigationDTO uiPageNavigationDto)
         {
             if (ModelState.IsValid)
             {
-                var createPageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(UiPageNavigationDto);
+                var createPageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDto);
                 _uiPageNavigationService.Create(createPageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(UiPageNavigationDto);
+            return View(uiPageNavigationDto);
         }
-
         /// <summary>
         /// For Edit Record View
         /// </summary>
@@ -119,7 +111,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var categoryList = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(categoryType);
             ViewBag.Module = moduleList;
             ViewBag.UiNavigationCategory = categoryList;
-
             var getByIdPageNavigationType = _uiPageNavigationService.GetById((int)id);
             if (getByIdPageNavigationType == null)
             {
@@ -127,10 +118,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             var pageNavigationModel = _mapper.Map<UiPageNavigationModel, UiPageNavigationDTO>(getByIdPageNavigationType);
             return View(pageNavigationModel);
-
-            
         }
-
         /// <summary>
         /// To Edit Record In Ui Page Navigation
         /// </summary>
@@ -139,20 +127,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-    
-        public IActionResult Edit(int id, [Bind] UiPageNavigationDTO UiPageNavigationDto)
+        public IActionResult Edit(int id, [Bind] UiPageNavigationDTO uiPageNavigationDto)
         {
-
             if (ModelState.IsValid)
             {
-                var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(UiPageNavigationDto);
+                var pageNavigation = _mapper.Map<UiPageNavigationDTO, UiPageNavigationModel>(uiPageNavigationDto);
                 _uiPageNavigationService.Update(id, pageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(UiPageNavigationDto);
+            return View(uiPageNavigationDto);
         }
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -164,13 +149,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var getByIdPageNavigationType = _uiPageNavigationService.GetById(id);
-            var pageNavigationModel = _mapper.Map<UiPageNavigationModel, UiPageNavigationDTO>(getByIdPageNavigationType);
-            return View(pageNavigationModel);
+            var getByIdPageNavigation = _uiPageNavigationService.GetById(id);
+            var pageNavigation = _mapper.Map<UiPageNavigationModel, UiPageNavigationDTO>(getByIdPageNavigation);
+            return View(pageNavigation);
         }
-
         /// <summary>
-        /// To Delete Record From Ui Page Validation
+        /// To Delete Record From Ui Page Navigation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -186,6 +170,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             TempData["IsTrue"] = true;
             return RedirectToAction("Index");
         }
+        #endregion
     }
-
 }

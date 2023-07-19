@@ -35,15 +35,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageNavigation.ForEach(x => x.FormatedUrl = string.Format(x.Url, x.ModuleId));
             return pageNavigation;
         }
-        #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Navigation 
         /// </summary>
-        /// <param name="UiPageNavigationModel"></param>
+        /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageNavigationModel UiPageNavigationModel)
+        public RequestResult<int> Create(UiPageNavigationModel uiPageNavigationModel)
         {
-            _uiPageNavigationRepository.Create(UiPageNavigationModel);
+            _uiPageNavigationRepository.Create(uiPageNavigationModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -68,13 +67,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Edit Record By Ui Page Navigation
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="UiPageNavigationModel"></param>
+        /// <param name="uiPageNavigationModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageNavigationModel UiPageNavigationModel)
+        public RequestResult<int> Update(int id, UiPageNavigationModel uiPageNavigationModel)
         {
-            _uiPageNavigationRepository.Update(UiPageNavigationModel);
+            _uiPageNavigationRepository.Update(uiPageNavigationModel);
             return new RequestResult<int>(1);
         }
-        #endregion
     }
 }

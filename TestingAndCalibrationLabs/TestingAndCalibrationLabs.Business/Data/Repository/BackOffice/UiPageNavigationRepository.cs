@@ -76,7 +76,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="UiPageNavigationModel"></param>
         /// <returns></returns>
-        public int Update(UiPageNavigationModel UiPageNavigationModel)
+        public int Update(UiPageNavigationModel uiPageNavigationModel)
         {
             string query = @"update [UiPageNavigation] Set 
                                     Url=@Url,
@@ -87,7 +87,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 Id = @Id";
             using IDbConnection db = _connectionFactory.GetConnection;
 
-            return db.Execute(query, UiPageNavigationModel);
+            return db.Execute(query, uiPageNavigationModel);
         }
     }
 }
