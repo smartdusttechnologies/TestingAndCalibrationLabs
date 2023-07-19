@@ -15,33 +15,23 @@
                 <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%"><b>RESET PASSWORD</b></button>
             </li>
         </ul>
-
- 
-
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
             <input class="form-input width-full black-border" type="password" id="NewPassword" asp-for="NewPassword" placeholder=" " name="NewPassword" item.IsRequired onchange="this.setAttribute('value',this.value)" required>
             <label class="form-label" style="color:gray;" for=NewPassword>
                 NewPassword
                 <span class="red-color">*</span>
-
             </label>
         </div>
-
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
             <input class="form-input width-full black-border" type="password" id="ConfirmPassword" asp-for="ConfirmPassword" placeholder=" " name="ConfirmPassword" item.IsRequired onchange="this.setAttribute('value',this.value)" required>
             <label class="form-label" style="color:gray;" for=ConfirmPassword>
                 ConfirmPassword
                 <span class="red-color">*</span>
-
             </label>
         </div>
-
         <button type="submit" class="btn btn-success text-center btn-block" onclick="password()" style="width:100px; margin-top:20px; margin-left:60px">Save</button>
-
         <button type="submit" class="btn btn-success text-center btn-block" onclick="clearFields()" style="width:100px;margin-top:20px;background-color:royalblue;margin-left:60px;">Cancel</button>
-
       </div>
-   
 </div>
 
 <div>
@@ -87,54 +77,34 @@
     function clearFields() {
         document.getElementById("NewPassword").value = "";
         document.getElementById("ConfirmPassword").value = "";
-
     }
-
 </script>
-
 <script>
     function password() {
-        debugger
         var keyValuepair = {};
-       
         keyValuepair.NewPassword = $("#NewPassword").val();
         keyValuepair.ConfirmPassword = $("#ConfirmPassword").val();
         keyValuepair.UserId = $("#UserId").val();
-
         $.ajax({
             type: "POST",
             url: "@Url.Action( "ResetPassword","Security")",
             dataType: 'json',
             data: keyValuepair,
-
             success: function (result) {
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Password  Reset successfully!");
                 window.location.replace("https://localhost:44337/Security");
-                //location.reload();
-
-                //if (success == true) {
-                //    setTimeout(function () {
-                //        location.reload();  
-                //    }, 5000);
-                //}
-
             },
             error: function (result) {
                 var newresponseJSON = result.responseJSON;
                 var newErrorMessage = newresponseJSON;
-
                 for (var i = 0; i <= newErrorMessage.length; i++) {
-
                     myFunctionError();
                     document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
                     ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
                     document.getElementById(newErrorMessage[i].sourceId).style.border = "2px solid red";
                 }
             }
-
-
         });
     }
-
 </script>

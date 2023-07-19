@@ -8,6 +8,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         UserModel GetLoginEmail(string Email);
         ForgotPasswordModel InsertOtp(string Otp, int userId);
         ForgotPasswordModel GetOTP(int userId);
-       PasswordLogin GetUserIdPassword(int userId);
+        PasswordLogin GetUserIdPassword(int userId);
     }
 }
