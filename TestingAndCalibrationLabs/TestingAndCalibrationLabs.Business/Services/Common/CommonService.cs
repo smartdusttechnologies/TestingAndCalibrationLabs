@@ -56,9 +56,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWorkflowActivityService workflowActivityService,
             IWebHostEnvironment webHostEnvironment,
-             IGoogleDriveService googleUploadDownloadService,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
-
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
@@ -71,23 +69,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowActivityService = workflowActivityService;
             _webHostEnvironment = webHostEnvironment;
             _uiPageMetadataCharacteristicsService = uiPageMetadataCharacteristicsService;
-            _googleUploadDownloadService = googleUploadDownloadService;
-
-        }
-
-        public CommonService(ICommonRepository commonRepository, IGenericRepository<RecordModel> recordGenericRepository, IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository, IGenericRepository<UiPageDataModel> uiPageDataGenericRepository, IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository, IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository, IUiPageMetadataRepository uiPageMetadataRepository, IWorkflowActivityService workflowActivityService, IWebHostEnvironment webHostEnvironment, IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
-        {
-            this.commonRepository=commonRepository;
-            this.recordGenericRepository=recordGenericRepository;
-            this.uiPageTypeGenericRepository=uiPageTypeGenericRepository;
-            this.uiPageDataGenericRepository=uiPageDataGenericRepository;
-            this.uiPageMetaDataGenericRepository=uiPageMetaDataGenericRepository;
-            this.uiPageValidationTypesGenericRepository=uiPageValidationTypesGenericRepository;
-            this.uiPageMetadataCharacteristicsRepository=uiPageMetadataCharacteristicsRepository;
-            this.uiPageMetadataRepository=uiPageMetadataRepository;
-            this.workflowActivityService=workflowActivityService;
-            this.webHostEnvironment=webHostEnvironment;
-            this.uiPageMetadataCharacteristicsService=uiPageMetadataCharacteristicsService;
         }
         #region public methods
         /// <summary>
