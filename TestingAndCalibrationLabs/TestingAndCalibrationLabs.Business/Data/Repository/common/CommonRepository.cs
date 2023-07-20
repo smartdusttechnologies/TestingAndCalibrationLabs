@@ -152,12 +152,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public int Insert(RecordModel record)
         {
-            //var p = new DynamicParameters();
-            //p.Add("RecordId", 0, DbType.Int32, ParameterDirection.Output);
-            //p.Add("@ModuleId", record.ModuleId);
-            //p.Add("@WorkflowStageId", record.WorkflowStageId);
-            //p.Add("@UpdatedDate", record.UpdatedDate);
-
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
