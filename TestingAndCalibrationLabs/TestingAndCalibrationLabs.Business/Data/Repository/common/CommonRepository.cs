@@ -161,14 +161,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var SingleValueData = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
-                var MultiValueData = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+                var storesingleval = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
+                var storemultiVal = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
                 command.Parameters.AddWithValue("@UpdatedDate", record.UpdatedDate);
-                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(SingleValueData));
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(MultiValueData));
+                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(storesingleval));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(storemultiVal));
                 command.ExecuteNonQuery();
             }
             return 1;

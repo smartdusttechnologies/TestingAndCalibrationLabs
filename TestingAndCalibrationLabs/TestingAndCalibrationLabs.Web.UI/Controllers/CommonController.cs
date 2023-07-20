@@ -242,7 +242,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
-            var adddata = _commonService.Save(records);
+            var adddata = _commonService.Save(records); 
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
 
