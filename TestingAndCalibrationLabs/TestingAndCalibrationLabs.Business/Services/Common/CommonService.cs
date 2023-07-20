@@ -184,6 +184,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
+                    //record.WorkflowStageId = oldRecord.WorkflowStageId;
+                    //_workflowActivityService.WorkflowActivity(record);
                 }
                 return new RequestResult<bool>(true);
 
