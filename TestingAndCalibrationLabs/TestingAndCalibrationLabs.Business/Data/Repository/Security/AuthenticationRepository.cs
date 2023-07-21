@@ -29,7 +29,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Save UserId in DB After Reset Password
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
         public PasswordLogin GetUserIdPassword(int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -39,18 +38,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Save Email Token in DB
         /// </summary>
         /// <param name="Email"></param>
-        /// <returns></returns>
-        public UserModel GetLoginEmail(string Email)
+        public UserModel GetLoginEmail(string emaiL)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UserModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { Email}).FirstOrDefault();
+            return db.Query<UserModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { emaiL }).FirstOrDefault();
         }
         /// <summary>
         /// Insert OTP in DB
         /// </summary>
         /// <param name="OTP"></param>
         /// <param name="userid"></param>
-        /// <returns></returns>
         public ForgotPasswordModel InsertOtp(string Otp,int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -61,7 +58,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// OTP in DB
         /// </summary>
         /// <param name="OTP"></param>
-        /// <returns></returns>
         public ForgotPasswordModel GetOTP(int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

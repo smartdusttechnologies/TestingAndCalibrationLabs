@@ -89,7 +89,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="newpassword"></param>
         /// <returns></returns>
-        public int Update(ForgotPasswordModel forgotPasswordModel)
+        public int updatePassword(ForgotPasswordModel forgotPasswordModel)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@PasswordHash", "PasswordHash");

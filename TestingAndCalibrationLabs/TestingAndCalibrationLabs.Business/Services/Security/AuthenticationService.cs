@@ -290,7 +290,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             passwordModel.UserId = forgotPasswordModel.UserId;
                             passwordModel.ChangeDate = DateTime.Now;
                             passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
-                            _userRepository.Update(passwordModel);
+                            _userRepository.updatePassword(passwordModel);
                             return new RequestResult<bool>(true);
                         }
                     }
@@ -343,7 +343,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method To Generate OTP
         /// </summary>
         /// <returns></returns>
-        public string GenerateOTP()
+        private string GenerateOTP()
         {
             Random random = new Random();
             int otp = random.Next(100000, 999999);
