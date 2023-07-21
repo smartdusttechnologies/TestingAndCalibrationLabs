@@ -179,14 +179,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate existing user for Registration
         /// </summary>
-        public RequestResult<bool> Add(UserModel user, string password, string Email, string Mobile, string ReEnterPassword,  string UserName, string FirstName, string LastName, string Country, string Organizations)
+        public RequestResult<bool> Add(UserModel user)
         {
             try
             {
-                var validationResult = ValidateNewUserRegistration(user, password, Email, Mobile, ReEnterPassword, UserName, FirstName, LastName, Country, Organizations);
+                var validationResult = ValidateNewUserRegistration(user);
                 if (validationResult.IsSuccessful)
                 {
-                    PasswordLogin passwordLogin = Hasher.HashPassword(password);
+                    PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
                     return new RequestResult<bool>(true);
@@ -202,19 +202,19 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
-        private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password, string Email, string Mobile,string ReEnterPassword,  string UserName, string FirstName, string LastName, string Country, string Organizations)
+        private RequestResult<bool> ValidateNewUserRegistration(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-            var ValidateReEnterResult = _securityParameterService.ValidateReEnterPasswordPolicy(user.OrgId, ReEnterPassword,password);
-            var validationEmailResult = _securityParameterService.ValidateEmailPolicy(user.OrgId, Email);
-            var ValidateMobilePolicy = _securityParameterService.ValidateMobilePolicy(user.OrgId, Mobile);
-            var ValidateOrganizationId = _securityParameterService.ValidateOrganizations(user.OrgId, Organizations);
-            var ValidateUserName = _securityParameterService.ValidateUserName(user.OrgId, UserName);
-            var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, FirstName);
-            var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, LastName);
-            var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, Country);
-            var validateexistinguser = ExistingUservalidation( UserName, user);
+            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId,user.Password);
+            var ValidateReEnterResult = _securityParameterService.ValidateReEnterPasswordPolicy(user.OrgId, user. ReEnterPassword,user.Password);
+            var validationEmailResult = _securityParameterService.ValidateEmailPolicy(user.OrgId, user.Email);
+            var ValidateMobilePolicy = _securityParameterService.ValidateMobilePolicy(user.OrgId, user.Mobile);
+            var ValidateOrganizationId = _securityParameterService.ValidateOrganizations(user.OrgId, user. Organizations);
+            var ValidateUserName = _securityParameterService.ValidateUserName(user.OrgId, user.UserName);
+            var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, user.FirstName);
+            var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, user.LastName);
+            var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, user.Country);
+            var validateexistinguser = ExistingUservalidation(user);
             //UserModel existingUser = _userRepository.Get(user.UserName);
             //if (existingUser != null)
             //{
@@ -239,7 +239,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the Existing User
         /// </summary>
-        private RequestResult<bool> ExistingUservalidation(string UserName, UserModel user)
+        private RequestResult<bool> ExistingUservalidation( UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
