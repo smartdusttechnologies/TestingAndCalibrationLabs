@@ -26,9 +26,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<UiNavigationCategoryModel> UiPageNavigationCategory = _uiPageNavigationCategoryServics.Get();
-            var NavigationCategoryData = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(UiPageNavigationCategory);
-            return View(NavigationCategoryData.AsEnumerable());
+            List<UiNavigationCategoryModel> uiPageNavigationCategory = _uiPageNavigationCategoryServics.Get();
+            var navigationCategoryData = _mapper.Map<List<UiNavigationCategoryModel>, List<UiNavigationCategoryDTO>>(uiPageNavigationCategory);
+            return View(navigationCategoryData.AsEnumerable());
         }
         /// <summary>
         /// For Edit Record View
@@ -43,32 +43,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var getByIdPageModel = _uiPageNavigationCategoryServics.GetById((int)id);
-            if (getByIdPageModel == null)
+            var result = _uiPageNavigationCategoryServics.GetById((int)id);
+            if (result == null)
             {
                 return NotFound();
             }
-            var PageNavigationCategoryData = _mapper.Map<UiNavigationCategoryModel,UiNavigationCategoryDTO>(getByIdPageModel);
+            var pageNavigationCategoryData = _mapper.Map<UiNavigationCategoryModel,UiNavigationCategoryDTO>(result);
 
-            return View(PageNavigationCategoryData);
+            return View(pageNavigationCategoryData);
         }
         /// <summary>
         /// To Edit Record In Ui Page Navigation Category
         /// </summary>
-        /// <param name="uiNavigationCategoryDTO"></param>
+        /// <param name="uiNavigationCategoryDto"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind] UiNavigationCategoryDTO UiNavigationCategoryDto)
+        public IActionResult Edit(int id, [Bind] UiNavigationCategoryDTO uiNavigationCategoryDto)
         {
             if (ModelState.IsValid)
             {
-                var PageNavigation = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(UiNavigationCategoryDto);
-                _uiPageNavigationCategoryServics.Update(id, PageNavigation);
+                var pageNavigation = _mapper.Map<UiNavigationCategoryDTO, UiNavigationCategoryModel>(uiNavigationCategoryDto);
+                _uiPageNavigationCategoryServics.Update(id, pageNavigation);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(UiNavigationCategoryDto);
+            return View(uiNavigationCategoryDto);
         }
         /// <summary>
         /// For Create Record View
@@ -109,12 +109,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            UiNavigationCategoryModel getByIdPageModel = _uiPageNavigationCategoryServics.GetById((int)id);
-            if (getByIdPageModel == null)
+            UiNavigationCategoryModel getIdNavigationModel = _uiPageNavigationCategoryServics.GetById((int)id);
+            if (getIdNavigationModel == null)
             {
                 return NotFound();
             }
-            var pageModel = _mapper.Map<UiNavigationCategoryModel, UiNavigationCategoryDTO>(getByIdPageModel);
+            var pageModel = _mapper.Map<UiNavigationCategoryModel, UiNavigationCategoryDTO>(getIdNavigationModel);
             return View(pageModel);
         }
         /// <summary>
