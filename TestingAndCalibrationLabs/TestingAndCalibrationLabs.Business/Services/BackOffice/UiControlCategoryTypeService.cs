@@ -13,16 +13,14 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
         private readonly IGenericRepository<UiControlCategoryTypeModel> _genericRepository;
         private readonly IUiControlCategoryTypeRepository _uiControlCategoryTypeRepository;
-
         public UiControlCategoryTypeService( IGenericRepository<UiControlCategoryTypeModel> genericRepository, IUiControlCategoryTypeRepository uiControlCategoryTypeRepository)
         {
             _genericRepository = genericRepository;
             _uiControlCategoryTypeRepository=uiControlCategoryTypeRepository;
         }
-
         #region Public methods
         /// <summary>
-        /// Get Record By Id For Ui Control Type
+        /// Get Record By Id For Ui Control Category Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

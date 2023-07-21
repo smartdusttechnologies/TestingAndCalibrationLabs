@@ -7,6 +7,9 @@ using Dapper;
 using System.Linq;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repository Class For Ui Control Category Type
+    /// </summary>
     public class UiControlCategoryTypeRepository : IUiControlCategoryTypeRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -14,6 +17,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+        /// <summary>
+        /// Get All Record From UiControlCategoryType
+        /// </summary>
+        /// <returns></returns
         public List<UiControlCategoryTypeModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -26,7 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     ").ToList();
         }
         /// <summary>
-        /// Insert Record in UiControlCategory
+        /// Insert Record in UiControlCategoryType
         /// </summary>
         /// <param name="uiControlCategoryTypeModel"></param>
         /// <returns></returns>
@@ -39,7 +46,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiControlCategoryTypeModel);
         }
         /// <summary>
-        /// Getting Record By Id  UiControlCategory
+        /// Getting Record By Id  UiControlCategoryType
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

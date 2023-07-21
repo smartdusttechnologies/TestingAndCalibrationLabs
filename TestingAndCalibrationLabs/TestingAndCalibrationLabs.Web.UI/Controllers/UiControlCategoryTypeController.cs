@@ -35,7 +35,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Index(int uiControlTypeId)
+        public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiControlCategoryTypeModel> controlTypeListModel = _uiControlCategoryTypeServices.Get();
@@ -48,17 +48,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id , int uiControlTypeId)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            ViewBag.UiControlType = uiControlTypeId;
             List<UiControlTypeModel> categoryType = _uiControlTypeServices.Get();
             var categoryList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(categoryType);
             ViewBag.UiControlTypeName = categoryList;
-
             UiControlCategoryTypeModel controlTypeModel = _uiControlCategoryTypeServices.GetById((int)id);
             if (controlTypeModel == null)
             {
@@ -67,7 +65,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var controlTypeEditModel = _mapper.Map<UiControlCategoryTypeModel, UiControlCategoryTypeDTO>(controlTypeModel);
             return View(controlTypeEditModel);
         }
-
         /// <summary>
         /// To Edit Record From Ui Control Category Type
         /// </summary>
@@ -86,7 +83,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiControlCategoryTypeDTO);
         }
-
         /// <summary>
         /// For Create View
         /// </summary>
@@ -100,7 +96,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiControlTypeName = validationList;
             return base.View(new UiControlCategoryTypeDTO { Id = id });
         }
-
         /// <summary>
         /// To Insert Record
         /// </summary>
@@ -119,7 +114,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiControlCategoryTypeDTO);
         }
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -139,7 +133,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var controlTypeEditModel = _mapper.Map<UiControlCategoryTypeModel, UiControlCategoryTypeDTO>(getByIdControlType);
             return View(controlTypeEditModel);
         }
-
         /// <summary>
         /// To Delete Record From Ui Control Category Type
         /// </summary>
