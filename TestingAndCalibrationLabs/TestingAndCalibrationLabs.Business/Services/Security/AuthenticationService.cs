@@ -342,7 +342,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method To Generate OTP
         /// </summary>
-        /// <returns></returns>
         private string GenerateOTP()
         {
             Random random = new Random();
@@ -353,7 +352,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// To use the email Template to send OTP to the User participated.
         /// </summary>
         /// <param name="emailTemplate"></param>
-        /// <returns></returns>
         private string CreateBody(string emailTemplate)
         {
             string body = string.Empty;

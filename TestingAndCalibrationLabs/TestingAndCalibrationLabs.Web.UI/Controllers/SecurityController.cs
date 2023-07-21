@@ -32,7 +32,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// UI Shows the Orgnizations names in dropdown list
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -44,7 +43,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Method to get the Login details from UI and Process Login.
         /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public IActionResult Login(LoginDTO loginRequest)
         {
@@ -70,8 +68,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method for otp and Email validation and Varification Code on Email
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
-
         [HttpPost]
         public IActionResult ForgotPassword(ForgotPasswordDTO forgotPasswordModel)
         {
@@ -95,7 +91,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// OTP Validation
         /// </summary>
         /// <param name="model"></param
-        /// <returns></returns>
         [HttpPost]
         public IActionResult ValidateOTP(ForgotPasswordDTO forgotPasswordDto)
         {
@@ -114,7 +109,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Reset Password
         /// </summary>
         /// <param name="forgotpassswordmodel"></param>
-        /// <returns></returns>
         [HttpPost]
         public IActionResult ResetPassword(ForgotPasswordDTO forgotPasswordDto)
         {
@@ -130,7 +124,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// 
         /// </summary>
         /// <param name="forgotpassword"></param>
-        /// <returns></returns>
         public IActionResult ResendOTP(ForgotPasswordDTO forgotPasswordDto)
         {
           return Ok(ForgotPassword(forgotPasswordDto));
