@@ -29,7 +29,8 @@ BEGIN
 			   (6, N'Ui Page Metadata', 1, 0),
 			   (7, N'Ui Page Validation',1,0),
 			   (8, N'Lookup Category',1,0),
-			   (9, N'Lookup',1,0)
+			   (9, N'Lookup',1,0),
+			   (10,N'FullPage',1,0)
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -388,7 +389,8 @@ BEGIN
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
 			  (11,N'/LookupCategory/Index/',8,1002,0),
-			  (12,N'/Lookup/Index/',9,1002,0)
+			  (12,N'/Lookup/Index/',9,1002,0),
+			  (13,N'/#/',10,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
