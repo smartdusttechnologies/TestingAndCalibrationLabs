@@ -12,9 +12,23 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class UiControlCategoryTypeService : IUiControlCategoryTypeService
     {
         private readonly IGenericRepository<UiControlCategoryTypeModel> _genericRepository;
-        public UiControlCategoryTypeService( IGenericRepository<UiControlCategoryTypeModel> genericRepository)
+        private readonly IUiControlCategoryTypeRepository _uiControlCategoryTypeRepository;
+
+        public UiControlCategoryTypeService( IGenericRepository<UiControlCategoryTypeModel> genericRepository, IUiControlCategoryTypeRepository uiControlCategoryTypeRepository)
         {
             _genericRepository = genericRepository;
+            _uiControlCategoryTypeRepository=uiControlCategoryTypeRepository;
+        }
+
+        #region Public methods
+        /// <summary>
+        /// Get Record By Id For Ui Control Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public UiControlCategoryTypeModel GetById(int id)
+        {
+            return _uiControlCategoryTypeRepository.GetById(id);
         }
         /// <summary>
         /// Get Record By Id For Ui Control Category Type
@@ -31,7 +45,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<UiControlCategoryTypeModel> Get()
         {
-            return _genericRepository.Get();
+            return _uiControlCategoryTypeRepository.Get();
         }
         /// <summary>
         /// Edit Record From Ui Control Category Type
@@ -40,7 +54,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(UiControlCategoryTypeModel uiControlCategoryTypeModel)
         {
-            _genericRepository.Update(uiControlCategoryTypeModel);
+            _uiControlCategoryTypeRepository.Update(uiControlCategoryTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -51,7 +65,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
         public RequestResult<int> Create(UiControlCategoryTypeModel uiControlCategoryTypeModel)
         {
-            _genericRepository.Insert(uiControlCategoryTypeModel);
+            _uiControlCategoryTypeRepository.Create(uiControlCategoryTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -61,7 +75,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _genericRepository.Delete(id);
+            return _uiControlCategoryTypeRepository.Delete(id);
         }
+        #endregion
     }
 }
