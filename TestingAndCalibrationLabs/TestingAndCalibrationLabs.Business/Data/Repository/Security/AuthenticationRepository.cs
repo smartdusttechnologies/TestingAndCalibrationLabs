@@ -1,13 +1,6 @@
 ﻿using Dapper;
-using Google.Apis.Drive.v3.Data;
-using Org.BouncyCastle.Math;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net.Sockets;
-using System.Numerics;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -38,21 +31,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Save Email Token in DB
         /// </summary>
         /// <param name="Email"></param>
-        public UserModel GetLoginEmail(string emaiL)
+        public UserModel GetLoginEmail(string email)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UserModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { emaiL }).FirstOrDefault();
+            return db.Query<UserModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { email }).FirstOrDefault();
         }
         /// <summary>
         /// Insert OTP in DB
         /// </summary>
         /// <param name="OTP"></param>
         /// <param name="userid"></param>
-        public ForgotPasswordModel InsertOtp(string Otp,int userId)
+        public ForgotPasswordModel InsertOtp(string otp,int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<ForgotPasswordModel>(@"IF EXISTS( Select 1 from [UserOtp] where UserId=@UserId) UPDATE [UserOtp] set Otp=@OTP,CreatedDate = GetDate() where UserId = @UserId
-                  ELSE Insert into [UserOtp](UserId,OTP,CreatedDate) values (@UserId,@Otp ,GetDate())", new { Otp, userId }).FirstOrDefault();
+                  ELSE Insert into [UserOtp](UserId,OTP,CreatedDate) values (@UserId,@Otp ,GetDate())", new { otp, userId }).FirstOrDefault();
         }
         /// <summary>
         /// OTP in DB

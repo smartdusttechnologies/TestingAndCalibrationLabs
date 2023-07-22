@@ -69,23 +69,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="model"></param>
         [HttpPost]
-        public IActionResult ForgotPassword(ForgotPasswordDTO forgotPasswordModel)
+        public IActionResult ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
         {
             if (ModelState.IsValid)
             {
-                var emailResult = new ForgotPasswordModel { Email = forgotPasswordModel.Email };
+                var emailResult = new ForgotPasswordModel { Email = forgotPasswordDto.Email };
                 var userVerify = _authenticationService.EmailValidateForgotPassword(emailResult);
                 if (userVerify.IsSuccessful)
                 {
-                    forgotPasswordModel.UserId = userVerify.RequestedObject;
-                    _authenticationService.CreateOtp(emailResult, forgotPasswordModel.UserId);
+                    forgotPasswordDto.UserId = userVerify.RequestedObject;
+                    _authenticationService.CreateOtp(emailResult, forgotPasswordDto.UserId);
                 }
                 else
                 {
-                    forgotPasswordModel.Email = null;
+                    forgotPasswordDto.Email = null;
                 }
             }
-            return View(forgotPasswordModel);
+            return View(forgotPasswordDto);
         }
         /// <summary>
         /// OTP Validation
@@ -94,8 +94,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ValidateOTP(ForgotPasswordDTO forgotPasswordDto)
         {
-            var OTPReturn = new ForgotPasswordModel {OTP= forgotPasswordDto.OTP,UserId= forgotPasswordDto.UserId, CreatedDate =DateTime.Now };
-            var user = _authenticationService.ValidateOTP(OTPReturn);
+            var otpReturn = new ForgotPasswordModel {OTP= forgotPasswordDto.OTP,UserId= forgotPasswordDto.UserId, CreatedDate =DateTime.Now };
+            var user = _authenticationService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
                 return View(new ForgotPasswordDTO { UserId = forgotPasswordDto.UserId });
@@ -113,12 +113,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ResetPassword(ForgotPasswordDTO forgotPasswordDto)
         {
             var passwordRequest = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotPasswordDto);
-            var Result = _authenticationService.UpdatePassword(passwordRequest);
-            if (Result.IsSuccessful)
+            var result = _authenticationService.UpdatePassword(passwordRequest);
+            if (result.IsSuccessful)
             {
-                return Ok(Result.RequestedObject);
+                return Ok(result.RequestedObject);
             }
-            return BadRequest(Result.ValidationMessages);
+            return BadRequest(result.ValidationMessages);
         }
         /// <summary>
         /// 

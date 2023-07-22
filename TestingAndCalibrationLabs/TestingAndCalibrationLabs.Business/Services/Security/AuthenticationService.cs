@@ -274,7 +274,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             try
             {
-                var passwordResult = _securityParameterService.ChangePasswordPolicy(forgotPasswordModel);
+                var passwordResult = _securityParameterService.ChangePasswordCondition(forgotPasswordModel);
                 if (passwordResult.IsSuccessful)
                 {
                     var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, forgotPasswordModel.NewPassword);
@@ -290,7 +290,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             passwordModel.UserId = forgotPasswordModel.UserId;
                             passwordModel.ChangeDate = DateTime.Now;
                             passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
-                            _userRepository.updatePassword(passwordModel);
+                            _userRepository.UpdatePassword(passwordModel);
                             return new RequestResult<bool>(true);
                         }
                     }
@@ -330,7 +330,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     mailMessage.Subject = subject;
                     mailMessage.Body = body;
-                    Console.WriteLine("OTP sent successfully.");
                 }
             }
             catch (Exception ex)

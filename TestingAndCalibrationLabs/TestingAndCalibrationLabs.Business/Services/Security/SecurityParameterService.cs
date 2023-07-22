@@ -78,7 +78,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public RequestResult<bool> ChangePasswordPolicy(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<bool> ChangePasswordCondition(ForgotPasswordModel forgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             if (forgotPasswordModel.NewPassword.IsNullOrEmpty())
