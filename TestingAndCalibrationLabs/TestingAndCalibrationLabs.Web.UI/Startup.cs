@@ -70,6 +70,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IEmailService, EmailService >();
 
             services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped<IWhatsappService, WhatsappService>();
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
