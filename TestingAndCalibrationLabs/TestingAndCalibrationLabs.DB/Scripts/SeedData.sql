@@ -30,6 +30,7 @@ BEGIN
 			   (7, N'Ui Page Validation',1,0),
 			   (8, N'Lookup Category',1,0),
 			   (9, N'Lookup',1,0),
+			   (10,N'DataType',1,0)
 			   (10, N'Ui ControlCategory Type',1,0)
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -328,12 +329,12 @@ BEGIN
 			(3046, 1, 0, N'Length', 0, 2, 3, N'0'),
 			(3047, 1, 0, N'Width', 0, 2, 3, N'0'),
 			(3048, 1, 0, N'Height', 0, 2, 3, N'0'),
-			(3049, 1, 1, N'mm²', 0, 2, 3, N'0'),
-			(3050, 1, 1, N'cm³', 0, 2, 3, N'0'),
+			(3049, 1, 1, N'mmï¿½', 0, 2, 3, N'0'),
+			(3050, 1, 1, N'cmï¿½', 0, 2, 3, N'0'),
 			(3051, 1, 0, N'gm', 0, 2, 3, N'0'),
-			(3053, 1, 0, N'gm/cm³', 0, 2, 3, N'0'),
+			(3053, 1, 0, N'gm/cmï¿½', 0, 2, 3, N'0'),
 			(3054, 1, 0, N'Load, KN', 0, 2, 3, N'0'),
-			(3056, 1, 1, N'Compressive Strength, N/mm²', 0, 2, 3, N'0'),
+			(3056, 1, 1, N'Compressive Strength, N/mmï¿½', 0, 2, 3, N'0'),
 			(3057, 1, 0, N'Average', 0, 2, 3, N'0'),
 			(3058, 38, 0, N'TestReport', 0, 2, 2010, N'0'),
 			(3059, 1, 0, N'Price', 0, 2, 3, N'0'),
@@ -369,6 +370,7 @@ BEGIN
 			  (1002, N'Settings', 3, 0),
 			  (1003, N'Profile', 4, 0),
 			  (1004, N'Notifications', 5, 0)
+			  
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
@@ -391,6 +393,7 @@ BEGIN
 			  (11,N'/LookupCategory/Index/',8,1002,0),
 			  (12,N'/Lookup/Index/',9,1002,0),
 			  (13,N'/UiControlCategoryType/Index/',10,1002,0)
+			  (13,N'/DataType/Index/',10,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
