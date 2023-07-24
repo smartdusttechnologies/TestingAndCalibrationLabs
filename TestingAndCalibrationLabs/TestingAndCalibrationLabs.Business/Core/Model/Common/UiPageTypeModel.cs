@@ -2,6 +2,7 @@
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+
     /// <summary>
     /// It Conatains The Properties for Ui Page Type
     /// </summary>
@@ -11,7 +12,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name For The Ui Page Type
         /// </summary>
+        [DbColumn]
+        
         public string Name { get; set; }
+        
     }
 
 }
