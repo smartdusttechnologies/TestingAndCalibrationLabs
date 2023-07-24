@@ -16,10 +16,6 @@
                     <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>
-                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style=" margin-bottom:5px;">
-                    <input class="form-input width-full black-border" type="text" id="Template" name="Template" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Template">
-                    <label class="form-label" for="Template">Template</label>
-                </div>
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
 
                     <select class="form-input width-full " name="UiControlTypeId" id="UiControlTypeName" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
@@ -37,6 +33,10 @@
                         }
                     </select>
                     <label for="UiControlTypeName" class="form-label">UiControlTypeId</label>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style=" margin-bottom:5px;">
+                    <input class="form-input width-full black-border" type="text" id="Template" name="Template" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Template">
+                    <label class="form-label" for="Template">Template</label>
                 </div>
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
                     <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
