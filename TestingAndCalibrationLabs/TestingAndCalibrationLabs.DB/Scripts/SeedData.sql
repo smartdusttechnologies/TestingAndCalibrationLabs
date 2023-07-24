@@ -17,21 +17,20 @@ BEGIN
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),
-			   
+                (0, N'none', 1, 0),
 			   (1, N'Cube Testing', 1, 0),
-			   
 			   (2, N'Water Testing', 1, 0),
-			   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
 			   (7, N'Ui Page Validation',1,0),
-			   (8, N'Lookup Category',1,0),
-			   (9, N'Lookup',1,0),
-			   (10,N'DataType',1,0),
-			   (11, N'Ui ControlCategory Type',1,0)
+			   (8, N'Ui Page Navigation',1,0),
+			   (9, N'Ui Page Navigation Category',1,0),
+			   (10, N'Lookup Category',1,0),
+			   (11, N'Lookup',1,0),
+			   (12,N'DataType',1,0),
+			   (13, N'Ui ControlCategory Type',1,0)
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -374,7 +373,7 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -390,10 +389,12 @@ BEGIN
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
-			  (11,N'/LookupCategory/Index/',8,1002,0),
-			  (12,N'/Lookup/Index/',9,1002,0),
-			  (13,N'/UiControlCategoryType/Index/',11,1002,0),
-			  (14,N'/DataType/Index/',10,1002,0)
+              (11, N'/UiPageNavigation/Index/', 8, 1002, 0),
+              (12, N'/UiPageNavigationCategory/Index/', 9, 1002, 0),
+			  (13,N'/LookupCategory/Index/',10,1002,0),
+			  (14,N'/Lookup/Index/',11,1002,0),
+			  (15,N'/DataType/Index/',12,1002,0),
+			  (16,N'/UiControlCategoryType/Index/',13,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

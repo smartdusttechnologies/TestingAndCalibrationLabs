@@ -1,8 +1,8 @@
-﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageTypeDTO>
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageNavigationDTO>
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Ui Page Type</h1>
+<h1>Ui Page Navigation</h1>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -15,9 +15,15 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    <h6><b>Url</b></h6>
                 </th>
-                
+                 <th>
+                    <h6><b>Module Name</b></h6>
+                </th>
+                 <th>
+                    <h6><b>Ui NavigationCategory Name</b></h6>
+                </th>
+
                 <th>
                     Actions
                 </th>
@@ -28,12 +34,17 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem =>item.Url)
                     </td>
-                    
+                     <td>
+                        @Html.DisplayFor(modelItem => item.ModuleName)
+                    </td>
                     <td>
-                        @Html.ActionLink("", "Edit", new { id=item.Id}, new{@class="fas fa-edit"}) |
-                        @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
+                        @Html.DisplayFor(modelItem => item.UiNavigationCategoryName)
+                    </td>
+                    <td>
+                    <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="UiPageNavigation" asp-action="Edit" asp-route-id="@item.Id"></a>|
+                    <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="UiPageNavigation" asp-action="Delete" asp-route-id="@item.Id"></a>
                     </td>
                 </tr>
             }
@@ -62,7 +73,11 @@
         ],
         scrollX: true,
     });
-    $('#gridui').keyup(function () {
+    $('#gridsearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
 </script>
+
+
+
+

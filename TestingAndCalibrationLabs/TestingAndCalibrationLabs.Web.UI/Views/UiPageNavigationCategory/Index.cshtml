@@ -1,8 +1,8 @@
-﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiPageTypeDTO>
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiNavigationCategoryDTO>
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Ui Page Type</h1>
+<h1>Ui Navigation Category</h1>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -15,9 +15,12 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    <h6><b>Name</b></h6>
                 </th>
-                
+                <th>
+                    <h6><b>Orders</b></h6>
+                </th>
+
                 <th>
                     Actions
                 </th>
@@ -30,10 +33,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    
                     <td>
-                        @Html.ActionLink("", "Edit", new { id=item.Id}, new{@class="fas fa-edit"}) |
-                        @Html.ActionLink("", "Delete", new {  id=item.Id }, new{@class="fa fa-trash"})
+                        @Html.DisplayFor(modelItem => item.Orders)
+                    </td>
+                    <td>
+                    <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="UiPageNavigationCategory" asp-action="Edit" asp-route-id="@item.Id"></a>|
+                    <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="UiPageNavigationCategory" asp-action="Delete" asp-route-id="@item.Id"></a>
                     </td>
                 </tr>
             }
@@ -62,7 +67,11 @@
         ],
         scrollX: true,
     });
-    $('#gridui').keyup(function () {
+    $('#gridsearch').keyup(function () {
         oTable.search($(this).val()).draw();
     })
 </script>
+
+
+
+

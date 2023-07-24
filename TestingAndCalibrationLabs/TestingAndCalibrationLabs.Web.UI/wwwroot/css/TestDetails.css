@@ -136,7 +136,7 @@
     display: none;
 }
 
-input.input-validation-error.form-input.width-full {
+input.input-validation-error.form-input.width-full{
     border: 2px solid red;
 }
 
@@ -149,6 +149,12 @@ input.input-validation-error#TestingType.form-input.width-full {
 }
 
 input.input-validation-error#State.form-input.width-full {
+    border: 2px solid red;
+}
+select.input-validation-error#UiNavigationCategoryId {
+    border: 2px solid red;
+}
+select.input-validation-error#ModuleId {
     border: 2px solid red;
 }
 

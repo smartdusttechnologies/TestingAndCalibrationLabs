@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -6,30 +8,28 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    /// <summary>
-    /// Service Class For Ui Page Type
-    /// </summary>
-    public class UiPageTypeService : IUiPageTypeService
+    public class UiNavigationCategoryServices : IUiNavigationCategoryServices
+
     {
-        private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
-        public UiPageTypeService(IGenericRepository<UiPageTypeModel> genericRepository)
+        private readonly IGenericRepository<UiNavigationCategoryModel> _genericRepository;
+        public UiNavigationCategoryServices(IGenericRepository<UiNavigationCategoryModel> genericRepository)
         {
             _genericRepository = genericRepository;
         }
 
         #region Public methods
         /// <summary>
-        /// Create Record For Ui Page Type
+        /// Create Record For Ui Page Navigation Category
         /// </summary>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="uiNavigationCategoryModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
+        public RequestResult<int> Create(UiNavigationCategoryModel uiNavigationCategoryModel)
         {
-            _genericRepository.Insert(uiPageTypeModel);
+            _genericRepository.Insert(uiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// Delete Record From Ui Page Type
+        /// Delete Record From Ui Page Navigation Category
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -37,39 +37,34 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
         /// <summary>
-        /// Edit Record For Ui Page Type
+        /// Edit Record For Ui Navigation Category
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="uiNavigationCategoryModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(UiPageTypeModel uiPageTypeModel)
+        public RequestResult<int> Update(int id ,UiNavigationCategoryModel uiNavigationCategoryModel)
         {
-            _genericRepository.Update(uiPageTypeModel);
+            _genericRepository.Update(uiNavigationCategoryModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
-        /// Get All Records From Ui Page Type
+        /// Get All Records From Ui Page Navigation Category
         /// </summary>
         /// <returns></returns>
-        public List<UiPageTypeModel> Get()
+        public List<UiNavigationCategoryModel> Get()
         {
             return _genericRepository.Get();
         }
         /// <summary>
-        /// Get Record By Id From Ui Page Type
+        /// Get Record By Id From Ui Page Navigation Category
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public UiPageTypeModel GetById(int id)
+        public UiNavigationCategoryModel GetById(int id)
         {
             return _genericRepository.Get(id);
         }
-        #endregion
-
-        #region Private Methods
-
         #endregion
     }
 }
