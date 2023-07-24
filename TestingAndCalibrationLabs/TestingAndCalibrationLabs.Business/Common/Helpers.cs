@@ -255,9 +255,10 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return false;
         }
-        public static bool ValidateMinimumSpecialCharsemail(string Email, int expectedCount)
+        public static bool ValidateMinimumSpecialCharsemail(string Email)
         {
             int minSpecialCharCount = 0;
+            int expectedCount = 1;
             char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' };
             foreach (char c in special)
             {

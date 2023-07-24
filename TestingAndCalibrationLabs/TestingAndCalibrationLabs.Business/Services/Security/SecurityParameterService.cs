@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Apis.Drive.v3.Data;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -27,16 +28,19 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
-        /// Method to validate Password Policy
+        /// Method to validate Newuser Policy
         /// </summary>
-        public RequestResult<bool> ValidatePasswordPolicy(int orgId, string password)
+        public RequestResult<bool> ValidateNewuserPolicy(UserModel user )
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             try
             {
-                var passwordPolicy = _securityParameterRepository.Get(orgId);
-                var validatePasswordResult = ValidatePassword(password, passwordPolicy);
-                return (validatePasswordResult);
+                var passwordPolicy = _securityParameterRepository.Get(user.OrgId);
+                var validatePasswordResult = ValidatePassword(user, passwordPolicy);
+                var newuservalidation = Validatenewuser(user);
+                validationMessages.AddRange(validatePasswordResult.ValidationMessages);
+                validationMessages.AddRange(newuservalidation.ValidationMessages);
+                return new RequestResult<bool>(validationMessages);
             }
             catch (Exception ex)
             {
@@ -45,195 +49,44 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
-        /// <summary>
-        /// Method to validate FirstName
-        /// </summary>
-        public RequestResult<bool> ValidateFirstName(int orgId, string FirstName)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var FirstNamePolicy = _securityParameterRepository.Get(orgId);
-                var validateFirstNameResult = ValidateFirstName(FirstName, FirstNamePolicy);
-                return (validateFirstNameResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate LastName
-        /// </summary>
-        public RequestResult<bool> ValidateLastName(int orgId, string LastName)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var LastNamePolicy = _securityParameterRepository.Get(orgId);
-                var validateLastNameResult = ValidateLastName(LastName, LastNamePolicy);
-                return (validateLastNameResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate Country
-        /// </summary>
-        public RequestResult<bool> ValidateCountry(int orgId, string Country)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var CountryPolicy = _securityParameterRepository.Get(orgId);
-                var validateCountryResult = ValidateCountry(Country, CountryPolicy);
-                return (validateCountryResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate UserName
-        /// </summary>
-        public RequestResult<bool> ValidateUserName(int orgId,string UserName)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var UserNamePolicy = _securityParameterRepository.Get(orgId);
-                var validateUserNameResult = ValidateUserName(UserName, UserNamePolicy);
-                return (validateUserNameResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate Organizations
-        /// </summary>
-        public RequestResult<bool> ValidateOrganizations(int orgId, string Organizations)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var OrganizationIdPolicy = _securityParameterRepository.Get(orgId);
-                var validateOrganizationIdResult = ValidateOrganizations(Organizations, OrganizationIdPolicy);
-                return (validateOrganizationIdResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate ReEnter Password Policy
-        /// </summary>
-        public RequestResult<bool> ValidateReEnterPasswordPolicy(int orgId, string ReEnterPassword, string password)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var passwordPolicy = _securityParameterRepository.Get(orgId);
-                var validatePasswordResult = ValidateReEnterPassword(ReEnterPassword, password, passwordPolicy);
-                return (validatePasswordResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate Email Policy
-        /// </summary>
-        public RequestResult<bool> ValidateEmailPolicy(int orgId, string Email)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var EmailValidatePolicy = _securityParameterRepository.Get(orgId);
-                var validationEmailResult = ValidateEmail(Email, EmailValidatePolicy);
-                return (validationEmailResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
-        /// <summary>
-        /// Method to validate Mobile Policy
-        /// </summary>
-        public RequestResult<bool> ValidateMobilePolicy(int orgId, string Mobile)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            try
-            {
-                var MobileValidatePolicy = _securityParameterRepository.Get(orgId);
-                var validationMobileResult = ValidateMobile(Mobile, MobileValidatePolicy);
-                return (validationMobileResult);
-            }
-            catch (Exception ex)
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
-                return new RequestResult<bool>(false, validationMessages); ;
-
-            }
-        }
+        //}
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
         /// </summary>
-        private RequestResult<bool> ValidatePassword(string password, SecurityParameter securityParameter)
+        private RequestResult<bool> ValidatePassword(UserModel user, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
-            if (password == null || password.Length < securityParameter.MinLength)
+            if (user.Password == null || user.Password.Length < securityParameter.MinLength)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            if (!Helpers.ValidateMinimumSmallChars(password, securityParameter.MinSmallChars))
+            if (!Helpers.ValidateMinimumSmallChars(user.Password, securityParameter.MinSmallChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of small characters the password should have is " + securityParameter.MinSmallChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateMinimumCapsChars(password, securityParameter.MinCaps))
+            if (!Helpers.ValidateMinimumCapsChars(user.Password, securityParameter.MinCaps))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of capital characters the password should have is " + securityParameter.MinCaps, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateMinimumDigits(password, securityParameter.MinNumber))
+            if (!Helpers.ValidateMinimumDigits(user.Password, securityParameter.MinNumber))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of numeric characters the password should have is " + securityParameter.MinNumber, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateMinimumSpecialChars(password, securityParameter.MinSpecialChars))
+            if (!Helpers.ValidateMinimumSpecialChars(user.Password, securityParameter.MinSpecialChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the password should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateDisallowedChars(password, securityParameter.DisAllowedChars))
+            if (!Helpers.ValidateDisallowedChars(user.Password, securityParameter.DisAllowedChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Characters which are not allowed in password are " + securityParameter.DisAllowedChars, Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
@@ -241,137 +94,48 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
         }
         /// <summary>
-        /// Method to validate the ReEnterPassword like ReEnterPassword and password both are same or not
+        /// Method to validate the Validatenewuser
         /// </summary>
-        private RequestResult<bool> ValidateReEnterPassword(string ReEnterPassword, string password, SecurityParameter securityParameter)
+        private RequestResult<bool> Validatenewuser(UserModel user )
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-           if (ReEnterPassword == null || ReEnterPassword !=password)
+            if (user.FirstName == null)
             {
-
-                validationMessages.Add(new ValidationMessage { Reason = "Please enter confirm password ", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
-                return new RequestResult<bool>(false, validationMessages); ;
-            }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the Email like MinSpecialChars
-        /// </summary>
-        private RequestResult<bool> ValidateEmail(string Email, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-           if (Email == null)
-            {
-
-                validationMessages.Add(new ValidationMessage { Reason = "Email should have a fromat", Severity = ValidationSeverity.Error, SourceId = "Email" });
-                return new RequestResult<bool>(false, validationMessages); ;
-            }
-            if (!Helpers.ValidateMinimumSpecialCharsemail(Email, securityParameter.MinSpecialChars))
-            {
-                validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the email should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error, SourceId = "Email" });
-                return new RequestResult<bool>(false, validationMessages); ;
-            }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the Mobile like Length, Min and Max Digits
-        /// </summary>
-        private RequestResult<bool> ValidateMobile(string Mobile, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-            if (Mobile == null || Mobile.Length!=10 )
-            {
-
-                validationMessages.Add(new ValidationMessage { Reason = "Mobile number length is equal to 10", Severity = ValidationSeverity.Error, SourceId = "Mobile" });
-                return new RequestResult<bool>(false, validationMessages); ;
-            }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the FirstName
-        /// </summary>
-        private RequestResult<bool> ValidateFirstName(string FirstName, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-            if (FirstName == null)
-            {
-
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter first name", Severity = ValidationSeverity.Error, SourceId = "FirstName" });
-                return new RequestResult<bool>(false, validationMessages); ;
             }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the LastName like Length
-        /// </summary>
-        private RequestResult<bool> ValidateLastName(string LastName, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-            if (LastName == null)
+            if (user.Mobile == null || user.Mobile.Length != 10)
             {
-
+                validationMessages.Add(new ValidationMessage { Reason = "Mobile number length is equal to 10", Severity = ValidationSeverity.Error, SourceId = "Mobile" });
+            }
+            if (user.Email == null)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Email should have a fromat", Severity = ValidationSeverity.Error, SourceId = "Email" });
+            }
+            if (user.Email != null && !Helpers.ValidateMinimumSpecialCharsemail(user.Email))
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the email should have is 1 ", Severity = ValidationSeverity.Error, SourceId = "Email" });
+            }
+            if (user.LastName == null)
+            {
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter last name", Severity = ValidationSeverity.Error, SourceId = "LastName" });
-                return new RequestResult<bool>(false, validationMessages); ;
             }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the Country
-        /// </summary>
-        private RequestResult<bool> ValidateCountry(string Country, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-            if (Country == null)
+            if (user.Country == null)
             {
-
                 validationMessages.Add(new ValidationMessage { Reason = "Please select a country", Severity = ValidationSeverity.Error, SourceId = "Country" });
-                return new RequestResult<bool>(false, validationMessages); ;
             }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the Organizations
-        /// </summary>
-        private RequestResult<bool> ValidateOrganizations(string Organizations, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-            if (Organizations == null)
+            if (user.Organizations == null)
             {
-
                 validationMessages.Add(new ValidationMessage { Reason = "Please select a Organizations", Severity = ValidationSeverity.Error, SourceId = "Organizations" });
-                return new RequestResult<bool>(false, validationMessages); ;
             }
-            return new RequestResult<bool>(validationMessages);
-
-        }
-        /// <summary>
-        /// Method to validate the UserName
-        /// </summary>
-        private RequestResult<bool> ValidateUserName(string UserName, SecurityParameter securityParameter)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
-            if (UserName == null)
+            if (user.UserName == null)
             {
-
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter user name", Severity = ValidationSeverity.Error, SourceId = "Username" });
-                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            if (user.ReEnterPassword == null || user.ReEnterPassword != user.Password)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter confirm password ", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
             }
             return new RequestResult<bool>(validationMessages);
-
         }
     }
 }

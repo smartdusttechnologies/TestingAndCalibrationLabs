@@ -195,7 +195,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             catch (Exception ex)
             {
-
                 return new RequestResult<bool>(false);
             }
         }
@@ -205,15 +204,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> ValidateNewUserRegistration(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId,user.Password);
-            var ValidateReEnterResult = _securityParameterService.ValidateReEnterPasswordPolicy(user.OrgId, user. ReEnterPassword,user.Password);
-            var validationEmailResult = _securityParameterService.ValidateEmailPolicy(user.OrgId, user.Email);
-            var ValidateMobilePolicy = _securityParameterService.ValidateMobilePolicy(user.OrgId, user.Mobile);
-            var ValidateOrganizationId = _securityParameterService.ValidateOrganizations(user.OrgId, user. Organizations);
-            var ValidateUserName = _securityParameterService.ValidateUserName(user.OrgId, user.UserName);
-            var ValidateFirstName = _securityParameterService.ValidateFirstName(user.OrgId, user.FirstName);
-            var ValidateLastName = _securityParameterService.ValidateLastName(user.OrgId, user.LastName);
-            var ValidateCountry = _securityParameterService.ValidateCountry(user.OrgId, user.Country);
+            var validatePasswordResult = _securityParameterService.ValidateNewuserPolicy(user);
             var validateexistinguser = ExistingUservalidation(user);
             //UserModel existingUser = _userRepository.Get(user.UserName);
             //if (existingUser != null)
@@ -223,18 +214,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             //    return new RequestResult<bool>(false, validationMessages);
             //}
             validationMessages.AddRange(validatePasswordResult.ValidationMessages);
-            validationMessages.AddRange(ValidateReEnterResult.ValidationMessages);
-            validationMessages.AddRange(ValidateOrganizationId.ValidationMessages);
-            validationMessages.AddRange(ValidateUserName.ValidationMessages);
-            validationMessages.AddRange(ValidateFirstName.ValidationMessages);
-            validationMessages.AddRange(ValidateLastName.ValidationMessages);
-            validationMessages.AddRange(ValidateCountry.ValidationMessages);
-            validationMessages.AddRange(validationEmailResult.ValidationMessages);
-            validationMessages.AddRange(ValidateMobilePolicy.ValidationMessages);
             validationMessages.AddRange(validateexistinguser.ValidationMessages);
-
             return new RequestResult<bool>(validationMessages);
-
         }
         /// <summary>
         /// Method to Validate the Existing User
@@ -242,7 +223,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> ExistingUservalidation( UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
             UserModel existingUser = _userRepository.Get(user.UserName);
             if (existingUser != null)
             {
@@ -251,8 +231,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages);
             }
             return new RequestResult<bool>(validationMessages);
-
-
         }
     }
 }
