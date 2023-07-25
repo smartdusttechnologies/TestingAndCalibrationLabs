@@ -18,11 +18,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IConfiguration _configuration;
         private readonly ISurveyService _surveyService;
        
-        /// <summary>
-        /// Default Action of the Survey Controller
-        /// </summary>
-        /// <returns></returns>
-        /// 
         public SurveyController(ILogger<HomeController> logger, ISurveyService surveyService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
             _logger = logger;
@@ -31,6 +26,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _surveyService = surveyService;
         }
 
+        /// <summary>
+        /// Default Action of the Survey Controller
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
              return View();
@@ -40,7 +39,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Survey view page
         /// </summary>
         /// <returns></returns>
-       
         public IActionResult Survey()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;

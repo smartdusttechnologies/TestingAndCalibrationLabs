@@ -8,10 +8,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     [DbTable("UiPageData")]
     public class UiPageDataModel : Entity
     {
-        public int UiPageId { get; set; }
-        
+        public int SubRecordId { get; set; }
+        public int UiPageTypeId { get; set; }
         public int UiPageMetadataId { get; set;}
+        public bool MultiValueControl { get; set; }
         private string _value;
+        [DbColumn]
         public string Value
         {
             get
@@ -23,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
                 _value = value;
             }
         }
-
+        [DbColumn]
         public int RecordId { get; set; }
     }
 }

@@ -1,0 +1,97 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+<style>
+    .alert {
+        padding: 2px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        font-size:15px;
+        transition: opacity 0.6s;
+        margin-bottom: 5px;
+    }
+
+        .alert.success {
+            background-color: #04AA6D;
+        }
+
+        .alert.info {
+            background-color: #2196F3;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
+        }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+</style>
+<!-- Insert MultiValue Modal Popup -->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="multiGridHeader" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="multiGridHeader">Create</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body" id="gridPopup">
+                <div id="alert-box"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ripple button-base button-second" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" onclick="saveRecords(this.value)" id="savebtn" class="ripple button-base button-material-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal Popup -->
+<div class="modal fade" id="deleteModalPopup" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal">Delete Record</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                Are You Sure Want to Delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ripple button-base button-second" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" id="deletePopup" onclick="deleteFun(this.value)" class="ripple button-base button-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Multi Value Table -->
+<div id="tableMultiValue"></div>
+<script>
+    $(document).ready(function () {
+        let id = $("#Id").val();
+        var url = "@Url.Action("MultiValueControlGrid","Common")" + "?id=" + id;
+        $("#tableMultiValue").load(url); 
+
+    });
+       //    var close = document.getElementsByClassName("closebtn");
+    
+    //for ( var i = 0; i < close.length; i++) {
+    //    close[i].onclick = function () {
+    //        var div = this.parentElement;
+    //        div.style.opacity = "0";
+    //        setTimeout(function () { div.style.display = "none"; }, 200);
+    //    }
+    //}
+</script>       

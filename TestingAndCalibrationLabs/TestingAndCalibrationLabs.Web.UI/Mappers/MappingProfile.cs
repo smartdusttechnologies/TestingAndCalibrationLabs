@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Model;
 

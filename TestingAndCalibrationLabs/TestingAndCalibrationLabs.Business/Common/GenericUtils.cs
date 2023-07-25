@@ -47,4 +47,3 @@ namespace TestingAndCalibrationLabs.Business.Common
 
     }
 }
-

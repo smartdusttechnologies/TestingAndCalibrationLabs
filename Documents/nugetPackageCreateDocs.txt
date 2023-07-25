@@ -1,0 +1,11 @@
+1. Open Visual studio and create a new class Library .net standard project
+2. rigth click on project on solution explorer then click on properties 
+3. then you can see there is a option called package so just click on their and give the package id uniqe across all nuget packages and you can use like (yourname+.+surname+.projectname)  
+4.configure all the field like company name licence etc 
+5. then write you code and then click on build tab and then select pack option  
+6. then you can see something like packed and adress of nupkg file go to nuget gallery 
+7. then first sign up to their website and then click on upload tab at top 
+8. then select the nupkg file and submit and now you get a messege hour later this package will be index so wait 5-10 min and copy your package id 
+9. and open another project on visual studio and then open nuget package manager
+10. and click on browse option and then paste your package id and boom now you can see your package on nuget package manager in visual studio 
+11. install your package and use Thanks👱‍♂️

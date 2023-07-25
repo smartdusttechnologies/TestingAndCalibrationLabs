@@ -9,9 +9,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IUiPageNavigationRepository
     {
         /// <summary>
-        /// Get All Records From Ui Page Type
+        /// Get All Records From Ui Page Navigation 
         /// </summary>
         /// <returns></returns>
-        List<UiPageTypeModel> Get();
+        List<UiPageNavigationModel> Get();
+
+        /// <summary>
+        /// Get Record By Id From Ui Page Validation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UiPageNavigationModel GetById(int id);
+        /// <summary>
+        /// Insert Record In Ui Page navigation
+        /// </summary>
+        /// <param name="uiPageNavigationModel"></param>
+        /// <returns></returns>
+        int Create(UiPageNavigationModel uiPageNavigationModel);
+        /// <summary>
+        /// Update Record In Ui Page Validation 
+        /// </summary>
+        /// <param name="uiPageNavigationModel"></param>
+        /// <returns></returns>
+        int Update(UiPageNavigationModel uiPageNavigationModel);
     }
 }

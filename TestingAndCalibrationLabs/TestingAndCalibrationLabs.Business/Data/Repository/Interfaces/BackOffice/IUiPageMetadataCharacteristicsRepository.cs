@@ -21,5 +21,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         List<UiPageMetadataCharacteristicsModel> GetByPageMetadataId(int id);
+        UiPageMetadataCharacteristicsModel Get(int id);
     }
 }
