@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Org.BouncyCastle.Ocsp;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
@@ -36,7 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             }
             return new QueryRecordModel { FieldValues = queryBuilderData };
         }
-        public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo)
+        public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels)
         {
 
             //foreach(var item in person)
@@ -47,6 +49,8 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
 
             //    }
             //}
+
+
             for (var i = 0; i < JoinInfo.Count; i++)
             {
 
@@ -71,12 +75,12 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
                     if (item.TableName == JoinInfo[i].TableChoice)
                     {
                         JoinInfo[i].TableChoice += " " + item.Alias;
-                        
+
                     }
                     if (item.TableName == JoinInfo[i].TableFrom)
                     {
                         JoinInfo[i].TableFrom += " " + item.Alias;
-                        
+
                     }
 
                 }
@@ -135,13 +139,26 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             }
             foriegnData = foriegnData.Remove(foriegnData.Length - 1, 1);
             foriegn += foriegnData + "]";
-            QueryJson = QueryJson + column + foriegn + QueryJsonEnd;
+            var condition= "'condition':[";
+            foreach (var  item in conditionModels)
+            {
+                condition += "{ 'value': " + '"' + item.value + '"' + ", 'Where':" + '"' + item.Where + '"' + " , 'operators': " + '"' + item.operators + '"' + ", 'TableName':" + '"' + item.TableName + '"' + ", 'OperatorType':" + '"' + item.OperatorType + '"' + "   },";
+
+            }
+
+            condition = condition.Remove(condition.Length - 1, 1);
+            condition += "],";
+
+
+            
+
+            
+
+            QueryJson = QueryJson + column + condition + foriegn + QueryJsonEnd;
 
 
 
-            //var jsonString = JSON.stringify(datainfo);
-            //////  const listOfArrays = datainfo.map(obj => [...obj.values]);
-            ////  
+
             var data = SqlConverter.JsonToSql(QueryJson);
             return 0;
         }

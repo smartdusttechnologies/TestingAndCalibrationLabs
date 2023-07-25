@@ -32,17 +32,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(records);
         }
         [HttpPost]
-       public IActionResult QueryGenerator(string jsonData ,string JoinData)
+       public IActionResult QueryGenerator(string jsonData ,string JoinData,string ConditionData)
         {
             //List<string> list = JsonSerializer.Serialize(jsonData);
           
             List<UiQueryBuilderColumn> person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
             List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
+            List<ConditionModelDTO> ConditionInfo = JsonSerializer.Deserialize<List<ConditionModelDTO>>(ConditionData);
 
             //var  emptydata = Object.entries(datainfo); 
 
 
-            for(var  item = 0; item < person.Count; item++)
+            for (var  item = 0; item < person.Count; item++)
             {
                 if (item + 65 + 1 <= 91)
                 {
@@ -57,9 +58,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
 
             var recordJoin = _mapper.Map<List<Models.JoinModel>, List<Business.Core.Model.QueryBuilder.JoinModelDTO>>(Join);
+            var  ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
 
 
-            var value = _querybuilderService.UiToJsonQueryBuilder(records,recordJoin);
+            var value = _querybuilderService.UiToJsonQueryBuilder(records,recordJoin,ConditionJoin);
             // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
 
             return Ok();

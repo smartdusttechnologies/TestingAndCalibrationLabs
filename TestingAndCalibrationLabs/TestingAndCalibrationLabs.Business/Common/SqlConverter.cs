@@ -102,7 +102,7 @@ namespace TestingAndCalibrationLabs.Business.Common
                     {
                         query.Append(cond.OperatorType);
                     }
-                    query.Append($" {cond.where} {cond.operators} '{cond.value}' ");
+                    query.Append($" {cond.TableName}{'.'}{cond.Where} {cond.operators} '{cond.value}' ");
 
 
                 }

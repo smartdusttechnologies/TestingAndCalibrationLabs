@@ -683,11 +683,30 @@ function ConditionDetails(ValueDetail, Innertext) {
     ParentDiv.className = "eqjs-qp-row eqjs-qp-row-condition eqjs-qp-level-1";
 
     if (detail.children.length >= 1) {
-        var conditionAnd = document.createElement('span')
+        var conditionAnd = document.createElement('select')
         conditionAnd.className = "eqjs-qp-condelement eqjs-qp-condition-conjuction";
-        conditionAnd.title = "and";
-        conditionAnd.innerHTML = "and";
+        
+       
+
+        
+        var option1 = document.createElement('option');
+        option1.value = "AND";
+        option1.innerHTML = "AND";
+        var option2 = document.createElement('option');
+        option2.value = "OR";
+        option2.innerHTML = "OR";
+        var option3 = document.createElement('option');
+        option3.value = "NOT";
+        option3.innerHTML = "NOT";
+
+        conditionAnd.appendChild(option1);
+        conditionAnd.appendChild(option2);
+        conditionAnd.appendChild(option3);
+
         ParentDiv.appendChild(conditionAnd);
+
+
+
     }
 
 
@@ -703,7 +722,7 @@ function ConditionDetails(ValueDetail, Innertext) {
 
     var MidElement = document.createElement('div')
     MidElement.className = "eqjs-qp-condelement eqjs-qp-operelement";
-    MidElement.innerHTML = '<a href = "javascript:void(0)" title ="starts with"onclick="QueryConditionMenu(this)">starts with</a>';
+    MidElement.innerHTML = '<a href = "javascript:void(0)" title ="starts with" value ="LIKE" onclick="QueryConditionMenu(this)">starts with</a>';
 
     var LastElement = document.createElement('div')
     LastElement.className = "eqjs-qp-condelement"
@@ -784,6 +803,8 @@ function QueryConditionMenu(Menu) {
 }
 
 function QueryCondition(ConditionValue) {
-    MenuDetail.innerHTML = ConditionValue;
+    MenuDetail.value = ConditionValue.value;
+    MenuDetail.title = ConditionValue.innerText;
+    MenuDetail.innerHTML = ConditionValue.innerText;
 
 }

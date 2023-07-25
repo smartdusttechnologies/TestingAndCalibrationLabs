@@ -28,6 +28,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<Models.QueryGenerator, Business.Core.Model.UiQueryBuilder>().ReverseMap();
             CreateMap<Models.JoinChildModel, JoinChildModelDTO>().ReverseMap();
             CreateMap<Models.JoinModel, JoinModelDTO>().ReverseMap();
+            CreateMap<Models.ConditionModelDTO, ConditionModel>().ReverseMap();
 
         }
     }

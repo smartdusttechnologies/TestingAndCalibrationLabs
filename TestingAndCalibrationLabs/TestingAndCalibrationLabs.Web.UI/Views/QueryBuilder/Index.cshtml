@@ -88,7 +88,7 @@
 
                         <div id="JoinPartInfo" style="display:inline-block">
                             <label for="JoinType">Choose JoinType:</label>
-                            <select name="JOINS" id="JOINTYPE" >
+                            <select name="JOINS" id="JOINTYPE">
                                 <option value="">Select</option>
                                 <option value="INNER JOIN">INNER JOIN</option>
                                 <option value="LEFT JOIN">LEFT JOIN</option>
@@ -97,7 +97,7 @@
 
                             </select>
                             <label for="TableChoice">Choose TableName:</label>
-                            <select name="TableName" id="JoinTableinfo" >
+                            <select name="TableName" id="JoinTableinfo">
                                 <option value="">Select</option>
                             </select>
                             <label for="TableFrom">From Table:</label>
@@ -115,7 +115,7 @@
                             </select>
                             <label for="Operator" style="padding-left:20px">Select Operator</label>
                             <select name="Operator" id="Operator-Dropdown" style="width:auto" onchange-required>
-                                <option  selected>Select</option>
+                                <option selected>Select</option>
                                 <option value=">">></option>
                                 <option value="<"> < </option>
                                 <option value=">=">>=</option>
@@ -126,7 +126,7 @@
 
                             <select name="ColumnDropdown2" id="ColumnDropdown2" onchange="chargeother(this)" style=" width:auto" onchange-required>
                                 <option selected>Select</option>
-                                
+
                                 <option value="input">input</option>
 
                             </select>
@@ -330,30 +330,20 @@
         var JoinValue = [];
         var JoinObject = {};
         var JoinObject1 = null;
-        var JoinObject2 = {}  ;
-
+        var JoinObject2 = {};
+        //JOINPART
         for (var JoinItem = 0; JoinItem <= DataItem.children.length; JoinItem++) {
-            //debugger;
 
-            ////if (DataItem.children[JoinItem].name == "Condition" && DataItem.children[JoinItem].name!=null) {
-            ////    JoinItem = JoinItem + 1;
-            ////}
-
-            ////if (DataItem.children[JoinItem].name != "Condition") {
-
-            ////    var JoinObject2 = {};
-
-            ////}
 
             if (DataItem.children[JoinItem] != null && DataItem.children[JoinItem].id == "JoinPartInfo") {
                 if (JoinObject1 != null) {
-                    
+
                     JoinValue.push(JoinObject1);
                     JoinObject1 = {};
                     JoinObject2 = {};
 
                 }
-                else{
+                else {
                     JoinObject1 = {};
                 }
 
@@ -382,17 +372,17 @@
                     JoinItem = JoinItem + 2;
                 }
 
-                if (JoinObject1['JoinInfo']){
+                if (JoinObject1['JoinInfo']) {
                     JoinObject1['JoinInfo'].push(JoinObject2);
                     JoinObject2 = {};
 
                 }
-                else{ 
-               JoinObject1['JoinInfo' ]= [];
-                JoinObject1['JoinInfo' ].push(JoinObject2);
-                JoinObject2={};
+                else {
+                    JoinObject1['JoinInfo'] = [];
+                    JoinObject1['JoinInfo'].push(JoinObject2);
+                    JoinObject2 = {};
                 }
-                
+
             }
 
 
@@ -410,15 +400,14 @@
         var arr = [];
         var TitleStorage = {};
 
+        //ColumnPart
         for (var item = 0; item < dataDetail.children.length; item++) {
 
             var details = dataDetail.children[item].children[2].innerText;
             var Title = dataDetail.children[item].children[3].innerText;
 
             var value = details.split(' ')[0];
-            //if (arr.indexOf(value)) {
 
-            //}
 
             var info = details.split(' ')[1];
             if (datainfo[value]) {
@@ -452,7 +441,7 @@
         for (var i = 0; i < arr.length; i++) {
             var columnValues = [];
             for (j = 0; j < TitleStorage[arr[i]].length; j++) {
-                //alert()
+
                 columnValues.push({ Name: TitleStorage[arr[i]][j], Title: datainfo[arr[i]][TitleStorage[arr[i]][j]] });
 
             }
@@ -460,7 +449,69 @@
             data.push({ TableName: arr[i], ColumnName: columnValues });
         }
 
-       
+
+
+
+        // Condition Part
+        var ConditionItem = document.getElementById('condition-data').children;
+        var ConditionBlock = [];
+        for (var condition = 0; condition < ConditionItem.length; condition++) {
+
+
+            var conditionObject = {};
+
+            if (condition == 0) {
+
+                var table = ConditionItem[condition].children[0].innerText.substring(0, ConditionItem[condition].children[0].innerText.indexOf(' '));
+
+                var column = ConditionItem[condition].children[0].innerText.substring(ConditionItem[condition].children[0].innerText.indexOf(' ') + 1);
+                if (ConditionItem[condition].children[1].children[0].innerText == "starts with" || ConditionItem[condition].children[1].children[0].innerText == "does not start with") {
+                    // add % from right
+                    ConditionItem[condition].children[1].innerText = ConditionItem[condition].children[2].innerText + "%";
+
+                }
+                else if (ConditionItem[condition].children[1].children[0].innerText == "contains" || ConditionItem[condition].children[1].children[0].innerText == "does not contain") {
+                    //add % from left and right
+                    ConditionItem[condition].children[2].innerText = "%" + ConditionItem[condition].children[2].innerText + "%";
+
+                }
+                conditionObject['Where'] = column;
+                conditionObject['operators'] = ConditionItem[condition].children[1].children[0].getAttribute("value");
+                conditionObject['value'] = ConditionItem[condition].children[2].innerText;
+                conditionObject['TableName'] = table;
+            }
+            else {
+                var table = ConditionItem[condition].children[1].innerText.substring(0, ConditionItem[condition].children[1].innerText.indexOf(' '));
+
+                var column = ConditionItem[condition].children[1].innerText.substring(ConditionItem[condition].children[1].innerText.indexOf(' ') + 1);
+                conditionObject['Where'] = column;
+
+                if (ConditionItem[condition].children[2].children[0].innerText == "starts with" || ConditionItem[condition].children[2].children[0].innerText == "does not start with") {
+                    // add % from right
+                    ConditionItem[condition].children[3].innerText = ConditionItem[condition].children[3].innerText + "%";
+
+                }
+                else if (ConditionItem[condition].children[2].children[0].innerText == "contains" || ConditionItem[condition].children[2].children[0].innerText == "does not contain") {
+                    //add % from left and right
+
+                    ConditionItem[condition].children[3].innerText = "%" + ConditionItem[condition].children[3].innerText + "%";
+
+                }
+
+                conditionObject['operators'] = ConditionItem[condition].children[2].children[0].getAttribute("value");
+
+
+                conditionObject['value'] = ConditionItem[condition].children[3].innerText;
+                conditionObject['TableName'] = table;
+                conditionObject['OperatorType'] = ConditionItem[condition].children[0].value;
+
+            }
+
+            ConditionBlock.push(conditionObject);
+
+        }
+
+
 
 
 
@@ -468,13 +519,15 @@
 
         var jsonData = JSON.stringify(data);
 
+        var ConditionData = JSON.stringify(ConditionBlock);
+
         var JoinData = JSON.stringify(JoinValue);
-        
+
 
         $.ajax({
             url: 'QueryBuilder/QueryGenerator',
             method: 'POST',
-            data: { jsonData, JoinData },
+            data: { jsonData, JoinData, ConditionData },
             success: function (response) {
                 alert('good work bro ') // Handle the response from the function
             },
@@ -484,6 +537,11 @@
         });
 
 
+
+    }
+
+    function ConditionValueChanger() {
+        var ConditionItem = document.getElementById('condition-data').children;
 
     }
 
@@ -561,18 +619,18 @@
 @*Condition Dropdown*@
 <div id="Query-Dropdown" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 502px; top: 383px; z-index: 10000; font-size: 14px;">
     <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: 383px;">
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">starts with</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">contains</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">is equal to</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">is in list</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">does not start with</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">does not contain</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">is not equal to</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">is not in list</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">in sub query</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">not in sub query</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">is null</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this.innerText)">is not null</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="LIKE">starts with</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="LIKE ">contains</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="=">is equal to</div>
+        @*  <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">is in list</div>*@
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="NOT LIKE ">does not start with</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="NOT LIKE ">does not contain</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="<>">is not equal to</div>
+        @*<div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">is not in list</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">in sub query</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">not in sub query</div>*@
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="IS NULL">is null</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="IS NOT NULL">is not null</div>
     </div>
 </div>
 
