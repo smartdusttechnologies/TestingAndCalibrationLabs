@@ -11,15 +11,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
+        private readonly IUiNavigationCategoryService _uiNavigationCategoryService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
-        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper)
+        /// <param name="uiNavigationCategoryService"></param>
+        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiNavigationCategoryService uiNavigationCategoryService)
         {
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
+            _uiNavigationCategoryService = uiNavigationCategoryService;
         }
 
         /// <summary>
@@ -31,49 +34,54 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
-            var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeModel>>(page);
+            var pageData = _mapper.Map<List<Business.Core.Model.UiPageTypeModel>, List<Models.UiPageTypeDTO>>(page);
             return View(pageData.AsEnumerable());
         }
+        
         /// <summary>
         /// For Edit Record View
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="NavigationCategoryId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id,int NavigationCategoryId)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var navigationCategory = _uiNavigationCategoryService.Get();
+            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>, List<Models.UiNavigationCategoryDTO>>(navigationCategory);
+            ViewBag.NavigationCategoryId = NavigationCategoryId;
+            ViewBag.UiNavigationCategory = navigationCategoryList;
             var getByIdPageModel = _uiPageTypeService.GetById((int)id);
             if (getByIdPageModel == null)
             {
                 return NotFound();
             }
-            var pageData = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(getByIdPageModel);
+            var pageData = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeDTO>(getByIdPageModel);
 
             return View(pageData);
         }
         /// <summary>
         /// To Edit Record In Ui Page Type
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pageModel"></param>
+        /// <param name="uiPageTypeDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit( [Bind] Models.UiPageTypeModel uiPageTypeModel)
+        public IActionResult Edit( [Bind] Models.UiPageTypeDTO uiPageTypeDTO)
         {
             
             if (ModelState.IsValid)
             {
-                var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
+                var pageModel = _mapper.Map<Models.UiPageTypeDTO, Business.Core.Model.UiPageTypeModel>(uiPageTypeDTO);
                 _uiPageTypeService.Update( pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageTypeModel);
+            return View(uiPageTypeDTO);
         }
         /// <summary>
         /// For Create Record View
@@ -83,26 +91,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            return base.View(new Models.UiPageTypeModel { Id = id });
+            var navigationCategory = _uiNavigationCategoryService.Get();
+            var navigationCategoryList = _mapper.Map<List<Business.Core.Model.UiNavigationCategoryModel>,List<Models.UiNavigationCategoryDTO>>(navigationCategory);
+            ViewBag.UiNavigationCategory = navigationCategoryList;
+
+            return base.View(new Models.UiPageTypeDTO { Id = id });
         }
         /// <summary>
         /// To Create Record In Ui Page Type
         /// </summary>
-        /// <param name="pageModel"></param>
+        /// <param name="uiPageTypeDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Models.UiPageTypeModel uiPageTypeModel)
+        public IActionResult Create([Bind] Models.UiPageTypeDTO uiPageTypeDTO)
         {
             if (ModelState.IsValid)
             {
                
-                var pageModel = _mapper.Map<Models.UiPageTypeModel, Business.Core.Model.UiPageTypeModel>(uiPageTypeModel);
+                var pageModel = _mapper.Map<Models.UiPageTypeDTO, Business.Core.Model.UiPageTypeModel>(uiPageTypeDTO);
                 _uiPageTypeService.Create(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageTypeModel);
+            return View(uiPageTypeDTO);
         }
         /// <summary>
         /// For Delete Record View
@@ -120,7 +132,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var pageModel = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeModel>(getByIdPageModel);
+            var pageModel = _mapper.Map<Business.Core.Model.UiPageTypeModel, Models.UiPageTypeDTO>(getByIdPageModel);
             return View(pageModel);
         }
         /// <summary>

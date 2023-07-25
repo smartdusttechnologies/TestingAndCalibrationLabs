@@ -52,7 +52,12 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return null;
         }
-        
+        public static string GenerateUiControlId(string uiControlTypeName,int uiPageMetadataId)
+        {
+            string metadataId = uiPageMetadataId.ToString();
+            string id = uiControlTypeName + metadataId;
+            return id;
+        }
         public static bool IsEmail(string email)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(email, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");

@@ -1,4 +1,4 @@
-﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageTypeModel
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageTypeDTO
 
 @{
     ViewData["Title"] = "Delete";
@@ -12,12 +12,26 @@
     <hr />
     <dl class="row">
        
-        @Html.HiddenFor(model => model.Id)
+        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UiNavigationCategoryName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UiNavigationCategoryName)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Url)
         </dd>
     </dl>
     

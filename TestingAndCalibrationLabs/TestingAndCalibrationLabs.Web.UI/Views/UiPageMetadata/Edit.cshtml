@@ -1,11 +1,8 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.UiPageMetadataDTO
-
 @{
     ViewData["Title"] = "Edit";
 }
-
 <h1>Ui Page Metadata</h1>
-
 <h4>Edit</h4>
 <hr />
 <div class="row">
@@ -13,10 +10,9 @@
         <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
                     <select class="form-input " name="UiPageTypeId" id="uipageonType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-
                         @foreach (var item in ViewBag.UiPageTypes)
                         {
                             if (@item.Id == @ViewBag.UiPageTypeId)
@@ -30,10 +26,9 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="UiControlTypeId" class="form-label"></label>
                     <select class="form-input " name="UiControlTypeId" id="uiconType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
-
                         @foreach (var item in ViewBag.UiControlTypes)
                         {
                             if (@item.Id == @ViewBag.UiControlTypeId)
@@ -47,12 +42,9 @@
                         }
                     </select>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element right-pd-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <label for="DataTypeId" class="form-label"></label>
                     <select class="form-input" name="DataTypeId" id="uidataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
-
                         @foreach (var item in ViewBag.DataTypes)
                         {
                             if (@item.Id == @ViewBag.DataTypeId)
@@ -65,25 +57,61 @@
                             }
                         }
                     </select>
+                   
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
-                        </label>
+                <div class="row ms-1 me-1">
+                    <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                        <label for="ParentId" class="form-label"></label>
+                        <select class="form-input" name="ParentId" id="ParentId" onchange="this.setAttribute('value',this.value)" asp-for="ParentId">
+                            <option disabled="disabled" selected>Select Parent Name ...</option>
+                            <option value="0">Root: 0</option>
+                            @foreach (var item in ViewBag.UiPageMetadata)
+                        {
+                            if (@item.Id == @ViewBag.UiPageMetadataId)
+                            {
+                                <option value=@item.Id selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value=@item.Id>@item.Name</option>
+                            }
+                            }
+                        </select>
+                    </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                    <label for="UiControlCategoryTypeId" class="form-label"></label>
+                    <select class="form-input" name="UiControlCategoryTypeId" id="UiControlCategoryTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId">
+                        <option disabled="disabled" selected>Select Template ...</option>
+                        @foreach (var item in ViewBag.UiControlCategoryType)
+                        {
+                            if (@item.Id == @ViewBag.UiControlCategoryTypeId)
+                            {
+                                <option value=@item.Id selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value=@item.Id>@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+                    <input class="form-input width-full" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <label class="form-label" for="Name">Name</label>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <input class="form-input width-full" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
-            </div>
-            <div class="row ms-1 me-1">
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
                     <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
                 </div>
             </div>
@@ -94,7 +122,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -8,6 +8,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     [DbTable("UiPageMetadata")]
     public class UiPageMetadataModel : Entity
     {
+        public string Name { get; set; }
         /// <summary>
         /// It Contains The Id of The Ui Page Type
         /// </summary>
@@ -40,6 +41,34 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Name of The Data Type
         /// </summary>
         public string DataTypeName { get; set; }
+        /// <summary>
+        /// it Contains The Id Of Lookup Category
+        /// </summary>
+        public int? LookupCategoryId { get; set; }
+        /// <summary>
+        /// It Contains the Name Of The Lookup Category
+        /// </summary>
+        public string LookupCategoryName { get; set; }
+
+        /// <summary>
+        /// It Contains the Name Of The Lookup Category
+        /// </summary>
+        public string ControlCategoryName { get; set; }
+        /// <summary>
+        /// It Contains The SelectedLookupId From ComboTree
+        /// </summary>
+        public int? ControlCategoryId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int UiControlCategoryTypeId { get; set; }
+        public string UiControlCategoryTypeName { get; set; }
+        public string UiControlCategoryTypeTemplate { get; set; }
+        public int ParentId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Position { get; set; }
 
     }
 }

@@ -104,6 +104,10 @@
         top: -6px;
     }
 
+.red-color {
+    color:red;
+}
+
 .field-validation-error.form-input.width-full {
     color: orangered;
     font-weight: bold;
@@ -193,6 +197,55 @@ select.input-validation-error#TestingType {
         animation: fadein 0.5s, fadeout 0.5s 2.5s;
     }
 
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
 .inputWithIconSearch {
     width: 100%;
     border: none;
@@ -274,7 +327,10 @@ select.input-validation-error#TestingType {
     border-radius: 10px;
     border: 1px solid;
 }
-
+.dropdown-right {
+    right: 0;
+    /*left: revert;*/
+}
 @media (max-width:768px) {
     #testDetailsGrid_paginate {
         padding: 0;
@@ -296,3 +352,4 @@ select.input-validation-error#TestingType {
         padding-left: 20px;
     }
 }
+

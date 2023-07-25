@@ -1,0 +1,255 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.DashboardV2;
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="~/css/adminlte.min.css">
+     <style>
+         .card{
+        background-color: #343a40;
+            color: #fff;
+        }
+
+        .main-header {
+            background-color: #343a40;
+        }
+       
+        .fa-bell {
+            color: white
+        }
+
+        .fa-bars {
+            color: white;
+        }
+
+        .fa-search {
+            color: white;
+        }
+
+        .fa-comments {
+            color: white;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .fa-expand-arrows-alt {
+            color: white;
+        }
+
+        .fa-th-large {
+            color: white;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: white;}
+        
+     </style>
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <partial name="AdminLTE/_TopNavigation" />
+
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <a href="index3.html" class="brand-link">
+                <img src="~/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            </a>
+
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="~/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Alexander Pierce</a>
+                    </div>
+                </div>
+
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Dashboard/Index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard v1</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Dashboardv2/Index" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard v2</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./index3.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard v3</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Starter Pages
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link active">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Active Page</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Inactive Page</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Simple Link
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="content-wrapper" style="background:rgb(79 81 84);">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"style="font:white">Dashboard V2</h1>
+                        </div>
+                        <div class="col-sm-6" style="font:white">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <partial name="AdminLTE/TilesV2/_V2Box" />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <partial name="AdminLTE/TilesV2/_MonthlyRecap" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <partial name="AdminLTE/TilesV2/_VisitorReport" />
+                            <div class="row">
+                                <partial name="AdminLTE/TilesV2/_Chat" />
+                                <partial name="AdminLTE/TilesV2/_LatestMember" />
+                            </div>
+                            <partial name="AdminLTE/TilesV2/_LatestOrders" />
+
+                        </div>
+                        <div class="col-md-4">
+                            <partial name="AdminLTE/TilesV2/_BoxInfo" />
+                            <partial name="AdminLTE/TilesV2/_BrowserUsage" />
+                            <partial name="AdminLTE/TilesV2/_AddedItem" />
+                        </div>
+
+                    </div>
+
+                    @RenderBody();
+
+                </div>
+
+
+            </section>
+
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <partial name="AdminLTE/_Footer" />
+    </div>
+
+</body>
+</html>
+
+<script>
+    var ModelData = @(Html.Raw(Json.Serialize(Model)));
+</script>
+<script src="~/plugins/jquery/jquery.min.js"></script>
+
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+<script src="~/js/adminlte.js"></script>
+
+
+<script src="~/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="~/plugins/raphael/raphael.min.js"></script>
+<script src="~/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="~/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+
+<script src="~/plugins/chart.js/Chart.min.js"></script>
+
+
+<script src="~/js/pages/dashboard2.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/~/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/~/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+

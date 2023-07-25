@@ -1,0 +1,94 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.Dashboard_Common;
+@{
+
+    var data = ViewData["Control"] as Dashboard_Common;
+
+}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Starter</title>
+
+
+    <partial name="AdminLTE/_Styles" />
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+        <partial name="AdminLTE/_TopNavigation" />
+
+        <partial name="AdminLTE/_MainNavigation" />
+
+
+        <div class="content-wrapper">
+
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Starter Page</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+
+                    <partial name="AdminLTE/TilesCard/_BoxTemplate" />
+
+
+                    <div class="row">
+
+                        <section class="col-lg-7 connectedSortable">
+                            <partial name="AdminLTE/TilesCard/_Sales" />
+                            <partial name="AdminLTE/TilesCard/_ChatBox" />
+                            <partial name="AdminLTE/TilesCard/_To-do-list" />
+
+                        </section>
+
+                        <section class="col-lg-5 connectedSortable">
+
+                            <partial name="AdminLTE/TilesCard/_SalesGraph" />
+                            <partial name="AdminLTE/TilesCard/_Map" />
+                            <partial name="AdminLTE/TilesCard/_Calendar" />
+                        </section>
+
+
+                        @RenderBody();
+
+
+                    </div>
+                </div>
+            </section>
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <partial name="AdminLTE/_Footer" />
+    </div>
+    <partial name="AdminLTE/_Scripts" />
+</body>
+</html>
+
+
+
+
+
+<script>
+
+    var ModelData = @(Html.Raw(Json.Serialize(Model)));
+
+</script>

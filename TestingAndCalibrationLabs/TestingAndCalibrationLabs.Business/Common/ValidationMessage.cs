@@ -10,7 +10,7 @@
 
         public virtual ValidationSeverity Severity { get; set; }
         public string MessageKey { get; set; }
-        public int SourceId { get; set; }
+        public string SourceId { get; set; }
         public string Description { get; set; }
         #endregion
     }

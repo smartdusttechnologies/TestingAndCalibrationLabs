@@ -11,6 +11,7 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestReportDTO = TestingAndCalibrationLabs.Web.UI.Models.TestReportDTO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
