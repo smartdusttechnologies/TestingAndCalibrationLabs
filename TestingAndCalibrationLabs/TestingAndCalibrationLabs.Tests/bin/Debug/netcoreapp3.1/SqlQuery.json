@@ -1,0 +1,139 @@
+//{
+//  "head": {
+//    "type": "select",
+//    "tableName": "UserT",
+//    "column": [
+//      {
+//        "columnName": "Id",
+//        "As": "Id",
+//        "tableName": "UserT"
+//      },
+//      {
+//        "columnName": "Name",
+//        "As": "Name",
+//        "tableName": "RitT"
+//      },
+//      {
+//        "columnName": "Name",
+//        "As": "GroupName",
+//        "tableName": "GroupT"
+//      }
+//    ]
+//  },
+//  "forign": [
+//    {
+//      "type": "INNER JOIN",
+//      "tableName": "GroupT",
+//      "forignTableName": "UserT",
+//      "on": {
+//        "pKey": "Id",
+//        "optor": "=",
+//        "fKey": "GroupId"
+//      }
+//    }
+//  ],
+//  "condition": [
+//    {
+//      "where": "IsDeleted",
+//      "optor": "=",
+//      "value": 0,
+//      "tableName": "UserT"
+//    },
+//    {
+//      "where": "IsDeleted",
+//      "optor": "=",
+//      "value": 0,
+//      "tableName": "GroupT"
+//    }
+//  ]
+//}
+
+
+{
+  "head": {
+    "tables": [
+      {
+        "type": "select",
+        "tableName": "persons",
+        "column": [
+          {
+            "columnName": "Student",
+            "As": "rittt",
+            "tableName": "persons",
+            "Aggregation":"sum"
+
+          },
+          {
+            "columnName": "Name",
+            "As": null,
+            "tableName": null,
+            "Aggregation": null
+
+          },
+          {
+            "columnName": "lastName",
+            "As": "Mr"
+
+          },
+          {
+            "columnName": "FirstName",
+            "As": "Ritesh"
+
+          }
+        ],
+        "condition": [
+          {
+            "OperatorType": null,
+            "where": "lastName",
+            "operators": "=",
+            "value": "Kumar"
+
+          },
+
+          {
+            "OperatorType": "And",
+            "where": "FirstName",
+            "operators": "=",
+            "value": "Kumar"
+
+          },
+          {
+            "OperatorType": "OR",
+            "where": "FirstName",
+            "operators": "=",
+            "value": "Raj"
+
+          }
+
+        ],
+        "GroupBy":null,
+        "OrderBy": [
+          {
+            "ColumnName": "CustomerName",
+            "OrderType":"Asc"
+          }
+        ],
+        "foriegn": [
+          {
+            "joinType": "InnerJoin",
+            "tableName": "persons2",
+            "foriegnTableName": "persons",
+            "on": {
+              "pKey": "Id",
+              "optor": "=",
+              "fKey": "GroupId"
+            }
+
+          }
+        ]
+
+      }
+     
+
+     
+    ]
+  }
+ 
+  
+}
+

@@ -8655,19 +8655,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ritesh kumar\\.nuget\\packages\\": {}
+    "C:\\Users\\Ritesh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
       "projectName": "TestingAndCalibrationLabs.Tests",
-      "projectPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
-      "packagesPath": "C:\\Users\\ritesh kumar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
+      "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+      "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ritesh kumar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8681,11 +8681,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
-              "projectPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+            "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+              "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
             },
-            "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
-              "projectPath": "C:\\Users\\ritesh kumar\\source\\repos\\RajBranch\\Dashboard\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
+            "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+              "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
             }
           }
         }
@@ -8737,7 +8737,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
       }
     }
   },
