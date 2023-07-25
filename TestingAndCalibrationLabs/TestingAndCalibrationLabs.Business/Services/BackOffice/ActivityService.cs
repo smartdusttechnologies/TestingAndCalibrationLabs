@@ -16,7 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _genericRepository = genericRepository;
         }
-
         #region Public methods
         /// <summary>
         /// Insert Record In Activity
@@ -28,7 +27,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Insert(activityModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Delete Record From Activity
         /// </summary>
@@ -38,7 +36,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
         /// <summary>
         /// Edit Record From Activity
         /// </summary>
@@ -49,7 +46,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Update(activityModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Get All Records From Activity
         /// </summary>
@@ -58,7 +54,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-
         /// <summary>
         /// Get Record by Id For Activity
         /// </summary>

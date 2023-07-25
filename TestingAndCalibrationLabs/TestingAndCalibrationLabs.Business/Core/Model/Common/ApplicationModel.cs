@@ -12,11 +12,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains Name Of Application
         /// </summary>
         public string Name { get; set; }
-
         /// <summary>
         /// It Contains Description Of Application
         /// </summary>
         public string Description { get; set; }
     }
-
 }

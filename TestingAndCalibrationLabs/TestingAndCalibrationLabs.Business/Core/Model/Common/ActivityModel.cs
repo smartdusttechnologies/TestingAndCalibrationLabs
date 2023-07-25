@@ -11,8 +11,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains Name Of Activity
         /// </summary>
-        public string Name { get; set; }
-        
+        public string Name { get; set; }       
     }
-
 }

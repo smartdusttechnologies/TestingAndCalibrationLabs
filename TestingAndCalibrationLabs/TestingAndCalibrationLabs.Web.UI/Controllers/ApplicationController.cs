@@ -95,7 +95,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var pageModel = _mapper.Map<ApplicationDTO, ApplicationModel>(applicationDTO);
                 _applicationService.Create(pageModel);
                 TempData["IsTrue"] = true;

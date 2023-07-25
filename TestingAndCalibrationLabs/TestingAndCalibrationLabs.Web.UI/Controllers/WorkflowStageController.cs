@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return base.View(new Models.WorkflowStageDTO { Id = id });
         }
         /// <summary>
-        /// To Create Record In WorkflowActivity
+        /// To Create Record In WorkflowStage
         /// </summary>
         /// <param name="workflowStageDTO"></param>
         /// <returns></returns>
