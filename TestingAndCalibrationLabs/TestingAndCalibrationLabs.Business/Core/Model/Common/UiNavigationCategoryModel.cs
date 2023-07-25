@@ -11,6 +11,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name of The Ui Navigation Category
         /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// It Contains The Orders of The Ui Navigation Category
+        /// </summary>
+        public string Orders { get; set; }
+          [DbColumn]
         public string Name { get; set; }    
     }
 }
