@@ -70,7 +70,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleDriveService, GoogleDriveService>();
             services.AddScoped<IEmailService, EmailService >();
-
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
@@ -86,7 +85,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IFileCompressionService, FileCompressionService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
             services.AddScoped<IUiControlCategoryTypeService, UiControlCategoryTypeService>();
-
             services.AddScoped<ILookupService, LookupService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
@@ -96,11 +94,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
-            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
-            ////
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
-
-
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
@@ -132,9 +127,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<Organization>, GenericRepository<Organization>>();
             services.AddScoped<IGenericRepository<WorkflowActivityModel>, GenericRepository<WorkflowActivityModel>>();
             services.AddScoped<IGenericRepository<WorkflowStageModel>, GenericRepository<WorkflowStageModel>>();
-
-            ////
-            ///
             services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
@@ -148,7 +140,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

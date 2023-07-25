@@ -68,10 +68,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get(id);
         }
-        #endregion
-
-        #region Private Methods
-
-        #endregion
+        #endregion 
     }
 }
