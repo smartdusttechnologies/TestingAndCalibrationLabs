@@ -16,15 +16,12 @@
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
 
                 }
-            </div>
+            </div>        
         </form>
-        <div class="form-group">
-            <input type="button" id="createbtn" value="Save" class="btn btn-primary mt-3" onclick="AjaxFormSubmit()" />
+        <div class="form-group" style="margin-left:2rem;">
+            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()" >Save</button>
         </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index" asp-route-id="@Model.ModuleId">Back to List</a>
 </div>
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
@@ -39,7 +36,6 @@
         </div>
     </div>
 </div>
-@ViewBag.resultD
 <div>
     <div class="d-flex justify-content-center fixed-bottom">
         <div role="alert" id="snackbarerror">
@@ -69,10 +65,17 @@
     }
 </script>
 <script type="text/javascript">
+    var moduleId = parseInt($("#ModuleId").val())
+        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+        
+    var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
+        WheelLoader();
+        var workflowStageId = parseInt($("#WorkflowStageId").val())
+        //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
-        var modelData = JSON.parse('@Json.Serialize(Model)');
+        
         //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
 
@@ -81,11 +84,11 @@
             }
             return [member.value.uiPageMetadata, _.flatMapDeep(member.children, getMembers)];
         }
-        var uiPageMetaData = _.flatMapDeep(modelData.layout, getMembers);
+        var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            if (uiPageMetaData[i].controlCategoryName == "DataControl") {
+            if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
@@ -94,34 +97,27 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 keyValuepair.UiPageMetadataId = metadataId;
+                keyValuepair.UiPageTypeId = uiPageTypeId;
                 keyValuepair.Value = fieldValue;
                 fieldValues.push(keyValuepair)
             }
         }
-        var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-        var workflowStageId = parseInt($("#WorkflowStageId").val())
+       
         $.ajax({
             type: 'POST',
             url: url,
-            data: { "ModuleId": moduleId, "WorkflowStageId": workflowStageId, "UiPageTypeId": uiPageTypeId, "FieldValues": fieldValues },
+            data: {  moduleId, workflowStageId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");
-                //window.location.href = "/common/index/" + moduleId;
-                var nuiPageMetaData = response.fields;
-                var a = response.fieldValues;
-                for (let i = 0; i < nuiPageMetaData.length; i++) {
-                    if (nuiPageMetaData[i].controlCategoryName == "DataControl") {
-                        var nfieldId = nuiPageMetaData[i].uiControlTypeName + nuiPageMetaData[i].id;
-                        $('#' + nfieldId).val('');         //Assigning a empty values to input fields
-                    }
-                }
+                HideWheelLoader();
+                window.location.href = "/common/index/" + moduleId;
             },
             failure: function (response) {
                 alert(response.responseText);
             },
             error: function (response) {
+                HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {

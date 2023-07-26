@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -17,6 +19,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
             _moduleRepository = moduleRepository;
         }
+
+
         /// <summary>
         /// Get All Records From Data Type
         /// </summary>
@@ -25,9 +29,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-        public List<Dictionary<int, string>> GetValues(int moduleId)
-        {
-            return _moduleRepository.GetValues(moduleId);
-        }
+
+
+
     }
 }

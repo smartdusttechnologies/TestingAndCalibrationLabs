@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -19,17 +21,52 @@ namespace TestingAndCalibrationLabs.Business.Services
             _lookupRepository = lookupRepository;
         }
         /// <summary>
-        /// Get All records Of Lookup 
+        /// Get All Records From Lookup
         /// </summary>
         /// <returns></returns>
         public List<LookupModel> Get()
         {
-            
-            return _genericRepository.Get();
+            return _lookupRepository.Get();
         }
-        public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
+        /// <summary>
+        /// Insert Record In Lookup
+        /// </summary>
+        /// <param name="lookupModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> Create(LookupModel lookupModel)
         {
-            return _lookupRepository.GetByLookupCategoryId(lookupCategoryId);
+            int id = _lookupRepository.Create(lookupModel);
+            return new RequestResult<int>(1);
         }
+        /// <summary>
+        /// Edit Record From Lookup
+        /// </summary>
+        /// <param name="lookupModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> Update(LookupModel lookupModel)
+        {
+            _lookupRepository.Update(lookupModel);
+            return new RequestResult<int>(1);
+        }
+        /// <summary>
+        /// Get Record by Id For Lookup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public LookupModel GetById(int id)
+        {
+
+            return _lookupRepository.GetById(id);
+        }
+        /// <summary>
+        /// Delete Record From Lookup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Delete(int id)
+        {
+            return _lookupRepository.Delete(id);
+        }
+
     }
 }

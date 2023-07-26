@@ -14,6 +14,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Record From Module
         /// </summary>
         List<ModuleModel> Get();
-        List<Dictionary<int, string>> GetValues(int moduleId);
     }
 }

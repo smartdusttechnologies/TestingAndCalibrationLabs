@@ -1,12 +1,43 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+@*
+<style>
+    popup-preview {
+        display: none;
+        position: absolute;
+        width: 280px;
+        padding: 10px;
+        background: #eeeeee;
+        color: #000000;
+        border: 1px solid #1a1a1a;
+        font-size: 90%;
+    }
 
-<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-login right-pd-input">
+    .file {
+        text-decoration: none;
+        top: 5px;
+        right: 25px;
+        position: absolute;
+    }
+</style>
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input" id="fileLabel-@Model.Value.UiPageMetadata.Id">
     <input class="form-input width-full black-border" type="file" name="@Model.Value.UiPageMetadata.UiControlDisplayName" id="image-@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF">
     <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName">@Model.Value.UiPageMetadata.UiControlDisplayName</label>
     <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+    <button class="file ripple button-outline button-outline-success">Preview</button>
+    <div class="popup-preview" id="pop-up-@Model.Value.UiPageMetadata.Id">
+    </div>
 </div>
-<input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"/>
+<input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" />
 <script>
+    var fileModel = JSON.parse('@Json.Serialize(Model)');
+    $(document).ready(function () {
+        if (fileModel.value.uiPageData != null) {
+            debugger;
+            let metadataId = fileModel.value.uiPageMetadata.id;
+            let value = fileModel.value.uiPageData.value;
+            $(`#pop-up-${metadataId}`).append(`<img  src="https://drive.google.com/uc?export=view&id=${value}"></img>`);
+        }
+    });
     function validateForImages(input) {
         const fileSize = input.files[0].size / 1024 / 1024;
         var fileName = input.files[0].name;
@@ -42,16 +73,319 @@
         $.ajax({
             type: "POST",
             url: "@Url.Action("FileUpload","Common")",
-            contentType: false, 
+            contentType: false,
             processData: false,
             data: file,
             success: function (response) {
-                var modelData = JSON.parse('@Json.Serialize(Model)');
-                var idNum = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+                var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
                 $(idNum).val(response);
             },
             error: function (req, status, error) {
             }
         });
     }
+</script>*@
+
+@*df*@
+
+<style>
+
+    .Box-Parent {
+        font-family: sans-serif;
+        text-align: center;
+        border: 1px solid;
+        border-radius: 4px;
+        border-color: rgba(0, 0, 0, 0.23);
+        padding-top: 24px;
+        padding-bottom: 24px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin: 12px;
+    }
+
+        .Box-Parent:hover {
+            border-color: rgba(0, 0, 0, 0.87);
+        }
+
+    .Form-Control {
+        font-family: sans-serif;
+        text-align: center;
+        position: relative;
+        min-width: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        vertical-align: top;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    .ul-Div {
+        font-family: sans-serif;
+        text-align: center;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 4px;
+        margin: 0px;
+        font-family: sans-serif;
+        text-align: center;
+    }
+
+    .cloud-icon {
+        font-family: sans-serif;
+        text-align: center;
+        user-select: none;
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        fill: currentColor;
+        flex-shrink: 0;
+        transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        color: #1976d2;
+        font-size: 40px;
+    }
+
+    .Typegraphy-text {
+        margin: 0;
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.66;
+        letter-spacing: 0.03333em;
+        text-align: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .upload-Btn {
+        display: inline-flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        outline: 0;
+        border: 0;
+        margin: 0;
+        cursor: pointer;
+        user-select: none;
+        vertical-align: middle;
+        -webkit-appearance: none;
+        text-decoration: none;
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-weight: 500;
+        font-size: 0.875rem;
+        line-height: 1.75;
+        letter-spacing: 0.02857em;
+        text-transform: uppercase;
+        min-width: 64px;
+        padding: 6px 16px;
+        border-radius: 4px;
+        transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        color: #fff;
+        background-color: #1976d2;
+        box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+        margin-bottom: 8px;
+    }
+
+    .Helper-Text-root {
+        color: rgba(0, 0, 0, 0.6);
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-weight: 400;
+        font-size: 0.75rem;
+        line-height: 1.66;
+        letter-spacing: 0.03333em;
+        text-align: left;
+        margin-top: 3px;
+        margin-right: 14px;
+        margin-bottom: 0;
+        margin-left: 14px;
+    }
+
+    .li-parent {
+        font-family: sans-serif;
+        list-style: none;
+        margin: 4px;
+    }
+
+    .sub-li {
+        list-style: none;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+        margin: 0;
+        user-select: none;
+        -webkit-appearance: none;
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-size: 0.8125rem;
+        display: inline-flex;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        height: 32px;
+        color: rgba(0, 0, 0, 0.87);
+        border-radius: 16px;
+        white-space: nowrap;
+        transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        cursor: default;
+        outline: 0;
+        text-decoration: none;
+        padding: 0;
+        vertical-align: middle;
+        box-sizing: border-box;
+        background-color: transparent;
+        border: 1px solid #bdbdbd;
+        max-width: 200px;
+    }
+
+    .upload-btn {
+        list-style: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        white-space: nowrap;
+        cursor: default;
+        user-select: none;
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        fill: currentColor;
+        flex-shrink: 0;
+        transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        font-size: 1.5rem;
+        color: #616161;
+        margin-right: -6px;
+        margin-left: 4px;
+    }
+
+    .span-txt {
+        list-style: none;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-size: 0.8125rem;
+        color: rgba(0, 0, 0, 0.87);
+        cursor: default;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-left: 12px;
+        padding-right: 12px;
+        white-space: nowrap;
+    }
+
+    .delete-svg {
+        list-style: none;
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        white-space: nowrap;
+        user-select: none;
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        fill: currentColor;
+        flex-shrink: 0;
+        transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        -webkit-tap-highlight-color: transparent;
+        color: rgba(0, 0, 0, 0.26);
+        font-size: 22px;
+        cursor: pointer;
+        margin: 0 5px 0 -6px;
+        margin-right: 5px;
+    }
+</style>
+
+
+
+<div class="Box-Parent">
+    <div class="Form-Control">
+        <input multiple="" type="file" autocomplete="off" tabindex="-1" style="display: none;" id="image-@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF">
+        <svg class="cloud-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CloudUploadIcon">
+            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path>
+        </svg>
+        <span class="Typegraphy-text">
+            Drag 'n' drop some files here, or click to select files
+        </span>
+        <button class="upload-Btn" id="btn-upload-@Model.Value.UiPageMetadata.Id" tabindex="0" type="button">
+            Upload
+        </button>
+        <p class="Helper-Text-root">  </p>
+    </div>
+    <ul class="ul-Div" id="file-showcase-@Model.Value.UiPageMetadata.Id">
+    </ul>
+</div>
+
+<script>
+    var fileModel = JSON.parse('@Json.Serialize(Model)');
+    let metadataId = fileModel.value.uiPageMetadata.id;
+    //$(document).ready(function () {
+    //    if (fileModel.value.uiPageData != null) {
+    //        debugger;
+    //        let value = fileModel.value.uiPageData.value;
+    //        $(`#pop-up-${metadataId}`).append(`<img  src="https://drive.google.com/uc?export=view&id=${value}"></img>`);
+    //    }
+    //});
+    $(`#btn-upload-${metadataId}`).click(function () {
+        $(`#image-${metadataId}`).click();
+    });
+    function validateForImages(input) {
+        $(`#file-showcase-${metadataId}`).empty();
+        var file = new FormData();
+        for (let i = 0; i < input.files.length; i++) {
+        let fileName = input.files[i].name;
+        var fileExtension = fileName.split('.').pop();
+        switch (fileExtension) {
+            case 'jpg':
+                break;
+            case 'JPG':
+                break;
+            case 'JPEG':
+                break;
+            case 'jpeg':
+                break;
+            case 'png':
+                break;
+            case 'PNG':
+                break;
+            case 'XlSX':
+                break;
+            case 'xlsx':
+                break;
+            case 'pdf':
+                break;
+            case 'PDF':
+                break;
+            default:
+                alert('Wrong File Type!');
+                $(input).val('');
+                break;
+        }
+            let fileInfo = `<li class="li-parent"><div class="sub-li" tabindex="0" role="button"><svg class="upload-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
+                    </svg><span class="span-txt">${fileName}</span><svg class="delete-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
+            $(`#file-showcase-${metadataId}`).append(fileInfo);
+            file.append(fileName, input.files[i]);
+        }
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("FileUpload","Common")",
+            contentType: false,
+            processData: false,
+            data: file,
+            success: function (response) {
+                //var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
+                //$(idNum).val(response);
+            },
+            error: function (req, status, error) {
+            }
+        });
+    }
 </script>
+
+@*jk*@
+

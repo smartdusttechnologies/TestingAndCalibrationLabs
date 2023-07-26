@@ -108,10 +108,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         //    }
         //    emailModel.HtmlMsg = template;
         //   _emailService.Sendemail(emailModel);
-        //} 
-        
+        //}
         #endregion
-
         #endregion
     }
 
