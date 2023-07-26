@@ -16,11 +16,6 @@ using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
-using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
-using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
-using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
@@ -46,14 +41,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddNewtonsoftJson();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-          .AddJwtBearer(options =>
-          {
-              options.TokenValidationParameters = tokenValidationParameters;
-          });
 
             services.AddAuthentication(options =>
             {
@@ -81,7 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleDriveService, GoogleDriveService>();
-            services.AddScoped<IEmailService, EmailService >();
+            services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
@@ -98,19 +85,28 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IFileCompressionService, FileCompressionService>();
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
             services.AddScoped<IUiControlCategoryTypeService, UiControlCategoryTypeService>();
+            services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
+            services.AddScoped<IUiNavigationCategoryServices, UiNavigationCategoryServices>();
 
-            services.AddScoped<IUiNavigationCategoryService, UiNavigationCategoryService>();
             services.AddScoped<ILookupService, LookupService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorterService, ListSorterService>();
+            services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped<IWorkflowService, WorkflowService>();
+            services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
 
 
             //Repository
-            
+            services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
+            services.AddScoped<IActivityMetadataRepository, ActivityMetadataRepository>();
+            services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();
+            services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+            services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
@@ -126,9 +122,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();
             services.AddScoped<IGenericRepository<UiPageNavigationModel>, GenericRepository<UiPageNavigationModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
-            services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository < DataTypeModel >> ();
-            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository < UiPageValidationTypeModel >> ();
-            services.AddScoped<IGenericRepository<UiPageValidationModel>, GenericRepository < UiPageValidationModel >> ();
+            services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository<DataTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository<UiPageValidationTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageValidationModel>, GenericRepository<UiPageValidationModel>>();
             services.AddScoped<IGenericRepository<UiControlTypeModel>, GenericRepository<UiControlTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
@@ -138,10 +134,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISecurityParameterRepository, SecurityParameterRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-            services.AddScoped< ITestReportRepository, TestReportRepository >();
-            services.AddScoped< IUserRepository, UserRepository>();
+            services.AddScoped<ITestReportRepository, TestReportRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -194,14 +191,13 @@ namespace TestingAndCalibrationLabs.Web.UI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=QueryBuilder}/{action=Index}/{id?}");
+                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
             });
-           
+
         }
     }
 }
