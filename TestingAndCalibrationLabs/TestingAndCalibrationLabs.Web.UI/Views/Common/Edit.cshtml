@@ -96,13 +96,11 @@
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
                   if (layout[i].uiPageData != null) {
-                   for (let j = 0; j < uiPageData.length; j++) {
-                       var pageDataId = layout[i].uiPageData[j].id;
-                       var childIds = layout[i].uiPageData[j].childId;
-                       var RecordIds = layout[i].uiPageData[j].recordId;
-                       var oldValue = layout[i].uiPageData[j].value;
+                       var pageDataId = layout[i].uiPageData[0].id;
+                       var childIds = layout[i].uiPageData[0].childId;
+                       var RecordIds = layout[i].uiPageData[0].recordId;
+                       var oldValue = layout[i].uiPageData[0].value;
                        var List;
-                   }
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
                             var filddata = $(fieldId).val();

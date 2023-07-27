@@ -380,7 +380,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<int> GenerateUiDataId(int recordId)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId}and IsDeleted = 0").ToList();
+            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId} and IsDeleted = 0").ToList();
         }
         /// <summary>
         /// Delete Multi Record Values
