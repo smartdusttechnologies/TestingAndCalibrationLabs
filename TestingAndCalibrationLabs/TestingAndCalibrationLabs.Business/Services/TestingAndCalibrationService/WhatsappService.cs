@@ -9,13 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using System.Collections.Generic;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace TestingAndCalibrationLabs.Business.Services
 
 {
-    /// <summary>
-    /// This service is exclusively to send the email.
-    /// </summary>
+   
     public class WhatsappService : IWhatsappService
     {
         /// <summary>
@@ -31,15 +31,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _configuration = configuration;
         }
-        public async Task SendMessageAsync(JObject message, string senderId)
+       
+        public async Task SendMessageAsync(WhatsappModel message, string senderId)
         {
-            string apiUrl = $"https://graph.facebook.com/v17.0/{senderId}/messages";
+            string apiUrl = _configuration["api:url"]+senderId+"/messages";
+         
             string apiToken = _configuration["MetaDeveloper:APIToken"];
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
-
                 var content = new StringContent(message.ToString(), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(apiUrl, content);
 

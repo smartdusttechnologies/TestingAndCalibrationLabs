@@ -8,8 +8,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface IWhatsappService
     {
-
-        Task SendMessageAsync(JObject message, string senderId);  
+      
+        Task SendMessageAsync(WhatsappModel message, string senderId);  
 
     }
 }
