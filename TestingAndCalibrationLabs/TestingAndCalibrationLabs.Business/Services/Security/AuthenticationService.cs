@@ -226,7 +226,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             UserModel existingUser = _userRepository.Get(user.UserName);
             if (existingUser != null)
             {
-                var error = new ValidationMessage { Reason = "The UserName is already available", Severity = ValidationSeverity.Error , SourceId = "Username" };
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error , SourceId = "Username" };
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
