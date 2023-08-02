@@ -21,7 +21,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _whatsappService = whatsappService;
         }
         [HttpPost]
-        public async Task<IActionResult> PostAsync(WhatsappModel whatsappModel)
+        public async Task<IActionResult> PostAsync([FromForm]WhatsappModel whatsappModel)
         {
             try
             {          
@@ -29,17 +29,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     //handle incoming message                           
                     string senderId = whatsappModel.phoneNumberId.ToString();
                     //when user request something via text or select something
-                   // string incomingMessageText = whatsappModel.entry.ToString();
-              
-      
+                    // string incomingMessageText = whatsappModel.entry.ToString();
+
+                    var Image = whatsappModel.Image;
+
+
+                  //  var ImageName = Path.GetFileName(imagelenth.FileName);
+                    //Getting file Extension
+                 //   var ImageExtension = Path.GetExtension(Image);
+                    // concatenating  FileName + FileExtension
+                    var NewImageName = String.Concat(Convert.ToString(Guid.NewGuid()), Image);
+
                     WhatsappModel message = new WhatsappModel();
                     message.messagingproduct = "whatsapp";
                     message.to = whatsappModel.from.ToString();
 
                  //fetching data what to send
-                    message.text = whatsappModel.body.ToString();
+                 //   message.text = whatsappModel.Image.ToString();
+                    message.text = NewImageName;
 
-              
                     await _whatsappService.SendMessageAsync(message, senderId);
                     return Ok("not found");
 
@@ -55,3 +63,34 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
     }
 }
+//List<string> imageId = new List<string>();
+
+//foreach (var imagelenth in Request.Form.Files)
+//{
+//    if (imagelenth != null)
+//    {
+//        if (imagelenth.Length > 0)
+//        {
+//            //Getting FileName
+//            var ImageName = Path.GetFileName(imagelenth.FileName);
+//            //Getting file Extension
+//            var ImageExtension = Path.GetExtension(ImageName);
+//            // concatenating  FileName + FileExtension
+//            var NewImageName = String.Concat(Convert.ToString(Guid.NewGuid()), ImageExtension);
+//            var ObjImage = new FileUploadModel()
+//            {
+//                Name = NewImageName,
+//                FileType = ImageExtension,
+//                CreatedOn = DateTime.Now
+//            };
+//            using (var target = new MemoryStream())
+//            {
+//                imagelenth.CopyTo(target);
+//                ObjImage.DataFiles = target.ToArray();
+//            }
+//            var Imagecollection = _commonService.ImageUpload(ObjImage);
+//            imageId.Add(NewImageName.ToString());
+//        }
+//    }
+//}
+//retu
