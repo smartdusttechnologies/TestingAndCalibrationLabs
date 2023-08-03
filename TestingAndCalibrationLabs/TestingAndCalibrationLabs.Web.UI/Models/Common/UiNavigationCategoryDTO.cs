@@ -17,6 +17,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Name Of The Ui Navigation Category
         /// </summary> 
         [Required(ErrorMessage = "Please Enter Navigation Name")]
-        public string Name { get; set; } 
+        public string Name { get; set; }
+        /// <summary>
+        /// It Contains The Id of The Ui Navigation Category
+        /// </summary>
+
+        [Required(ErrorMessage = "Please Enter Orders")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please Enter  Number Greater than 0 in Orders")]
+        public string Orders { get; set; }
     }
 }

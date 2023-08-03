@@ -169,7 +169,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _uiPageValidationService.Delete((int)id);
-            TempData["IsTrue"] = true;
+            TempData["IsTrue"] = false;
             return RedirectToAction("Index");
         }
     }
