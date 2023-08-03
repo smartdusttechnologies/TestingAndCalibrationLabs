@@ -17,7 +17,6 @@ using static System.Net.WebRequestMethods;
 using Google.Apis.Drive.v3.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class AuthenticationService : IAuthenticationService
@@ -229,9 +228,9 @@ namespace TestingAndCalibrationLabs.Business.Services
            UserModel existingUser = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
             if (existingUser == null)
             {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error};
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
                 validationMessages.Add(error);
-                return new RequestResult<int>(0,validationMessages);
+                return new RequestResult<int>(0, validationMessages);
             }
             return new RequestResult<int>(existingUser.Id);
         }
@@ -253,14 +252,14 @@ namespace TestingAndCalibrationLabs.Business.Services
                 }
                 else
                 {
-                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error };
+                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
                     validationMessages.Add(Error);
                     return new RequestResult<int>(0, validationMessages);
                 }
             }
            else
             {
-                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error };
+                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error ,SourceId = "OTP" };
                 validationMessages.Add(Error);
                 return new RequestResult<int>(0, validationMessages);
             }
@@ -318,14 +317,18 @@ namespace TestingAndCalibrationLabs.Business.Services
             EmailModel model = new EmailModel();
             model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
             model.Subject = _configuration["ForgotPassOTP:Subject"];
+            model.BodyImage = _configuration["ForgotPassOTP:BodyImageLink"];
+            model.LogoImage = _configuration["ForgotPassOTP:LogoLink"];
             model.Email = new List<string>();
             model.Email.Add(forgotPasswordModel.Email);
             model.HtmlMsg = CreateBody(model.EmailTemplate);
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
-            var EmailSend = _emailService.Sendemail(model);
+            model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*",model.BodyImage);
+            model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
             ForgotPasswordModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
             try
             {
+                _emailService.Sendemail(model);
                 using (MailMessage mailMessage = new MailMessage())
                 {
                     mailMessage.Subject = subject;

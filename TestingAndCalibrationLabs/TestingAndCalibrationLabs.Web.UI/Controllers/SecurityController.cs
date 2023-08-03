@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
@@ -10,7 +9,6 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Web.UI.Models;
-
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -71,21 +69,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
         {
-            if (ModelState.IsValid)
-            {
-                var emailResult = new ForgotPasswordModel { Email = forgotPasswordDto.Email };
+                var emailResult = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotPasswordDto);
                 var userVerify = _authenticationService.EmailValidateForgotPassword(emailResult);
                 if (userVerify.IsSuccessful)
                 {
                     forgotPasswordDto.UserId = userVerify.RequestedObject;
                     _authenticationService.CreateOtp(emailResult, forgotPasswordDto.UserId);
+                    return Ok(forgotPasswordDto);
                 }
-                else
-                {
-                    forgotPasswordDto.Email = null;
-                }
-            }
-            return View(forgotPasswordDto);
+            return BadRequest(userVerify.ValidationMessages);
         }
         /// <summary>
         /// OTP Validation
@@ -93,17 +85,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="model"></param
         [HttpPost]
         public IActionResult ValidateOTP(ForgotPasswordDTO forgotPasswordDto)
-        {
-            var otpReturn = new ForgotPasswordModel {OTP= forgotPasswordDto.OTP,UserId= forgotPasswordDto.UserId, CreatedDate =DateTime.Now };
+         {
+            var otpReturn = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotPasswordDto);
             var user = _authenticationService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
-                return View(new ForgotPasswordDTO { UserId = forgotPasswordDto.UserId });
+               return Ok(user.RequestedObject);
             }
-            else
-            {
-                return BadRequest(user.ValidationMessages);
-            }
+             return BadRequest(user.ValidationMessages);
+        }
+        /// <summary>
+        /// Reset Password
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
         }
         /// <summary>
         /// Reset Password
@@ -121,7 +119,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return BadRequest(result.ValidationMessages);
         }
         /// <summary>
-        /// 
+        /// Method to Resend OTP
         /// </summary>
         /// <param name="forgotpassword"></param>
         public IActionResult ResendOTP(ForgotPasswordDTO forgotPasswordDto)
