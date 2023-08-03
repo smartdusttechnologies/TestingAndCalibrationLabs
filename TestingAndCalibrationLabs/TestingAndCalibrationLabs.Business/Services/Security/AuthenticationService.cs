@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -88,13 +89,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             catch (Exception ex)
             {
                 //_logger.LogException(new ExceptionLog
-               // {
-                 //   ExceptionDate = DateTime.Now,
-                 //   ExceptionMsg = ex.Message,
-                  //  ExceptionSource = ex.Source,
-                 //   ExceptionType = "UserService",
-                  //  FullException = ex.StackTrace
-               // });
+                // {
+                //   ExceptionDate = DateTime.Now,
+                //   ExceptionMsg = ex.Message,
+                //  ExceptionSource = ex.Source,
+                //   ExceptionType = "UserService",
+                //  FullException = ex.StackTrace
+                // });
                 validationMessages.Add(new ValidationMessage { Reason = ex.Message, Severity = ValidationSeverity.Error, Description = ex.StackTrace });
                 return new RequestResult<LoginToken>(validationMessages);
             }
@@ -160,7 +161,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 new Claim(JwtRegisteredClaimNames.Sub, sub),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, Helpers.ToUnixEpochDate(dateTime).ToString(), ClaimValueTypes.Integer64)
-            }.Union(roleClaims).Union(userRoleClaim).ToList(); 
+            }.Union(roleClaims).Union(userRoleClaim).ToList();
 
             var roles = _roleRepository.GetRoleWithOrg(sub);
             foreach (var role in roles)
@@ -178,39 +179,58 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate existing user for Registration
         /// </summary>
-        public RequestResult<bool> Add(UserModel user, string password)
+        public RequestResult<bool> Add(UserModel user)
         {
             try
             {
-                var validationResult = ValidateNewUserRegistration(user, password);
+                var validationResult = ValidateNewUserRegistration(user);
                 if (validationResult.IsSuccessful)
                 {
-                    PasswordLogin passwordLogin = Hasher.HashPassword(password);
+                    PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
+                    user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
             }
-            catch (Exception ex) {
-
+            catch (Exception ex)
+            {
                 return new RequestResult<bool>(false);
             }
         }
         /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
-        private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
+        private RequestResult<bool> ValidateNewUserRegistration(UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            var validatePasswordResult = _securityParameterService.ValidateNewuserPolicy(user);
+            var validateexistinguser = ExistingUservalidation(user);
+            //UserModel existingUser = _userRepository.Get(user.UserName);
+            //if (existingUser != null)
+            //{
+            //    var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+            //    validationMessages.Add(error);
+            //    return new RequestResult<bool>(false, validationMessages);
+            //}
+            validationMessages.AddRange(validatePasswordResult.ValidationMessages);
+            validationMessages.AddRange(validateexistinguser.ValidationMessages);
+            return new RequestResult<bool>(validationMessages);
+        }
+        /// <summary>
+        /// Method to Validate the Existing User
+        /// </summary>
+        private RequestResult<bool> ExistingUservalidation( UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             UserModel existingUser = _userRepository.Get(user.UserName);
-            if (existingUser != null) 
+            if (existingUser != null)
             {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error , SourceId = "Username" };
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
-            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-            return validatePasswordResult;
+            return new RequestResult<bool>(validationMessages);
         }
     }
 }
