@@ -9,7 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IWorkflowRepository
     {
         /// <summary>
-        /// Get All Records From 
+        /// Get All Records From Module
         /// </summary>
         /// <returns></returns>
         WorkflowModel GetByModuleId(int moduleId);

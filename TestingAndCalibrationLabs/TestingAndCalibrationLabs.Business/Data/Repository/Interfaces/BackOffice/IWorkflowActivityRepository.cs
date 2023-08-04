@@ -9,10 +9,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IWorkflowActivityRepository
     {
         /// <summary>
-        /// Get All Records From 
-       /// </summary>
-       /// <returns></returns>
-       List<WorkflowActivityModel> GetByWorkflowStageId(int uiPageTypeId);
+        /// Get All Records From WorkflowActivity
+        /// </summary>
+        /// <returns></returns>
+        List<WorkflowActivityModel> GetByWorkflowStageId(int uiPageTypeId);
         /// <summary>
         /// Get All Records From WorkflowActivity
         /// </summary>
