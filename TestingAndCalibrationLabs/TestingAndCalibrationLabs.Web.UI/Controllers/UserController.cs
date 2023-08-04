@@ -37,7 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var userModel = _mapper.Map<UserDTO, UserModel>(userRequest);
 
-            var result = _authenticationService.Add(userModel);
+            var result = _authenticationService.Add(userModel, userRequest.Password);
             if (result.IsSuccessful && result.RequestedObject)
             {
                 return Ok(result.RequestedObject);
