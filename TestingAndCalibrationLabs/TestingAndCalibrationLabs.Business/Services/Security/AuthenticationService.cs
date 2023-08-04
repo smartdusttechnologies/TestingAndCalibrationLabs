@@ -211,7 +211,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> ValidateNewUserRegistration(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            var validatePasswordResult = _securityParameterService.ValidateNewuserPolicy(user);
+            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user);
+            var validateUserfieldsResult = _securityParameterService.ValidateNewuserPolicy(user);
+
             var validateexistinguser = ExistingUservalidation(user);
             //UserModel existingUser = _userRepository.Get(user.UserName);
             //if (existingUser != null)
@@ -222,6 +224,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             //}
             validationMessages.AddRange(validatePasswordResult.ValidationMessages);
             validationMessages.AddRange(validateexistinguser.ValidationMessages);
+            validationMessages.AddRange(validateUserfieldsResult.ValidationMessages);
+
             return new RequestResult<bool>(validationMessages);
         }
         /// <summary>
