@@ -179,11 +179,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Add new and validate existing user for Registration
         /// </summary>
-        public RequestResult<bool> Add(UserModel user)
+        public RequestResult<bool> Add(UserModel user, string password)
         {
             try
             {
-                var validationResult = ValidateNewUserRegistration(user);
+                var validationResult = ValidateNewUserRegistration(user, password);
                 if (validationResult.IsSuccessful)
                 {
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
@@ -201,10 +201,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
-        private RequestResult<bool> ValidateNewUserRegistration(UserModel user)
+        private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user);
+            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             var validateUserfieldsResult = _securityParameterService.ValidateNewuserPolicy(user);
 
             var validateexistinguser = ExistingUservalidation(user);

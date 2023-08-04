@@ -31,14 +31,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to validate Newuser Policy
         /// </summary>
-        public RequestResult<bool> ValidatePasswordPolicy(UserModel user )
+        public RequestResult<bool> ValidatePasswordPolicy(int orgId, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             try
             {
-                var passwordPolicy = _securityParameterRepository.Get(user.OrgId);
-                var validatePasswordResult = ValidatePassword(user, passwordPolicy);
-                return (validatePasswordResult);
+                var passwordPolicy = _securityParameterRepository.Get(orgId);
+                var validatePasswordResult = ValidatePassword(password, passwordPolicy);
+                return validatePasswordResult;
             }
             catch (Exception ex)
             {
@@ -66,40 +66,40 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
         /// </summary>
-        private RequestResult<bool> ValidatePassword(UserModel user, SecurityParameter securityParameter)
+        private RequestResult<bool> ValidatePassword(string password, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
-            if (user.Password == null || user.Password.Length < securityParameter.MinLength)
+            if (password == null || password.Length < securityParameter.MinLength)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            if (!Helpers.ValidateMinimumSmallChars(user.Password, securityParameter.MinSmallChars))
+            if (!Helpers.ValidateMinimumSmallChars(password, securityParameter.MinSmallChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of small characters the password should have is " + securityParameter.MinSmallChars, Severity = ValidationSeverity.Error , SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateMinimumCapsChars(user.Password, securityParameter.MinCaps))
+            if (!Helpers.ValidateMinimumCapsChars(password, securityParameter.MinCaps))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of capital characters the password should have is " + securityParameter.MinCaps, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateMinimumDigits(user.Password, securityParameter.MinNumber))
+            if (!Helpers.ValidateMinimumDigits(password, securityParameter.MinNumber))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of numeric characters the password should have is " + securityParameter.MinNumber, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateMinimumSpecialChars(user.Password, securityParameter.MinSpecialChars))
+            if (!Helpers.ValidateMinimumSpecialChars(password, securityParameter.MinSpecialChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the password should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
 
-            if (!Helpers.ValidateDisallowedChars(user.Password, securityParameter.DisAllowedChars))
+            if (!Helpers.ValidateDisallowedChars(password, securityParameter.DisAllowedChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Characters which are not allowed in password are " + securityParameter.DisAllowedChars, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;

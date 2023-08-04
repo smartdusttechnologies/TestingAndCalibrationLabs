@@ -10,6 +10,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Interfaces to validate Newuser Policy
         /// </summary>
         RequestResult<bool> ValidateNewuserPolicy(UserModel user);
-        RequestResult<bool> ValidatePasswordPolicy(UserModel user);
+        RequestResult<bool> ValidatePasswordPolicy(int orgId, string password);
     }
 }
