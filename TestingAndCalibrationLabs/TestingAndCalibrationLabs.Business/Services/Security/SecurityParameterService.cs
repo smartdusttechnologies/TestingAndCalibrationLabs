@@ -72,25 +72,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of small characters the password should have is " + securityParameter.MinSmallChars, Severity = ValidationSeverity.Error , SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumCapsChars(password, securityParameter.MinCaps))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of capital characters the password should have is " + securityParameter.MinCaps, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumDigits(password, securityParameter.MinNumber))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of numeric characters the password should have is " + securityParameter.MinNumber, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumSpecialChars(password, securityParameter.MinSpecialChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the password should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateDisallowedChars(password, securityParameter.DisAllowedChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Characters which are not allowed in password are " + securityParameter.DisAllowedChars, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
@@ -169,6 +165,3 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
     }
 }
-
-        
-
