@@ -30,8 +30,8 @@ BEGIN
 			   (10, N'Lookup Category',1,0),
 			   (11, N'Lookup',1,0),
 			   (12,N'DataType',1,0),
-			   (13, N'Ui ControlCategory Type',1,0)
-			   (8, N'Change Password',1,0)
+			   (13, N'Ui ControlCategory Type',1,0),
+			   (14, N'Change Password',1,0)
 
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
@@ -376,8 +376,7 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11))
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -393,15 +392,14 @@ BEGIN
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
-			  (11, N'/Security/ChangePassword', 8, 1003, 0)
-
-
               (11, N'/UiPageNavigation/Index/', 8, 1002, 0),
               (12, N'/UiPageNavigationCategory/Index/', 9, 1002, 0),
 			  (13,N'/LookupCategory/Index/',10,1002,0),
 			  (14,N'/Lookup/Index/',11,1002,0),
 			  (15,N'/DataType/Index/',12,1002,0),
-			  (16,N'/UiControlCategoryType/Index/',13,1002,0)
+			  (16,N'/UiControlCategoryType/Index/',13,1002,0),
+			  (17, N'/Security/ChangePassword', 14, 1003, 0)
+
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
