@@ -5,13 +5,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-
+using static System.Net.WebRequestMethods;
+using Google.Apis.Drive.v3.Data;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class AuthenticationService : IAuthenticationService
@@ -23,9 +29,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly ISecurityParameterService _securityParameterService;
         private readonly ILoggerRepository _loggerRepository;
         private readonly IRoleRepository _roleRepository;
+        private readonly IEmailService _emailService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             ILogger logger,
+            IEmailService emailservice,
+            IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
               IRoleRepository roleRepository)
@@ -37,7 +47,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _securityParameterService = securityParameterService;
             _loggerRepository = loggerRepository;
             _roleRepository = roleRepository;
-
+            _emailService = emailservice;
+            _hostingEnvironment = hostingEnvironment;
         }
         /// <summary>
         /// Method to Authenticate for Login
@@ -49,6 +60,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 LoginToken token = new LoginToken();
                 var passwordLogin = _authenticationRepository.GetLoginPassword(loginRequest.UserName);
+
                 string valueHash = string.Empty;
                 if (passwordLogin != null && !Hasher.ValidateHash(loginRequest.Password, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
                 {
@@ -69,7 +81,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //    var passwordPolicy = _securityParameterService.Get(user.OrgId);
                 //    changeIntervalDays = passwordPolicy.ChangeIntervalDays;
                 //}
-                //if(passwordLogin.ChangeDate.AddDays(changeIntervalDays) < DateTime.Today)
+                //if (passwordLogin.ChangeDate.AddDays(changeIntervalDays) < DateTime.Today)
                 //{
                 //    validationMessages.Add(new ValidationMessage { Reason = "Password expired.", Severity = ValidationSeverity.Error });
                 //    return new RequestResult<LoginToken>(validationMessages);
@@ -106,10 +118,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private LoginToken GenerateTokens(string userName)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
             DateTime now = DateTime.Now;
             var claims = GetTokenClaims(userName, now);
-
             var accessJwt = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -118,9 +128,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 expires: now.AddDays(1),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
-
             var encodedAccessJwt = new JwtSecurityTokenHandler().WriteToken(accessJwt);
-
             var refreshJwt = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -130,7 +138,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
             var encodedRefreshJwt = new JwtSecurityTokenHandler().WriteToken(refreshJwt);
-
             var loginToken = new LoginToken
             {
                 UserName = userName,
@@ -235,6 +242,150 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages);
             }
             return new RequestResult<bool>(validationMessages);
+        }
+        /// <summary>
+        /// Method to Validate the Email
+        /// </summary>
+        public RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+           UserModel existingUser = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
+            if (existingUser == null)
+            {
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
+                validationMessages.Add(error);
+                return new RequestResult<int>(0, validationMessages);
+            }
+            return new RequestResult<int>(existingUser.Id);
+        }
+        /// <summary>
+        /// Method to validate OTP
+        /// </summary>
+        /// <param name="forgotPasswordModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            ForgotPasswordModel existingUser = _authenticationRepository.GetOTP(forgotPasswordModel.UserId);
+           if (forgotPasswordModel.OTP == existingUser.OTP)
+            {
+                double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
+                if (forgotPasswordModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
+                {
+                    return new RequestResult<int>(existingUser.UserId);
+                }
+                else
+                {
+                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
+                    validationMessages.Add(Error);
+                    return new RequestResult<int>(0, validationMessages);
+                }
+            }
+           else
+            {
+                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error ,SourceId = "OTP" };
+                validationMessages.Add(Error);
+                return new RequestResult<int>(0, validationMessages);
+            }
+        }
+        /// <summary>
+        /// Method to Reset Password 
+        /// </summary>
+        /// <param name="forgotPasswordModel"></param>
+        /// <returns></returns>
+        public RequestResult<bool> UpdatePassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            try
+            {
+                var passwordResult = _securityParameterService.ChangePasswordCondition(forgotPasswordModel);
+                if (passwordResult.IsSuccessful)
+                {
+                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, forgotPasswordModel.NewPassword);
+                    var PasswordLogin = _authenticationRepository.GetUserIdPassword(forgotPasswordModel.UserId);
+                    List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+                    if (ValidationResult.IsSuccessful)
+                    {
+                        if (passwordResult.IsSuccessful)
+                        {
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(forgotPasswordModel.NewPassword);
+                            ForgotPasswordModel passwordModel = new ForgotPasswordModel();
+                            passwordModel.PasswordHash = newPasswordLogin.PasswordHash;
+                            passwordModel.UserId = forgotPasswordModel.UserId;
+                            passwordModel.ChangeDate = DateTime.Now;
+                            passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
+                            _userRepository.UpdatePassword(passwordModel);
+                            return new RequestResult<bool>(true);
+                        }
+                    }
+                    return new RequestResult<bool>(false, ValidationResult.ValidationMessages);
+                }
+                return new RequestResult<bool>(false, passwordResult.ValidationMessages);
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<bool>(false);
+            }
+        }
+        /// <summary>
+        /// Method To Create OTP though user email 
+        /// </summary>
+        /// <param name="forgotPasswordModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> CreateOtp(ForgotPasswordModel forgotPasswordModel, int userId)
+        {
+            var myEmail = _authenticationRepository.GetLoginEmail(forgotPasswordModel.Email);
+            var UserId = userId;
+            string otp = GenerateOTP();
+            string subject = "OTP Verification";
+            string body = $"{otp}";
+            EmailModel model = new EmailModel();
+            model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
+            model.Subject = _configuration["ForgotPassOTP:Subject"];
+            model.BodyImage = _configuration["ForgotPassOTP:BodyImageLink"];
+            model.LogoImage = _configuration["ForgotPassOTP:LogoLink"];
+            model.Email = new List<string>();
+            model.Email.Add(forgotPasswordModel.Email);
+            model.HtmlMsg = CreateBody(model.EmailTemplate);
+            model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
+            model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*",model.BodyImage);
+            model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
+            ForgotPasswordModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
+            try
+            {
+                _emailService.Sendemail(model);
+                using (MailMessage mailMessage = new MailMessage())
+                {
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending OTP: {"Wrong OTP"}");
+            }
+            return new RequestResult<int>(1);
+        }
+        /// <summary>
+        /// Method To Generate OTP
+        /// </summary>
+        private string GenerateOTP()
+        {
+            Random random = new Random();
+            int otp = random.Next(100000, 999999);
+            return otp.ToString();
+        }
+        /// <summary>
+        /// To use the email Template to send OTP to the User participated.
+        /// </summary>
+        /// <param name="emailTemplate"></param>
+        private string CreateBody(string emailTemplate)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["ForgotPassOTP:EmailTemplate"])))
+            {
+                body = reader.ReadToEnd();
+            }
+            return body;
         }
     }
 }

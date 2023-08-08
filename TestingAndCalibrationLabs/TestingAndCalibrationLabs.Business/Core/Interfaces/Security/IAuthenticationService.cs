@@ -1,6 +1,5 @@
 ﻿using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
-
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface IAuthenticationService
@@ -9,6 +8,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Interfaces to Add new and validate existing user for Registration
         /// </summary>
+
         RequestResult<bool> Add(UserModel user, string password);
+        RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel);
+        RequestResult<int> CreateOtp(ForgotPasswordModel forgotPasswordModel, int userId);
+        RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel);
+        RequestResult<bool> UpdatePassword(ForgotPasswordModel forgotPasswordModel);
     }
 }
