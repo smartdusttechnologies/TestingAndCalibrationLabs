@@ -1,5 +1,8 @@
-﻿namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿using TestingAndCalibrationLabs.Business.Common;
+
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+        [DbTable("UiPageNavigation")]
     /// <summary>
     /// Ui Page Navigation Model.
     /// </summary>
@@ -11,17 +14,17 @@
         public string Url { get; set; }
 
         /// <summary>
-        /// Ui Page Type Id reference from Ui page type.
+        /// It contains id of module
         /// </summary>
         public int ModuleId { get; set; }
 
         /// <summary>
-        /// Ui Page Type Name
+        /// Module  Name
         /// </summary>
         public string ModuleName { get; set; }
 
         /// <summary>
-        /// Ui Navigation Category Id reference from UiNavigationCategory.
+        /// Ui Navigation Category Id.
         /// </summary>
         public int UiNavigationCategoryId { get; set; }
 

@@ -37,5 +37,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+        UiControlCategoryTypeModel GetById(int id);
+
     }
 }
