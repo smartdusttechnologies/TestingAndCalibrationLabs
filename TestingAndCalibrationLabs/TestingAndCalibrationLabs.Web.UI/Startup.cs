@@ -21,6 +21,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Web.UI.Models;
+using Microsoft.AspNetCore.Identity;
+using Google;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -60,6 +63,27 @@ namespace TestingAndCalibrationLabs.Web.UI
                 //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });
                 options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.EditRole); });
             });
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "959609168626-is9opbhgia4kmc6a6h69i0446a63oeoh.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            });
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
+            //});
+            //services.AddScoped<ApplicationUser, ApplicationUser>();
+            services.AddScoped<SignInManager<ApplicationUser>>();
+            //services.AddScoped<UserManager<ApplicationUser>>();
+            //services.AddIdentity<ApplicationUser, IdentityUser>();
+
+
+            //services.AddDbContext<ApplicationContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
+
+
             //Services
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<ISampleService, SampleService>();

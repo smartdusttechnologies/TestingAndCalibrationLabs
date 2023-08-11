@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authentication;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -74,6 +76,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public int AdminLevel { get; set; }
 
-        
+        public string ReturnUrl { get; set; }
+
+        // AuthenticationScheme is in Microsoft.AspNetCore.Authentication namespace
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
     }
 }
