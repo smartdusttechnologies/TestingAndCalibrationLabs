@@ -16,5 +16,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The DisplayName of The Ui Control Type
         /// </summary>
         public string DisplayName { get; set; }
+        public int ControlCategoryId { get; set; }
+        public string ControlCategoryName { get; set;}
+
     }
 }

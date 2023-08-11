@@ -20,11 +20,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Id of The Ui Control Type
         /// </summary>
+        public int MetadataModuleBridgeId { get; set; }
         public int UiControlTypeId { get; set; }
         /// <summary>
         /// It Contains The Name of The Ui Control Type
         /// </summary>
         public string UiControlTypeName { get; set; }
+       public string ControlTypeName { get; set; }
+
         /// <summary>
         /// It Contains The IsRequired of The Ui Page Metadata
         /// </summary>
@@ -66,8 +69,13 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string UiControlCategoryTypeName { get; set; }
         public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
-       public int ModuleId { get; set; }
+        public string ParentDisplayName { get; set; }
+
+        public int ModuleLayoutId { get; set; }
+        public string ModuleLayoutName { get; set; }
         public int Orders { get; set; }
         public bool MultiValueControl { get; set; }
+        public int UiPageMetadataId { get; set; }
+
     }
 }

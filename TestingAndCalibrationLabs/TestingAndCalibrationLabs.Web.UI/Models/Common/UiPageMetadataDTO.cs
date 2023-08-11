@@ -52,6 +52,7 @@
         /// It Contains the Name Of The Lookup Category
         /// </summary>
         public string ControlCategoryName { get; set; }
+        public string ControlTypeName { get; set; }
         /// <summary>
         /// It Contains The SelectedLookupId From ComboTree
         /// </summary>
@@ -63,8 +64,16 @@
         public string UiControlCategoryTypeName { get; set; }
         public string UiControlCategoryTypeTemplate { get; set; }
         public int ParentId { get; set; }
-        public int ModuleId { get; set; }
+        public string ParentDisplayName { get; set; }
+
+        public int Orders { get; set; }
+        public int MetadataModuleBridgeId { get; set; }
+        public int ModuleLayoutId { get; set; }
+        public string ModuleLayoutName { get; set; }
         public int Position { get; set; }
         public bool MultiValueControl { get;set; }
+         
+        public string UiPageMetadata { get; set; }
+        public int UiPageMetadataId { get; set; }
     }
 }

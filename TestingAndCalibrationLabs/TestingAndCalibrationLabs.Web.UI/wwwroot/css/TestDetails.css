@@ -479,3 +479,9 @@ span.comboTreeItemTitle, .comboTreeDropDownContainer .selectAll{
 	border-right: none;
 	border-bottom: 1px solid var(--ct-border-color);
 }
+.floatBlock {
+    float: left;
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+

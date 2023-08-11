@@ -22,7 +22,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
            
         }
-
         #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
@@ -39,9 +38,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int uiPageTypeId, int metadataModuleBridgeId)
         {
-            return _uiPageMetadataRepository.Delete(id);
+            return _uiPageMetadataRepository.Delete(id,  uiPageTypeId, metadataModuleBridgeId);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
@@ -50,8 +49,17 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageMetadataModel GetById(int id)
         {
-
             return _uiPageMetadataRepository.GetById(id);
+        }
+        /// <summary>
+        /// Get Record by Id and uiPageTypeId ,metadataModuleBridgeId For Ui Page Metadata Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public UiPageMetadataModel GetByPageId(int id, int uiPageTypeId , int metadataModuleBridgeId)
+        {
+
+            return _uiPageMetadataRepository.GetByPageId(id, uiPageTypeId,metadataModuleBridgeId);
         }
         /// <summary>
         /// Edit Record From Ui Page Metadata Type
@@ -59,7 +67,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
+        public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel, int metadataModuleBridgeId)
         {
             _uiPageMetadataRepository.Update(uiPageMetadataModel);
             return new RequestResult<int>(1);
@@ -71,6 +79,23 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<UiPageMetadataModel> Get()
         {
             return _uiPageMetadataRepository.Get();
+        }
+        /// <summary>
+        /// Get All Records by moduleLayoutId From Ui Page Metadata Type
+        /// </summary>
+        /// <returns></returns>
+        public List<UiPageMetadataModel> GetResult( int moduleLayoutId)
+        {
+
+            return _uiPageMetadataRepository.GetExisting(moduleLayoutId);
+        }
+        /// <summary>
+        /// Get All UIDisplayName  From Ui Page Metadata Type
+        /// </summary>
+        /// <returns></returns>
+        public List<UiPageMetadataModel> GetDisplayName()
+        {
+            return _uiPageMetadataRepository.GetDisplayName();
         }
         #endregion
 
