@@ -17,7 +17,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Orders of The Ui Navigation Category
         /// </summary>
         public string Orders { get; set; }
-          
-        
+           
     }
 }

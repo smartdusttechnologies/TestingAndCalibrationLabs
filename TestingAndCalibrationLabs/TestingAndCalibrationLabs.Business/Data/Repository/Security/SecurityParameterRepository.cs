@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         }
 
         /// <summary>
-        /// Get Password Policy bases on OrgnizationId
+        /// Get Password Policy bases on OrganizationId
         /// </summary>
         public SecurityParameter Get(int orgId)
         {
