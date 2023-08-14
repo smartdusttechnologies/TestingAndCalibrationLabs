@@ -233,7 +233,7 @@
 
 
 <script>
-    var input = document.getElementById('')
+   // var input = document.getElementById('')
     var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
     var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
 
@@ -278,8 +278,8 @@
         newElement.appendChild(selectMenu);
 
         var Data = document.getElementById('JoinConditionMenu0');
-        var datainfo = Data.cloneNode(true);
-        newElement.appendChild(datainfo);
+        var dataInfo = Data.cloneNode(true);
+        newElement.appendChild(dataInfo);
     }
     function JoinAdd() {
 

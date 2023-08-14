@@ -36,32 +36,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             //List<string> list = JsonSerializer.Serialize(jsonData);
           
-            List<UiQueryBuilderColumn> person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
+            List<UiQueryBuilderColumn> Person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
             List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
             List<ConditionModelDTO> ConditionInfo = JsonSerializer.Deserialize<List<ConditionModelDTO>>(ConditionData);
 
             //var  emptydata = Object.entries(datainfo); 
 
 
-            for (var  item = 0; item < person.Count; item++)
+            for (var  item = 0; item < Person.Count; item++)
             {
                 if (item + 65 + 1 <= 91)
                 {
-                   
-                    person[item].Alias = Convert.ToChar(item + 65); 
+
+                    Person[item].Alias = Convert.ToChar(item + 65); 
 
                 }
                     
                     
             }
-            var records = _mapper.Map<List<Models.UiQueryBuilderColumn>, List<Business.Core.Model.UiQueryGenerator>>(person);
+            var Records = _mapper.Map<List<Models.UiQueryBuilderColumn>, List<Business.Core.Model.UiQueryGenerator>>(Person);
 
 
             var recordJoin = _mapper.Map<List<Models.JoinModel>, List<Business.Core.Model.QueryBuilder.JoinModelDTO>>(Join);
             var  ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
 
 
-            var value = _querybuilderService.UiToJsonQueryBuilder(records,recordJoin,ConditionJoin, TemplateName);
+            var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin,ConditionJoin, TemplateName);
             // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
 
             return Ok();
