@@ -17,18 +17,20 @@ BEGIN
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),
-			   
+                (0, N'none', 1, 0),
 			   (1, N'Cube Testing', 1, 0),
-			   
 			   (2, N'Water Testing', 1, 0),
-			   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
-
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'Ui Page Navigation',1,0),
+			   (9, N'Ui Page Navigation Category',1,0),
+			   (10, N'Lookup Category',1,0),
+			   (11, N'Lookup',1,0),
+			   (12,N'DataType',1,0),
+			   (13, N'Ui ControlCategory Type',1,0)
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -326,12 +328,12 @@ BEGIN
 			(3046, 1, 0, N'Length', 0, 2, 3, N'0'),
 			(3047, 1, 0, N'Width', 0, 2, 3, N'0'),
 			(3048, 1, 0, N'Height', 0, 2, 3, N'0'),
-			(3049, 1, 1, N'mm²', 0, 2, 3, N'0'),
-			(3050, 1, 1, N'cm³', 0, 2, 3, N'0'),
+			(3049, 1, 1, N'mmï¿½', 0, 2, 3, N'0'),
+			(3050, 1, 1, N'cmï¿½', 0, 2, 3, N'0'),
 			(3051, 1, 0, N'gm', 0, 2, 3, N'0'),
-			(3053, 1, 0, N'gm/cm³', 0, 2, 3, N'0'),
+			(3053, 1, 0, N'gm/cmï¿½', 0, 2, 3, N'0'),
 			(3054, 1, 0, N'Load, KN', 0, 2, 3, N'0'),
-			(3056, 1, 1, N'Compressive Strength, N/mm²', 0, 2, 3, N'0'),
+			(3056, 1, 1, N'Compressive Strength, N/mmï¿½', 0, 2, 3, N'0'),
 			(3057, 1, 0, N'Average', 0, 2, 3, N'0'),
 			(3058, 38, 0, N'TestReport', 0, 2, 2010, N'0'),
 			(3059, 1, 0, N'Price', 0, 2, 3, N'0'),
@@ -367,10 +369,11 @@ BEGIN
 			  (1002, N'Settings', 3, 0),
 			  (1003, N'Profile', 4, 0),
 			  (1004, N'Notifications', 5, 0)
+			  
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -385,7 +388,13 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+              (11, N'/UiPageNavigation/Index/', 8, 1002, 0),
+              (12, N'/UiPageNavigationCategory/Index/', 9, 1002, 0),
+			  (13,N'/LookupCategory/Index/',10,1002,0),
+			  (14,N'/Lookup/Index/',11,1002,0),
+			  (15,N'/DataType/Index/',12,1002,0),
+			  (16,N'/UiControlCategoryType/Index/',13,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
