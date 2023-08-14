@@ -87,6 +87,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageValidationTypeService, UiPageValidationTypeService>();
             services.AddScoped<IUiControlCategoryTypeService, UiControlCategoryTypeService>();
             services.AddScoped<ILookupService, LookupService>();
+            services.AddScoped<IUiNavigationCategoryServices, UiNavigationCategoryServices>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<ILookupCategoryService, LookupCategoryService>();
             services.AddScoped<IListSorterService, ListSorterService>();
