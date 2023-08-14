@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
 
 
-            var Data = _dashboardService.Template("dfdf");
+           // var Data = _dashboardService.Template("dfdf");
            
             
             var salesValue = new SalesModel();
@@ -51,44 +51,44 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //salesValue.salesData.Add(salesModeldata);
             var count = typeof(DashboardModel).GetProperties().Count();
             var salesModeldata = new SalesComponentDataModel();
-            
-            for (  var item = 0; item< Data.Dictionary.Count; item++)
-            {
+            //For future use
+            //for (  var item = 0; item< Data.Dictionary.Count; item++)
+            //{
 
 
-                if (item > 0)
-                {
-                    //
+            //    if (item > 0)
+            //    {
+            //        //
 
-                    salesModeldata.label = Data.Dictionary.ToList()[item].Key;
-                    salesModeldata.pointRadius = "false";
-                    salesModeldata.pointHighlightFill = "";
-                    salesModeldata.backgroundColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.9 + ") ";
-                    salesModeldata.borderColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.8 + ") ";
+            //        salesModeldata.label = Data.Dictionary.ToList()[item].Key;
+            //        salesModeldata.pointRadius = "false";
+            //        salesModeldata.pointHighlightFill = "";
+            //        salesModeldata.backgroundColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.9 + ") ";
+            //        salesModeldata.borderColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.8 + ") ";
 
-                    salesModeldata.pointColor = "#" + 3 * item + "b8bba";
-                    salesModeldata.pointStrokeColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
-                    salesModeldata.pointHighlightFill = "#fff ";
-                    salesModeldata.pointHighlightStroke = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
-                    salesModeldata.Data = new List<object>();
+            //        salesModeldata.pointColor = "#" + 3 * item + "b8bba";
+            //        salesModeldata.pointStrokeColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
+            //        salesModeldata.pointHighlightFill = "#fff ";
+            //        salesModeldata.pointHighlightStroke = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
+            //        salesModeldata.Data = new List<object>();
 
-                    foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
-                    {
+            //        foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
+            //        {
                        
-                        salesModeldata.Data.Add(datainfo);
-                    }
-                    salesValue.salesData.Add(salesModeldata);
-                }
-                else
-                {
-                    foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
-                    {
-                        salesValue.Month.Add(datainfo);
+            //            salesModeldata.Data.Add(datainfo);
+            //        }
+            //        salesValue.salesData.Add(salesModeldata);
+            //    }
+            //    else
+            //    {
+            //        foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
+            //        {
+            //            salesValue.Month.Add(datainfo);
 
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
 
 
             
