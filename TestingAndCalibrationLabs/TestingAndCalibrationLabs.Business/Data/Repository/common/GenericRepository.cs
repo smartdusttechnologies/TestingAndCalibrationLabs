@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
+using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
@@ -55,14 +56,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<T>(string.Format("Select top 1 * From [{0}] where Name=@name and IsDeleted=0", _tableName), new { name }).FirstOrDefault();
         }
-
         public int Insert(T model)
         {
             var query = GenerateInsertQuery();
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, model);
         }
-
         /// <summary>
         /// Inserting data to list
         /// </summary>
@@ -74,7 +73,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, model);
         }
-
         public int Update(T model)
         {
             var query = GenerateUpdateQuery();
@@ -104,7 +102,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             return insertQuery.ToString();
         }
-
         private string GenerateUpdateQuery()
         {
             var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
@@ -123,7 +120,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             return updateQuery.ToString();
         }
-
         private static List<string> GenerateListOfProperties(IEnumerable<PropertyInfo> listOfProperties)
         {
             return (from prop in listOfProperties

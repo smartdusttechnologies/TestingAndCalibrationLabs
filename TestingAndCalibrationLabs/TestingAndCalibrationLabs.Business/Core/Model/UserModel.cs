@@ -57,6 +57,9 @@
         /// <summary>
         /// Admin Level.
         /// </summary>
+        public string Organizations { get; set; }
         public int AdminLevel { get; set; }
+        public string Password { get; set; }    
+        public string ReEnterPassword { get; set; }
     }
 }

@@ -24,7 +24,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
             _listSorterService = listSorterService;
         }
-
         /// <summary>
         /// For Showing All Records Of Ui Control Type
         /// </summary>
@@ -78,7 +77,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiControlTypeDTO);
         }
-
         /// <summary>
         /// For Create View
         /// </summary>
@@ -89,7 +87,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new UiControlTypeDTO { Id = id });
         }
-
         /// <summary>
         /// To Insert Record
         /// </summary>
@@ -143,7 +140,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _uiControlTypeServices.Delete((int)id);
-            TempData["IsTrue"] = true;
+            TempData["IsTrue"] = false;
             return RedirectToAction("Index");
         }
     }
