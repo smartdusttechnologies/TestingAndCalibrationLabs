@@ -2,18 +2,97 @@
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1;
 using TestingAndCalibrationLabs.Web.UI.Models;
-
+using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
+using AutoMapper;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
+using System.Linq;
+using Microsoft.AspNetCore.Razor.Language;
+using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     public class DashboardController : Controller
     {
+        private readonly IDashboardService _dashboardService;
+        private readonly IMapper _mapper;
+        public DashboardController(IDashboardService dashboardService, IMapper mapper)
+        {
+            _dashboardService = dashboardService;
+            _mapper = mapper;
+        }
+
         public IActionResult Index()
         {
+
+
+            var Data = _dashboardService.Template("dfdf");
+           
+            
             var salesValue = new SalesModel();
-            salesValue.Month = new List<string> { "January", "February", "March", "April", "May", "June", "July" };
-            salesValue.salesData1 = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
-            salesValue.SalesData2 = new List<int> { 25, 18, 30, 45, 6, 67, 45 };
+            //salesValue.Month = new List<string> { "January", "February", "March", "April", "May", "June", "July" };
+            //salesValue.salesData1 = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
+            salesValue.Month = new List<object> ();
+            salesValue.salesData = new List<SalesComponentDataModel>(); 
+            
+            //for (var item=1; item <= Data.)
+            //var salesModeldata = new SalesComponentDataModel();
+            //salesModeldata.label = "";
+            //salesModeldata.pointRadius = "false";
+            //salesModeldata.pointHighlightFill = "";
+            //salesModeldata.backgroundColor = "rgba("+ 60*item+ "," + item*141+","+ item*188+ "," + item* 0.9+") ";
+            //salesModeldata.borderColor  = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.8 + ") ";
+
+            //salesModeldata.pointColor = "#"+3*item+"b8bba";
+            //salesModeldata.pointStrokeColor =  "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
+            //salesModeldata.pointHighlightFill = "#fff ";
+            //salesModeldata.pointHighlightStroke = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
+
+            //salesValue.salesData.Add(salesModeldata);
+            var count = typeof(DashboardModel).GetProperties().Count();
+            var salesModeldata = new SalesComponentDataModel();
+            
+            for (  var item = 0; item< Data.Dictionary.Count; item++)
+            {
+
+
+                if (item > 0)
+                {
+                    //
+
+                    salesModeldata.label = Data.Dictionary.ToList()[item].Key;
+                    salesModeldata.pointRadius = "false";
+                    salesModeldata.pointHighlightFill = "";
+                    salesModeldata.backgroundColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.9 + ") ";
+                    salesModeldata.borderColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.8 + ") ";
+
+                    salesModeldata.pointColor = "#" + 3 * item + "b8bba";
+                    salesModeldata.pointStrokeColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
+                    salesModeldata.pointHighlightFill = "#fff ";
+                    salesModeldata.pointHighlightStroke = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
+                    salesModeldata.Data = new List<object>();
+
+                    foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
+                    {
+                       
+                        salesModeldata.Data.Add(datainfo);
+                    }
+                    salesValue.salesData.Add(salesModeldata);
+                }
+                else
+                {
+                    foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
+                    {
+                        salesValue.Month.Add(datainfo);
+
+
+                    }
+                }
+            }
+
+
+            
+            //salesValue.SalesData2 = new List<int> { 25, 18, 30, 45, 6, 67, 45 };
             salesValue.SalesName = new List<string> { "Instore Sales", "Download Sales", "Mail-Order Sales" };
             salesValue.DataSet = new List<int> { 15, 12, 43 };
 

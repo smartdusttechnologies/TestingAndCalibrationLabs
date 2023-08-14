@@ -11,6 +11,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder
         List<QueryBuilderModel> GetTableNames();
 
         QueryRecordModel GetColoumsNames(List<QueryBuilderModel> tableNames);
-        public int UiToJsonQueryBuilder(List<UiQueryGenerator> tableNames,List<JoinModelDTO>JoinInfo,List<ConditionModel> conditionModels);
+        public int UiToJsonQueryBuilder(List<UiQueryGenerator> tableNames,List<JoinModelDTO>JoinInfo,List<ConditionModel> conditionModels, string TemplateName);
+
+
+        public bool Validator(string Json);
     }
 }

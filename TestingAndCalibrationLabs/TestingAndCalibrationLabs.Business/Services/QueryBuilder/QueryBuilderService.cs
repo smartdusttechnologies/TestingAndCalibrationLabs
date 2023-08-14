@@ -1,15 +1,12 @@
-﻿using Org.BouncyCastle.Ocsp;
-using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.Json;
-using TestingAndCalibrationLabs.Business.Common;
+using System.Diagnostics;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
 {
@@ -38,17 +35,9 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             }
             return new QueryRecordModel { FieldValues = queryBuilderData };
         }
-        public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels)
+        public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
         {
 
-            //foreach(var item in person)
-            //{
-            //    if (JoinInfo[0].TableFrom == item.TableName)
-            //    {
-            //        JoinInfo[0].TableFrom += person[0].Alias;
-
-            //    }
-            //}
 
 
             for (var i = 0; i < JoinInfo.Count; i++)
@@ -139,28 +128,62 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             }
             foriegnData = foriegnData.Remove(foriegnData.Length - 1, 1);
             foriegn += foriegnData + "]";
-            var condition= "'condition':[";
-            foreach (var  item in conditionModels)
+            
+            if (conditionModels.Count != 0)
             {
-                condition += "{ 'value': " + '"' + item.value + '"' + ", 'Where':" + '"' + item.Where + '"' + " , 'operators': " + '"' + item.operators + '"' + ", 'TableName':" + '"' + item.TableName + '"' + ", 'OperatorType':" + '"' + item.OperatorType + '"' + "   },";
+                var condition = "'condition':[";
+                foreach (var item in conditionModels)
+                {
+                    condition += "{ 'value': " + '"' + item.value + '"' + ", 'Where':" + '"' + item.Where + '"' + " , 'operators': " + '"' + item.operators + '"' + ", 'TableName':" + '"' + item.TableName + '"' + ", 'OperatorType':" + '"' + item.OperatorType + '"' + "   },";
+
+                }
+
+                condition = condition.Remove(condition.Length - 1, 1);
+                condition += "],";
+
+
+
+
+
+
+                QueryJson = QueryJson + column + condition + foriegn + QueryJsonEnd;
+
 
             }
-
-            condition = condition.Remove(condition.Length - 1, 1);
-            condition += "],";
-
-
-            
-
-            
-
-            QueryJson = QueryJson + column + condition + foriegn + QueryJsonEnd;
+            else
+            {
+                QueryJson = QueryJson + column  + foriegn + QueryJsonEnd;
+            }
 
 
 
 
-            var data = SqlConverter.JsonToSql(QueryJson);
-            return 0;
+            if (Validator(QueryJson))
+            {
+                var model = new JsonSaveModel();
+                model.Template = TemplateName;
+                model.JSON = QueryJson;
+                return  _querybuilderRepository.QuerySaver(model);
+                
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public bool Validator(string QueryJson)
+        {
+            try
+            {
+                JToken.Parse(QueryJson);
+                return true;
+            }
+            catch (JsonReaderException ex)
+            {
+                Trace.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

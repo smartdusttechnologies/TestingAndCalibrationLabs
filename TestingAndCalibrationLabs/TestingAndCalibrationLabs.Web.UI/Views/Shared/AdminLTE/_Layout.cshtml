@@ -90,5 +90,18 @@
 <script>
 
     var ModelData = @(Html.Raw(Json.Serialize(Model)));
-
+    debugger;
+    var DatasetValue =[];
+   
+    for(var item =0;item<ModelData.salesModel.salesData.length;item++){
+        DatasetValue.push(ModelData.salesModel.salesData[item]);
+        
+        
+        //DatasetValue += '{' + ModelData.salesModel.salesData[item] + "},"
+            // DatasetValue{ ModelData.salesModel.salesData}
+         //DatasetValue = JSON.stringify(ModelData.salesModel.salesData[item]);
+        //var value += ModelData.salesModel.salesData[item];
+        
+    }
+   // DatasetValue.slice(0, -1);
 </script>

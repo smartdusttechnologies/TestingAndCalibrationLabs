@@ -4,6 +4,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using TestingAndCalibrationLabs.Business.Services;
 using Microsoft.AspNetCore.Builder;
+using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -69,6 +74,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleDriveService, GoogleDriveService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IQueryBuilderService,QueryBuilderService>();
 
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
@@ -98,6 +104,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<IDashboardService, DashboardService>();
+            
+
 
 
             //Repository
@@ -139,6 +148,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
+            services.AddScoped<IQueryBuilderRepository, QueryBuilderRepository>();
+            services.AddScoped<IDashboardRepository,DashboardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -195,7 +206,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
+                    pattern: "{controller=QueryBuilder}/{action=Index}/{id?}");
             });
 
         }

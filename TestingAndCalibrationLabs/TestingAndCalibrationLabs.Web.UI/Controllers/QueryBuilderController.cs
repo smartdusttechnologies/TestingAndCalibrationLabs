@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(records);
         }
         [HttpPost]
-       public IActionResult QueryGenerator(string jsonData ,string JoinData,string ConditionData)
+       public IActionResult QueryGenerator(string jsonData ,string JoinData,string ConditionData,string TemplateName)
         {
             //List<string> list = JsonSerializer.Serialize(jsonData);
           
@@ -61,7 +61,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var  ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
 
 
-            var value = _querybuilderService.UiToJsonQueryBuilder(records,recordJoin,ConditionJoin);
+            var value = _querybuilderService.UiToJsonQueryBuilder(records,recordJoin,ConditionJoin, TemplateName);
             // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
 
             return Ok();

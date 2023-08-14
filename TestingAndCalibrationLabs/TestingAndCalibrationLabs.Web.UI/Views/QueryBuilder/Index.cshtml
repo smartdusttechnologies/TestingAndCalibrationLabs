@@ -331,6 +331,8 @@
         var JoinObject = {};
         var JoinObject1 = null;
         var JoinObject2 = {};
+
+        let TemplateName = prompt('Type here');
         //JOINPART
         for (var JoinItem = 0; JoinItem <= DataItem.children.length; JoinItem++) {
 
@@ -527,7 +529,7 @@
         $.ajax({
             url: 'QueryBuilder/QueryGenerator',
             method: 'POST',
-            data: { jsonData, JoinData, ConditionData },
+            data: { jsonData, JoinData, ConditionData, TemplateName },
             success: function (response) {
                 alert('good work bro ') // Handle the response from the function
             },

@@ -1,9 +1,7 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -29,6 +27,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder
             string query = @"SELECT COLUMN_NAME as coloumnName FROM INFORMATION_SCHEMA.COLUMNS 
                               WHERE TABLE_NAME =@tableName ORDER BY ORDINAL_POSITION";
             return db.Query<QueryBuilderColNames>(query, new { tableName }).ToList();
+        }
+
+        public int QuerySaver(JsonSaveModel model)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string query = @"INSERT INTO DashboardJSON (Name,JSON,IsDeleted) VALUES (@Template,@JSON,0)";
+             db.Execute(query, model);
+            return 1;
         }
     }
 }
