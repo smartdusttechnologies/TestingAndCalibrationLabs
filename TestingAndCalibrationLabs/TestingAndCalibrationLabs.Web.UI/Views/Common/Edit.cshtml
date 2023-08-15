@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "CreateLayout";
 }
+<style>
+    .fixed-bottom {
+        position: relative;
+    }
+</style>
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
@@ -113,7 +118,7 @@
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
-                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
                 }
             }
@@ -130,7 +135,7 @@
                 alert(response.responseText);
             },
             error: function (response) {
-               HideWheelLoader();
+                HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {
