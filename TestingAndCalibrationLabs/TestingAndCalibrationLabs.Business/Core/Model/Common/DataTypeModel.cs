@@ -11,6 +11,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name of The Data Type
         /// </summary>
+        [DbColumn]
         public string Name { get; set; }
     }
 }

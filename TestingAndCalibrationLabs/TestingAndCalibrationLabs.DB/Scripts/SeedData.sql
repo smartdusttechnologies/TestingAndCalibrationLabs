@@ -14,20 +14,26 @@ IF NOT EXISTS (SELECT 1 FROM [Module] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Module]  ON
 
+
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),
-			   
-			   (1, N'Cube Testing', 1, 0),
-			   
-			   (2, N'Water Testing', 1, 0),
-			   
+               (0, N'none', 1, 0),			   
+			   (1, N'Cube Testing', 1, 0),			   
+			   (2, N'Water Testing', 1, 0),		   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'Application',1,0),
+			   (9, N'Workflow',1,0),
+			   (10,N'Workflow Stage',1,0),
+			   (11,N'Module',1,0),
+			   (12,N'Workflow Activitiy',1,0),
+			   (13,N'Organization',1,0),
+			   (14,N'Lookup',1,0),
+			   (15,N'Lookup Category',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -66,7 +72,6 @@ BEGIN
 			   (2, N'ApplicationAdmin', 2, 0),
 			   (3, N'Manager', 3, 0),
 			   (4, N'GeneralUser', 6, 0)
-
     SET IDENTITY_INSERT [dbo].[Role]  OFF
 END
 GO
@@ -102,7 +107,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Lookup] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Lookup]  ON
-
     INSERT INTO [dbo].[Lookup]
                 ([Id], [Name], [LookupCategoryId], [IsDeleted])
 			   VALUES
@@ -126,7 +130,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiControlType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlType]  ON
-
     INSERT INTO [dbo].[UiControlType]
                 ([id], [Name], [DisplayName], [IsDeleted], [ControlCategoryId])
 			   VALUES
@@ -173,7 +176,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiControlCategoryType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  ON
-
     INSERT INTO [dbo].[UiControlCategoryType]
               ([Id], [Name], [Template], [IsDeleted], [UiControlTypeId])
 			   VALUES
@@ -208,7 +210,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageMetadata] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  ON
-
     INSERT INTO [dbo].[UiPageMetadata]
               ([Id], [UiControlTypeId], [IsRequired], [UiControlDisplayName], [IsDeleted], [DataTypeId], [UiControlCategoryTypeId], [Name])
 			   VALUES
@@ -326,12 +327,12 @@ BEGIN
 			(3046, 1, 0, N'Length', 0, 2, 3, N'0'),
 			(3047, 1, 0, N'Width', 0, 2, 3, N'0'),
 			(3048, 1, 0, N'Height', 0, 2, 3, N'0'),
-			(3049, 1, 1, N'mm²', 0, 2, 3, N'0'),
-			(3050, 1, 1, N'cm³', 0, 2, 3, N'0'),
+			(3049, 1, 1, N'mmï¿½', 0, 2, 3, N'0'),
+			(3050, 1, 1, N'cmï¿½', 0, 2, 3, N'0'),
 			(3051, 1, 0, N'gm', 0, 2, 3, N'0'),
-			(3053, 1, 0, N'gm/cm³', 0, 2, 3, N'0'),
+			(3053, 1, 0, N'gm/cmï¿½', 0, 2, 3, N'0'),
 			(3054, 1, 0, N'Load, KN', 0, 2, 3, N'0'),
-			(3056, 1, 1, N'Compressive Strength, N/mm²', 0, 2, 3, N'0'),
+			(3056, 1, 1, N'Compressive Strength, N/mmï¿½', 0, 2, 3, N'0'),
 			(3057, 1, 0, N'Average', 0, 2, 3, N'0'),
 			(3058, 38, 0, N'TestReport', 0, 2, 2010, N'0'),
 			(3059, 1, 0, N'Price', 0, 2, 3, N'0'),
@@ -367,6 +368,7 @@ BEGIN
 			  (1002, N'Settings', 3, 0),
 			  (1003, N'Profile', 4, 0),
 			  (1004, N'Notifications', 5, 0)
+			  
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
@@ -385,7 +387,15 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+			  (11,N'/LookupCategory/Index/',15,1002,0),
+			  (12,N'/Lookup/Index/',14,1002,0),
+			  (13,N'/Application/Index/',8,1002,0),
+			  (14,N'/Workflow/Index/',9,1002,0),
+			  (15,N'/WorkflowStage/Index/',10,1002,0),
+			  (16,N'/Module/Index/',11,1002,0),
+			  (17,N'/WorkflowActivity/Index/',12,1002,0),
+			  (18,N'/Organization/Index/',13,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
@@ -403,7 +413,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Activity] WHERE Id IN (1))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Activity]  ON
-
     INSERT INTO [dbo].[Activity]
                ([Id], [Name], [IsDeleted])
 			   VALUES 
@@ -414,7 +423,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageType] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageType]  ON
-
     INSERT INTO [dbo].[UiPageType]
                ([Id], [Name], [IsDeleted])
 			   VALUES
@@ -441,7 +449,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Workflow] WHERE Id IN (1,2,3))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Workflow]  ON
-
     INSERT INTO [dbo].[Workflow]
               ([Id], [Name], [ModuleId], [IsDeleted])
 			   VALUES
@@ -454,7 +461,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [WorkflowStage] WHERE Id IN (2,3,4,5,9,10))
 BEGIN
     SET IDENTITY_INSERT [dbo].[WorkflowStage]  ON
-
     INSERT INTO [dbo].[WorkflowStage]
                ([Id], [Name], [IsDeleted], [WorkflowId], [UiPageTypeId], [Orders])
 			   VALUES
@@ -470,7 +476,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [ActivityMetadata] WHERE Id IN (1,2,3,4,5,7,9,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[ActivityMetadata]  ON
-
     INSERT INTO [dbo].[ActivityMetadata]
                ([Id], [Name], [ActivityId], [UiPageMetadataId], [IsDeleted], [Value], [ActivityMetadataTypeId], [WorkflowStageId])
 			   VALUES
@@ -488,7 +493,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UserRole] WHERE Id IN (0))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UserRole]  ON
-
     INSERT INTO [dbo].[UserRole]
               ([Id], [UserId], [RoleId], [IsDeleted])
 			   VALUES
@@ -503,106 +507,106 @@ BEGIN
     INSERT INTO [dbo].[UiPageMetadataModuleBridge]
                ([Id], [UiPageMetadataId], [UiPageTypeId], [IsDeleted], [ModuleId], [ParentId], [Orders], [UiControlDisplayName], [MultiValueControl])
 			   VALUES
-            (3011, 3012, 14, 0, 3, 0, 0, NULL, 0),
-			(3012, 3013, 14, 0, 3, 0, 0, NULL, 0),
-			(3013, 3014, 14, 0, 3, 0, 0, NULL, 0),
-			(3014, 21, 14, 0, 3, 0, 0, NULL, 0),
-			(3015, 20, 14, 0, 3, 0, 0, NULL, 0),
-			(3016, 17, 14, 0, 3, 0, 0, NULL, 0),
-			(3017, 3016, 15, 0, 1, 4, 0, NULL, 0),
-			(3018, 3017, 15, 0, 1, 4, 0, NULL, 0),
-			(3019, 3018, 15, 0, 1, 4, 0, NULL, 0),
-			(3020, 3019, 15, 0, 1, 4, 0, NULL, 0),
-			(3021, 3020, 15, 0, 1, 4, 0, NULL, 0),
-			(3022, 3021, 15, 0, 1, 4, 0, NULL, 0),
-			(3023, 21, 15, 0, 1, 4, 0, NULL, 0),
-			(3024, 20, 15, 0, 1, 4, 0, NULL, 0),
-			(3025, 3024, 15, 0, 1, 4, 0, NULL, 0),
-			(3026, 3025, 15, 0, 1, 4, 0, NULL, 0),
-			(3029, 3026, 15, 0, 1, 4, 0, NULL, 0),
-			(3030, 3027, 16, 0, 1, 5, 0, NULL, 0),
-			(3031, 3028, 16, 0, 1, 5, 0, NULL, 0),
-			(3032, 3029, 16, 0, 1, 5, 0, NULL, 0),
-			(3033, 3030, 16, 0, 1, 5, 0, NULL, 0),
-			(3034, 3031, 16, 0, 1, 5, 0, NULL, 0),
-			(3035, 3032, 16, 0, 1, 5, 0, NULL, 0),
-			(3037, 3034, 16, 0, 1, 5, 0, NULL, 0),
-			(3038, 3035, 16, 0, 1, 5, 0, NULL, 0),
-			(3039, 3036, 16, 0, 1, 5, 0, NULL, 0),
-			(3040, 3019, 16, 0, 1, 5, 0, NULL, 0),
-			(3041, 3037, 16, 0, 1, 5, 0, NULL, 0),
-			(3042, 3038, 16, 0, 1, 5, 0, NULL, 0),
-			(3043, 3039, 16, 0, 1, 5, 0, NULL, 0),
-			(3044, 3008, 15, 0, 1, 4, 1, NULL, 0),
-			(3045, 3008, 16, 0, 1, 5, 2, NULL, 0),
-			(3047, 3, 15, 0, 1, 0, 0, NULL, 0),
-			(3048, 4, 15, 0, 1, 3, 0, NULL, 0),
-			(3049, 5, 15, 0, 1, 3, 0, NULL, 0),
-			(3050, 6, 15, 0, 1, 3, 0, NULL, 0),
-			(3051, 7, 15, 0, 1, 3, 0, NULL, 0),
-			(3052, 8, 15, 0, 1, 3, 0, NULL, 0),
-			(3053, 3, 16, 0, 1, 0, 0, NULL, 0),
-			(3054, 4, 16, 0, 1, 3, 0, NULL, 0),
-			(3055, 5, 16, 0, 1, 3, 0, NULL, 0),
-			(3056, 6, 16, 0, 1, 3, 0, NULL, 0),
-			(3057, 7, 16, 0, 1, 3, 0, NULL, 0),
-			(3058, 8, 16, 0, 1, 3, 0, NULL, 0),
-			(3059, 3, 17, 0, 1, 0, 0, NULL, 0),
-			(3060, 4, 17, 0, 1, 3, 0, NULL, 0),
-			(3061, 5, 17, 0, 1, 3, 0, NULL, 0),
-			(3062, 6, 17, 0, 1, 3, 0, NULL, 0),
-			(3063, 7, 17, 0, 1, 3, 0, NULL, 0),
-			(3064, 8, 17, 0, 1, 3, 0, NULL, 0),
-			(3065, 3040, 17, 0, 1, 6, 0, NULL, 0),
-			(3066, 3041, 17, 0, 1, 6, 0, NULL, 0),
-			(3067, 3043, 17, 0, 1, 6, 0, NULL, 0),
-			(3068, 3044, 17, 0, 1, 6, 0, NULL, 0),
-			(3069, 3045, 17, 1, 1, 6, 0, NULL, 0),
-			(3070, 3046, 17, 1, 1, 6, 0, NULL, 0),
-			(3071, 3047, 17, 0, 1, 6, 0, NULL, 0),
-			(3072, 3048, 17, 0, 1, 6, 0, NULL, 0),
-			(3073, 3049, 18, 0, 1, 6, 0, NULL, 1),
-			(3074, 3050, 18, 0, 1, 6, 0, NULL, 1),
-			(3075, 3051, 18, 0, 1, 6, 0, NULL, 1),
-			(3077, 3053, 18, 0, 1, 6, 0, NULL, 1),
-			(3078, 3054, 18, 0, 1, 6, 0, NULL, 1),
-			(3080, 3056, 18, 0, 1, 6, 0, NULL, 1),
-			(3081, 3057, 18, 0, 1, 6, 0, NULL, 1),
-			(3082, 3008, 17, 0, 1, 6, 1, NULL, 0),
-			(3083, 3, 18, 0, 1, 0, 0, NULL, 0),
-			(3084, 4, 18, 0, 1, 3, 0, N'Sample Reciving', 0),
-			(3085, 5, 18, 0, 1, 3, 0, N'Test Plan', 0),
-			(3086, 6, 18, 0, 1, 3, 0, N'Lab Analysis', 0),
-			(3087, 7, 18, 0, 1, 3, 0, N'Test Report', 0),
-			(3088, 8, 18, 0, 1, 3, 0, N'Payment & Billing', 0),
-			(3089, 3058, 18, 0, 1, 7, 19, N'Download', 0),
-			(3090, 3016, 18, 0, 1, 7, 1, NULL, 0),
-			(3091, 3017, 18, 0, 1, 7, 2, NULL, 0),
-			(3092, 3018, 18, 0, 1, 7, 3, NULL, 0),
-			(3093, 3019, 18, 0, 1, 7, 4, NULL, 0),
-			(3094, 3020, 18, 0, 1, 7, 5, NULL, 0),
-			(3095, 3021, 18, 0, 1, 7, 6, NULL, 0),
-			(3096, 21, 18, 0, 1, 7, 7, NULL, 0),
-			(3097, 20, 18, 0, 1, 7, 8, NULL, 0),
-			(3098, 3024, 18, 0, 1, 7, 9, NULL, 0),
-			(3099, 3025, 18, 0, 1, 7, 0, NULL, 0),
-			(3100, 3, 19, 0, 1, 0, 0, NULL, 0),
-			(3101, 4, 19, 0, 1, 3, 0, NULL, 0),
-			(3102, 5, 19, 0, 1, 3, 0, NULL, 0),
-			(3103, 6, 19, 0, 1, 3, 0, NULL, 0),
-			(3104, 7, 19, 0, 1, 3, 0, NULL, 0),
-			(3105, 8, 19, 0, 1, 3, 0, NULL, 0),
-			(3106, 3059, 19, 0, 1, 8, 0, NULL, 0),
-			(3107, 3060, 19, 0, 1, 8, 1, NULL, 0),
-			(3108, 3061, 19, 0, 1, 8, 2, NULL, 0),
-			(3110, 3062, 19, 0, 1, 8, 3, N'Download Report', 0),
-			(3111, 3008, 19, 0, 1, 8, 3, NULL, 0),
-			(3112, 3008, 18, 0, 1, 7, 16, NULL, 0),
-			(3113, 3040, 18, 0, 1, 7, 10, NULL, 0),
-			(3114, 3041, 18, 0, 1, 7, 11, NULL, 0),
-			(3116, 3043, 18, 0, 1, 7, 12, NULL, 0),
-			(3117, 3044, 18, 0, 1, 7, 13, NULL, 0),
-			(3118, 3045, 18, 0, 1, 7, 14, NULL, 0),
+            (3011, 3012, 14, 0, 3, 0, 0, NULL, 0),		
+			(3012, 3013, 14, 0, 3, 0, 0, NULL, 0),			
+			(3013, 3014, 14, 0, 3, 0, 0, NULL, 0),			
+			(3014, 21, 14, 0, 3, 0, 0, NULL, 0),			
+			(3015, 20, 14, 0, 3, 0, 0, NULL, 0),		
+			(3016, 17, 14, 0, 3, 0, 0, NULL, 0),			
+			(3017, 3016, 15, 0, 1, 4, 0, NULL, 0),			
+			(3018, 3017, 15, 0, 1, 4, 0, NULL, 0),			
+			(3019, 3018, 15, 0, 1, 4, 0, NULL, 0),			
+			(3020, 3019, 15, 0, 1, 4, 0, NULL, 0),			
+			(3021, 3020, 15, 0, 1, 4, 0, NULL, 0),			
+			(3022, 3021, 15, 0, 1, 4, 0, NULL, 0),			
+			(3023, 21, 15, 0, 1, 4, 0, NULL, 0),			
+			(3024, 20, 15, 0, 1, 4, 0, NULL, 0),			
+			(3025, 3024, 15, 0, 1, 4, 0, NULL, 0),			
+			(3026, 3025, 15, 0, 1, 4, 0, NULL, 0),			
+			(3029, 3026, 15, 0, 1, 4, 0, NULL, 0),			
+			(3030, 3027, 16, 0, 1, 5, 0, NULL, 0),			
+			(3031, 3028, 16, 0, 1, 5, 0, NULL, 0),			
+			(3032, 3029, 16, 0, 1, 5, 0, NULL, 0),			
+			(3033, 3030, 16, 0, 1, 5, 0, NULL, 0),			
+			(3034, 3031, 16, 0, 1, 5, 0, NULL, 0),			
+			(3035, 3032, 16, 0, 1, 5, 0, NULL, 0),			
+			(3037, 3034, 16, 0, 1, 5, 0, NULL, 0),			
+			(3038, 3035, 16, 0, 1, 5, 0, NULL, 0),			
+			(3039, 3036, 16, 0, 1, 5, 0, NULL, 0),			
+			(3040, 3019, 16, 0, 1, 5, 0, NULL, 0),			
+			(3041, 3037, 16, 0, 1, 5, 0, NULL, 0),			
+			(3042, 3038, 16, 0, 1, 5, 0, NULL, 0),			
+			(3043, 3039, 16, 0, 1, 5, 0, NULL, 0),			
+			(3044, 3008, 15, 0, 1, 4, 1, NULL, 0),			
+			(3045, 3008, 16, 0, 1, 5, 2, NULL, 0),			
+			(3047, 3, 15, 0, 1, 0, 0, NULL, 0),			
+			(3048, 4, 15, 0, 1, 3, 0, NULL, 0),			
+			(3049, 5, 15, 0, 1, 3, 0, NULL, 0),			
+			(3050, 6, 15, 0, 1, 3, 0, NULL, 0),			
+			(3051, 7, 15, 0, 1, 3, 0, NULL, 0),			
+			(3052, 8, 15, 0, 1, 3, 0, NULL, 0),		
+			(3053, 3, 16, 0, 1, 0, 0, NULL, 0),			
+			(3054, 4, 16, 0, 1, 3, 0, NULL, 0),			
+			(3055, 5, 16, 0, 1, 3, 0, NULL, 0),			
+			(3056, 6, 16, 0, 1, 3, 0, NULL, 0),			
+			(3057, 7, 16, 0, 1, 3, 0, NULL, 0),			
+			(3058, 8, 16, 0, 1, 3, 0, NULL, 0),			
+			(3059, 3, 17, 0, 1, 0, 0, NULL, 0),			
+			(3060, 4, 17, 0, 1, 3, 0, NULL, 0),			
+			(3061, 5, 17, 0, 1, 3, 0, NULL, 0),			
+			(3062, 6, 17, 0, 1, 3, 0, NULL, 0),			
+			(3063, 7, 17, 0, 1, 3, 0, NULL, 0),			
+			(3064, 8, 17, 0, 1, 3, 0, NULL, 0),			
+			(3065, 3040, 17, 0, 1, 6, 0, NULL,0),			
+			(3066, 3041, 17, 0, 1, 6, 0, NULL, 0),			
+			(3067, 3043, 17, 0, 1, 6, 0, NULL, 0),			
+			(3068, 3044, 17, 0, 1, 6, 0, NULL, 0),			
+			(3069, 3045, 17, 1, 1, 6, 0, NULL, 0),			
+			(3070, 3046, 17, 1, 1, 6, 0, NULL, 0),			
+			(3071, 3047, 17, 0, 1, 6, 0, NULL, 0),			
+			(3072, 3048, 17, 0, 1, 6, 0, NULL, 0),		
+			(3073, 3049, 18, 0, 1, 6, 0, NULL, 1),			
+			(3074, 3050, 18, 0, 1, 6, 0, NULL, 1),			
+			(3075, 3051, 18, 0, 1, 6, 0, NULL, 1),			
+			(3077, 3053, 18, 0, 1, 6, 0, NULL, 1),			
+			(3078, 3054, 18, 0, 1, 6, 0, NULL, 1),			
+			(3080, 3056, 18, 0, 1, 6, 0, NULL, 1),			
+			(3081, 3057, 18, 0, 1, 6, 0, NULL, 1),			
+			(3082, 3008, 17, 0, 1, 6, 1, NULL, 0),			
+			(3083, 3, 18, 0, 1, 0, 0, NULL, 0),			
+			(3084, 4, 18, 0, 1, 3, 0, N'Sample Reciving', 0),			
+			(3085, 5, 18, 0, 1, 3, 0, N'Test Plan', 0),			
+			(3086, 6, 18, 0, 1, 3, 0, N'Lab Analysis', 0),			
+			(3087, 7, 18, 0, 1, 3, 0, N'Test Report', 0),			
+			(3088, 8, 18, 0, 1, 3, 0, N'Payment & Billing', 0),			
+			(3089, 3058, 18, 0, 1, 7, 19, N'Download', 0),			
+			(3090, 3016, 18, 0, 1, 7, 1, NULL, 0),			
+			(3091, 3017, 18, 0, 1, 7, 2, NULL, 0),			
+			(3092, 3018, 18, 0, 1, 7, 3, NULL, 0),			
+			(3093, 3019, 18, 0, 1, 7, 4, NULL, 0),			
+			(3094, 3020, 18, 0, 1, 7, 5, NULL, 0),		
+			(3095, 3021, 18, 0, 1, 7, 6, NULL, 0),			
+			(3096, 21, 18, 0, 1, 7, 7, NULL, 0),			
+			(3097, 20, 18, 0, 1, 7, 8, NULL, 0),			
+			(3098, 3024, 18, 0, 1, 7, 9, NULL, 0),			
+			(3099, 3025, 18, 0, 1, 7, 0, NULL, 0),			
+			(3100, 3, 19, 0, 1, 0, 0, NULL, 0),			
+			(3101, 4, 19, 0, 1, 3, 0, NULL, 0),			
+			(3102, 5, 19, 0, 1, 3, 0, NULL, 0),			
+			(3103, 6, 19, 0, 1, 3, 0, NULL, 0),			
+			(3104, 7, 19, 0, 1, 3, 0, NULL, 0),			
+			(3105, 8, 19, 0, 1, 3, 0, NULL, 0),			
+			(3106, 3059, 19, 0, 1, 8, 0, NULL, 0),			
+			(3107, 3060, 19, 0, 1, 8, 1, NULL, 0),			
+			(3108, 3061, 19, 0, 1, 8, 2, NULL, 0),			
+			(3110, 3062, 19, 0, 1, 8, 3, N'Download Report', 0),			
+			(3111, 3008, 19, 0, 1, 8, 3, NULL, 0),			
+			(3112, 3008, 18, 0, 1, 7, 16, NULL, 0),			
+			(3113, 3040, 18, 0, 1, 7, 10, NULL, 0),			
+			(3114, 3041, 18, 0, 1, 7, 11, NULL, 0),			
+			(3116, 3043, 18, 0, 1, 7, 12, NULL, 0),			
+			(3117, 3044, 18, 0, 1, 7, 13, NULL, 0),			
+			(3118, 3045, 18, 0, 1, 7, 14, NULL, 0),			
 			(3119, 3046, 18, 0, 1, 7, 15, NULL, 0),
 			(3120, 3063, 18, 0, 1, 7, 17, NULL, 0),
 			(3121, 3049, 17, 0, 1, 6, 0, NULL, 1),
@@ -619,7 +623,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidationType] WHERE Id IN (1,2,3,4,5,6,7))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidationType]  ON
-
     INSERT INTO [dbo].[UiPageValidationType]
               ([Id], [Name], [Message], [Value], [IsDeleted])
 			   VALUES
@@ -636,7 +639,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidation] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidation]  ON
-
     INSERT INTO [dbo].[UiPageValidation]
              ([Id], [UiPageTypeId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted])
 			   VALUES
@@ -661,7 +663,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [PasswordLogin] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[PasswordLogin]  ON
-
     INSERT INTO [dbo].[PasswordLogin]
               ([Id], [PasswordHash], [PasswordSalt], [UserId], [ChangeDate])
 			  VALUES 
@@ -672,7 +673,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [TestReport] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[TestReport]  ON
-
     INSERT INTO [dbo].[TestReport]
               ([Id], [Client], [Filepath], [Email], [JobId], [Name], [DateTime], [IsDeleted])
 			  VALUES 
@@ -683,7 +683,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [WorkflowActivity] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[WorkflowActivity]  ON
-
     INSERT INTO [dbo].[WorkflowActivity]
               ([Id], [Name], [WorkflowStageId], [IsDeleted], [ActivityId])
 			  VALUES 
@@ -695,7 +694,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Record] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Record]  ON
-
     INSERT INTO [dbo].[Record]
               ([Id], [IsDeleted], [ModuleId], [WorkflowStageId], [UpdatedDate])
 			  VALUES 
@@ -706,7 +704,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageData] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageData]  ON
-
     INSERT INTO [dbo].[UiPageData]
               ([Id],
 			  [UiPageMetadataId],

@@ -21,7 +21,7 @@
 //        IMapper _mapper;
 //        ICommonService _commonService;
 //        List<UiPageValidationModel> validations = new List<UiPageValidationModel>();
-//        List<UiPageValidationTypeModel> validationlist = new List<UiPageValidationTypeModel>();       
+//        List<UiPageValidationTypeModel> validationlist = new List<UiPageValidationTypeModel>();
 
 //        Mock<ICommonRepository> commonRepository = new Mock<ICommonRepository>();
 //        Mock<IGenericRepository<RecordModel>> igenericRepository = new Mock<IGenericRepository<RecordModel>>();
@@ -57,7 +57,7 @@
 //            var controller = new CommonController(logger.Object, _commonService, _mapper);
 //        }
 
-        
+
 //        /* Description - This unit test cases is to validate the create method of common controller 
 //         * Step1- Input parameter = Id , Expected = Recordsdto is fetched successfully 
 //         * Expected Result = It will have the record of recordDTO
@@ -218,7 +218,7 @@
 
 //            commonRepository.Setup(x => x.GetUiPageMetadata(It.IsAny<int>())).Returns(new RecordModel { UiPageId = 12, Id = 1, Fields = uiPageMetaDataModels, FieldValues = null });
 
-            
+
 
 
 //            foreach (var item in uiPageMetaDataModels)
@@ -255,7 +255,7 @@
 //        {
 //            List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
 //            uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 1, Value = "Rit" });
-           
+
 
 //            List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
 //            uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 3, UiPageTypeId = 1, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Password", IsRequired = false, DataTypeId = 12, DataTypeName = "string" });
@@ -302,7 +302,7 @@
 //            error_message.Severity = ValidationSeverity.Error;
 //            error_message.MessageKey = null;
 //            error_message.Description = null;
-            
+
 
 //            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField, ErrorMessage = error_message };
 
@@ -317,7 +317,7 @@
 //        [Test]
 //        public void Common_Create_Wrong_Mail_Test()
 //        {
-//            List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();            
+//            List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
 //            uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 2, Value = "21" });
 
 //            List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
@@ -371,7 +371,7 @@
 
 //            value.ErrorMessage.Should().BeEquivalentTo(expectedResult.ErrorMessage);
 //        }
-        
+
 //        /*
 //         * Description: To validate the Adhar Detail from validations in Create Post Method 
 //         * Step - Passing Parameter =  Record of RecordDTO Model 
@@ -382,7 +382,7 @@
 //        {
 //            List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
 //            uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 3, Value = "641568763619" });
-            
+
 
 //            List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
 //            uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 3, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "AdharNo", IsRequired = false, DataTypeId = 12, DataTypeName = "varchar(12)" });
@@ -426,7 +426,7 @@
 
 //            value.Should().BeEquivalentTo(expectedResult);
 //        }
-       
+
 //        /*
 //         * Description: This method is to validate the Mobile No 
 //         * step1- Passing Parameter = Record of RecordDTO model 
@@ -494,8 +494,8 @@
 //        {
 //            List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
 //            //For AAdhar
-//            uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 3, Value = "64156876361"});
-           
+//            uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 3, Value = "64156876361" });
+
 //            List<UiPageMetadataModel> uiPageMetaDataModels = new List<UiPageMetadataModel>();
 //            uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 3, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "AdharNo", IsRequired = false, DataTypeId = 12, DataTypeName = "varchar(12)" });
 
@@ -542,10 +542,10 @@
 //            List<UiPageMetadataDTO> uiPageDTOFields = new List<UiPageMetadataDTO>();
 //            uiPageDTOFields.Add(new UiPageMetadataDTO { Id = 3, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "AdharNo", IsRequired = false, DataTypeId = 12, DataTypeName = "varchar(12)" });
 
-//            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField ,ErrorMessage = error };
+//            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField, ErrorMessage = error };
 
 //            value.ErrorMessage.Should().BeEquivalentTo(expectedResult.ErrorMessage);
-            
+
 
 //        }
 //        /*
@@ -558,7 +558,7 @@
 //        public void Common_Create_Post_Mob_Test()
 //        {
 //            List<UiPageDataDTO> uipagedata = new List<UiPageDataDTO>();
-            
+
 //            //for MobileNo
 //            uipagedata.Add(new UiPageDataDTO { UiPageId = 0, UiPageMetadataId = 4, Value = "8709282" });
 
@@ -609,10 +609,10 @@
 //            error_message.MessageKey = null;
 //            error_message.Description = null;
 
-//            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField , ErrorMessage = error_message };
+//            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField, ErrorMessage = error_message };
 
 //            value.ErrorMessage.Should().BeEquivalentTo(expectedResult.ErrorMessage);
-         
+
 
 //        }
 //        /// <summary>
@@ -669,7 +669,7 @@
 
 //            value.Should().BeEquivalentTo(expectedResult);
 //        }
-        
+
 //        /*
 //         * Description: This method is to validate the Create Method for Passing Wrong Value of Year 
 //         * step- Passing Parameter= Record of recordDTO
@@ -729,12 +729,12 @@
 //            List<UiPageMetadataDTO> uiPageDTOFields = new List<UiPageMetadataDTO>();
 //            uiPageDTOFields.Add(new UiPageMetadataDTO { Id = 5, UiPageTypeId = 3, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Year", IsRequired = false, DataTypeId = 12, DataTypeName = "int" });
 
-//            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField  };
+//            var expectedResult = new RecordDTO { Id = 1, UiPageId = 12, Fields = uiPageDTOFields, FieldValues = expectField };
 
 //            value.Should().NotBeEquivalentTo(expectedResult);
 //        }
 
-        
+
 //        /* Description
 //         * IgenericRepository = It is returning a Record model base on the UipageId
 //         * Expected = This is returning a recordDTO model 
@@ -746,7 +746,7 @@
 //            uiPageMetaDataModels.Add(new UiPageMetadataModel { Id = 5, UiPageTypeId = 10, UiPageTypeName = null, UiControlTypeId = 6, UiControlTypeName = null, UiControlDisplayName = "Year", IsRequired = false, DataTypeId = 12, DataTypeName = "int" });
 
 //            List<UiPageDataModel> uiPageDataModels = new List<UiPageDataModel>();
-           
+
 //            uiPageDataModels.Add(new UiPageDataModel { Id = 3, UiPageId = 10, RecordId = 14, UiPageMetadataId = 4, Value = "Ritesh1244" });
 //            uiPageDataModels.Add(new UiPageDataModel { Id = 5, UiPageId = 10, RecordId = 14, UiPageMetadataId = 5, Value = "Ritesh44" });
 
@@ -777,11 +777,11 @@
 //            result.Model.Should().BeEquivalentTo(expectedResult);
 //        }
 
-//      /*
-//       * Description: This method is to validate the post method With valid Record
-//       * step1- Passing Parameter = Record of recordDTO 
-//       * ExpectedResult = Record of RecordDTO
-//       */
+//        /*
+//         * Description: This method is to validate the post method With valid Record
+//         * step1- Passing Parameter = Record of recordDTO 
+//         * ExpectedResult = Record of RecordDTO
+//         */
 //        [Test]
 //        public void common_Edit_POST_True_Test()
 //        {
@@ -843,12 +843,12 @@
 //            value.Should().BeEquivalentTo(expectedResult);
 //        }
 
-        
+
 //        /* 
 //         * Description: This method is to validate the Record with validation and the existing value 
 //         * step - passing parameter = Record of RecordDTO 
 //         * ExpectedResult = RecordDTO record with error Message 
-//        */ 
+//        */
 //        [Test]
 //        public void Common_controller_EDIT_POSt_Wrong_value_Test()
 //        {
@@ -907,7 +907,7 @@
 //            var expectedResult = new RecordDTO { Id = 5, UiPageId = 10, Fields = uiPageDTOFields, FieldValues = expectField };
 
 //            value.Should().NotBeEquivalentTo(expectedResult);
-           
+
 //        }
 
 
@@ -961,7 +961,7 @@
 //         * Description: This Method is to Delete the Record Of the Passed Id 
 //         * Steps: Passing Parameter = Id ,
 //         * Expect Result : Record Of RecordDTO
-//         */ 
+//         */
 //        [Test]
 //        public void Common_Delete_Post_Test()
 //        {
@@ -977,7 +977,7 @@
 //            result.ActionName.Should().BeEquivalentTo(expectedResult);
 
 //        }
-        
+
 //        /*
 //         * Description :Passing Null to Validate the Method 
 //         * Expected Result : Error 404 

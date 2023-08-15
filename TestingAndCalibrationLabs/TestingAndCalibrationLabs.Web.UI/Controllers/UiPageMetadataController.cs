@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
@@ -199,7 +200,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _uiPageMetadataService.Delete((int)id);
-            TempData["IsTrue"] = true;
+            TempData["IsTrue"] = false;
             return RedirectToAction("Index");
         }
     }
