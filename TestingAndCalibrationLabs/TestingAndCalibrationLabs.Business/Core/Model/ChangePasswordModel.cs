@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class ChangePasswordModel

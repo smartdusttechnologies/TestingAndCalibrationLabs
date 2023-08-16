@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-
+﻿using System.ComponentModel.DataAnnotations;
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class ChangePasswordDTO
