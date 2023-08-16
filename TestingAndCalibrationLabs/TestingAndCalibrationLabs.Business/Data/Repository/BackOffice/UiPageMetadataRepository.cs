@@ -129,7 +129,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UiPageMetadataModel>(@"Select upm.Id,
                                                         upm.IsRequired,
                                                         upm.UiControlTypeId,
-                                                        uct.[Name] as UiControlTypeName,
+                                                        uct.DisplayName as UiControlTypeName,
                                                         upm.UiControlDisplayName,
                                                         upm.DataTypeId,
 														upt.Name as UiPageTypeName,
