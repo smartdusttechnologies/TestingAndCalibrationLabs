@@ -60,22 +60,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-            return View(new ForgotPasswordDTO());
+            return View(new OtpDTO());
         }
         /// <summary>
         /// Method for otp and Email validation and Varification Code on Email
         /// </summary>
         /// <param name="model"></param>
         [HttpPost]
-        public IActionResult ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
+        public IActionResult ForgotPassword(OtpDTO OtpDTO)
         {
-                var emailResult = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotPasswordDto);
+                var emailResult = _mapper.Map<OtpDTO, OtpModel>(OtpDTO);
                 var userVerify = _authenticationService.EmailValidateForgotPassword(emailResult);
                 if (userVerify.IsSuccessful)
                 {
-                    forgotPasswordDto.UserId = userVerify.RequestedObject;
-                    _authenticationService.CreateOtp(emailResult, forgotPasswordDto.UserId);
-                    return Ok(forgotPasswordDto);
+                    OtpDTO.UserId = userVerify.RequestedObject;
+                    _authenticationService.CreateOtp(emailResult, OtpDTO.UserId);
+                    return Ok(OtpDTO);
                 }
             return BadRequest(userVerify.ValidationMessages);
         }
@@ -84,9 +84,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="model"></param
         [HttpPost]
-        public IActionResult ValidateOTP(ForgotPasswordDTO forgotPasswordDto)
+        public IActionResult ValidateOTP(OtpDTO OtpDTO)
          {
-            var otpReturn = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotPasswordDto);
+            var otpReturn = _mapper.Map<OtpDTO, OtpModel>(OtpDTO);
             var user = _authenticationService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
@@ -108,9 +108,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="forgotpassswordmodel"></param>
         [HttpPost]
-        public IActionResult ResetPassword(ForgotPasswordDTO forgotPasswordDto)
+        public IActionResult ResetPassword(OtpDTO OtpDTO)
         {
-            var passwordRequest = _mapper.Map<ForgotPasswordDTO, ForgotPasswordModel>(forgotPasswordDto);
+            var passwordRequest = _mapper.Map<OtpDTO, OtpModel>(OtpDTO);
             var result = _authenticationService.UpdatePassword(passwordRequest);
             if (result.IsSuccessful)
             {
@@ -122,9 +122,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method to Resend OTP
         /// </summary>
         /// <param name="forgotpassword"></param>
-        public IActionResult ResendOTP(ForgotPasswordDTO forgotPasswordDto)
+        public IActionResult ResendOTP(OtpDTO OtpDTO)
         {
-          return Ok(ForgotPassword(forgotPasswordDto));
+          return Ok(ForgotPassword(OtpDTO));
         }
     }
 }

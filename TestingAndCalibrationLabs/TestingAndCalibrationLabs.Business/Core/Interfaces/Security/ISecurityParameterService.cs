@@ -11,6 +11,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         RequestResult<bool> ValidateNewuserPolicy(UserModel user);
         RequestResult<bool> ValidatePasswordPolicy( int orgId, string Password);
-        RequestResult<bool> ChangePasswordCondition(ForgotPasswordModel forgotPasswordModel);
+        RequestResult<bool> ChangePasswordCondition(OtpModel OtpModel);
     }
 }

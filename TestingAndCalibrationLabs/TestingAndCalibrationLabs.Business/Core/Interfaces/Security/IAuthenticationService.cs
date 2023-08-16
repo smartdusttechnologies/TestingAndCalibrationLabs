@@ -10,9 +10,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
 
         RequestResult<bool> Add(UserModel user, string password);
-        RequestResult<int> EmailValidateForgotPassword(ForgotPasswordModel forgotPasswordModel);
-        RequestResult<int> CreateOtp(ForgotPasswordModel forgotPasswordModel, int userId);
-        RequestResult<int> ValidateOTP(ForgotPasswordModel forgotPasswordModel);
-        RequestResult<bool> UpdatePassword(ForgotPasswordModel forgotPasswordModel);
+        RequestResult<int> EmailValidateForgotPassword(OtpModel OtpModel);
+        RequestResult<int> CreateOtp(OtpModel OtpModel, int userId);
+        RequestResult<int> ValidateOTP(OtpModel OtpModel);
+        RequestResult<bool> UpdatePassword(OtpModel OtpModel);
     }
 }

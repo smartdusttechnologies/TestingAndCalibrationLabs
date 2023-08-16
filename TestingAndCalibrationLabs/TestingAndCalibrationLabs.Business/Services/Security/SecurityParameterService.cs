@@ -143,7 +143,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public RequestResult<bool> ChangePasswordCondition(ForgotPasswordModel forgotPasswordModel)
+        public RequestResult<bool> ChangePasswordCondition(OtpModel forgotPasswordModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             if (forgotPasswordModel.NewPassword.IsNullOrEmpty())
