@@ -93,16 +93,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         }
             public int Update(ChangePasswordModel changePasswordModel)
             {
-            var DynamicPara = new DynamicParameters();
-            DynamicPara.Add("@PasswordHash", "PasswordHash");
-            DynamicPara.Add("@PasswordSalt", "PasswordSalt");
+            var dynamicPara = new DynamicParameters();
+            dynamicPara.Add("@PasswordHash", "PasswordHash");
+            dynamicPara.Add("@PasswordSalt", "PasswordSalt");
 
-               string ChangePasswordQuery = @"update [PasswordLogin] Set
+               string changePasswordQuery = @"update [PasswordLogin] Set
                                            PasswordHash = @PasswordHash,
                                            PasswordSalt = @PasswordSalt
                                                 Where UserId = @UserId";
                using IDbConnection db = _connectionFactory.GetConnection;
-               return db.Execute(ChangePasswordQuery, changePasswordModel);
+               return db.Execute(changePasswordQuery, changePasswordModel);
             }
     }
 }

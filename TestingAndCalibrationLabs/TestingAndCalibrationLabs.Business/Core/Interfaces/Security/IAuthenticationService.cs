@@ -10,6 +10,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Interfaces to Add new and validate existing user for Registration
         /// </summary>
         RequestResult<bool> Add(UserModel user, string password);
-        RequestResult<bool> UpdatePassword(ChangePasswordModel cangePasswordModel);
+        RequestResult<bool> UpdatePassword(ChangePasswordModel changePasswordModel);
     }
 }
