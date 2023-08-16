@@ -68,6 +68,7 @@
 </script>
 <script type="text/javascript">
     var mainModel = JSON.parse('@Json.Serialize(Model)');
+    debugger
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
@@ -85,6 +86,7 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
+        debugger
         for (let i = 0; i < layout.length; i++) {
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
@@ -95,14 +97,18 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-                  if (layout[i].uiPageData != null) {
-                   for (let j = 0; j < uiPageData.length; j++) {
-                       var pageDataId = layout[i].uiPageData[j].id;
-                       var childIds = layout[i].uiPageData[j].childId;
-                       var RecordIds = layout[i].uiPageData[j].recordId;
-                       var oldValue = layout[i].uiPageData[j].value;
+                  if (layout[i].uiPageData != 0) {
+                   //for (let j = 0; j < uiPageData.length; j++) {
+                       //var pageDataId = layout[i].uiPageData[j].id;
+                       //var childIds = layout[i].uiPageData[j].childId;
+                       //var RecordIds = layout[i].uiPageData[j].recordId;
+                       //var oldValue = layout[i].uiPageData[j].value;
+                        var pageDataId = layout[i].uiPageData[0].id;
+                        var childIds = layout[i].uiPageData[0].childId;
+                        var RecordIds = layout[i].uiPageData[0].recordId;
+                        var oldValue = layout[i].uiPageData[0].value;
                        var List;
-                   }
+                   //}
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
                             var filddata = $(fieldId).val();
@@ -120,6 +126,7 @@
                                 fieldValues.push(keyValuepair)
                             }
                         }
+                     
                         function findChildId(uiPageData, value) {
                             var childId = uiPageData.find(item => item.value === value)?.childId;
                             return childId !== undefined ? childId : null;
@@ -134,15 +141,25 @@
                                 fieldValues.push(keyValuepair)
                             }
                     }
+                    //else {
+                    //    var fieldValue = $(fieldId).val();
+                    //    var keyValuepair = {};
+                    //    keyValuepair.UiPageMetadataId = metadataId;
+                    //    keyValuepair.UiPageTypeId = uiPageTypeId;
+                    //    keyValuepair.Value = fieldValue;
+                    //    fieldValues.push(keyValuepair)
+                    //}
                     
                   }
-                else {
+                else 
+                {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = RecordIds;
                     keyValuepair.Value = fieldValue;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
+              
                 }
             }
         }

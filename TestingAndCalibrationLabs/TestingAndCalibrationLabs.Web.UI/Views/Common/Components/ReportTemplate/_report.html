@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous" />
+
+    <style>
+        .centre {
+            display: flex;
+            justify-content: center;
+        }
+
+        .table-centre {
+            justify-content: center;
+            display: grid;
+        }
+
+        .report-content {
+            border: 3px solid black;
+            width: 80%;
+            padding: 9px;
+            box-shadow: 10px 10px 10px #888888;
+            /*  margin-left: 12%;*/
+            margin-top: 2%;
+        }
+
+        .report-header {
+            border: 0px solid black;
+            height: 150px;
+        }
+
+        .report-body {
+            margin-top: 80px;
+            border: 0px solid black;
+            height: 300px;
+            text-align: center;
+            font-size: 100px;
+            padding: 100px;
+            transform: rotate(-50deg);
+            color: grey;
+            text-transform: uppercase;
+        }
+
+        .report-sign {
+            border: 0px solid black;
+            height: 100px;
+            margin: 30px 30px;
+        }
+
+        .report-footer {
+            border: 0px solid black;
+            height: 150px;
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .lab-doctor-sign {
+            float: right;
+        }
+
+        .report-sign img {
+            height: 50px;
+            width: 100px;
+            display: inline-block;
+        }
+
+        .lab-incharge-sign {
+            display: inline-block;
+        }
+
+        .align-left {
+            text-align: left;
+            padding: 10px;
+        }
+        .boldtext {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-content">
+        <!--<div class="report-header">
+            <img src="https://labsmart-healthcare-trial.s3.us-west-2.amazonaws.com/diagnostic_lab_524/sample_report_header.jpg"
+                 alt="lab-name-header" />
+        </div>-->
+        <div class="patient-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col center">
+                        <table border="0" class="">
+                            <tr>
+                                <td class="boldtext">
+                                    Issued to:<br />
+                                    Assistant Manager,<br />
+                                    Indian Oil Corporation Limited,<br />
+                                    CGD-Aurangabad GA.
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table border="0" class="table-centre">
+                            <tr>
+                                <td class="boldtext">Date of Report</td>
+                                <td class="align-left">**fieldvalue1**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Report No:</td>
+                                <td class="align-left">**fieldvalue2**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Date of Sample Receipt </td>
+                                <td class="align-left">**fieldvalue3**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Period of Testing</td>
+                                <td class="align-left">**fieldvalue4**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">JOB.S. NO.</td>
+                                <td class="align-left">**fieldvalue5**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">JOB CODE NO.</td>
+                                <td class="align-left">**fieldvalue6**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">ULR No.</td>
+                                <td class="align-left">**fieldvalue7**</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <table border="0" class="">
+                            <tr>
+                                <td class="boldtext">Name of Customer :</td>
+                                <td class="align-left">**fieldvalue8**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Customer Ref. No. to GTRL: </td>
+                                <td class="align-left">**fieldvalue9**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Customer-Client Agreement No.</td>
+                                <td class="align-left">**fieldvalue10**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Sample Description</td>
+                                <td class="align-left">**fieldvalue11**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Name of Work:</td>
+                                <td class="align-left">**fieldvalue12**</td>
+                            </tr>
+                            <!--<tr>
+                                <td>**field13**</td>
+                                <td class="align-left">**fieldvalue13**</td>
+                            </tr>
+                            <tr>
+                                <td>**field14**</td>
+                                <td class="align-left">**fieldvalue14**</td>
+                            </tr>-->
+                        </table>
+                    </div>
+                </div>
+                <!--<p class="table-centre">This Is Raj</p>-->
+                <!--<div class="row">
+                    <div class="col table-centre">One</div>
+                    <div class="col table-centre">2</div>
+                    <div class="col table-centre">3</div>
+                </div>-->
+                <div class="row">
+                    <div class="col">
+                        <table>
+                           
+                            <tr class="table-centre">
+                                <th>S.No.</th>
+                            </tr>
+                            <!--<tr class="table-centre">
+                                <td>Conpressive Strenth</td>
+                            </tr>-->
+                            <!--<tr class="table-centre">
+                                <td>{Mpa or N/mm2}</td>
+                            </tr>-->
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Test</th>
+                            </tr>
+                            <table>
+                                <!--<tr>
+                                    <th>Length</th>
+                                    <th>Width</th>
+                                    <th>Height</th>
+                                </tr>
+                                <tr>
+                                    <td>150</td>
+                                    <td>150</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>150</td>
+                                    <td>150</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>150</td>
+                                    <td>150</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>150</td>
+                                    <td>150</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>150</td>
+                                    <td>150</td>
+                                    <td>150</td>
+                                </tr>-->
+                            </table>
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Test Method</th>
+                            </tr>
+
+                            <!--<tr>
+
+                                <td>22500</td>
+                            </tr>
+                            <tr>
+                                <td>22500</td>
+
+                            </tr>
+                            <tr>
+                                <td>22500</td>
+
+                            </tr>
+                            <tr>
+                                <td>22500</td>
+
+                            </tr-->
+
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Results</th>
+                            </tr>
+
+                            <!--<tr>
+
+                                <td>3375</td>
+                            </tr>
+                            <tr>
+                                <td>3375</td>
+
+                            </tr>
+                            <tr>
+                                <td>3375</td>
+
+                            </tr>-->
+
+
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Requirement Ref. IS No<br /> 456:2000 (Clause. 5.4)</th>
+                            </tr>
+
+                            <!--<tr>
+
+                                <td>7937</td>
+                            </tr>
+                            <tr>
+                                <td>7765</td>
+
+                            </tr>
+                            <tr>
+                                <td>7069</td>
+
+                            </tr>-->
+
+
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Conformity</th>
+                            </tr>
+
+                            <!--<tr>
+
+                                <td>2.352</td>
+                            </tr>
+                            <tr>
+                                <td>2.302</td>
+
+                            </tr>
+                            <tr>
+                                <td>2.283</td>
+
+                            </tr>-->
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- <hr>
+
+            <hr> -->
+        </div>
+        <!-- <div class="report-body">
+            Report
+        </div> -->
+
+        <!--<div class="report-sign">
+            <div class="lab-incharge-sign">
+                <img src="https://labsmart-healthcare-trial.s3.us-west-2.amazonaws.com/diagnostic_lab_524/sample_lab_incharge_sign.jpg" />
+                <figcaption>Mr. Sachin Sharma</figcaption>
+            </div>-->
+            <!--<div class="lab-doctor-sign">
+                <img src="https://labsmart-healthcare-trial.s3.us-west-2.amazonaws.com/diagnostic_lab_524/sample_pathologist_sign.jpg" />
+                <figcaption>Dr. A.K. Asthana</figcaption>
+            </div>
+        </div>-->
+
+        <!--<div class="report-footer">
+            <img src="https://labsmart-healthcare-trial.s3.us-west-2.amazonaws.com/diagnostic_lab_524/sample_report_footer.jpg"
+                 alt="lab-footer" />
+        </div>-->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+            integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+            crossorigin="anonymous"></script>
+</body>
+</html>

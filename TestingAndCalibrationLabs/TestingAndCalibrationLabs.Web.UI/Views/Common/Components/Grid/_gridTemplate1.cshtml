@@ -116,6 +116,7 @@
     //Inserting Record
     let saveRecords = (subRId) => {
         WheelLoader();
+        debugger
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         const getMembers = (member) => {
 
@@ -133,12 +134,25 @@
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = layout[i].uiPageMetadata.id;
+                debugger
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
-                var uiPageData = layout[i].uiPageData;
-                if (layout[i].uiPageData != null) {
-                    var pageDataId = layout[i].uiPageData.id;
-                    var oldValue = layout[i].uiPageData.value;
+
+                if (fieldValue == ""){
+                    keyValuepair.RecordId = id;
+                    keyValuepair.uiPageMetadataId = metadataId;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
+                    fieldValues.push(keyValuepair)
+                }
+               //else{
+                  var uiPageData = layout[i].uiPageData;
+                 if (layout[i].uiPageData != null) {
+                    //var pageDataId = layout[i].uiPageData.id;
+                    for (let j = 0; j < uiPageData.length; j++) {
+                    var pageDataId = layout[i].uiPageData[j].id;
+                    var childIds = layout[i].uiPageData[j].childId;
+                    var oldValue = layout[i].uiPageData[j].value;
+                    }
                     if (oldValue != fieldValue) {
                         keyValuepair.Id = pageDataId;
                         keyValuepair.uiPageMetadataId = metadataId;
@@ -146,8 +160,10 @@
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
+                   
                     }
-                }
+                  }
+               //}
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.UiPageMetadataId = metadataId;

@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Common\Components\ReportTemplate\_report.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\Common\Components\ReportTemplate\_report.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.18.1" />

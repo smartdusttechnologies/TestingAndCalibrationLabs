@@ -110,8 +110,15 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)
+                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList(),
+
             }));
+            //List<LayoutModel> hirericheys = new List<LayoutModel>();
+            //pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
+            //{
+            //    UiPageMetadata = x,
+            //    UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
+            //})) ;
             foreach (var item in hirericheys)
             {
                 if (item.UiPageMetadata.ControlCategoryName == "DataControl" && item.UiPageMetadata.MultiValueControl != true)
@@ -120,9 +127,16 @@ namespace TestingAndCalibrationLabs.Business.Services
                     {
                         item.UiPageMetadata.UiControlDisplayName = item.UiPageMetadata.MetadataModuleBridgeUiControlDisplayName;
                     }
-                    string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
-                    var fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
-                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
+                    if (item.UiPageMetadata.Orders !=0)
+                    {
+                        string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
+                        string fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
+                        // string fieldValues = string.Format("**fieldvalue{0}**", item.UiPageData.Count);
+
+                        // template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
+
+                        template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
+                    }
                 }
             }
             var multiVal = GetMultiControlValue(recordId);
