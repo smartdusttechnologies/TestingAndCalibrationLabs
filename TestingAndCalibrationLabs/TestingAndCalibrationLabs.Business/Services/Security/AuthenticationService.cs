@@ -196,6 +196,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
+                    var SendOTP = CreateOtp(user, passwordLogin.UserId);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
@@ -246,10 +247,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the Email
         /// </summary>
-        public RequestResult<int> EmailValidateForgotPassword(OtpModel OtpModel)
+        public RequestResult<int> EmailValidateForgotPassword(UserModel UserModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-           UserModel existingUser = _authenticationRepository.GetLoginEmail(OtpModel.Email);
+           UserModel existingUser = _authenticationRepository.GetLoginEmail(UserModel.Email);
             if (existingUser == null)
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
@@ -261,16 +262,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to validate OTP
         /// </summary>
-        /// <param name="OtpModel"></param>
+        /// <param name="UserModel"></param>
         /// <returns></returns>
-        public RequestResult<int> ValidateOTP(OtpModel OtpModel)
+        public RequestResult<int> ValidateOTP(UserModel UserModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            OtpModel existingUser = _authenticationRepository.GetOTP(OtpModel.UserId);
-           if (OtpModel.OTP == existingUser.OTP)
+            UserModel existingUser = _authenticationRepository.GetOTP(UserModel.UserId);
+           if (UserModel.OTP == existingUser.OTP)
             {
                 double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
-                if (OtpModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
+                if (UserModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
                 {
                     return new RequestResult<int>(existingUser.UserId);
                 }
@@ -291,26 +292,26 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Reset Password 
         /// </summary>
-        /// <param name="OtpModel"></param>
+        /// <param name="UserModel"></param>
         /// <returns></returns>
-        public RequestResult<bool> UpdatePassword(OtpModel OtpModel)
+        public RequestResult<bool> UpdatePassword(UserModel UserModel)
         {
             try
             {
-                var passwordResult = _securityParameterService.ChangePasswordCondition(OtpModel);
+                var passwordResult = _securityParameterService.ChangePasswordCondition(UserModel);
                 if (passwordResult.IsSuccessful)
                 {
-                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, OtpModel.NewPassword);
-                    var PasswordLogin = _authenticationRepository.GetUserIdPassword(OtpModel.UserId);
+                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, UserModel.NewPassword);
+                    var PasswordLogin = _authenticationRepository.GetUserIdPassword(UserModel.UserId);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     if (ValidationResult.IsSuccessful)
                     {
                         if (passwordResult.IsSuccessful)
                         {
-                            PasswordLogin newPasswordLogin = Hasher.HashPassword(OtpModel.NewPassword);
-                            OtpModel passwordModel = new OtpModel();
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(UserModel.NewPassword);
+                            UserModel passwordModel = new UserModel();
                             passwordModel.PasswordHash = newPasswordLogin.PasswordHash;
-                            passwordModel.UserId = OtpModel.UserId;
+                            passwordModel.UserId = UserModel.UserId;
                             passwordModel.ChangeDate = DateTime.Now;
                             passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
                             _userRepository.UpdatePassword(passwordModel);
@@ -329,11 +330,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method To Create OTP though user email 
         /// </summary>
-        /// <param name="OtpModel"></param>
+        /// <param name="UserModel"></param>
         /// <returns></returns>
-        public RequestResult<int> CreateOtp(OtpModel OtpModel, int userId)
+        public RequestResult<int> CreateOtp(UserModel UserModel, int userId)
         {
-            var myEmail = _authenticationRepository.GetLoginEmail(OtpModel.Email);
+            var myEmail = _authenticationRepository.GetLoginEmail(UserModel.Email);
             var UserId = userId;
             string otp = GenerateOTP();
             string subject = "OTP Verification";
@@ -344,12 +345,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             model.BodyImage = _configuration["ForgotPassOTP:BodyImageLink"];
             model.LogoImage = _configuration["ForgotPassOTP:LogoLink"];
             model.Email = new List<string>();
-            model.Email.Add(OtpModel.Email);
+            model.Email.Add(UserModel.Email);
             model.HtmlMsg = CreateBody(model.EmailTemplate);
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
             model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*",model.BodyImage);
             model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
-            OtpModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
+            UserModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
             try
             {
                 _emailService.Sendemail(model);

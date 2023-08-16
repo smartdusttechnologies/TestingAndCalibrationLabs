@@ -43,8 +43,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return Ok(result.RequestedObject);
             }
             return BadRequest(result.ValidationMessages);
+        }
+        [HttpGet]
+        public IActionResult SendOtp()
+        {
+           return View();
 
         }
-
     }
 }

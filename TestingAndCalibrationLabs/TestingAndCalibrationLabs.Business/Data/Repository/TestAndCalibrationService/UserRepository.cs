@@ -89,7 +89,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="newpassword"></param>
         /// <returns></returns>
-        public int UpdatePassword(OtpModel forgotPasswordModel)
+        public int UpdatePassword(UserModel UserModel)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@PasswordHash", "PasswordHash");
@@ -101,7 +101,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                            ChangeDate =@ChangeDate
                                                 Where UserId = @UserId";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(changepasswordQuery, forgotPasswordModel);
+            return db.Execute(changepasswordQuery, UserModel);
         }
     }
 }

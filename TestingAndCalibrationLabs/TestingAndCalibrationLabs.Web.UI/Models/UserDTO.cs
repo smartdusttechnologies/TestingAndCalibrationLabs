@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -74,6 +75,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public int AdminLevel { get; set; }
 
-        
+        ////new implimetetion///
+
+
+        public int UserId { get; set; }
+        public string OTP { get; set; }
+        public DateTime CreatedDate { get; }
+        public string NewPassword { get; set; }
+        public string ConfirmPassword { get; set; }
+        public UserDTO()
+        {
+            CreatedDate = DateTime.Now;
+        }
+
+
     }
 }

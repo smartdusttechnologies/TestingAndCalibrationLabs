@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿using System;
+
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class UserModel : Entity
     {
@@ -61,5 +63,16 @@
         public int AdminLevel { get; set; }
         public string Password { get; set; }    
         public string ReEnterPassword { get; set; }
+
+        /////new implimentetion///
+
+        public int UserId { get; set; }
+        public string OTP { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string NewPassword { get; set; }
+        public string ConfirmPassword { get; set; }
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
+        public DateTime ChangeDate { get; set; }
     }
 }

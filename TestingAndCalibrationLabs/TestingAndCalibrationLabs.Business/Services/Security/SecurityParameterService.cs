@@ -143,20 +143,20 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public RequestResult<bool> ChangePasswordCondition(OtpModel forgotPasswordModel)
+        public RequestResult<bool> ChangePasswordCondition(UserModel UserModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            if (forgotPasswordModel.NewPassword.IsNullOrEmpty())
+            if (UserModel.NewPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (forgotPasswordModel.ConfirmPassword.IsNullOrEmpty())
+            else if (UserModel.ConfirmPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (forgotPasswordModel.NewPassword != forgotPasswordModel.ConfirmPassword)
+            else if (UserModel.NewPassword != UserModel.ConfirmPassword)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;

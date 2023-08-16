@@ -1,7 +1,6 @@
 ﻿using Google.Apis.Drive.v3.Data;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Core.Model;
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
     public interface ISecurityParameterService
@@ -11,6 +10,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         RequestResult<bool> ValidateNewuserPolicy(UserModel user);
         RequestResult<bool> ValidatePasswordPolicy( int orgId, string Password);
-        RequestResult<bool> ChangePasswordCondition(OtpModel OtpModel);
+        RequestResult<bool> ChangePasswordCondition(UserModel UserModel);
     }
 }
