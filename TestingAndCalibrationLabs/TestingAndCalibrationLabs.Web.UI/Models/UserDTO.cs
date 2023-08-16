@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Organization Id.
         /// </summary>
-        public int OrgnizationId { get; set; }
+        public string Organizations { get; set; }
 
         /// <summary>
         /// Admin Level.

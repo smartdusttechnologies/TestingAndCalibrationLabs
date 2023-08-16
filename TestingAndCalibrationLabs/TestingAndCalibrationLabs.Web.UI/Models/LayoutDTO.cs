@@ -8,7 +8,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public UiPageMetadataDTO UiPageMetadata { get; set; }
         public List<UiPageDataDTO> UiPageData { get; set; }
         
-
-
     }
 }

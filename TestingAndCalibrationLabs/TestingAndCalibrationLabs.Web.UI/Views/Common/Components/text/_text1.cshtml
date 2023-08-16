@@ -4,7 +4,8 @@
 <div class="row ms-1 me-1">
     <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
         <input class="form-input width-full black-border" type="text" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" />
-            <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName">@Model.Value.UiPageMetadata.UiControlDisplayName@if (Model.Value.UiPageMetadata.IsRequired)
+            <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id">
+                @Model.Value.UiPageMetadata.UiControlDisplayName@if (Model.Value.UiPageMetadata.IsRequired)
                 {
                     <span class="red-color">*</span>
                 }</label>

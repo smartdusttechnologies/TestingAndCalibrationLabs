@@ -11,8 +11,6 @@
         var lookupCategoryId = modelData.value.uiPageMetadata.lookupCategoryId;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
         var uiPageData = modelData.value.uiPageData;
-       
-
         $.ajax({
             type: "POST",
             url: "@Url.Action("LookupByCategoryId","Lookup")",

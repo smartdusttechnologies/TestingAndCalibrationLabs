@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Services;
@@ -59,25 +62,58 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(records);
         }
         /// <summary>
-        /// Method To Upload Images in Google Drive And Return The Url Of File
+        /// Method To Upload Images in Database
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-
         public IActionResult FileUpload()
         {
-
             List<string> imageId = new List<string>();
-            
-            foreach (var item in Request.Form.Files)
-            {
-                AttachmentModel attachmentModel = new AttachmentModel();
-                attachmentModel.DataUrl = item;
 
-                var result = _googleDriveService.Upload(attachmentModel);
-                imageId.Add(result.RequestedObject.FilePath);
+            foreach (var imagelenth in Request.Form.Files)
+            {
+                if (imagelenth != null)
+                {
+                    if (imagelenth.Length > 0)
+                    {
+                        //Getting FileName
+                        var ImageName = Path.GetFileName(imagelenth.FileName);
+                        //Getting file Extension
+                        var ImageExtension = Path.GetExtension(ImageName);
+                        // concatenating  FileName + FileExtension
+                        var NewImageName = String.Concat(Convert.ToString(Guid.NewGuid()), ImageExtension);
+                        var ObjImage = new FileUploadModel()
+                        {
+                            Name= NewImageName,
+                            FileType = ImageExtension,
+                            CreatedOn = DateTime.Now
+                        };
+                        using (var target = new MemoryStream())
+                        {
+                            imagelenth.CopyTo(target);
+                            ObjImage.DataFiles = target.ToArray();
+                        }
+                       var Imagecollection = _commonService.ImageUpload(ObjImage);
+                        imageId.Add(NewImageName.ToString());
+                    }
+                }
             }
             return Ok(imageId);
+        }
+        /// <summary>
+        /// Method To download Images 
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult DownloadImage(string ImageValue)
+        {
+           
+            FileUploadModel attachment = _commonService.DownloadImage(ImageValue);
+           
+            if (attachment != null)
+            {
+                 return File(new MemoryStream(attachment.DataFiles),Helpers.GetMimeTypes()[attachment.FileType] , attachment.Name);
+            }
+            return Ok("Can't find the Image");
         }
         /// <summary>
         /// Method To load Grid by given page Id And Template Details
@@ -102,8 +138,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
-            
-
         }
         [HttpGet]
         public ActionResult TemplateGenerate(int recordId, int metadataId)
@@ -208,9 +242,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
-            var adddata = _commonService.Save(records);
+            var adddata = _commonService.Save(records); 
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
+
             if (adddata.IsSuccessful)
             {
                 return Ok(recordModel);
@@ -249,19 +284,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
-        [HttpGet]
-        /// <param name="uiPageDataId"></param>
-
-        public ActionResult GetUiPageDataById(int uiPageDataId)
-        {
-            var result = _commonService.GetUiPageDataById((int)uiPageDataId);
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return BadRequest();
-        }
     }
-
-    
 }

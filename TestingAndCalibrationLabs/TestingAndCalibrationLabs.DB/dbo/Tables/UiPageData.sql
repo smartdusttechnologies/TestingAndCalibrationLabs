@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[UiPageData] (
     [Id]               INT           IDENTITY (1, 1) NOT NULL,
     [UiPageMetadataId] INT           NOT NULL,
-    [Value]            VARCHAR (500) NOT NULL,
     [IsDeleted]        BIT           CONSTRAINT [DF_UiPageData_IsDeleted] DEFAULT ((0)) NOT NULL,
     [RecordId]         INT           NOT NULL,
     [UiPageTypeId]     INT           NULL,
@@ -11,6 +10,8 @@
     CONSTRAINT [FK_UiPageData_UiPageMetadata_Id] FOREIGN KEY ([UiPageMetadataId]) REFERENCES [dbo].[UiPageMetadata] ([Id]),
     CONSTRAINT [FK_UiPageData_UiPageType] FOREIGN KEY ([UiPageTypeId]) REFERENCES [dbo].[UiPageType] ([Id])
 );
+
+
 
 
 

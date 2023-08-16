@@ -17,18 +17,20 @@ BEGIN
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),
-			   
+                (0, N'none', 1, 0),
 			   (1, N'Cube Testing', 1, 0),
-			   
 			   (2, N'Water Testing', 1, 0),
-			   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
-
+			   (7, N'Ui Page Validation',1,0),
+			   (8, N'Ui Page Navigation',1,0),
+			   (9, N'Ui Page Navigation Category',1,0),
+			   (10, N'Lookup Category',1,0),
+			   (11, N'Lookup',1,0),
+			   (12,N'DataType',1,0),
+			   (13, N'Ui ControlCategory Type',1,0)
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -79,7 +81,11 @@ BEGIN
 			   VALUES
               (1, N'int', 0),
 			  (2, N'string', 0),
-			  (3, N'bit', 0)
+			  (3, N'bit', 0),
+			  (4, N'Decimal', 0),
+			    (5, N'Date', 0),
+				 (6, N'Boolean', 0)
+			  
     SET IDENTITY_INSERT [dbo].[DataType]  OFF
 END
 GO
@@ -204,11 +210,7 @@ BEGIN
 			  (2010, N'Download', N'~/Views/Common/Components/Download/_download.cshtml', 0, 38),
 			  (2011, N'MultiControlGrid', N'~/Views/Common/Components/Grid/_gridMultiControl.cshtml', 0, 33),
 			  (2012, N'MultiselectDropdown',N'~/Views/Common/Components/MultiselectDropdown/_multiselectDropdown.cshtml',0,39),
-			  (2014, N'Text', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
-
-
-			
-
+			  (2014, N'Text Design', N'~/Views/Common/Components/Text/_text2.cshtml', 0, 1)
     SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  OFF
 END
 GO
@@ -304,13 +306,13 @@ BEGIN
 			(3012, 1, 0, N'Customer Name', 0, 2, 3, N'cu'),
 			(3013, 1, 0, N'Contant Person', 0, 2, 3, N'cP'),
 			(3014, 1, 0, N'Name', 0, 2, 3, N'name'),
-			(3016, 1, 1, N'Job Serial No', 0, 1, 3, N'jsn'),
-			(3017, 1, 1, N'Department Name', 0, 2, 2014, N'rd'),
+			(3016, 1, 1, N'Job Serial No', 0, 2, 3, N'jsn'),
+			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd'),
 			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df'),
-			(3019, 22, 1, N'Recived On', 0, 2, 1011, N'jklg'),
-			(3020, 1, 1, N'Job Order No / Ref No', 0, 1, 3, N'sdg'),
+			(3019, 22, 1, N'Recived On', 0, 5, 1011, N'jklg'),
+			(3020, 1, 1, N'Job Order No / Ref No', 0, 2, 3, N'sdg'),
 			(3021, 1, 0, N'Contact Person Name', 0, 2, 3, N'ds'),
-			(3024, 22, 0, N'TestReport Release Date', 0, 2, 1011, N'datee'),
+			(3024, 22, 0, N'TestReport Release Date', 0, 5, 1011, N'datee'),
 			(3025, 1, 0, N'Any Other Specific Requirment', 0, 2, 3, N'sdsf'),
 			(3026, 5, 0, N'Attachments', 0, 3, 2004, N'sfsd'),
 			(3027, 1, 0, N'Sample Type', 0, 3, 3, N'dfgf'),
@@ -333,12 +335,12 @@ BEGIN
 			(3046, 1, 0, N'Length', 0, 2, 3, N'0'),
 			(3047, 1, 0, N'Width', 0, 2, 3, N'0'),
 			(3048, 1, 0, N'Height', 0, 2, 3, N'0'),
-			(3049, 1, 1, N'mm²', 0, 2, 3, N'0'),
-			(3050, 1, 1, N'cm³', 0, 2, 3, N'0'),
+			(3049, 1, 1, N'mmï¿½', 0, 2, 3, N'0'),
+			(3050, 1, 1, N'cmï¿½', 0, 2, 3, N'0'),
 			(3051, 1, 0, N'gm', 0, 2, 3, N'0'),
-			(3053, 1, 0, N'gm/cm³', 0, 2, 3, N'0'),
+			(3053, 1, 0, N'gm/cmï¿½', 0, 2, 3, N'0'),
 			(3054, 1, 0, N'Load, KN', 0, 2, 3, N'0'),
-			(3056, 1, 1, N'Compressive Strength, N/mm²', 0, 2, 3, N'0'),
+			(3056, 1, 1, N'Compressive Strength, N/mmï¿½', 0, 2, 3, N'0'),
 			(3057, 1, 0, N'Average', 0, 2, 3, N'0'),
 			(3058, 38, 0, N'TestReport', 0, 2, 2010, N'0'),
 			(3059, 1, 0, N'Price', 0, 2, 3, N'0'),
@@ -346,7 +348,7 @@ BEGIN
 			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
 			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
 			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
-			(3064, 1, 0, N'ProgressStatus1', 0, 1, 2014, N'progress'),
+			(3064,0,0,N'ProgressStatus1',0,1,2014,N'0'),
 			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0')
 
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
@@ -378,10 +380,11 @@ BEGIN
 			  (1002, N'Settings', 3, 0),
 			  (1003, N'Profile', 4, 0),
 			  (1004, N'Notifications', 5, 0)
+			  
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -396,7 +399,13 @@ BEGIN
 			  (7, N'/UiPageType/Index/', 4, 1002, 0),
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
-			  (10, N'/UiPageValidation/Index/', 7, 1002, 0)
+			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
+              (11, N'/UiPageNavigation/Index/', 8, 1002, 0),
+              (12, N'/UiPageNavigationCategory/Index/', 9, 1002, 0),
+			  (13,N'/LookupCategory/Index/',10,1002,0),
+			  (14,N'/Lookup/Index/',11,1002,0),
+			  (15,N'/DataType/Index/',12,1002,0),
+			  (16,N'/UiControlCategoryType/Index/',13,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
@@ -530,7 +539,7 @@ BEGIN
 			(3024, 20, 15, 0, 1, 4, 0, NULL, 0),
 			(3025, 3024, 15, 0, 1, 4, 0, NULL, 0),
 			(3026, 3025, 15, 0, 1, 4, 0, NULL, 0),
-			(3029, 3026, 15, 0, 1, 4, 0, NULL, 0),
+			(3029, 3026, 15, 0, 1, 4, 0, NULL, 1),
 			(3030, 3027, 16, 0, 1, 5, 0, NULL, 0),
 			(3031, 3028, 16, 0, 1, 5, 0, NULL, 0),
 			(3032, 3029, 16, 0, 1, 5, 0, NULL, 0),
@@ -624,12 +633,8 @@ BEGIN
 			(3127, 3056, 17, 0, 1, 6, 0, NULL, 1),
 			(3129, 3057, 17, 0, 1, 6, 0, NULL, 1),
 			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
-			(3131,3065, 15, 0, 1, 4,0, NULL, 0),
-			(3132, 3064, 15, 0, 1, 0, 0, NULL, 0)
-
-
-
-
+			(3131,3064, 15, 0, 1, 0,0, NULL, 0),
+			(3132, 3065, 15, 0, 1, 4, 0, NULL, 1)
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  OFF
 END
 GO
@@ -719,104 +724,3 @@ BEGIN
 			  (12063, 0, 1, 4, CAST(N'2023-02-18T00:07:18.197' AS DateTime))
     SET IDENTITY_INSERT [dbo].[Record]  OFF
 END
-GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageData] WHERE Id = 0)
-BEGIN
-    SET IDENTITY_INSERT [dbo].[UiPageData]  ON
-
-    INSERT INTO [dbo].[UiPageData]
-              ([Id],
-			  [UiPageMetadataId],
-			  [Value],
-			  [IsDeleted],
-			  [RecordId],
-			  [UiPageTypeId],
-			  [SubRecordId])
-			  VALUES 
-			  (13187, 3016, N'124', 0, 12063, 15, NULL),
-			  (13188, 3017, N'Software', 0, 12063, 15, NULL),
-			  (13189, 3018, N'Rishi Rao', 0, 12063, 15, NULL),
-			  (13190, 3019, N'2023-02-17', 0, 12063, 15, NULL),
-			  (13191, 3020, N'14', 0, 12063, 15, NULL),
-			  (13192, 3021, N'Himanshu Jaiswal', 0, 12063, 15, NULL),
-			  (13193, 21, N'rajkumar00999.rk@gmail.com', 0, 12063, 15, NULL),
-			  (13194, 20, N'9308337299', 0, 12063, 15, NULL),
-			  (13195, 3024, N'2023-02-22', 0, 12063, 15, NULL),
-			  (13196, 3025, N'Want Mobile Support', 0, 12063, 15, NULL),
-			  (13197, 3026, N'', 0, 12063, 15, NULL),
-			  (13198, 3008, N'4', 0, 12063, 19, NULL),
-			  (13199, 3027, N'Website', 0, 12063, 16, NULL),
-			  (13200, 3028, N'RajguptaH.Github.io', 0, 12063, 16, NULL),
-			  (13201, 3029, N'2023-02-27', 0, 12063, 16, NULL),
-			  (13202, 3030, N'124', 0, 12063, 16, NULL),
-			  (13203, 3031, N'45', 0, 12063, 16, NULL),
-			  (13204, 3032, N'5', 0, 12063, 16, NULL),
-			  (13205, 3034, N'Website Testing With Mobility', 0, 12063, 16, NULL),
-			  (13206, 3035, N'Dot Net', 0, 12063, 16, NULL),
-			  (13207, 3036, N'Ritesh Kumar', 0, 12063, 16, NULL),
-			  (13208, 3037, N'2023-02-28', 0, 12063, 16, NULL),
-			  (13209, 3038, N'2023-03-09', 0, 12063, 16, NULL),
-			  (13210, 3039, N'This Needs To Done Within Five Days', 0, 12063, 16, NULL),
-			  (13211, 3040, N'2023-02-22', 0, 12063, 18, NULL),
-			  (13212, 3041, N'124', 0, 12063, 17, NULL),
-			  (13213, 3043, N'85', 0, 12063, 17, NULL),
-			  (13214, 3044, N'2023-02-21', 0, 12063, 17, NULL),
-			  (13215, 3047, N'512', 0, 12063, 17, NULL),
-			  (13216, 3048, N'512', 0, 12063, 17, NULL),
-			  (13217, 3045, N'25years', 0, 12063, 18, NULL),
-			  (13218, 3046, N'5cm', 0, 12063, 18, NULL),
-			  (13219, 3049, N'12', 0, 12063, 18, 1),
-			  (13220, 3050, N'95', 0, 12063, 18, 1),
-			  (13221, 3051, N'22', 0, 12063, 18, 1),
-			  (13222, 3053, N'45', 0, 12063, 18, 1),
-			  (13223, 3054, N'2456', 0, 12063, 18, 1),
-			  (13224, 3056, N'1324', 0, 12063, 18, 1),
-			  (13225, 3057, N'2.2', 0, 12063, 18, 1),
-			  (13226, 3049, N'58', 0, 12063, 18, 2),
-			  (13227, 3050, N'654', 0, 12063, 18, 2),
-			  (13228, 3051, N'45', 0, 12063, 18, 2),
-			  (13229, 3053, N'68', 0, 12063, 18, 2),
-			  (13230, 3054, N'498', 0, 12063, 18, 2),
-			  (13231, 3056, N'34546', 0, 12063, 18, 2),
-			  (13232, 3057, N'3.12', 0, 12063, 18, 2),
-			  (13233, 3049, N'4', 0, 12063, 18, 3),
-			  (13234, 3050, N'56.00', 0, 12063, 18, 3),
-			  (13235, 3051, N'46', 0, 12063, 18, 3),
-			  (13236, 3053, N'8.00', 0, 12063, 18, 3),
-			  (13237, 3054, N'42.00', 0, 12063, 18, 3),
-			  (13238, 3056, N'676', 0, 12063, 18, 3),
-			  (13239, 3057, N'465741', 0, 12063, 18, 3),
-			  (13240, 3049, N'54', 0, 12063, 18, 4),
-			  (13241, 3050, N'4', 0, 12063, 18, 4),
-			  (13242, 3051, N'4', 0, 12063, 18, 4),
-			  (13243, 3053, N'6', 0, 12063, 18, 4),
-			  (13244, 3054, N'87', 0, 12063, 18, 4),
-			  (13245, 3056, N'6465', 0, 12063, 18, 4),
-			  (13246, 3057, N'46', 0, 12063, 18, 4),
-			  (13247, 3049, N'45', 1, 12063, 18, 5),
-			  (13248, 3050, N'12', 1, 12063, 18, 5),
-			  (13249, 3051, N'54', 1, 12063, 18, 5),
-			  (13250, 3053, N'867', 1, 12063, 18, 5),
-			  (13251, 3054, N'4', 1, 12063, 18, 5),
-			  (13252, 3056, N'654', 1, 12063, 18, 5),
-			  (13253, 3057, N'76', 1, 12063, 18, 5),
-			  (13254, 3049, N'4', 0, 12063, 18, 6),
-			  (13255, 3050, N'3', 0, 12063, 18, 6),
-			  (13256, 3051, N'43', 0, 12063, 18, 6),
-			  (13257, 3053, N'534', 0, 12063, 18, 6),
-			  (13258, 3054, N'345', 0, 12063, 18, 6),
-			  (13259, 3056, N'345', 0, 12063, 18, 6),
-			  (13260, 3057, N'345', 0, 12063, 18, 6),
-			  (13261, 3049, N'43', 0, 12063, 18, 7),
-			  (13262, 3050, N'465', 0, 12063, 18, 7),
-			  (13263, 3051, N'312', 0, 12063, 18, 7),
-			  (13264, 3053, N'5', 0, 12063, 18, 7),
-			  (13265, 3054, N'31', 0, 12063, 18, 7),
-			  (13266, 3056, N'65', 0, 12063, 18, 7),
-			  (13267, 3057, N'132', 0, 12063, 18, 7),
-			  (13268, 3059, N'500.00', 0, 12063, 19, NULL),
-			  (13269, 3060, N'250.00', 0, 12063, 19, NULL),
-			  (13270, 3061, N'750.00', 0, 12063, 19, NULL)
-    SET IDENTITY_INSERT [dbo].[UiPageData]  OFF
-END
-GO

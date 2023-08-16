@@ -1,4 +1,7 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
     /// It Contains Properties For Lookup
@@ -12,19 +15,21 @@
         /// <summary>
         /// It Contains Name For Lookup
         /// </summary>
+        [Required(ErrorMessage = "Please Enter Name")]
         public string Name { get; set; }
         /// <summary>
         /// It Contains Id For Lookup Category
         /// </summary>
+        [Required(ErrorMessage = "Please choose LookupCategory Name")]
         public int LookupCategoryId { get; set; }
-        /// <summary>
-        /// It Contains LookupId For Lookup Category
-        /// </summary>
-        public int LookupId { get; set; }
         /// <summary>
         /// It Contains ParentId For Lookup
         /// </summary>
-
         public int ParentId { get; set; }
+        /// <summary>
+        /// It Contains LookupCategoryName based on LookupCategoryId
+        /// </summary>
+        public string LookupCategoryName { get; set; }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlDisplayName"></label>
+    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"></label>
     <textarea class="form-input width-full black-border" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder="@Model.Value.UiPageMetadata.UiControlDisplayName@if(Model.Value.UiPageMetadata.IsRequired){
     <span class=" red-color">*</span>
 }"  rows="1" onchange="this.setAttribute('value',this.value)"></textarea>

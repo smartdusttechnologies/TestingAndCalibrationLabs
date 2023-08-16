@@ -12,12 +12,26 @@ using System.Text;
 using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class CommonService : ICommonService
     {
         internal string UI_PAGE_NAME = string.Empty;
+        private ICommonRepository commonRepository;
+        private IGenericRepository<RecordModel> recordGenericRepository;
+        private IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository;
+        private IGenericRepository<UiPageDataModel> uiPageDataGenericRepository;
+        private IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository;
+        private IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository;
+        private IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository;
+        private IUiPageMetadataRepository uiPageMetadataRepository;
+        private IWorkflowActivityService workflowActivityService;
+        private IWebHostEnvironment webHostEnvironment;
+        private IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService;
         private readonly ICommonRepository _commonRepository;
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
         private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
@@ -29,6 +43,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
+        private readonly IGoogleDriveService _googleUploadDownloadService;
+
 
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
@@ -41,7 +57,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             IWorkflowActivityService workflowActivityService,
             IWebHostEnvironment webHostEnvironment,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
-
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
@@ -67,7 +82,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (requestResult.IsSuccessful)
             {
                 record.UpdatedDate = DateTime.Now;
+                //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
                 record.Id = _commonRepository.Insert(record);
+                // record.WorkflowStageId = workflowStageId;
+                //_workflowActivityService.WorkflowActivity(record)
                 return new RequestResult<bool>(true);
             }
             return requestResult;
@@ -92,7 +110,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)/*.ToList()*/
+                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)
             }));
             foreach (var item in hirericheys)
             {
@@ -166,6 +184,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
+                    //record.WorkflowStageId = oldRecord.WorkflowStageId;
+                    //_workflowActivityService.WorkflowActivity(record);
                 }
                 return new RequestResult<bool>(true);
 
@@ -216,17 +236,13 @@ namespace TestingAndCalibrationLabs.Business.Services
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
-        public List<UiPageDataModel> GetUiPageDataById(int uiPageDataId)
-        {
-            return _commonRepository.GetUiPageDataById(uiPageDataId);
-        }
 
-        /// <summary>
-        /// Get Record By Record Id
-        /// </summary>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public RecordModel GetRecordById(int recordId)
+    /// <summary>
+    /// Get Record By Record Id
+    /// </summary>
+    /// <param name="recordId"></param>
+    /// <returns></returns>
+    public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
@@ -247,9 +263,19 @@ namespace TestingAndCalibrationLabs.Business.Services
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel. WorkflowStageId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel.WorkflowStageId, Layout = hierarchy };
         }
         #region Multi Value Control
+        public int ImageUpload (FileUploadModel fileUpload)
+        {
+           var dataDownloaded = _commonRepository.FileUpload(fileUpload);
+              return dataDownloaded;
+        }
+        public FileUploadModel  DownloadImage(string ImageValue)
+        { 
+             var image = _commonRepository.ImageDownload(ImageValue);
+            return image;
+        }
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>
