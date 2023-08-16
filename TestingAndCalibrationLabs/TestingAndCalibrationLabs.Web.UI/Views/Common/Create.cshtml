@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Create";
 }
+<style>
+    .fixed-bottom {
+        position: relative;
+    }
+</style>
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
@@ -70,7 +75,7 @@
 </script>
 <script type="text/javascript">
     var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
         WheelLoader();
