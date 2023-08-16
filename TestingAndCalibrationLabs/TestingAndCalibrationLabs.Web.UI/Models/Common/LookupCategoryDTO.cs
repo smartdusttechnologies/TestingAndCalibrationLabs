@@ -1,4 +1,7 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+using TestingAndCalibrationLabs.Business.Core.Model;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
     /// It Contains Properties Of Lookup Category
@@ -12,6 +15,9 @@
         /// <summary>
         /// It Contains Name For Lookup Category
         /// </summary>
+        [Required(ErrorMessage = "Please Enter Name")]
+
         public string Name { get; set; }
+
     }
 }

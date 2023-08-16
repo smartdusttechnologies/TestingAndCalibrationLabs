@@ -10,11 +10,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class OrganizationService : IOrganizationService
     {
         private readonly IOrganizationRepository _organizationRepository;
+        private readonly IGenericRepository<Organization> _genericRepository;
         private readonly ILogger _logger;
-        public OrganizationService(IOrganizationRepository organizationRepository, ILogger logger)
+        public OrganizationService(IOrganizationRepository organizationRepository, ILogger logger, IGenericRepository<Organization> genericRepository)
         {
             _organizationRepository = organizationRepository;
             _logger = logger;
+            _genericRepository = genericRepository;
         }
 
         /// <summary>
@@ -23,13 +25,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<Organization> Get()
         {
             try
-            {
-                return _organizationRepository.Get();
+            {    //Changed organizationRepository to genericRepository
+                return _genericRepository.Get();
             }
             catch (Exception ex)
             {
                 //_logger.LogException(new ExceptionLog
-                // {
+                //{
                 //    ExceptionDate = DateTime.Now,
                 //    ExceptionMsg = ex.Message,
                 //    ExceptionSource = ex.Source,
@@ -48,7 +50,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             catch (Exception ex)
             {
                 //_logger.LogException(new ExceptionLog
-               // {
+                //{
                 //    ExceptionDate = DateTime.Now,
                 //    ExceptionMsg = ex.Message,
                 //    ExceptionSource = ex.Source,
@@ -76,6 +78,44 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //});
                 return null;
             }
+        } 
+        /// <summary>
+        /// Insert Record In Organization
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public RequestResult<int> Create(Organization organization)
+        {
+            _genericRepository.Insert(organization);
+            return new RequestResult<int>(1);
+        }
+        /// <summary>
+        /// Delete Record From Organization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Delete(int id)
+        {
+            return _genericRepository.Delete(id);
+        }
+        /// <summary>
+        /// Edit Record From Organization
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public RequestResult<int> Update(Organization organization)
+        {
+            _genericRepository.Update(organization);
+            return new RequestResult<int>(1);
+        }
+        /// <summary>
+        /// Get Record by Id For Organization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Organization GetById(int id)
+        {
+            return _genericRepository.Get(id);
         }
     }
 }

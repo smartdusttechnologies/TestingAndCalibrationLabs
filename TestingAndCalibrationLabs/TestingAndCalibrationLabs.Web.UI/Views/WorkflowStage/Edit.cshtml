@@ -1,0 +1,59 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.WorkflowStageDTO
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>WorkflowStage</h1>
+<h4>Edit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkflowStage" novalidate>
+            <div asp-validation-summary="All"></div>
+           <div class="row ms-1 me-1">           
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <label class="form-label" for="Name">Name</label>
+                </div>          
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">             
+                <select class="form-input " name="WorkflowId" id="WorkflowId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowId">
+                    <option disabled="disabled" selected>....</option>
+                    @foreach (var item in ViewBag.Workflow)
+                    {
+                        <option value=@item.Id>@item.Name</option>
+                    }
+                </select>
+                <label class="form-label" for="WorkflowId">WorkflowName</label>
+            </div>
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">             
+                <select class="form-input " name="UiPageTypeId" id="UiPageTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+                    <option disabled="disabled" selected>....</option>
+                    @foreach (var item in ViewBag.UiPageTypes)
+                    {
+                        <option value=@item.Id>@item.Name</option>
+                    }
+                </select>
+                <label class="form-label" for="UiPageType">UiPageTypeName</label>
+            </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
+                <label class="form-label" for="Orders">Orders</label>
+            </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

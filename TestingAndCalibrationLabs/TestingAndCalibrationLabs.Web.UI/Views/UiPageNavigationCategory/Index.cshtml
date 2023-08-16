@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TestingAndCalibrationLabs.Web.UI.Models.UiNavigationCategoryDTO>
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Ui Navigation Category</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
+    <div class="row mb-1">
+    </div>
+</div>
+<div class="table-responsive simple-pagination card shadow border-radius-grid">
+    <table id="gridui" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    <h6><b>Name</b></h6>
+                </th>
+                <th>
+                    <h6><b>Orders</b></h6>
+                </th>
+
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Orders)
+                    </td>
+                    <td>
+                    <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="UiPageNavigationCategory" asp-action="Edit" asp-route-id="@item.Id"></a>|
+                    <a class="fa fa-trash" style="margin:5px;color:red;" color:black; asp-controller="UiPageNavigationCategory" asp-action="Delete" asp-route-id="@item.Id"></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@if (ViewBag.IsSuccess != null && ViewBag.IsSuccess)
+{
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+    </svg>
+    <div class="d-flex justify-content-center fixed-bottom">
+        <div class="alert alert-success" role="alert" id="snackbar">
+            <svg class="bi flex-shrink-0 me-2" width="34" height="9" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <span><strong style="font-size:14px;">Changes saved successfully!! Thank you.</strong></span>
+        </div>
+    </div>
+}
+<script>
+    oTable = $('#gridui').DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
+        scrollX: true,
+    });
+    $('#gridsearch').keyup(function () {
+        oTable.search($(this).val()).draw();
+    })
+</script>
+
+
+
+
