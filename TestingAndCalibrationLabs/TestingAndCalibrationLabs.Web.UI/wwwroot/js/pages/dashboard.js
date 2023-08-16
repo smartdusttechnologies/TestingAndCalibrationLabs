@@ -137,7 +137,7 @@ $(function () {
         ]
 }
     for (var item = 0; item < ModelData.salesModel.salesData.length; item++) {
-        debugger;
+       
         salesChartData.datasets.push(DatasetValue[item]);
     }
     var salesChartOptions = {

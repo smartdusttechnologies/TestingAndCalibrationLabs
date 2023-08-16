@@ -20,12 +20,21 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             _querybuilderRepository = querybuilderRepository;
             _logger = logger;
         }
+        /// <summary>
+        /// This method will get the TableName
+        /// </summary>
+        /// <returns></returns>
 
         public List<QueryBuilderModel> GetTableNames()
         {
             return _querybuilderRepository.GetTableName();
         }
 
+        /// <summary>
+        /// This will get the Columns of Table
+        /// </summary>
+        /// <param name="tableNames"></param>
+        /// <returns></returns>
         public QueryRecordModel GetColoumsNames(List<QueryBuilderModel> tableNames)
         {
             Dictionary<QueryBuilderModel, List<QueryBuilderColNames>> queryBuilderData = new Dictionary<QueryBuilderModel, List<QueryBuilderColNames>>();
@@ -35,6 +44,14 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             }
             return new QueryRecordModel { FieldValues = queryBuilderData };
         }
+        /// <summary>
+        /// This method will convert to the JSON format
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="JoinInfo"></param>
+        /// <param name="conditionModels"></param>
+        /// <param name="TemplateName"></param>
+        /// <returns></returns>
         public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
         {
 
@@ -171,7 +188,11 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
                 return 0;
             }
         }
-
+        /// <summary>
+        /// This method will validate the JSON
+        /// </summary>
+        /// <param name="QueryJson"></param>
+        /// <returns></returns>
         public bool Validator(string QueryJson)
         {
             try

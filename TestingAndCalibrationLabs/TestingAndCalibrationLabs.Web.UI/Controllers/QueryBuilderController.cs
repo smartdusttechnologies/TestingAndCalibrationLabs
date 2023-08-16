@@ -23,7 +23,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _querybuilderService = querybuilderService;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// This method will show Table to the QueryBuilder Page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             List<Business.Core.Model.QueryBuilder.QueryBuilderModel> tableName = _querybuilderService.GetTableNames();
@@ -31,7 +34,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<Business.Core.Model.QueryBuilder.QueryRecordModel, Models.QueryBuilderRecordDTO>(queryBuilderMetaData);
             return View(records);
         }
+        /// <summary>
+        /// This method will take the Detail from Query Builder
+        /// </summary>
+        /// <param name="jsonData"></param>
+        /// <param name="JoinData"></param>
+        /// <param name="ConditionData"></param>
+        /// <param name="TemplateName"></param>
+        /// <returns></returns>
         [HttpPost]
+        
        public IActionResult QueryGenerator(string jsonData ,string JoinData,string ConditionData,string TemplateName)
         {
             //List<string> list = JsonSerializer.Serialize(jsonData);

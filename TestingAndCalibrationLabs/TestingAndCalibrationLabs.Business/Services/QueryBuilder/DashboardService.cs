@@ -18,6 +18,11 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             _dashboardRepository = dashboardRepository;
             
         }
+        /// <summary>
+        /// THis method to Take JSON from DataBase and the convert to query and then to execute 
+        /// </summary>
+        /// <param name="TemplateName"></param>
+        /// <returns></returns>
         public DashboardModel Template(string TemplateName)
         {
             var value = _dashboardRepository.SalesTemplate(TemplateName);
