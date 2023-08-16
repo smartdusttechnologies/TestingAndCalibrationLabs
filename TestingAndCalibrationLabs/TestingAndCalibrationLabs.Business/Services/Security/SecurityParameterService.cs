@@ -62,7 +62,6 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
-        //}
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
         /// </summary>
@@ -185,6 +184,3 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
     }
 }
-
-        
-
