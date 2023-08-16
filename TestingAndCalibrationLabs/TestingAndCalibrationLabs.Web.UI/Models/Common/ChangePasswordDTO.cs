@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public string ConfirmPassword { get; set; }
         /// <summary>
-        /// It Contains The Use Id to exsiting User 
+        /// It Contains The Use Id to existing User 
         /// </summary>
         public int UserId { get; set; } 
     }
