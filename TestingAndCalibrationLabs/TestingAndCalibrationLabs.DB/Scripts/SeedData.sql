@@ -38,16 +38,8 @@ BEGIN
 			   (17,N'Workflow Stage',1,0),
 			   (18,N'Module',1,0),
 			   (19,N'Workflow Activitiy',1,0),
-			   (20,N'Organization',1,0)
-			   (8, N'Application',1,0),
-			   (9, N'Workflow',1,0),
-			   (10,N'Workflow Stage',1,0),
-			   (11,N'Module',1,0),
-			   (12,N'Workflow Activitiy',1,0),
-			   (13,N'Organization',1,0),
-			   (14,N'Lookup',1,0),
-			   (15,N'Lookup Category',1,0),
-			   (16,N'FullPage',1,0)
+			   (20,N'Organization',1,0),
+			   (21,N'FullPage',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -415,16 +407,8 @@ BEGIN
 			  (20,N'/WorkflowStage/Index/',17,1002,0),
 			  (21,N'/Module/Index/',18,1002,0),
 			  (22,N'/WorkflowActivity/Index/',19,1002,0),
-			  (23,N'/Organization/Index/',20,1002,0)
-			  (11,N'/LookupCategory/Index/',15,1002,0),
-			  (12,N'/Lookup/Index/',14,1002,0),
-			  (13,N'/Application/Index/',8,1002,0),
-			  (14,N'/Workflow/Index/',9,1002,0),
-			  (15,N'/WorkflowStage/Index/',10,1002,0),
-			  (16,N'/Module/Index/',11,1002,0),
-			  (17,N'/WorkflowActivity/Index/',12,1002,0),
-			  (18,N'/Organization/Index/',13,1002,0),
-			  (19,N'/#/',16,1002,0)
+			  (23,N'/Organization/Index/',20,1002,0),
+			  (24,N'/#/',21,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
