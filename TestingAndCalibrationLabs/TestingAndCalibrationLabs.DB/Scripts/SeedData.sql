@@ -14,23 +14,28 @@ IF NOT EXISTS (SELECT 1 FROM [Module] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Module]  ON
 
+
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-                (0, N'none', 1, 0),
-			   (1, N'Cube Testing', 1, 0),
-			   (2, N'Water Testing', 1, 0),
+               (0, N'none', 1, 0),			   
+			   (1, N'Cube Testing', 1, 0),			   
+			   (2, N'Water Testing', 1, 0),		   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
 			   (7, N'Ui Page Validation',1,0),
-			   (8, N'Ui Page Navigation',1,0),
-			   (9, N'Ui Page Navigation Category',1,0),
-			   (10, N'Lookup Category',1,0),
-			   (11, N'Lookup',1,0),
-			   (12,N'DataType',1,0),
-			   (13, N'Ui ControlCategory Type',1,0)
+			   (8, N'Application',1,0),
+			   (9, N'Workflow',1,0),
+			   (10,N'Workflow Stage',1,0),
+			   (11,N'Module',1,0),
+			   (12,N'Workflow Activitiy',1,0),
+			   (13,N'Organization',1,0),
+			   (14,N'Lookup',1,0),
+			   (15,N'Lookup Category',1,0),
+			   (16,N'FullPage',1,0)
+
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -68,7 +73,6 @@ BEGIN
 			   (2, N'ApplicationAdmin', 2, 0),
 			   (3, N'Manager', 3, 0),
 			   (4, N'GeneralUser', 6, 0)
-
     SET IDENTITY_INSERT [dbo].[Role]  OFF
 END
 GO
@@ -108,7 +112,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Lookup] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Lookup]  ON
-
     INSERT INTO [dbo].[Lookup]
                 ([Id], [Name], [LookupCategoryId], [IsDeleted])
 			   VALUES
@@ -132,7 +135,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiControlType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlType]  ON
-
     INSERT INTO [dbo].[UiControlType]
                 ([id], [Name], [DisplayName], [IsDeleted], [ControlCategoryId])
 			   VALUES
@@ -180,7 +182,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiControlCategoryType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  ON
-
     INSERT INTO [dbo].[UiControlCategoryType]
               ([Id], [Name], [Template], [IsDeleted], [UiControlTypeId])
 			   VALUES
@@ -217,7 +218,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageMetadata] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  ON
-
     INSERT INTO [dbo].[UiPageMetadata]
               ([Id], [UiControlTypeId], [IsRequired], [UiControlDisplayName], [IsDeleted], [DataTypeId], [UiControlCategoryTypeId], [Name])
 			   VALUES
@@ -384,7 +384,7 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12))
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
 
@@ -400,12 +400,15 @@ BEGIN
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
-              (11, N'/UiPageNavigation/Index/', 8, 1002, 0),
-              (12, N'/UiPageNavigationCategory/Index/', 9, 1002, 0),
-			  (13,N'/LookupCategory/Index/',10,1002,0),
-			  (14,N'/Lookup/Index/',11,1002,0),
-			  (15,N'/DataType/Index/',12,1002,0),
-			  (16,N'/UiControlCategoryType/Index/',13,1002,0)
+			  (11,N'/LookupCategory/Index/',15,1002,0),
+			  (12,N'/Lookup/Index/',14,1002,0),
+			  (13,N'/Application/Index/',8,1002,0),
+			  (14,N'/Workflow/Index/',9,1002,0),
+			  (15,N'/WorkflowStage/Index/',10,1002,0),
+			  (16,N'/Module/Index/',11,1002,0),
+			  (17,N'/WorkflowActivity/Index/',12,1002,0),
+			  (18,N'/Organization/Index/',13,1002,0),
+			  (19,N'/#/',16,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
@@ -423,7 +426,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Activity] WHERE Id IN (1))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Activity]  ON
-
     INSERT INTO [dbo].[Activity]
                ([Id], [Name], [IsDeleted])
 			   VALUES 
@@ -434,7 +436,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageType] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageType]  ON
-
     INSERT INTO [dbo].[UiPageType]
                ([Id], [Name], [IsDeleted])
 			   VALUES
@@ -461,7 +462,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Workflow] WHERE Id IN (1,2,3))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Workflow]  ON
-
     INSERT INTO [dbo].[Workflow]
               ([Id], [Name], [ModuleId], [IsDeleted])
 			   VALUES
@@ -474,7 +474,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [WorkflowStage] WHERE Id IN (2,3,4,5,9,10))
 BEGIN
     SET IDENTITY_INSERT [dbo].[WorkflowStage]  ON
-
     INSERT INTO [dbo].[WorkflowStage]
                ([Id], [Name], [IsDeleted], [WorkflowId], [UiPageTypeId], [Orders])
 			   VALUES
@@ -490,7 +489,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [ActivityMetadata] WHERE Id IN (1,2,3,4,5,7,9,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[ActivityMetadata]  ON
-
     INSERT INTO [dbo].[ActivityMetadata]
                ([Id], [Name], [ActivityId], [UiPageMetadataId], [IsDeleted], [Value], [ActivityMetadataTypeId], [WorkflowStageId])
 			   VALUES
@@ -508,7 +506,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UserRole] WHERE Id IN (0))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UserRole]  ON
-
     INSERT INTO [dbo].[UserRole]
               ([Id], [UserId], [RoleId], [IsDeleted])
 			   VALUES
@@ -641,7 +638,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidationType] WHERE Id IN (1,2,3,4,5,6,7))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidationType]  ON
-
     INSERT INTO [dbo].[UiPageValidationType]
               ([Id], [Name], [Message], [Value], [IsDeleted])
 			   VALUES
@@ -658,7 +654,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidation] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidation]  ON
-
     INSERT INTO [dbo].[UiPageValidation]
              ([Id], [UiPageTypeId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted])
 			   VALUES
@@ -683,7 +678,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [PasswordLogin] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[PasswordLogin]  ON
-
     INSERT INTO [dbo].[PasswordLogin]
               ([Id], [PasswordHash], [PasswordSalt], [UserId], [ChangeDate])
 			  VALUES 
@@ -694,7 +688,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [TestReport] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[TestReport]  ON
-
     INSERT INTO [dbo].[TestReport]
               ([Id], [Client], [Filepath], [Email], [JobId], [Name], [DateTime], [IsDeleted])
 			  VALUES 
@@ -705,7 +698,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [WorkflowActivity] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[WorkflowActivity]  ON
-
     INSERT INTO [dbo].[WorkflowActivity]
               ([Id], [Name], [WorkflowStageId], [IsDeleted], [ActivityId])
 			  VALUES 
@@ -717,10 +709,109 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Record] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Record]  ON
-
     INSERT INTO [dbo].[Record]
               ([Id], [IsDeleted], [ModuleId], [WorkflowStageId], [UpdatedDate])
 			  VALUES 
 			  (12063, 0, 1, 4, CAST(N'2023-02-18T00:07:18.197' AS DateTime))
     SET IDENTITY_INSERT [dbo].[Record]  OFF
 END
+GO
+IF NOT EXISTS (SELECT 1 FROM [UiPageData] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiPageData]  ON
+    INSERT INTO [dbo].[UiPageData]
+              ([Id],
+			  [UiPageMetadataId],
+			  [Value],
+			  [IsDeleted],
+			  [RecordId],
+			  [UiPageTypeId],
+			  [SubRecordId])
+			  VALUES 
+			  (13187, 3016, N'124', 0, 12063, 15, NULL),
+			  (13188, 3017, N'Software', 0, 12063, 15, NULL),
+			  (13189, 3018, N'Rishi Rao', 0, 12063, 15, NULL),
+			  (13190, 3019, N'2023-02-17', 0, 12063, 15, NULL),
+			  (13191, 3020, N'14', 0, 12063, 15, NULL),
+			  (13192, 3021, N'Himanshu Jaiswal', 0, 12063, 15, NULL),
+			  (13193, 21, N'rajkumar00999.rk@gmail.com', 0, 12063, 15, NULL),
+			  (13194, 20, N'9308337299', 0, 12063, 15, NULL),
+			  (13195, 3024, N'2023-02-22', 0, 12063, 15, NULL),
+			  (13196, 3025, N'Want Mobile Support', 0, 12063, 15, NULL),
+			  (13197, 3026, N'', 0, 12063, 15, NULL),
+			  (13198, 3008, N'4', 0, 12063, 19, NULL),
+			  (13199, 3027, N'Website', 0, 12063, 16, NULL),
+			  (13200, 3028, N'RajguptaH.Github.io', 0, 12063, 16, NULL),
+			  (13201, 3029, N'2023-02-27', 0, 12063, 16, NULL),
+			  (13202, 3030, N'124', 0, 12063, 16, NULL),
+			  (13203, 3031, N'45', 0, 12063, 16, NULL),
+			  (13204, 3032, N'5', 0, 12063, 16, NULL),
+			  (13205, 3034, N'Website Testing With Mobility', 0, 12063, 16, NULL),
+			  (13206, 3035, N'Dot Net', 0, 12063, 16, NULL),
+			  (13207, 3036, N'Ritesh Kumar', 0, 12063, 16, NULL),
+			  (13208, 3037, N'2023-02-28', 0, 12063, 16, NULL),
+			  (13209, 3038, N'2023-03-09', 0, 12063, 16, NULL),
+			  (13210, 3039, N'This Needs To Done Within Five Days', 0, 12063, 16, NULL),
+			  (13211, 3040, N'2023-02-22', 0, 12063, 18, NULL),
+			  (13212, 3041, N'124', 0, 12063, 17, NULL),
+			  (13213, 3043, N'85', 0, 12063, 17, NULL),
+			  (13214, 3044, N'2023-02-21', 0, 12063, 17, NULL),
+			  (13215, 3047, N'512', 0, 12063, 17, NULL),
+			  (13216, 3048, N'512', 0, 12063, 17, NULL),
+			  (13217, 3045, N'25years', 0, 12063, 18, NULL),
+			  (13218, 3046, N'5cm', 0, 12063, 18, NULL),
+			  (13219, 3049, N'12', 0, 12063, 18, 1),
+			  (13220, 3050, N'95', 0, 12063, 18, 1),
+			  (13221, 3051, N'22', 0, 12063, 18, 1),
+			  (13222, 3053, N'45', 0, 12063, 18, 1),
+			  (13223, 3054, N'2456', 0, 12063, 18, 1),
+			  (13224, 3056, N'1324', 0, 12063, 18, 1),
+			  (13225, 3057, N'2.2', 0, 12063, 18, 1),
+			  (13226, 3049, N'58', 0, 12063, 18, 2),
+			  (13227, 3050, N'654', 0, 12063, 18, 2),
+			  (13228, 3051, N'45', 0, 12063, 18, 2),
+			  (13229, 3053, N'68', 0, 12063, 18, 2),
+			  (13230, 3054, N'498', 0, 12063, 18, 2),
+			  (13231, 3056, N'34546', 0, 12063, 18, 2),
+			  (13232, 3057, N'3.12', 0, 12063, 18, 2),
+			  (13233, 3049, N'4', 0, 12063, 18, 3),
+			  (13234, 3050, N'56.00', 0, 12063, 18, 3),
+			  (13235, 3051, N'46', 0, 12063, 18, 3),
+			  (13236, 3053, N'8.00', 0, 12063, 18, 3),
+			  (13237, 3054, N'42.00', 0, 12063, 18, 3),
+			  (13238, 3056, N'676', 0, 12063, 18, 3),
+			  (13239, 3057, N'465741', 0, 12063, 18, 3),
+			  (13240, 3049, N'54', 0, 12063, 18, 4),
+			  (13241, 3050, N'4', 0, 12063, 18, 4),
+			  (13242, 3051, N'4', 0, 12063, 18, 4),
+			  (13243, 3053, N'6', 0, 12063, 18, 4),
+			  (13244, 3054, N'87', 0, 12063, 18, 4),
+			  (13245, 3056, N'6465', 0, 12063, 18, 4),
+			  (13246, 3057, N'46', 0, 12063, 18, 4),
+			  (13247, 3049, N'45', 1, 12063, 18, 5),
+			  (13248, 3050, N'12', 1, 12063, 18, 5),
+			  (13249, 3051, N'54', 1, 12063, 18, 5),
+			  (13250, 3053, N'867', 1, 12063, 18, 5),
+			  (13251, 3054, N'4', 1, 12063, 18, 5),
+			  (13252, 3056, N'654', 1, 12063, 18, 5),
+			  (13253, 3057, N'76', 1, 12063, 18, 5),
+			  (13254, 3049, N'4', 0, 12063, 18, 6),
+			  (13255, 3050, N'3', 0, 12063, 18, 6),
+			  (13256, 3051, N'43', 0, 12063, 18, 6),
+			  (13257, 3053, N'534', 0, 12063, 18, 6),
+			  (13258, 3054, N'345', 0, 12063, 18, 6),
+			  (13259, 3056, N'345', 0, 12063, 18, 6),
+			  (13260, 3057, N'345', 0, 12063, 18, 6),
+			  (13261, 3049, N'43', 0, 12063, 18, 7),
+			  (13262, 3050, N'465', 0, 12063, 18, 7),
+			  (13263, 3051, N'312', 0, 12063, 18, 7),
+			  (13264, 3053, N'5', 0, 12063, 18, 7),
+			  (13265, 3054, N'31', 0, 12063, 18, 7),
+			  (13266, 3056, N'65', 0, 12063, 18, 7),
+			  (13267, 3057, N'132', 0, 12063, 18, 7),
+			  (13268, 3059, N'500.00', 0, 12063, 19, NULL),
+			  (13269, 3060, N'250.00', 0, 12063, 19, NULL),
+			  (13270, 3061, N'750.00', 0, 12063, 19, NULL)
+    SET IDENTITY_INSERT [dbo].[UiPageData]  OFF
+END
+GO
