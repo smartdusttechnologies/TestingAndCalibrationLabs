@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Create";
 }
+<style>
+    .fixed-bottom {
+        position: relative;
+    }
+</style>
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
@@ -16,10 +21,10 @@
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
 
                 }
-            </div>        
+            </div>
         </form>
         <div class="form-group" style="margin-left:2rem;">
-            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()" >Save</button>
+            <button class="button-base ripple button-material-primary" id="createbtn" onclick="AjaxFormSubmit()">Save</button>
         </div>
     </div>
 </div>
@@ -66,8 +71,7 @@
 </script>
 <script type="text/javascript">
     var moduleId = parseInt($("#ModuleId").val())
-        var uiPageTypeId = parseInt($("#UiPageTypeId").val())
-        
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     function AjaxFormSubmit() {
         WheelLoader();
@@ -75,7 +79,6 @@
         //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
-        
         //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
 
@@ -102,7 +105,6 @@
                 fieldValues.push(keyValuepair)
             }
         }
-       
         $.ajax({
             type: 'POST',
             url: url,

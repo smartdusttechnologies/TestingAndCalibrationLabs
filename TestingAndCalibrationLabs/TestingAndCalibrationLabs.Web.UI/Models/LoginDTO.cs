@@ -8,7 +8,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// UserName for Login
         /// </summary>
         public string UserName { get; set; }
-
         /// <summary>
         /// Password For Login
         /// </summary>

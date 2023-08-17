@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -88,13 +90,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             catch (Exception ex)
             {
                 //_logger.LogException(new ExceptionLog
-               // {
-                 //   ExceptionDate = DateTime.Now,
-                 //   ExceptionMsg = ex.Message,
-                  //  ExceptionSource = ex.Source,
-                 //   ExceptionType = "UserService",
-                  //  FullException = ex.StackTrace
-               // });
+                // {
+                //   ExceptionDate = DateTime.Now,
+                //   ExceptionMsg = ex.Message,
+                //  ExceptionSource = ex.Source,
+                //   ExceptionType = "UserService",
+                //  FullException = ex.StackTrace
+                // });
                 validationMessages.Add(new ValidationMessage { Reason = ex.Message, Severity = ValidationSeverity.Error, Description = ex.StackTrace });
                 return new RequestResult<LoginToken>(validationMessages);
             }
@@ -189,14 +191,56 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var validationResult = ValidateNewUserRegistration(user, password);
                 if (validationResult.IsSuccessful)
                 {
-                    PasswordLogin passwordLogin = Hasher.HashPassword(password);
+                    PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
+                    user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
             }
-            catch (Exception ex) {
-
+            catch (Exception ex)
+            {
+                return new RequestResult<bool>(false);
+            }
+        }
+        /// <summary>
+        /// Method to Add new and validate Of Change Password
+        /// </summary>
+        public RequestResult<bool> UpdatePassword(ChangePasswordModel changePasswordModel)
+        {
+            try
+            {
+                var passwordResult = _securityParameterService.ChangePasswordPolicy(changePasswordModel);
+                if (passwordResult.IsSuccessful)
+                {
+                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, changePasswordModel.NewPassword);
+                    var passwordLogin = _authenticationRepository.GetLoginPassword(changePasswordModel.Username);
+                    List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+                    string valueHash = string.Empty;
+                    if (changePasswordModel != null && !Hasher.ValidateHash(changePasswordModel.OldPassword, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                    {
+                        validationMessages.Add(new ValidationMessage { Reason = "Old password is incorrect.", Severity = ValidationSeverity.Error, SourceId="OldPassword" });
+                        return new RequestResult<bool>(validationMessages);
+                    }
+                    if (validationResult.IsSuccessful)
+                    {
+                        if (passwordResult.IsSuccessful)
+                        {
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(changePasswordModel.NewPassword);
+                            ChangePasswordModel passwordModel = new ChangePasswordModel();
+                            passwordModel.PasswordHash= newPasswordLogin.PasswordHash;
+                            passwordModel.UserId=changePasswordModel.UserId;
+                            passwordModel.PasswordSalt= newPasswordLogin.PasswordSalt;
+                            _userRepository.Update(passwordModel);
+                            return new RequestResult<bool>(true);
+                        }
+                    }
+                    return new RequestResult<bool>(false, validationResult.ValidationMessages);
+                }
+                return new RequestResult<bool>(false, passwordResult.ValidationMessages);
+            }
+            catch (Exception ex)
+            {
                 return new RequestResult<bool>(false);
             }
         }
@@ -206,15 +250,37 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
+            var validateUserfieldsResult = _securityParameterService.ValidateNewuserPolicy(user);
+
+            var validateexistinguser = ExistingUservalidation(user);
+            //UserModel existingUser = _userRepository.Get(user.UserName);
+            //if (existingUser != null)
+            //{
+            //    var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+            //    validationMessages.Add(error);
+            //    return new RequestResult<bool>(false, validationMessages);
+            //}
+            validationMessages.AddRange(validatePasswordResult.ValidationMessages);
+            validationMessages.AddRange(validateexistinguser.ValidationMessages);
+            validationMessages.AddRange(validateUserfieldsResult.ValidationMessages);
+
+            return new RequestResult<bool>(validationMessages);
+        }
+        /// <summary>
+        /// Method to Validate the Existing User
+        /// </summary>
+        private RequestResult<bool> ExistingUservalidation( UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             UserModel existingUser = _userRepository.Get(user.UserName);
-            if (existingUser != null) 
+            if (existingUser != null)
             {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error };
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error , SourceId = "Username" };
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
-            var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
-            return validatePasswordResult;
+            return new RequestResult<bool>(validationMessages);
         }
     }
 }

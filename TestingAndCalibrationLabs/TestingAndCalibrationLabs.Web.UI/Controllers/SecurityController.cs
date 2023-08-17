@@ -1,13 +1,18 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -16,6 +21,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+
 
         public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
         {
@@ -52,6 +58,27 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 return Json(new { status = true, message = "Login Successfull!" });
             }
+            return View();
+        }
+        /// <summary>
+        /// Method to get the Change Password.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordDTO changePasswordDto)
+        {
+            var passwordRequest = _mapper.Map<ChangePasswordDTO, ChangePasswordModel>(changePasswordDto);
+            var result = _authenticationService.UpdatePassword(passwordRequest);
+            if (result.IsSuccessful)
+            {
+                return Ok(result.RequestedObject);
+            }
+            return BadRequest(result.ValidationMessages);
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
             return View();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -67,13 +68,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Organization Id.
         /// </summary>
-        public int OrgnizationId { get; set; }
+        public string Organizations { get; set; }
 
         /// <summary>
         /// Admin Level.
         /// </summary>
         public int AdminLevel { get; set; }
 
-        
+        /// <summary>
+        /// Admin Level.
+        /// </summary>
+       
     }
 }
