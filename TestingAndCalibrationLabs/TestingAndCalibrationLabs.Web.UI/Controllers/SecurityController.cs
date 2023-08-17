@@ -67,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordDTO changePasswordDto)
         {
-            var passwordRequest = new ChangePasswordModel { OldPassword= changePasswordDto.OldPassword, NewPassword=changePasswordDto.NewPassword, ConfirmPassword=changePasswordDto.ConfirmPassword, UserId = changePasswordDto.UserId };
+            var passwordRequest = _mapper.Map<ChangePasswordDTO, ChangePasswordModel>(changePasswordDto);
             var result = _authenticationService.UpdatePassword(passwordRequest);
             if (result.IsSuccessful)
             {
@@ -75,6 +75,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest(result.ValidationMessages);
         }
+
         [HttpGet]
         public IActionResult ChangePassword()
         {
