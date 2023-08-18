@@ -245,7 +245,7 @@ function Aggregates(Aggregitem) {
 
         var aggreg = document.getElementsByClassName("eqjs-menu-rootLevel eqjs-menu-levelDiv")[0]
         aggreg.style.display = "block";
-        //aggreg.id = Aggregitem + "-menu";
+        
         aggreg.style.top = (rect.bottom + 5) + "px";
         aggreg.style.left = (rect.left + 2) + "px";
 
@@ -255,7 +255,7 @@ function Aggregates(Aggregitem) {
         var parent = document.getElementsByClassName('eqjs-menu-scrollDiv')[0]
 
         for (var item = 0; item < parent.children.length; item++) {
-            // alert(parent.children[item]);
+           
             parent.children[item].id = Aggregitem + "-" + arr[item];
         }
         sortingIconCaller = Aggregitem;
@@ -281,7 +281,7 @@ window.onclick = function (event) {
     if (event.target.className != "fa fa-sort-amount-asc") {
         var sortDropdown = document.getElementById('ColumnsPanel-SortMenu');
         sortDropdown.style.display = "none";
-        // temporaryDetail = null;
+        
     }
     if (event.target.localName != 'a') {
         var aggreg = document.getElementById("DataTypeMenu");
@@ -619,11 +619,11 @@ function NewConditionMenu(Position) {
 //// This Function will Load the Data for New Condition
 window.onload = function () {
 
-    // 
+   
     for (var item = 0; item < Key.length; item++) {
         var ChildrenDiv = document.createElement('div');
         ChildrenDiv.className = "eqjs-menu-itemDiv eqjs-menu-itemDiv-hasChildren";
-        ChildrenDiv.innerHTML = Key[item].tableName;
+        ChildrenDiv.innerHTML = Key[item].TableName;
         ChildrenDiv.onclick = function () { ConditionChildMenu(this) }
         var childSpan = document.createElement('span');
         childSpan.className = "eqjs-menu-itemDiv-arrow";
@@ -643,21 +643,19 @@ window.onload = function () {
 function ConditionChildMenu(itemvalue) {
     valueDetail = itemvalue.innerText;
     valueDetail = valueDetail.replace("\n>", "");
-    //var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
-    //var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
     var element = document.getElementById('QueryPanel-EntitiesMenu-children');
     element.style.display = "block";
     element = element.children[0];
     element.innerHTML = "";
     for (var item = 0; item < Key.length; item++) {
 
-        if (valueDetail == Key[item].tableName) {
+        if (valueDetail == Key[item].TableName) {
             for (var value = 0; value < KeyValues[item].length; value++) {
 
                 var ChildrenDiv = document.createElement('div');
                 ChildrenDiv.className = "eqjs-menu-itemDiv";
                 ChildrenDiv.onclick = function () { ConditionDetails(valueDetail, this) }
-                ChildrenDiv.innerHTML = KeyValues[item][value].coloumnName;
+                ChildrenDiv.innerHTML = KeyValues[item][value].ColoumnName;
                 element.appendChild(ChildrenDiv);
 
             }

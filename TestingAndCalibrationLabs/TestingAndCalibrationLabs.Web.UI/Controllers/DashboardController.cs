@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
 using AutoMapper;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
-using System.Linq;
-using Microsoft.AspNetCore.Razor.Language;
-using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -21,93 +16,45 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _dashboardService = dashboardService;
             _mapper = mapper;
         }
+        /// <summary>
+        /// This method will make the data for DashboardTemplate
+        /// </summary>
+        /// <returns>It will return the model which will contain complete TemplateData</returns>
 
         public IActionResult Index()
         {
 
 
-           // var Data = _dashboardService.Template("dfdf");
+           
            
             
             var salesValue = new SalesModel();
-            //salesValue.Month = new List<string> { "January", "February", "March", "April", "May", "June", "July" };
-            //salesValue.salesData1 = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
+          
             salesValue.Month = new List<object> ();
-            salesValue.salesData = new List<SalesComponentDataModel>(); 
+            salesValue.SalesData = new List<SalesComponentDataModel>(); 
             
-            //for (var item=1; item <= Data.)
-            //var salesModeldata = new SalesComponentDataModel();
-            //salesModeldata.label = "";
-            //salesModeldata.pointRadius = "false";
-            //salesModeldata.pointHighlightFill = "";
-            //salesModeldata.backgroundColor = "rgba("+ 60*item+ "," + item*141+","+ item*188+ "," + item* 0.9+") ";
-            //salesModeldata.borderColor  = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.8 + ") ";
-
-            //salesModeldata.pointColor = "#"+3*item+"b8bba";
-            //salesModeldata.pointStrokeColor =  "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
-            //salesModeldata.pointHighlightFill = "#fff ";
-            //salesModeldata.pointHighlightStroke = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
-
-            //salesValue.salesData.Add(salesModeldata);
-            var count = typeof(DashboardModel).GetProperties().Count();
+           
+            
             var salesModeldata = new SalesComponentDataModel();
-            //For future use
-            //for (  var item = 0; item< Data.Dictionary.Count; item++)
-            //{
-
-
-            //    if (item > 0)
-            //    {
-            //        //
-
-            //        salesModeldata.label = Data.Dictionary.ToList()[item].Key;
-            //        salesModeldata.pointRadius = "false";
-            //        salesModeldata.pointHighlightFill = "";
-            //        salesModeldata.backgroundColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.9 + ") ";
-            //        salesModeldata.borderColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 0.8 + ") ";
-
-            //        salesModeldata.pointColor = "#" + 3 * item + "b8bba";
-            //        salesModeldata.pointStrokeColor = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
-            //        salesModeldata.pointHighlightFill = "#fff ";
-            //        salesModeldata.pointHighlightStroke = "rgba(" + 60 * item + "," + item * 141 + "," + item * 188 + "," + item * 1 + ") ";
-            //        salesModeldata.Data = new List<object>();
-
-            //        foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
-            //        {
-                       
-            //            salesModeldata.Data.Add(datainfo);
-            //        }
-            //        salesValue.salesData.Add(salesModeldata);
-            //    }
-            //    else
-            //    {
-            //        foreach (var datainfo in Data.Dictionary.ToList()[item].Value)
-            //        {
-            //            salesValue.Month.Add(datainfo);
-
-
-            //        }
-            //    }
-            //}
+           
 
 
             
-            //salesValue.SalesData2 = new List<int> { 25, 18, 30, 45, 6, 67, 45 };
             salesValue.SalesName = new List<string> { "Instore Sales", "Download Sales", "Mail-Order Sales" };
             salesValue.DataSet = new List<int> { 15, 12, 43 };
 
             var Graph = new Dashboard_SalesGraph();
             Graph.QuarterData = new List<string> { "2011 Q1", "2011 Q2", "2011 Q3", "2011 Q4", "2012 Q1", "2012 Q2", "2012 Q3", "2012 Q4", "2013 Q1", "2013 Q2" };
-            Graph.data = new List<int> { 2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432 };
+            Graph.Data = new List<int> { 2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432 };
 
             var MapData = new Dashboard_Map();
             MapData.CountryData = new List<string> { "US: 398", "SA: 400", "CA: 1000", " DE: 500", "FR: 760", "CN: 300", "AU: 700", " BR: 600" };
 
             var Template = new Dashboard_BoxTemplate();
-            Template.info = 21;
-            Template.bounce = "23%";
+            Template.Info = 21;
+            Template.Bounce = "23%";
             Template.Registration = 211;
-            Template.visitors = 422;
+            Template.Visitors = 422;
 
             var TODO = new Dashboard_To_Do();
             TODO.ToDo = new List<string> { "Hi ritesh i was sent from the T0-DO controller", "Hi ritesh i was sent from the T0-DO controller", "Hi ritesh i was sent from the T0-DO controller" };
@@ -150,8 +97,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var Modelset = new Dashboard_Common();
             Modelset.Graph = Graph;
             Modelset.SalesModel = salesValue;
-            Modelset.map = MapData;
-            Modelset.template = Template;
+            Modelset.Map = MapData;
+            Modelset.Template = Template;
             Modelset.To_Do = TODO;
             Modelset.ChatData = new List<ChatModel> { chat1, chat2, chat3, chat4, chat5, chat6 };
 

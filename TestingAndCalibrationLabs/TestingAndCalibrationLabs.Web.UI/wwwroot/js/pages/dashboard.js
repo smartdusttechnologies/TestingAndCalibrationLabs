@@ -199,7 +199,6 @@ var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
 
 // Sales graph chart
 var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
-// $('#revenue-chart').get(0).getContext('2d');
 
 
    

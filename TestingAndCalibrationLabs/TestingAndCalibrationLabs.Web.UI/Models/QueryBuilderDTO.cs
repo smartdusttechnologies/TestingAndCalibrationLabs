@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
-
+﻿
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class QueryBuilderDTO
     {
-        public string tableName { get; set; }
+        /// <summary>
+        /// To store the Table Name 
+        /// </summary>
+        public string TableName { get; set; }
       
     }
 }

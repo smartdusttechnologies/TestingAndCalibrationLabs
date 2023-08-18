@@ -6,16 +6,24 @@ namespace TestingAndCalibrationLabs.Web.UI.Models.Dashboard.DashboardV1
     public class SalesModel
     {
 
-        // Sales Graph
+        /// <summary>
+        /// To store the Month Detail
+        /// </summary>
         public List<object> Month { get; set; }
-        //public List<int> salesData1 { get; set; }
-        //public List<int> SalesData2 { get; set; }
 
-        public List<SalesComponentDataModel> salesData { get; set; }
+        /// <summary>
+        /// To store the Color Related and Data 
+        /// </summary>
+        public List<SalesComponentDataModel> SalesData { get; set; }
 
-        //donut graph
-
+        
+        /// <summary>
+        /// To store the salesName
+        /// </summary>
         public List<string> SalesName { get; set; }
+        /// <summary>
+        /// To store the dataset for PieGraph
+        /// </summary>
         public List<int> DataSet { get; set; }
 
 

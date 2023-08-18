@@ -6,7 +6,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Model.Dashboard
 {
     public  class DashboardModel
     {
-        //public string Name { get; set; }
+        /// <summary>
+        /// It is a key and list of ValuePair For Dashboard Template
+        /// </summary>
         public Dictionary<string, List<object>> Dictionary { get; set; }
     }
 }

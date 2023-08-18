@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder
         /// <param name="tableNames"></param>
         /// <param name="JoinInfo"></param>
         /// <param name="conditionModels"></param>
-        /// <param name="TemplateName"></param>
+        /// <param name="TemplateName"></param> 
         /// <returns></returns>
         public int UiToJsonQueryBuilder(List<UiQueryGenerator> tableNames,List<JoinModelDTO>JoinInfo,List<ConditionModel> conditionModels, string TemplateName);
 

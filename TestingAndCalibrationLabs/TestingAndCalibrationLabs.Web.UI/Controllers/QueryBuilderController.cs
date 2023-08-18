@@ -6,11 +6,6 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using System.Text.Json;
 using System;
-using TestingAndCalibrationLabs.Business.Core.Model;
-using CloudinaryDotNet.Actions;
-using TestingAndCalibrationLabs.Business.Common;
-using Newtonsoft.Json.Linq;
-using AutoMapper.Execution;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -46,14 +41,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         
        public IActionResult QueryGenerator(string jsonData ,string JoinData,string ConditionData,string TemplateName)
         {
-            //List<string> list = JsonSerializer.Serialize(jsonData);
+           
           
             List<UiQueryBuilderColumn> Person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
             List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
             List<ConditionModelDTO> ConditionInfo = JsonSerializer.Deserialize<List<ConditionModelDTO>>(ConditionData);
 
-            //var  emptydata = Object.entries(datainfo); 
-
+            
 
             for (var  item = 0; item < Person.Count; item++)
             {
@@ -74,7 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
 
             var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin,ConditionJoin, TemplateName);
-            // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
+            
 
             return Ok();
         }

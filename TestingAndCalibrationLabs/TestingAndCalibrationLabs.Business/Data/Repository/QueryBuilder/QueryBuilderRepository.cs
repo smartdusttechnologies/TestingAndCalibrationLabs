@@ -15,12 +15,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder
         {
             _connectionFactory = connectionFactory;
         }
+
+        /// <summary>
+        /// This method will Return the List of TableName
+        /// </summary>
+        /// <returns></returns>
         public List<QueryBuilderModel> GetTableName()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<QueryBuilderModel>("SELECT name as tableName FROM Sys.Tables").ToList();
         }
 
+        /// <summary>
+        /// This method will return the columnName of a table 
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
         public List<QueryBuilderColNames> GetColoumsNames(string tableName) {
 
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -29,6 +39,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder
             return db.Query<QueryBuilderColNames>(query, new { tableName }).ToList();
         }
 
+        /// <summary>
+        /// This method will save the Json To DB
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public int QuerySaver(JsonSaveModel model)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
