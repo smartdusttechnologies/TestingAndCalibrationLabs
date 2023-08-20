@@ -49,4 +49,34 @@
         question,
         workflowStage
     }
+    public enum PermissionModuleType
+    {
+        DefaultModulePermission,
+        UiPageTypePermission,
+        UiPageMetadataPermission,
+        UiControlTypePermission
+    }
+
+    //public class CustomClaimTypes
+    //{
+    //    public const string Permission = "Application.Permission";
+    //    public const string UserId = "UserId";
+    //    public const string OrganizationId = "OrganizationId";
+    //}
+
+    public enum CustomClaimType
+    {
+        DefaultClaim,
+        ApplicationPermission,
+        UserId,
+        OrganizationId
+    }
+    public enum PermissionType
+    {
+        None,
+        Create,
+        Update,
+        Read,
+        Delete
+    }
 }

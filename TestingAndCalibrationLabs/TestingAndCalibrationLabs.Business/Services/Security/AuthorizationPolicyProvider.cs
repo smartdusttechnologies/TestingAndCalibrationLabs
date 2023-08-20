@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using TestingAndCalibrationLabs.Business.Core.Model;
-
+using TestingAndCalibrationLabs.Business.Common;
 namespace TestingAndCalibrationLabs.Business.Services
 {
     //TODO: This can be useful for endpointor web API based request model.
     //Reference: https://www.jerriepelser.com/blog/creating-dynamic-authorization-policies-aspnet-core/
+    /// <summary>
+    /// AuthorizationPolicyProvider Implementation
+    /// </summary>
     public class AuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
         private readonly AuthorizationOptions _options;
@@ -21,7 +20,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             _options = options.Value;
             _configuration = configuration;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="policyName"></param>
+        /// <returns></returns>
         public override async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
             // Check static policies first
