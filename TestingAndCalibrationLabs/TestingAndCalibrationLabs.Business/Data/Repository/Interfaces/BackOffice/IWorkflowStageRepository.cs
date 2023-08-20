@@ -53,11 +53,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="moduleId"></param>
         /// <returns></returns>
         WorkflowStageModel GetPageIdBasedOnOrder(int moduleId);
-        /// <summary>
-        /// Get All Records From 
-        /// </summary>
-        /// <returns></returns>
-        List<WorkflowStageModel> GetByWorkflowId(int workflowId);
        
     }
 }

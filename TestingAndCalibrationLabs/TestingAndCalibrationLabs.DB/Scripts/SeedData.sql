@@ -12,33 +12,15 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[ClaimType]  OFF
 END
 GO
+
 IF NOT EXISTS (SELECT 1 FROM [PermissionModuleType] WHERE ID IN (1))
 BEGIN
     SET IDENTITY_INSERT [dbo].[PermissionModuleType]  ON
 
-
-    INSERT INTO [dbo].[Module]
-               ([Id], [Name], [ApplicationId], [IsDeleted])
     INSERT INTO [dbo].[PermissionModuleType]
               ([Id], [Name], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),			   
-			   (1, N'Cube Testing', 1, 0),			   
-			   (2, N'Water Testing', 1, 0),		   
-			   (3, N'Customer', 1, 0),
-			   (4, N'Ui Page Type', 1, 0),
-			   (5, N'Ui Control Type', 1, 0),
-			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0),
-			   (8, N'Application',1,0),
-			   (9, N'Workflow',1,0),
-			   (10,N'Workflow Stage',1,0),
-			   (11,N'Module',1,0),
-			   (12,N'Workflow Activitiy',1,0),
-			   (13,N'Organization',1,0),
-			   (14,N'Lookup',1,0),
-			   (15,N'Lookup Category',1,0),
-			   (16,N'FullPage',1,0)
+               
                (1, N'UIPageTypePermission', 0),
 			   (2, N'UiPageMetadataPermission', 0),
 			   (3, N'CubeTesting', 0),
@@ -173,11 +155,6 @@ BEGIN
 			  (3, N'Manager', 3, 0),
 			  (4, N'GeneralUser', 6, 0)
 
-               (0, N'Sysadmin', 0, 0),
-			   (1, N'Admin', 1, 0),
-			   (2, N'ApplicationAdmin', 2, 0),
-			   (3, N'Manager', 3, 0),
-			   (4, N'GeneralUser', 6, 0)
     SET IDENTITY_INSERT [dbo].[Role]  OFF
 END
 GO
@@ -397,11 +374,21 @@ BEGIN
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
+			   (7, N'Ui Page Validation',1,0),
+			    (8, N'Application',1,0),
+			   (9, N'Workflow',1,0),
+			   (10,N'Workflow Stage',1,0),
+			   (11,N'Module',1,0),
+			   (12,N'Workflow Activitiy',1,0),
+			   (13,N'Organization',1,0),
+			   (14,N'Lookup',1,0),
+			   (15,N'Lookup Category',1,0),
+			   (16,N'FullPage',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
+
 IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[DataType]  ON
