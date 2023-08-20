@@ -1,14 +1,24 @@
 ﻿namespace TestingAndCalibrationLabs.Business.Common
 {
-    public enum ActivityType{
-    None,
-    EmailServices
+    /// <summary>
+    /// Enum For ActivityType
+    /// </summary>
+    public enum ActivityType
+    {
+        None,
+        EmailServices
     }
+    /// <summary>
+    /// Enum For Activity Metadata Type
+    /// </summary>
     public enum ActivityMetadataType
     {
         Static = 1015,
         Dynamic = 1016
     }
+    /// <summary>
+    /// Enum For Ui Control Type
+    /// </summary>
     public enum UiControlType
     {
         None,
@@ -49,6 +59,9 @@
         question,
         workflowStage
     }
+    /// <summary>
+    /// Enum For Permission Module Type
+    /// </summary>
     public enum PermissionModuleType
     {
         DefaultModulePermission,
@@ -63,7 +76,9 @@
     //    public const string UserId = "UserId";
     //    public const string OrganizationId = "OrganizationId";
     //}
-
+    /// <summary>
+    /// Emum For Custom Claim Type
+    /// </summary>
     public enum CustomClaimType
     {
         DefaultClaim,
@@ -71,6 +86,9 @@
         UserId,
         OrganizationId
     }
+    /// <summary>
+    /// Enum For Permission Type
+    /// </summary>
     public enum PermissionType
     {
         None,
