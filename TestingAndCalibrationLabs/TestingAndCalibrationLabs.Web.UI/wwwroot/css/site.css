@@ -91,7 +91,25 @@ select.input-validation-error#UiControlType {
 select.input-validation-error#UiPageType {
     border: 2px solid red;
 }
+select.input-validation-error#Lookup {
+    border: 2px solid red;
+}
 select.input-validation-error#DataType {
+    border: 2px solid red;
+}
+select.input-validation-error#Workflow {
+    border: 2px solid red;
+}
+select.input-validation-error#ModuleId {
+    border: 2px solid red;
+}
+select.input-validation-error#Application {
+    border: 2px solid red;
+}
+select.input-validation-error#WorkflowStage {
+    border: 2px solid red;
+}
+select.input-validation-error#Activity {
     border: 2px solid red;
 }
 
