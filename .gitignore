@@ -43,3 +43,8 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin
 *.dep
 
 *.CopyComplete
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/bin/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/obj/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/bin/Debug/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj
