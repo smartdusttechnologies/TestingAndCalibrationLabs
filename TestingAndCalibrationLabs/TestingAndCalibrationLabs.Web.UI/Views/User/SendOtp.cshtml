@@ -1,12 +1,11 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.OtpDTO
 @{
-    ViewBag.Title = "Forgot Password";
+    ViewData["Title"] = "SendOtp";
 }
-<div  class="padding-login bg-white d-flex flex-column min-vh-100 justify-content-center align-items-center bg-login" style="margin-bottom:80px;">
-   <div asp-action="ValidateOTP" asp-controller="Security" method="post">
-      <div id="ValidateOTP" style="display:none">
-          <input type="hidden" asp-for="UserId">
-           <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
+<div class="padding-login bg-white d-flex flex-column min-vh-100 justify-content-center align-items-center bg-login" style="margin-bottom:80px;">
+    <div id="SendOtp" asp-action="SendOtp" asp-controller="User" method="post">
+        <input type="hidden" asp-for="UserId">
+            <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
                 <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
                     <li class="nav-item login-tab-click" role="presentation" style="width:100%; margin:20px;">
                         <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%"><b>VERIFICATION CODE</b></button>
@@ -52,14 +51,13 @@
                 </section>
                 <center>
                     <div class="col-lg-20 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input" style="margin:20px;">
-
-                    <input class="form-input width-full black-border" id="OTP" style="width:200px;" type="OTP"  placeholder=" " name="OTP" asp-validation-for="OTP" , maxlength="6" , item.IsRequired onchange="this.setAttribute('value',this.value)" asp-for="OTP" required>
+                        <input class="form-input width-full black-border" id="OTP" style="width:200px;" type="OTP" placeholder=" " name="OTP" asp-validation-for="OTP" , maxlength="6" , item.IsRequired onchange="this.setAttribute('value',this.value)" asp-for="OTP" required>
                         <label class="form-label" style="color:gray;" for=OTP>
                             OTP
                             <span class="red-color">*</span>
                         </label>
                     </div>
-                     <button type="submit" class="btn btn-success text-center btn-block" onclick="OtpMatch()" style="width:80px; margin-left:20px">Submit</button>
+                    <button type="submit" class="btn btn-success text-center btn-block" onclick="OtpMatch()" style="width:80px; margin-left:20px">Submit</button>
                 </center>
                 <div>
                     <input type="hidden" asp-for="Email">
@@ -68,32 +66,8 @@
                         <span id="counter"></span>
                     </span>
                 </div>
-           </div>
-      </div>
-   </div>
-    <div id="EmailValidate">
-        <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
-            <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
-                <li class="nav-item login-tab-click" role="presentation" style="width:100%; margin:20px;">
-                    <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" bg-color="orange" aria-selected="true" href="#signInBoot" style="width:100%"><b>FORGOT PASSWORD</b></button>
-                </li>
-            </ul>
-            <center>
-                <b>
-                    Please !
-                    Enter Your Registered Email<br>
-                    To Get Verification Code!
-                </b>
-            </center>
-            <div class="col-lg-20 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input" style="margin:20px;">
-                <input class="form-input width-full black-border" id="EmailValue" style="width:300px;" type="email" placeholder=" " name="Email" asp-validation-for="Email" , item.IsRequired onchange="this.setAttribute('value',this.value)" required>
-                <label class="form-label" style="color:gray;" for=Email>
-                    Email
-                    <span class="red-color">*</span>
-                </label>
             </div>
-            <button type="submit" class="btn btn-success text-center btn-block" onclick="ForgotPassword()" style="width:80px; margin-left:20px">Submit</button>  
-        </div>
+        
     </div>
 </div>
 <div>
@@ -124,49 +98,21 @@
     </div>
 </div>
 <script>
-    function ForgotPassword() {
-        WheelLoader();
-        var keyValuepair = {};
-        keyValuepair.Email = $("#EmailValue").val();
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("ForgotPassword","Security")",
-            dataType: 'json',
-            data: keyValuepair,
-            success: function (result) {
-                var Valid = document.getElementById('EmailValidate');
-                Valid.style.display="none";
-                var OtpValid = document.getElementById('ValidateOTP');
-                OtpValid.style.display = "block";
-                $("#UserId").val(result.userId);
-                myFunction();
-                SuccessMessage(NotificationNumbers++, "We Send OTP successfully!");
-                HideWheelLoader();
-            },
-            error: function (result) {
-                HideWheelLoader();
-                var newresponseJSON = result.responseJSON;
-                var newErrorMessage = newresponseJSON;
-                for (var i = 0; i <= newErrorMessage.length; i++) {
-                    myFunctionError();
-                    document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
-                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
-                    document.getElementById(newErrorMessage[i].sourceId).style.border = "2px solid red";
-                }
-            }
-        });
-    }
     function OtpMatch() {
+        debugger;
         var keyValuepair = {};
+        keyValuepair.SendOtp = $("#SendOtp").val();
         keyValuepair.UserId = $("#UserId").val();
         keyValuepair.OTP = $("#OTP").val();
         $.ajax({
             type: "POST",
-            url: "@Url.Action( "ValidateOTP","Security")",
+            url: "@Url.Action( "SendOtp","User")",
             dataType: 'json',
             data: keyValuepair,
             success: function (result) {
-             window.location.href = "ResetPassword";
+                debugger;
+                myFunction();
+                SuccessMessage(NotificationNumbers++, "We Send OTP successfully!");
             },
             error: function (result) {
                 var newresponseJSON = result.responseJSON;
@@ -193,7 +139,7 @@
                 seconds--;
             }
             counter.innerHTML =
-            (minutes < 10 ? "0" : "") + String(minutes) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+                (minutes < 10 ? "0" : "") + String(minutes) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
             if (minutes > 0 || seconds > 0) {
                 timer = setTimeout(tick, 1000);
             } else {
@@ -227,15 +173,17 @@
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
     function ResendOTP() {
+        debugger;
         WheelLoader();
         var keyValuepair = {};
-        keyValuepair.Email = $("#EmailValue").val();
+        keyValuepair.Email = $("#ValidateOTP").val();
         $.ajax({
             type: "POST",
             url: "@Url.Action("ResendOTP","Security")",
             dataType: 'json',
             data: keyValuepair,
             success: function (result) {
+                debugger;
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "ResendOTP successfully!");

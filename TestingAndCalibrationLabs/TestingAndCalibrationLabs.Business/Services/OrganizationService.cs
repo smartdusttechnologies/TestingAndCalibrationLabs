@@ -12,11 +12,20 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IOrganizationRepository _organizationRepository;
         private readonly IGenericRepository<Organization> _genericRepository;
         private readonly ILogger _logger;
+        private IOrganizationRepository object1;
+        private IGenericRepository<Organization> object2;
+
         public OrganizationService(IOrganizationRepository organizationRepository, ILogger logger, IGenericRepository<Organization> genericRepository)
         {
             _organizationRepository = organizationRepository;
             _logger = logger;
             _genericRepository = genericRepository;
+        }
+
+        public OrganizationService(IOrganizationRepository object1, IGenericRepository<Organization> object2)
+        {
+            this.object1 = object1;
+            this.object2 = object2;
         }
 
         /// <summary>

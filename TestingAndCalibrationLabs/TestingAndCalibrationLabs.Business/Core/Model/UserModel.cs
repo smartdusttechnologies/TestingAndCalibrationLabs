@@ -63,9 +63,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int AdminLevel { get; set; }
         public string Password { get; set; }    
         public string ReEnterPassword { get; set; }
-
         /////new implimentetion///
-
         public int UserId { get; set; }
         public string OTP { get; set; }
         public DateTime CreatedDate { get; set; }

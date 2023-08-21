@@ -8,6 +8,8 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -18,14 +20,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOrganizationService _orgnizationService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
+        private readonly IOTPServices _otpServices;
         private readonly IAuthenticationRepository _authenticationRepository;
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IAuthenticationRepository authenticationRepository)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOTPServices otpServices, IAuthenticationRepository authenticationRepository)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _emailService = emailService;
             _mapper = mapper;
-            _authenticationRepository=authenticationRepository;
+            _otpServices = otpServices;
+            _authenticationRepository =authenticationRepository;
         }
         /// <summary>
         /// UI Shows the Orgnizations names in dropdown list
@@ -67,15 +71,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="model"></param>
         [HttpPost]
-        public IActionResult ForgotPassword(UserDTO UserDTO)
+        public IActionResult ForgotPassword(OtpDTO otpDTO)
         {
-                var emailResult = _mapper.Map<UserDTO, UserModel>(UserDTO);
-                var userVerify = _authenticationService.EmailValidateForgotPassword(emailResult);
+                var emailResult = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
+                var userVerify = _otpServices.EmailValidateForgotPassword(emailResult);
                 if (userVerify.IsSuccessful)
                 {
-                    UserDTO.UserId = userVerify.RequestedObject;
-                    _authenticationService.CreateOtp(emailResult, UserDTO.UserId);
-                    return Ok(UserDTO);
+                otpDTO.UserId = userVerify.RequestedObject;
+                    _otpServices.CreateOtp(emailResult, otpDTO.UserId);
+                    return Ok(otpDTO);
                 }
             return BadRequest(userVerify.ValidationMessages);
         }
@@ -84,10 +88,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="model"></param
         [HttpPost]
-        public IActionResult ValidateOTP(UserDTO UserDTO)
+        public IActionResult ValidateOTP(OtpDTO UserDTO)
         {
-            var otpReturn = _mapper.Map<UserDTO, UserModel>(UserDTO);
-            var user = _authenticationService.ValidateOTP(otpReturn);
+            var otpReturn = _mapper.Map<OtpDTO, OtpModel>(UserDTO);
+            var user = _otpServices.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
                return Ok(user.RequestedObject);
@@ -122,9 +126,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method to Resend OTP
         /// </summary>
         /// <param name="forgotpassword"></param>
-        public IActionResult ResendOTP(UserDTO UserDTO)
+        public IActionResult ResendOTP(OtpDTO otpDTO)
         {
-          return Ok(ForgotPassword(UserDTO));
+          return Ok(ForgotPassword(otpDTO));
         }
     }
 }

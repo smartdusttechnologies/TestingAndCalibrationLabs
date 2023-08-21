@@ -76,8 +76,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public int AdminLevel { get; set; }
 
         ////new implimetetion///
-
-
         public int UserId { get; set; }
         public string OTP { get; set; }
         public DateTime CreatedDate { get; }

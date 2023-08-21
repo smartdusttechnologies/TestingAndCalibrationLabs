@@ -8,11 +8,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Interfaces to Add new and validate existing user for Registration
         /// </summary>
-
-        RequestResult<bool> Add(UserModel user, string password);
-        RequestResult<int> EmailValidateForgotPassword(UserModel UserModel);
-        RequestResult<int> CreateOtp(UserModel UserModel, int userId);
-        RequestResult<int> ValidateOTP(UserModel UserModel);
+        RequestResult<bool> Add(UserModel user, string password);      
         RequestResult<bool> UpdatePassword(UserModel UserModel);
     }
 }

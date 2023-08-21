@@ -18,6 +18,9 @@ using static System.Net.WebRequestMethods;
 using Google.Apis.Drive.v3.Data;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using static TestingAndCalibrationLabs.Business.Core.Model.PolicyTypes;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
+
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class AuthenticationService : IAuthenticationService
@@ -31,6 +34,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IRoleRepository _roleRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IOTPServices _otpServices;
+
+
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             ILogger logger,
@@ -38,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
-              IRoleRepository roleRepository)
+              IRoleRepository roleRepository, IOTPServices otpServices)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -49,6 +55,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _roleRepository = roleRepository;
             _emailService = emailservice;
             _hostingEnvironment = hostingEnvironment;
+            _otpServices = otpServices;
         }
         /// <summary>
         /// Method to Authenticate for Login
@@ -196,7 +203,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
-                    var SendOTP = CreateOtp(user, passwordLogin.UserId);
+                    _otpServices.CreateOtp(user, passwordLogin.UserId);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
@@ -245,51 +252,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
         }
         /// <summary>
-        /// Method to Validate the Email
-        /// </summary>
-        public RequestResult<int> EmailValidateForgotPassword(UserModel UserModel)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-           UserModel existingUser = _authenticationRepository.GetLoginEmail(UserModel.Email);
-            if (existingUser == null)
-            {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
-                validationMessages.Add(error);
-                return new RequestResult<int>(0, validationMessages);
-            }
-            return new RequestResult<int>(existingUser.Id);
-        }
-        /// <summary>
-        /// Method to validate OTP
-        /// </summary>
-        /// <param name="UserModel"></param>
-        /// <returns></returns>
-        public RequestResult<int> ValidateOTP(UserModel UserModel)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            UserModel existingUser = _authenticationRepository.GetOTP(UserModel.UserId);
-           if (UserModel.OTP == existingUser.OTP)
-            {
-                double OTPTime =double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
-                if (UserModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
-                {
-                    return new RequestResult<int>(existingUser.UserId);
-                }
-                else
-                {
-                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
-                    validationMessages.Add(Error);
-                    return new RequestResult<int>(0, validationMessages);
-                }
-            }
-           else
-            {
-                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error ,SourceId = "OTP" };
-                validationMessages.Add(Error);
-                return new RequestResult<int>(0, validationMessages);
-            }
-        }
-        /// <summary>
         /// Method to Reset Password 
         /// </summary>
         /// <param name="UserModel"></param>
@@ -327,66 +289,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false);
             }
         }
-        /// <summary>
-        /// Method To Create OTP though user email 
-        /// </summary>
-        /// <param name="UserModel"></param>
-        /// <returns></returns>
-        public RequestResult<int> CreateOtp(UserModel UserModel, int userId)
-        {
-            var myEmail = _authenticationRepository.GetLoginEmail(UserModel.Email);
-            var UserId = userId;
-            string otp = GenerateOTP();
-            string subject = "OTP Verification";
-            string body = $"{otp}";
-            EmailModel model = new EmailModel();
-            model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
-            model.Subject = _configuration["ForgotPassOTP:Subject"];
-            model.BodyImage = _configuration["ForgotPassOTP:BodyImageLink"];
-            model.LogoImage = _configuration["ForgotPassOTP:LogoLink"];
-            model.Email = new List<string>();
-            model.Email.Add(UserModel.Email);
-            model.HtmlMsg = CreateBody(model.EmailTemplate);
-            model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
-            model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*",model.BodyImage);
-            model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
-            UserModel OtpGenerate = _authenticationRepository.InsertOtp(body, UserId);
-            try
-            {
-                _emailService.Sendemail(model);
-                using (MailMessage mailMessage = new MailMessage())
-                {
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = body;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error sending OTP: {"Wrong OTP"}");
-            }
-            return new RequestResult<int>(1);
-        }
-        /// <summary>
-        /// Method To Generate OTP
-        /// </summary>
-        private string GenerateOTP()
-        {
-            Random random = new Random();
-            int otp = random.Next(100000, 999999);
-            return otp.ToString();
-        }
-        /// <summary>
-        /// To use the email Template to send OTP to the User participated.
-        /// </summary>
-        /// <param name="emailTemplate"></param>
-        private string CreateBody(string emailTemplate)
-        {
-            string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Path.Combine(_hostingEnvironment.WebRootPath, _configuration["ForgotPassOTP:EmailTemplate"])))
-            {
-                body = reader.ReadToEnd();
-            }
-            return body;
-        }
+       
     }
 }

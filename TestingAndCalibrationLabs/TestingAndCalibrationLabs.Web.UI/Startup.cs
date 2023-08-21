@@ -22,6 +22,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -98,6 +99,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped <IOTPServices,OTPservice>();
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
