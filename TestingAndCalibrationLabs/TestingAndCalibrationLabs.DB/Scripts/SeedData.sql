@@ -33,7 +33,8 @@ BEGIN
 			   (12,N'Workflow Activitiy',1,0),
 			   (13,N'Organization',1,0),
 			   (14,N'Lookup',1,0),
-			   (15,N'Lookup Category',1,0)
+			   (15,N'Lookup Category',1,0),
+			   (16,N'FullPage',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -395,7 +396,8 @@ BEGIN
 			  (15,N'/WorkflowStage/Index/',10,1002,0),
 			  (16,N'/Module/Index/',11,1002,0),
 			  (17,N'/WorkflowActivity/Index/',12,1002,0),
-			  (18,N'/Organization/Index/',13,1002,0)
+			  (18,N'/Organization/Index/',13,1002,0),
+			  (19,N'/#/',16,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
