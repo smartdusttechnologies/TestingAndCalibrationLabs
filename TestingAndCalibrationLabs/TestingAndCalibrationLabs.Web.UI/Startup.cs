@@ -110,6 +110,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowActivityRepository, WorkflowActivityRepository>();
             services.AddScoped<IWorkflowRepository, WorkflowRepository>();
            services.AddScoped<IWorkflowStageRepository, WorkflowStageRepository>();
+            //services.AddScoped<ILayoutRepository, LayoutRepository>();
+
             services.AddScoped<IUiPageValidationRepository, UiPageValidationRepository>();
             services.AddScoped<IUiControlTypeRepository, UiControlTypeRepository>();
             services.AddScoped<IModuleLayoutRepository, ModuleLayoutRepository>();
@@ -123,9 +125,12 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<ActivityMetadataModel>, GenericRepository<ActivityMetadataModel>>();
             services.AddScoped<IGenericRepository<ModuleModel>, GenericRepository<ModuleModel>>();
             services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
+            //services.AddScoped<IGenericRepository<Layout2Model>, GenericRepository<Layout2DTO>>();
+
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();
+            services.AddScoped<IGenericRepository<Layout2Model>, GenericRepository<Layout2Model>>();
             services.AddScoped<IGenericRepository<UiPageNavigationModel>, GenericRepository<UiPageNavigationModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
             services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository < DataTypeModel >> ();
