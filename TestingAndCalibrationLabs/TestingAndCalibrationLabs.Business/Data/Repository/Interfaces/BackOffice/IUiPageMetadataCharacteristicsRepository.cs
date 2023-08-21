@@ -16,11 +16,36 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         List<UiPageMetadataCharacteristicsModel> Get();
         /// <summary>
-        /// Get Records By UiPageMetadataId
+        /// Get Records By id from uiPageMetadataCharacteristics
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         List<UiPageMetadataCharacteristicsModel> GetByPageMetadataId(int id);
         UiPageMetadataCharacteristicsModel Get(int id);
+        /// <summary>
+        /// Get Record By Id From uiPageMetadataCharacteristics
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        UiPageMetadataCharacteristicsModel GetById(int id);
+        /// <summary>
+        /// Insert Record In uiPageMetadataCharacteristics
+        /// </summary>
+        /// <param name="uiControlTypeModel"></param>
+        /// <returns></returns>
+        int Create(UiPageMetadataCharacteristicsModel uiPageMetadataCharacteristicsModel);
+        /// <summary>
+        /// Update Record In uiPageMetadataCharacteristics
+        /// </summary>
+        /// <param name="uiControlTypeModel"></param>
+        /// <returns></returns>
+        int Update(UiPageMetadataCharacteristicsModel uiPageMetadataCharacteristicsModel);
+        /// <summary>
+        /// Delete Record From uiPageMetadataCharacteristics
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool Delete(int id);
     }
 }

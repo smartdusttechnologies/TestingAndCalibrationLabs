@@ -14,11 +14,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int UiPageMetadataId { get; set; }
         /// <summary>
         /// It Contains The Id Of The Lookup 
-        /// </summary>
-        public int LookupCategoryId { get; set; }
+        public string UiControlDisplayName { get; set; }
+        public int LookupId { get; set; }
         /// <summary>
-        /// It Contains The Name Of The Lookup
+        /// It Contains Name For Lookup
         /// </summary>
         public string LookupName { get; set; }
+        public string LookupCategoryId { get; set; }
+        public string LookupCategoryName { get; set; }
+
     }
 }

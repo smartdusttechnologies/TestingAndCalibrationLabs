@@ -19,8 +19,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Records From Ui Control Type
         /// </summary>
         /// <returns></returns>
-
         List<UiControlTypeModel> Get();
+        /// <summary>
+        /// Get All Records From  Control Type Name
+        /// </summary>
+        /// <returns></returns>
+        List<UiControlTypeModel> GetControl();
         /// <summary>
         /// Edit Record In Ui Control Type
         /// </summary>

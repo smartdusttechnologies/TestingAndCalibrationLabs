@@ -21,5 +21,9 @@
         /// It Contains Name For Lookup
         /// </summary>
         public string LookupName { get; set; }
+        public int LookupCategoryId { get; set; }
+        public string LookupCategoryName { get; set; }
+        public string UiControlDisplayName { get; set; }
+
     }
 }

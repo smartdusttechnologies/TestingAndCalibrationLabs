@@ -18,5 +18,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         [DbColumn]
         public string DisplayName { get; set; }
+        public int ControlCategoryId { get; set; }
+        public string ControlCategoryName { get; set;}
+
     }
 }
