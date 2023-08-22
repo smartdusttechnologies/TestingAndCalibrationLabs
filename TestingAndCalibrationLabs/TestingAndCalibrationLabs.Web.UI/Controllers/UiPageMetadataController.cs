@@ -17,9 +17,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IUiControlTypeService _uiControlTypeService;
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
-        private readonly ILookupService _lookupService;
-        private readonly ILookupCategoryService _lookupCategoryService;
-        private readonly IListSorterService _listSorter;
         private readonly IUiControlCategoryTypeService _uiControlCategoryTypeService;
         /// <summary>
         /// passing parameter via varibales for establing connection
@@ -29,16 +26,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataService"></param>
         /// <param name="lookupService"></param>
-        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,ILookupCategoryService lookupCategory,IListSorterService listSorter,ILookupService lookupService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
+        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _uiControlTypeService = uiControlTypeService;
             _dataTypeService = dataTypeService;
-            _lookupService = lookupService;
-            _listSorter = listSorter;
-            _lookupCategoryService = lookupCategory;
             _uiControlCategoryTypeService = uiControlCategoryTypeService;
         }
 

@@ -13,16 +13,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
-        /// <param name="uiNavigationCategoryService"></param>
-        public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper)
+        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper)
         {
-            _httpContextAccessor = httpContextAccessor;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
         }
@@ -34,8 +31,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
-            var context = _httpContextAccessor.HttpContext;
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiPageTypeModel> page = _uiPageTypeService.Get();
             var pageData = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(page);
