@@ -16,7 +16,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// using the userRespository
         /// </summary>
         private readonly IConnectionFactory _connectionFactory;
-
         public UserRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
@@ -39,7 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UserModel>("Select top 1 * From [User] where Id=@id and IsDeleted=0", new { id }).FirstOrDefault();
         }
         /// <summary>
-        /// Get Iser Based on Name
+        /// Get User Based on Name
         /// </summary>
         public UserModel Get(string userName)
         {
@@ -67,32 +66,42 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             p.Add("@MobileValidationStatus", user.MobileValidationStatus);
             p.Add("@OrgId", user.OrgId);
             p.Add("@AdminLevel", user.AdminLevel);
-
             string userInsertQuery = @"Insert into [User](UserName, FirstName, LastName, Email, Mobile, Country, ISDCode, TwoFactor, Locked, IsActive, EmailValidationStatus, MobileValidationStatus, OrgId, AdminLevel) 
                 values (@UserName, @FirstName, @LastName, @Email, @Mobile, @Country, @ISDCode, @TwoFactor, @Locked, @IsActive, @EmailValidationStatus, @MobileValidationStatus, @OrgId, @AdminLevel);
                 SELECT @Id = @@IDENTITY";
-
             string passwordLoginInsertQuery = @"Insert into [PasswordLogin](PasswordHash, PasswordSalt, UserId, ChangeDate) 
                 values (@PasswordHash, @PasswordSalt, @UserId, @ChangeDate)";
-
             string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
-
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(userInsertQuery, p, transaction);
-
-
             int insertedUserId = p.Get<int>("@Id");
-
             passwordLogin.UserId = insertedUserId;
             passwordLogin.ChangeDate = DateTime.Now;
             db.Execute(passwordLoginInsertQuery, passwordLogin, transaction);
-
             // assign the general user role by default.
             db.Execute(userRoleInsertQuery, new { UserId = insertedUserId, RoleId = 2 }, transaction);
             transaction.Commit();
-
             return insertedUserId;
+        }
+        /// <summary>
+        /// Method to Update Password
+        /// </summary>
+        /// <param name="newpassword"></param>
+        /// <returns></returns>
+        public int UpdatePassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@PasswordHash", "PasswordHash");
+            parameter.Add("@PasswordSalt", "PasswordSalt");
+            parameter.Add("@ChangeDate", "ChangeDate");
+            string changepasswordQuery = @"update [PasswordLogin] Set
+                                           PasswordHash = @PasswordHash,
+                                           PasswordSalt = @PasswordSalt,
+                                           ChangeDate =@ChangeDate
+                                                Where UserId = @UserId";
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Execute(changepasswordQuery, forgotPasswordModel);
         }
     }
 }

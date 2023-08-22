@@ -106,6 +106,7 @@
     <Build Include="dbo\Tables\Application.sql" />
     <Build Include="dbo\Tables\Activity.sql" />
     <Build Include="dbo\Tables\ActivityMetadata.sql" />
+    <Build Include="dbo\Tables\UserOtp.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />
