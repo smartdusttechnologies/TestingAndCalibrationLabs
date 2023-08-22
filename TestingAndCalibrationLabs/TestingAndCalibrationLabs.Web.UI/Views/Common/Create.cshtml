@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Create";
 }
-<style>
+@*<style>
     .fixed-bottom {
         position: relative;
     }
-</style>
+</style>*@
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
@@ -74,7 +74,7 @@
     }
 </script>
 <script type="text/javascript">
-    debugger
+    debugger;
     var moduleId = parseInt($("#ModuleId").val())
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var mainModel = JSON.parse('@Json.Serialize(Model)');
@@ -94,12 +94,14 @@
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
+        debugger;
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl" || uiPageMetaData[i].multiValueControl == true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
+                debugger;
                 var metadataId = uiPageMetaData[i].id;
                 var List;
                 if (uiPageMetaData[i].multiValueControl == true) {
@@ -113,6 +115,7 @@
                         fieldValues.push(keyValuepair)
                     }
                 }
+                debugger;
                 if (uiPageMetaData[i].multiValueControl != true) {
                     var fieldValue = $(fieldId).val();
                     var keyValuepair = {};
@@ -122,34 +125,35 @@
                     fieldValues.push(keyValuepair)
                 }
             }
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: { moduleId, workflowStageId, uiPageTypeId, fieldValues },
-                success: function (response) {
-                    myFunction();                      //Calling myFunction javascript function
-                    SuccessMessage(NotificationNumbers++, "Saved Successfully");
-                    HideWheelLoader();
-                    window.location.href = "/common/index/" + moduleId;
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    HideWheelLoader();
-                    var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
-                    var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
-                    for (var i = 0; i < newErrorMessage.length; i++) {
-                        var sourceId = "#" + newErrorMessage[i].sourceId;
-                        $(sourceId).removeClass("black-border").addClass("red-error-border");
-                        myFunctionError();                                              //Calling myFunctionError javacript function
-                        ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
-                        if (i == 0) {
-                            document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
-                        }
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { moduleId, workflowStageId, uiPageTypeId, fieldValues },
+            success: function (response) {
+                myFunction();                      //Calling myFunction javascript function
+                SuccessMessage(NotificationNumbers++, "Saved Successfully");
+                HideWheelLoader();
+                window.location.href = "/common/index/" + moduleId;
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                HideWheelLoader();
+                var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
+                var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
+                for (var i = 0; i < newErrorMessage.length; i++) {
+                    var sourceId = "#" + newErrorMessage[i].sourceId;
+                    $(sourceId).removeClass("black-border").addClass("red-error-border");
+                    myFunctionError();                                              //Calling myFunctionError javacript function
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    if (i == 0) {
+                        document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
                     }
                 }
-            });
-        }
+            }
+        });
+
     }
 </script>

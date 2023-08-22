@@ -102,7 +102,7 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-                  if (layout[i].uiPageData != null) {
+                if (layout[i].uiPageData != null && layout[i].uiPageData.length != 0){
                        var pageDataId = layout[i].uiPageData[0].id;
                        var childIds = layout[i].uiPageData[0].childId;
                        var RecordIds = layout[i].uiPageData[0].recordId;
@@ -144,7 +144,7 @@
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
-                    keyValuepair.RecordId = RecordIds;
+                    keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
