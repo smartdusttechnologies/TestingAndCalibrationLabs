@@ -91,6 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
             model.BodyImage = _configuration["ForgotPassOTP:BodyImageLink"];
             model.LogoImage = _configuration["ForgotPassOTP:LogoLink"];
             model.Email = new List<string>();
+            model.Email.Add(otpModel.Email);
             model.HtmlMsg = CreateBody(model.EmailTemplate);
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
             model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*", model.BodyImage);

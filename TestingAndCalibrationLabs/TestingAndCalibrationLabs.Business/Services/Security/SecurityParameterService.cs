@@ -146,17 +146,17 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<bool> ChangePasswordCondition(UserModel UserModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            if (UserModel.Password.IsNullOrEmpty())
+            if (UserModel.NewPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (UserModel.Password.IsNullOrEmpty())
+            else if (UserModel.NewPassword.IsNullOrEmpty())
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (UserModel.Password != UserModel.ConfirmPassword)
+            else if (UserModel.NewPassword != UserModel.ConfirmPassword)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;

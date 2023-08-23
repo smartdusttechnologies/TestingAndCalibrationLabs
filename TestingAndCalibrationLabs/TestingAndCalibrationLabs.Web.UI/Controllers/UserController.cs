@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -14,16 +13,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
         private readonly IOTPService _otpService;
-        private IOTPService otpService;
-        private readonly IUserService _userService;
         private readonly IOrganizationService _organizationService;
 
-        public UserController(IAuthenticationService authenticationService, IUserService userService, IOrganizationService organizationService, IMapper mapper, IOTPService otpService)
+        public UserController(IAuthenticationService authenticationService,IOrganizationService organizationService, IMapper mapper, IOTPService otpService)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
             _otpService = otpService;
-            _userService = userService;
             _organizationService = organizationService;
         }
 

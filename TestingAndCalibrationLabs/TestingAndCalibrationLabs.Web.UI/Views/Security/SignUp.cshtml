@@ -180,7 +180,6 @@
         }
         // validation messages
         $.ajax({
-            debugger
             type: "POST",
             url: "@Url.Action("Add","User")",
             data: $('#SignUpData').serialize(),
@@ -188,10 +187,9 @@
             success: function (result) {
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
-                window.location.href = '@Url.Action("index","Security")';
+                window.location.href = '@Url.Action("index","security")';
             },
             error: function (result) {
-                debugger
                 var newresponseJSON = result.responseJSON;
                 var newErrorMessage = newresponseJSON;
                 for (var i = 0; i < newErrorMessage.length; i++) {
@@ -205,5 +203,4 @@
         });
 
     }
-
 </script>
