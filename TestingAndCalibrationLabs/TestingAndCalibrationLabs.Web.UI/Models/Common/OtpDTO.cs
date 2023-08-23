@@ -12,7 +12,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [MaxLength(50)]
         [RegularExpression("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
         public string Email { get; set; }
-        public int UserId { get; set; }
+        public int userId { get; set; }
         public string OTP { get; set; }
         public DateTime CreatedDate { get;  }
         public string NewPassword { get; set; }

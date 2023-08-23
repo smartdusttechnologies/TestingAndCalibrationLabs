@@ -69,23 +69,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// Organization Id.
         /// </summary>
         public string Organizations { get; set; }
-
         /// <summary>
         /// Admin Level.
         /// </summary>
         public int AdminLevel { get; set; }
-
-        ////new implimetetion///
-        public int UserId { get; set; }
+        public int userId { get; set; }
         public string OTP { get; set; }
-        public DateTime CreatedDate { get; }
+        public DateTime CreatedDate { get; set; }
         public string NewPassword { get; set; }
         public string ConfirmPassword { get; set; }
-        public UserDTO()
-        {
-            CreatedDate = DateTime.Now;
-        }
-
-
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
+        public DateTime ChangeDate { get; set; }
     }
 }

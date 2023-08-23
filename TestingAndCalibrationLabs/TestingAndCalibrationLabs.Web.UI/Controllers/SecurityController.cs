@@ -20,15 +20,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOrganizationService _orgnizationService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
-        private readonly IOTPServices _otpServices;
+        private readonly IOTPService _otpService;
         private readonly IAuthenticationRepository _authenticationRepository;
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOTPServices otpServices, IAuthenticationRepository authenticationRepository)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _emailService = emailService;
             _mapper = mapper;
-            _otpServices = otpServices;
+            _otpService = otpService;
             _authenticationRepository =authenticationRepository;
         }
         /// <summary>
@@ -64,7 +64,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-            return View(new UserDTO());
+            return View(new OtpDTO());
         }
         /// <summary>
         /// Method for otp and Email validation and Varification Code on Email
@@ -74,11 +74,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ForgotPassword(OtpDTO otpDTO)
         {
                 var emailResult = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-                var userVerify = _otpServices.EmailValidateForgotPassword(emailResult);
+                var userVerify = _otpService.EmailValidateForgotPassword(emailResult);
                 if (userVerify.IsSuccessful)
                 {
-                otpDTO.UserId = userVerify.RequestedObject;
-                    _otpServices.CreateOtp(emailResult, otpDTO.UserId);
+                otpDTO.userId = userVerify.RequestedObject;
+                    _otpService.CreateOtp(emailResult, otpDTO.userId);
                     return Ok(otpDTO);
                 }
             return BadRequest(userVerify.ValidationMessages);
@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ValidateOTP(OtpDTO UserDTO)
         {
             var otpReturn = _mapper.Map<OtpDTO, OtpModel>(UserDTO);
-            var user = _otpServices.ValidateOTP(otpReturn);
+            var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
                return Ok(user.RequestedObject);

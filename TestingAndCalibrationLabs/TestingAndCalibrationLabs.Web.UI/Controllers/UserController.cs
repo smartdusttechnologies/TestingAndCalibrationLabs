@@ -13,16 +13,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
-        private readonly IOTPServices _otpServices;
-        private IOTPServices otpServices;
+        private readonly IOTPService _otpService;
+        private IOTPService otpService;
         private readonly IUserService _userService;
         private readonly IOrganizationService _organizationService;
 
-        public UserController(IAuthenticationService authenticationService, IUserService userService, IOrganizationService organizationService, IMapper mapper, IOTPServices otpServices)
+        public UserController(IAuthenticationService authenticationService, IUserService userService, IOrganizationService organizationService, IMapper mapper, IOTPService otpService)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
-            _otpServices = otpServices;
+            _otpService = otpService;
             _userService = userService;
             _organizationService = organizationService;
         }
@@ -72,7 +72,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult SendOtp(OtpDTO otpDTO)
         {
             var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            var user = _otpServices.ValidateOTP(otpReturn);
+            var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
                 return Ok(user.RequestedObject);

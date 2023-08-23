@@ -20,6 +20,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using static TestingAndCalibrationLabs.Business.Core.Model.PolicyTypes;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
+using AutoMapper;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -34,8 +35,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IRoleRepository _roleRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IOTPServices _otpServices;
-
+        private readonly IOTPService _otpService;
+        private readonly IMapper _mapper;
 
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
@@ -44,7 +45,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
-              IRoleRepository roleRepository, IOTPServices otpServices)
+              IRoleRepository roleRepository, IOTPService otpService,  IMapper mapper)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -55,7 +56,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _roleRepository = roleRepository;
             _emailService = emailservice;
             _hostingEnvironment = hostingEnvironment;
-            _otpServices = otpServices;
+            _otpService = otpService;
+            _mapper = mapper;
         }
         /// <summary>
         /// Method to Authenticate for Login
@@ -203,7 +205,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
-                    _otpServices.CreateOtp(user, passwordLogin.UserId);
+                    var User = _mapper.Map<OtpModel>(user);
+                    _otpService.CreateOtp(User, passwordLogin.UserId);
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
@@ -264,7 +267,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 if (passwordResult.IsSuccessful)
                 {
                     var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, UserModel.NewPassword);
-                    var PasswordLogin = _authenticationRepository.GetUserIdPassword(UserModel.UserId);
+                    var PasswordLogin = _authenticationRepository.GetUserIdPassword(UserModel.userId);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     if (ValidationResult.IsSuccessful)
                     {
@@ -273,7 +276,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             PasswordLogin newPasswordLogin = Hasher.HashPassword(UserModel.NewPassword);
                             UserModel passwordModel = new UserModel();
                             passwordModel.PasswordHash = newPasswordLogin.PasswordHash;
-                            passwordModel.UserId = UserModel.UserId;
+                            passwordModel.userId = UserModel.userId;
                             passwordModel.ChangeDate = DateTime.Now;
                             passwordModel.PasswordSalt = newPasswordLogin.PasswordSalt;
                             _userRepository.UpdatePassword(passwordModel);
@@ -289,6 +292,5 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false);
             }
         }
-       
     }
 }
