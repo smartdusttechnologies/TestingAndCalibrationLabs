@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly IUiPageTypeService _uiPageTypeService;
         public readonly IMapper _mapper;
-        private readonly IUiPageNavigationService _uiNavigationCategoryService;
-        
-        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
+        /// <param name="uiPageTypeService"></param>
+        /// <param name="mapper"></param>
+        public UiPageTypeController(IUiPageTypeService uiPageTypeService, IMapper mapper)
         {
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
-            _uiNavigationCategoryService = uiNavigationCategoryService;
         }
 
         /// <summary>

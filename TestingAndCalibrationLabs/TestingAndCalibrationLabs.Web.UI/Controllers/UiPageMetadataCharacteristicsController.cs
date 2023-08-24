@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {

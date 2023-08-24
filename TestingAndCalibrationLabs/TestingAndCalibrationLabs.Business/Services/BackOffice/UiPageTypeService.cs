@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -11,9 +13,14 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// </summary>
     public class UiPageTypeService : IUiPageTypeService
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthorizationService _authorizationService;
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
-        public UiPageTypeService(IGenericRepository<UiPageTypeModel> genericRepository)
+        public UiPageTypeService(IHttpContextAccessor httpContextAccessor, IGenericRepository<UiPageTypeModel> genericRepository,
+            IAuthorizationService authorizationService)
         {
+            _httpContextAccessor = httpContextAccessor;
+            _authorizationService = authorizationService;
             _genericRepository = genericRepository;
         }
 
@@ -25,8 +32,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            _genericRepository.Insert(uiPageTypeModel);
-            return new RequestResult<int>(1);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
+            {
+                _genericRepository.Insert(uiPageTypeModel);
+                return new RequestResult<int>(1);
+            }
+            return new RequestResult<int>(0);
         }
         /// <summary>
         /// Delete Record From Ui Page Type
@@ -35,9 +46,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            return _genericRepository.Delete(id);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Delete }).Result.Succeeded)
+            {
+                return _genericRepository.Delete(id);
+            }
+            return false;
         }
-
         /// <summary>
         /// Edit Record For Ui Page Type
         /// </summary>
@@ -46,17 +60,22 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(UiPageTypeModel uiPageTypeModel)
         {
-            _genericRepository.Update(uiPageTypeModel);
-            return new RequestResult<int>(1);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User,uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
+            {
+                _genericRepository.Update(uiPageTypeModel);
+                return new RequestResult<int>(1);
+            }
+            return new RequestResult<int>(0);
         }
-        /// <summary>
-        /// Get All Records From Ui Page Type
-        /// </summary>
-        /// <returns></returns>
-        public List<UiPageTypeModel> Get()
+       public List<UiPageTypeModel> Get()
         {
-            return _genericRepository.Get();
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            {
+                return _genericRepository.Get();
+            }
+            return null;
         }
+
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>
@@ -64,12 +83,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
-            return _genericRepository.Get(id);
+            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            {
+                return _genericRepository.Get(id);
+            }
+            return null;
         }
-        #endregion
-
-        #region Private Methods
-
         #endregion
     }
 }

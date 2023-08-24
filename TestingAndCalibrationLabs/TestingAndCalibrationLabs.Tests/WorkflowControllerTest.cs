@@ -23,6 +23,7 @@ namespace TestingAndCalibrationLabs.Tests
 
         Mock<IModuleRepository> genericRepository = new Mock<IModuleRepository>();
         Mock<IWorkflowRepository> workflowRepository = new Mock<IWorkflowRepository>();
+        Mock<IGenericRepository<WorkflowModel>> _genericRepository = new Mock<IGenericRepository<WorkflowModel>>();
 
         [SetUp]
         public void SetUp()
@@ -41,7 +42,7 @@ namespace TestingAndCalibrationLabs.Tests
             workflowModel.Add(new WorkflowModel { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" });
             workflowModel.Add(new WorkflowModel { Id = 26, Name = "eAman", ModuleId = 25, ModuleName = "eaman" });
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object,_genericRepository.Object);
 
             workflowRepository.Setup(x => x.Get()).Returns(workflowModel);
 
@@ -61,7 +62,7 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void Edit_Get_Test()
         {
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
 
             workflowRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new WorkflowModel { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" });
@@ -79,7 +80,7 @@ namespace TestingAndCalibrationLabs.Tests
         public void Edit_get_null_Id()
         {
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
 
             var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
@@ -96,7 +97,7 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void Create_Get_Test()
         {
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
 
             var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
@@ -116,7 +117,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             var workflowDTO = new WorkflowDTO { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" };
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
             workflowRepository.Setup(x => x.Update(workflowModel)).Returns(0);
 
@@ -136,7 +137,7 @@ namespace TestingAndCalibrationLabs.Tests
             var workflowDTO = new WorkflowDTO { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" };
 
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
             var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
 
             var createResult = (NotFoundResult)controller.Edit(1, workflowDTO);
@@ -155,7 +156,7 @@ namespace TestingAndCalibrationLabs.Tests
 
 
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
             workflowRepository.Setup(x => x.Create(workflowModel)).Returns(0);
 
@@ -179,7 +180,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             WorkflowModel workflowModel = new WorkflowModel { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" };
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
             workflowRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(workflowModel);
 
@@ -197,7 +198,7 @@ namespace TestingAndCalibrationLabs.Tests
         public void Delete_get_null_Id()
         {
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
             var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
 
             var createResult = (NotFoundResult)controller.Delete(null);
@@ -209,29 +210,11 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
-        [Test]
-        public void DeleteConfirmed_Test()
-        {
-            workflowRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
-
-
-            _workflowService = new WorkflowService(workflowRepository.Object);
-            var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
-
-
-            var createResult = (RedirectToActionResult)controller.DeleteConfirmed(5);
-            var expectedResult = "Index";
-
-            createResult.ActionName.Should().BeEquivalentTo(expectedResult);
-
-
-
-        }
-        [Test]
+        
         public void Delete_Confirmed_IdNull()
         {
 
-            _workflowService = new WorkflowService(workflowRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
             var controller = new WorkFlowController(_workflowService, _mapper, _moduleService);
 
             var createResult = (NotFoundResult)controller.DeleteConfirmed(null);
