@@ -3,6 +3,7 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.common;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -23,11 +24,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowService = workflowService;
         }
         /// <summary>
-        /// To Get Metadata Based On Module Id And stageId
+        /// To Get Ui Page Type Id Based On Module Id And stageId
         /// </summary>
         /// <param name="moduleId"></param>
-        /// <param name="stageId"></param>
-        /// <param name="uiPageId"></param>
+        /// <param name="recordId"></param>
         /// <returns></returns>
         public WorkflowStageModel GetStage(int moduleId, int recordId)
         {

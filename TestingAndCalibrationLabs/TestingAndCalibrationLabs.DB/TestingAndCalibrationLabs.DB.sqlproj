@@ -109,6 +109,7 @@
     <Build Include="dbo\Tables\UserGroup.sql" />
     <Build Include="dbo\Tables\RoleClaim.sql" />
     <Build Include="dbo\Tables\SubPermissionModuleType.sql" />
+    <Build Include="dbo\Tables\UserRoleClaim.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

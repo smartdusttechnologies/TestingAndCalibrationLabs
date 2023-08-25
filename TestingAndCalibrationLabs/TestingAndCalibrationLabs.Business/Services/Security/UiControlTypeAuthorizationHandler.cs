@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Core.Model.Common;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {

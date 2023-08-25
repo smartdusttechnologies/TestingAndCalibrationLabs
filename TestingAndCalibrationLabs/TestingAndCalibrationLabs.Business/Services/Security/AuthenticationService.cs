@@ -15,6 +15,9 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
+    /// <summary>
+    /// Service Implementation For Authentication Class
+    /// </summary>
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _configuration;

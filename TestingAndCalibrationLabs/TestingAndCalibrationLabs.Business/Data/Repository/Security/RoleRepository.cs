@@ -5,9 +5,14 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
+using TestingAndCalibrationLabs.Business.Common;
+
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
+    /// <summary>
+    /// Repository Class For Role
+    /// </summary>
     public class RoleRepository : IRoleRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -28,6 +33,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Query<(int, string)>(query, new { userName }).ToList();
         }
+        /// <summary>
+        /// Get User By Username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public UserModel GetUserByUserName(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -79,6 +89,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         //    return db.Query<UserClaim>(query, new { userName }).ToList();
         //}
+        /// <summary>
+        /// method to get User Claims Based on their Group
+        /// </summary>
+        /// <param name="organizationId"></param>
+        /// <param name="userId"></param>
+        /// <param name="permissionModuleType"></param>
+        /// <param name="subPermissionModuleType"></param>
+        /// <param name="claimType"></param>
+        /// <returns></returns>
         public List<GroupClaim> GetGroupClaims(int organizationId, int userId,string permissionModuleType, string subPermissionModuleType, CustomClaimType claimType)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -100,7 +119,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<GroupClaim>(query, new { userId, organizationId, claimType, permissionModuleType, subPermissionModuleType }).ToList();
         }
         /// <summary>
-        /// Get Role by Orgnization including Claims
+        /// method to get User Claims Based on Their Profile
         /// </summary>
         public List<UserClaim> GetUserClaims(int organizationId, int userId, string permissionModuleType, string subPermissionModuleType, CustomClaimType claimType)
         {
@@ -124,6 +143,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Query<UserClaim>(query, new { userId, organizationId, permissionModuleType, claimType, subPermissionModuleType }).ToList();
         }
+        /// <summary>
+        /// method to get User Claim Based on User Role
+        /// </summary>
+        /// <param name="organizationId"></param>
+        /// <param name="userId"></param>
+        /// <param name="permissionModuleType"></param>
+        /// <param name="subPermissionModuleType"></param>
+        /// <param name="claimType"></param>
+        /// <returns></returns>
         public List<UserRoleClaim> GetUserRoleClaims(int organizationId, int userId, string permissionModuleType, string subPermissionModuleType, CustomClaimType claimType)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

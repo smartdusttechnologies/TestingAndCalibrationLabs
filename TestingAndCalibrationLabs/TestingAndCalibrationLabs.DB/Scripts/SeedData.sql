@@ -12,6 +12,7 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[ClaimType]  OFF
 END
 GO
+
 IF NOT EXISTS (SELECT 1 FROM [PermissionModuleType] WHERE ID IN (1))
 BEGIN
     SET IDENTITY_INSERT [dbo].[PermissionModuleType]  ON
@@ -19,6 +20,7 @@ BEGIN
     INSERT INTO [dbo].[PermissionModuleType]
               ([Id], [Name], [IsDeleted])
          VALUES
+               
                (1, N'UIPageTypePermission', 0),
 			   (2, N'UiPageMetadataPermission', 0),
 			   (3, N'CubeTesting', 0),
@@ -372,11 +374,21 @@ BEGIN
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0)
+			   (7, N'Ui Page Validation',1,0),
+			    (8, N'Application',1,0),
+			   (9, N'Workflow',1,0),
+			   (10,N'Workflow Stage',1,0),
+			   (11,N'Module',1,0),
+			   (12,N'Workflow Activitiy',1,0),
+			   (13,N'Organization',1,0),
+			   (14,N'Lookup',1,0),
+			   (15,N'Lookup Category',1,0),
+			   (16,N'FullPage',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
+
 IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[DataType]  ON
@@ -788,15 +800,6 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[ActivityMetadata]  OFF
 END
 GO
-IF NOT EXISTS (SELECT 1 FROM [UserRole] WHERE Id IN (0))
-BEGIN
-    SET IDENTITY_INSERT [dbo].[UserRole]  ON
-    INSERT INTO [dbo].[UserRole]
-              ([Id], [UserId], [RoleId], [IsDeleted])
-			   VALUES
-              (0, 0, 0, 0)
-    SET IDENTITY_INSERT [dbo].[UserRole]  OFF
-END
 GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageMetadataModuleBridge] WHERE Id = 0)
 BEGIN
@@ -956,16 +959,6 @@ BEGIN
 			 (15, 17, 3050, 7, 0),
 			 (16, 17, 3056, 7, 0)
     SET IDENTITY_INSERT [dbo].[UiPageValidation]  OFF
-END
-GO
-IF NOT EXISTS (SELECT 1 FROM [PasswordLogin] WHERE Id = 0)
-BEGIN
-    SET IDENTITY_INSERT [dbo].[PasswordLogin]  ON
-    INSERT INTO [dbo].[PasswordLogin]
-              ([Id], [PasswordHash], [PasswordSalt], [UserId], [ChangeDate])
-			  VALUES 
-			  (0, N'qnVDMZYlsGjs4chNs1/qPidI70eDUZ1fzUF5EdCqdl0=', N'NDlzcm0GY1GqMgn+urXX9Q==', 0, CAST(N'2022-11-12T14:25:35.763' AS DateTime))
-    SET IDENTITY_INSERT [dbo].[PasswordLogin]  OFF
 END
 GO
 IF NOT EXISTS (SELECT 1 FROM [TestReport] WHERE Id = 0)

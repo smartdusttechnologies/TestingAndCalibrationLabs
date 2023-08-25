@@ -3,6 +3,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using TestingAndCalibrationLabs.Business.Services;
+using TestingAndCalibrationLabs.Business.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +23,6 @@ using TestingAndCalibrationLabs.Web.UI.Common;
 using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
-using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
-using System.IO;
-using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 
 namespace TestingAndCalibrationLabs.Web.UI

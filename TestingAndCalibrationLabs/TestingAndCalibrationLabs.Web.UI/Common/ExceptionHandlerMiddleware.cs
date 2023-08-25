@@ -14,6 +14,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
         {
             _next = next;
         }
+        /// <summary>
+        /// This method get Called When Any Execption is Invoked
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -37,6 +42,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
             var message =  exception.Message;
             switch (exception)
             {
+                //We need to extend Cases like to handle accurate Exceptions
                 case UnauthorizedAccessException ex:
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     break;

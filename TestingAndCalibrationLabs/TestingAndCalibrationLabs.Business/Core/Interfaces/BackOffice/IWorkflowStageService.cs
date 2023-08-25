@@ -9,6 +9,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     /// </summary>
     public interface IWorkflowStageService
     {
+        /// <summary>
+        /// get Ui Page Type Id Based On ModuleId and StageId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <param name="stageId"></param>
+        /// <returns></returns>
         WorkflowStageModel GetStage(int moduleId, int stageId);
         /// <summary>
         /// Get All Record From Module
