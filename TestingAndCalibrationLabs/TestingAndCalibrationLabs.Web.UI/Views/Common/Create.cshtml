@@ -108,7 +108,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { moduleId, workflowStageId, uiPageTypeId, fieldValues },
+            data: {"Id":0,  moduleId, workflowStageId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");

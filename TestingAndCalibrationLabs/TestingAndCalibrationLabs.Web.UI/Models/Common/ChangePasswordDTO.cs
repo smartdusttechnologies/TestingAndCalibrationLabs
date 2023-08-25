@@ -18,6 +18,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The Use Id to existing User 
         /// </summary>
-        public int UserId { get; set; } 
+        public int UserId { get; set; }
+        /// <summary>
+        /// User Name.
+        /// </summary>
+        public string Username { get; set; }
+        /// <summary>
+        /// Organization Id.
+        /// </summary>
+        public int OrgId { get; set; }
     }
 }

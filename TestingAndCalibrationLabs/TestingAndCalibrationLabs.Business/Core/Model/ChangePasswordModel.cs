@@ -31,5 +31,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// User Name.
         /// </summary>
         public string Username { get; set; }
+        /// <summary>
+        /// Organization Id.
+        /// </summary>
+        public int OrgId { get; set; }
     }
 }

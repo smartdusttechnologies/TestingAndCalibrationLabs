@@ -30,6 +30,9 @@
     </div>
 </div>
 <script>
+    window.onload = function(){
+        document.getElementById('dropdownContentProfile').style.display="none"
+    }
     function Validate() {
         $.ajax(
             {
@@ -44,6 +47,7 @@
                 },
                 success: function(result) {
                     if (result.status == true) {
+                        document.getElementById('dropdownContentProfile').style.display = "block"
                         window.location.href = '@Url.Action("Index", "TestReport")';
                     }
                     else {
@@ -52,8 +56,4 @@
                 }
             });
     }
-
-
- 
-
 </script>

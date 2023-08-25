@@ -216,7 +216,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var passwordResult = _securityParameterService.ChangePasswordPolicy(changePasswordModel);
                 if (passwordResult.IsSuccessful)
                 {
-                    var validationResult = _securityParameterService.ValidatePasswordPolicy(0, changePasswordModel.NewPassword);
+                    var validationResult = _securityParameterService.ValidatePasswordPolicy(changePasswordModel.OrgId, changePasswordModel.NewPassword);
                     var passwordLogin = _authenticationRepository.GetLoginPassword(changePasswordModel.Username);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     string valueHash = string.Empty;

@@ -358,7 +358,6 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
-
 IF NOT EXISTS (SELECT 1 FROM [DataType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[DataType]  ON
@@ -770,6 +769,15 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[ActivityMetadata]  OFF
 END
 GO
+IF NOT EXISTS (SELECT 1 FROM [UserRole] WHERE Id IN (0))
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UserRole]  ON
+    INSERT INTO [dbo].[UserRole]
+              ([Id], [UserId], [RoleId], [IsDeleted])
+			   VALUES
+              (0, 0, 0, 0)
+    SET IDENTITY_INSERT [dbo].[UserRole]  OFF
+END
 GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageMetadataModuleBridge] WHERE Id = 0)
 BEGIN
@@ -929,6 +937,16 @@ BEGIN
 			 (15, 17, 3050, 7, 0),
 			 (16, 17, 3056, 7, 0)
     SET IDENTITY_INSERT [dbo].[UiPageValidation]  OFF
+END
+GO
+IF NOT EXISTS (SELECT 1 FROM [PasswordLogin] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[PasswordLogin]  ON
+    INSERT INTO [dbo].[PasswordLogin]
+              ([Id], [PasswordHash], [PasswordSalt], [UserId], [ChangeDate])
+			  VALUES 
+			  (0, N'qnVDMZYlsGjs4chNs1/qPidI70eDUZ1fzUF5EdCqdl0=', N'NDlzcm0GY1GqMgn+urXX9Q==', 0, CAST(N'2022-11-12T14:25:35.763' AS DateTime))
+    SET IDENTITY_INSERT [dbo].[PasswordLogin]  OFF
 END
 GO
 IF NOT EXISTS (SELECT 1 FROM [TestReport] WHERE Id = 0)
