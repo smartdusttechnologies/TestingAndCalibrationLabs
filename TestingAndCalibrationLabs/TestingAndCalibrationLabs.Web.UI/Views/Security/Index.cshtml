@@ -24,13 +24,15 @@
                     @*<div class="tab-pane fade" id="Sign-Up" role="tabpanel" aria-labelledby="Sign-Up-tab">
                         @Html.Partial("~/Views/Security/ChangePassword.cshtml")
                     </div>*@
-                    
-                </div><a href="d:\smartdust\password\testingandcalibrationlabs\testingandcalibrationlabs\testingandcalibrationlabs.web.ui\views\security\index.cshtml">d:\smartdust\password\testingandcalibrationlabs\testingandcalibrationlabs\testingandcalibrationlabs.web.ui\views\security\index.cshtml</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+    window.onload = function(){
+        document.getElementById('dropdownContentProfile').style.display="none"
+    }
     function Validate() {
         $.ajax(
             {
@@ -45,6 +47,7 @@
                 },
                 success: function(result) {
                     if (result.status == true) {
+                        document.getElementById('dropdownContentProfile').style.display = "block"
                         window.location.href = '@Url.Action("Index", "TestReport")';
                     }
                     else {
@@ -53,8 +56,4 @@
                 }
             });
     }
-
-
- 
-
 </script>

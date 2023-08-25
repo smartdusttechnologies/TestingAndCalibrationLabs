@@ -1,17 +1,25 @@
 ﻿using AutoMapper;
+using Google.Apis.Drive.v3.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
+using SelectPdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
+using static TestingAndCalibrationLabs.Business.Core.Model.PolicyTypes;
 
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -21,13 +29,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+        private readonly IRoleService _roleService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper,
+            IRoleService roleService, IHttpContextAccessor httpContextAccessor)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _mapper = mapper;
+            _roleService = roleService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -67,6 +80,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordDTO changePasswordDto)
         {
+
+            var User = _httpContextAccessor.HttpContext.User;
+            var sdtUserIdentity = User.Identity as SdtUserIdentity;
+            changePasswordDto.UserId = sdtUserIdentity.UserId;
+            changePasswordDto.Username = sdtUserIdentity.UserName;
+            changePasswordDto.OrgId = sdtUserIdentity.OrganizationId;
             var passwordRequest = _mapper.Map<ChangePasswordDTO, ChangePasswordModel>(changePasswordDto);
             var result = _authenticationService.UpdatePassword(passwordRequest);
             if (result.IsSuccessful)
@@ -75,7 +94,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest(result.ValidationMessages);
         }
-
         [HttpGet]
         public IActionResult ChangePassword()
         {
