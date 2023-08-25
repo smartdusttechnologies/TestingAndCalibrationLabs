@@ -1,0 +1,124 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+/*Below link for the Roboto font which we area using */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbarBrandWithATag {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Roboto';
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top-footer {
+    border-top: 1px solid #e5e5e5;
+}
+
+form-group-for-common > label {
+    top: 12px;
+    left: 6px;
+    position: relative;
+    background-color: white;
+    padding: 0px 0px 0px 0px;
+}
+
+.field-validation-error.form-input.width-full {
+    color: orangered;
+    font-weight: bold;
+}
+
+.field-validation-valid .form-input.width-full {
+    display: none;
+}
+
+input.input-validation-error.form-input.width-full {
+    border: 2px solid #f00;
+}
+textarea.input-validation-error#Comments {
+    border: 2px solid red;
+}
+
+input.input-validation-error#Comments.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#TestingType.form-input.width-full {
+    border: 2px solid red;
+}
+
+input.input-validation-error#State.form-input.width-full {
+    border: 2px solid red;
+}
+
+select.form-element- {
+    border: 2px solid red;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+select.input-validation-error#TestingType {
+    border: 2px solid red;
+}
+
+select.input-validation-error#UiControlType {
+    border: 2px solid red;
+}
+select.input-validation-error#UiPageType {
+    border: 2px solid red;
+}
+select.input-validation-error#Lookup {
+    border: 2px solid red;
+}
+select.input-validation-error#DataType {
+    border: 2px solid red;
+}
+select.input-validation-error#Workflow {
+    border: 2px solid red;
+}
+select.input-validation-error#ModuleId {
+    border: 2px solid red;
+}
+select.input-validation-error#Application {
+    border: 2px solid red;
+}
+select.input-validation-error#WorkflowStage {
+    border: 2px solid red;
+}
+select.input-validation-error#Activity {
+    border: 2px solid red;
+}
+
+.validation-summary-errors {
+    color: red;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TestingAndCalibrationLabs.Web.UI.props" />
+</Project>
