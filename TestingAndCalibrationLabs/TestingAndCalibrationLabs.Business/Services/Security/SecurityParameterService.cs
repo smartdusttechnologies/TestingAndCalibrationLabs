@@ -146,19 +146,19 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<bool> ChangePasswordCondition(UserModel UserModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            if (UserModel.NewPassword.IsNullOrEmpty())
+            if (UserModel.Password.IsNullOrEmpty())
             {
-                validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "Password" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (UserModel.NewPassword.IsNullOrEmpty())
+            else if (UserModel.Password.IsNullOrEmpty())
             {
-                validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
+                validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-            else if (UserModel.NewPassword != UserModel.ConfirmPassword)
+            else if (UserModel.Password != UserModel.ReEnterPassword)
             {
-                validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
+                validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
             return new RequestResult<bool>(true);

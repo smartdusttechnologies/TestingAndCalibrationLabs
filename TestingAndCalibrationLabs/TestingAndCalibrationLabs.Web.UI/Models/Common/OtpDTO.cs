@@ -14,9 +14,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public string Email { get; set; }
         public int userId { get; set; }
         public string OTP { get; set; }
-        public DateTime CreatedDate { get;  }
-        public string NewPassword { get; set; }
-        public string ConfirmPassword { get; set; }
+        public DateTime CreatedDate { get; }
         public OtpDTO()
         {
             CreatedDate = DateTime.Now;

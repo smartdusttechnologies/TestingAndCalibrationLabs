@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
@@ -14,13 +15,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IOTPService _otpService;
         private readonly IOrganizationService _organizationService;
+        private readonly IAuthenticationRepository _authenticationRepository;
 
-        public UserController(IAuthenticationService authenticationService,IOrganizationService organizationService, IMapper mapper, IOTPService otpService)
+        public UserController(IAuthenticationService authenticationService,IOrganizationService organizationService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
             _otpService = otpService;
             _organizationService = organizationService;
+            _authenticationRepository = authenticationRepository;
         }
 
         /// <summary>
@@ -40,24 +43,24 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Add(UserDTO userRequest)
         {
             var userModel = _mapper.Map<UserDTO, UserModel>(userRequest);
-
             var result = _authenticationService.Add(userModel, userRequest.Password);
-            if (result.IsSuccessful && result.RequestedObject)
+            if (result.IsSuccessful)
             {
-                return Ok(result.RequestedObject);
-                //return Ok(userRequest);
-                //return RedirectToAction("SendOtp",userRequest);
+                OtpModel otpModel = new OtpModel {userId= userModel.userId};
+                return Ok(otpModel);
             }
             return BadRequest(result.ValidationMessages);
         }
+
         /// <summary>
         /// Method for Sign-up OTP
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult SendOtp()
+        public IActionResult SendOtp(int userId)
         {
-            return View();
+            OtpDTO otpDTO = new OtpDTO { userId=userId };
+            return View(otpDTO);
         }
         ///// <summary>
         ///// Method to validate otp for Sign-up

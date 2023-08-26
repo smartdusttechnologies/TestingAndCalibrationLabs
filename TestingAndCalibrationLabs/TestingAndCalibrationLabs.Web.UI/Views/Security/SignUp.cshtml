@@ -5,6 +5,7 @@
 *@
 <div class="padding-login bg-white">
     <form id="SignUpData" asp-controller="User" asp-action="Add">
+        <input type="hidden" asp-for="userId">
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
             <input class="form-input  inputForSignUp gray-border" type="text" id="FirstName" placeholder=" " name="FirstName" item.IsRequired onchange="this.setAttribute('value',this.value)">
             <label class="form-label" style="color:gray;" for=FirstName>
@@ -179,6 +180,7 @@
             }
         }
         // validation messages
+
         $.ajax({
             type: "POST",
             url: "@Url.Action("Add","User")",
@@ -187,7 +189,8 @@
             success: function (result) {
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
-                window.location.href = '@Url.Action("index","security")';
+                var userId = result.userId;
+                window.location.href = '@Url.Action("SendOtp","User")' + '?userId=' + userId;
             },
             error: function (result) {
                 var newresponseJSON = result.responseJSON;
@@ -201,6 +204,5 @@
                 }
             }
         });
-
     }
 </script>

@@ -88,13 +88,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="model"></param
         [HttpPost]
-        public IActionResult ValidateOTP(OtpDTO UserDTO)
+        public IActionResult ValidateOTP(OtpDTO otpDTO)
         {
-            var otpReturn = _mapper.Map<OtpDTO, OtpModel>(UserDTO);
+            var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
             var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
+               otpDTO.userId = user.RequestedObject;
                return Ok(user.RequestedObject);
+               //return Ok(otpDTO);
             }
              return BadRequest(user.ValidationMessages);
         }
@@ -112,9 +114,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="forgotpassswordmodel"></param>
         [HttpPost]
-        public IActionResult ResetPassword(UserDTO UserDTO)
+        public IActionResult ResetPassword(UserDTO userDTO)
         {
-            var passwordRequest = _mapper.Map<UserDTO, UserModel>(UserDTO);
+            var passwordRequest = _mapper.Map<UserDTO, UserModel>(userDTO);
             var result = _authenticationService.UpdatePassword(passwordRequest);
             if (result.IsSuccessful)
             {

@@ -205,8 +205,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
-                    var User = _mapper.Map<OtpModel>(user);
+                    OtpModel User = new OtpModel { userId = passwordLogin.UserId, Email = user.Email };
                     _otpService.CreateOtp(User, passwordLogin.UserId);
+                    user.userId = User.userId;
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
@@ -266,14 +267,14 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var passwordResult = _securityParameterService.ChangePasswordCondition(UserModel);
                 if (passwordResult.IsSuccessful)
                 {
-                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, UserModel.NewPassword);
+                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, UserModel.Password);
                     var PasswordLogin = _authenticationRepository.GetUserIdPassword(UserModel.userId);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     if (ValidationResult.IsSuccessful)
                     {
                         if (passwordResult.IsSuccessful)
                         {
-                            PasswordLogin newPasswordLogin = Hasher.HashPassword(UserModel.NewPassword);
+                            PasswordLogin newPasswordLogin = Hasher.HashPassword(UserModel.Password);
                             UserModel passwordModel = new UserModel();
                             passwordModel.PasswordHash = newPasswordLogin.PasswordHash;
                             passwordModel.userId = UserModel.userId;

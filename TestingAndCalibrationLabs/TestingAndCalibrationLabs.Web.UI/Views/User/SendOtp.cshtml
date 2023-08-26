@@ -102,7 +102,7 @@
         debugger;
         var keyValuepair = {};
         keyValuepair.SendOtp = $("#SendOtp").val();
-        keyValuepair.UserId = $("#UserId").val();
+        keyValuepair.userId = $("#userId").val();
         keyValuepair.OTP = $("#OTP").val();
         $.ajax({
             type: "POST",
@@ -113,6 +113,7 @@
                 debugger;
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "We Send OTP successfully!");
+                window.location.href = '@Url.Action("index","Security")';
             },
             error: function (result) {
                 var newresponseJSON = result.responseJSON;

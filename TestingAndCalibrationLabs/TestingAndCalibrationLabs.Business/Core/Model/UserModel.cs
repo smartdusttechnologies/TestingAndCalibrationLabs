@@ -64,10 +64,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public string Password { get; set; }
         public string ReEnterPassword { get; set; }
         public int userId { get; set; }
-        public string OTP { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string NewPassword { get; set; }
-        public string ConfirmPassword { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public DateTime ChangeDate { get; set; }

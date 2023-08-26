@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -58,8 +57,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
                 double OTPTime = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
                 if (OtpModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
                 {
-                    OtpModel.EmailValidationStatus = 1;
-                    return new RequestResult<int>(existingUser.userId);
+                    return new RequestResult<int>(existingUser.Id);
                 }
                 else
                 {
