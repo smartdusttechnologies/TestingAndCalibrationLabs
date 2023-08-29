@@ -80,11 +80,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ChangePassword(ChangePasswordDTO changePasswordDto)
         {
 
-            var User = _httpContextAccessor.HttpContext.User;
-            var sdtUserIdentity = User.Identity as SdtUserIdentity;
-            changePasswordDto.UserId = sdtUserIdentity.UserId;
-            changePasswordDto.Username = sdtUserIdentity.UserName;
-            changePasswordDto.OrgId = sdtUserIdentity.OrganizationId;
+            //var User = _httpContextAccessor.HttpContext.User;
+            //var sdtUserIdentity = User.Identity as SdtUserIdentity;
+            //changePasswordDto.UserId = sdtUserIdentity.UserId;
+            //changePasswordDto.Username = sdtUserIdentity.UserName;
+            //changePasswordDto.OrgId = sdtUserIdentity.OrganizationId;
             var passwordRequest = _mapper.Map<ChangePasswordDTO, ChangePasswordModel>(changePasswordDto);
             var result = _authenticationService.UpdatePassword(passwordRequest);
             if (result.IsSuccessful)

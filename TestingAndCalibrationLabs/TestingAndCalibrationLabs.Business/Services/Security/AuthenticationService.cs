@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -27,12 +28,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly ISecurityParameterService _securityParameterService;
         private readonly ILoggerRepository _loggerRepository;
         private readonly IRoleRepository _roleRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             ILogger logger,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
-              IRoleRepository roleRepository)
+              IRoleRepository roleRepository, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -41,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _securityParameterService = securityParameterService;
             _loggerRepository = loggerRepository;
             _roleRepository = roleRepository;
-
+            _httpContextAccessor = httpContextAccessor;
         }
         /// <summary>
         /// Method to Authenticate for Login
@@ -213,6 +216,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             try
             {
+                var User = _httpContextAccessor.HttpContext.User;
+                var sdtUserIdentity = User.Identity as SdtUserIdentity;
+                changePasswordModel.UserId = sdtUserIdentity.UserId;
+                changePasswordModel.Username = sdtUserIdentity.UserName;
+                changePasswordModel.OrgId = sdtUserIdentity.OrganizationId;
                 var passwordResult = _securityParameterService.ChangePasswordPolicy(changePasswordModel);
                 if (passwordResult.IsSuccessful)
                 {
