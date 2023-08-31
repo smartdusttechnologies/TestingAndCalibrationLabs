@@ -74,10 +74,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// Admin Level.
         /// </summary>
         public int AdminLevel { get; set; }
-
-        /// <summary>
-        /// Admin Level.
-        /// </summary>
-       
-    }
+   }
 }
