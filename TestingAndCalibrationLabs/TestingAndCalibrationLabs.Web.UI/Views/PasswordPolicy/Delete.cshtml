@@ -1,0 +1,97 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.PasswordPolicyDTO
+@{
+    // Set the page title
+    ViewData["Title"] = "Delete";
+}
+<h1>Delete</h1>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Password Policy</h4>
+    <hr />
+    <dl class="row">
+        <!-- Display MinCaps -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MinCaps)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MinCaps)
+        </dd>
+
+        <!-- Display MinSmallChars -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MinSmallChars)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MinSmallChars)
+        </dd>
+
+        <!-- Display MinSpecialChars -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MinSpecialChars)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MinSpecialChars)
+        </dd>
+
+        <!-- Display MinNumber -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MinNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MinNumber)
+        </dd>
+
+        <!-- Display MinLength -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MinLength)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MinLength)
+        </dd>
+
+        <!-- Display AllowUserName -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AllowUserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AllowUserName)
+        </dd>
+
+        <!-- Display DisAllPastPassword -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DisAllPastPassword)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DisAllPastPassword)
+        </dd>
+
+        <!-- Display DisAllowedChars -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DisAllowedChars)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DisAllowedChars)
+        </dd>
+
+        <!-- Display ChangeIntervalDays -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChangeIntervalDays)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChangeIntervalDays)
+        </dd>
+
+        <!-- Display OrgId -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrgId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrgId)
+        </dd>
+    </dl>
+    <!-- Form for deleting the Password Policy -->
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
