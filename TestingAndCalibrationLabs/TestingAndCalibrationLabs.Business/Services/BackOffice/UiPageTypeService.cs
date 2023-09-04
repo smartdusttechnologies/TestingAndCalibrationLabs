@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -32,12 +33,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
             {
-                _genericRepository.Insert(uiPageTypeModel);
-                return new RequestResult<int>(1);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return new RequestResult<int>(0);
+            _genericRepository.Insert(uiPageTypeModel);
+            return new RequestResult<int>(1);
         }
         /// <summary>
         /// Delete Record From Ui Page Type
@@ -46,11 +47,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Delete }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Delete }).Result.Succeeded)
             {
-                return _genericRepository.Delete(id);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return false;
+            return _genericRepository.Delete(id);
         }
         /// <summary>
         /// Edit Record For Ui Page Type
@@ -60,20 +61,20 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(UiPageTypeModel uiPageTypeModel)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User,uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
             {
-                _genericRepository.Update(uiPageTypeModel);
-                return new RequestResult<int>(1);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return new RequestResult<int>(0);
+            _genericRepository.Update(uiPageTypeModel);
+            return new RequestResult<int>(1);
         }
-       public List<UiPageTypeModel> Get()
+        public List<UiPageTypeModel> Get()
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
             {
-                return _genericRepository.Get();
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return null;
+            return _genericRepository.Get();
         }
 
         /// <summary>
@@ -83,11 +84,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
             {
-                return _genericRepository.Get(id);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return null;
+            return _genericRepository.Get(id);
         }
         #endregion
     }
