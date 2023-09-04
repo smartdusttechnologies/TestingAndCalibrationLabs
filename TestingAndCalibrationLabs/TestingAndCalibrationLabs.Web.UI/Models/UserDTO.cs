@@ -6,27 +6,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     public class UserDTO
     {
         /// <summary>
-        /// UserName for Registration
+        /// User Name.
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
-        /// Email for Registration
-        /// </summary>
-        public string Email { get; set; }
-        /// <summary>
-        /// Password for Registration
-        /// </summary>
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Reenter Password for Registration
-        /// </summary>
-        [DataType(DataType.Password)]
-        public string ReEnterPassword { get; set; }
-
-        /// <summary>
-        /// FirstName for Registration
+        /// First Name.
         /// </summary>
         public string FirstName { get; set; }
         /// <summary>
@@ -34,7 +18,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public string LastName { get; set; }
         /// <summary>
-        /// Mobile Number.
+        /// Email Address.
+        /// </summary>
+        public string Email { get; set; }
+        /// <summary>
+        /// Mobile.
         /// </summary>
         public string Mobile { get; set; }
         /// <summary>
@@ -68,19 +56,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Organization Id.
         /// </summary>
-        public string Organizations { get; set; }
+        public int OrgId { get; set; }
         /// <summary>
         /// Admin Level.
         /// </summary>
-
+        public string Organizations { get; set; }
+        public int AdminLevel { get; set; }
+        public string Password { get; set; }
+        public string ReEnterPassword { get; set; }
         public int userId { get; set; }
-
-        public UserDTO() 
-        { 
-            CreatedDate = DateTime.Now;
-        }
-        public DateTime CreatedDate { get; set; }
-       
-
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
+        public DateTime ChangeDate { get; set; }
     }
 }

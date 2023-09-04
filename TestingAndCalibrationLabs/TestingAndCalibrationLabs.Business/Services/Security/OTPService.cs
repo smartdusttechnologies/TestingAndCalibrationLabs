@@ -18,10 +18,11 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
+
         public OTPservice(IConfiguration configuration,
-          IAuthenticationRepository authenticationRepository, 
-          IEmailService emailservice,
-          IWebHostEnvironment hostingEnvironment)
+           IAuthenticationRepository authenticationRepository, 
+           IEmailService emailservice,
+           IWebHostEnvironment hostingEnvironment)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -57,7 +58,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
                 double OTPTime = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
                 if (OtpModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
                 {
-                    return new RequestResult<int>(existingUser.Id);
+                  return new RequestResult<int>(existingUser.Id);
                 }
                 else
                 {
@@ -131,6 +132,18 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
                 body = reader.ReadToEnd();
             }
             return body;
+        }
+        /// <summary>
+        /// Method To Creat OTP for Sign-up Page
+        /// </summary>
+        /// <param name="OtpModel"></param>
+        /// <returns></returns>
+        public RequestResult<int> ResendOTP(OtpModel OtpModel)
+        {
+           var Email =  _authenticationRepository.GetEmail(OtpModel.userId);
+            var userId = OtpModel.userId;
+            var otp = CreateOtp(Email , userId);
+            return new RequestResult<int>(0);
         }
     }
 }

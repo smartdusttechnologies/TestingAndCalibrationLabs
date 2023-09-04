@@ -172,6 +172,7 @@
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
     function User() {
+        WheelLoader();
         //remove highlight column
         var under = ["#FirstName", "#LastName", "#Mobile", "#Email", "#ReEnterPassword", "#EnterPassword", "#Organizations", "#Country", "#Username"];
         for (var i = 0; i < under.length; i++) {
@@ -187,12 +188,14 @@
             data: $('#SignUpData').serialize(),
             dataType: 'json',
             success: function (result) {
+                HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
                 var userId = result.userId;
                 window.location.href = '@Url.Action("SendOtp","User")' + '?userId=' + userId;
             },
             error: function (result) {
+                HideWheelLoader();
                 var newresponseJSON = result.responseJSON;
                 var newErrorMessage = newresponseJSON;
                 for (var i = 0; i < newErrorMessage.length; i++) {

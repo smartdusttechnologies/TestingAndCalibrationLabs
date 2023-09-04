@@ -25,7 +25,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _organizationService = organizationService;
             _authenticationRepository = authenticationRepository;
         }
-
         /// <summary>
         /// Default Action of the User Controller
         /// </summary>
@@ -34,7 +33,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return View(new UserDTO());
         }
-
         /// <summary>
         /// Method for User Registration
         /// </summary>
@@ -46,12 +44,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _authenticationService.Add(userModel, userRequest.Password);
             if (result.IsSuccessful)
             {
-                OtpModel otpModel = new OtpModel {userId= userModel.userId};
+                OtpModel otpModel = new OtpModel {userId= userModel.userId ,Email = userModel.Email};
                 return Ok(otpModel);
             }
             return BadRequest(result.ValidationMessages);
         }
-
         /// <summary>
         /// Method for Sign-up OTP
         /// </summary>
@@ -59,7 +56,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult SendOtp(int userId)
         {
-            OtpDTO otpDTO = new OtpDTO { userId=userId };
+            OtpDTO otpDTO = new OtpDTO { userId = userId};
             return View(otpDTO);
         }
         ///// <summary>
@@ -74,9 +71,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
-                return Ok(user.RequestedObject);
+               UserModel userModel = new UserModel { userId = otpReturn.userId, Email = otpReturn.Email };
+
+                _authenticationService.EmailValidationStatus(userModel);
+              return Ok(user.RequestedObject);
             }
             return BadRequest(user.ValidationMessages);
+        }
+        /// <summary>
+        /// Method To Resend OTP For Sign-Up Page
+        /// </summary>
+        /// <param name="otpDTO"></param>
+        /// <returns></returns>
+        public IActionResult ResendOTP(OtpDTO otpDTO)
+        {
+            var resendOtp = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
+            _otpService.ResendOTP(resendOtp);
+            return Ok(otpDTO);
         }
     }
 }

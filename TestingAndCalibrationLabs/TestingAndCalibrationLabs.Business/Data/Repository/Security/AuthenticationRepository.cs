@@ -57,6 +57,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<OtpModel>("select u.Id ,uo.Otp,u.Email,uo.CreatedDate From [User] u inner join [UserOtp] uo on u.Id =uo.UserId  where uo.UserId =@UserId  ;", new {userId}).FirstOrDefault();
         }
         /// <summary>
+        /// Get  Email  in DB
+        /// </summary>
+        /// <param name="OTP"></param>
+        public OtpModel GetEmail(int userId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<OtpModel>("select u.Id, u.Email From [User] u where u.Id = @userId", new { userId }).FirstOrDefault();
+        }
+        /// <summary>
         /// Save Login Token in DB
         /// </summary>
         public int SaveLoginToken(LoginToken loginToken)

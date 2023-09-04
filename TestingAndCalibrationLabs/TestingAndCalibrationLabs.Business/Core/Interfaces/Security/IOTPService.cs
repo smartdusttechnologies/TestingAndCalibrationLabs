@@ -12,5 +12,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingA
         RequestResult<int> CreateOtp(OtpModel otpModel, int userId);
         RequestResult<int> ValidateOTP(OtpModel OtpModel);
         //void CreateOtp(string email, int userId);
+        RequestResult<int> ResendOTP(OtpModel OtpModel);
+
     }
 }

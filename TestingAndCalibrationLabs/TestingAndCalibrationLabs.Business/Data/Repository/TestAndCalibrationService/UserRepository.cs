@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -44,6 +43,26 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UserModel>("Select top 1 * From [User] where UserName=@userName and IsDeleted=0", new { userName }).FirstOrDefault();
+        }
+        /// <summary>
+        /// Get User Based on Email exist or not
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
+        public UserModel GetEmail(string Email)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UserModel>("Select top 1 * From [User] where Email=@Email and IsDeleted=0", new { Email }).FirstOrDefault();
+        }
+        /// <summary>
+        /// Update EmailValidatioStatus for Sign-up Page
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public UserModel EmailValidationStatusUpdate(int userId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UserModel>("UPDATE [User] SET EmailValidationStatus='1' WHERE Id=@userId", new { userId }).FirstOrDefault();
         }
         /// <summary>
         /// Method to Insert User Info in DB

@@ -9,7 +9,6 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -94,9 +93,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
-               otpDTO.userId = user.RequestedObject;
-               return Ok(user.RequestedObject);
-               //return Ok(otpDTO);
+                UserModel otpModel = new UserModel { userId = user.RequestedObject };
+                return Ok(otpModel);
             }
              return BadRequest(user.ValidationMessages);
         }
@@ -105,9 +103,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult ResetPassword()
+        public IActionResult ResetPassword(int userId)
         {
-            return View();
+            UserDTO userDTO = new UserDTO { userId=userId};
+            return View(userDTO);
         }
         /// <summary>
         /// Reset Password

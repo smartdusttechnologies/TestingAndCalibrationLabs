@@ -9,5 +9,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         OtpModel InsertOtp(string otp, int userId);
         OtpModel GetOTP(int userId);
         PasswordLogin GetUserIdPassword(int userId);
+        OtpModel GetEmail(int userId);
     }
 }

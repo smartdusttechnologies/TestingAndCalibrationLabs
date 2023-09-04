@@ -4,7 +4,7 @@
 }
 <div class="padding-login bg-white d-flex flex-column min-vh-100 justify-content-center align-items-center bg-login" style="margin-bottom:80px;">
     <div id="SendOtp" asp-action="SendOtp" asp-controller="User" method="post">
-        <input type="hidden" asp-for="userId">
+            <input type="hidden" asp-for="userId">
             <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
                 <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
                     <li class="nav-item login-tab-click" role="presentation" style="width:100%; margin:20px;">
@@ -61,7 +61,7 @@
                 </center>
                 <div>
                     <input type="hidden" asp-for="Email">
-                    <a href="#" onclick="ResendOTP()" style="float:right;">Resend OTP?</a>
+                <a href="#" onclick="ResendOTP()" style="float:right;">Resend OTP?</a>
                     <span class="timer">
                         <span id="counter"></span>
                     </span>
@@ -99,9 +99,8 @@
 </div>
 <script>
     function OtpMatch() {
-        debugger;
+        WheelLoader();
         var keyValuepair = {};
-        keyValuepair.SendOtp = $("#SendOtp").val();
         keyValuepair.userId = $("#userId").val();
         keyValuepair.OTP = $("#OTP").val();
         $.ajax({
@@ -110,12 +109,13 @@
             dataType: 'json',
             data: keyValuepair,
             success: function (result) {
-                debugger;
+                HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "We Send OTP successfully!");
                 window.location.href = '@Url.Action("index","Security")';
             },
             error: function (result) {
+                HideWheelLoader();
                 var newresponseJSON = result.responseJSON;
                 var newErrorMessage = newresponseJSON;
                 for (var i = 0; i <= newErrorMessage.length; i++) {
@@ -140,7 +140,7 @@
                 seconds--;
             }
             counter.innerHTML =
-                (minutes < 10 ? "0" : "") + String(minutes) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+            (minutes < 10 ? "0" : "") + String(minutes) + ":" + (seconds < 10 ? "0" : "") + String(seconds);
             if (minutes > 0 || seconds > 0) {
                 timer = setTimeout(tick, 1000);
             } else {
@@ -174,17 +174,17 @@
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
     function ResendOTP() {
-        debugger;
         WheelLoader();
         var keyValuepair = {};
-        keyValuepair.Email = $("#ValidateOTP").val();
+        keyValuepair.Email =$("#Email").val();
+        keyValuepair.userId = $("#userId").val();
+        keyValuepair.OTP = $("#OTP").val();
         $.ajax({
             type: "POST",
-            url: "@Url.Action("ResendOTP","Security")",
+            url: "@Url.Action("ResendOTP","User")",
             dataType: 'json',
             data: keyValuepair,
             success: function (result) {
-                debugger;
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "ResendOTP successfully!");

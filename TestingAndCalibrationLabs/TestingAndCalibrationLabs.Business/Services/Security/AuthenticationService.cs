@@ -2,23 +2,15 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using static System.Net.WebRequestMethods;
-using Google.Apis.Drive.v3.Data;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using static TestingAndCalibrationLabs.Business.Core.Model.PolicyTypes;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using AutoMapper;
 
@@ -227,6 +219,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var validateUserfieldsResult = _securityParameterService.ValidateNewuserPolicy(user);
 
             var validateexistinguser = ExistingUservalidation(user);
+            var validateexistingEmail = ExistingEmailvalidation(user);
             //UserModel existingUser = _userRepository.Get(user.UserName);
             //if (existingUser != null)
             //{
@@ -237,6 +230,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             validationMessages.AddRange(validatePasswordResult.ValidationMessages);
             validationMessages.AddRange(validateexistinguser.ValidationMessages);
             validationMessages.AddRange(validateUserfieldsResult.ValidationMessages);
+            validationMessages.AddRange(validateexistingEmail.ValidationMessages);
+
 
             return new RequestResult<bool>(validationMessages);
         }
@@ -250,6 +245,23 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (existingUser != null)
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error , SourceId = "Username" };
+                validationMessages.Add(error);
+                return new RequestResult<bool>(false, validationMessages);
+            }
+            return new RequestResult<bool>(validationMessages);
+        }
+        /// <summary>
+        /// Method to Validate Existing Email
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private RequestResult<bool> ExistingEmailvalidation(UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            UserModel existingEmail= _userRepository.GetEmail(user.Email);
+            if (existingEmail != null)
+            {
+                var error = new ValidationMessage { Reason = "Already! Email Exist!", Severity = ValidationSeverity.Error, SourceId = "Email" };
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
@@ -292,6 +304,16 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return new RequestResult<bool>(false);
             }
+        }
+        /// <summary>
+        /// Method to EmailValidation Status update in DB after OTP validation.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public RequestResult<int> EmailValidationStatus(UserModel user)
+        {
+            _userRepository.EmailValidationStatusUpdate(user.userId);
+            return new RequestResult<int>(1);
         }
     }
 }
