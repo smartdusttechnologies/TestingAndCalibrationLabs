@@ -6,14 +6,30 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-   public interface IPasswordPolicyService
+    /// <summary>
+    /// Interface for Password Policy Service
+    /// </summary>
+    public interface IPasswordPolicyService
     {
-
-        RequestResult<int> Create(PasswordPolicyModel passwordPolicyModel);
+        /// <summary>
+        /// Create a new Password Policy
+        /// </summary>
+        RequestResult<int> Create(PasswordPolicyModel passwordPolicyModel);  
+        /// <summary>
+        /// Delete a Password Policy by ID
+        /// </summary>
         bool Delete(int id);
+        /// <summary>
+        /// Update an existing Password Policy
+        /// </summary>
         RequestResult<int> Update(PasswordPolicyModel passwordPolicyModel);
+        /// <summary>
+        /// Get a list of all Password Policies
+        /// </summary>
         List<PasswordPolicyModel> Get();
+        /// <summary>
+        /// Get a Password Policy by ID
+        /// </summary>
         PasswordPolicyModel GetById(int id);
-
     }
 }

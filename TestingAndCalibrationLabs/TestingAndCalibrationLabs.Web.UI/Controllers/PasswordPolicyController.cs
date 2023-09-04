@@ -16,14 +16,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IPasswordPolicyService _PasswordPolicyService;
         public readonly IMapper _mapper;
         private readonly IOrganizationService _organizationService;
-
         public PasswordPolicyController(IPasswordPolicyService PasswordPolicyService, IMapper mapper, IOrganizationService organizationService)
         {
             _PasswordPolicyService = PasswordPolicyService;
             _mapper = mapper;
             _organizationService = organizationService;
         }
-
         /// <summary>
         /// Get all Password Policies and display them in the view
         /// </summary>
@@ -36,7 +34,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<PasswordPolicyModel>, List<PasswordPolicyDTO>>(page);
             return View(pageData.AsEnumerable());
         }
-
         /// <summary>
         /// Display the edit view for a Password Policy record
         /// </summary>
@@ -63,7 +60,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return View(pageData);
         }
-
         /// <summary>
         /// Handle the submission of edits to a Password Policy record
         /// </summary>
@@ -72,8 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit([Bind] PasswordPolicyDTO passwordPolicyDTO)
-        {
-
+        { 
             if (ModelState.IsValid)
             {
                 var pageModel = _mapper.Map<PasswordPolicyDTO, PasswordPolicyModel>(passwordPolicyDTO);
@@ -83,7 +78,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(passwordPolicyDTO);
         }
-
         /// <summary>
         /// Display the view for creating a new Password Policy record
         /// </summary>
@@ -97,7 +91,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.organization = organizationList;
             return base.View(new Models.PasswordPolicyDTO { Id = id });
         }
-
         /// <summary>
         /// Handle the submission of a new Password Policy record
         /// </summary>
@@ -109,7 +102,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var pageModel = _mapper.Map<PasswordPolicyDTO, PasswordPolicyModel>(passwordPolicyDTO);
                 _PasswordPolicyService.Create(pageModel);
                 TempData["IsTrue"] = true;
@@ -117,7 +109,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(passwordPolicyDTO);
         }
-
         /// <summary>
         /// Display the view for deleting a Password Policy record
         /// </summary>
@@ -137,7 +128,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageModel = _mapper.Map<PasswordPolicyModel, PasswordPolicyDTO>(getByIdPageModel);
             return View(pageModel);
         }
-
         /// <summary>
         /// Handle the submission of deleting a Password Policy record
         /// </summary>
