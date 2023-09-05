@@ -399,7 +399,7 @@ BEGIN
 			  (17,N'/WorkflowActivity/Index/',12,1002,0),
 			  (18,N'/Organization/Index/',13,1002,0),
 			  (19,N'/#/',16,1002,0),
-			  (20,N'//PasswordPolicy/Index/',17,1002,0)
+			  (20,N'/PasswordPolicy/Index/',17,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
