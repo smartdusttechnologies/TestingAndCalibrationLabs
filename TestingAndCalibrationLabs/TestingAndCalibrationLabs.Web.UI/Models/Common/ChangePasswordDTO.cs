@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public string Username { get; set; }
         /// <summary>
-        /// Organization Id.
+        /// It Contains The  Organization Id.
         /// </summary>
         public int OrgId { get; set; }
     }

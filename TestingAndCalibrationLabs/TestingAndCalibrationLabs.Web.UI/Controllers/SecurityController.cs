@@ -27,15 +27,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
-        private readonly IRoleService _roleService;
 
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper,
-            IRoleService roleService)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _mapper = mapper;
-            _roleService = roleService;
         }
 
         /// <summary>
