@@ -28,6 +28,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The ControlCategoryName of The Ui Control Type
         /// </summary> 
+        [Required(ErrorMessage = "Please Enter your ControlCategoryName")]
         public string ControlCategoryName { get; set; }
 
 

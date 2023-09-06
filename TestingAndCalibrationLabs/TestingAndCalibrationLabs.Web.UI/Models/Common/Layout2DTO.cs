@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
     /// It Contains Properties Of Layout
@@ -12,6 +14,7 @@
         /// <summary>
         /// It Contains Name For Layout
         /// </summary>
+        [Required(ErrorMessage = "Please Enter Name")]
         public string Name { get; set; }
     }
 }
