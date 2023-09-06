@@ -61,12 +61,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// Admin Level.
         /// </summary>
         public string Organizations { get; set; }
+        /// <summary>
+        /// Used at the time of insert in DB.
+        /// </summary>
         public int AdminLevel { get; set; }
+        /// <summary>
+        /// For Password
+        /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// For ReEnterPassword
+        /// </summary>
         public string ReEnterPassword { get; set; }
+        /// <summary>
+        /// It Contain User Id 
+        /// </summary>
         public int userId { get; set; }
-        public string PasswordHash { get; set; }
-        public string PasswordSalt { get; set; }
-        public DateTime ChangeDate { get; set; }
+       
     }
 }
