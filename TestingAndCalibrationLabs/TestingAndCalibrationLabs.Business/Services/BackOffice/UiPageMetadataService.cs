@@ -20,17 +20,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
             _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
-           
         }
         #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
         /// </summary>
-        /// <param name="pageControl"></param>
+        /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageMetadataModel pageControl)
+        public RequestResult<int> Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            int id = _uiPageMetadataRepository.Create(pageControl);
+            int id = _uiPageMetadataRepository.Create(uiPageMetadataModel);
             return new RequestResult<int>(1);
         }
         /// <summary>

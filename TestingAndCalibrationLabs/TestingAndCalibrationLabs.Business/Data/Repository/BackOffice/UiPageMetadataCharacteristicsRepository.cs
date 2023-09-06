@@ -113,16 +113,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 UiPageMetadataId = @UiPageMetadataId,
                                 LookupCategoryId = @LookupCategoryId
                                 Where id = @Id";
-												
             using IDbConnection db = _connectionFactory.GetConnection;
-
             return db.Execute(query, uiPageMetadataCharacteristicsModel);
         }
         /// <summary>
         /// Delete into  Ui Page Metadata Characteristics
         /// </summary>
         /// <returns></returns>
-
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

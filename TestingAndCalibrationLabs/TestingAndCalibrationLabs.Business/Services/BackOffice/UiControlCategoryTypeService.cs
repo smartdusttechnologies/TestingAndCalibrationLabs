@@ -60,7 +60,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="uiControlCategoryTypeModel"></param>
         /// <returns></returns>
-
         public RequestResult<int> Create(UiControlCategoryTypeModel uiControlCategoryTypeModel)
         {
             _uiControlCategoryTypeRepository.Create(uiControlCategoryTypeModel);

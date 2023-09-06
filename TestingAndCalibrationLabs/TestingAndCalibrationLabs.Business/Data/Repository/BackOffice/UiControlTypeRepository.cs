@@ -18,6 +18,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+        /// <summary>
+        /// Insert Record in UiControlType
+        /// </summary>
+        /// <param name="uiControlTypeModel"></param>
+        /// <returns></returns>
         public int Create(UiControlTypeModel uiControlTypeModel)
         {
             string query = @"Insert into [UiControlType] (ControlCategoryId,DisplayName,Name)
@@ -25,6 +30,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiControlTypeModel);
         }
+        /// <summary>
+        /// GET ALL Record in UiControlType
+        /// </summary>
+        /// <param name="uiControlTypeModel"></param>
+        /// <returns></returns>
         public List<UiControlTypeModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -42,6 +52,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                    And uct.IsDeleted = 0 
                                                    And L.IsDeleted = 0").ToList();
         }
+        /// <summary>
+        /// GET ALL Control in Lookup
+        /// </summary>
+        /// <returns></returns>
         public List<UiControlTypeModel> GetControl()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -54,7 +68,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                    And L.IsDeleted = 0").ToList();
             return controlname ;
         }
-
+        /// <summary>
+        /// GET ALL Record in UiControlType based on id
+        /// </summary>
+        /// <returns></returns>
         public UiControlTypeModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -71,6 +88,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return uiControlTypeById;
         }
+        /// <summary>
+        /// Update Record in UiControlType
+        /// </summary>
+        /// <param name="moduleModel"></param>
+        /// <returns></returns>
         public int Update(UiControlTypeModel uiControlTypeModel)
         {
             string query = @"update [UiControlType] Set  
@@ -82,7 +104,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiControlTypeModel);
         }
-
+        /// <summary>
+        /// Delete Record in UiControlType
+        /// </summary>
+        /// <param name="moduleModel"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

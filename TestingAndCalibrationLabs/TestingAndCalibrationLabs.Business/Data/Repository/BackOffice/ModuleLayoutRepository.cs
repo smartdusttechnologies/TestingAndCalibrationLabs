@@ -65,7 +65,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upt.IsDeleted = 0
                                                     and lc.IsDeleted = 0", new { metadataId = id }).First();
         }
-
+        /// <summary>
+        /// Create Record From ModuleLayout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public int Create(ModuleLayoutModel moduleLayoutModel)
         {
@@ -76,6 +80,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         }
 
+        /// <summary>
+        /// GET Record From ModuleLayout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public ModuleLayoutModel GetById(int id)
         {
@@ -93,6 +102,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return moduleLayoutById;
         }
+        /// <summary>
+        /// Update Record From ModuleLayout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
         public int Update(ModuleLayoutModel moduleLayoutModel)
         {
             string query = @"update [ModuleLayout] Set  
@@ -106,6 +121,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return db.Execute(query, moduleLayoutModel);
         }
+        /// <summary>
+        /// Delete Record From ModuleLayout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         public bool Delete(int id)
         {

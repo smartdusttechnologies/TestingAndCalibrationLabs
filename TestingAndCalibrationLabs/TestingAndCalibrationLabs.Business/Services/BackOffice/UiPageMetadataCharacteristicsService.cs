@@ -57,7 +57,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Update Record From UiPageMetadataCharacteristics
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="uiControlTypeModel"></param>
+        /// <param name="uiPageMetadataCharacteristicsModel"></param>
         /// <returns></returns>
         public RequestResult<int> Update(UiPageMetadataCharacteristicsModel uiPageMetadataCharacteristicsModel)
         {
@@ -67,9 +67,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Insert Record In UiPageMetadataCharacteristics
         /// </summary>
-        /// <param name="uiControlTypeModel"></param>
+        /// <param name="uiPageMetadataCharacteristicsModel"></param>
         /// <returns></returns>
-
         public RequestResult<int> Create(UiPageMetadataCharacteristicsModel uiPageMetadataCharacteristicsModel)
         {
             _PageMetadataCharacteristicsRepository.Create(uiPageMetadataCharacteristicsModel);

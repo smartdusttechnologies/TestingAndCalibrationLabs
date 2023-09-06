@@ -19,19 +19,17 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _uiPageMetadataModuleBridgeRepository = uiPageMetadataModuleBridgeRepository;
         }
-
         #region Public methods
         /// <summary>
         /// Create Record For Ui Page Type
         /// </summary>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="uiPageMetadataModuleBridgeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageMetadataModuleBridgeModel uiPageTypeModel)
+        public RequestResult<int> Create(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridgeModel)
         {
-            _uiPageMetadataModuleBridgeRepository.Insert(uiPageTypeModel);
+            _uiPageMetadataModuleBridgeRepository.Insert(uiPageMetadataModuleBridgeModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Delete Record From Ui Page Type
         /// </summary>
@@ -46,14 +44,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Edit Record For Ui Page Type
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="uiPageMetadataModuleBridgeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(UiPageMetadataModuleBridgeModel uiPageTypeModel)
+        public RequestResult<int> Update(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridgeModel)
         {
-            _uiPageMetadataModuleBridgeRepository.Update(uiPageTypeModel);
+            _uiPageMetadataModuleBridgeRepository.Update(uiPageMetadataModuleBridgeModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Get All Records From Ui Page Type
         /// </summary>
@@ -62,7 +59,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _uiPageMetadataModuleBridgeRepository.Get();
         }
-
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>

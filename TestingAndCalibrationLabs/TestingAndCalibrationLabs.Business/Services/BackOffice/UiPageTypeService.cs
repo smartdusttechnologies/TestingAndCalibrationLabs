@@ -37,7 +37,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
         /// <summary>
         /// Edit Record For Ui Page Type
         /// </summary>

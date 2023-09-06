@@ -9,7 +9,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     /// <summary>
-    /// Repository Class For Ui UiControl  Type
+    /// Repository Class For UiPageMetadataModuleBridge
     /// </summary> 
     public class UiPageMetadataModuleBridgeRepository : IUiPageMetadataModuleBridgeRepository
     {
@@ -18,15 +18,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
-        public int Insert(UiPageMetadataModuleBridgeModel uiControlTypeModel)
+        /// <summary>
+        /// Insert into  UiPageMetadataModuleBridge
+        /// </summary>
+        /// <returns></returns>
+        public int Insert(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridgeModel)
         {
             string query = @" Insert into [UiPageMetadataModuleBridge] (UiPageMetadataId,UiPageTypeId,ModuleId,ParentId,Orders,UiControlDisplayName,MultiValueControl)
                                                   values (@UiPageMetadataId,@UiPageTypeId,@ModuleId,@ParentId,@Orders,@UiControlDisplayName,@MultiValueControl)";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, uiControlTypeModel);
+            return db.Execute(query, uiPageMetadataModuleBridgeModel);
 
         }
+        /// <summary>
+        /// Get all Record  UiPageMetadataModuleBridge
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageMetadataModuleBridgeModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -43,6 +50,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                    And upt.IsDeleted = 0").ToList();
 
         }
+        /// <summary>
+        /// Get  ControlName from  Lookup
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageMetadataModuleBridgeModel> GetControl()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -56,6 +67,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return controlname;
         }
+        /// <summary>
+        /// Get all record into  UiPageMetadataModuleBridge based on Id
+        /// </summary>
+        /// <returns></returns>
         public UiPageMetadataModuleBridgeModel GetById(int id)
         {
           using IDbConnection db = _connectionFactory.GetConnection;
@@ -75,7 +90,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 												                                    and m.IsDeleted = 0", new { Id = id }).FirstOrDefault(); ;
             return uiControlTypeById;
         }
-        public int Update(UiPageMetadataModuleBridgeModel uiControlTypeModel)
+        /// <summary>
+        /// Update into  UiPageMetadataModuleBridge
+        /// </summary>
+        /// <returns></returns>
+        public int Update(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridgeModel)
         {
             string query = @"update [UiPageMetadataModuleBridge] Set  
                                UiPageMetadataId=@UiPageMetadataId,
@@ -89,9 +108,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             using IDbConnection db = _connectionFactory.GetConnection;
 
-            return db.Execute(query, uiControlTypeModel);
+            return db.Execute(query, uiPageMetadataModuleBridgeModel);
         }
-
+        /// <summary>
+        /// Delete into  UiPageMetadataModuleBridge
+        /// </summary>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

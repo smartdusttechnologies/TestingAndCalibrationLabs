@@ -4,38 +4,41 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
     /// <summary>
-    /// Repository interface for Ui Page Metadata Type
+    /// Repository interface for UiPageMetadataModuleBridge
     /// </summary>
     public interface IUiPageMetadataModuleBridgeRepository
     {
 
         /// <summary>
-        /// Get All Records From Ui Page Metadata
+        /// Get All Records From UiPageMetadataModuleBridge
         /// </summary>
         /// <returns></returns>
         List<UiPageMetadataModuleBridgeModel> Get();
         /// <summary>
-        /// Get Record By Id From Ui Page Metadata
+        /// Get Record  From Lookup
+        /// </summary>
+        /// <returns></returns>
+        List<UiPageMetadataModuleBridgeModel> GetControl();
+        /// <summary>
+        /// Get Record By Id From UiPageMetadataModuleBridge
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<UiPageMetadataModuleBridgeModel> GetControl();
-
         UiPageMetadataModuleBridgeModel GetById(int id);
         /// <summary>
-        /// Insert Record In Ui Metadata
+        /// Insert Record In UiPageMetadataModuleBridge
         /// </summary>
-        /// <param name="uiControlTypeModel"></param>
+        /// <param name="uiPageMetadataModuleBridge"></param>
         /// <returns></returns>
-        int Insert(UiPageMetadataModuleBridgeModel uiControlTypeModel);
+        int Insert(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridge);
         /// <summary>
-        /// Update Record In Ui Page Metadata
+        /// Update Record In UiPageMetadataModuleBridge
         /// </summary>
-        /// <param name="uiControlTypeModel"></param>
+        /// <param name="uiPageMetadataModuleBridge"></param>
         /// <returns></returns>
-        int Update(UiPageMetadataModuleBridgeModel uiControlTypeModel);
+        int Update(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridge);
         /// <summary>
-        /// Delete Record From Ui Page Metadata By Id
+        /// Delete Record From UiPageMetadataModuleBridge By Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

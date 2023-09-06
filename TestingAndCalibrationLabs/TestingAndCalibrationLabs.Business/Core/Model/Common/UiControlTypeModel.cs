@@ -18,7 +18,13 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         [DbColumn]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// It Contains The ControlCategoryId of The Ui Control Type
+        /// </summary>
         public int ControlCategoryId { get; set; }
+        /// <summary>
+        /// It Contains The ControlCategoryName of The Ui Control Type
+        /// </summary>
         public string ControlCategoryName { get; set;}
 
     }
