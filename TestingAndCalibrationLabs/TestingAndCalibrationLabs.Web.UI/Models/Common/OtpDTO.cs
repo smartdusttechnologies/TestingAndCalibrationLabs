@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public int userId { get; set; }
         /// <summary>
-        /// this used for otp
+        /// it used for otp
         /// </summary>
         public string OTP { get; set; }
         /// <summary>
