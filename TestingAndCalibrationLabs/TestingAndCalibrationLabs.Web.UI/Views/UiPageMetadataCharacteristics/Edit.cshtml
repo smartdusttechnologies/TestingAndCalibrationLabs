@@ -16,7 +16,7 @@
                 
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageMetadataId" class="form-label"></label>
-                    <select class="form-input " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
+                    <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
 
                         @foreach (var item in ViewBag.DisplayName)
                         {
@@ -35,7 +35,7 @@
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="LookupCategoryId" class="form-label"></label>
-                    <select class="form-input" name="LookupCategoryId" id="LookupCategory" onchange="this.setAttribute('value',this.value)" asp-for="LookupCategoryId">
+                    <select class="form-input width-full black-border" name="LookupCategoryId" id="LookupCategory" onchange="this.setAttribute('value',this.value)" asp-for="LookupCategoryId">
 
                         @foreach (var item in ViewBag.ControlCategoryName)
                         {
