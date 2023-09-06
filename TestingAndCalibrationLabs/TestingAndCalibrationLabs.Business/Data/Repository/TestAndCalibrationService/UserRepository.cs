@@ -93,10 +93,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         }
             public int Update(ChangePasswordModel changePasswordModel)
             {
-            var dynamicPara = new DynamicParameters();
-            dynamicPara.Add("@PasswordHash", "PasswordHash");
-            dynamicPara.Add("@PasswordSalt", "PasswordSalt");
-
                string changePasswordQuery = @"update [PasswordLogin] Set
                                            PasswordHash = @PasswordHash,
                                            PasswordSalt = @PasswordSalt

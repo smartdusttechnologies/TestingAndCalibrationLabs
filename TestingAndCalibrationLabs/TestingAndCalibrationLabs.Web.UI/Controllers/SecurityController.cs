@@ -80,6 +80,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest(result.ValidationMessages);
         }
+        /// <summary>
+        /// Method to render Change Password Page 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult ChangePassword()
         {
