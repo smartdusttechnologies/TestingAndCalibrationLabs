@@ -1,17 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TestingAndCalibrationLabs.Business.Common;
+﻿using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration
 {
     public interface IOTPService
     {
+        /// <summary>
+        /// Interface for Email validation for FogetPassword.
+        /// </summary>
+        /// <param name="user"></param>
         RequestResult<int> EmailValidateForgotPassword(OtpModel OtpModel);
+        /// <summary>
+        /// Interface for CreateOTP.
+        /// </summary>
+        /// <param name="user"></param>
         RequestResult<int> CreateOtp(OtpModel otpModel, int userId);
+        /// <summary>
+        /// Interface for ValidateOTP .
+        /// </summary>
+        /// <param name="user"></param>
         RequestResult<int> ValidateOTP(OtpModel OtpModel);
-        //void CreateOtp(string email, int userId);
+        /// <summary>
+        /// Interface for Resend OTP .
+        /// </summary>
+        /// <param name="user"></param>
         RequestResult<int> ResendOTP(OtpModel OtpModel);
 
     }
