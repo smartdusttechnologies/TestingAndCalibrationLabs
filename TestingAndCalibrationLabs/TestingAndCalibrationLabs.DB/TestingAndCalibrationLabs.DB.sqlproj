@@ -120,6 +120,8 @@
     <Build Include="dbo\Tables\UiPageDateType.sql" />
     <Build Include="dbo\Tables\UiPageBoolType.sql" />
     <Build Include="dbo\Tables\ImageUpload.sql" />
+    <Build Include="dbo\Tables\ModuleLayout.sql" />
+    <Build Include="dbo\Tables\Layout.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

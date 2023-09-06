@@ -12,6 +12,7 @@
         var uiPageData = modelData.value.uiPageData;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
         $.ajax({
+           
             type: "POST",
             url: "@Url.Action("GetByModuleId","WorkflowStage")",
             data: { moduleId: lookupCategoryId },

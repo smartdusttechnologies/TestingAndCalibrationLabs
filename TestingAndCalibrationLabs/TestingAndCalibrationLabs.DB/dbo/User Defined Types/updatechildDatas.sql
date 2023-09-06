@@ -3,5 +3,8 @@
     [UiPageMetadataId] INT           NULL,
     [ChildId]          INT           NULL,
     [RecordId]         INT           NULL,
+    [UiPageTypeId]     INT           NULL,
     [Value]            VARCHAR (200) NULL);
+
+
 

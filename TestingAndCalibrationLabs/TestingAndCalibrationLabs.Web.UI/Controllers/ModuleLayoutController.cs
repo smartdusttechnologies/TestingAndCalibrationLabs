@@ -52,18 +52,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ModuleLayoutModel controlTypeModel = _moduleLayoutService.GetById((int)id);
             var controlCategoryType = _layoutService.Get();
             var controlCategoryTypeList = _mapper.Map<List<Layout2Model>, List<Layout2DTO>>(controlCategoryType);
-
             var pageModule = _moduleService.Get();
             var ModuleTypeList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageModule);
-
-
             if (controlTypeModel == null)
             {
                 return NotFound();
             }
             ViewBag.ControlCategoryName = controlCategoryTypeList;
             ViewBag.DisplayName = ModuleTypeList;
-
             var controlTypeEditModel = _mapper.Map<ModuleLayoutModel, ModuleLayoutDTO>(controlTypeModel);
             return View(controlTypeEditModel);
         }
