@@ -13,6 +13,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
+        /// <summary>
+        /// Save Password in DB after user signup on the basis of username
+        /// </summary>
+        /// <param name="userName"></param>
         public PasswordLogin GetLoginPassword(string userName)
         {
             using IDbConnection db = _connectionFactory.GetConnection;

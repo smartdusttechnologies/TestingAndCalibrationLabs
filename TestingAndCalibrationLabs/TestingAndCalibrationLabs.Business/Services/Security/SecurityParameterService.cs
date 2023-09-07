@@ -54,7 +54,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages); ;
             }
         }
-        //}
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
         /// </summary>
