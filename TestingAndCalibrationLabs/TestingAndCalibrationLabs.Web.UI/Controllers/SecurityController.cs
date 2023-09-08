@@ -76,8 +76,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 var userVerify = _otpService.EmailValidateForgotPassword(emailResult);
                 if (userVerify.IsSuccessful)
                 {
-                otpDTO.userId = userVerify.RequestedObject;
-                    _otpService.CreateOtp(emailResult, otpDTO.userId);
+                     otpDTO.userId = userVerify.RequestedObject.UserId;
+                     otpDTO.Name = userVerify.RequestedObject.UserName; 
+                    _otpService.CreateOtp(emailResult, otpDTO.userId,otpDTO.Name);
                     return Ok(otpDTO);
                 }
             return BadRequest(userVerify.ValidationMessages);
@@ -93,8 +94,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
-                UserModel otpModel = new UserModel { userId = user.RequestedObject };
-                return Ok(otpModel);
+                UserModel userModel = new UserModel { userId = user.RequestedObject };
+                return Ok(userModel);
             }
              return BadRequest(user.ValidationMessages);
         }

@@ -7,6 +7,7 @@ using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 
@@ -18,21 +19,22 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
-
+        private readonly IUserRepository _userRepository;
         public OTPservice(IConfiguration configuration,
            IAuthenticationRepository authenticationRepository, 
-           IEmailService emailservice,
+           IEmailService emailservice,IUserRepository userRepository,
            IWebHostEnvironment hostingEnvironment)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
             _emailService = emailservice;
+            _userRepository= userRepository;
             _hostingEnvironment = hostingEnvironment;
         }
         /// <summary>
         /// Method to Validate the Email
         /// </summary>
-        public RequestResult<int> EmailValidateForgotPassword(OtpModel OtpModel)
+        public RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             UserModel existingUser = _authenticationRepository.GetLoginEmail(OtpModel.Email);
@@ -40,9 +42,9 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
                 validationMessages.Add(error);
-                return new RequestResult<int>(0, validationMessages);
+                return new RequestResult<(int, string)>(default, validationMessages);
             }
-            return new RequestResult<int>(existingUser.Id);
+            return new RequestResult<(int, string)>((existingUser.Id, existingUser.FirstName));
         }
         /// <summary>
         /// Method to validate OTP
@@ -79,31 +81,26 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// </summary>
         /// <param name="OtpModel"></param>
         /// <returns></returns>
-        public RequestResult<int> CreateOtp(OtpModel otpModel, int userId)
+        public RequestResult<int> CreateOtp(OtpModel otpModel, int userId ,string name )
         {
             string otp = GenerateOTP();
-            string subject = "OTP Verification";
-            string body = $"{otp}";
-            EmailModel model = new EmailModel();
-            model.EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"];
-            model.Subject = _configuration["ForgotPassOTP:Subject"];
-            model.BodyImage = _configuration["ForgotPassOTP:BodyImageLink"];
-            model.LogoImage = _configuration["ForgotPassOTP:LogoLink"];
-            model.Email = new List<string>();
-            model.Email.Add(otpModel.Email);
+            EmailModel model = new EmailModel
+            {
+                EmailTemplate = _configuration["ForgotPassOTP:EmailTemplate"],
+                Subject = _configuration["ForgotPassOTP:Subject"],
+                BodyImage = _configuration["ForgotPassOTP:BodyImageLink"],
+                LogoImage = _configuration["ForgotPassOTP:LogoLink"],
+                Email = new List<string> { otpModel.Email }
+            };
             model.HtmlMsg = CreateBody(model.EmailTemplate);
-            model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", body);
+            model.HtmlMsg = model.HtmlMsg.Replace("*Name*", name);
+            model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", otp);
             model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*", model.BodyImage);
             model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
-            OtpModel OtpGenerate = _authenticationRepository.InsertOtp(body, userId);
+            OtpModel OtpGenerate = _authenticationRepository.InsertOtp(otp, userId);
             try
             {
                 _emailService.Sendemail(model);
-                using (MailMessage mailMessage = new MailMessage())
-                {
-                    mailMessage.Subject = subject;
-                    mailMessage.Body = body;
-                }
             }
             catch (Exception ex)
             {
@@ -142,7 +139,8 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         {
            var Email =  _authenticationRepository.GetEmail(OtpModel.userId);
             var userId = OtpModel.userId;
-            var otp = CreateOtp(Email , userId);
+            var name = OtpModel.Name;
+            var otp = CreateOtp(Email ,userId,name);
             return new RequestResult<int>(0);
         }
     }

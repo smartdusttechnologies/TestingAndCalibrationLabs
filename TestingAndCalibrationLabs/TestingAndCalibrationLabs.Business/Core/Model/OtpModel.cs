@@ -5,6 +5,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class OtpModel : Entity
     {
         /// <summary>
+        /// Used for Name
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
         /// Used For Email.
         /// </summary>
         public string Email { get; set; }

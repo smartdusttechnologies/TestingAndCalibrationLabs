@@ -9,12 +9,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingA
         /// Interface for Email validation for FogetPassword.
         /// </summary>
         /// <param name="user"></param>
-        RequestResult<int> EmailValidateForgotPassword(OtpModel OtpModel);
+        //RequestResult<int> EmailValidateForgotPassword(OtpModel OtpModel);
+        RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel);
+
         /// <summary>
         /// Interface for CreateOTP.
         /// </summary>
         /// <param name="user"></param>
-        RequestResult<int> CreateOtp(OtpModel otpModel, int userId);
+        //RequestResult<int> CreateOtp(OtpModel otpModel, int userId);
+        RequestResult<int> CreateOtp(OtpModel otpModel, int userId, string name);
+
         /// <summary>
         /// Interface for ValidateOTP .
         /// </summary>

@@ -6,6 +6,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     public class OtpDTO
     {
         /// <summary>
+        /// Used For Name
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Used For Email
         /// </summary>
         [Required(ErrorMessage = "Please enter your email address")]

@@ -198,7 +198,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
                     OtpModel User = new OtpModel { userId = passwordLogin.UserId, Email = user.Email };
-                    _otpService.CreateOtp(User, passwordLogin.UserId);
+                    _otpService.CreateOtp(User, passwordLogin.UserId,user.FirstName);
                     user.userId = User.userId;
                     return new RequestResult<bool>(true);
                 }
