@@ -3,11 +3,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 
@@ -19,16 +17,14 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IUserRepository _userRepository;
         public OTPservice(IConfiguration configuration,
            IAuthenticationRepository authenticationRepository, 
-           IEmailService emailservice,IUserRepository userRepository,
+           IEmailService emailservice,
            IWebHostEnvironment hostingEnvironment)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
             _emailService = emailservice;
-            _userRepository= userRepository;
             _hostingEnvironment = hostingEnvironment;
         }
         /// <summary>
