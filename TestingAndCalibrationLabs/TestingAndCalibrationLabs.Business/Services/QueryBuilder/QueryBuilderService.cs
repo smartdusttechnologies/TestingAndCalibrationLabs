@@ -7,6 +7,9 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Common;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 
 namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
 {
@@ -52,7 +55,9 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
         /// <param name="conditionModels"></param>
         /// <param name="TemplateName"></param>
         /// <returns></returns>
-        public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
+        // public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
+       // public List<CommonQueryModel> UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
+        public DashboardModel UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
         {
 
 
@@ -180,12 +185,18 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
                 var model = new JsonSaveModel();
                 model.Template = TemplateName;
                 model.JSON = QueryJson;
-                return  _querybuilderRepository.QuerySaver(model);
-                
+                // return  _querybuilderRepository.QuerySaver(model);
+                var result = SqlConverter.JsonToSql(QueryJson);
+                var data= _querybuilderRepository.ExecuteCustomQuery(result);
+                //  return 1;
+                return data;
+
+
             }
             else
             {
-                return 0;
+                // return 0;
+                return null;
             }
         }
         /// <summary>

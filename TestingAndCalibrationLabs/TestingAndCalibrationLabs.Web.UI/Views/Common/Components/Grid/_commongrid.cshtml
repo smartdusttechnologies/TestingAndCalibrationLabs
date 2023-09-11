@@ -1,0 +1,88 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.DashboardDTO
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .scrollable-table {
+            width: 100%;
+            max-width: 1000px; /* Adjust the max-width as needed */
+            height: 250px; /* Adjust the height as needed */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-spacing: 0;
+            margin: 10px;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            width: auto;
+            line-height: 2;
+            font-size: 12px;
+        }
+
+        td{
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scrollable-table">
+        <table>
+            @if (Model.Dictionary != null)
+            {
+                <thead>
+                    <tr>
+                        @foreach (var keyValuePair in Model.Dictionary)
+                        {
+                            <th>
+                                @keyValuePair.Key
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                   @*     @foreach (var keyValuePair in Model.Dictionary)
+                        {
+                          <tr>
+                               
+                                @foreach (var item in keyValuePair.Value)
+                                {
+                                   <td>
+
+                                       @(item == null ? "null" : item)
+                                   </td>
+                                }
+                          </tr>
+                        }*@
+
+                    <tr>
+                        @foreach (var keyValuePair in Model.Dictionary)
+                        {
+                            <td>
+                                @foreach (var item in keyValuePair.Value)
+                                {
+                                    <div>@(item == null ? "null" : item)</div>
+                                }
+                            </td>
+                        }
+                    </tr>
+                    
+                </tbody>
+            }
+        </table>
+
+
+
+    </div>
+
+</body>
+</html>

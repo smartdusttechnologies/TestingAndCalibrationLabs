@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 using TestingAndCalibrationLabs.Business.Core.Model.QueryBuilder;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder
@@ -28,9 +29,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder
         /// <param name="conditionModels"></param>
         /// <param name="TemplateName"></param>
         /// <returns></returns>
-        public int UiToJsonQueryBuilder(List<UiQueryGenerator> tableNames,List<JoinModelDTO>JoinInfo,List<ConditionModel> conditionModels, string TemplateName);
-
-
+        //public int UiToJsonQueryBuilder(List<UiQueryGenerator> tableNames,List<JoinModelDTO>JoinInfo,List<ConditionModel> conditionModels, string TemplateName);
+        //List<CommonQueryModel> UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName);
+        DashboardModel UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName);
         /// <summary>
         /// This is to validate the json which is created
         /// </summary>

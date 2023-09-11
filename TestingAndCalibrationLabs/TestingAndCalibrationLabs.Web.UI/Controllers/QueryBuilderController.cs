@@ -11,6 +11,9 @@ using CloudinaryDotNet.Actions;
 using TestingAndCalibrationLabs.Business.Common;
 using Newtonsoft.Json.Linq;
 using AutoMapper.Execution;
+using System.Linq;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -43,11 +46,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="TemplateName"></param>
         /// <returns></returns>
         [HttpPost]
+
+        public IActionResult QueryGenerator(string jsonData, string JoinData, string ConditionData, string TemplateName)
         
-       public IActionResult QueryGenerator(string jsonData ,string JoinData,string ConditionData,string TemplateName)
         {
             //List<string> list = JsonSerializer.Serialize(jsonData);
-          
+
             List<UiQueryBuilderColumn> Person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
             List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
             List<ConditionModelDTO> ConditionInfo = JsonSerializer.Deserialize<List<ConditionModelDTO>>(ConditionData);
@@ -55,28 +59,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //var  emptydata = Object.entries(datainfo); 
 
 
-            for (var  item = 0; item < Person.Count; item++)
+            for (var item = 0; item < Person.Count; item++)
             {
                 if (item + 65 + 1 <= 91)
                 {
 
-                    Person[item].Alias = Convert.ToChar(item + 65); 
+                    Person[item].Alias = Convert.ToChar(item + 65);
 
                 }
-                    
-                    
             }
             var Records = _mapper.Map<List<Models.UiQueryBuilderColumn>, List<Business.Core.Model.UiQueryGenerator>>(Person);
-
-
             var recordJoin = _mapper.Map<List<Models.JoinModel>, List<Business.Core.Model.QueryBuilder.JoinModelDTO>>(Join);
-            var  ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
+            var ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
 
 
-            var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin,ConditionJoin, TemplateName);
+            var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin, ConditionJoin, TemplateName);
+            //var data = Value.ToDictionary(row => (string)row.itemdata, row => (string)row.itemtype);
             // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
+        
+                var records = _mapper.Map<DashboardModel, DashboardDTO>(Value);
 
-            return Ok();
+                return PartialView("~/Views/Common/Components/Grid/_commongrid.cshtml", records);
+                // return Ok (records);
+            
+
         }
     }
 }

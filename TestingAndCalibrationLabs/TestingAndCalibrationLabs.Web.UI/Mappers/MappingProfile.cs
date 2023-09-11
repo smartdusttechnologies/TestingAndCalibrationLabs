@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
 {
@@ -30,7 +31,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<Models.JoinModel, Business.Core.Model.QueryBuilder.JoinModelDTO>().ReverseMap();
             CreateMap<Models.ConditionModelDTO, Business.Core.Model.QueryBuilder.ConditionModel>().ReverseMap();
             CreateMap<UiPageNavigationModel, UiPageNavigationDTO>().ReverseMap();
-
+            CreateMap<DashboardModel , DashboardDTO>().ReverseMap();
         }
     }
 }

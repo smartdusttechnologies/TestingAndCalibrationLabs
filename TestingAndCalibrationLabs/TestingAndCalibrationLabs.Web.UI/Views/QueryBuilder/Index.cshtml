@@ -118,6 +118,7 @@
                                 <option selected>Select</option>
                                 <option value=">">></option>
                                 <option value="<"> < </option>
+                                <option value="=">=</option>
                                 <option value=">=">>=</option>
                                 <option value="<="><=</option>
                                 <option value="Like">Like</option>
@@ -197,7 +198,7 @@
                         <div class="eqv-dropdown-content">
                         </div>
                     </div>
-                    <a class="eqv-button">Preview Data</a>
+                    <a class="eqv-button" onclick="DataToModel()">Preview Data</a>
                     <a class="eqv-button" onclick="DataToModel()">Save Query</a>
                     <div id="ChangeLocale">
                         <select class="eqv-select">
@@ -212,9 +213,9 @@
         </div>
 
         <div class="eqv-bottom-panel">
-            <div class="eqv-result-panel">
+            <div class="eqv-result-panel" id="Result">
                 <hr class="eqv-result-panel-hr eqv-hr">
-                <div class="eqv-result-panel-title">
+                <div class="eqv-result-panel-title" >
                     Result
                     <span id="ResultCount" style="display:none; margin-left:20px; font-size:small"></span>
                     <span class="eqv-export-buttons">
@@ -224,9 +225,9 @@
                         <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="csv">Export to CSV</a>
                     </span>
                 </div>
+                <div id="partialView"></div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -514,32 +515,27 @@
         }
 
 
-
-
-
-
-
         var jsonData = JSON.stringify(data);
 
         var ConditionData = JSON.stringify(ConditionBlock);
 
         var JoinData = JSON.stringify(JoinValue);
+     
 
 
         $.ajax({
             url: 'QueryBuilder/QueryGenerator',
             method: 'POST',
-            data: { jsonData, JoinData, ConditionData, TemplateName },
+            data: { jsonData, JoinData, ConditionData, TemplateName},
             success: function (response) {
+                $('#partialView').html(response);
                 alert('good work bro ') // Handle the response from the function
             },
             error: function (xhr, status, error) {
                 alert('bad work bro');// Handle any errors that occur during the AJAX request
             }
         });
-
-
-
+     
     }
 
     function ConditionValueChanger() {
@@ -653,5 +649,3 @@
         <div class="eqjs-menu-itemDiv" onclick="JoinRowDel()">Delete</div>
     </div>
 </div>
-
-
