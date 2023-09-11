@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TestingAndCalibrationLabs.Business.Core.Interfaces;
-using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
+﻿using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
 

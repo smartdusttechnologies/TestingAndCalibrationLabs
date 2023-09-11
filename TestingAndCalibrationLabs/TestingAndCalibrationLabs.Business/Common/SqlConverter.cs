@@ -11,7 +11,11 @@ namespace TestingAndCalibrationLabs.Business.Common
 {
     public class SqlConverter
     {
-
+        /// <summary>
+        /// This method will take the json in string and convert in the format of query 
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public static string JsonToSql(string json)
         {
             //var str = ReadAllText(json);
@@ -52,14 +56,18 @@ namespace TestingAndCalibrationLabs.Business.Common
             return null;
         }
 
-
+        /// <summary>
+        /// this method will convert only column part in Query Format
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <param name="query"></param>
         public static void Column( dynamic ob, ref StringBuilder query)
         {
 
             foreach (var col in ob.column)
             {
 
-                //query.Append($" {col.tableName}.{col.columnName} AS {col.As} ,");
+                
                 if(col.Aggregation!=null && ob.GroupBy!=null)
                 {
                     query.Append($" {col.Aggregation}(");
@@ -88,7 +96,11 @@ namespace TestingAndCalibrationLabs.Business.Common
 
 
         }
-
+        /// <summary>
+        /// This method will convert the condition part in the QueryFormat
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <param name="query"></param>
         public static void Condition(ref dynamic ob, ref StringBuilder query)
         {
 
@@ -109,6 +121,11 @@ namespace TestingAndCalibrationLabs.Business.Common
 
             }
         }
+        /// <summary>
+        /// this method will convert the Join Part into Query Format 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <param name="query"></param>
         public static void JoinType(dynamic ob, ref StringBuilder query)
         {
 
@@ -145,6 +162,11 @@ namespace TestingAndCalibrationLabs.Business.Common
                 }
             }
         }
+        /// <summary>
+        /// this method will convert the OrderType into Query Format 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <param name="query"></param>
         public static void OrderType(dynamic ob, ref StringBuilder query)
         {
             if(ob.OrderBy != null)

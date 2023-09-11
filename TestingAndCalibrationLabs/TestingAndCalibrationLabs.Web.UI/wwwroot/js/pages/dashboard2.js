@@ -31,7 +31,7 @@ $(function () {
         pointHighlightStroke: 'rgba(220,220,220,1)',
           data: ModelData.recapModel.salesData2
       }
-    ]
+    ] 
   }
 
   var salesChartOptions = {

@@ -24,13 +24,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             Template.Sales = 211;
             Template.NewMember = 422;
             Template.Inventory = 21;
-            Template.mention = 23;
+            Template.Mention = 23;
             Template.Downloads = 211;
             Template.Messages = 422;
 
             var salesValue = new RecapModel();
             salesValue.Month = new List<string> { "January", "February", "March", "April", "May", "June", "July" };
-            salesValue.salesData1 = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
+            salesValue.SalesData1 = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
             salesValue.SalesData2 = new List<int> { 25, 18, 30, 45, 6, 67, 45 };
 
             salesValue.Revenue = 21110;
@@ -49,9 +49,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             salesValue.DateRange = " 21 July ,2014 to 22 jan, 2022";
 
             var visitorvalue = new UsVisitor();
-            visitorvalue.vistorslist = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
+            visitorvalue.Vistorslist = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
             visitorvalue.ReferalNo = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
-            visitorvalue.organiclist = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
+            visitorvalue.Organiclist = new List<int> { 21, 12, 33, 45, 66, 7, 45 };
 
             visitorvalue.VisitorsAvg = 7654;
             visitorvalue.ReferalPercent = "32%";
@@ -63,7 +63,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             var orderdata = new LatestOrder();
             orderdata.Orderid = new List<string> { "OR1848", "OR1848", "OR1848", "OR1848" };
-            orderdata.item = new List<string> { "Call of Duty IV", "Call of Duty IV","Call of Duty IV", "Call of Duty IV" };
+            orderdata.Item = new List<string> { "Call of Duty IV", "Call of Duty IV","Call of Duty IV", "Call of Duty IV" };
             orderdata.Status = new List<string> { "Pending", "Delivered","waiting","Pending" };
             orderdata.Popularity = new List<string> { "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63", "90,80,90,-70,61,-83,63" };
             orderdata.BadgeName = new List<string> { "badge badge-success","badge badge-danger","badge badge-warning", "badge badge-success" };
@@ -71,7 +71,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             var product = new RecentProduct();
             product.Name = new List<string> { "Samsung TV", "Jio TV", "Bauraha TV", "boka TV" };
-            product.price = new List<string> { "$1600", "$1400", "$1800", "$1200" };
+            product.Price = new List<string> { "$1600", "$1400", "$1800", "$1200" };
             product.ProductDetails = new List<string> { "ritesh ji ka tv hai achhe se pahuchao", "ritesh ji ka tv hai achhe se pahuchao", "ye to pakka raj ka tv h", "burbak belong to my friend raj" };
             product.ProductImg = new List<string> { "/img/default-150x150.png", "/img/default-150x150.png", "/img/default-150x150.png", "/img/default-150x150.png" };
 
@@ -115,7 +115,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             var Modelset = new DashboardV2();
 
-            Modelset.map = visitorvalue;
+            Modelset.Map = visitorvalue;
             Modelset.RecapModel = salesValue;
             Modelset.Box = Template;
             Modelset.Usage = Browse;

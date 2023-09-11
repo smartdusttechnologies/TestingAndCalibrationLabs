@@ -24,19 +24,19 @@
 
                                     @*this is for title part*@
                                     <div class="eqjs-ep-entity-node eqjs-mobile">
-                                        <div class="eqjs-ep-entity-node-button" onclick="DropdownContent('@item.Key.tableName')"></div>
+                                        <div class="eqjs-ep-entity-node-button" onclick="DropdownContent('@item.Key.TableName')"></div>
                                         <label class="eqjs-ep-entity-node-label">
-                                            <input type="checkbox" name="@item.Key.tableName" value="@item.Key.tableName" class="Parent-item" id="@item.Key.tableName" onclick="FunctionBox('@item.Key.tableName','@item.Value.Count')"> @Html.DisplayFor(tables => item.Key.tableName)
+                                            <input type="checkbox" name="@item.Key.TableName" value="@item.Key.TableName" class="Parent-item" id="@item.Key.TableName" onclick="FunctionBox('@item.Key.TableName','@item.Value.Count')"> @Html.DisplayFor(tables => item.Key.TableName)
                                         </label>
                                     </div>
-                                    <div class="eqjs-ep-entity-children eqjs-mobile" id="flush-@item.Key.tableName" style="display:none">
+                                    <div class="eqjs-ep-entity-children eqjs-mobile" id="flush-@item.Key.TableName" style="display:none">
                                         @for (var pos = 0; pos < item.Value.Count; pos++)
                                         {
 
                                             <div class="eqjs-ep-entity-attr">
                                                 <label class="eqjs-ep-entity-attr-label">
                                                     <div class="eqjs-ep-entity-offset" style="width:30px;"></div>
-                                                    <input type="checkbox" class="child-item" name="@item.Key.tableName" id="@item.Key.tableName@pos" value="@item.Value[pos].coloumnName" />@Html.DisplayFor(colNames =>@item.Value[pos].coloumnName)
+                                                    <input type="checkbox" class="child-item" name="@item.Key.TableName" id="@item.Key.TableName@pos" value="@item.Value[pos].ColoumnName" />@Html.DisplayFor(colNames =>@item.Value[pos].ColoumnName)
                                                 </label>
                                             </div>
 
@@ -105,9 +105,7 @@
                                 <option value="">Select</option>
                             </select>
                         </div>
-                        @* <div style="display:inline-block">
-
-                        </div>*@
+                       
                         <div class="eqjs-qp-row" id="JoinConditionMenu0" style="display:block">
                             <label for="Columns" style="padding-left:20px" id="ColumnDropDownLabel">Select column</label>
                             <select name="ColumnDropdown" id="ColumnDropDown" style="width:auto" onchange-required>
@@ -234,10 +232,12 @@
 
 
 <script>
-   // var input = document.getElementById('')
+   
     var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
     var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
+    
 
+    ///This method will change input to Value and value to input
     function chargeother(select) {
         if (select.value == "input") {
             select.style.display = "none";
@@ -251,6 +251,7 @@
     }
 
 
+    ///This method to add Join Condition
     function JoinConditionAdd() {
         var newElement = document.getElementById('JOINTYPE-Main-Div');
         var LabelItem = document.createElement('label');
@@ -282,6 +283,8 @@
         var dataInfo = Data.cloneNode(true);
         newElement.appendChild(dataInfo);
     }
+    
+    //This method is used to add Join
     function JoinAdd() {
 
         var newElement = document.getElementById('JOINTYPE-Main-Div');
@@ -302,6 +305,8 @@
 
 
     }
+
+    //This Method to make MultipleJoin 
     function MultipleJoin(Data) {
         ParentElementDiv = Data.parentElement.parentElement.parentElement;
         var stringPosition = Data.getBoundingClientRect();
@@ -310,6 +315,7 @@
         Aggregates.style.top = (stringPosition.bottom + 5) + "px";
         Aggregates.style.left = (stringPosition.left + 2) + "px";
     }
+    ///This method to delete the Join
     function JoinRowDel() {
 
 
@@ -325,6 +331,8 @@
             ParentElementDiv = null;
         }
     }
+
+     ///This method to convert data to model format  and send to controller for Json Conversion
     function DataToModel() {
 
         var DataItem = document.getElementById('JOINTYPE-Main-Div');
@@ -415,7 +423,7 @@
             var info = details.split(' ')[1];
             if (datainfo[value]) {
 
-                //datainfo[value].push(info);
+                
                 datainfo[value][info] = Title;
                 TitleStorage[value].push(info);
 
@@ -428,8 +436,7 @@
                 TitleStorage[value] = [];
                 TitleStorage[value].push(info);
 
-                // datainfo[value].push(info);
-                //  datainfo[value].[info].['Title']= Title;
+               
                 arr.push(value);
 
 
@@ -532,7 +539,7 @@
                 alert('good work bro ') // Handle the response from the function
             },
             error: function (xhr, status, error) {
-                alert('bad work bro');// Handle any errors that occur during the AJAX request
+                alert('bad work bro');
             }
         });
      
@@ -620,13 +627,9 @@
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="LIKE">starts with</div>
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="LIKE ">contains</div>
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="=">is equal to</div>
-        @*  <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">is in list</div>*@
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="NOT LIKE ">does not start with</div>
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="NOT LIKE ">does not contain</div>
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="<>">is not equal to</div>
-        @*<div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">is not in list</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">in sub query</div>
-        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="">not in sub query</div>*@
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="IS NULL">is null</div>
         <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="IS NOT NULL">is not null</div>
     </div>

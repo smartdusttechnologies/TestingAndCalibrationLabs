@@ -56,8 +56,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
             List<ConditionModelDTO> ConditionInfo = JsonSerializer.Deserialize<List<ConditionModelDTO>>(ConditionData);
 
-            //var  emptydata = Object.entries(datainfo); 
-
+            
 
             for (var item = 0; item < Person.Count; item++)
             {

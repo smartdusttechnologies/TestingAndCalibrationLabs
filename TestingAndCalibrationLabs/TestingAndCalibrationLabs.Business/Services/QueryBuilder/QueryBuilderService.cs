@@ -43,7 +43,7 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
             Dictionary<QueryBuilderModel, List<QueryBuilderColNames>> queryBuilderData = new Dictionary<QueryBuilderModel, List<QueryBuilderColNames>>();
             foreach (QueryBuilderModel table in tableNames)
             {
-                queryBuilderData.Add(table, _querybuilderRepository.GetColoumsNames(table.tableName));
+                queryBuilderData.Add(table, _querybuilderRepository.GetColoumsNames(table.TableName));
             }
             return new QueryRecordModel { FieldValues = queryBuilderData };
         }
@@ -62,35 +62,35 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
 
 
 
-            for (var i = 0; i < JoinInfo.Count; i++)
+            for (var item = 0; item < JoinInfo.Count; item++)
             {
 
-                foreach (var item2 in JoinInfo[i].JoinInfo)
+                foreach (var item2 in JoinInfo[item].JoinInfo)
                 {
-                    foreach (var item in person)
+                    foreach (var value in person)
                     {
-                        if (item2.Columns.Contains(item.TableName))
+                        if (item2.Columns.Contains(value.TableName))
                         {
-                            item2.Columns = item2.Columns.Replace(item.TableName, item.Alias.ToString());
+                            item2.Columns = item2.Columns.Replace(value.TableName, value.Alias.ToString());
                         }
-                        if (item2.Column2.Contains(item.TableName))
+                        if (item2.Column2.Contains(value.TableName))
                         {
-                            item2.Column2 = item2.Column2.Replace(item.TableName, item.Alias.ToString());
+                            item2.Column2 = item2.Column2.Replace(value.TableName, value.Alias.ToString());
                         }
                     }
                 }
-                foreach (var item in person)
+                foreach (var info in person)
                 {
 
 
-                    if (item.TableName == JoinInfo[i].TableChoice)
+                    if (info.TableName == JoinInfo[item].TableChoice)
                     {
-                        JoinInfo[i].TableChoice += " " + item.Alias;
+                        JoinInfo[item].TableChoice += " " + info.Alias;
 
                     }
-                    if (item.TableName == JoinInfo[i].TableFrom)
+                    if (info.TableName == JoinInfo[item].TableFrom)
                     {
-                        JoinInfo[i].TableFrom += " " + item.Alias;
+                        JoinInfo[item].TableFrom += " " + info.Alias;
 
                     }
 

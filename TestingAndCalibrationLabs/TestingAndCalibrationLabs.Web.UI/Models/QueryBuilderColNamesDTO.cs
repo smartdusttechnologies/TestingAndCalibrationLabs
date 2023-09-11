@@ -2,7 +2,10 @@
 {
     public class QueryBuilderColNamesDTO
     {
-        public string coloumnName { get; set; }
+        /// <summary>
+        /// To store the ColumnName
+        /// </summary>
+        public string ColoumnName { get; set; }
 
     }
 }
