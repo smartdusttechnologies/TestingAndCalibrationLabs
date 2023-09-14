@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class LoginRequest : Entity

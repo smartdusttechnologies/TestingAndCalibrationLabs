@@ -1,9 +1,9 @@
-﻿using Google.Apis.Drive.v3.Data;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -62,7 +62,6 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
-        //}
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
         /// </summary>
@@ -150,8 +149,38 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(validationMessages);
         }
+        /// <summary>
+        /// Method to validate the Change Password.
+        /// </summary>
+        public RequestResult<bool> ChangePasswordPolicy(ChangePasswordModel changePasswordModel)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+            if (changePasswordModel.OldPassword.IsNullOrEmpty())
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter Old Password", Severity = ValidationSeverity.Error, SourceId = "OldPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            else if (changePasswordModel.NewPassword.IsNullOrEmpty())
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please Enter New Password.", Severity = ValidationSeverity.Error, SourceId = "NewPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            else if (changePasswordModel.ConfirmPassword.IsNullOrEmpty()){
+                validationMessages.Add(new ValidationMessage { Reason = "Please Enter Confirm Password.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            else if (changePasswordModel.OldPassword == changePasswordModel.NewPassword)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "New password must be different from old password.", Severity = ValidationSeverity.Error,SourceId="NewPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+            else if (changePasswordModel.NewPassword != changePasswordModel.ConfirmPassword)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "New password and confirm password fields must match.", Severity = ValidationSeverity.Error, SourceId = "ConfirmPassword" });
+                return new RequestResult<bool>(false, validationMessages); ;
+            }
+             return new RequestResult<bool>(true);
+        }
     }
 }
-
-        
-

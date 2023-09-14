@@ -1,13 +1,24 @@
 ﻿using AutoMapper;
+using Google.Apis.Drive.v3.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
+using SelectPdf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -52,6 +63,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 return Json(new { status = true, message = "Login Successfull!" });
             }
+            return View();
+        }
+        /// <summary>
+        /// Method to get the Change Password.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordDTO changePasswordDto)
+        {
+            var passwordRequest = _mapper.Map<ChangePasswordDTO, ChangePasswordModel>(changePasswordDto);
+            var result = _authenticationService.UpdatePassword(passwordRequest);
+            if (result.IsSuccessful)
+            {
+                return Ok(result.RequestedObject);
+            }
+            return BadRequest(result.ValidationMessages);
+        }
+        /// <summary>
+        /// Method to render Change Password Page 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
             return View();
         }
     }

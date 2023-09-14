@@ -19,5 +19,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         //TODo: This should be moved to User service.
         RequestResult<bool> Add(UserModel user, string password);
+        /// <summary>
+        /// Interfaces to  Update Password for existing User 
+        /// </summary>
+        RequestResult<bool> UpdatePassword(ChangePasswordModel changePasswordModel);
     }
 }

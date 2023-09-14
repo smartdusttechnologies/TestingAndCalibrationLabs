@@ -383,7 +383,11 @@ BEGIN
 			   (13,N'Organization',1,0),
 			   (14,N'Lookup',1,0),
 			   (15,N'Lookup Category',1,0),
-			   (16,N'FullPage',1,0)
+			   (16,N'FullPage',1,0),
+			   (17,N'ChangePassword',1,0),
+			   (18, N'Ui Page Navigation',1,0),
+			   (19, N'Ui Page Navigation Category',1,0),
+			   (20, N'Ui ControlCategory Type',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -686,6 +690,7 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
+IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14))
 IF NOT EXISTS (SELECT 1 FROM [UiPageNavigation] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  ON
@@ -702,15 +707,21 @@ BEGIN
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
-			  (11,N'/LookupCategory/Index/',15,1002,0),
-			  (12,N'/Lookup/Index/',14,1002,0),
-			  (13,N'/Application/Index/',8,1002,0),
-			  (14,N'/Workflow/Index/',9,1002,0),
-			  (15,N'/WorkflowStage/Index/',10,1002,0),
-			  (16,N'/Module/Index/',11,1002,0),
-			  (17,N'/WorkflowActivity/Index/',12,1002,0),
-			  (18,N'/Organization/Index/',13,1002,0),
-			  (19,N'/#/',16,1002,0)
+			  (11,N'/Application/Index/',8,1002,0),
+			  (12,N'/Workflow/Index/',9,1002,0),
+			  (13,N'/WorkflowStage/Index/',10,1002,0),
+			  (14,N'/Module/Index/',11,1002,0),
+			  (15,N'/WorkflowActivity/Index/',12,1002,0),
+			  (16,N'/Organization/Index/',13,1002,0),
+			  (17,N'/Lookup/Index/',14,1002,0),
+			  (18,N'/LookupCategory/Index/',15,1002,0),
+			  (19,N'/#/',16,1002,0),
+			  (20,N'/DataType/Index/',12,1002,0),
+			  (21, N'/Security/ChangePassword', 17, 1003, 0),
+			  (22, N'/UiPageNavigation/Index/', 18, 1002, 0),
+              (23, N'/UiPageNavigationCategory/Index/', 19, 1002, 0),
+			  (24,N'/UiControlCategoryType/Index/',20,1002,0)
+
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

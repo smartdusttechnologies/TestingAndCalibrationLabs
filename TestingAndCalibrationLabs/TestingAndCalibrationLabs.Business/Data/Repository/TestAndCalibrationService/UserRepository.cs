@@ -1,9 +1,12 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -76,23 +79,26 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                 values (@PasswordHash, @PasswordSalt, @UserId, @ChangeDate)";
 
             string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
-
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(userInsertQuery, p, transaction);
-
-
             int insertedUserId = p.Get<int>("@Id");
-
             passwordLogin.UserId = insertedUserId;
             passwordLogin.ChangeDate = DateTime.Now;
             db.Execute(passwordLoginInsertQuery, passwordLogin, transaction);
-
             // assign the general user role by default.
             db.Execute(userRoleInsertQuery, new { UserId = insertedUserId, RoleId = 2 }, transaction);
             transaction.Commit();
-
             return insertedUserId;
         }
+            public int Update(ChangePasswordModel changePasswordModel)
+            {
+               string changePasswordQuery = @"update [PasswordLogin] Set
+                                           PasswordHash = @PasswordHash,
+                                           PasswordSalt = @PasswordSalt
+                                                Where UserId = @UserId";
+               using IDbConnection db = _connectionFactory.GetConnection;
+               return db.Execute(changePasswordQuery, changePasswordModel);
+            }
     }
 }

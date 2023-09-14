@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -73,7 +74,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// Admin Level.
         /// </summary>
         public int AdminLevel { get; set; }
-
-        
-    }
+   }
 }
