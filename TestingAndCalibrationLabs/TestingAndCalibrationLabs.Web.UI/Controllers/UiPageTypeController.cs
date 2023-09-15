@@ -26,7 +26,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiNavigationCategoryService"></param>
         public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper, ILogger<UiPageTypeController> logger)
         {
-            _httpContextAccessor = httpContextAccessor;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _logger = logger;

@@ -1,4 +1,5 @@
-﻿namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿using TestingAndCalibrationLabs.Business.Common;
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
     /// Class to get the user role with claims.

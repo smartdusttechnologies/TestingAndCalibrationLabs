@@ -18,14 +18,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IAuthorizationService _authorizationService;
         private readonly IUiPageMetadataCharacteristicsRepository _uiPageMetadataCharacteristicsRepository;
         public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
-        public UiPageMetadataService(IHttpContextAccessor httpContextAccessor,IAuthorizationService authorizationService,IUiPageMetadataRepository uiPageMetadataRepository,IGenericRepository<UiPageMetadataModel> genericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository)
+        public UiPageMetadataService(IHttpContextAccessor httpContextAccessor, IAuthorizationService authorizationService, IUiPageMetadataRepository uiPageMetadataRepository, IGenericRepository<UiPageMetadataModel> genericRepository, IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository)
         {
             _uiPageMetadataRepository = uiPageMetadataRepository;
             _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
-           _httpContextAccessor= httpContextAccessor;
-            _authorizationService= authorizationService;
+            _httpContextAccessor = httpContextAccessor;
+            _authorizationService = authorizationService;
         }
-
         #region Public methods
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
@@ -34,12 +33,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageMetadataModel pageControl)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, pageControl, new[] { Operations.Create }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, pageControl, new[] { Operations.Create }).Result.Succeeded)
             {
-                int id = _uiPageMetadataRepository.Create(pageControl);
-                return new RequestResult<int>(1);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            int id = _uiPageMetadataRepository.Create(pageControl);
+            return new RequestResult<int>(1);
+
         }
         /// <summary>
         /// Delete Record From Ui Page Metadata Type
@@ -48,11 +48,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Delete }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Delete }).Result.Succeeded)
             {
-                return _uiPageMetadataRepository.Delete(id);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            return _uiPageMetadataRepository.Delete(id);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
@@ -61,11 +61,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageMetadataModel GetById(int id)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Read }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Read }).Result.Succeeded)
             {
-                return _uiPageMetadataRepository.GetById(id);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            return _uiPageMetadataRepository.GetById(id);
         }
         /// <summary>
         /// Edit Record From Ui Page Metadata Type
@@ -75,12 +75,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageMetadataModel, new[] { Operations.Update }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageMetadataModel, new[] { Operations.Update }).Result.Succeeded)
             {
-                _uiPageMetadataRepository.Update(uiPageMetadataModel);
-                return new RequestResult<int>(1);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            _uiPageMetadataRepository.Update(uiPageMetadataModel);
+            return new RequestResult<int>(1);
         }
         /// <summary>
         /// Get All Records From Ui Page Metadata Type
@@ -88,11 +88,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<UiPageMetadataModel> Get()
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Read }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Read }).Result.Succeeded)
             {
-                return _uiPageMetadataRepository.Get();
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            return _uiPageMetadataRepository.Get();
         }
         #endregion
     }

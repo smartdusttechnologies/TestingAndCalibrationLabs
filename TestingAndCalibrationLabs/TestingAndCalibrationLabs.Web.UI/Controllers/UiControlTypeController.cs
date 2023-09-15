@@ -11,18 +11,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class UiControlTypeController : Controller
     {
         public readonly IUiControlTypeService _uiControlTypeServices;
-        public readonly IListSorterService _listSorterService;
         public readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiControlTypeServices"></param>
         /// <param name="mapper"></param>
-        public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper, IListSorterService listSorterService)
+        public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper)
         {
             _uiControlTypeServices = uiControlTypeServices;
             _mapper = mapper;
-            _listSorterService = listSorterService;
         }
         /// <summary>
         /// For Showing All Records Of Ui Control Type
@@ -138,7 +136,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             _uiControlTypeServices.Delete((int)id);
-            TempData["IsTrue"] = true;
+            TempData["IsTrue"] = false;
             return RedirectToAction("Index");
         }
     }

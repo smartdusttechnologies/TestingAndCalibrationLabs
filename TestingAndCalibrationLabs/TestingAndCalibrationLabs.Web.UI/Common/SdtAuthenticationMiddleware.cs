@@ -4,14 +4,16 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Web.UI.Common
 {
+    /// <summary>
+    /// Authentication Middlerware To handle Authentication Of this Application
+    /// </summary>
     public class SdtAuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
@@ -24,7 +26,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
             _configuration = configuration;
             _next = requestDelegate;
         }
-
+        /// <summary>
+        /// When Authentication Invoked This method will be called
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             //_roleService = roleservice;
@@ -46,15 +52,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 || context.Request.Path.Value.Equals("/Security/Login", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RefreshToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RevokeToken", StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+                || context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase))
             {
                 await _next(context);
             }
             return;
         }
-
+        /// <summary>
+        /// To Get User Identity Based On JWT Security Token
+        /// </summary>
+        /// <param name="jwtSecurityToken"></param>
+        /// <returns></returns>
         private SdtUserIdentity GetUserIdentity(JwtSecurityToken jwtSecurityToken)
         {
             var organisations = jwtSecurityToken.Claims.Select(x => x.Type == CustomClaimType.OrganizationId.ToString());
@@ -77,7 +86,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
 
             return userIdentity;
         }
-
+        /// <summary>
+        /// Validate Token Either JWT Token Is valid or its expired or not 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="token"></param>
+        /// <param name="validatedToken"></param>
+        /// <returns></returns>
         private bool ValidateToken(HttpContext context, string token, out JwtSecurityToken validatedToken)
         {
             try

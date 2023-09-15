@@ -17,7 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IGenericRepository<UiControlTypeModel> _genericRepository;
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UiControlTypeService( IGenericRepository<UiControlTypeModel> genericRepository,IAuthorizationService authorizationService,IHttpContextAccessor httpContextAccessor)
+        public UiControlTypeService(IGenericRepository<UiControlTypeModel> genericRepository, IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor)
         {
             _genericRepository = genericRepository;
             _authorizationService = authorizationService;
@@ -31,9 +31,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiControlTypeModel GetById(int id)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Read).Result.Succeeded)
-                return _genericRepository.Get(id);
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Read).Result.Succeeded)
+            {
+                throw new UnauthorizedAccessException("Your Unauthorized");
+            }
+            return _genericRepository.Get(id);
         }
         /// <summary>
         /// Get All Record For Ui Control Type
@@ -41,9 +43,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<UiControlTypeModel> Get()
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Read).Result.Succeeded)
-                return _genericRepository.Get();
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Read).Result.Succeeded)
+            {
+                throw new UnauthorizedAccessException("Your Unauthorized");
+            }
+            return _genericRepository.Get();
         }
         /// <summary>
         /// Edit Record From Ui Control Type
@@ -51,15 +55,15 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update( UiControlTypeModel uiControlTypeModel)
+        public RequestResult<int> Update(UiControlTypeModel uiControlTypeModel)
         {
             var result = new RequestResult<int>(1);
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiControlTypeModel, Operations.Update).Result.Succeeded)
-            { 
-                _genericRepository.Update(uiControlTypeModel);
-                return result;
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiControlTypeModel, Operations.Update).Result.Succeeded)
+            {
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            _genericRepository.Update(uiControlTypeModel);
+            return result;
         }
         /// <summary>
         /// Insert Record In Ui Control Type
@@ -68,12 +72,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiControlTypeModel uiControlTypeModel)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiControlTypeModel, Operations.Create).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiControlTypeModel, Operations.Create).Result.Succeeded)
             {
-                _genericRepository.Insert(uiControlTypeModel);
-                return new RequestResult<int>(1);
+                throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            _genericRepository.Insert(uiControlTypeModel);
+            return new RequestResult<int>(1);
         }
         /// <summary>
         /// Delete Record From Ui Control 
@@ -82,9 +86,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            if (_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Delete).Result.Succeeded)
-                return _genericRepository.Delete(id);
-            throw new UnauthorizedAccessException("Your Unauthorized");
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiControlTypeModel(), Operations.Delete).Result.Succeeded)
+            {
+                throw new UnauthorizedAccessException("Your Unauthorized");
+            }
+            return _genericRepository.Delete(id);
         }
         #endregion
     }

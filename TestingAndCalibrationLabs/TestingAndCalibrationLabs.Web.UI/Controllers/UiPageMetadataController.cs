@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
@@ -18,9 +19,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IUiControlTypeService _uiControlTypeService;
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
-        private readonly ILookupService _lookupService;
-        private readonly ILookupCategoryService _lookupCategoryService;
-        private readonly IListSorterService _listSorter;
         private readonly IUiControlCategoryTypeService _uiControlCategoryTypeService;
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
         /// <summary>
@@ -31,16 +29,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataService"></param>
         /// <param name="lookupService"></param>
-        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,ILookupCategoryService lookupCategory,IListSorterService listSorter,ILookupService lookupService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService, ILogger<UiPageMetadataController> logger)
+        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _uiControlTypeService = uiControlTypeService;
             _dataTypeService = dataTypeService;
-            _lookupService = lookupService;
-            _listSorter = listSorter;
-            _lookupCategoryService = lookupCategory;
             _uiControlCategoryTypeService = uiControlCategoryTypeService;
             _logger = logger;
         }

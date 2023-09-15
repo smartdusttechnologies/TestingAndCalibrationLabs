@@ -16,19 +16,19 @@
         <div class="row ms-1 me-1">
             <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  left-pd-input">
                 <input class="form-input width-full black-border" type="tel" placeholder=" " id="TRJobId" name="JobId"  onchange="this.setAttribute('value',this.value)" asp-for="JobId">
-                <label class="form-label" for="JobId">Job ID</label>
+                <label class="form-label" for="TRJobId">Job ID</label>
             </div>
 
             <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  left-pd-input">
                 <input class="form-input width-full black-border" type="text" id="TRClient" placeholder=" " name="Client"  onchange="this.setAttribute('value',this.value)" asp-for="Client">
-                <label class="form-label" for="Client">Client Name</label>
+                <label class="form-label" for="TRClient">Client Name</label>
             </div>
         </div>
 
         <div class="row ms-1 me-1">
             <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control left-pd-input">
                 <input class="form-input width-full black-border" type="email" placeholder=" " id="TREmail" name="Email" onchange="this.setAttribute('value',this.value)" asp-for="Email">
-                <label class="form-label" for="Email">Email ID</label>
+                <label class="form-label" for="TREmail">Email ID</label>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
             <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                 <input class="form-input width-full black-border" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="validateForImages(this)" accept=".jpg, .jpeg, .JPG, .JPEG .PNG, .png,.xlsx,.XLSX,.pdf,.PDF"  asp-for="DataUrl">
                @* <input class="form-input width-full black-border" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="DataUrl">*@
-                <label class="form-label" for="DataUrl">File Upload</label>
+                <label class="form-label" for="TRDataUrl">File Upload</label>
             </div>
         </div>
 

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Services.Security
 {
+    /// <summary>
+    /// Authorization Handler For Common
+    /// </summary>
     public class CommonAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, RecordModel>
     {
         private readonly IRoleService _roleService;
