@@ -29,6 +29,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>

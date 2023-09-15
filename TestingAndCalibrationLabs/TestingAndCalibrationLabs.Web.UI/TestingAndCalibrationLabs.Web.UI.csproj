@@ -18,7 +18,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.12.0" />
-    <PackageReference Include="smartdusttechnologies.util.raj.logger" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>
