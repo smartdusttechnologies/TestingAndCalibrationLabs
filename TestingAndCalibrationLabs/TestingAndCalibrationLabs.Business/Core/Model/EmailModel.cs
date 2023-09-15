@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Text;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
@@ -68,5 +69,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Lists of CC mail-address
         /// </summary>
         public List<string> Cc { get; set; }
+        public List<Attachment> Attachments { get; set; }
     }
 }

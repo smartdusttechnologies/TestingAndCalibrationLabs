@@ -1,16 +1,53 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-
+<!-- Send Button Take Input Modal Popup -->
+<div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="sendHeader" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendHeader">Enter Your Email & Send</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body" >
+                <div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input class="form-input width-full black-border" type="email" placeholder=" " id="sendMailEmail" name="sendMailEmail" onchange="this.setAttribute('value',this.value)" />
+                    <label class="form-label" for="sendMailEmail">Email<span class="red-color">*</span></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ripple button-base button-second" id="cancleSendModal" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" onclick="SendMail()"  class="ripple button-base button-material-primary">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var modelData;
     $(document).ready(function () {
         modelData = JSON.parse('@Json.Serialize(Model)');
         var displayName = modelData.value.uiPageMetadata.uiControlDisplayName;
-        var btnHtml = '<input type="button" value="' + displayName + '" class="button-base button-material-primary" onclick="GenerateReport()" />'
-        $("#sub-mt-btn").append(btnHtml);
+        var downloadHtml = '<input type="button" value="' + displayName + '" class="button-base button-material-primary" onclick="GenerateReport()" />'
+        var sendHtml = '<input type="button" value="Send" class="button-base button-material-primary" data-toggle="modal" data-target="#sendModal" />'
+        $("#sub-mt-btn").append(downloadHtml);
+        $("#sub-mt-btn").append(sendHtml);
     });
     function GenerateReport() {
         var metadata = modelData.value.uiPageMetadata.id;
+        window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}&email=null&send=false`, '_blank');
+    }
+    function SendMail(){
+        let emailId = $("#sendMailEmail").val();
         var id = $("#Id").val();
-        window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}`, '_blank');
+        var metadata = modelData.value.uiPageMetadata.id;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("TemplateGenerate","Common")",
+            data: { "recordId": id,"metadataId":metadata,"email":emailId,"send":true },
+            success: function (response) {
+                $('#cancleSendModal').click();
+            },
+            error: function (req, status, error) {
+            }
+        });
     }
 </script>
