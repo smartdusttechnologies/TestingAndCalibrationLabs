@@ -55,6 +55,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 || context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+
             {
                 await _next(context);
             }
