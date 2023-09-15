@@ -9,7 +9,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     /// It Contains The Properties For Layout
     /// </summary>
     [DbTable("Layout")]
-    public class Layout2Model : Entity
+    public class LayoutMModel : Entity
     {
         /// <summary>
         /// It Contains The Name of The Layout

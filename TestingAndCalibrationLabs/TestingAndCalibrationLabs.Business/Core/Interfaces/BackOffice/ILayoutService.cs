@@ -11,24 +11,24 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Records From layout
         /// </summary>
         /// <returns></returns>
-        List<Layout2Model> Get();
+        List<LayoutMModel> Get();
         /// <summary>
         /// Get All Records From layout based on id
         /// </summary>
         /// <returns></returns>
-        Layout2Model GetById(int id);
+        LayoutMModel GetById(int id);
         /// <summary>
         /// Insert Record In layout
         /// </summary>
-        /// <param name="layout2DTO"></param>
+        /// <param name="layoutMModel"></param>
         /// <returns></returns>
-        RequestResult<int> Create(Layout2Model layout2DTO);
+        RequestResult<int> Create(LayoutMModel layoutMModel);
         /// <summary>
         /// Update Record From layout
         /// </summary>
         /// <param name="layout2DTO"></param>
         /// <returns></returns>
-        RequestResult<int> Update(Layout2Model layout2DTO);
+        RequestResult<int> Update(LayoutMModel layoutMModel);
         /// <summary>
         /// Delete Record From layout
         /// </summary>

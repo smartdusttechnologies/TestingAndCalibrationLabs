@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<ModuleLayoutModel> GetByPageMetadataId(int id);
+        List<ModuleLayoutModel> GetByMetadataId(int id);
         /// <summary>
         /// Get All Record From ModuleLayout
         /// </summary>
@@ -27,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ModuleLayoutModel Get(int metadataId);
+        ModuleLayoutModel GetByModuleId(int metadataId);
         /// <summary>
         /// Get Records By ModuleLayout based on Id
         /// </summary>

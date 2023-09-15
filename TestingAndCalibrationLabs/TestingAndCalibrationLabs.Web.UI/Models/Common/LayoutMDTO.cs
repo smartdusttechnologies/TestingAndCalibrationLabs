@@ -5,7 +5,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
     /// <summary>
     /// It Contains Properties Of Layout
     /// </summary>
-    public class Layout2DTO
+    public class LayoutMDTO
     {
         /// <summary>
         /// It Contains Id For Layout

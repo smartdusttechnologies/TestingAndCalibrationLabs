@@ -59,23 +59,23 @@
         public string ControlCategoryName { get; set; }
         public string ControlTypeName { get; set; }
         /// <summary>
-        /// It Contains The SelectedLookupId From ComboTree
+        /// It Contains The Id From Lookup
         /// </summary>
         public int? ControlCategoryId { get; set; }
         /// <summary>
-        /// It Contains The UiControlCategoryTypeId From ComboTree
+        /// It Contains The UiControlCategoryTypeId From UiPageMetadata
         /// </summary>
         public int UiControlCategoryTypeId { get; set; }
         /// <summary>
-        /// It Contains The UiControlCategoryTypeName From ComboTree
+        /// It Contains The UiControlCategoryTypeName From Lookup
         /// </summary>
         public string UiControlCategoryTypeName { get; set; }
         /// <summary>
-        /// It Contains The UiControlCategoryTypeTemplate From ComboTree
+        /// It Contains The UiControlCategoryTypeTemplate From UiControlCategoryType
         /// </summary>
         public string UiControlCategoryTypeTemplate { get; set; }
         /// <summary>
-        /// It Contains The ParentId From ComboTree
+        /// It Contains The ParentId From UiPageMetadataModuleBridge
         /// </summary>
         public int ParentId { get; set; }
         /// <summary>
@@ -83,19 +83,19 @@
         /// </summary>
         public string ParentDisplayName { get; set; }
         /// <summary>
-        /// It Contains The Orders From ComboTree
+        /// It Contains The Orders From UiPageMetadataModuleBridge
         /// </summary>
         public int Orders { get; set; }
         /// <summary>
-        /// It Contains The MetadataModuleBridgeId From ComboTree
+        /// It Contains The MetadataModuleBridgeId From UiPageMetadataModuleBridge
         /// </summary>
         public int MetadataModuleBridgeId { get; set; }
         /// <summary>
-        /// It Contains The ModuleLayoutId From ComboTree
+        /// It Contains The ModuleLayoutId From UiPageMetadata
         /// </summary>
         public int ModuleLayoutId { get; set; }
         /// <summary>
-        /// It Contains The ModuleLayoutName From ComboTree
+        /// It Contains The ModuleLayoutName From ModuleLayout
         /// </summary>
         public string ModuleLayoutName { get; set; }
         /// <summary>
@@ -103,7 +103,7 @@
         /// </summary>
         public int Position { get; set; }
         /// <summary>
-        /// It Contains The MultiValueControl From ComboTree
+        /// It Contains The MultiValueControl From UiPageMetadataModuleBridge
         /// </summary>
         public bool MultiValueControl { get;set; }
         /// <summary>
@@ -111,7 +111,7 @@
         /// </summary>
         public string UiPageMetadata { get; set; }
         /// <summary>
-        /// It Contains The UiPageMetadataId From ComboTree
+        /// It Contains The UiPageMetadataId From UiPageMetadata
         /// </summary>
         public int UiPageMetadataId { get; set; }
     }

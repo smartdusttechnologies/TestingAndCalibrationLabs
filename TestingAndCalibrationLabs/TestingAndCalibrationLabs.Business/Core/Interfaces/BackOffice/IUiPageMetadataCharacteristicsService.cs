@@ -26,7 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All Record From Ui Page Metadata Characteristics based on metadataId
         /// </summary>
         /// <returns></returns>
-        UiPageMetadataCharacteristicsModel Get(int metadataId);
+        UiPageMetadataCharacteristicsModel GetByMetadataId(int metadataId);
         /// <summary>
         /// Get All Record From Ui Page Metadata Characteristics based on id
         /// </summary>

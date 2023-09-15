@@ -130,7 +130,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();
-            services.AddScoped<IGenericRepository<Layout2Model>, GenericRepository<Layout2Model>>();
+            services.AddScoped<IGenericRepository<LayoutMModel>, GenericRepository<LayoutMModel>>();
             services.AddScoped<IGenericRepository<UiPageNavigationModel>, GenericRepository<UiPageNavigationModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
             services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository < DataTypeModel >> ();

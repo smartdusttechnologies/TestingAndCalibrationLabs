@@ -41,7 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All UiPageMetadataCharacteristics Record Based on metadataId
         /// </summary>
         /// <returns></returns>
-        public UiPageMetadataCharacteristicsModel Get(int metadataId)
+        public UiPageMetadataCharacteristicsModel GetByMetadataId(int metadataId)
         {
            return _PageMetadataCharacteristicsRepository.Get(metadataId);
         }

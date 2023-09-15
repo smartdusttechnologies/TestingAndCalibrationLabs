@@ -9,23 +9,23 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class UiPageMetadataModuleBridgeModel : Entity
     {
         /// <summary>
-        /// It Contains The UiPageMetadataId of The UiPageMetadataModuleBridge
+        /// It Contains The Id of The UiPageMetadata
         /// </summary>
         public int UiPageMetadataId { get; set; }
         /// <summary>
-        /// It Contains The UiPageTypeId of The UiPageMetadataModuleBridge
+        /// It Contains The Id of The UiPageType
         /// </summary>
         public int UiPageTypeId { get; set; }
         /// <summary>
-        /// It Contains The UiPageTypeName of The UiPageType
+        /// It Contains The Name of The UiPageType
         /// </summary>
         public string UiPageTypeName { get; set; }
         /// <summary>
-        /// It Contains The ModuleId of The UiPageMetadataModuleBridge
+        /// It Contains The Id of The Module
         /// </summary>
         public int ModuleId { get; set; }
         /// <summary>
-        /// It Contains The ModuleName of The Module
+        /// It Contains The Name of The Module
         /// </summary>
         public string ModuleName { get; set; }
         /// <summary>

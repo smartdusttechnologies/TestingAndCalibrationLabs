@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<ModuleLayoutModel> GetByPageMetadataId(int id)
+        public List<ModuleLayoutModel> GetByMetadataId(int id)
         {
             return _moduleLayoutRepository.GetByPageMetadataId(id);
         }
@@ -41,7 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Record For moduleLayoutDTO based on metadataId
         /// </summary>
         /// <returns></returns>
-        public ModuleLayoutModel Get(int metadataId)
+        public ModuleLayoutModel GetByModuleId(int metadataId)
         {
             return _moduleLayoutRepository.Get(metadataId);
         }
@@ -57,22 +57,22 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Edit Record From moduleLayoutDTO
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="moduleLayoutDTO"></param>
+        /// <param name="moduleLayoutModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(ModuleLayoutModel moduleLayoutDTO)
+        public RequestResult<int> Update(ModuleLayoutModel moduleLayoutModel)
         {
-            _moduleLayoutRepository.Update(moduleLayoutDTO);
+            _moduleLayoutRepository.Update(moduleLayoutModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
         /// Insert Record In moduleLayoutDTO
         /// </summary>
-        /// <param name="moduleLayoutDTO"></param>
+        /// <param name="moduleLayoutModel"></param>
         /// <returns></returns>
 
-        public RequestResult<int> Create(ModuleLayoutModel moduleLayoutDTO)
+        public RequestResult<int> Create(ModuleLayoutModel moduleLayoutModel)
         {
-            _moduleLayoutRepository.Create(moduleLayoutDTO);
+            _moduleLayoutRepository.Create(moduleLayoutModel);
             return new RequestResult<int>(1);
         }
         /// <summary>

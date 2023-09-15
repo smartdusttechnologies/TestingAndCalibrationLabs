@@ -16,25 +16,29 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         List<UiPageMetadataModuleBridgeModel> Get();
         /// <summary>
-        /// Get Record By Id From Ui Page Type
+        /// Get Record from generic By Id From Ui Page Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         UiPageMetadataModuleBridgeModel GetById(int id);
+        /// <summary>
+        /// Get Record By Id From Ui Page Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         UiPageMetadataModuleBridgeModel GetBy(int id);
-
         /// <summary>
         /// Insert Record In Ui Page Type
         /// </summary>
-        /// <param name="uiPageTypeModel"></param>
+        /// <param name="uiPageMetadataModuleBridgeModel"></param>
         /// <returns></returns>
-        RequestResult<int> Create(UiPageMetadataModuleBridgeModel uiPageTypeModel);
+        RequestResult<int> Create(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridgeModel);
         /// <summary>
         /// Edit Record From Ui Page Type
         /// </summary>
         /// <param name="uiPageTypeModel"></param>
         /// <returns></returns>
-        RequestResult<int> Update(UiPageMetadataModuleBridgeModel uiPageTypeModel);
+        RequestResult<int> Update(UiPageMetadataModuleBridgeModel uiPageMetadataModuleBridgeModel);
         /// <summary>
         /// Delete Record From Ui Page Type
         /// </summary>

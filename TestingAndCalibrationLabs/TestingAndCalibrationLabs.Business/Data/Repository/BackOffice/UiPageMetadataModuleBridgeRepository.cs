@@ -125,20 +125,4 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         }
     }
 
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

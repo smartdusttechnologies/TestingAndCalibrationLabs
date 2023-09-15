@@ -98,7 +98,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public byte[] TemplateGenerate(int recordId, int metadataId)
         {
-            var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
+            var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
             var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);

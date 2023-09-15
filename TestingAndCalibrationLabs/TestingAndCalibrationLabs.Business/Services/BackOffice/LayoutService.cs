@@ -8,8 +8,8 @@ namespace TestingAndCalibrationLabs.Business.Services
 {
     public class LayoutService : ILayoutService
     {
-        private readonly IGenericRepository<Layout2Model> _genericRepository;
-        public LayoutService(IGenericRepository<Layout2Model> genericRepository)
+        private readonly IGenericRepository<LayoutMModel> _genericRepository;
+        public LayoutService(IGenericRepository<LayoutMModel> genericRepository)
         {
             _genericRepository = genericRepository;
         }
@@ -17,11 +17,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Insert Record In layout
         /// </summary>
-        /// <param name="layout2DTO"></param>
+        /// <param name="layoutMModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(Layout2Model layout2DTO)
+        public RequestResult<int> Create(LayoutMModel layoutMModel)
         {
-            _genericRepository.Insert(layout2DTO);
+            _genericRepository.Insert(layoutMModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -36,18 +36,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Edit Record From layout
         /// </summary>
-        /// <param name="layout2DTO"></param>
+        /// <param name="layoutMModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(Layout2Model layout2DTO)
+        public RequestResult<int> Update(LayoutMModel layoutMModel)
         {
-            _genericRepository.Update(layout2DTO);
+            _genericRepository.Update(layoutMModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
         /// Get All Records From layout
         /// </summary>
         /// <returns></returns>
-        public List<Layout2Model> Get()
+        public List<LayoutMModel> Get()
         {
             return _genericRepository.Get();
         }
@@ -56,14 +56,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Layout2Model GetById(int id)
+        public LayoutMModel GetById(int id)
         {
             return _genericRepository.Get(id);
         }
-        #endregion
-
-        #region Private Methods
-
         #endregion
     }
 }

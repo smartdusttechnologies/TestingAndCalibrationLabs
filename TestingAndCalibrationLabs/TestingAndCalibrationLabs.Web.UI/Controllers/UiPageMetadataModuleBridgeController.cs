@@ -72,25 +72,24 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             return View(pageData);
         }
-
         /// <summary>
         /// To Edit Record In Ui Page Type
         /// </summary>
-        /// <param name="uiPageTypeDTO"></param>
+        /// <param name="uiPageMetadataModuleBridgeDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] UiPageMetadataModuleBridgeDTO uiPageTypeDTO)
+        public IActionResult Edit([Bind] UiPageMetadataModuleBridgeDTO uiPageMetadataModuleBridgeDTO)
         {
 
             if (ModelState.IsValid)
             {
-                var pageModel = _mapper.Map<UiPageMetadataModuleBridgeDTO, UiPageMetadataModuleBridgeModel>(uiPageTypeDTO);
+                var pageModel = _mapper.Map<UiPageMetadataModuleBridgeDTO, UiPageMetadataModuleBridgeModel>(uiPageMetadataModuleBridgeDTO);
                 _uiPageMetadataModuleBridgeService.Update(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageTypeDTO);
+            return View(uiPageMetadataModuleBridgeDTO);
         }
 
         /// <summary>
@@ -114,21 +113,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// To Create Record In Ui Page Type
         /// </summary>
-        /// <param name="uiPageTypeDTO"></param>
+        /// <param name="uiPageMetadataModuleBridgeDTO"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] UiPageMetadataModuleBridgeDTO uiPageTypeDTO)
+        public IActionResult Create([Bind] UiPageMetadataModuleBridgeDTO uiPageMetadataModuleBridgeDTO)
         {
             if (ModelState.IsValid)
             {
 
-                var pageModel = _mapper.Map<UiPageMetadataModuleBridgeDTO, UiPageMetadataModuleBridgeModel>(uiPageTypeDTO);
+                var pageModel = _mapper.Map<UiPageMetadataModuleBridgeDTO, UiPageMetadataModuleBridgeModel>(uiPageMetadataModuleBridgeDTO);
                 _uiPageMetadataModuleBridgeService.Create(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            return View(uiPageTypeDTO);
+            return View(uiPageMetadataModuleBridgeDTO);
         }
 
         /// <summary>

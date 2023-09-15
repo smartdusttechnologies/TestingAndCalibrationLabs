@@ -51,7 +51,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             ModuleLayoutModel controlTypeModel = _moduleLayoutService.GetById((int)id);
             var controlCategoryType = _layoutService.Get();
-            var controlCategoryTypeList = _mapper.Map<List<Layout2Model>, List<Layout2DTO>>(controlCategoryType);
+            var controlCategoryTypeList = _mapper.Map<List<LayoutMModel>, List<LayoutMDTO>>(controlCategoryType);
             var pageModule = _moduleService.Get();
             var ModuleTypeList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageModule);
             if (controlTypeModel == null)
@@ -92,7 +92,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var ModuleTypeList = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageModule);
 
             var controlCategoryType = _layoutService.Get();
-            var LayoutTypeList = _mapper.Map<List<Layout2Model>, List<Layout2DTO>>(controlCategoryType);
+            var LayoutTypeList = _mapper.Map<List<LayoutMModel>, List<LayoutMDTO>>(controlCategoryType);
             ViewBag.ModuleName = ModuleTypeList;
             ViewBag.LayoutName = LayoutTypeList;
 

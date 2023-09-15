@@ -38,16 +38,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<UiControlTypeModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiControlTypeModel>(@"	Select uct.Id,
+            return db.Query<UiControlTypeModel>(@"Select uct.Id,
                                                        uct.Name,
 													   uct.DisplayName,
                                                        uct.ControlCategoryId,
                                                        L.Name as ControlCategoryName
-                                                        
                                                     From [UiControlType] uct
-
                                                     inner join [Lookup]L on uct.ControlCategoryId = L.Id
-                                                   
                                                 where l.LookupCategoryId = 4
                                                    And uct.IsDeleted = 0 
                                                    And L.IsDeleted = 0").ToList();
@@ -119,15 +116,3 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -54,7 +54,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     ", new { Id = id }).ToList();
         }
         /// <summary>
-        /// Get All Record From Ui Page Metadata Characteristics
+        /// Get  Record From Ui Page Metadata Characteristics
         /// </summary>
         /// <returns></returns>
         public UiPageMetadataCharacteristicsModel Get(int id)
@@ -83,7 +83,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
         }
         /// <summary>
-        /// Get All Record From Ui Page Metadata Characteristics 
+        /// Get  Record From Ui Page Metadata Characteristics 
         /// </summary>
         /// <returns></returns>
         public UiPageMetadataCharacteristicsModel GetById(int id)

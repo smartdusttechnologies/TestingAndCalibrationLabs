@@ -35,8 +35,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            List<Layout2Model> page = _layoutService.Get();
-            var pageData = _mapper.Map<List<Layout2Model>, List<Layout2DTO>>(page);
+            List<LayoutMModel> page = _layoutService.Get();
+            var pageData = _mapper.Map<List<LayoutMModel>, List<LayoutMDTO>>(page);
             return View(pageData.AsEnumerable());
         }
 
@@ -57,7 +57,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            var pageData = _mapper.Map<Layout2Model, Layout2DTO>(getByIdPageModel);
+            var pageData = _mapper.Map<LayoutMModel, LayoutMDTO>(getByIdPageModel);
 
             return View(pageData);
         }
@@ -67,12 +67,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind] Layout2DTO layout2DTO)
+        public IActionResult Edit([Bind] LayoutMDTO layout2DTO)
         {
 
             if (ModelState.IsValid)
             {
-                var pageModel = _mapper.Map<Layout2DTO, Layout2Model>(layout2DTO);
+                var pageModel = _mapper.Map<LayoutMDTO, LayoutMModel>(layout2DTO);
                 _layoutService.Update(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -88,7 +88,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            return base.View(new Models.Layout2DTO { Id = id });
+            return base.View(new Models.LayoutMDTO { Id = id });
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Layout2DTO layout2DTO)
+        public IActionResult Create([Bind] LayoutMDTO layout2DTO)
         {
             if (ModelState.IsValid)
             {
-                var pageModel = _mapper.Map<Layout2DTO, Layout2Model>(layout2DTO);
+                var pageModel = _mapper.Map<LayoutMDTO, LayoutMModel>(layout2DTO);
                 _layoutService.Create(pageModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
@@ -120,12 +120,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return NotFound();
             }
-            Layout2Model getByIdPageModel = _layoutService.GetById((int)id);
+            LayoutMModel getByIdPageModel = _layoutService.GetById((int)id);
             if (getByIdPageModel == null)
             {
                 return NotFound();
             }
-            var pageModel = _mapper.Map<Layout2Model, Layout2DTO>(getByIdPageModel);
+            var pageModel = _mapper.Map<LayoutMModel, LayoutMDTO>(getByIdPageModel);
             return View(pageModel);
         }
 

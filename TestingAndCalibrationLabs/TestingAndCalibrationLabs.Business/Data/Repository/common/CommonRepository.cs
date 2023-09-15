@@ -1,16 +1,8 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Http;
-using Org.BouncyCastle.Math.EC;
-using Org.BouncyCastle.Utilities.Zlib;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Transactions;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -247,13 +239,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var ListofValue = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, UiPageTypeId = x.UiPageTypeId, Value = x.Value }).ToList();
+                var collectionofdata = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, UiPageTypeId = x.UiPageTypeId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@RecordId", recordModel.Id);
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(ListofValue));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(collectionofdata));
                 command.ExecuteNonQuery();
             }
             return true;

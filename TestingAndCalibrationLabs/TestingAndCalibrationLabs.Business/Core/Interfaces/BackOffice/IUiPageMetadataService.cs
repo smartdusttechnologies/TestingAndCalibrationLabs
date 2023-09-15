@@ -50,7 +50,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        RequestResult <int> Update(int id , UiPageMetadataModel uiPageMetadataModel, int metadataModuleBridgeId);
+        RequestResult <int> Update(UiPageMetadataModel uiPageMetadataModel);
         /// <summary>
         /// Delete Record From Ui Metadata
         /// </summary>

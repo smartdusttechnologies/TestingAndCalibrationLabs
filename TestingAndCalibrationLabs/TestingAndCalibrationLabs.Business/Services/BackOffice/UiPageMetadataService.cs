@@ -66,7 +66,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel, int metadataModuleBridgeId)
+        public RequestResult<int> Update(UiPageMetadataModel uiPageMetadataModel)
         {
             _uiPageMetadataRepository.Update(uiPageMetadataModel);
             return new RequestResult<int>(1);

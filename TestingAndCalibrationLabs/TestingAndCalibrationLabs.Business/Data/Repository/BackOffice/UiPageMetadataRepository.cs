@@ -1,23 +1,12 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Connections;
-using Org.BouncyCastle.Asn1.Ocsp;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Utilities.Collections;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Linq;
-using System.Reflection;
-using TestingAndCalibrationLabs.Business.Common;
+using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
-using static System.Net.Mime.MediaTypeNames;
-using MailKit.Search;
-using IConnectionFactory = TestingAndCalibrationLabs.Business.Infrastructure.IConnectionFactory;
-using System.Transactions;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {

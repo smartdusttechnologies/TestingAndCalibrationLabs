@@ -27,7 +27,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         UiPageMetadataCharacteristicsModel GetById(int id);
         /// <summary>
         /// Insert Record In uiPageMetadataCharacteristics
