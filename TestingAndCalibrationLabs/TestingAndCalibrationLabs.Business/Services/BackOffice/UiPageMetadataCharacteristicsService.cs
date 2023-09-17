@@ -38,7 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _PageMetadataCharacteristicsRepository.Get();
         }
         /// <summary>
-        /// Get All UiPageMetadataCharacteristics Record Based on metadataId
+        /// Get Record from UiPageMetadataCharacteristics  Based on metadataId
         /// </summary>
         /// <returns></returns>
         public UiPageMetadataCharacteristicsModel GetByMetadataId(int metadataId)
@@ -46,7 +46,7 @@ namespace TestingAndCalibrationLabs.Business.Services
            return _PageMetadataCharacteristicsRepository.Get(metadataId);
         }
         /// <summary>
-        /// Get All Record For UiPageMetadataCharacteristics Record Based on Id
+        /// Get  Record For UiPageMetadataCharacteristics Record Based on Id
         /// </summary>
         /// <returns></returns>
         public UiPageMetadataCharacteristicsModel GetById(int id)

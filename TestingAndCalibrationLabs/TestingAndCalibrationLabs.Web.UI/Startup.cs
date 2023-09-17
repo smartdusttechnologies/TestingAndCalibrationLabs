@@ -98,7 +98,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             
-            services.AddScoped<IUiPageMetadataModuleBridgeService, UiPageMetadataModuleBridgeService>();
 
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
@@ -117,7 +116,6 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IModuleLayoutRepository, ModuleLayoutRepository>();
             services.AddScoped<IUiPageMetadataRepository, UiPageMetadataRepository>();
             services.AddScoped<IUiPageMetadataCharacteristicsRepository, UiPageMetadataCharacteristicsRepository>();
-            services.AddScoped<IUiPageMetadataModuleBridgeRepository, UiPageMetadataModuleBridgeRepository>();
             services.AddScoped<IUiPageNavigationRepository, UiPageNavigationRepository>();
             services.AddScoped<IConnectionFactory, ConnectionFactory>();
             services.AddScoped<IGenericRepository<UiControlCategoryTypeModel>, GenericRepository<UiControlCategoryTypeModel>>();

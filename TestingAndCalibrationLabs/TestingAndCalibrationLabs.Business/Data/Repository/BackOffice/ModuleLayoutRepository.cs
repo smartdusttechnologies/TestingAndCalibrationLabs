@@ -60,10 +60,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     inner join[LookupCategory] lc on upm.LookupCategoryId = lc.Id
                                                     inner join[Lookup] upt on lc.Id = upt.LookupCategoryId
                                                 where
-                                                    upm.UiPageMetadataId = @metadataId
+                                                    upm.UiPageMetadataId = @uiPageMetadataId
                                                     and upm.IsDeleted = 0
                                                     and upt.IsDeleted = 0
-                                                    and lc.IsDeleted = 0", new { metadataId = id }).First();
+                                                    and lc.IsDeleted = 0", new { uiPageMetadataId = id }).First();
         }
         /// <summary>
         /// Create Record From ModuleLayout

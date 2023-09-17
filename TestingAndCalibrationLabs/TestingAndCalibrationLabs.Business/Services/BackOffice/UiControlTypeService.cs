@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _uiControlTypeRepository.Get();
         }
         /// <summary>
-        /// Get All Record For Control Type Name
+        /// Get All Record For Control Type 
         /// </summary>
         /// <returns></returns>
         public List<UiControlTypeModel> GetControl()
