@@ -3,6 +3,93 @@
     width: 100%;
 }
 
+.divDrop {
+    position: relative;
+}
+
+.CubeLabel {
+    color: dimgrey;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 15px;
+    top: 11px;
+    padding: 0 5px;
+    background: #fff;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.CubeSelect {
+    font-size: 20px;
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    background: #fff;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+    .CubeSelect:focus {
+        outline: none;
+        border-color: dodgerblue;
+        box-shadow: 0 0 3px 0 dodgerblue;
+        transition: 0.3s all;
+    }
+
+    .CubeSelect:hover {
+        border-color: dodgerblue;
+        box-shadow: 0 0 1px 0 dodgerblue;
+    }
+
+
+
+    .CubeSelect:focus ~ .CubeLabel {
+        top: -6px;
+        font-size: 12px;
+    }
+
+select.CubeSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+    select.CubeSelect::-ms-expand {
+        display: none;
+    }
+
+.did-floating-input:not(:placeholder-shown) ~ .CubeLabel {
+    top: -6px;
+    font-size: 12px;
+}
+
+.CubeSelect:not([value=""]):valid ~ .CubeLabel {
+    top: -6px;
+    font-size: 12px;
+}
+
+.CubeSelect[value=""]:focus ~ .CubeLabel {
+    top: 12px;
+    font-size: 13px;
+}
+
+.CubeSelect:not([multiple]):not([size]) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'%3E%3Cpath id='Path_1' data-name='Path 1' d='M371,294l4,6,4-6Z' transform='translate(-371 -294)' fill='%23003d71'/%3E%3C/svg%3E%0A");
+    background-position: right 15px top 50%;
+    background-repeat: no-repeat;
+}
+
+.did-error-input .CubeSelect:not([multiple]):not([size]) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'%3E%3Cpath id='Path_1' data-name='Path 1' d='M371,294l4,6,4-6Z' transform='translate(-371 -294)' fill='%239d3b3b'/%3E%3C/svg%3E%0A");
+}
+
+
 .red-error-border {
     border: 2px solid red;
     border-radius: 5px;
