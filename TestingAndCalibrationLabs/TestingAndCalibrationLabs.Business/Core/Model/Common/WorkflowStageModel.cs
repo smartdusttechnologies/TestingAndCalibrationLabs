@@ -33,9 +33,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains Orders Of WorkflowStage
         /// </summary>
         public int Orders { get; set; }
-        /// <summary>
-        /// It Contains Name Of Module
-        /// </summary>
-        public string ModuleName { get; set; }
     }
 }

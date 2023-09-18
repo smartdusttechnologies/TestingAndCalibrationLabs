@@ -13,16 +13,19 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         public readonly ILookupCategoryService _LookupCategoryService;
         public readonly IMapper _mapper;
+        private readonly IUiPageNavigationService _uiNavigationCategoryService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="LookupCategoryService"></param>
         /// <param name="mapper"></param>
+        /// <param name="uiNavigationCategoryService"></param>
 
-        public LookupCategoryController(ILookupCategoryService LookupCategoryService, IMapper mapper)
+        public LookupCategoryController(ILookupCategoryService LookupCategoryService, IMapper mapper, IUiPageNavigationService uiNavigationCategoryService)
         {
             _LookupCategoryService = LookupCategoryService;
             _mapper = mapper;
+            _uiNavigationCategoryService = uiNavigationCategoryService;
         }
         /// <summary>
         /// Get All The Pages From Database

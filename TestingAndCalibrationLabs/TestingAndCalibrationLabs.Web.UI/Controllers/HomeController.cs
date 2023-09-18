@@ -16,8 +16,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
 
-        public HomeController()
+        public HomeController(IAuthenticationService authenticationService, IOrganizationService orgnizationService,IMapper mapper)
         {
+            _authenticationService = authenticationService;
+            _orgnizationService = orgnizationService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -93,6 +96,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.TableHeaddings = TableHeadding.Distinct();
             return View(TestDetailsOfUsers);
         }
-        
     }
 }

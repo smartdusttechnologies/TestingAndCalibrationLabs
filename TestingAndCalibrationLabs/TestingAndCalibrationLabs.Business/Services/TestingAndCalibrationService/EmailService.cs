@@ -26,6 +26,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _configuration = configuration;
         }
+        
         /// <summary>
         /// Sends mail using the Email model.
         /// </summary>
@@ -49,10 +50,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     mm.Subject = emailModel.Subject;
                     mm.Body = emailModel.HtmlMsg;
                     mm.IsBodyHtml = true;
-                    if(emailModel.Attachments.Count > 0)
-                    {
-                        emailModel.Attachments.ForEach(x=>mm.Attachments.Add(x));
-                    }
+
                     using (SmtpClient smtp = new SmtpClient())
                     {
                         smtp.Host = host;
@@ -66,11 +64,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }                           
-        }
-
+        }   
     }
 }    

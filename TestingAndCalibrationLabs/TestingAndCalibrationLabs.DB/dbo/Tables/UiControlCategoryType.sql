@@ -5,6 +5,6 @@
     [IsDeleted]       BIT           CONSTRAINT [DF_UiControlCategoryType_IsDeleted] DEFAULT ((0)) NOT NULL,
     [UiControlTypeId] INT           NULL,
     CONSTRAINT [PK_UiControlCategoryType] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_UiControlCategoryType_UiControlType_Id] FOREIGN KEY ([UiControlTypeId]) REFERENCES [dbo].[UiControlType] ([id])
+    CONSTRAINT [FK_UiControlCategoryType_UiControlType] FOREIGN KEY ([UiControlTypeId]) REFERENCES [dbo].[UiControlType] ([id])
 );
 

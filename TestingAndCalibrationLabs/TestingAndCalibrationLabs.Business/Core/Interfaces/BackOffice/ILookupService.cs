@@ -10,9 +10,20 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface ILookupService
     {
         /// <summary>
-        /// Get All Record From Lookup
+        /// To Get All Records Of Lookup
         /// </summary>
+        /// <returns></returns>
+        List<LookupModel> GetLookup();
+        /// <summary>
+        /// Get All records for Lookup and LookupCategory
+        /// </summary>
+        /// <returns></returns>
         List<LookupModel> Get();
+        /// <summary>
+        /// Get Record In Lookup Based on lookupCategoryId
+        /// </summary>
+        /// <returns></returns>
+        List<LookupModel> GetLookupCategoryId(int lookupCategoryId);
         /// <summary>
         /// Get Record By Id From Lookup
         /// </summary>
@@ -37,8 +48,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
-
-
     }
+
 }

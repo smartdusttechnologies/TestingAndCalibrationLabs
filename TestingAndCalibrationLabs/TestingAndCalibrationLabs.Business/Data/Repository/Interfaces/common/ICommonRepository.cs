@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
@@ -88,5 +89,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="record"></param>
         /// <returns></returns>
         bool DeleteMultiValue(RecordModel record);
+        // <summary>
+        // Image Upload in database
+        //</summary>
+        int FileUpload(FileUploadModel File);
+        // <summary>
+        // Image Download  in database
+        //</summary>
+        FileUploadModel ImageDownload(string ImageValue);
     }
 }

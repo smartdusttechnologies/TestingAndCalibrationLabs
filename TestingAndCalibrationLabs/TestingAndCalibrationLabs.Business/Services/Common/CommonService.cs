@@ -9,46 +9,66 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Microsoft.AspNetCore.Http;
-using System.Net.Mail;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class CommonService : ICommonService
     {
         internal string UI_PAGE_NAME = string.Empty;
+        private ICommonRepository commonRepository;
+        private IGenericRepository<RecordModel> recordGenericRepository;
+        private IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository;
+        private IGenericRepository<UiPageDataModel> uiPageDataGenericRepository;
+        private IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository;
+        private IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository;
+        private IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository;
+        private IUiPageMetadataRepository uiPageMetadataRepository;
+        private IWorkflowActivityService workflowActivityService;
+        private IWebHostEnvironment webHostEnvironment;
+        private IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService;
         private readonly ICommonRepository _commonRepository;
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
+        private readonly IGenericRepository<UiPageTypeModel> _uiPageTypeGenericRepository;
+        private readonly IGenericRepository<UiPageDataModel> _uiPageDataGenericRepository;
+        private readonly IGenericRepository<UiPageMetadataModel> _uiPageMetaDataGenericRepository;
         private readonly IGenericRepository<UiPageValidationTypeModel> _uiPageValidationTypesGenericRepository;
+        private readonly IUiPageMetadataCharacteristicsRepository _uiPageMetadataCharacteristicsRepository;
         private readonly IUiPageMetadataRepository _uiPageMetadataRepository;
+        private readonly IWorkflowActivityService _workflowActivityService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
-        private readonly IAuthorizationService _authorizationService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IWorkflowStageService _workflowStageService;
-        private readonly IEmailService _emailService;
+        private readonly IGoogleDriveService _googleUploadDownloadService;
+
+
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
+            IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
+            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
+            IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
+            IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
+            IWorkflowActivityService workflowActivityService,
             IWebHostEnvironment webHostEnvironment,
-            IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,
-            IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,
-            IWorkflowStageService workflowStageService,
-            IEmailService emailService)
-
+            IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
         {
             _commonRepository = commonRepository;
             _recordGenericRepository = recordGenericRepository;
+            _uiPageTypeGenericRepository = uiPageTypeGenericRepository;
+            _uiPageDataGenericRepository = uiPageDataGenericRepository;
+            _uiPageMetaDataGenericRepository = uiPageMetaDataGenericRepository;
             _uiPageValidationTypesGenericRepository = uiPageValidationTypesGenericRepository;
+            _uiPageMetadataCharacteristicsRepository = uiPageMetadataCharacteristicsRepository;
             _uiPageMetadataRepository = uiPageMetadataRepository;
+            _workflowActivityService = workflowActivityService;
             _webHostEnvironment = webHostEnvironment;
             _uiPageMetadataCharacteristicsService = uiPageMetadataCharacteristicsService;
-            _authorizationService = authorizationService;
-            _httpContextAccessor = httpContextAccessor;
-            _workflowStageService = workflowStageService;
-            _emailService = emailService;
         }
         #region public methods
         /// <summary>
@@ -58,44 +78,39 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<bool> Add(RecordModel record)
         {
-            RequestResult<bool> requestResult = new RequestResult<bool>(false);
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Create).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
-            requestResult = Validate(record);
+            RequestResult<bool> requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
+                record.UpdatedDate = DateTime.Now;
                 //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
                 record.Id = _commonRepository.Insert(record);
                 // record.WorkflowStageId = workflowStageId;
-                //_workflowActivityService.WorkflowActivity(record);
+                //_workflowActivityService.WorkflowActivity(record)
                 return new RequestResult<bool>(true);
             }
             return requestResult;
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public RequestResult<byte[]> TemplateGenerate(int recordId, int metadataId, string email, bool send)
+        public byte[] TemplateGenerate(int recordId, int metadataId)
         {
-            var lookupM = _uiPageMetadataCharacteristicsService.Get(metadataId);
+            var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
+            int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
             var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);
             var template = File.ReadAllText(path);
-            var workflowStage = _workflowStageService.GetStage(recordMdel.ModuleId, recordMdel.Id);
-            var pageMetadata = _commonRepository.GetUiPageMetadata(workflowStage.UiPageTypeId);
+            var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageId);
             var uiPageData = _commonRepository.GetPageData(recordId);
 
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.SingleOrDefault(y => y.UiPageMetadataId == x.Id)
+                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)
             }));
             foreach (var item in hirericheys)
             {
@@ -107,7 +122,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                     string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
                     var fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
-                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.Value);
+                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
                 }
             }
             var multiVal = GetMultiControlValue(recordId);
@@ -141,27 +156,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
             var pdfByte = doc.Save();
             doc.Close();
-            if (send)
-            {
-                //string emailAd = new string(email);
-                var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
-                var htmlWeb = File.ReadAllText(htmlPath);
-                using Stream stream = new MemoryStream(pdfByte);
-                Attachment attachment = new Attachment(stream, "report.pdf", "application/pdf");
-                EmailModel emailModel = new EmailModel();
-                var emailAd = new List<string>
-                {
-                    email
-                };
-                emailModel.Email = emailAd;
 
-                emailModel.Subject = "Thanks For Visiting Testing And Calibration Labs";
-                emailModel.HtmlMsg = htmlWeb;
-                var atchmt = new List<Attachment>() { attachment };
-                emailModel.Attachments = atchmt;
-                var sendMail = _emailService.Sendemail(emailModel);
-            }
-            return new RequestResult<byte[]>(pdfByte);
+            return pdfByte;
         }
         /// <summary>
         /// to Delete Record
@@ -170,15 +166,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            var record = _recordGenericRepository.Get(id);
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Create).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
             _recordGenericRepository.Delete(id);
             return true;
         }
-
         /// <summary>
         /// to save the record 
         /// </summary>
@@ -186,12 +176,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<bool> Save(RecordModel record)
         {
-            RequestResult<bool> requestResult = new RequestResult<bool>();
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Update).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
-            requestResult = Validate(record);
+            RequestResult<bool> requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
                 var oldRecord = _recordGenericRepository.Get(record.Id);
@@ -201,8 +186,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                     _commonRepository.Save(record);
                     //record.WorkflowStageId = oldRecord.WorkflowStageId;
                     //_workflowActivityService.WorkflowActivity(record);
-                    return new RequestResult<bool>(true);
                 }
+                return new RequestResult<bool>(true);
+
             }
             return new RequestResult<bool>(false);
         }
@@ -213,13 +199,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RecordModel GetUiPageMetadataCreate(int moduleId)
         {
-            RecordModel record = new RecordModel() { ModuleId = moduleId, Id = 0 };
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Read).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
-            var workflowStage = _workflowStageService.GetStage(moduleId, 0);
-            var uiMetadata = _commonRepository.GetUiPageMetadata(workflowStage.UiPageTypeId);
+            int uiPageTypeId;
+            var uiMetadata = GetMetadata(moduleId, 0, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
             List<LayoutModel> hirericheys = new List<LayoutModel>();
@@ -230,14 +211,16 @@ namespace TestingAndCalibrationLabs.Business.Services
              f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
             f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
              );
-            record = new RecordModel
+
+            var record = new RecordModel
             {
                 ModuleId = moduleId,
-                UiPageTypeId = workflowStage.UiPageTypeId,
+                UiPageTypeId = uiPageTypeId,
                 Layout = hierarchy
             };
             return record;
         }
+
         /// <summary>
         /// This Method Return Data For Grid
         /// </summary>
@@ -245,50 +228,54 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RecordsModel GetRecords(int moduleId)
         {
-            var workflowStage = _workflowStageService.GetStage(moduleId, 0);
             var uiMetadata = _commonRepository.GetUiPageMetadataByModuleId(moduleId);
             var uiPageData = _commonRepository.GetUiPageDataByModuleId(moduleId);
             var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
             uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
-            return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels, WorkflowStageName = workflowStage.Name };
+            return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
 
-        /// <summary>
-        /// Get Record By Record Id
-        /// </summary>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public RecordModel GetRecordById(int recordId)
+    /// <summary>
+    /// Get Record By Record Id
+    /// </summary>
+    /// <param name="recordId"></param>
+    /// <returns></returns>
+    public RecordModel GetRecordById(int recordId)
         {
+            int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, recordMdel, Operations.Read).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
-            var workflowStage = _workflowStageService.GetStage(recordMdel.ModuleId, recordMdel.Id);
-            var uiMetadata = _commonRepository.GetUiPageMetadata(workflowStage.UiPageTypeId);
+            var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
-            //var uiPageData = _uiPageDataGenericRepository.Get<int>("RecordId", recordId);
             var uiPageData = _commonRepository.GetPageData(recordId);
             List<LayoutModel> hirericheys = new List<LayoutModel>();
             uiMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).FirstOrDefault()
+                UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             }));
+
             var hierarchy = hirericheys.Hierarchize(
                  0, // The "root level" key. We're using -1 to indicate root level.
                  f => f.UiPageMetadata.Id, // The ID property on your object
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = workflowStage.UiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel.WorkflowStageId, Layout = hierarchy };
         }
-
         #region Multi Value Control
+        public int ImageUpload (FileUploadModel fileUpload)
+        {
+           var dataDownloaded = _commonRepository.FileUpload(fileUpload);
+              return dataDownloaded;
+        }
+        public FileUploadModel  DownloadImage(string ImageValue)
+        { 
+             var image = _commonRepository.ImageDownload(ImageValue);
+            return image;
+        }
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>
@@ -329,7 +316,28 @@ namespace TestingAndCalibrationLabs.Business.Services
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// To Get Metadata Based On Module Id And stageId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <param name="stageId"></param>
+        /// <param name="uiPageId"></param>
+        /// <returns></returns>
+        private List<UiPageMetadataModel> GetMetadata(int moduleId, int stageId, out int uiPageId)
+        {
+            //TODO: All this can be done in one call inside GetUiMetadata , one call to database
+            if (stageId == 0)
+            {
+                uiPageId = _commonRepository.GetPageIdBasedOnOrder(moduleId);
+            }
+            else
+            {
+                uiPageId = _commonRepository.GetPageIdBasedOnCurrentWorkflowStage(stageId);
 
+            }
+            var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
+            return metadata;
+        }
         private int GetWorkflowStageId(int moduleId)
         {
             return _commonRepository.GetWorkflowStageBasedOnOrder(moduleId);
@@ -395,6 +403,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<bool>(validationMessages);
         }
+
         #endregion
     }
 }

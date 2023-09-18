@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -26,11 +24,6 @@ namespace TestingAndCalibrationLabs.Tests
 
         Mock<IGenericRepository<UiPageDataModel>> genericRepository = new Mock<IGenericRepository<UiPageDataModel>>();
         Mock<IWorkflowActivityRepository> workflowActivityRepository = new Mock<IWorkflowActivityRepository>();
-        Mock<IConfiguration> configuration = new Mock<IConfiguration>();
-        Mock<IWebHostEnvironment> webhost = new Mock<IWebHostEnvironment>();
-        Mock<IEmailService> emailservice = new Mock<IEmailService>();
-        Mock<IActivityMetadataService> activity = new Mock<IActivityMetadataService>();
-        Mock<IGenericRepository<WorkflowActivityModel>> activityGeneric = new Mock<IGenericRepository<WorkflowActivityModel>>();
 
         [SetUp]
         public void SetUp()
@@ -50,7 +43,7 @@ namespace TestingAndCalibrationLabs.Tests
             workflowActivityModel.Add(new WorkflowActivityModel { Id = 36, Name = "wAman", ActivityId = 35, ActivityName = "faman", WorkflowStageId = 65, WorkflowStageName = "writesh" });
 
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object,webhost.Object,emailservice.Object,activity.Object, workflowActivityRepository.Object, genericRepository.Object,activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
 
             workflowActivityRepository.Setup(x => x.Get()).Returns(workflowActivityModel);
 
@@ -76,7 +69,7 @@ namespace TestingAndCalibrationLabs.Tests
             //workflowActivityModel.Add(new WorkflowActivityModel { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" });
             //workflowActivityModel.Add(new WorkflowActivityModel { Id = 36, Name = "wAman", ActivityId = 35, ActivityName = "faman", WorkflowStageId = 65, WorkflowStageName = "writesh" });
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
 
             workflowActivityRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new WorkflowActivityModel { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" });
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
@@ -93,7 +86,7 @@ namespace TestingAndCalibrationLabs.Tests
         public void Edit_get_null_Id()
         {
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
 
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
 
@@ -113,7 +106,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             var workflowActivityDTO = new WorkflowActivityDTO { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" };
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
 
             workflowActivityRepository.Setup(x => x.Update(workflowActivityModel)).Returns(0);
 
@@ -132,7 +125,7 @@ namespace TestingAndCalibrationLabs.Tests
             var workflowActivityDTO = new WorkflowActivityDTO { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" };
 
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
 
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
 
@@ -147,7 +140,7 @@ namespace TestingAndCalibrationLabs.Tests
         public void Create_Get_Test()
         {
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
 
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
 
@@ -168,7 +161,8 @@ namespace TestingAndCalibrationLabs.Tests
 
 
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+
             workflowActivityRepository.Setup(x => x.Create(workflowActivityModel)).Returns(0);
 
 
@@ -192,7 +186,8 @@ namespace TestingAndCalibrationLabs.Tests
         {
             WorkflowActivityModel workflowActivityModel = new WorkflowActivityModel { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" };
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+
             workflowActivityRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(workflowActivityModel);
 
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
@@ -210,7 +205,7 @@ namespace TestingAndCalibrationLabs.Tests
         {
 
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
 
             var createResult = (NotFoundResult)controller.Delete(null);
@@ -222,12 +217,28 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
+        [Test]
+        public void DeleteConfirmed_Test()
+        {
+            workflowActivityRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
 
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
+            var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
+
+
+            var createResult = (RedirectToActionResult)controller.DeleteConfirmed(5);
+            var expectedResult = "Index";
+
+            createResult.ActionName.Should().BeEquivalentTo(expectedResult);
+
+
+
+        }
         [Test]
         public void Delete_Confirmed_IdNull()
         {
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(workflowActivityRepository.Object, genericRepository.Object);
             var controller = new WorkflowActivityController(_mapper, _workflowStageService, _activityService, _workflowActivityService);
 
             var createResult = (NotFoundResult)controller.DeleteConfirmed(null);

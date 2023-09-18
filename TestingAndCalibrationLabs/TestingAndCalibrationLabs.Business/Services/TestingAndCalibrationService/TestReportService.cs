@@ -186,7 +186,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 Email = emailIds,
                 Subject = testReportModel.Subject,
                 HtmlMsg = testReportModel.HtmlMsg
-                
             };
             //Sending mail
            

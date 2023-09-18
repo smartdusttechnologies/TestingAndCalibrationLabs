@@ -3,7 +3,6 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -21,12 +20,29 @@ namespace TestingAndCalibrationLabs.Business.Services
             _lookupRepository = lookupRepository;
         }
         /// <summary>
-        /// Get All Records From Lookup
+        /// Get All records Of Lookup 
+        /// </summary>
+        /// <returns></returns>
+        public List<LookupModel> GetLookup()
+        {
+            return _genericRepository.Get();
+        }
+        /// <summary>
+        /// Get All records for Lookup and LookupCategory
         /// </summary>
         /// <returns></returns>
         public List<LookupModel> Get()
         {
             return _lookupRepository.Get();
+        }
+        /// <summary>
+        /// Get Record In Lookup Based on lookupCategoryId
+        /// </summary>
+        /// <returns></returns>
+        public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
+        {
+
+            return _lookupRepository.GetLookupCategoryId(lookupCategoryId);
         }
         /// <summary>
         /// Insert Record In Lookup
@@ -67,6 +83,5 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _lookupRepository.Delete(id);
         }
-
     }
 }

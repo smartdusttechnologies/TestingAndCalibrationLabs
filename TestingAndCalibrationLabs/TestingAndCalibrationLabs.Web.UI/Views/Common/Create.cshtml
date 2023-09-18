@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Create";
 }
-<style>
+@*<style>
     .fixed-bottom {
         position: relative;
     }
-</style>
+</style>*@
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
@@ -15,6 +15,10 @@
             <input type="hidden" asp-for="UiPageTypeId" />
             <input type="hidden" asp-for="WorkflowStageId" value="true" />
             <input type="hidden" id="workflowStageChecker" value="false" />
+            <script>
+                var comboTree1;
+
+            </script>
             <div class="row ms-1 me-1">
                 @foreach (var item in Model.Layout)
                 {
@@ -70,6 +74,7 @@
     }
 </script>
 <script type="text/javascript">
+    debugger;
     var moduleId = parseInt($("#ModuleId").val())
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var mainModel = JSON.parse('@Json.Serialize(Model)');
@@ -81,7 +86,6 @@
         var url = $("#commonForm").attr("action");
         //here I am flatting the hirarchy of Node<Layout> and List Of Layout
         const getMembers = (member) => {
-
             if (!member.children || !member.children.length) {
                 return member.value.uiPageMetadata;
             }
@@ -90,19 +94,36 @@
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
+        debugger;
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            if (uiPageMetaData[i].controlCategoryName == "DataControl" && uiPageMetaData[i].multiValueControl != true) {
+            if (uiPageMetaData[i].controlCategoryName == "DataControl" || uiPageMetaData[i].multiValueControl == true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
+                debugger;
                 var metadataId = uiPageMetaData[i].id;
-                var fieldValue = $(fieldId).val();
-                var keyValuepair = {};
-                keyValuepair.UiPageMetadataId = metadataId;
-                keyValuepair.UiPageTypeId = uiPageTypeId;
-                keyValuepair.Value = fieldValue;
-                fieldValues.push(keyValuepair)
+                var List;
+                if (uiPageMetaData[i].multiValueControl == true) {
+                    var filddata = $(fieldId).val();
+                    List = filddata.split(",");
+                    for (let x = 0; x < List.length; x++) {
+                        var keyValuepair = {};
+                        keyValuepair.UiPageMetadataId = metadataId;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        keyValuepair.Value = List[x];
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+                debugger;
+                if (uiPageMetaData[i].multiValueControl != true) {
+                    var fieldValue = $(fieldId).val();
+                    var keyValuepair = {};
+                    keyValuepair.UiPageMetadataId = metadataId;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
+                    keyValuepair.Value = fieldValue;
+                    fieldValues.push(keyValuepair)
+                }
             }
         }
         $.ajax({
@@ -133,5 +154,6 @@
                 }
             }
         });
+
     }
 </script>

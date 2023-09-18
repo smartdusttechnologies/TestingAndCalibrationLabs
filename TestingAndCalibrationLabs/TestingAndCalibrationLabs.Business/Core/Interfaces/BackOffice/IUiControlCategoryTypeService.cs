@@ -37,6 +37,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
+        /// <summary>
+        /// GET Record In Ui Control Category Type based on Id
+        /// </summary>
+        /// <param name="uiControlCategoryTypeModel"></param>
+        /// <returns></returns>
         UiControlCategoryTypeModel GetById(int id);
 
     }

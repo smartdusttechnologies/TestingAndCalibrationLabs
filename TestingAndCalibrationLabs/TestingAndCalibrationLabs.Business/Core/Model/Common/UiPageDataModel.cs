@@ -12,7 +12,9 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int UiPageTypeId { get; set; }
         public int UiPageMetadataId { get; set;}
         public bool MultiValueControl { get; set; }
+
         private string _value;
+        public int? ChildId { get; set; }
         [DbColumn]
         public string Value
         {
