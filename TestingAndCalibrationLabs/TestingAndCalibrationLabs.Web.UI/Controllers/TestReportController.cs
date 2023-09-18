@@ -6,9 +6,12 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestReportDTO = TestingAndCalibrationLabs.Web.UI.Models.TestReportDTO;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -18,14 +21,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
         private readonly ITestReportService _testReportService;
         private readonly IMapper _mapper;
 
-        public TestReportController(ILogger<HomeController> logger, IMapper mapper, ITestReportService testReportService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        public TestReportController(ILogger<HomeController> logger, ITestReportRepository testReportRepository, IMapper mapper, ITestReportService testReportService, IEmailService emailService, IWebHostEnvironment hostingEnvironment, IConfiguration configuration, IGoogleDriveService googleUploadDownloadService)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
+            _emailService = emailService;
             _testReportService = testReportService;
             _mapper = mapper;
         }

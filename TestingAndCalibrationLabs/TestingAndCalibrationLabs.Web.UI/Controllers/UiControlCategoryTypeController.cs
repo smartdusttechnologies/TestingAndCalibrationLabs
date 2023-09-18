@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -11,6 +14,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class UiControlCategoryTypeController : Controller
     {
         public readonly IUiControlCategoryTypeService _uiControlCategoryTypeServices;
+        public readonly IListSorterService _listSorterService;
         public readonly IMapper _mapper;
         public readonly IUiControlTypeService _uiControlTypeServices;
 
@@ -19,10 +23,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="uiControlTypeServices"></param>
         /// <param name="mapper"></param>
-        public UiControlCategoryTypeController(IUiControlCategoryTypeService uiControlCategoryTypeServices, IMapper mapper, IUiControlTypeService uiControlTypeServices)
+        public UiControlCategoryTypeController(IUiControlCategoryTypeService uiControlCategoryTypeServices, IMapper mapper, IListSorterService listSorterService, IUiControlTypeService uiControlTypeServices)
         {
             _uiControlCategoryTypeServices = uiControlCategoryTypeServices;
             _mapper = mapper;
+            _listSorterService = listSorterService;
             _uiControlTypeServices= uiControlTypeServices;   
         }
         /// <summary>

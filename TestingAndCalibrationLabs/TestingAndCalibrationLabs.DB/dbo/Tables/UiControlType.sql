@@ -5,7 +5,7 @@
     [IsDeleted]         BIT           CONSTRAINT [DF_UiControlType_IsDeleted] DEFAULT ((0)) NOT NULL,
     [ControlCategoryId] INT           NULL,
     CONSTRAINT [PK_UiControlType] PRIMARY KEY CLUSTERED ([id] ASC),
-    CONSTRAINT [FK_UiControlType_Lookup_ControlCategory_Id] FOREIGN KEY ([ControlCategoryId]) REFERENCES [dbo].[Lookup] ([Id])
+    CONSTRAINT [FK_UiControlType_Lookup_ControlCategoryId] FOREIGN KEY ([ControlCategoryId]) REFERENCES [dbo].[Lookup] ([Id])
 );
 
 

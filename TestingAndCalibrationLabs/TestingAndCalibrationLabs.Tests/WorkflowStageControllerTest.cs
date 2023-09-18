@@ -23,9 +23,8 @@ namespace TestingAndCalibrationLabs.Tests
         IMapper _mapper;
 
         Mock<IWorkflowRepository> workflowRepository = new Mock<IWorkflowRepository>();
-        Mock<IWorkflowService> workflowService = new Mock<IWorkflowService>();
         Mock<IWorkflowStageRepository> workflowStageRepository = new Mock<IWorkflowStageRepository>();
-        Mock<IGenericRepository<WorkflowStageModel>> genericRepository = new Mock<IGenericRepository<WorkflowStageModel>>();
+        Mock<IGenericRepository<UiPageTypeModel>> genericRepository = new Mock<IGenericRepository<UiPageTypeModel>>();
         [SetUp]
         public void SetUp()
         {
@@ -44,7 +43,7 @@ namespace TestingAndCalibrationLabs.Tests
             workflowStageModel.Add(new WorkflowStageModel { Id = 26, Name = "wAman", UiPageTypeId = 75, UiPageTypeName = "daman", WorkflowId = 46, WorkflowName = "jritesh", Orders = 54 });
 
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object,genericRepository.Object,workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
             workflowStageRepository.Setup(x => x.Get()).Returns(workflowStageModel);
 
@@ -54,8 +53,8 @@ namespace TestingAndCalibrationLabs.Tests
             var result = (ViewResult)controller.Index();
 
             List<WorkflowStageDTO> workflowStageDTO = new List<WorkflowStageDTO>();
-            workflowStageDTO.Add(new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = "4" });
-            workflowStageDTO.Add(new WorkflowStageDTO { Id = 26, Name = "wAman", UiPageTypeId = 75, UiPageTypeName = "daman", WorkflowId = 46, WorkflowName = "jritesh", Orders = "54" });
+            workflowStageDTO.Add(new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 });
+            workflowStageDTO.Add(new WorkflowStageDTO { Id = 26, Name = "wAman", UiPageTypeId = 75, UiPageTypeName = "daman", WorkflowId = 46, WorkflowName = "jritesh", Orders = 54 });
 
             var ExpectedResult = workflowStageDTO;
 
@@ -70,13 +69,13 @@ namespace TestingAndCalibrationLabs.Tests
             //workflowActivityModel.Add(new WorkflowActivityModel { Id = 6, Name = "Aman", ActivityId = 5, ActivityName = "aman", WorkflowStageId = 6, WorkflowStageName = "ritesh" });
             //workflowActivityModel.Add(new WorkflowActivityModel { Id = 36, Name = "wAman", ActivityId = 35, ActivityName = "faman", WorkflowStageId = 65, WorkflowStageName = "writesh" });
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
             workflowStageRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(new WorkflowStageModel { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 });
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
 
             var result = (ViewResult)controller.Edit(6);
-            var ExpectedResult = new WorkflowStageDTO() { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = "4" };
+            var ExpectedResult = new WorkflowStageDTO() { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
             result.Model.Should().BeEquivalentTo(ExpectedResult);
 
@@ -86,7 +85,7 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void Edit_get_null_Id()
         {
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
 
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
@@ -106,9 +105,9 @@ namespace TestingAndCalibrationLabs.Tests
 
             WorkflowStageModel workflowStageModel = new WorkflowStageModel { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
-            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = "4" };
+            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
             workflowStageRepository.Setup(x => x.Update(workflowStageModel)).Returns(0);
 
@@ -124,10 +123,10 @@ namespace TestingAndCalibrationLabs.Tests
         [Test]
         public void Edit_Null_Id_Post_Test()
         {
-            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = "4" };
+            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
 
@@ -142,7 +141,7 @@ namespace TestingAndCalibrationLabs.Tests
         public void Create_Get_Test()
         {
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
 
@@ -159,11 +158,11 @@ namespace TestingAndCalibrationLabs.Tests
         {
             WorkflowStageModel workflowStageModel = new WorkflowStageModel { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
-            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = "4" };
+            var workflowStageDTO = new WorkflowStageDTO { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
 
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
 
             workflowStageRepository.Setup(x => x.Create(workflowStageModel)).Returns(0);
@@ -189,14 +188,14 @@ namespace TestingAndCalibrationLabs.Tests
         {
             WorkflowStageModel workflowStageModel = new WorkflowStageModel { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
 
             workflowStageRepository.Setup(x => x.GetById(It.IsAny<int>())).Returns(workflowStageModel);
 
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
 
             var createResult = (ViewResult)controller.Delete(6);
-            var expectedResult = new WorkflowStageDTO() { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = "4" };
+            var expectedResult = new WorkflowStageDTO() { Id = 6, Name = "Aman", UiPageTypeId = 5, UiPageTypeName = "aman", WorkflowId = 6, WorkflowName = "ritesh", Orders = 4 };
 
             createResult.Model.Should().BeEquivalentTo(expectedResult);
 
@@ -207,7 +206,7 @@ namespace TestingAndCalibrationLabs.Tests
         public void Delete_get_null_Id()
         {
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
 
             var createResult = (NotFoundResult)controller.Delete(null);
@@ -219,12 +218,28 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
-        
+        [Test]
+        public void DeleteConfirmed_Test()
+        {
+            workflowStageRepository.Setup(x => x.Delete(It.IsAny<int>())).Returns(true);
+
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
+            var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
+
+
+            var createResult = (RedirectToActionResult)controller.DeleteConfirmed(5);
+            var expectedResult = "Index";
+
+            createResult.ActionName.Should().BeEquivalentTo(expectedResult);
+
+
+
+        }
         [Test]
         public void Delete_Confirmed_IdNull()
         {
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object);
             var controller = new WorkflowStageController(_workflowStageService, _mapper, _uiPageTypeService, _workflowService);
 
             var createResult = (NotFoundResult)controller.DeleteConfirmed(null);

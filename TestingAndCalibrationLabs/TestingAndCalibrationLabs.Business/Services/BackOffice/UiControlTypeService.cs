@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -65,6 +62,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>
+
         public RequestResult<int> Create(UiControlTypeModel uiControlTypeModel)
         {
             _uiControlTypeRepository.Create(uiControlTypeModel);
@@ -79,6 +77,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _uiControlTypeRepository.Delete(id);
         }
+        #endregion
+
+        #region Private Methods
+
         #endregion
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -14,18 +12,23 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
         public SampleService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
+            IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
+            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
+            IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
+            IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
-            IWebHostEnvironment webHostEnvironment,
-            IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,IWorkflowStageService workflowStageService,
-            IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,IEmailService email)
+            IWorkflowActivityService workflowActivityService,IWebHostEnvironment webHostEnvironment,
+            IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService)
             : base(commonRepository,
                   recordGenericRepository,
+                  uiPageTypeGenericRepository,
+                  uiPageDataGenericRepository,
+                  uiPageMetaDataGenericRepository,
                   uiPageValidationTypesGenericRepository,
+                  uiPageMetadataCharacteristicsRepository,
                   uiPageMetadataRepository,
-                  webHostEnvironment,
-                  uiPageMetadataCharacteristicsService,
-                  authorizationService,httpContextAccessor,workflowStageService,email)
+                  workflowActivityService,webHostEnvironment,uiPageMetadataCharacteristicsService)
         {
             UI_PAGE_NAME = "SamplePage";
         }

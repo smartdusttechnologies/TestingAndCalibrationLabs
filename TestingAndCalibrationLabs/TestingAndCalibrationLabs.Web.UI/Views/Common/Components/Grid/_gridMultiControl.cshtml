@@ -9,15 +9,19 @@
         transition: opacity 0.6s;
         margin-bottom: 5px;
     }
+
         .alert.success {
             background-color: #04AA6D;
         }
+
         .alert.info {
             background-color: #2196F3;
         }
+
         .alert.warning {
             background-color: #ff9800;
         }
+
     .closebtn {
         margin-left: 15px;
         color: white;
@@ -28,6 +32,7 @@
         cursor: pointer;
         transition: 0.3s;
     }
+
         .closebtn:hover {
             color: black;
         }
@@ -65,7 +70,7 @@
                 Are You Sure Want to Delete?
             </div>
             <div class="modal-footer">
-                <button type="button" class="ripple button-base button-second" id="cancleModal" data-bs-dismiss="modal">Cancle</button>
+                <button type="button" class="ripple button-base button-second" data-bs-dismiss="modal">Cancle</button>
                 <button type="button" id="deletePopup" onclick="deleteFun(this.value)" class="ripple button-base button-danger">Delete</button>
             </div>
         </div>
@@ -81,4 +86,13 @@
         $("#tableMultiValue").load(url); 
 
     });
+       //    var close = document.getElementsByClassName("closebtn");
+    
+    //for ( var i = 0; i < close.length; i++) {
+    //    close[i].onclick = function () {
+    //        var div = this.parentElement;
+    //        div.style.opacity = "0";
+    //        setTimeout(function () { div.style.display = "none"; }, 200);
+    //    }
+    //}
 </script>       

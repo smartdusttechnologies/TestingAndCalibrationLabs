@@ -2,7 +2,6 @@
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
@@ -22,26 +21,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _workflowStageRepository = workflowStageRepository;
             _genericRepository = genericRepository;
             _workflowService = workflowService;
-        }
-        /// <summary>
-        /// To Get Ui Page Type Id Based On Module Id And stageId
-        /// </summary>
-        /// <param name="moduleId"></param>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public WorkflowStageModel GetStage(int moduleId, int recordId)
-        {
-            var workflowStage = new WorkflowStageModel();
-            //TODO: All this can be done in one call inside GetUiMetadata , one call to database
-            if (recordId == 0)
-            {
-                workflowStage = _workflowStageRepository.GetPageIdBasedOnOrder(moduleId);
-            }
-            else
-            {
-                workflowStage = _workflowStageRepository.GetPageIdBasedOnCurrentWorkflowStage(recordId);
-            }
-            return workflowStage;
         }
         /// <summary>
         /// Get All Records From Data Type

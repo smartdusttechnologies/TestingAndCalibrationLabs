@@ -14,9 +14,6 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
-    /// <summary>
-    /// Service Implementation For Authentication Class
-    /// </summary>
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _configuration;
@@ -108,7 +105,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         private LoginToken GenerateTokens(string userName)
         {
-            var authSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             DateTime now = DateTime.Now;
             var claims = GetTokenClaims(userName, now);
@@ -119,7 +116,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 claims: claims,
                 notBefore: now,
                 expires: now.AddDays(1),
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
             var encodedAccessJwt = new JwtSecurityTokenHandler().WriteToken(accessJwt);
@@ -130,7 +127,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 claims: claims,
                 notBefore: now,
                 expires: now.AddDays(30),
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
             var encodedRefreshJwt = new JwtSecurityTokenHandler().WriteToken(refreshJwt);
 
@@ -155,31 +152,27 @@ namespace TestingAndCalibrationLabs.Business.Services
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
             // You can add other claims here, if you want:
 
-            var userModel = _roleRepository.GetUserByUserName(sub);
-            //var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName));
-            //var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName));
+            var roleByOrganizationWithClaims = _roleRepository.GetRoleByOrganizationWithClaims(sub);
+            var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName));
+            var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName));
 
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, sub),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, Helpers.ToUnixEpochDate(dateTime).ToString(), ClaimValueTypes.Integer64)
-            };
-            //.Union(roleClaims).Union(userRoleClaim).ToList(); 
+            }.Union(roleClaims).Union(userRoleClaim).ToList();
 
-            //var roles = _roleRepository.GetRoleWithOrg(sub);
-            //foreach (var role in roles)
-            //{
-            //    claims.Add(new Claim(ClaimTypes.Role, role.Item2));
-            //}
-
-            claims.Add(new Claim(CustomClaimType.UserId.ToString(), userModel.Id.ToString()));
+            var roles = _roleRepository.GetRoleWithOrg(sub);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role.Item2));
+            }
 
             if (sub.ToLower() == "sysadmin")
-                claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), "0"));
+                claims.Add(new Claim("OrganizationId", "0"));
             else
-                claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), userModel.OrgId.ToString()));
-
+                claims.Add(new Claim("OrganizationId", roleByOrganizationWithClaims.FirstOrDefault().OrgId.ToString()));
             return claims;
         }
 

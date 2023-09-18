@@ -20,6 +20,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IUiControlTypeService _uiControlTypeService;
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
+        private readonly ILookupService _lookupService;
+        private readonly ILookupCategoryService _lookupCategoryService;
+        private readonly IListSorterService _listSorter;
         private readonly IUiControlCategoryTypeService _uiControlCategoryTypeService;
         private IModuleLayoutService _moduleLayoutService;
 
@@ -38,6 +41,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _mapper = mapper;
             _uiControlTypeService = uiControlTypeService;
             _dataTypeService = dataTypeService;
+            _lookupService = lookupService;
+            _listSorter = listSorter;
+            _lookupCategoryService = lookupCategory;
             _uiControlCategoryTypeService = uiControlCategoryTypeService;
             _moduleLayoutService = moduleLayoutService;
 
