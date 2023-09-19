@@ -236,7 +236,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
         }
         /// <summary>
-        /// Method to Validate the Existing User
+        /// Method to Validate the Existing User Email.
         /// </summary>
         private RequestResult<bool> ExistingUservalidation( UserModel user)
         {
