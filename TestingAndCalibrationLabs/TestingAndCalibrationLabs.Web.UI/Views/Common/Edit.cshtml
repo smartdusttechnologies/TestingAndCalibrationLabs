@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "CreateLayout";
 }
-<style>
+@*<style>
     .fixed-bottom {
         position: relative;
     }
-</style>
+</style>*@
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
@@ -72,7 +72,6 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
@@ -91,7 +90,6 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
-        debugger;
         for (let i = 0; i < layout.length; i++) {
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
