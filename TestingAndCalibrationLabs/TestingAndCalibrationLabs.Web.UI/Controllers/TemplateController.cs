@@ -10,6 +10,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using SelectPdf;
 using System;
+using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -116,18 +118,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
 
         [HttpPost]
-
-        
         public IActionResult Edit([Bind]TemplateDTO template)
         {
-            if (_documentService.ImageFileUpdate(template.Id, template.DataUrl))
+           
+
+            if (ModelState.IsValid)
             {
+                _documentService.ImageFileUpdate(template.Id, template.DataUrl);
                 var pageData = _mapper.Map<TemplateDTO, TemplateModel>(template);
                 _templateService.Update(pageData);
-                 return RedirectToAction("Index"); 
+                
+                TempData["IsTrue"] = true;
+                return RedirectToAction("Index");
             }
-            else 
-                return View(template);
+            return View(template);
 
 
         }
