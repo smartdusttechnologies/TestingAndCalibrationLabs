@@ -100,16 +100,16 @@
             let metadataId = metadata[i].id;
             let controlTypeName = metadata[i].uiControlTypeName;
             let star;
-            if (metadata[i].isRequired){
+            if (metadata[i].isRequired) {
                 star = "<span class='red-color'>*</span>";
-            }else{
+            } else {
                 star = "";
             }
             let controlId = `${controlTypeName}${metadataId}`;
             let uiControlDisplayName = metadata[i].uiControlDisplayName;
             let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                                                                                                        <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
-                                                                                                    <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
+                                                                                                            <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                                                                                                        <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
             $("#gridPopup").append(insertElement);
         }
     });
@@ -138,20 +138,20 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
 
-                if (fieldValue == ""){
+                if (fieldValue == "") {
                     keyValuepair.RecordId = id;
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
                 }
-               //else{
-                  var uiPageData = layout[i].uiPageData;
-                 if (layout[i].uiPageData != null) {
+                //else{
+                var uiPageData = layout[i].uiPageData;
+                if (layout[i].uiPageData != null) {
                     //var pageDataId = layout[i].uiPageData.id;
                     for (let j = 0; j < uiPageData.length; j++) {
-                    var pageDataId = layout[i].uiPageData[j].id;
-                    var childIds = layout[i].uiPageData[j].childId;
-                    var oldValue = layout[i].uiPageData[j].value;
+                        var pageDataId = layout[i].uiPageData[j].id;
+                        var childIds = layout[i].uiPageData[j].childId;
+                        var oldValue = layout[i].uiPageData[j].value;
                     }
                     if (oldValue != fieldValue) {
                         keyValuepair.Id = pageDataId;
@@ -160,10 +160,10 @@
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
-                   
+
                     }
-                  }
-               //}
+                }
+                //}
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.UiPageMetadataId = metadataId;
@@ -228,7 +228,7 @@
                     $(sourceId).removeClass("black-border").addClass("red-error-border");
                     if (newErrorMessage[i].messageKey == "True") {
                         ele += `<div class="alert"><span onclick="this.parentElement.style.display='none';" class="closebtn">&times;</span>${msg}</div>`;
-                       
+
                     }
                     else {
                         myFunctionError();                                              //Calling myFunctionError javacript function
@@ -236,7 +236,7 @@
                             document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
                         }
                     }
-                    ErrorMessage(NotificationNumbers++, msg); 
+                    ErrorMessage(NotificationNumbers++, msg);
                 }
                 $("#alert-box").html(ele);
             }

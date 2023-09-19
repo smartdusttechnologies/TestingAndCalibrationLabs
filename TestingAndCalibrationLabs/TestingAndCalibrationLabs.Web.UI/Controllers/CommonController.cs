@@ -31,6 +31,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IGoogleDriveService _googleDriveService;
         private readonly IWorkflowStageService _workflowStageService;
         private readonly IListSorterService _listSorterService;
+        private readonly IDocumentService _documentService;
          
         /// <summary>
         /// passing parameter via varibales for establing connection
@@ -38,7 +39,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="logger"></param>
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
-        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService, IListSorterService listSorterService, ILookupService lookupService)
+        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService, IListSorterService listSorterService, ILookupService lookupService, IDocumentService documentService)
         {
             _logger = logger;
             _commonService = commonService;
@@ -47,6 +48,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _workflowStageService = workflowStageService;
             _listSorterService = listSorterService;
             _lookupService = lookupService;
+            _documentService = documentService;
         }
 
         /// <summary>
@@ -68,7 +70,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult FileUpload()
         {
-            List<string> imageId = new List<string>();
+            List<int> imageId = new List<int>();
 
             foreach (var imagelenth in Request.Form.Files)
             {
@@ -76,25 +78,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 {
                     if (imagelenth.Length > 0)
                     {
-                        //Getting FileName
-                        var ImageName = Path.GetFileName(imagelenth.FileName);
-                        //Getting file Extension
-                        var ImageExtension = Path.GetExtension(ImageName);
-                        // concatenating  FileName + FileExtension
-                        var NewImageName = String.Concat(Convert.ToString(Guid.NewGuid()), ImageExtension);
-                        var ObjImage = new FileUploadModel()
-                        {
-                            Name= NewImageName,
-                            FileType = ImageExtension,
-                            CreatedOn = DateTime.Now
-                        };
-                        using (var target = new MemoryStream())
-                        {
-                            imagelenth.CopyTo(target);
-                            ObjImage.DataFiles = target.ToArray();
-                        }
-                       var Imagecollection = _commonService.ImageUpload(ObjImage);
-                        imageId.Add(NewImageName.ToString());
+                        var ObjImage = _documentService.FileUpload(imagelenth);
+                        var Imagecollection = _commonService.ImageUpload(ObjImage);
+                        imageId.Add(Imagecollection);
                     }
                 }
             }
@@ -104,7 +90,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method To download Images 
         /// </summary>
         /// <returns></returns>
-        public IActionResult DownloadImage(string ImageValue)
+        public IActionResult DownloadImage(int ImageValue)
         {
            
             FileUploadModel attachment = _commonService.DownloadImage(ImageValue);
@@ -284,5 +270,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
+
+        
     }
 }

@@ -20,6 +20,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using Newtonsoft.Json.Serialization;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Services.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -95,6 +98,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<ITemplateService, TemplateService>();
+            services.AddScoped<IDocumentService, DocumentService>();
 
 
             //Repository
@@ -134,6 +139,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<ITemplateRepository, TemplateRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -190,7 +196,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
+                    pattern: "{controller=Template}/{action=Index}/{id?}");
             });
            
         }

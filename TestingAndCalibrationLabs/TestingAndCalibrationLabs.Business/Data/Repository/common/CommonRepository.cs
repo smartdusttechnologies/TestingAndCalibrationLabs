@@ -1,16 +1,9 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Http;
-using Org.BouncyCastle.Math.EC;
-using Org.BouncyCastle.Utilities.Zlib;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Transactions;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -242,7 +235,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public bool Save(RecordModel recordModel)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            using (var command = new System.Data.SqlClient.SqlCommand("Demo_edit_sp", (System.Data.SqlClient.SqlConnection)db))
+            using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
                 //var SingleValeData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
                 var ListofValue = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
@@ -253,7 +246,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
 
               //  command.Parameters.AddWithValue("@UiPageDataId", recordModel.FieldValues);
-                command.Parameters.AddWithValue("@DemoEdit", GetDataTable(ListofValue));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(ListofValue));
                 command.ExecuteNonQuery();
             }
             return true;
@@ -312,16 +305,50 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<UiPageDataModel> GetMultiPageData(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
-                                                    inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-                                                    inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
-                                                    inner join [UiPageData] upd on r.Id = upd.RecordId
-                                               where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
-                                                    and r.Id = @id and mmb.MultiValueControl = 'true'
-                                                    and r.IsDeleted = 0 
-                                                    and ws.IsDeleted = 0
-                                                    and mmb.IsDeleted = 0 
-                                                    and upd.IsDeleted = 0", new { id }).ToList();
+            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId, t1.Id , t2.Value, t2.Id as ChildId,t7.Id as RecordId,t3.UiPageTypeId 
+                                                     FROM UiPageData t1
+                                                        JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+														Join [Record] t7 ON t7.Id  = t2.RecordId
+														join [WorkflowStage] t9 on t7.WorkflowStageId = t9.Id
+														join [UiPageMetadataModuleBridge] t3 on t9.UiPageTypeId = t3.UiPageTypeId
+                                                           WHERE t1.RecordId = @Id
+														   and  t1.UiPageMetadataId in (t3.UiPageMetadataId)
+														      and   t7.Id = @Id
+															  and   t3.MultiValueControl ='true'
+															  and t1.IsDeleted = 0
+															  and t7.IsDeleted = 0
+															  and t3.IsDeleted =0
+															  and t9.IsDeleted =0
+                                                        UNION All
+                                                   SELECT t3.UiPageMetadataId, t3.Id , CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId ,t6.Id as RecordId,t11.UiPageTypeId
+												   FROM UiPageData t3
+                                                       JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+													   Join [Record] t6 ON t6.Id  = t3.RecordId
+													   join [WorkflowStage] t10 on t6.WorkflowStageId = t10.Id
+														join [UiPageMetadataModuleBridge] t11 on t10.UiPageTypeId = t11.UiPageTypeId
+                                                         WHERE t3.RecordId = @Id
+														   and  t3.UiPageMetadataId in (t11.UiPageMetadataId)
+														      and   t6.Id = @Id
+															  and   t11.MultiValueControl ='true'
+															  and t3.IsDeleted = 0
+															  and t6.IsDeleted = 0
+															  and t10.IsDeleted =0
+															  and t11.IsDeleted =0
+                                                            UNION All
+                                                       SELECT t5.UiPageMetadataId, t5.Id, t6.Value, t6.Id as ChildId ,t8.Id as RecordId,t11.UiPageTypeId
+                                                            FROM UiPageData t5
+                                                            JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
+															Join [Record] t8 ON t8.Id  = t5.RecordId
+                                                       join [WorkflowStage] t12 on t8.WorkflowStageId = t12.Id
+														join [UiPageMetadataModuleBridge] t11 on t12.UiPageTypeId = t11.UiPageTypeId
+                                                         WHERE t5.RecordId = @Id
+														   and  t5.UiPageMetadataId in (t11.UiPageMetadataId)
+														      and   t8.Id = @Id
+															  and   t11.MultiValueControl ='true'
+															  and t5.IsDeleted = 0
+															  and t8.IsDeleted = 0
+															  and t12.IsDeleted =0
+															  and t11.IsDeleted =0", new { id }).ToList();
         }
         /// <summary>
         /// Get All Metadata Based On Multi Control
@@ -409,18 +436,42 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// </summary>
         public int FileUpload(FileUploadModel File)
         {
-            string query = @"INSERT INTO [ImageUpload](Name,FileType,DataFiles,CreatedOn)
-                             VALUES (@Name,@FileType,@DataFiles,@CreatedOn)";
+            string query = @" INSERT INTO [ImageUpload] (Name, FileType, DataFiles, CreatedOn) OUTPUT INSERTED.ID  VALUES (@Name, @FileType, @DataFiles, @CreatedOn)";
+
+
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, File);
+            return  db.Query<int>(query, File).FirstOrDefault();
         }
         /// <summary>
         /// Image download in Your Local System
         /// </summary>
-        public FileUploadModel ImageDownload(string ImageValue)
+        public FileUploadModel ImageDownload(int ImageValue)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Name = @Name ", new { Name = ImageValue }).FirstOrDefault();
+            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Id = @Name ", new { Name = ImageValue }).FirstOrDefault();
+        }
+        
+
+         public bool FileUpload(int id, FileUploadModel File)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+
+            string query = @"UPDATE [ImageUpload]  SET Name = @Name, FileType = @FileType, DataFiles = @DataFiles, CreatedOn = @CreatedOn  WHERE Id = @Id";
+            var parameters = new
+            {
+                Id = id, 
+                Name = File.Name,
+                FileType = File.FileType,
+                DataFiles = File.DataFiles,
+                CreatedOn = DateTime.Now, 
+            };
+
+            if (db.Execute(query, parameters) > 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
         #endregion
     }
