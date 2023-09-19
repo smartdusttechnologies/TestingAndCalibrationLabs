@@ -3,6 +3,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 using TestingAndCalibrationLabs.Business.Services;
+using TestingAndCalibrationLabs.Business.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +18,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using TestingAndCalibrationLabs.Web.UI.Common;
+using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
-using Newtonsoft.Json.Serialization;
-using TestingAndCalibrationLabs.Web.UI.Models;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Services.Security;
@@ -36,12 +38,13 @@ namespace TestingAndCalibrationLabs.Web.UI
 
         public IConfiguration Configuration { get; }
         public static TokenValidationParameters tokenValidationParameters;
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddNewtonsoftJson();
 
@@ -57,11 +60,12 @@ namespace TestingAndCalibrationLabs.Web.UI
             //PolicyBases Authorization
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Add); });
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Edit); });
-                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Read); });
+                     
+                     options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Add); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Edit); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Read); });
                 //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });
-                options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.EditRole); });
+                options.AddPolicy(PolicyTypes.Users.EditRole, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.EditRole); });
             });
             //Services
             services.AddScoped<ICommonService, CommonService>();
@@ -77,6 +81,13 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IRoleService, RoleService>();
+            //Authorization Handler Initalization Start
+            services.AddScoped<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, UiControlTypeAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, UiPageMetadataAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, CommonAuthorizationHandler>();
+            //Authorization Handler Initalization End
             services.AddScoped<ISecurityParameterService, SecurityParameterService>();
             services.AddScoped<ILogger, Logger>();
             services.AddScoped<IOrganizationService, OrganizationService>();
@@ -146,14 +157,17 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+
+            services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Home/Error");
             }
             else
             {
@@ -161,12 +175,12 @@ namespace TestingAndCalibrationLabs.Web.UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+           
             tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT:Secret"])),
 
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
@@ -190,19 +204,23 @@ namespace TestingAndCalibrationLabs.Web.UI
                 var token = context.Session.GetString("Token");
                 if (!string.IsNullOrEmpty(token))
                 {
-                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+                    //context.Request.Headers.Add("Authorization", "Bearer " + token);
+                    context.Request.Headers.Add("Authorization", token);
                 }
                 await next();
             });
             app.UseStaticFiles();
-            app.UseRouting();
+            
             app.UseAuthentication();
+            app.UseRouting();
+            app.UseMiddleware<SdtAuthenticationMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
+                    pattern: "{controller=Security}/{action=Index}/{id?}");
             });
            
         }
