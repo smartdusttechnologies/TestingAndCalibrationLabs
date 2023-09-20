@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using Org.BouncyCastle.Asn1.Crmf;
 using System.Collections.Generic;
 using System.Data;
@@ -20,12 +22,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IUiControlTypeService _uiControlTypeService;
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
-        private readonly ILookupService _lookupService;
-        private readonly ILookupCategoryService _lookupCategoryService;
-        private readonly IListSorterService _listSorter;
         private readonly IUiControlCategoryTypeService _uiControlCategoryTypeService;
         private IModuleLayoutService _moduleLayoutService;
 
+        private readonly Microsoft.Extensions.Logging.ILogger _logger;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -34,18 +34,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataService"></param>
         /// <param name="lookupService"></param>
-        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,ILookupCategoryService lookupCategory,IListSorterService listSorter,ILookupService lookupService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService, IModuleLayoutService moduleLayoutService)
+        /// <param name="looger"></param>
+
+        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,ILookupCategoryService lookupCategory,IListSorterService listSorter,ILookupService lookupService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService, IModuleLayoutService moduleLayoutService, Microsoft.Extensions.Logging.ILogger logger)
         {
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _uiControlTypeService = uiControlTypeService;
             _dataTypeService = dataTypeService;
-            _lookupService = lookupService;
-            _listSorter = listSorter;
-            _lookupCategoryService = lookupCategory;
             _uiControlCategoryTypeService = uiControlCategoryTypeService;
             _moduleLayoutService = moduleLayoutService;
+            _logger = logger;
 
         }
         /// <summary>
@@ -55,11 +55,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            var pageMetadata = _uiPageMetadataService.Get();
-            var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
-            return View(pageMetadatas.AsEnumerable());
+            try
+            {              
+                ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+                var pageMetadata = _uiPageMetadataService.Get();
+                var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
+                _logger.LogInformation("UiPageMetadata index has been successfully accessed");
+                return View(pageMetadatas.AsEnumerable());               
+            }
+            catch(Exception exception)
+            {
+                _logger.LogError(""+exception.Message);
+            }
+
+            return View();
         }
+
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -68,7 +79,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-           var pageList = _uiPageTypeService.Get();
+
+            try
+            {
+                var pageList = _uiPageTypeService.Get();
            var controlList = _uiControlTypeService.Get();
            var  dataList = _dataTypeService.Get();
             var controlCategoryType = _uiControlCategoryTypeService.Get();
@@ -88,8 +102,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.UiPageMetadata = pageMetadatas;
             ViewBag.Modulelist = Module;
             ViewBag.displayName = getdisplay;
+            _logger.LogInformation("UiPageMetadata create get method has been successfully accessed");
+
 
             return base.View(new Models.UiPageMetadataDTO { Id = id});
+        }
+           catch(Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+return View();
         }
 
         /// <summary>
@@ -101,15 +123,26 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] UiPageMetadataDTO uiPageMetadataDTO)
         {
-            if (ModelState.IsValid)
+            try
+            {
+
+                    if (ModelState.IsValid)
             {
                 var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 _uiPageMetadataService.Create(createMetadataModel);
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
+            _logger.LogError("you are unauthorized");
+
             return View(uiPageMetadataDTO);
         }
+            catch(Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
+}
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -122,9 +155,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Edit(int? id,int parentId,int uiPageTypeId,int metadataModuleBridgeId, int uiControlTypeId,int dataTypeId , int uiControlCategoryTypeId)
         {
-            if(id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+            {
+                    _logger.LogError("id is null");
+
+                    return NotFound();
             }
             var pageList = _uiPageTypeService.Get();
             var controlList = _uiControlTypeService.Get();
@@ -148,7 +185,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             ViewBag.displayName = getdisplay;
             UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetByPageId((int)id, uiPageTypeId, metadataModuleBridgeId);
             var pageMetadataas = _mapper.Map<UiPageMetadataModel,UiPageMetadataDTO>(pageMetadataModel);
-            return View(pageMetadataas);
+                _logger.LogInformation("UiPageMetadata edit get has been accessed");
+
+                return View(pageMetadataas);
+        }
+            catch (Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
+
         }
         /// <summary>
         /// To Edit Record In Ui Page Metadata Type
@@ -161,34 +207,62 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, int uiPageTypeId, int metadataModuleBridgeId, [Bind] UiPageMetadataDTO uiPageMetadataDTO)
         {
-            if (id != uiPageMetadataDTO.Id)
+            try
             {
-                return NotFound();
+                if (id != uiPageMetadataDTO.Id)
+                {
+                    _logger.LogError("id is null");
+
+                    return NotFound();
+
+                }
+                if (ModelState.IsValid)
+                {
+
+                    var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
+                    _uiPageMetadataService.Update(editMetadata);
+                    TempData["IsTrue"] = true;
+                    _logger.LogInformation("UiPageMetadata edit post  has been accessed");
+
+                    return RedirectToAction("Index");
+                }
+                _logger.LogError("you are unauthorized");
+
+                return View(uiPageMetadataDTO);
             }
-            if (ModelState.IsValid)
+            catch (Exception exception)
             {
-                
-                var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
-                _uiPageMetadataService.Update(editMetadata);
-                TempData["IsTrue"] = true;
-                return RedirectToAction("Index");
+                _logger.LogError("." + exception.Message);
             }
-            return View(uiPageMetadataDTO);
+            return View();
         }
-        /// <summary>
-        /// For Delete Record View
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IActionResult Delete(int id, int uiPageTypeId, int metadataModuleBridgeId)
+            /// <summary>
+            /// For Delete Record View
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+        public IActionResult Delete(int id)
         {
-            if(id == null)
+            try
             {
-                return NotFound();
+
+                if (id == null)
+            {
+                    _logger.LogError("id is null");
+
+                    return NotFound();
             }
-            UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetByPageId((int)id, uiPageTypeId, metadataModuleBridgeId);
+            UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetById((int)id);
             var deleteMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(uiPageMetadataModel);
-            return View(deleteMetadata);
+                _logger.LogInformation("UiPageMetadata delete  has been accessed");
+
+                return View(deleteMetadata);
+        }
+            catch (Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
         }
         /// <summary>
         /// To Delete Record In Ui Page Metadata Type
@@ -199,16 +273,28 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id, int uiPageTypeId, int metadataModuleBridgeId)
         {
-            if(id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+            {
+                    _logger.LogError("id is null");
+
+                    return NotFound();
             }
-            _uiPageMetadataService.Delete((int)id, uiPageTypeId, metadataModuleBridgeId);
-            TempData["IsTrue"] = true;
-            return RedirectToAction("Index");
+            _uiPageMetadataService.Delete((int)id);
+            TempData["IsTrue"] = false;
+                _logger.LogInformation("UiPageMetadata delete  has been accessed");
+
+                return RedirectToAction("Index");
+        }
+            catch (Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
         }
         [HttpGet]
-        public IActionResult GetExistingResult( int moduleLayoutId)
+        public IActionResult GetExistingResult(int moduleLayoutId)
         {
             var uiPageMetadataModel = _uiPageMetadataService.GetResult(moduleLayoutId);
             var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(uiPageMetadataModel);
@@ -216,3 +302,4 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         }
     }
 }
+

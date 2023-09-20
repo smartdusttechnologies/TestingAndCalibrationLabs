@@ -82,7 +82,6 @@
     <Build Include="dbo\Tables\Lookup.sql" />
     <Build Include="dbo\Tables\UiPageMetadataCharacteristics.sql" />
     <Build Include="dbo\Tables\LookupCategory.sql" />
-    <Build Include="dbo\Tables\UserRoleClaim.sql" />
     <Build Include="dbo\Tables\UserClaim.sql" />
     <Build Include="dbo\Tables\UiControlCategoryType.sql" />
     <Build Include="dbo\Tables\TestReport.sql" />
@@ -92,7 +91,6 @@
     <Build Include="dbo\Tables\Permission.sql" />
     <Build Include="dbo\Tables\ClaimType.sql" />
     <Build Include="dbo\Tables\TestReport.sql" />
-    <Build Include="dbo\Tables\UserRoleClaim.sql" />
     <Build Include="dbo\Tables\UserClaim.sql" />
     <Build Include="dbo\Tables\PermissionType.sql" />
     <Build Include="dbo\Tables\PermissionModuleType.sql" />
@@ -122,6 +120,14 @@
     <Build Include="dbo\Tables\ImageUpload.sql" />
     <Build Include="dbo\Tables\ModuleLayout.sql" />
     <Build Include="dbo\Tables\Layout.sql" />
+    <Build Include="dbo\Tables\GroupClaim.sql" />
+    <Build Include="dbo\Tables\Group.sql" />
+    <Build Include="dbo\Tables\UserGroup.sql" />
+    <Build Include="dbo\Tables\RoleClaim.sql" />
+    <Build Include="dbo\Tables\SubPermissionModuleType.sql" />
+    <Build Include="dbo\Tables\Logs.sql" />
+    <Build Include="dbo\Stored Procedures\usp_Logs_AddEntry.sql" />
+    <Build Include="dbo\Tables\UserRoleClaim.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

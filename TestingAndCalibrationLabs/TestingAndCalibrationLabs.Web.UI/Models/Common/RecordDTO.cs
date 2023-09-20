@@ -21,6 +21,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public DateTime UpdatedDate { get; set; }
         public List<UiPageMetadataDTO> Fields { get; set; }
         public List<UiPageDataDTO> FieldValues { get; set; }
+        public string ModuleName { get; set; }
         public IEnumerable<Node<LayoutDTO>> Layout { get; set; }
         public IList<ValidationMessage> ErrorMessage { get; set; }
         #endregion
