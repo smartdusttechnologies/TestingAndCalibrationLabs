@@ -81,6 +81,7 @@
 <script>
     $(document).ready(function () {
         let id = $("#Id").val();
+        debugger;
         var url = "@Url.Action("MultiValueControlGrid","Common")" + "?id=" + id;
         $("#tableMultiValue").load(url); 
 

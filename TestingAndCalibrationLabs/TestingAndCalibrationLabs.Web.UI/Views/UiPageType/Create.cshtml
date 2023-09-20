@@ -2,20 +2,39 @@
 @{
     ViewData["Title"] = "Create";
 }
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h>Hello Everyone</h>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 <h1>Ui Page Type</h1>
 <h4>Create</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageType" novalidate>
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageType" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style="padding-left:10px; padding-bottom:5px;">
-                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                <div style="display:flex" class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style="padding-left:10px; padding-bottom:5px;">
+                    <input class="form-input change width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name"><i style="color:Teal; margin:15px;" data-bs-toggle="modal" onclick="myFunction('Select Pages')" data-bs-target="#exampleModal" class="fa" title="Need Help">&#xf05a;</i>
                     <label class="form-label" for="Name">Name</label>
                 </div>
-                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
-                <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
         </form>
     </div>
 </div>
@@ -23,3 +42,9 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<script>
+    function myFunction(Title) {
+        $('.modal-title').html(Title);
+        $('.modal').modal('show');;
+    }
+</script>

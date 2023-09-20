@@ -2,7 +2,7 @@
     [Id]               INT           IDENTITY (1, 1) NOT NULL,
     [UiPageMetadataId] INT           NOT NULL,
     [IsDeleted]        BIT           CONSTRAINT [DF_UiPageData_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [RecordId]         INT           NOT NULL,
+    [RecordId]         INT           NULL,
     [UiPageTypeId]     INT           NULL,
     [SubRecordId]      INT           NULL,
     CONSTRAINT [PK_UiPageData] PRIMARY KEY CLUSTERED ([Id] ASC),

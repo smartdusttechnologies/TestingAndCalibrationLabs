@@ -60,7 +60,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult LookupByCategoryId(int lookupCategoryId)
         {
-            var lookupList = _lookupService.GetByLookupCategoryId(lookupCategoryId);
+            var lookupList = _lookupService.GetLookupByCategoryId(lookupCategoryId);
             var lookupListDTO = _mapper.Map<List<LookupModel>, List<LookupDTO>>(lookupList);
             return Ok(lookupListDTO);
         }

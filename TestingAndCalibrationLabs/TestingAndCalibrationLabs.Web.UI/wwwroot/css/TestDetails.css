@@ -27,7 +27,11 @@
     border-radius: 5px;
     outline: none;
 }
-
+.gray-border {
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    /* outline: none;*/
+}
 .form-element-for-common-control {
     height: 50px;
     position: relative;
@@ -139,7 +143,7 @@
     display: none;
 }
 
-input.input-validation-error.form-input.width-full {
+input.input-validation-error.form-input.width-full{
     border: 2px solid red;
 }
 
@@ -152,6 +156,12 @@ input.input-validation-error#TestingType.form-input.width-full {
 }
 
 input.input-validation-error#State.form-input.width-full {
+    border: 2px solid red;
+}
+select.input-validation-error#UiNavigationCategoryId {
+    border: 2px solid red;
+}
+select.input-validation-error#ModuleId {
     border: 2px solid red;
 }
 
@@ -265,13 +275,20 @@ select.input-validation-error#TestingType {
             transition: 0.3s;
         }
 
-.inputWithIcon.inputIconBg .iconForSignIn {
-    background-color: #aaa;
-    color: #fff;
-    padding: 9px 4px;
-    border-radius: 4px 0 0 4px;
+
+.inputForSignUp {
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+    padding: 6px;
+    box-sizing: border-box;
+    transition: 0.3s;
 }
 
+    .inputForSignUp:focus {
+        border-color: dodgerblue;
+        box-shadow: 0 0 8px 0 dodgerblue;
+    }
 
 /*The following few ID were display hidden bcs of using the datatable things*/
 #testDetailsGrid_length {
@@ -479,3 +496,9 @@ span.comboTreeItemTitle, .comboTreeDropDownContainer .selectAll{
 	border-right: none;
 	border-bottom: 1px solid var(--ct-border-color);
 }
+.floatBlock {
+    float: left;
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+

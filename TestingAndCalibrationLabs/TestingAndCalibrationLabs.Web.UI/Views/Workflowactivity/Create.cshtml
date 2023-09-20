@@ -1,0 +1,53 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.WorkflowActivityDTO
+@{
+    ViewData["Title"] = "Create";
+}
+<h1>WorkflowActivity</h1>
+<h4>Create</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">     
+            <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="WorkflowActivity" novalidate>
+                <div asp-validation-summary="All"></div>
+                <div class="row ms-1 me-1">      
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                <label class="form-label" for="Name">Name</label>
+            </div>
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="WorkflowStageId" id="WorkflowStage" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
+                    <option disabled="disabled" selected>....</option>
+                    @foreach (var item in ViewBag.WorkflowStage)
+                    {
+                        <option value=@item.Id>@item.Name</option>
+                    }
+                </select>
+                    <label class="form-label" for="WorkflowStageId">WorkflowStageName</label>
+            </div>
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="ActivityId" id="Activity" onchange="this.setAttribute('value',this.value)" asp-for="ActivityId">
+                    <option disabled="disabled" selected>....</option>
+                    @foreach (var item in ViewBag.Activity)
+                    {
+                      <option value=@item.Id>@item.Name</option>      
+                    }
+                </select>
+                  <label class="form-label" for="ActivityId">ActivityName</label>
+            </div>          
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+                </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

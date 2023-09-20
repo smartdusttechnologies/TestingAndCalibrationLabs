@@ -28,7 +28,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Insert(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Delete Record From Ui Page Type
         /// </summary>
@@ -38,7 +37,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Delete(id);
         }
-
         /// <summary>
         /// Edit Record For Ui Page Type
         /// </summary>
@@ -50,7 +48,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
-
         /// <summary>
         /// Get All Records From Ui Page Type
         /// </summary>
@@ -59,7 +56,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _genericRepository.Get();
         }
-
         /// <summary>
         /// Get Record By Id From Ui Page Type
         /// </summary>

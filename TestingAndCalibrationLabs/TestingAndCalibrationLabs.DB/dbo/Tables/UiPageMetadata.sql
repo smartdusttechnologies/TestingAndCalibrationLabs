@@ -7,6 +7,7 @@
     [DataTypeId]              BIGINT        NOT NULL,
     [UiControlCategoryTypeId] INT           NULL,
     [Name]                    VARCHAR (50)  NULL,
+     [ModuleLayoutId]          INT           NULL,
     CONSTRAINT [PK_UiPageMetadata] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_UiPageMetadata_DataType_Id] FOREIGN KEY ([DataTypeId]) REFERENCES [dbo].[DataType] ([Id]),
     CONSTRAINT [FK_UiPageMetadata_UiControlCategoryType] FOREIGN KEY ([UiControlCategoryTypeId]) REFERENCES [dbo].[UiControlCategoryType] ([Id])

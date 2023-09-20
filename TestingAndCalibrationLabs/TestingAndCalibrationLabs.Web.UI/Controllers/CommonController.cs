@@ -173,7 +173,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public ActionResult MultipleValue(int lookupCategoryId  )
         {
-            var lookupList = _lookupService.GetLookupCategoryId(lookupCategoryId);
+            var lookupList = _lookupService.GetLookupByCategoryId(lookupCategoryId);
            
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in lookupList)

@@ -23,11 +23,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Insert Record In Ui Page Validation 
         /// </summary>
-        /// <param name="pageControl"></param>
+        /// <param name="uiPageValidationModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageValidationModel pageControl)
+        public RequestResult<int> Create(UiPageValidationModel uiPageValidationModel)
         {
-            _uiPageValidationTypeRepository.Create(pageControl);
+            _uiPageValidationTypeRepository.Create(uiPageValidationModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -60,11 +60,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Edit Record By Ui Page Validation
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pageControl"></param>
+        /// <param name="uiPageValidationModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageValidationModel pageControl)
+        public RequestResult<int> Update(int id, UiPageValidationModel uiPageValidationModel)
         {
-            _uiPageValidationTypeRepository.Update(pageControl);
+            _uiPageValidationTypeRepository.Update(uiPageValidationModel);
             return new RequestResult<int>(1);
         }
         #endregion

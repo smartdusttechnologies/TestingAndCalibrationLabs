@@ -33,15 +33,20 @@
                     withSelectAll: true,
                     selected: value
                 });
-                if (value.length >0) {    // All selected value  
+                if (value.length >0 && val != 0 ) { 
+                  // All selected value  
                 let selectedIdes = comboTree1.getSelectedIds();
                 let listOfLookupes = selectedIdes.toString();
                 $(id).val(listOfLookupes);
                 }
                 comboTree1.onChange(function () {   // sending ids of all string values
                     let selectedId = this.getSelectedIds();
+                    if (selectedId!=null) {
                     let listOfLookup = selectedId.toString();
                     $(id).val(listOfLookup);
+                    }
+                    $(id).val(selectedId);
+
                 });
             },
         });

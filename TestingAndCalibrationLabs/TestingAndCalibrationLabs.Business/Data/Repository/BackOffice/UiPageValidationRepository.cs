@@ -73,7 +73,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upvt.isDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
         }
         /// <summary>
-        /// Edit Record From Ui Page Validation 
+        /// Update Record From Ui Page Validation 
         /// </summary>
         /// <param name="uiPageValidationModel"></param>
         /// <returns></returns>

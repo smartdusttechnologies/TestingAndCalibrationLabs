@@ -14,19 +14,33 @@ IF NOT EXISTS (SELECT 1 FROM [Module] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Module]  ON
 
+
     INSERT INTO [dbo].[Module]
                ([Id], [Name], [ApplicationId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),
-			   (1, N'Cube Testing', 1, 0),
-			   (2, N'Water Testing', 1, 0),
+               (0, N'none', 1, 0),			   
+			   (1, N'Cube Testing', 1, 0),			   
+			   (2, N'Water Testing', 1, 0),		   
 			   (3, N'Customer', 1, 0),
 			   (4, N'Ui Page Type', 1, 0),
 			   (5, N'Ui Control Type', 1, 0),
 			   (6, N'Ui Page Metadata', 1, 0),
 			   (7, N'Ui Page Validation',1,0),
-			   (8, N'Lookup Category',1,0),
-			   (9, N'Lookup',1,0)
+			   (8, N'Application',1,0),
+			   (9, N'Workflow',1,0),
+			   (10,N'Workflow Stage',1,0),
+			   (11,N'Module',1,0),
+			   (12,N'Workflow Activitiy',1,0),
+			   (13,N'Organization',1,0),
+			   (14,N'Lookup',1,0),
+			   (15,N'Lookup Category',1,0),
+			   (16,N'FullPage',1,0),
+			   (17,N'Layout',1,0),
+			   (18,N'ModuleLayout',1,0),
+			   (19,N'UiPageNavigation',1,0),
+			   (20,N'UiPageMetadataCharacteristics',1,0)
+
+
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
 GO
@@ -64,7 +78,6 @@ BEGIN
 			   (2, N'ApplicationAdmin', 2, 0),
 			   (3, N'Manager', 3, 0),
 			   (4, N'GeneralUser', 6, 0)
-
     SET IDENTITY_INSERT [dbo].[Role]  OFF
 END
 GO
@@ -104,7 +117,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Lookup] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Lookup]  ON
-
     INSERT INTO [dbo].[Lookup]
                 ([Id], [Name], [LookupCategoryId], [IsDeleted])
 			   VALUES
@@ -125,10 +137,40 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[Lookup]  OFF
 END
 GO
+IF NOT EXISTS (SELECT 1 FROM [Layout] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[Layout]  ON
+    INSERT INTO [dbo].[Layout]
+                ([Id], [Name], [IsDeleted])
+				VALUES
+				 (1, N'Cube Testing', 0),
+			 (2, N'Water Testing', 0),
+			 (3, N'Customer',0),
+			 (4, N' mabfa', 0)
+			 
+
+
+ SET IDENTITY_INSERT [dbo].[Layout]  OFF
+END
+GO
+IF NOT EXISTS (SELECT 1 FROM [ModuleLayout] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[ModuleLayout]  ON
+    INSERT INTO [dbo].[ModuleLayout]
+                ([Id], [LayoutId], [ModuleId], [IsDeleted],[Name])
+				VALUES
+				 (1,  1,  1 , 0,N'Cube Testing'),
+			 (2,2 , 2 , 0, N'Water Testing'),
+			 (3,3 ,3 ,0 , N'Customer'),
+			 (4,2,5 , 0,N' pages')
+			 
+ SET IDENTITY_INSERT [dbo].[ModuleLayout]  OFF
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [UiControlType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlType]  ON
-
     INSERT INTO [dbo].[UiControlType]
                 ([id], [Name], [DisplayName], [IsDeleted], [ControlCategoryId])
 			   VALUES
@@ -176,7 +218,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiControlCategoryType] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiControlCategoryType]  ON
-
     INSERT INTO [dbo].[UiControlCategoryType]
               ([Id], [Name], [Template], [IsDeleted], [UiControlTypeId])
 			   VALUES
@@ -213,139 +254,138 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageMetadata] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  ON
-
     INSERT INTO [dbo].[UiPageMetadata]
-              ([Id], [UiControlTypeId], [IsRequired], [UiControlDisplayName], [IsDeleted], [DataTypeId], [UiControlCategoryTypeId], [Name])
+              ([Id], [UiControlTypeId], [IsRequired], [UiControlDisplayName], [IsDeleted], [DataTypeId], [UiControlCategoryTypeId], [Name],[ModuleLayoutId])
 			   VALUES
-            (3, 25, 0, N'ProgressStatus', 0, 1, 1012, N'progress1'),
-			(4, 29, 0, N'Sample Recieving', 0, 1, 1017, N'lab1'),
-			(5, 29, 0, N'Test Plan', 0, 1, 1017, N'disc1'),
-			(6, 29, 0, N'Lab Analysis', 0, 1, 1017, N'disc2'),
-			(7, 29, 0, N'Test Report', 0, 1, 1017, N'org1'),
-			(8, 29, 0, N'Billing & Payment', 0, 1, 1017, N'equi1'),
-			(9, 29, 0, N'Reference Materials', 0, 1, 1017, N'refer1'),
-			(10, 29, 0, N'Quality Control Activities', 0, 1, 1017, N'qcont1'),
-			(11, 29, 0, N'Enclosure List', 0, 1, 1017, N'enc1'),
-			(12, 1, 0, N'Name Of The Laboratory', 0, 2, 3, N'nothe1'),
-			(13, 1, 0, N'GSTIN', 0, 2, 3, N'gstin1'),
-			(14, 1, 0, N'Contry', 0, 2, 3, N'cont2'),
-			(15, 1, 0, N'State/Provider', 0, 2, 3, N'sttt3'),
-			(16, 1, 0, N'City', 0, 2, 3, N'ct3'),
-			(17, 1, 0, N'Address', 0, 2, 3, N'adgag4'),
-			(18, 1, 0, N'District', 0, 2, 3, N'discr4'),
-			(19, 1032, 0, N'Pincode', 0, 2, 1016, N'pincd5'),
-			(20, 12, 0, N'Mobile Number', 0, 2, 1007, N'mobi34'),
-			(21, 10, 0, N'Email', 0, 2, 1006, N'emuil34'),
-			(22, 1, 0, N'Discipline Of Testing', 0, 2, 3, N'discip6'),
-			(23, 1, 0, N'Group', 0, 2, 3, N'grty5'),
-			(24, 1, 0, N'Location', 0, 2, 3, N'dsg'),
-			(25, 1, 0, N'Discipline', 0, 2, 3, N'etr'),
-			(26, 1, 0, N'Group', 0, 2, 3, N'ttyr'),
-			(27, 1, 0, N'Sub-Group', 0, 2, 3, N'rteag'),
-			(28, 8, 0, N'Products/Materials of Test', 0, 2, 1020, N'dgsdsert'),
-			(29, 8, 0, N'Specific tests or types of tests perofmed', 0, 2, 1020, N'vstyers'),
-			(30, 30, 0, N'Collapsable', 0, 1, 1014, N'dasterdsd'),
-			(31, 29, 0, N'Organization Structure', 0, 1, 1017, N'hyer'),
-			(32, 29, 0, N'New Employee Details', 0, 1, 1017, N'gdfy'),
-			(33, 1, 0, N'Organization Chart of Laboratory Link', 0, 2, 3, N'dfgd'),
-			(34, 1, 0, N'organization chart', 0, 2, 3, N'rtyery'),
-			(35, 1, 0, N'Subject', 0, 2, 3, N'hrty'),
-			(36, 1, 0, N'HtmlMsg', 0, 2, 3, N'wsrt'),
-			(1004, 5, 0, N'Image Input', 0, 1, 2004, N'sg'),
-			(1005, 1, 0, N'Location', 0, 2, 3, N'sergs'),
-			(1006, 1, 0, N'Discipline', 0, 2, 3, N'tr5'),
-			(1007, 1, 0, N'Group', 0, 2, 3, N'sgsret'),
-			(1008, 1, 0, N'Type Of Test', 0, 2, 3, N'regs'),
-			(1009, 1, 0, N'UID of Equipment', 0, 2, 3, N'trse'),
-			(1010, 1, 0, N'Name Of Equipment', 0, 2, 3, N'gsdg'),
-			(1011, 1, 0, N'Model', 0, 2, 3, N'uys'),
-			(1012, 1, 0, N'Serial No', 0, 2, 3, N'bew'),
-			(1013, 1, 0, N'Name Of Manufracturer', 0, 2, 3, N'ma'),
-			(1014, 2032, 0, N'Year Of Make', 0, 2, 2006, N'v'),
-			(1015, 1, 0, N'Range and Accurecy', 0, 2, 3, N'rtsd'),
-			(1017, 22, 0, N'Last Calibration Date', 0, 2, 1011, N'uym'),
-			(1018, 22, 0, N'Calibration Due on', 0, 2, 1011, N'du v'),
-			(1019, 32, 0, N'Location', 0, 2, 1015, N'aser'),
-			(1023, 1, 0, N'Discipline', 0, 2, 3, N'bys'),
-			(1024, 1, 0, N'Group', 0, 2, 3, N'um'),
-			(1025, 1, 0, N'Name of Reference Material/Strain/Culture', 0, 2, 3, N'gbgsn '),
-			(1026, 1, 0, N'Source', 0, 2, 3, N'shb sdfy'),
-			(1027, 22, 0, N'Date Of Expiry', 0, 2, 1011, N'dbsghv'),
-			(1028, 1, 0, N'Tracability', 0, 2, 3, N'vbs'),
-			(1029, 1, 0, N'Location', 0, 2, 3, N'gvtsn s'),
-			(1030, 1, 0, N'Type Of Partipatation', 0, 2, 3, N'm,s ij'),
-			(1031, 1, 0, N'Discipline', 0, 2, 3, N'v '),
-			(1032, 1, 0, N'Group', 0, 2, 3, N'zym r'),
-			(1033, 1, 0, N'Product/Material', 0, 2, 3, N'mn'),
-			(1034, 1, 0, N'Details of Test', 0, 2, 3, N'burtm,'),
-			(1035, 22, 0, N'Date Of Testing', 0, 2, 1011, N'io'),
-			(1036, 1, 0, N'Nodal Laboratory/PT Provider (Accredification Body/Country)', 0, 2, 3, N'rb'),
-			(1037, 1, 0, N'Performance in Term of Z Score / Any Other Criteria', 0, 2, 3, N'ta'),
-			(1038, 1, 0, N'Corrective Action Taken (if any)', 0, 2, 3, N'byim'),
-			(1039, 5, 0, N'Upload Quality Manual', 0, 2, 2004, N'ng'),
-			(1040, 4, 0, N'Calibrated By', 0, 1, 1004, N'svbtyio'),
-			(1042, 29, 0, N'Inhouse', 0, 1, 1003, N'eryrt'),
-			(1043, 29, 0, N'External', 0, 1, 1003, N'ryrtuty'),
-			(1044, 3, 0, N'Checkbox-check', 0, 1, 1003, N'esbum'),
-			(1045, 29, 0, N'Patna', 1, 1, 1017, N'iduyaer'),
-			(1046, 29, 0, N'Lacknow', 1, 1, 1017, N'sgfdsgd'),
-			(1047, 29, 0, N'Bareliy', 1, 1, 1017, N'sdgsdfg'),
-			(1048, 29, 0, N'Karnataka', 1, 1, 1017, N'fgd'),
-			(2002, 33, 0, N'Grid', 0, 1, 2, N'lfy'),
-			(2008, 1, 0, N'adfsafds', 0, 2, 3, N'afsdfa'),
-			(3006, 1, 0, N'Name', 0, 2, 3, N'UserName'),
-			(3007, 1, 0, N'fghfgh', 0, 2, 1010, N'hfhgh'),
-			(3008, 37, 1, N'Workflow', 0, 1, 2008, N'wrkff'),
-			(3009, 1, 0, N'User Table', 0, 2, 3, N'Raj'),
-			(3010, 1, 1, N'TableName', 0, 2, 3, N'uyhfg'),
-			(3011, 1, 0, N'ThirdPageName', 0, 3, 3, N'jh'),
-			(3012, 1, 0, N'Customer Name', 0, 2, 3, N'cu'),
-			(3013, 1, 0, N'Contant Person', 0, 2, 3, N'cP'),
-			(3014, 1, 0, N'Name', 0, 2, 3, N'name'),
-			(3016, 1, 1, N'Job Serial No', 0, 2, 3, N'jsn'),
-			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd'),
-			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df'),
-			(3019, 22, 1, N'Recived On', 0, 5, 1011, N'jklg'),
-			(3020, 1, 1, N'Job Order No / Ref No', 0, 2, 3, N'sdg'),
-			(3021, 1, 0, N'Contact Person Name', 0, 2, 3, N'ds'),
-			(3024, 22, 0, N'TestReport Release Date', 0, 5, 1011, N'datee'),
-			(3025, 1, 0, N'Any Other Specific Requirment', 0, 2, 3, N'sdsf'),
-			(3026, 5, 0, N'Attachments', 0, 3, 2004, N'sfsd'),
-			(3027, 1, 0, N'Sample Type', 0, 3, 3, N'dfgf'),
-			(3028, 1, 0, N'Sample Details', 0, 2, 3, N'0'),
-			(3029, 22, 0, N'Date of TP', 0, 2, 1011, N'0'),
-			(3030, 1, 0, N'Job Code No', 0, 2, 3, N'0'),
-			(3031, 1, 0, N'Sample ID', 0, 2, 3, N'0'),
-			(3032, 1, 0, N'Number Of Samples/Quantity', 0, 2, 3, N'0'),
-			(3034, 1, 0, N'Test Name ', 0, 2, 3, N'0'),
-			(3035, 1, 0, N'Test Method', 0, 2, 3, N'0'),
-			(3036, 1, 0, N'Person Authorized', 0, 2, 3, N'0'),
-			(3037, 22, 0, N'Targeted On', 0, 2, 1011, N'0'),
-			(3038, 22, 0, N'Completed on', 0, 2, 1011, N'0'),
-			(3039, 1, 0, N'Remarks', 0, 2, 3, N'0'),
-			(3040, 22, 0, N'Date Of Report', 0, 5, 1011, N'0'),
-			(3041, 1, 0, N'Report No', 0, 1, 3, N'0'),
-			(3043, 1, 0, N'ULR No', 0, 2, 3, N'0'),
-			(3044, 22, 0, N'Date Of Casting', 0, 5, 1011, N'0'),
-			(3045, 1, 0, N'Age Of Specimens', 0, 1, 3, N'0'),
-			(3046, 1, 0, N'Length', 0, 2, 3, N'0'),
-			(3047, 1, 0, N'Width', 0, 2, 3, N'0'),
-			(3048, 1, 0, N'Height', 0, 2, 3, N'0'),
-			(3049, 1, 1, N'mm²', 0, 2, 3, N'0'),
-			(3050, 1, 1, N'cm³', 0, 2, 3, N'0'),
-			(3051, 1, 0, N'gm', 0, 2, 3, N'0'),
-			(3053, 1, 0, N'gm/cm³', 0, 2, 3, N'0'),
-			(3054, 1, 0, N'Load, KN', 0, 2, 3, N'0'),
-			(3056, 1, 1, N'Compressive Strength, N/mm²', 0, 2, 3, N'0'),
-			(3057, 1, 0, N'Average', 0, 2, 3, N'0'),
-			(3058, 38, 0, N'TestReport', 0, 2, 2010, N'0'),
-			(3059, 1, 0, N'Price', 0, 2, 3, N'0'),
-			(3060, 1, 0, N'Tax', 0, 2, 3, N'0'),
-			(3061, 1, 0, N'Total', 0, 2, 3, N'0'),
-			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0'),
-			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0'),
-			(3064,0,0,N'ProgressStatus1',0,1,2014,N'0'),
-			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0')
+            (3, 25, 0, N'ProgressStatus', 0, 1, 1012, N'progress1',1),
+			(4, 29, 0, N'Sample Recieving', 0, 1, 1017, N'lab1',1),
+			(5, 29, 0, N'Test Plan', 0, 1, 1017, N'disc1',1),
+			(6, 29, 0, N'Lab Analysis', 0, 1, 1017, N'disc2',1),
+			(7, 29, 0, N'Test Report', 0, 1, 1017, N'org1',1),
+			(8, 29, 0, N'Billing & Payment', 0, 1, 1017, N'equi1',1),
+			(9, 29, 0, N'Reference Materials', 0, 1, 1017, N'refer1',1),
+			(10, 29, 0, N'Quality Control Activities', 0, 1, 1017, N'qcont1',1),
+			(11, 29, 0, N'Enclosure List', 0, 1, 1017, N'enc1',1),
+			(12, 1, 0, N'Name Of The Laboratory', 0, 2, 3, N'nothe1',1),
+			(13, 1, 0, N'GSTIN', 0, 2, 3, N'gstin1',1),
+			(14, 1, 0, N'Contry', 0, 2, 3, N'cont2',1),
+			(15, 1, 0, N'State/Provider', 0, 2, 3, N'sttt3',1),
+			(16, 1, 0, N'City', 0, 2, 3, N'ct3',1),
+			(17, 1, 0, N'Address', 0, 2, 3, N'adgag4',3),
+			(18, 1, 0, N'District', 0, 2, 3, N'discr4',1),
+			(19, 1032, 0, N'Pincode', 0, 2, 1016, N'pincd5',1),
+			(20, 12, 0, N'Mobile Number', 0, 2, 1007, N'mobi34',3),
+			(21, 10, 0, N'Email', 0, 2, 1006, N'emuil34',3),
+			(22, 1, 0, N'Discipline Of Testing', 0, 2, 3, N'discip6',1),
+			(23, 1, 0, N'Group', 0, 2, 3, N'grty5',1),
+			(24, 1, 0, N'Location', 0, 2, 3, N'dsg',1),
+			(25, 1, 0, N'Discipline', 0, 2, 3, N'etr',1),
+			(26, 1, 0, N'Group', 0, 2, 3, N'ttyr',1),
+			(27, 1, 0, N'Sub-Group', 0, 2, 3, N'rteag',1),
+			(28, 8, 0, N'Products/Materials of Test', 0, 2, 1020, N'dgsdsert',1),
+			(29, 8, 0, N'Specific tests or types of tests perofmed', 0, 2, 1020, N'vstyers',1),
+			(30, 30, 0, N'Collapsable', 0, 1, 1014, N'dasterdsd',1),
+			(31, 29, 0, N'Organization Structure', 0, 1, 1017, N'hyer',1),
+			(32, 29, 0, N'New Employee Details', 0, 1, 1017, N'gdfy',1),
+			(33, 1, 0, N'Organization Chart of Laboratory Link', 0, 2, 3, N'dfgd',1),
+			(34, 1, 0, N'organization chart', 0, 2, 3, N'rtyery',1),
+			(35, 1, 0, N'Subject', 0, 2, 3, N'hrty',1),
+			(36, 1, 0, N'HtmlMsg', 0, 2, 3, N'wsrt',1),
+			(1004, 5, 0, N'Image Input', 0, 1, 2004, N'sg',1),
+			(1005, 1, 0, N'Location', 0, 2, 3, N'sergs',1),
+			(1006, 1, 0, N'Discipline', 0, 2, 3, N'tr5',1),
+			(1007, 1, 0, N'Group', 0, 2, 3, N'sgsret',1),
+			(1008, 1, 0, N'Type Of Test', 0, 2, 3, N'regs',1),
+			(1009, 1, 0, N'UID of Equipment', 0, 2, 3, N'trse',1),
+			(1010, 1, 0, N'Name Of Equipment', 0, 2, 3, N'gsdg',1),
+			(1011, 1, 0, N'Model', 0, 2, 3, N'uys',1),
+			(1012, 1, 0, N'Serial No', 0, 2, 3, N'bew',1),
+			(1013, 1, 0, N'Name Of Manufracturer', 0, 2, 3, N'ma',1),
+			(1014, 2032, 0, N'Year Of Make', 0, 2, 2006, N'v',1),
+			(1015, 1, 0, N'Range and Accurecy', 0, 2, 3, N'rtsd',1),
+			(1017, 22, 0, N'Last Calibration Date', 0, 2, 1011, N'uym',1),
+			(1018, 22, 0, N'Calibration Due on', 0, 2, 1011, N'du v',1),
+			(1019, 32, 0, N'Location', 0, 2, 1015, N'aser',1),
+			(1023, 1, 0, N'Discipline', 0, 2, 3, N'bys',1),
+			(1024, 1, 0, N'Group', 0, 2, 3, N'um',1),
+			(1025, 1, 0, N'Name of Reference Material/Strain/Culture', 0, 2, 3, N'gbgsn',1),
+			(1026, 1, 0, N'Source', 0, 2, 3, N'shb sdfy',1),
+			(1027, 22, 0, N'Date Of Expiry', 0, 2, 1011, N'dbsghv',1),
+			(1028, 1, 0, N'Tracability', 0, 2, 3, N'vbs',1),
+			(1029, 1, 0, N'Location', 0, 2, 3, N'gvtsn s',1),
+			(1030, 1, 0, N'Type Of Partipatation', 0, 2, 3, N'm,s ij',1),
+			(1031, 1, 0, N'Discipline', 0, 2, 3, N'v ',1),
+			(1032, 1, 0, N'Group', 0, 2, 3, N'zym r',1),
+			(1033, 1, 0, N'Product/Material', 0, 2, 3, N'mn',1),
+			(1034, 1, 0, N'Details of Test', 0, 2, 3, N'burtm,',1),
+			(1035, 22, 0, N'Date Of Testing', 0, 2, 1011, N'io',1),
+			(1036, 1, 0, N'Nodal Laboratory/PT Provider (Accredification Body/Country)', 0, 2, 3, N'rb',1),
+			(1037, 1, 0, N'Performance in Term of Z Score / Any Other Criteria', 0, 2, 3, N'ta',1),
+			(1038, 1, 0, N'Corrective Action Taken (if any)', 0, 2, 3, N'byim',1),
+			(1039, 5, 0, N'Upload Quality Manual', 0, 2, 2004, N'ng',1),
+			(1040, 4, 0, N'Calibrated By', 0, 1, 1004, N'svbtyio',1),
+			(1042, 29, 0, N'Inhouse', 0, 1, 1003, N'eryrt',1),
+			(1043, 29, 0, N'External', 0, 1, 1003, N'ryrtuty',1),
+			(1044, 3, 0, N'Checkbox-check', 0, 1, 1003, N'esbum',1),
+			(1045, 29, 0, N'Patna', 1, 1, 1017, N'iduyaer',1),
+			(1046, 29, 0, N'Lacknow', 1, 1, 1017, N'sgfdsgd',1),
+			(1047, 29, 0, N'Bareliy', 1, 1, 1017, N'sdgsdfg',1),
+			(1048, 29, 0, N'Karnataka', 1, 1, 1017, N'fgd',1),
+			(2002, 33, 0, N'Grid', 0, 1, 2, N'lfy',1),
+			(2008, 1, 0, N'adfsafds', 0, 2, 3, N'afsdfa',1),
+			(3006, 1, 0, N'Name', 0, 2, 3, N'UserName',1),
+			(3007, 1, 0, N'fghfgh', 0, 2, 1010, N'hfhgh',1),
+			(3008, 37, 1, N'Workflow', 0, 1, 2008, N'wrkff',1),
+			(3009, 1, 0, N'User Table', 0, 2, 3, N'Raj',1),
+			(3010, 1, 1, N'TableName', 0, 2, 3, N'uyhfg',1),
+			(3011, 1, 0, N'ThirdPageName', 0, 3, 3, N'jh',1),
+			(3012, 1, 0, N'Customer Name', 0, 2, 3, N'cu',3),
+			(3013, 1, 0, N'Contant Person', 0, 2, 3, N'cP',3),
+			(3014, 1, 0, N'Name', 0, 2, 3, N'name',3),
+			(3016, 1, 1, N'Job Serial No', 0, 2, 3, N'jsn',1),
+			(3017, 1, 1, N'Department Name', 0, 2, 3, N'rd',1),
+			(3018, 1, 1, N'Issue To', 0, 2, 3, N'df',1),
+			(3019, 22, 1, N'Recived On', 0, 5, 1011, N'jklg',1),
+			(3020, 1, 1, N'Job Order No / Ref No', 0, 2, 3, N'sdg',1),
+			(3021, 1, 0, N'Contact Person Name', 0, 2, 3, N'ds',1),
+			(3024, 22, 0, N'TestReport Release Date', 0, 5, 1011, N'datee',1),
+			(3025, 1, 0, N'Any Other Specific Requirment', 0, 2, 3, N'sdsf',1),
+			(3026, 5, 0, N'Attachments', 0, 3, 2004, N'sfsd',1),
+			(3027, 1, 0, N'Sample Type', 0, 3, 3, N'dfgf',1),
+			(3028, 1, 0, N'Sample Details', 0, 2, 3, N'0',1),
+			(3029, 22, 0, N'Date of TP', 0, 2, 1011, N'0',1),
+			(3030, 1, 0, N'Job Code No', 0, 2, 3, N'0',1),
+			(3031, 1, 0, N'Sample ID', 0, 2, 3, N'0',1),
+			(3032, 1, 0, N'Number Of Samples/Quantity', 0, 2, 3, N'0',1),
+			(3034, 1, 0, N'Test Name ', 0, 2, 3, N'0',1),
+			(3035, 1, 0, N'Test Method', 0, 2, 3, N'0',1),
+			(3036, 1, 0, N'Person Authorized', 0, 2, 3, N'0',1),
+			(3037, 22, 0, N'Targeted On', 0, 2, 1011, N'0',1),
+			(3038, 22, 0, N'Completed on', 0, 2, 1011, N'0',1),
+			(3039, 1, 0, N'Remarks', 0, 2, 3, N'0',1),
+			(3040, 22, 0, N'Date Of Report', 0, 3, 1011, N'0',1),
+			(3041, 1, 0, N'Report No', 0, 2, 3, N'0',1),
+			(3043, 1, 0, N'ULR No', 0, 2, 3, N'0',1),
+			(3044, 22, 0, N'Date Of Casting', 0, 2, 1011, N'0',1),
+			(3045, 1, 0, N'Age Of Specimens', 0, 2, 3, N'0',1),
+			(3046, 1, 0, N'Length', 0, 2, 3, N'0',1),
+			(3047, 1, 0, N'Width', 0, 2, 3, N'0',1),
+			(3048, 1, 0, N'Height', 0, 2, 3, N'0',1),
+			(3049, 1, 1, N'mmï¿½', 0, 2, 3, N'0',1),
+			(3050, 1, 1, N'cmï¿½', 0, 2, 3, N'0',1),
+			(3051, 1, 0, N'gm', 0, 2, 3, N'0',1),
+			(3053, 1, 0, N'gm/cmï¿½', 0, 2, 3, N'0',1),
+			(3054, 1, 0, N'Load, KN', 0, 2, 3, N'0',1),
+			(3056, 1, 1, N'Compressive Strength, N/mmï¿½', 0, 2, 3, N'0',1),
+			(3057, 1, 0, N'Average', 0, 2, 3, N'0',1),
+			(3058, 38, 0, N'TestReport', 0, 2, 2010, N'0',1),
+			(3059, 1, 0, N'Price', 0, 2, 3, N'0',1),
+			(3060, 1, 0, N'Tax', 0, 2, 3, N'0',1),
+			(3061, 1, 0, N'Total', 0, 2, 3, N'0',1),
+			(3062, 38, 0, N'Payment', 0, 2, 2010, N'0',1),
+			(3063, 33, 0, N'MultiControlGrid', 0, 2, 2011, N'0',1),
+			(3064,0,0,N'ProgressStatus1',0,1,2014,N'0',1),
+			(3065,39,1,N'MultiselectDropdown',0,1,2012,N'0',1)
 
     SET IDENTITY_INSERT [dbo].[UiPageMetadata]  OFF
 END
@@ -376,6 +416,7 @@ BEGIN
 			  (1002, N'Settings', 3, 0),
 			  (1003, N'Profile', 4, 0),
 			  (1004, N'Notifications', 5, 0)
+			  
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
 GO
@@ -395,8 +436,19 @@ BEGIN
 			  (8, N'/UiControlType/Index/', 5, 1002, 0),
 			  (9, N'/UiPageMetadata/Index/', 6, 1002, 0),
 			  (10, N'/UiPageValidation/Index/', 7, 1002, 0),
-			  (11,N'/LookupCategory/Index/',8,1002,0),
-			  (12,N'/Lookup/Index/',9,1002,0)
+			  (11,N'/LookupCategory/Index/',15,1002,0),
+			  (12,N'/Lookup/Index/',14,1002,0),
+			  (13,N'/Application/Index/',8,1002,0),
+			  (14,N'/Workflow/Index/',9,1002,0),
+			  (15,N'/WorkflowStage/Index/',10,1002,0),
+			  (16,N'/Module/Index/',11,1002,0),
+			  (17,N'/WorkflowActivity/Index/',12,1002,0),
+			  (18,N'/Organization/Index/',13,1002,0),
+			  (19,N'/#/',16,1002,0),
+			  (20,N'/Layout/Index/',17,1002,0),
+			  (21,N'/ModuleLayout/Index/',18,1002,0),
+			  (22,N'/UiPageNavigation/Index/', 19,1002,0),
+			  (23,N'/UiPageMetadataCharacteristics/Index/',20,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
@@ -414,7 +466,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Activity] WHERE Id IN (1))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Activity]  ON
-
     INSERT INTO [dbo].[Activity]
                ([Id], [Name], [IsDeleted])
 			   VALUES 
@@ -425,7 +476,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageType] WHERE Id IN (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageType]  ON
-
     INSERT INTO [dbo].[UiPageType]
                ([Id], [Name], [IsDeleted])
 			   VALUES
@@ -452,7 +502,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Workflow] WHERE Id IN (1,2,3))
 BEGIN
     SET IDENTITY_INSERT [dbo].[Workflow]  ON
-
     INSERT INTO [dbo].[Workflow]
               ([Id], [Name], [ModuleId], [IsDeleted])
 			   VALUES
@@ -465,7 +514,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [WorkflowStage] WHERE Id IN (2,3,4,5,9,10))
 BEGIN
     SET IDENTITY_INSERT [dbo].[WorkflowStage]  ON
-
     INSERT INTO [dbo].[WorkflowStage]
                ([Id], [Name], [IsDeleted], [WorkflowId], [UiPageTypeId], [Orders])
 			   VALUES
@@ -481,7 +529,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [ActivityMetadata] WHERE Id IN (1,2,3,4,5,7,9,12))
 BEGIN
     SET IDENTITY_INSERT [dbo].[ActivityMetadata]  ON
-
     INSERT INTO [dbo].[ActivityMetadata]
                ([Id], [Name], [ActivityId], [UiPageMetadataId], [IsDeleted], [Value], [ActivityMetadataTypeId], [WorkflowStageId])
 			   VALUES
@@ -499,7 +546,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UserRole] WHERE Id IN (0))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UserRole]  ON
-
     INSERT INTO [dbo].[UserRole]
               ([Id], [UserId], [RoleId], [IsDeleted])
 			   VALUES
@@ -512,127 +558,126 @@ BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  ON
 
     INSERT INTO [dbo].[UiPageMetadataModuleBridge]
-               ([Id], [UiPageMetadataId], [UiPageTypeId], [IsDeleted], [ModuleId], [ParentId], [Orders], [UiControlDisplayName], [MultiValueControl])
+               ([Id], [UiPageMetadataId], [UiPageTypeId], [IsDeleted], [ParentId], [Orders], [UiControlDisplayName], [MultiValueControl])
 			   VALUES
-            (3011, 3012, 14, 0, 3, 0, 0, NULL, 0),
-			(3012, 3013, 14, 0, 3, 0, 0, NULL, 0),
-			(3013, 3014, 14, 0, 3, 0, 0, NULL, 0),
-			(3014, 21, 14, 0, 3, 0, 0, NULL, 0),
-			(3015, 20, 14, 0, 3, 0, 0, NULL, 0),
-			(3016, 17, 14, 0, 3, 0, 0, NULL, 0),
-			(3017, 3016, 15, 0, 1, 4, 0, NULL, 0),
-			(3018, 3017, 15, 0, 1, 4, 0, NULL, 0),
-			(3019, 3018, 15, 0, 1, 4, 0, NULL, 0),
-			(3020, 3019, 15, 0, 1, 4, 0, NULL, 0),
-			(3021, 3020, 15, 0, 1, 4, 0, NULL, 0),
-			(3022, 3021, 15, 0, 1, 4, 0, NULL, 0),
-			(3023, 21, 15, 0, 1, 4, 0, NULL, 0),
-			(3024, 20, 15, 0, 1, 4, 0, NULL, 0),
-			(3025, 3024, 15, 0, 1, 4, 0, NULL, 0),
-			(3026, 3025, 15, 0, 1, 4, 0, NULL, 0),
-			(3029, 3026, 15, 0, 1, 4, 0, NULL, 1),
-			(3030, 3027, 16, 0, 1, 5, 0, NULL, 0),
-			(3031, 3028, 16, 0, 1, 5, 0, NULL, 0),
-			(3032, 3029, 16, 0, 1, 5, 0, NULL, 0),
-			(3033, 3030, 16, 0, 1, 5, 0, NULL, 0),
-			(3034, 3031, 16, 0, 1, 5, 0, NULL, 0),
-			(3035, 3032, 16, 0, 1, 5, 0, NULL, 0),
-			(3037, 3034, 16, 0, 1, 5, 0, NULL, 0),
-			(3038, 3035, 16, 0, 1, 5, 0, NULL, 0),
-			(3039, 3036, 16, 0, 1, 5, 0, NULL, 0),
-			(3040, 3019, 16, 0, 1, 5, 0, NULL, 0),
-			(3041, 3037, 16, 0, 1, 5, 0, NULL, 0),
-			(3042, 3038, 16, 0, 1, 5, 0, NULL, 0),
-			(3043, 3039, 16, 0, 1, 5, 0, NULL, 0),
-			(3044, 3008, 15, 0, 1, 4, 1, NULL, 0),
-			(3045, 3008, 16, 0, 1, 5, 2, NULL, 0),
-			(3047, 3, 15, 0, 1, 0, 0, NULL, 0),
-			(3048, 4, 15, 0, 1, 3, 0, NULL, 0),
-			(3049, 5, 15, 0, 1, 3, 0, NULL, 0),
-			(3050, 6, 15, 0, 1, 3, 0, NULL, 0),
-			(3051, 7, 15, 0, 1, 3, 0, NULL, 0),
-			(3052, 8, 15, 0, 1, 3, 0, NULL, 0),
-			(3053, 3, 16, 0, 1, 0, 0, NULL, 0),
-			(3054, 4, 16, 0, 1, 3, 0, NULL, 0),
-			(3055, 5, 16, 0, 1, 3, 0, NULL, 0),
-			(3056, 6, 16, 0, 1, 3, 0, NULL, 0),
-			(3057, 7, 16, 0, 1, 3, 0, NULL, 0),
-			(3058, 8, 16, 0, 1, 3, 0, NULL, 0),
-			(3059, 3, 17, 0, 1, 0, 0, NULL, 0),
-			(3060, 4, 17, 0, 1, 3, 0, NULL, 0),
-			(3061, 5, 17, 0, 1, 3, 0, NULL, 0),
-			(3062, 6, 17, 0, 1, 3, 0, NULL, 0),
-			(3063, 7, 17, 0, 1, 3, 0, NULL, 0),
-			(3064, 8, 17, 0, 1, 3, 0, NULL, 0),
-			(3065, 3040, 17, 0, 1, 6, 0, NULL, 0),
-			(3066, 3041, 17, 0, 1, 6, 0, NULL, 0),
-			(3067, 3043, 17, 0, 1, 6, 0, NULL, 0),
-			(3068, 3044, 17, 0, 1, 6, 0, NULL, 0),
-			(3069, 3045, 17, 1, 1, 6, 0, NULL, 0),
-			(3070, 3046, 17, 1, 1, 6, 0, NULL, 0),
-			(3071, 3047, 17, 0, 1, 6, 0, NULL, 0),
-			(3072, 3048, 17, 0, 1, 6, 0, NULL, 0),
-			(3073, 3049, 18, 0, 1, 6, 0, NULL, 1),
-			(3074, 3050, 18, 0, 1, 6, 0, NULL, 1),
-			(3075, 3051, 18, 0, 1, 6, 0, NULL, 1),
-			(3077, 3053, 18, 0, 1, 6, 0, NULL, 1),
-			(3078, 3054, 18, 0, 1, 6, 0, NULL, 1),
-			(3080, 3056, 18, 0, 1, 6, 0, NULL, 1),
-			(3081, 3057, 18, 0, 1, 6, 0, NULL, 1),
-			(3082, 3008, 17, 0, 1, 6, 1, NULL, 0),
-			(3083, 3, 18, 0, 1, 0, 0, NULL, 0),
-			(3084, 4, 18, 0, 1, 3, 0, N'Sample Reciving', 0),
-			(3085, 5, 18, 0, 1, 3, 0, N'Test Plan', 0),
-			(3086, 6, 18, 0, 1, 3, 0, N'Lab Analysis', 0),
-			(3087, 7, 18, 0, 1, 3, 0, N'Test Report', 0),
-			(3088, 8, 18, 0, 1, 3, 0, N'Payment & Billing', 0),
-			(3089, 3058, 18, 0, 1, 7, 19, N'Download', 0),
-			(3090, 3016, 18, 0, 1, 7, 1, NULL, 0),
-			(3091, 3017, 18, 0, 1, 7, 2, NULL, 0),
-			(3092, 3018, 18, 0, 1, 7, 3, NULL, 0),
-			(3093, 3019, 18, 0, 1, 7, 4, NULL, 0),
-			(3094, 3020, 18, 0, 1, 7, 5, NULL, 0),
-			(3095, 3021, 18, 0, 1, 7, 6, NULL, 0),
-			(3096, 21, 18, 0, 1, 7, 7, NULL, 0),
-			(3097, 20, 18, 0, 1, 7, 8, NULL, 0),
-			(3098, 3024, 18, 0, 1, 7, 9, NULL, 0),
-			(3099, 3025, 18, 0, 1, 7, 0, NULL, 0),
-			(3100, 3, 19, 0, 1, 0, 0, NULL, 0),
-			(3101, 4, 19, 0, 1, 3, 0, NULL, 0),
-			(3102, 5, 19, 0, 1, 3, 0, NULL, 0),
-			(3103, 6, 19, 0, 1, 3, 0, NULL, 0),
-			(3104, 7, 19, 0, 1, 3, 0, NULL, 0),
-			(3105, 8, 19, 0, 1, 3, 0, NULL, 0),
-			(3106, 3059, 19, 0, 1, 8, 0, NULL, 0),
-			(3107, 3060, 19, 0, 1, 8, 1, NULL, 0),
-			(3108, 3061, 19, 0, 1, 8, 2, NULL, 0),
-			(3110, 3062, 19, 0, 1, 8, 3, N'Download Report', 0),
-			(3111, 3008, 19, 0, 1, 8, 3, NULL, 0),
-			(3112, 3008, 18, 0, 1, 7, 16, NULL, 0),
-			(3113, 3040, 18, 0, 1, 7, 10, NULL, 0),
-			(3114, 3041, 18, 0, 1, 7, 11, NULL, 0),
-			(3116, 3043, 18, 0, 1, 7, 12, NULL, 0),
-			(3117, 3044, 18, 0, 1, 7, 13, NULL, 0),
-			(3118, 3045, 18, 0, 1, 7, 14, NULL, 0),
-			(3119, 3046, 18, 0, 1, 7, 15, NULL, 0),
-			(3120, 3063, 18, 0, 1, 7, 17, NULL, 0),
-			(3121, 3049, 17, 0, 1, 6, 0, NULL, 1),
-			(3122, 3050, 17, 0, 1, 6, 0, NULL, 1),
-			(3123, 3051, 17, 0, 1, 6, 0, NULL, 1),
-			(3124, 3053, 17, 0, 1, 6, 0, NULL, 1),
-			(3126, 3054, 17, 0, 1, 6, 0, NULL, 1),
-			(3127, 3056, 17, 0, 1, 6, 0, NULL, 1),
-			(3129, 3057, 17, 0, 1, 6, 0, NULL, 1),
-			(3130, 3063, 17, 0, 1, 6, 20, NULL, 0),
-			(3131,3064, 15, 0, 1, 0,0, NULL, 0),
-			(3132, 3065, 15, 0, 1, 4, 0, NULL, 1)
+            (3011, 3012, 14, 0, 0, 0, NULL, 0),
+			(3012, 3013, 14, 0, 0, 0, NULL, 0),
+			(3013, 3014, 14, 0, 0, 0, NULL, 0),
+			(3014, 21, 14, 0, 0, 0, NULL, 0),
+			(3015, 20, 14, 0, 0, 0, NULL, 0),
+			(3016, 17, 14, 0, 0, 0, NULL, 0),
+			(3017, 3016, 15, 0,  4, 0, NULL, 0),
+			(3018, 3017, 15, 0, 4, 0, NULL, 0),
+			(3019, 3018, 15, 0, 4, 0, NULL, 0),
+			(3020, 3019, 15, 0,  4, 0, NULL, 0),
+			(3021, 3020, 15, 0, 4, 0, NULL, 0),
+			(3022, 3021, 15, 0, 4, 0, NULL, 0),
+			(3023, 21, 15, 0, 4, 0, NULL, 0),
+			(3024, 20, 15, 0, 4, 0, NULL, 0),
+			(3025, 3024, 15, 0, 4, 0, NULL, 0),
+			(3026, 3025, 15, 0, 4, 0, NULL, 0),
+			(3029, 3026, 15, 0, 4, 0, NULL, 1),
+			(3030, 3027, 16, 0, 5, 0, NULL, 0),
+			(3031, 3028, 16, 0, 5, 0, NULL, 0),
+			(3032, 3029, 16, 0, 5, 0, NULL, 0),
+			(3033, 3030, 16, 0, 5, 0, NULL, 0),
+			(3034, 3031, 16, 0, 5, 0, NULL, 0),
+			(3035, 3032, 16, 0, 5, 0, NULL, 0),
+			(3037, 3034, 16, 0, 5, 0, NULL, 0),
+			(3038, 3035, 16, 0, 5, 0, NULL, 0),
+			(3039, 3036, 16, 0, 5, 0, NULL, 0),
+			(3040, 3019, 16, 0, 5, 0, NULL, 0),
+			(3041, 3037, 16, 0, 5, 0, NULL, 0),
+			(3042, 3038, 16, 0, 5, 0, NULL, 0),
+			(3043, 3039, 16, 0, 5, 0, NULL, 0),
+			(3044, 3008, 15, 0, 4, 1, NULL, 0),
+			(3045, 3008, 16, 0, 5, 2, NULL, 0),
+			(3047, 3, 15, 0, 0, 0, NULL, 0),
+			(3048, 4, 15, 0, 3, 0, NULL, 0),
+			(3049, 5, 15, 0, 3, 0, NULL, 0),
+			(3050, 6, 15, 0, 3, 0, NULL, 0),
+			(3051, 7, 15, 0, 3, 0, NULL, 0),
+			(3052, 8, 15, 0, 3, 0, NULL, 0),
+			(3053, 3, 16, 0, 0, 0, NULL, 0),
+			(3054, 4, 16, 0, 3, 0, NULL, 0),
+			(3055, 5, 16, 0, 3, 0, NULL, 0),
+			(3056, 6, 16, 0, 3, 0, NULL, 0),
+			(3057, 7, 16, 0, 3, 0, NULL, 0),
+			(3058, 8, 16, 0, 3, 0, NULL, 0),
+			(3059, 3, 17, 0, 0, 0, NULL, 0),
+			(3060, 4, 17, 0, 3, 0, NULL, 0),
+			(3061, 5, 17, 0, 3, 0, NULL, 0),
+			(3062, 6, 17, 0, 3, 0, NULL, 0),
+			(3063, 7, 17, 0, 3, 0, NULL, 0),
+			(3064, 8, 17, 0, 3, 0, NULL, 0),
+			(3065, 3040, 17, 0, 6, 0, NULL, 0),
+			(3066, 3041, 17, 0, 6, 0, NULL, 0),
+			(3067, 3043, 17, 0, 6, 0, NULL, 0),
+			(3068, 3044, 17, 0, 6, 0, NULL, 0),
+			(3069, 3045, 17, 1, 6, 0, NULL, 0),
+			(3070, 3046, 17, 1, 6, 0, NULL, 0),
+			(3071, 3047, 17, 0, 6, 0, NULL, 0),
+			(3072, 3048, 17, 0, 6, 0, NULL, 0),
+			(3073, 3049, 18, 0, 6, 0, NULL, 1),
+			(3074, 3050, 18, 0, 6, 0, NULL, 1),
+			(3075, 3051, 18, 0, 6, 0, NULL, 1),
+			(3077, 3053, 18, 0, 6, 0, NULL, 1),
+			(3078, 3054, 18, 0, 6, 0, NULL, 1),
+			(3080, 3056, 18, 0, 6, 0, NULL, 1),
+			(3081, 3057, 18, 0, 6, 0, NULL, 1),
+			(3082, 3008, 17, 0, 6, 1, NULL, 0),
+			(3083, 3, 18, 0, 0, 0, NULL, 0),
+			(3084, 4, 18, 0, 3, 0, N'Sample Reciving', 0),
+			(3085, 5, 18, 0, 3, 0, N'Test Plan', 0),
+			(3086, 6, 18, 0, 3, 0, N'Lab Analysis', 0),
+			(3087, 7, 18, 0, 3, 0, N'Test Report', 0),
+			(3088, 8, 18, 0, 3, 0, N'Payment & Billing', 0),
+			(3089, 3058, 18, 0,  7, 19, N'Download', 0),
+			(3090, 3016, 18, 0, 7, 1, NULL, 0),
+			(3091, 3017, 18, 0, 7, 2, NULL, 0),
+			(3092, 3018, 18, 0, 7, 3, NULL, 0),
+			(3093, 3019, 18, 0, 7, 4, NULL, 0),
+			(3094, 3020, 18, 0, 7, 5, NULL, 0),
+			(3095, 3021, 18, 0,  7, 6, NULL, 0),
+			(3096, 21, 18, 0, 7, 7, NULL, 0),
+			(3097, 20, 18, 0, 7, 8, NULL, 0),
+			(3098, 3024, 18, 0, 7, 9, NULL, 0),
+			(3099, 3025, 18, 0, 7, 0, NULL, 0),
+			(3100, 3, 19, 0,  0, 0, NULL, 0),
+			(3101, 4, 19, 0, 3, 0, NULL, 0),
+			(3102, 5, 19, 0, 3, 0, NULL, 0),
+			(3103, 6, 19, 0,  3, 0, NULL, 0),
+			(3104, 7, 19, 0, 3, 0, NULL, 0),
+			(3105, 8, 19, 0,  3, 0, NULL, 0),
+			(3106, 3059, 19, 0, 8, 0, NULL, 0),
+			(3107, 3060, 19, 0, 8, 1, NULL, 0),
+			(3108, 3061, 19, 0, 8, 2, NULL, 0),
+			(3110, 3062, 19, 0, 8, 3, N'Download Report', 0),
+			(3111, 3008, 19, 0, 8, 3, NULL, 0),
+			(3112, 3008, 18, 0, 7, 16, NULL, 0),
+			(3113, 3040, 18, 0, 7, 10, NULL, 0),
+			(3114, 3041, 18, 0, 7, 11, NULL, 0),
+			(3116, 3043, 18, 0, 7, 12, NULL, 0),
+			(3117, 3044, 18, 0, 7, 13, NULL, 0),
+			(3118, 3045, 18, 0, 7, 14, NULL, 0),
+			(3119, 3046, 18, 0,  7, 15, NULL, 0),
+			(3120, 3063, 18, 0, 7, 17, NULL, 0),
+			(3121, 3049, 17, 0, 6, 0, NULL, 1),
+			(3122, 3050, 17, 0, 6, 0, NULL, 1),
+			(3123, 3051, 17, 0, 6, 0, NULL, 1),
+			(3124, 3053, 17, 0, 6, 0, NULL, 1),
+			(3126, 3054, 17, 0, 6, 0, NULL, 1),
+			(3127, 3056, 17, 0, 6, 0, NULL, 1),
+			(3129, 3057, 17, 0, 6, 0, NULL, 1),
+			(3130, 3063, 17, 0, 6, 20, NULL, 0),
+			(3131,3064, 15, 0, 0,0, NULL, 0),
+			(3132, 3065, 15, 0, 4, 0, NULL, 1)
     SET IDENTITY_INSERT [dbo].[UiPageMetadataModuleBridge]  OFF
 END
 GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidationType] WHERE Id IN (1,2,3,4,5,6,7))
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidationType]  ON
-
     INSERT INTO [dbo].[UiPageValidationType]
               ([Id], [Name], [Message], [Value], [IsDeleted])
 			   VALUES
@@ -649,7 +694,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [UiPageValidation] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiPageValidation]  ON
-
     INSERT INTO [dbo].[UiPageValidation]
              ([Id], [UiPageTypeId], [UiPageMetadataId], [UiPageValidationTypeId], [IsDeleted])
 			   VALUES
@@ -674,7 +718,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [PasswordLogin] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[PasswordLogin]  ON
-
     INSERT INTO [dbo].[PasswordLogin]
               ([Id], [PasswordHash], [PasswordSalt], [UserId], [ChangeDate])
 			  VALUES 
@@ -685,7 +728,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [TestReport] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[TestReport]  ON
-
     INSERT INTO [dbo].[TestReport]
               ([Id], [Client], [Filepath], [Email], [JobId], [Name], [DateTime], [IsDeleted])
 			  VALUES 
@@ -696,7 +738,6 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [WorkflowActivity] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[WorkflowActivity]  ON
-
     INSERT INTO [dbo].[WorkflowActivity]
               ([Id], [Name], [WorkflowStageId], [IsDeleted], [ActivityId])
 			  VALUES 
@@ -708,10 +749,108 @@ GO
 IF NOT EXISTS (SELECT 1 FROM [Record] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[Record]  ON
-
     INSERT INTO [dbo].[Record]
               ([Id], [IsDeleted], [ModuleId], [WorkflowStageId], [UpdatedDate])
 			  VALUES 
 			  (12063, 0, 1, 4, CAST(N'2023-02-18T00:07:18.197' AS DateTime))
     SET IDENTITY_INSERT [dbo].[Record]  OFF
 END
+GO
+IF NOT EXISTS (SELECT 1 FROM [UiPageData] WHERE Id = 0)
+BEGIN
+    SET IDENTITY_INSERT [dbo].[UiPageData]  ON
+    INSERT INTO [dbo].[UiPageData]
+              ([Id],
+			  [UiPageMetadataId],
+			  [IsDeleted],
+			  [RecordId],
+			  [UiPageTypeId],
+			  [SubRecordId])
+			  VALUES 
+			  (13187, 3016, 0, 12063, 15, NULL),
+			  (13188, 3017, 0, 12063, 15, NULL),
+			  (13189, 3018,0, 12063, 15, NULL),
+			  (13190, 3019,0, 12063, 15, NULL),
+			  (13191, 3020,0, 12063, 15, NULL),
+			  (13192, 3021,0, 12063, 15, NULL),
+			  (13193, 21,0, 12063, 15, NULL),
+			  (13194, 20,0, 12063, 15, NULL),
+			  (13195, 3024,0, 12063, 15, NULL),
+			  (13196, 3025,0, 12063, 15, NULL),
+			  (13197, 3026,0, 12063, 15, NULL),
+			  (13198, 3008,0, 12063, 19, NULL),
+			  (13199, 3027,0, 12063, 16, NULL),
+			  (13200, 3028,0, 12063, 16, NULL),
+			  (13201, 3029,0, 12063, 16, NULL),
+			  (13202, 3030,0, 12063, 16, NULL),
+			  (13203, 3031,0, 12063, 16, NULL),
+			  (13204, 3032,0, 12063, 16, NULL),
+			  (13205, 3034,0, 12063, 16, NULL),
+			  (13206, 3035,0, 12063, 16, NULL),
+			  (13207, 3036,0, 12063, 16, NULL),
+			  (13208, 3037,0, 12063, 16, NULL),
+			  (13209, 3038,0, 12063, 16, NULL),
+			  (13210, 3039, 0, 12063, 16, NULL),
+			  (13211, 3040,0, 12063, 18, NULL),
+			  (13212, 3041,0, 12063, 17, NULL),
+			  (13213, 3043, 0, 12063, 17, NULL),
+			  (13214, 3044,0, 12063, 17, NULL),
+			  (13215, 3047, 0, 12063, 17, NULL),
+			  (13216, 3048,0, 12063, 17, NULL),
+			  (13217, 3045,0, 12063, 18, NULL),
+			  (13218, 3046,0, 12063, 18, NULL),
+			  (13219, 3049,0, 12063, 18, 1),
+			  (13220, 3050,0, 12063, 18, 1),
+			  (13221, 3051,0, 12063, 18, 1),
+			  (13222, 3053,0, 12063, 18, 1),
+			  (13223, 3054,0, 12063, 18, 1),
+			  (13224, 3056,0, 12063, 18, 1),
+			  (13225, 3057,0, 12063, 18, 1),
+			  (13226, 3049,0, 12063, 18, 2),
+			  (13227, 3050,0, 12063, 18, 2),
+			  (13228, 3051,0, 12063, 18, 2),
+			  (13229, 3053,0, 12063, 18, 2),
+			  (13230, 3054,0, 12063, 18, 2),
+			  (13231, 3056,0, 12063, 18, 2),
+			  (13232, 3057,0, 12063, 18, 2),
+			  (13233, 3049,0, 12063, 18, 3),
+			  (13234, 3050,0, 12063, 18, 3),
+			  (13235, 3051,0, 12063, 18, 3),
+			  (13236, 3053,0, 12063, 18, 3),
+			  (13237, 3054, 0, 12063, 18, 3),
+			  (13238, 3056, 0, 12063, 18, 3),
+			  (13239, 3057, 0, 12063, 18, 3),
+			  (13240, 3049, 0, 12063, 18, 4),
+			  (13241, 3050, 0, 12063, 18, 4),
+			  (13242, 3051, 0, 12063, 18, 4),
+			  (13243, 3053, 0, 12063, 18, 4),
+			  (13244, 3054, 0, 12063, 18, 4),
+			  (13245, 3056, 0, 12063, 18, 4),
+			  (13246, 3057, 0, 12063, 18, 4),
+			  (13247, 3049, 1, 12063, 18, 5),
+			  (13248, 3050, 1, 12063, 18, 5),
+			  (13249, 3051, 1, 12063, 18, 5),
+			  (13250, 3053, 1, 12063, 18, 5),
+			  (13251, 3054, 1, 12063, 18, 5),
+			  (13252, 3056, 1, 12063, 18, 5),
+			  (13253, 3057, 1, 12063, 18, 5),
+			  (13254, 3049, 0, 12063, 18, 6),
+			  (13255, 3050, 0, 12063, 18, 6),
+			  (13256, 3051, 0, 12063, 18, 6),
+			  (13257, 3053, 0, 12063, 18, 6),
+			  (13258, 3054, 0, 12063, 18, 6),
+			  (13259, 3056, 0, 12063, 18, 6),
+			  (13260, 3057, 0, 12063, 18, 6),
+			  (13261, 3049, 0, 12063, 18, 7),
+			  (13262, 3050, 0, 12063, 18, 7),
+			  (13263, 3051, 0, 12063, 18, 7),
+			  (13264, 3053, 0, 12063, 18, 7),
+			  (13265, 3054, 0, 12063, 18, 7),
+			  (13266, 3056, 0, 12063, 18, 7),
+			  (13267, 3057, 0, 12063, 18, 7),
+			  (13268, 3059, 0, 12063, 19, NULL),
+			  (13269, 3060, 0, 12063, 19, NULL),
+			  (13270, 3061, 0, 12063, 19, NULL)
+    SET IDENTITY_INSERT [dbo].[UiPageData]  OFF
+END
+GO

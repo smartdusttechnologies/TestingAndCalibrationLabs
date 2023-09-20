@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "CreateLayout";
 }
+@*<style>
+    .fixed-bottom {
+        position: relative;
+    }
+</style>*@
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
@@ -68,7 +73,6 @@
 </script>
 <script type="text/javascript">
     var mainModel = JSON.parse('@Json.Serialize(Model)');
-    debugger
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
@@ -97,18 +101,12 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-                  if (layout[i].uiPageData != 0) {
-                   //for (let j = 0; j < uiPageData.length; j++) {
-                       //var pageDataId = layout[i].uiPageData[j].id;
-                       //var childIds = layout[i].uiPageData[j].childId;
-                       //var RecordIds = layout[i].uiPageData[j].recordId;
-                       //var oldValue = layout[i].uiPageData[j].value;
-                        var pageDataId = layout[i].uiPageData[0].id;
-                        var childIds = layout[i].uiPageData[0].childId;
-                        var RecordIds = layout[i].uiPageData[0].recordId;
-                        var oldValue = layout[i].uiPageData[0].value;
+                if (layout[i].uiPageData != null && layout[i].uiPageData.length != 0){
+                       var pageDataId = layout[i].uiPageData[0].id;
+                       var childIds = layout[i].uiPageData[0].childId;
+                       var RecordIds = layout[i].uiPageData[0].recordId;
+                       var oldValue = layout[i].uiPageData[0].value;
                        var List;
-                   //}
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
                             var filddata = $(fieldId).val();
@@ -155,7 +153,7 @@
                 {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
-                    keyValuepair.RecordId = RecordIds;
+                    keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
@@ -175,7 +173,7 @@
                 alert(response.responseText);
             },
             error: function (response) {
-               HideWheelLoader();
+                HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {

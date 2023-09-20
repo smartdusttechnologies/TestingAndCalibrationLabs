@@ -15,6 +15,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 
         private string _value;
         public int? ChildId { get; set; }
+        [DbColumn]
         public string Value
         {
             get
@@ -26,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
                 _value = value;
             }
         }
+        [DbColumn]
         public int RecordId { get; set; }
-       
     }
 }

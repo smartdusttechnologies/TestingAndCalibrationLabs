@@ -13,5 +13,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <returns></returns>
         List<UiPageNavigationModel> Get();
+        /// <summary>
+        /// Get Record By Id From Ui Page Navigation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UiPageNavigationModel GetById(int id);
+        /// <summary>
+        /// Insert Record In Ui Page navigation
+        /// </summary>
+        /// <param name="uiPageNavigationModel"></param>
+        /// <returns></returns>
+        int Create(UiPageNavigationModel uiPageNavigationModel);
+        /// <summary>
+        /// Update Record In Ui Page Navigation 
+        /// </summary>
+        /// <param name="uiPageNavigationModel"></param>
+        /// <returns></returns>
+        int Update(UiPageNavigationModel uiPageNavigationModel);
     }
 }

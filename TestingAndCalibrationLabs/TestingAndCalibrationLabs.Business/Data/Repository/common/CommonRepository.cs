@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
@@ -64,7 +63,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 														mmb.Orders,
                                                         mmb.MultiValueControl,
 														mmb.ParentId,
-														mmb.ModuleId,
+														upm.ModuleLayoutId,
                                                         mmb.[UiControlDisplayName] as MetadataModuleBridgeUiControlDisplayName,
                                                         upt.[Name] as UiPageTypeName,
                                                          upm.IsRequired,
@@ -100,7 +99,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// </summary>
         /// <param name="moduleId"></param>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int moduleId)
+        public List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int modulelayoutId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id,
@@ -108,7 +107,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 														mmb.Orders,
                                                         mmb.MultiValueControl,
 														mmb.ParentId,
-														mmb.ModuleId,
+														upm.ModuleLayoutId,
+                                                      
+													     
                                                         upt.[Name] as UiPageTypeName,
                                                          upm.IsRequired,
                                                         upm.UiControlTypeId,
@@ -129,13 +130,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                    where mmb.ModuleId = @moduleId
+                                                where upm.ModuleLayoutId = @modulelayoutId
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
 													and mmb.IsDeleted = 0
-                                                    and ucct.IsDeleted = 0", new { moduleId }).ToList();
+                                                    and ucct.IsDeleted = 0", new { modulelayoutId }).ToList();
             return metadata;
         }
         /// <summary>
@@ -234,19 +235,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public bool Save(RecordModel recordModel)
         {
+            var datalist = recordModel.FieldValues;
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                //var SingleValeData = recordModel.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { Id = x.First().Id, UiPageMetadataId = x.Key, ChildId = x.First().ChildId, RecordId = x.First().RecordId, Value = x.First().Value }).ToList();
-                var ListofValue = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, Value = x.Value }).ToList();
+                var collectionofdata = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, UiPageTypeId = x.UiPageTypeId, Value = x.Value }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@RecordId", recordModel.Id);
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
-
-              //  command.Parameters.AddWithValue("@UiPageDataId", recordModel.FieldValues);
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(ListofValue));
+                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(collectionofdata));
                 command.ExecuteNonQuery();
             }
             return true;
@@ -259,7 +258,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<UiPageDataModel> GetPageData(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId, t1.Id , t2.Value, t2.Id as ChildId,t7.Id as RecordId 
+            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId, t1.Id , t2.Value, t2.Id as ChildId,t7.Id as RecordId ,t1.UiPageTypeId
                                                      FROM UiPageData t1
                                                         JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
 														Join [Record] t7 ON t7.Id  = t2.RecordId
@@ -268,7 +267,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 															  and t1.IsDeleted = 0
 															  and t7.IsDeleted = 0
                                                         UNION All
-                                                      SELECT t3.UiPageMetadataId, t3.Id, CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId ,t6.Id as RecordId 
+                                                      SELECT t3.UiPageMetadataId, t3.Id, CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId ,t6.Id as RecordId ,t3.UiPageTypeId
                                                     FROM UiPageData t3
                                                        JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
 													   Join [Record] t6 ON t6.Id  = t3.RecordId
@@ -277,7 +276,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 															and t3.IsDeleted = 0
 															and t6.IsDeleted = 0
                                                             UNION All
-                                                       SELECT t5.UiPageMetadataId, t5.Id, t6.Value, t6.Id as ChildId ,t8.Id as RecordId 
+                                                       SELECT t5.UiPageMetadataId, t5.Id, t6.Value, t6.Id as ChildId ,t8.Id as RecordId ,t5.UiPageTypeId
                                                             FROM UiPageData t5
                                                             JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
@@ -286,7 +285,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 														and t5.IsDeleted = 0
 															and t8.IsDeleted = 0
 														  UNION All
-														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId 
+														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId,t5.UiPageTypeId 
                                                             FROM UiPageData t5
                                                             JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
 															Join [Record] t8 ON t8.Id  = t5.RecordId
@@ -363,7 +362,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 														mmb.Orders,
                                                         mmb.MultiValueControl,
 														mmb.ParentId,
-														mmb.ModuleId,
+														upm.ModuleLayoutId,
                                                         mmb.[UiControlDisplayName] as MetadataModuleBridgeUiControlDisplayName,
                                                         upt.[Name] as UiPageTypeName,
                                                          upm.IsRequired,
@@ -409,7 +408,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<int> GenerateUiDataId(int recordId)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId}and IsDeleted = 0").ToList();
+            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId} and IsDeleted = 0").ToList();
         }
         /// <summary>
         /// Delete Multi Record Values
