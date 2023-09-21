@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -12,9 +9,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -211,7 +206,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public ActionResult Create(RecordDTO record)
         {
-           
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
             var adddata = _commonService.Add(records);
             var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);

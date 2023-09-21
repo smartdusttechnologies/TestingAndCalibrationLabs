@@ -24,26 +24,12 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class CommonService : ICommonService
     {
         internal string UI_PAGE_NAME = string.Empty;
-        private ICommonRepository commonRepository;
-        private IGenericRepository<RecordModel> recordGenericRepository;
-        private IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository;
-        private IGenericRepository<UiPageDataModel> uiPageDataGenericRepository;
-        private IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository;
-        private IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository;
-        private IUiPageMetadataCharacteristicsRepository uiPageMetadataCharacteristicsRepository;
-        private IUiPageMetadataRepository uiPageMetadataRepository;
-        private IWorkflowActivityService workflowActivityService;
-        private IWebHostEnvironment webHostEnvironment;
-        private IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService;
         private readonly ICommonRepository _commonRepository;
         private readonly IGenericRepository<RecordModel> _recordGenericRepository;
         private readonly IGenericRepository<UiPageValidationTypeModel> _uiPageValidationTypesGenericRepository;
         private readonly IUiPageMetadataRepository _uiPageMetadataRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
-        private readonly IGoogleDriveService _googleUploadDownloadService;
-
-
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWorkflowStageService _workflowStageService;
@@ -79,10 +65,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<bool> Add(RecordModel record)
         {
             RequestResult<bool> requestResult = new RequestResult<bool>(false);
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Create).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Create).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
