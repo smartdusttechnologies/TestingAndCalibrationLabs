@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, pageControl, new[] { Operations.Create }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageMetadataModel, new[] { Operations.Create }).Result.Succeeded)
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
@@ -110,6 +110,16 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<UiPageMetadataModel> GetDisplayName()
         {
             return _uiPageMetadataRepository.GetDisplayName();
+        }
+        /// <summary>
+        /// Get Record by Id and uiPageTypeId ,metadataModuleBridgeId For Ui Page Metadata Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public UiPageMetadataModel GetByPageId(int id, int uiPageTypeId, int metadataModuleBridgeId)
+        {
+
+            return _uiPageMetadataRepository.GetByPageId(id, uiPageTypeId, metadataModuleBridgeId);
         }
         #endregion
     }

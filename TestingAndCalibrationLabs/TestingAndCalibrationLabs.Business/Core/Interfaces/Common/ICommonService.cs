@@ -52,7 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="uiPageTypeId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-		byte[] TemplateGenerate(int uiPageTypeId, int metadataId);
+		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send);
         /// <summary>
         /// To Get multi Value Records For Creating Grid
         /// </summary>

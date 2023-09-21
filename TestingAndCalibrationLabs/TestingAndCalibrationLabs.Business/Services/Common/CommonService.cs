@@ -183,7 +183,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 emailModel.Attachments = atchmt;
                 var sendMail = _emailService.Sendemail(emailModel);
             }
-            return new RequestResult<byte[]>(pdfByte);
+            return pdfByte;
         }
         /// <summary>
         /// to Delete Record
@@ -255,7 +255,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
              );
 
-            var record = new RecordModel
+             record = new RecordModel
             {
                 ModuleId = moduleId,
                 UiPageTypeId = uiPageTypeId,
@@ -287,11 +287,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// <returns></returns>
     public RecordModel GetRecordById(int recordId)
         {
+            int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
             if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, recordMdel, Operations.Read).Result.Succeeded)
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
+            
             var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
@@ -363,7 +365,21 @@ namespace TestingAndCalibrationLabs.Business.Services
         #endregion
 
         #region Private Methods
+        private List<UiPageMetadataModel> GetMetadata(int moduleId, int stageId, out int uiPageId)
+        {
+            //TODO: All this can be done in one call inside GetUiMetadata , one call to database
+            if (stageId == 0)
+            {
+                uiPageId = _commonRepository.GetPageIdBasedOnOrder(moduleId);
+            }
+            else
+            {
+                uiPageId = _commonRepository.GetPageIdBasedOnCurrentWorkflowStage(stageId);
 
+            }
+            var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
+            return metadata;
+        }
         private int GetWorkflowStageId(int moduleId)
         {
             return _commonRepository.GetWorkflowStageBasedOnOrder(moduleId);

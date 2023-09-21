@@ -148,7 +148,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return Ok("Sent Succsefully");
             }
-            return File(reportByte.RequestedObject, "application/pdf");
+            return File(reportByte, "application/pdf");
         }
         /// <summary>
         /// sending record to axaj to show grid control

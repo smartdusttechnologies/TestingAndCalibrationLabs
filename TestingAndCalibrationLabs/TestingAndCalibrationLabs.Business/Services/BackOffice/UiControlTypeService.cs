@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            _uiControlTypeRepository.Insert(uiControlTypeModel);
+            _uiControlTypeRepository.Create(uiControlTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
