@@ -148,7 +148,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 return Ok("Sent Succsefully");
             }
-            return File(reportByte.RequestedObject, "application/pdf");
+            return File(reportByte, "application/pdf");
         }
         /// <summary>
         /// sending record to axaj to show grid control
@@ -180,7 +180,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
-            
             return base.View(result);
 
         }
@@ -193,7 +192,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult MultipleValue(int lookupCategoryId  )
         {
             var lookupList = _lookupService.GetLookupByCategoryId(lookupCategoryId);
-           
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in lookupList)
             {
@@ -211,7 +209,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public ActionResult Create(RecordDTO record)
         {
-           
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
             var adddata = _commonService.Add(records);
             var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);
@@ -232,12 +229,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-
             var pageMetadata = _commonService.GetRecordById(id);
             RecordDTO record = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
             return View(record);
         }
-
         /// <summary>
         /// Edit and binding with business project
         /// </summary>
@@ -250,7 +245,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var adddata = _commonService.Save(records); 
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
-
             if (adddata.IsSuccessful)
             {
                 return Ok(recordModel);
@@ -265,7 +259,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public ActionResult Delete(int? id, int moduleId)
         {
             if (id == null)
@@ -282,7 +275,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public ActionResult DeleteMultiValue(RecordModel record)
         {
-            
             var result = _commonService.DeleteMultiValue(record);
             if (result.IsSuccessful)
             {

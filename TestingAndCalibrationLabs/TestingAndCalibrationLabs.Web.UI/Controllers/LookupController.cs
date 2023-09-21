@@ -79,7 +79,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var lookupCategoryList = _lookupCategoryService.Get();
             //var lookupCategoryDatas = _mapper.Map<List<LookupCategoryModel>, List<LookupCategoryDTO>>(lookupCategoryList);
             ViewBag.LookupCategory = lookupCategoryList;
-
             var getByIdPageModel = _lookupService.GetById((int)id);
             if (getByIdPageModel == null)
             {
@@ -118,8 +117,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var applicationList = _lookupCategoryService.Get();
             //var applicationDatas = _mapper.Map<List<LookupCategoryModel>, List<LookupCategoryDTO>>(applicationList);
             ViewBag.LookupCategory = applicationList;
-
-
             return base.View(new LookupDTO { Id = id });
         }
         /// <summary>
@@ -133,7 +130,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var pageModel = _mapper.Map<LookupDTO, LookupModel>(lookupDTO);
                 _lookupService.Create(pageModel);
                 TempData["IsTrue"] = true;

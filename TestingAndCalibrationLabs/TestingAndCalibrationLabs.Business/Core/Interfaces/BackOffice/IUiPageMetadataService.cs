@@ -56,6 +56,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool Delete(int id, int uiPageTypeId,int metadataModuleBridgeId);
+        bool Delete(int id, int metadataModuleBridgeId);
     }
 }

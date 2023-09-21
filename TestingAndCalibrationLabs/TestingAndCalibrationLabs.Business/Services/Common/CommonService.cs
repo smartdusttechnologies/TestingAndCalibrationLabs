@@ -9,14 +9,8 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Text;
-using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection;
-using Org.BouncyCastle.Asn1.Ocsp;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using System.Net.Mail;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -42,8 +36,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IUiPageMetadataCharacteristicsService _uiPageMetadataCharacteristicsService;
         private readonly IGoogleDriveService _googleUploadDownloadService;
-
-
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWorkflowStageService _workflowStageService;
@@ -102,7 +94,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public RequestResult<byte[]> TemplateGenerate(int recordId, int metadataId, string email, bool send)
+        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
@@ -183,7 +175,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 emailModel.Attachments = atchmt;
                 var sendMail = _emailService.Sendemail(emailModel);
             }
-            return new RequestResult<byte[]>(pdfByte);
+            return (pdfByte);
         }
         /// <summary>
         /// to Delete Record
@@ -254,13 +246,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
              );
 
-            var record = new RecordModel
+            var records = new RecordModel
             {
                 ModuleId = moduleId,
                 UiPageTypeId = workflowStage.UiPageTypeId,
                 Layout = hierarchy
             };
-            return record;
+            return records;
         }
 
         /// <summary>
@@ -287,11 +279,8 @@ namespace TestingAndCalibrationLabs.Business.Services
     /// <returns></returns>
     public RecordModel GetRecordById(int recordId)
         {
+            int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, recordMdel, Operations.Read).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
             var workflowStage = _workflowStageService.GetStage(recordMdel.ModuleId, recordMdel.Id);
             var uiMetadata = _commonRepository.GetUiPageMetadata(workflowStage.UiPageTypeId);
             foreach (var item in uiMetadata)
@@ -310,7 +299,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                  f => f.UiPageMetadata.ParentId,// The property on your object that points to its parent
                 f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
                  );
-            return new RecordModel { Id = recordId, UiPageTypeId = uiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel.WorkflowStageId, Layout = hierarchy };
+            return new RecordModel { Id = recordId, UiPageTypeId = workflowStage.UiPageTypeId, UpdatedDate = recordMdel.UpdatedDate, ModuleId = recordMdel.ModuleId, WorkflowStageId = recordMdel.WorkflowStageId, Layout = hierarchy };
         }
 
         #region Multi Value Control

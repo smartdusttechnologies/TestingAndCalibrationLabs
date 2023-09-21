@@ -299,7 +299,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id, int uiPageTypeId, int metadataModuleBridgeId)
+        public bool Delete(int id, int metadataModuleBridgeId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             db.Execute(@"UPDATE [UiPageMetadata] SET IsDeleted = 1 WHERE Id = @Id", new { Id = id });

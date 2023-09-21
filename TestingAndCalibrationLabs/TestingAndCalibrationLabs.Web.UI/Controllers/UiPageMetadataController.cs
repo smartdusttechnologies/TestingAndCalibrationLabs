@@ -271,7 +271,7 @@ return View();
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int? id, int uiPageTypeId, int metadataModuleBridgeId)
+        public IActionResult DeleteConfirmed(int? id, int metadataModuleBridgeId)
         {
             try
             {
@@ -281,7 +281,7 @@ return View();
 
                     return NotFound();
             }
-            _uiPageMetadataService.Delete((int)id);
+            _uiPageMetadataService.Delete((int)id, metadataModuleBridgeId);
             TempData["IsTrue"] = false;
                 _logger.LogInformation("UiPageMetadata delete  has been accessed");
 

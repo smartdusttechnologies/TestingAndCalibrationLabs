@@ -31,6 +31,5 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [Required(ErrorMessage = "Please Enter your ControlCategoryName")]
         public string ControlCategoryName { get; set; }
 
-
     }
 }

@@ -228,7 +228,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Security}/{action=Index}/{id?}");
+                    pattern: "{controller=TestReport}/{action=Index}/{id?}");
             });
            
         }

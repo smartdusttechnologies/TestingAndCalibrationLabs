@@ -33,26 +33,24 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, pageControl, new[] { Operations.Create }).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+           
             int id = _uiPageMetadataRepository.Create(uiPageMetadataModel);
             return new RequestResult<int>(1);
 
         }
+
         /// <summary>
         /// Delete Record From Ui Page Metadata Type
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id, int uiPageTypeId, int metadataModuleBridgeId)
+        public bool Delete(int id,int metadataModuleBridgeId)
         {
             if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Delete }).Result.Succeeded)
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return _uiPageMetadataRepository.Delete(id, uiPageTypeId, metadataModuleBridgeId);
+            return _uiPageMetadataRepository.Delete(id, metadataModuleBridgeId);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
