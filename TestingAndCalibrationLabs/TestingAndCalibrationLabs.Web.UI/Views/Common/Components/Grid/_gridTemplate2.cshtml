@@ -24,6 +24,7 @@
                     {
                         <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
                     }
+                    <th>Stage</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -44,6 +45,9 @@
 
                             count++;
                         }
+                        <td>
+                            @Html.DisplayFor(modelitem=>Model.WorkflowStageName)
+                        </td>
                         <td>
                             <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>|
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-toggle="modal" data-target="#deleteModalPopup" onclick="setValue(@item.Key)"></a>
