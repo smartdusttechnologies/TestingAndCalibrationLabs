@@ -278,7 +278,7 @@ return View();
                 if (id == null)
             {
                     _logger.LogError("id is null");
-
+                          
                     return NotFound();
             }
             _uiPageMetadataService.Delete((int)id, metadataModuleBridgeId);
