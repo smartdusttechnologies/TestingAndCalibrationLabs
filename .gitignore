@@ -48,3 +48,4 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/obj
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/bin/Debug/netcoreapp3.1
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.sqlproj.user
