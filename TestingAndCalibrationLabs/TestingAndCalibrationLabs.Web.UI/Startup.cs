@@ -24,6 +24,8 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Services.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -109,6 +111,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped<IPermissionTypeService, PermissionTypeService>();
+            services.AddScoped<IPermissionModuleTypeService, PermissionModuleTypeService>();
+            services.AddScoped<ISubPermissionModuleTypeService, SubPermissionModuleTypeServices>();
+            services.AddScoped<IPermissionService, PermissionService>();
+
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
@@ -142,6 +149,12 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<WorkflowActivityModel>, GenericRepository<WorkflowActivityModel>>();
             services.AddScoped<IGenericRepository<WorkflowStageModel>, GenericRepository<WorkflowStageModel>>();
             services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();
+            services.AddScoped<IGenericRepository<PermissionTypeModel>, GenericRepository<PermissionTypeModel>>();
+            services.AddScoped<IGenericRepository<PermissionModuleTypeModel>, GenericRepository<PermissionModuleTypeModel>>();
+            services.AddScoped<ISubPermissionModuleTypeRepository, SubPermissionModuleTypeRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IGenericRepository<SubPermissionModuleTypeModel>, GenericRepository<SubPermissionModuleTypeModel>>();
+            services.AddScoped<IGenericRepository<PermissionModel>, GenericRepository<PermissionModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<ILoggerRepository, LoggerRepository>();

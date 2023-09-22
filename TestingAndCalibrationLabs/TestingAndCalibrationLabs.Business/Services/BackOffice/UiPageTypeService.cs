@@ -33,10 +33,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Create(UiPageTypeModel uiPageTypeModel)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Create }).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             _genericRepository.Insert(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
@@ -47,10 +47,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public bool Delete(int id)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Delete }).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Delete }).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             return _genericRepository.Delete(id);
         }
         /// <summary>
@@ -61,19 +61,19 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<int> Update(UiPageTypeModel uiPageTypeModel)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageTypeModel, new[] { Operations.Update }).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             _genericRepository.Update(uiPageTypeModel);
             return new RequestResult<int>(1);
         }
         public List<UiPageTypeModel> Get()
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             return _genericRepository.Get();
         }
 
@@ -84,10 +84,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public UiPageTypeModel GetById(int id)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageTypeModel(), new[] { Operations.Read }).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             return _genericRepository.Get(id);
         }
         #endregion
