@@ -12,6 +12,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IRoleService
     {
         /// <summary>
+        /// Get Role Based On user Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> List<RoleId,RoleName>Of Roles </returns>
+        List<(int, string)> GetRole(int id);
+        /// <summary>
         /// Abstract method to get Role for Orgnization
         /// </summary>
         List<(int, string)> GetRoleWithOrg(string userName);
