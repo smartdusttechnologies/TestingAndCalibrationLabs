@@ -115,9 +115,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
-            var controlCategoryType = _uiControlTypeServices.GetControl();
-            var controlCategoryTypeList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlCategoryType);
-            ViewBag.ControlCategoryName = controlCategoryTypeList;
             return View(uiControlTypeDTO);
         }
         /// <summary>

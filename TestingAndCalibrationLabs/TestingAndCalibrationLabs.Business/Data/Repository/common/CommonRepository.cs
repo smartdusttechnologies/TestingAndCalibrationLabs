@@ -29,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return db.Query<UiPageDataModel>(@" Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId , updst.Value From[UiPageData] upd
                  INNER JOIN[Record] r ON upd.RecordId = r.Id
                  INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
-                 where r.ModuleId=ModuleId  
+                 where r.ModuleId=@moduleId  
                  and updst.RecordId = r.Id
                  and r.IsDeleted = 0
                  and upd.IsDeleted=0", new { moduleId }).ToList();
@@ -126,11 +126,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
+													inner join [ModuleLayout] ml on ml.Id = upm.ModuleLayoutId
                                                     inner join [Lookup] l on l.Id = uct.ControlCategoryId
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                where upm.ModuleLayoutId = @modulelayoutId
+                                                where ml.ModuleId = @modulelayoutId
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
@@ -304,16 +305,61 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<UiPageDataModel> GetMultiPageData(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageDataModel>(@"select upd.* from [Record] r 
-                                                    inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-                                                    inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
-                                                    inner join [UiPageData] upd on r.Id = upd.RecordId
-                                               where upd.UiPageMetadataId in (mmb.UiPageMetadataId)
-                                                    and r.Id = @id and mmb.MultiValueControl = 'true'
-                                                    and r.IsDeleted = 0 
-                                                    and ws.IsDeleted = 0
-                                                    and mmb.IsDeleted = 0 
-                                                    and upd.IsDeleted = 0", new { id }).ToList();
+            return db.Query<UiPageDataModel>(@"SELECT t1.UiPageMetadataId, t1.Id , t2.Value, t2.Id as ChildId,t7.Id as RecordId ,t1.UiPageTypeId
+                                                     FROM UiPageData t1
+                                                        JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+														Join [Record] t7 ON t7.Id  = t2.RecordId
+														join [WorkflowStage] ws on t7.WorkflowStageId = ws.Id
+                                                     join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                           WHERE t1.UiPageMetadataId in (mmb.UiPageMetadataId)
+														     and  t1.RecordId = @id and mmb.MultiValueControl = 'true'
+														      and   t7.Id = @id
+															  and t1.IsDeleted = 0
+															  and t7.IsDeleted = 0
+															  and mmb.IsDeleted = 0
+															  and ws.IsDeleted = 0
+                                                        UNION All
+                                                      SELECT t3.UiPageMetadataId, t3.Id, CAST(t4.Value AS varchar) AS Value, t4.Id as ChildId ,t6.Id as RecordId ,t3.UiPageTypeId
+                                                    FROM UiPageData t3
+                                                       JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+													   Join [Record] t6 ON t6.Id  = t3.RecordId
+													   	join [WorkflowStage] ws on t6.WorkflowStageId = ws.Id
+                                                     join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                          WHERE t3.UiPageMetadataId in (mmb.UiPageMetadataId)
+														 and t3.RecordId = @id and mmb.MultiValueControl = 'true'
+														    and t6.Id = @id
+															and t3.IsDeleted = 0
+															and t6.IsDeleted = 0
+															and mmb.IsDeleted = 0
+															  and ws.IsDeleted = 0
+                                                            UNION All
+                                                       SELECT t5.UiPageMetadataId, t5.Id, t6.Value, t6.Id as ChildId ,t8.Id as RecordId ,t5.UiPageTypeId
+                                                            FROM UiPageData t5
+                                                            JOIN [UiPageFileAttachType] t6 ON t5.Id = t6.UiPageDataId
+															Join [Record] t8 ON t8.Id  = t5.RecordId
+														    join [WorkflowStage] ws on t8.WorkflowStageId = ws.Id
+                                                           join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                      WHERE t5.UiPageMetadataId in (mmb.UiPageMetadataId)
+													  and t5.RecordId = @id and mmb.MultiValueControl = 'true'
+													    and t8.Id = @id
+														and t5.IsDeleted = 0
+															and t8.IsDeleted = 0
+															and mmb.IsDeleted = 0
+															  and ws.IsDeleted = 0
+														  UNION All
+														     SELECT t5.UiPageMetadataId, t5.Id, CAST(t9.Value AS varchar) AS Value, t9.Id as ChildId ,t8.Id as RecordId,t5.UiPageTypeId 
+                                                            FROM UiPageData t5
+                                                            JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
+															Join [Record] t8 ON t8.Id  = t5.RecordId
+														join [WorkflowStage] ws on t8.WorkflowStageId = ws.Id
+                                                     join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
+                                                          WHERE  t5.UiPageMetadataId in (mmb.UiPageMetadataId)
+														  and t5.RecordId = @id and mmb.MultiValueControl = 'true'
+													      and t8.Id = @id 
+														  and t5.IsDeleted = 0
+															and t8.IsDeleted = 0
+															and mmb.IsDeleted = 0
+															  and ws.IsDeleted = 0", new { id }).ToList();
         }
         /// <summary>
         /// Get All Metadata Based On Multi Control

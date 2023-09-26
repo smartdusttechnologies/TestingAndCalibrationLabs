@@ -9,14 +9,8 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using System.Text;
-using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection;
-using Org.BouncyCastle.Asn1.Ocsp;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using System.Net.Mail;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -366,11 +360,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
             return metadata;
         }
-        private int GetWorkflowStageId(int moduleId)
-        {
-            return _commonRepository.GetWorkflowStageBasedOnOrder(moduleId);
-        }
-
+      
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageTypeId);

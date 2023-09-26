@@ -39,7 +39,7 @@
                             </td>
                         }
                         <td>
-                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@item.Key)"></a> |
+                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@item.Key)"></a>
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@item.Key)"></a>
                         </td>
                     </tr>
@@ -80,9 +80,11 @@
         fieldValues.push(keyValuepair)
         $.ajax({
             type: 'POST',
+            
             url: "@Url.Action("DeleteMultiValue","Common")",
             data: { "Id": recordId, fieldValues, updatedDate },
             success: function (response) {
+                debugger;
                 myFunction();
                 window.location.href = "/common/edit/" + recordId;
             },
@@ -116,6 +118,7 @@
     //Inserting Record
     let saveRecords = (subRId) => {
         WheelLoader();
+        debugger;
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         const getMembers = (member) => {
 
@@ -195,6 +198,7 @@
             url: url,
             data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
+                debugger;
                 myFunction();
                 window.location.href = "/common/edit/" + id;
             },
@@ -230,6 +234,7 @@
     let setValue = (eId, sId) => $(`#${eId}`).val(sId);
     //Set Modal Header
     let SetHeader = (headerName, rId) => {
+        debugger;
         $("#multiGridHeader").text(headerName);
         $("#savebtn").val(rId);
     }
@@ -237,6 +242,7 @@
     let UpdateFieldsWithValue = (headerName, id) => {
         SetHeader(headerName, id);
         for (let x = 0; x < metadata.length; x++) {
+            debugger;
             var value;
             let metadataId = metadata[x].id;
             let controlType = metadata[x].uiControlTypeName;

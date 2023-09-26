@@ -157,32 +157,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     return NotFound();
 
                 }
-                ViewBag.UiControlTypeId = uiControlTypeId;
-                ViewBag.DataTypeId = dataTypeId;
-                ViewBag.UiPageTypeId = uiPageTypeId;
-                ViewBag.UiPageMetadataId = parentId;
-                ViewBag.UiControlCategoryTypeId = uiControlCategoryTypeId;
-                var pages = _uiPageTypeService.Get();
-                var controls = _uiControlTypeService.Get();
-                var datas = _dataTypeService.Get();
+                var pageList = _uiPageTypeService.Get();
+                var controlList = _uiControlTypeService.Get();
+                var dataList = _dataTypeService.Get();
                 var controlCategoryType = _uiControlCategoryTypeService.Get();
-                var pageMetadataList = _uiPageMetadataService.Get();
-                var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadataList);
+                var pageMetadata = _uiPageMetadataService.Get();
+                var Module = _moduleLayoutService.Get();
+                var getdisplayName = _uiPageMetadataService.GetDisplayName();
+                var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
+                var getdisplay = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(getdisplayName);
                 var controlCategoryTypeList = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(controlCategoryType);
-
-                var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pages);
-                var controlList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controls);
-                var dataList = _mapper.Map<List<DataTypeModel>, List<DataTypeDTO>>(datas);
-                ViewBag.UiControlTypes = controlList;
-                ViewBag.DataTypes = dataList;
-                ViewBag.UiPageTypes = pageList;
+                var pages = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageList);
+                var controles = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlList);
+                var datas = _mapper.Map<List<DataTypeModel>, List<DataTypeDTO>>(dataList);
+                ViewBag.UiControlTypes = controles;
+                ViewBag.DataTypes = datas;
+                ViewBag.UiPageTypes = pages;
                 ViewBag.UiControlCategoryType = controlCategoryTypeList;
                 ViewBag.UiPageMetadata = pageMetadatas;
-                UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
-                var pageMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(pageMetadataModel);
+                ViewBag.Modulelist = Module;
+                ViewBag.displayName = getdisplay;
+                UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetByPageId((int)id, uiPageTypeId, metadataModuleBridgeId);
+                var pageMetadataas = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(pageMetadataModel);
                 _logger.LogInformation("UiPageMetadata edit get has been accessed");
-                return View(pageMetadata);
+                return View(pageMetadataas);
             }
+
             catch (Exception exception)
             {
                 _logger.LogError("." + exception.Message);
