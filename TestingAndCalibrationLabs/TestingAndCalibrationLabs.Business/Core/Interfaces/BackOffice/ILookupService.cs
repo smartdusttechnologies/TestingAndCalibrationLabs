@@ -49,5 +49,4 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         bool Delete(int id);
     }
-
 }

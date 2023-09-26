@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
@@ -43,7 +42,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool Delete(int id, int uiPageTypeId,int metadataModuleBridgeId);
+        bool Delete(int id,int metadataModuleBridgeId);
         /// <summary>
         /// Get UiDisplayName From Ui Page Metadata
         /// </summary>

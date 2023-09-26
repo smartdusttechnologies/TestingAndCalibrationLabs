@@ -1,7 +1,5 @@
 ﻿using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {

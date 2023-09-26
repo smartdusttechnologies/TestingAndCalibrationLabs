@@ -79,13 +79,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, moduleLayoutModel);
 
         }
-
         /// <summary>
         /// GET Record From ModuleLayout
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         public ModuleLayoutModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -97,8 +95,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and l.IsDeleted = 0
                                                     and m.IsDeleted = 0
                                                     and ml.IsDeleted = 0", new { Id = id }).FirstOrDefault(); ;
-
-
 
             return moduleLayoutById;
         }

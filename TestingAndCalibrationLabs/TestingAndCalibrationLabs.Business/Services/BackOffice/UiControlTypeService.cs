@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -20,8 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public UiControlTypeService(IUiControlTypeRepository uiControlTypeRepository,IGenericRepository<UiControlTypeModel> genericRepository, IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor)
-
-        
         {
             _genericRepository = genericRepository;
             _authorizationService = authorizationService;
@@ -52,7 +49,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            
             return _uiControlTypeRepository.Get();
         }
         /// <summary>
@@ -62,7 +58,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<UiControlTypeModel> GetControl()
         {
             return _uiControlTypeRepository.GetControl();
-            
         }
         /// <summary>
         /// Edit Record From Ui Control Type

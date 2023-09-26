@@ -46,13 +46,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id, int uiPageTypeId, int metadataModuleBridgeId)
+        public bool Delete(int id, int metadataModuleBridgeId)
         {
             if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Delete }).Result.Succeeded)
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return _uiPageMetadataRepository.Delete(id, uiPageTypeId, metadataModuleBridgeId);
+            return _uiPageMetadataRepository.Delete(id, metadataModuleBridgeId);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type

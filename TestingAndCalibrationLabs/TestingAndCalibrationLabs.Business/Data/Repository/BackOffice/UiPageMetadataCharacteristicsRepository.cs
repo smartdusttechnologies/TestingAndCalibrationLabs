@@ -97,9 +97,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upmc.IsDeleted = 0
                                                     and upm.IsDeleted = 0
                                                     and lc.IsDeleted = 0", new { Id = id }).FirstOrDefault(); ;
-
-                                                                        
-
             return uiControlTypeById;
         }
         /// <summary>
@@ -123,7 +120,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public bool Delete(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-
             db.Execute(@"update [UiPageMetadataCharacteristics] Set 
                                     IsDeleted = 1
                                     Where Id = @Id", new { Id = id });

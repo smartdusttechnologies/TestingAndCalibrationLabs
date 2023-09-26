@@ -261,7 +261,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int? id, int uiPageTypeId, int metadataModuleBridgeId)
+        public IActionResult DeleteConfirmed(int? id, int metadataModuleBridgeId)
         {
             try
             {
@@ -270,7 +270,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     _logger.LogError("id is null");
                     return NotFound();
                 }
-                _uiPageMetadataService.Delete((int)id, uiPageTypeId, metadataModuleBridgeId);
+                _uiPageMetadataService.Delete((int)id, metadataModuleBridgeId);
                 TempData["IsTrue"] = true;
                 _logger.LogInformation("UiPageMetadata delete  has been accessed");
                 return RedirectToAction("Index");
