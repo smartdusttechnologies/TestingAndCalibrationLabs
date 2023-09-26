@@ -28,5 +28,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="user"></param>
         RequestResult<int> EmailValidationStatus(UserModel user);
+
+         RequestResult<int> ExistingEmailVerify(UserModel user);
+        //RequestResult<bool> ExistingEmailVerify(UserModel user);
+
+
     }
 }

@@ -39,5 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="user"></param>
         UserModel GetEmail(string Email);
+        UserModel SelectEmail(int userId);
+
     }
 }

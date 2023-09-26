@@ -72,7 +72,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (user.IsSuccessful)
             {
                UserModel userModel = new UserModel { userId = otpReturn.userId, Email = otpReturn.Email };
-
                 _authenticationService.EmailValidationStatus(userModel);
               return Ok(user.RequestedObject);
             }
@@ -88,6 +87,33 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var resendOtp = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
             _otpService.ResendOTP(resendOtp);
             return Ok(otpDTO);
+        }
+        /// <summary>
+        /// Method to VerifyEmail at the time of email varification.
+        /// </summary>
+        /// <param name="otpDTO"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult VerifyEmail()
+        {
+            return View(new UserDTO());
+        }
+        /// <summary>
+        /// Method to Verify Email at the time of Email Varification
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        [HttpPost]
+     
+        public IActionResult VerifyEmail(UserDTO userDTO)
+        {
+            var userModel = _mapper.Map<UserDTO, UserModel>(userDTO);
+            var existingEmail = _authenticationService.ExistingEmailVerify(userModel);
+            if (existingEmail.IsSuccessful)
+            {
+                return Ok(userModel.userId);
+            }
+            return BadRequest(existingEmail.ValidationMessages);
         }
     }
 }

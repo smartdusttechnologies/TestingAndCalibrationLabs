@@ -49,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     mm.Subject = emailModel.Subject;
                     mm.Body = emailModel.HtmlMsg;
                     mm.IsBodyHtml = true;
-                    if(emailModel.Attachments.Count > 0)
+                    if(emailModel.Attachments != null)
                     {
                         emailModel.Attachments.ForEach(x=>mm.Attachments.Add(x));
                     }

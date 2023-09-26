@@ -13,6 +13,8 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using AutoMapper;
+using TestingAndCalibrationLabs.Business.Services.Security;
+using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -32,6 +34,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IOTPService _otpService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
 
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
@@ -40,7 +44,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
-              IRoleRepository roleRepository, IOTPService otpService,  IMapper mapper)
+              IRoleRepository roleRepository, IOTPService otpService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -53,6 +57,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _hostingEnvironment = hostingEnvironment;
             _otpService = otpService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+
         }
         /// <summary>
         /// Method to Authenticate for Login
@@ -225,7 +231,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             var validateUserfieldsResult = _securityParameterService.ValidateNewuserPolicy(user);
-
             var validateexistinguser = ExistingUservalidation(user);
             var validateexistingEmail = ExistingEmailvalidation(user);
             //UserModel existingUser = _userRepository.Get(user.UserName);
@@ -239,8 +244,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             validationMessages.AddRange(validateexistinguser.ValidationMessages);
             validationMessages.AddRange(validateUserfieldsResult.ValidationMessages);
             validationMessages.AddRange(validateexistingEmail.ValidationMessages);
-
-
             return new RequestResult<bool>(validationMessages);
         }
         /// <summary>
@@ -263,7 +266,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private RequestResult<bool> ExistingEmailvalidation(UserModel user)
+       private RequestResult<string> ExistingEmailvalidation(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             UserModel existingEmail= _userRepository.GetEmail(user.Email);
@@ -271,9 +274,38 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 var error = new ValidationMessage { Reason = "Already! Email Exist!", Severity = ValidationSeverity.Error, SourceId = "Email" };
                 validationMessages.Add(error);
-                return new RequestResult<bool>(false, validationMessages);
+                return new RequestResult<string>(user.Email, validationMessages);
             }
-            return new RequestResult<bool>(validationMessages);
+            return new RequestResult<string>(validationMessages);
+        }
+       /// <summary>
+       /// Methodt to Verify Email if user did not validate OTP
+       /// </summary>
+       /// <param name="user"></param>
+       /// <returns></returns>
+        public RequestResult<int> ExistingEmailVerify(UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            var User = _httpContextAccessor.HttpContext.User;
+            var sdtUserIdentity = User.Identity as SdtUserIdentity;
+            user.userId = sdtUserIdentity.UserId;
+            UserModel existingEmailUser = _userRepository.SelectEmail(user.userId);
+            if (existingEmailUser != null)
+            {
+                if (existingEmailUser.Email == user.Email)
+                {
+                    OtpModel otpModel = new OtpModel { Email = user.Email, userId = user.userId, Name = user.UserName };
+                    _otpService.CreateOtp(otpModel, user.userId, user.FirstName);
+                    return new RequestResult<int>(1, validationMessages);
+                }
+                else
+                {
+                    var errorMessage = new ValidationMessage { Reason = "Existing Email not Match!", Severity = ValidationSeverity.Error, SourceId = "Email" };
+                    validationMessages.Add(errorMessage);
+                    return new RequestResult<int>(0, validationMessages);
+                }
+            }
+            return new RequestResult<int>(1, validationMessages);
         }
         /// <summary>
         /// Method to Reset Password 

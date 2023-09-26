@@ -54,6 +54,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UserModel>("Select top 1 * From [User] where Email=@Email and IsDeleted=0", new { Email }).FirstOrDefault();
         }
+        public UserModel SelectEmail(int userId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UserModel>("select u.Id, u.Email From [User] u where u.Id = @userId", new { userId }).FirstOrDefault();
+        }
         /// <summary>
         /// Update EmailValidatioStatus for Sign-up Page
         /// </summary>

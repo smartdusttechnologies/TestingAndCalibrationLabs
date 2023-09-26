@@ -30,5 +30,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingA
         /// <param name="user"></param>
         RequestResult<int> ResendOTP(OtpModel OtpModel);
 
+
     }
 }

@@ -77,6 +77,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contain User Id 
         /// </summary>
         public int userId { get; set; }
-       
+        //public DateTime ChangeDate { get; set; }
+
     }
 }
