@@ -36,7 +36,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             ILogger logger,
@@ -265,7 +264,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method to Validate Existing Email
         /// </summary>
         /// <param name="user"></param>
-        /// <returns></returns>
        private RequestResult<string> ExistingEmailvalidation(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -282,7 +280,6 @@ namespace TestingAndCalibrationLabs.Business.Services
        /// Methodt to Verify Email if user did not validate OTP
        /// </summary>
        /// <param name="user"></param>
-       /// <returns></returns>
         public RequestResult<int> ExistingEmailVerify(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -311,7 +308,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method to Reset Password 
         /// </summary>
         /// <param name="UserModel"></param>
-        /// <returns></returns>
         public RequestResult<bool> UpdatePassword(UserModel UserModel)
         {
             try
@@ -349,7 +345,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method to EmailValidation Status update in DB after OTP validation.
         /// </summary>
         /// <param name="user"></param>
-        /// <returns></returns>
         public RequestResult<int> EmailValidationStatus(UserModel user)
         {
             _userRepository.EmailValidationStatusUpdate(user.userId);

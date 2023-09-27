@@ -11,7 +11,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Abstract Method For Login
         /// </summary>
         /// <param name="loginRequest"></param>
-        /// <returns></returns>
         RequestResult<LoginToken> Login(LoginRequest loginRequest);
         /// <summary>
         /// Interfaces to Add new and validate existing user for Registration
@@ -24,14 +23,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="UserModel"></param>
         RequestResult<bool> UpdatePassword(UserModel UserModel);
         /// <summary>
-        /// Interface for Update EmailValidationStatus  if user sign-up Successfully with OTP validation.
+        /// Interface for Update EmailValidationStatus if user sign-up Successfully with OTP validation.
         /// </summary>
         /// <param name="user"></param>
         RequestResult<int> EmailValidationStatus(UserModel user);
-
+        /// <summary>
+        /// Interface for verify Email with Existing Email using at the time of signup.
+        /// </summary>
+        /// <param name="user"></param>
          RequestResult<int> ExistingEmailVerify(UserModel user);
-        //RequestResult<bool> ExistingEmailVerify(UserModel user);
-
-
     }
 }

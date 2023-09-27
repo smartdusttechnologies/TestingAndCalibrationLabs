@@ -28,7 +28,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Default Action of the User Controller
         /// </summary>
-        /// <returns></returns>
         public IActionResult Index()
         {
             return View(new UserDTO());
@@ -36,7 +35,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Method for User Registration
         /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public IActionResult Add(UserDTO userRequest)
         {
@@ -52,7 +50,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Method for Sign-up OTP
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult SendOtp(int userId)
         {
@@ -63,7 +60,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         ///// Method to validate otp for Sign-up
         ///// </summary>
         ///// <param name="userDTO"></param>
-        ///// <returns></returns>
         [HttpPost]
         public IActionResult SendOtp(OtpDTO otpDTO)
         {
@@ -81,7 +77,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method To Resend OTP For Sign-Up Page
         /// </summary>
         /// <param name="otpDTO"></param>
-        /// <returns></returns>
         public IActionResult ResendOTP(OtpDTO otpDTO)
         {
             var resendOtp = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
@@ -92,7 +87,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method to VerifyEmail at the time of email varification.
         /// </summary>
         /// <param name="otpDTO"></param>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult VerifyEmail()
         {
@@ -102,7 +96,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method to Verify Email at the time of Email Varification
         /// </summary>
         /// <param name="userDTO"></param>
-        /// <returns></returns>
         [HttpPost]
      
         public IActionResult VerifyEmail(UserDTO userDTO)

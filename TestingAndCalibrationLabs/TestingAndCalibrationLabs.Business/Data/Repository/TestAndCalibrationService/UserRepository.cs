@@ -48,12 +48,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Get User Based on Email exist or not
         /// </summary>
         /// <param name="Email"></param>
-        /// <returns></returns>
         public UserModel GetEmail(string Email)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UserModel>("Select top 1 * From [User] where Email=@Email and IsDeleted=0", new { Email }).FirstOrDefault();
         }
+        /// <summary>
+        /// Select User Email At the Time of Email Verify.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public UserModel SelectEmail(int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -63,7 +67,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Update EmailValidatioStatus for Sign-up Page
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
         public UserModel EmailValidationStatusUpdate(int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -112,7 +115,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Method to Update Password
         /// </summary>
         /// <param name="newpassword"></param>
-        /// <returns></returns>
         public int UpdatePassword(UserModel UserModel)
         {
             var parameter = new DynamicParameters();
