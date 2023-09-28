@@ -1,0 +1,39 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0' # Adjust the version as needed # \--source-bundle S3Bucket="elasticbeanstalk-$AWS_REGION",S3Key=$GITHUB_SHA.zip
+
+    - name: Build and Publish
+      run: dotnet publish -c Release -o ./publish 
+           
+      
+      working-directory: ./TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI
+    - name: Zip File
+      run: zip -r publish.zip .
+      working-directory: ./TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI
+
+    - name: Deploy to Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v15
+      with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: ${{ secrets.AWS_ELASTIC_BEANSTALK_APP_NAME }}
+          environment_name: ${{ secrets.AWS_ELASTIC_BEANSTALK_ENV_NAME }}
+          version_label: ${{ github.run_id }}
+          deployment_package: TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/publish/publish.zip
