@@ -196,8 +196,8 @@
                         <div class="eqv-dropdown-content">
                         </div>
                     </div>
-                    <a class="eqv-button" onclick="DataToModel()">Preview Data</a>
-                    <a class="eqv-button" onclick="DataToModel()">Save Query</a>
+                    <a class="eqv-button" id="preview" onclick="DataToModel()">Preview Data</a>
+                    <a class="eqv-button" id="save" onclick="DataToModel()">Save Query</a>
                     <div id="ChangeLocale">
                         <select class="eqv-select">
                             <option value="en-US">English - English</option>
@@ -205,7 +205,6 @@
                             <option value="es">Spanish - español</option>
                         </select>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -217,10 +216,12 @@
                     Result
                     <span id="ResultCount" style="display:none; margin-left:20px; font-size:small"></span>
                     <span class="eqv-export-buttons">
-                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel">Export to Excel</a>
-                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="pdf">Export to PDF</a>
-                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel-html">Export to HTML (Excel-compatible)</a>
-                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="csv">Export to CSV</a>
+                        <a class="eqjs-export eqjs-disabled" onclick="ExportToExcel()" id="exportLink">Export to Excel</a>
+
+@*                        <a class="eqjs-export eqjs-disabled"  asp-action="ExportExcel" asp-controller="QueryBuilder" id="exportLink">Export to Excel</a>
+*@                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="pdf" id="exportpdf">Export to PDF</a>
+                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel-html" id="exportHTML">Export to HTML (Excel-compatible)</a>
+                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="csv" id="exportCSV">Export to CSV</a>
                     </span>
                 </div>
                 <div id="partialView"></div>
@@ -230,12 +231,9 @@
 </div>
 
 
-
 <script>
-   
     var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
     var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
-    
 
     ///This method will change input to Value and value to input
     function chargeother(select) {
@@ -331,17 +329,21 @@
             ParentElementDiv = null;
         }
     }
-
+  
      ///This method to convert data to model format  and send to controller for Json Conversion
-    function DataToModel() {
+    function DataGenerateJson() {
 
         var DataItem = document.getElementById('JOINTYPE-Main-Div');
         var JoinValue = [];
         var JoinObject = {};
         var JoinObject1 = null;
         var JoinObject2 = {};
-
+        //var action = prompt('Choose an action (preview, save, export):');
+        //var itemid = ("#prview");
+        //if (itemid != prview) {
         let TemplateName = prompt('Type here');
+    
+       // }
         //JOINPART
         for (var JoinItem = 0; JoinItem <= DataItem.children.length; JoinItem++) {
 
@@ -527,31 +529,83 @@
         var ConditionData = JSON.stringify(ConditionBlock);
 
         var JoinData = JSON.stringify(JoinValue);
-     
 
 
+
+       
+        var jsonItem = {};
+        jsonItem.jsonData = jsonData;
+        jsonItem.ConditionData = ConditionData;
+        jsonItem.JoinData = JoinData;
+        jsonItem.TemplateName = TemplateName;
+      return jsonItem;
+    }
+    function DataToModel(){
+        debugger
+         var jsonItem = DataGenerateJson();
         $.ajax({
             url: 'QueryBuilder/QueryGenerator',
             method: 'POST',
-            data: { jsonData, JoinData, ConditionData, TemplateName},
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData, 'TemplateName': jsonItem.TemplateName },
             success: function (response) {
                 $('#partialView').html(response);
-                alert('good work bro ') // Handle the response from the function
+                enableExportLink();
             },
             error: function (xhr, status, error) {
                 alert('bad work bro');
             }
-        });
-     
-    }
 
+        });
+
+        function enableExportLink() {
+            var exportLink = document.getElementById('exportLink');
+            exportLink.classList.remove('eqjs-disabled');
+            //  exportLink.href = '#'; // Set the appropriate URL for exporting data
+
+            var exportpdf = document.getElementById('exportpdf');
+            exportpdf.classList.remove('eqjs-disabled');
+            //exportpdf.href = '#';
+
+
+            var exportHTML = document.getElementById('exportHTML');
+            exportHTML.classList.remove('eqjs-disabled');
+            //exportHTML.href = '#';
+
+            var exportCSV = document.getElementById('exportCSV');
+            exportCSV.classList.remove('eqjs-disabled');
+            //exportCSV.href = '#';
+        }
+
+    }
+       function ExportToExcel() {
+        var jsonItem = DataGenerateJson();
+         $.ajax({
+            url: 'QueryBuilder/ExportExcel',
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
+            success: function (response) {
+                var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'ExportedData.xls'; // Use .xlsx extension
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                alert('bad work bro');
+            }
+
+         });
+       }
     function ConditionValueChanger() {
         var ConditionItem = document.getElementById('condition-data').children;
 
     }
-
-
 </script>
+
 <script src="~/js/QueryBuilder.js"></script>
 <div class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 721px; top: 193px; z-index: 10000; font-size: 14px;">
     <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
