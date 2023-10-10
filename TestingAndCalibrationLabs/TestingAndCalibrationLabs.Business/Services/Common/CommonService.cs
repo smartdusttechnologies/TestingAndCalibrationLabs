@@ -317,7 +317,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
 
             Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
-            uiPageData.GroupBy(x => x.SubRecordId).ToList()
+            uiPageData.GroupBy(x => x.RecordId).ToList()
                 .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
 
             return new RecordsModel { Id = recordId, Fields = metadata, FieldValues = uiPageDataModels };

@@ -17,61 +17,67 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive simple-pagination card shadow border-radius-grid">
-        <table id="multiValueGrid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    @foreach (var item in Model.Fields)
-                    {
-                        <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
-                    }
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.FieldValues)
+<div class="table-responsive simple-pagination card shadow border-radius-grid">
+    <table id="multiValueGrid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                @foreach (var item in Model.Fields)
                 {
-                    <tr>
-                        @foreach (var itemValue in item.Value)
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => itemValue.Value)
-                            </td>
-                        }
-                        <td>
-                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@item.Key)"></a>
-                            <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@item.Key)"></a>
-                        </td>
-                    </tr>
+                    <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
                 }
-            </tbody>
-        </table>
-    </div>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+                @{
+                   Dictionary<int, List<UiPageDataDTO>> assignedRows = new Dictionary<int, List<UiPageDataDTO>>();
+                   List<UiPageDataDTO> rowData = new List<UiPageDataDTO>();
+                    int totalFields = Model.Fields.Count;
+                    int fieldIndex = 0;
+                    int rowKey = 1; 
+            }
+            @foreach (var item in Model.FieldValues)
+            {
+                <tr>
+                    @foreach (var itemValue in item.Value)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => itemValue.Value)
+                        </td>
+                        fieldIndex++;
+                         
+                        rowData.Add(itemValue);
+                        if (fieldIndex % totalFields == 0)
+                        {
+
+                            <td>
+                                
+                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@rowKey)"></a>
+                            <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@rowKey)"></a>
+                            </td>
+                            @:</tr><tr>
+                          
+                          
+                           
+                          assignedRows[rowKey] = new List<UiPageDataDTO>(rowData);
+                          rowData.Clear(); 
+                          rowKey++; 
+                          fieldIndex = 0; 
+                        }
+                          
+                        }
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 </div>
 
 <script>
-    let recordId = parseInt($("#Id").val());
-    let model = JSON.parse('@Json.Serialize(Model)');
-    let metadata = model.fields;
-    let multiPageData = model.fieldValues;
-    oTable = $('#multiValueGrid').DataTable({
-        lengthMenu: [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, 'All'],
-        ],
-        scrollX: true,
-    });
-    $('#MultiValueGridSearch').keyup(function () {
-        oTable.search($(this).val()).draw();
-    })
-    const clearText = () => {
-        const inputID = document.querySelector("#MultiValueGridSearch");
-        inputID.value = "";
-    }
-
-
-    //Call the DeleteMultiValue Method Of Common Page
+     //Call the DeleteMultiValue Method Of Common Page
     let deleteFun = (id) => {
+                debugger;
         WheelLoader();
         let fieldValues = [];
         let keyValuepair = {};
@@ -96,32 +102,13 @@
             }
         });
     }
-    //In This Function I am Creating Controls For Save Popup
-    $(document).ready(function () {
-        for (let i = 0; i < metadata.length; i++) {
-            let metadataId = metadata[i].id;
-            let controlTypeName = metadata[i].uiControlTypeName;
-            let star;
-            if (metadata[i].isRequired){
-                star = "<span class='red-color'>*</span>";
-            }else{
-                star = "";
-            }
-            let controlId = `${controlTypeName}${metadataId}`;
-            let uiControlDisplayName = metadata[i].uiControlDisplayName;
-            let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                                                                                                        <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
-                                                                                                    <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
-            $("#gridPopup").append(insertElement);
-        }
-    });
     //Inserting Record
     let saveRecords = (subRId) => {
+         debugger;
         WheelLoader();
-        debugger;
-        let workflowStageId = parseInt($("#WorkflowStageId").val())
+        let workflowStageId = parseInt($("#WorkflowStageId").val());
         const getMembers = (member) => {
-
+            
             if (!member.children || !member.children.length) {
                 return member.value;
             }
@@ -230,26 +217,102 @@
             }
         });
     }
-    //Set Value To Element eId Is Element Id and sId Is Value Id
-    let setValue = (eId, sId) => $(`#${eId}`).val(sId);
-    //Set Modal Header
-    let SetHeader = (headerName, rId) => {
+   
+    //debugger;
+    //let models = JSON.parse('@Json.Serialize(Model)');
+
+    //var datastore = models.fieldValues;
+    //var list = datastore[0];
+    //groupByFieldId(list);
+    //function groupByFieldId(list) {
+    //    debugger;
+    //    const groupedLists = new Map();
+
+    //    list.forEach(item => {
+    //        debugger;
+    //        const fieldId = item.uiPageMetadataId;
+    //        if (!groupedLists.has(fieldId)) {
+    //            debugger;
+    //            groupedLists.set(fieldId, []);
+    //        }
+    //        groupedLists.get(fieldId).push(item);
+    //    });
+    //    debugger;
+    //    return Array.from(groupedLists.values());
+    //}
+
+    let recordId = parseInt($("#Id").val());
+    let model = JSON.parse('@Json.Serialize(Model)');
+    let metadata = model.fields;
+    let multiPageData = model.fieldValues;
+    oTable = $('#multiValueGrid').DataTable({
+        lengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, 'All'],
+        ],
+        scrollX: true,
+    });
+    $('#MultiValueGridSearch').keyup(function () {
+        oTable.search($(this).val()).draw();
+    })
+    const clearText = () => {
         debugger;
-        $("#multiGridHeader").text(headerName);
-        $("#savebtn").val(rId);
+        const inputID = document.querySelector("#MultiValueGridSearch");
+        inputID.value = "";
     }
+
+
+    
+    //In This Function I am Creating Controls For Save Popup
+    
+    //Set Value To Element eId Is Element Id and sId Is Value Id
+        let setValue = (eId, sId) => $(`#${eId}`).val(sId);
+
+     //Set Modal Header
+
+   function SetHeader(headerName, rId) {
+    debugger;
+    $("#multiGridHeader").text(headerName);
+    $("#savebtn").val(rId);
+}
     //Set PreValues To Update Dailog
-    let UpdateFieldsWithValue = (headerName, id) => {
-        SetHeader(headerName, id);
+    //let UpdateFieldsWithValue = (headerName, id) => {
+    //    debugger;
+    //    SetHeader(headerName, id);
+    //    for (let x = 0; x < metadata.length; x++) {
+    //        var value;
+    //        let metadataId = metadata[x].id;
+    //        let controlType = metadata[x].uiControlTypeName;
+    //        if (id == 0) {
+    //            $(`#${controlType}${metadataId}`).val("");
+
+    //        } else {
+    //            for (let i = 0; i < multiPageData[id].length; i++) {
+    //                debugger;
+    //                if (metadata[x].id == multiPageData[id][i].uiPageMetadataId) {
+    //                    value = multiPageData[id][i].value;
+    //                    $(`#${controlType}${metadataId}`).val(value);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+    function UpdateFieldsWithValue(headerName, rId) {
+    try {
+           debugger;
+         SetHeader(headerName, rId);
+          Datapop();
+         debugger;
         for (let x = 0; x < metadata.length; x++) {
             debugger;
             var value;
             let metadataId = metadata[x].id;
             let controlType = metadata[x].uiControlTypeName;
-            if (id == 0) {
+            if (rId == 0) {
                 $(`#${controlType}${metadataId}`).val("");
-
-            } else {
+            }
+            else {
                 for (let i = 0; i < multiPageData[id].length; i++) {
                     if (metadata[x].id == multiPageData[id][i].uiPageMetadataId) {
                         value = multiPageData[id][i].value;
@@ -257,6 +320,36 @@
                     }
                 }
             }
+        }
+        // Rest of your code
+
+    } catch (error) {
+      
+        console.error('Error in UpdateFieldsWithValue:', error);
+    }
+
+    }
+    debugger;
+     function Datapop() {
+       debugger;
+       document.getElementById('gridPopup').innerHTML=" <div id="+"alert-box"+"></div>"
+
+    for (let i = 0; i < metadata.length; i++) {
+            
+            let metadataId = metadata[i].id;
+            let controlTypeName = metadata[i].uiControlTypeName;
+            let star;
+            if (metadata[i].isRequired){
+                star = "<span class='red-color'>*</span>";
+            }else{
+                star = "";
+            }
+            let controlId = `${controlTypeName}${metadataId}`;
+            let uiControlDisplayName = metadata[i].uiControlDisplayName;
+            let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                                                                                                        <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                                                                                                    <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
+            $("#gridPopup").append(insertElement);
         }
     }
 
