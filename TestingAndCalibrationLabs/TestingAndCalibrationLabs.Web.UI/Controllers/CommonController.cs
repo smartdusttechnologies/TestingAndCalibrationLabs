@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
-using static System.Net.Mime.MediaTypeNames;
+using static iTextSharp.text.pdf.AcroFields;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -32,7 +34,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IWorkflowStageService _workflowStageService;
         private readonly IListSorterService _listSorterService;
         private readonly IDocumentService _documentService;
-         
+
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -92,12 +94,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult DownloadImage(int ImageValue)
         {
-           
+
             FileUploadModel attachment = _commonService.DownloadImage(ImageValue);
-           
+
             if (attachment != null)
             {
-                 return File(new MemoryStream(attachment.DataFiles),Helpers.GetMimeTypes()[attachment.FileType] , attachment.Name);
+                return File(new MemoryStream(attachment.DataFiles), Helpers.GetMimeTypes()[attachment.FileType], attachment.Name);
             }
             return Ok("Can't find the Image");
         }
@@ -123,7 +125,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
-            return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+            //  return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+            return PartialView("~/Views/Common/Components/Grid/TemplateGrid.cshtml", records);
+
         }
         [HttpGet]
         public ActionResult TemplateGenerate(int recordId, int metadataId)
@@ -161,7 +165,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
-            
+
             return base.View(result);
 
         }
@@ -171,10 +175,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="lookupCategoryId"></param>
         /// <returns></returns>
-        public ActionResult MultipleValue(int lookupCategoryId  )
+        public ActionResult MultipleValue(int lookupCategoryId)
         {
             var lookupList = _lookupService.GetLookupByCategoryId(lookupCategoryId);
-           
+
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in lookupList)
             {
@@ -192,7 +196,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public ActionResult Create(RecordDTO record)
         {
-           
+
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
             var adddata = _commonService.Add(records);
             var pageMetadata = _commonService.GetUiPageMetadataCreate(record.ModuleId);
@@ -228,7 +232,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
-            var adddata = _commonService.Save(records); 
+            var adddata = _commonService.Save(records);
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
 
@@ -271,6 +275,147 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return BadRequest();
         }
 
-        
+
+        [HttpGet]
+        public IActionResult DownloadReport(int id)
+        {
+            var pageMetadata = _commonService.GetRecordById(id);
+            RecordModel Record = new RecordModel();
+            Record.Id = pageMetadata.Id;
+            Record.Fields = pageMetadata.Fields;
+            Record.FieldValues = pageMetadata.FieldValues;
+            Record.ModuleId = pageMetadata.ModuleId;
+            Record.UiPageTypeId = pageMetadata.UiPageTypeId;
+            Record.UpdatedDate = pageMetadata.UpdatedDate;
+             //var value = new List<Models.Node<LayoutModel>>();
+            //var PageDataList = pageMetadata.Layout;
+            foreach (var item in pageMetadata.Layout)
+            {
+                //Record.Layout = PageDataList;
+
+
+                var itemChildren = item.Children.ToList();
+                //item.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/_LabelValue.cshtml";
+
+
+                foreach (var item2 in item.Children)
+                {
+                    if (item2.Children.Count != 0)
+                    {
+
+
+                        foreach (var item3 in item2.Children)
+                        {
+                            if (!item3.Value.UiPageMetadata.MultiValueControl && item3.Value.UiPageMetadata.ControlCategoryName == "DataControl")
+                            {
+                                 
+                                
+                                item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/_LabelValue.cshtml";
+                            }
+                            //else if (!item3.Value.UiPageMetadata.MultiValueControl && item3.Value.UiPageMetadata.ControlCategoryName == "NonDataControl"&& item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate!= "~/Views/Common/Components/Grid/_gridMultiControl.cshtml")
+                            //{
+                            //item3.Value.UiPageMetadata.ControlCategoryName = "DataControl";
+                            //item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/Empty.cshtml";
+                           if(item3.Value.UiPageMetadata.ControlCategoryName != "DataControl") {
+                                itemChildren.Remove(item3);
+                            }
+
+
+                        }
+                    }
+
+
+                    //for (var item2 = 0; item2 < item.Children.Count; item2++)
+                    //{
+                    //    /*if (item2.Children.Count != 0) */
+                    //    if (item.Children[item2].Children.Count != 0)
+                    //    {
+
+
+                    //        for (var item3 = 0; item3 < item.Children[item2].Children.Count; item3++)
+                    //        {
+                    //            if (!item.Children[item2].Children[item3].Value.UiPageMetadata.MultiValueControl && item.Children[item2].Children[item3].Value.UiPageMetadata.ControlCategoryName == "DataControl")
+                    //            {
+
+
+                    //                item.Children[item2].Children[item3].Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/_LabelValue.cshtml";
+                    //            }
+                    //            //else if (!item3.Value.UiPageMetadata.MultiValueControl && item3.Value.UiPageMetadata.ControlCategoryName == "NonDataControl"&& item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate!= "~/Views/Common/Components/Grid/_gridMultiControl.cshtml")
+                    //            //{
+                    //            //item3.Value.UiPageMetadata.ControlCategoryName = "DataControl";
+                    //            //item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/Empty.cshtml";
+                    //            if (item.Children[item2].Children[item3].Value.UiPageMetadata.ControlCategoryName != "DataControl")
+                    //            {
+                    //                // itemChildren[item2].Children[item3].Clear();
+                    //            }
+
+
+                    //        }
+                    //    }
+                    //    //else
+                    //    //{
+                    //    //    itemChildren.Remove(item2);
+
+                    //    //}
+
+                    //}
+                    //else
+                    //{
+                    //    itemChildren.Remove(item2);
+
+                    //}
+
+                }
+                Record.Layout =  itemChildren ;
+
+            }
+
+
+
+
+
+            //}
+            var record = _mapper.Map<RecordModel, RecordDTO>(Record);
+
+            return View(record);
+        }
+
+        //private async Task<string> RenderRazorViewToString(string viewName, object model)
+        //{
+        //    ViewData.Model = model;
+        //    using (var sw = new StringWriter())
+        //    {
+        //        var viewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+        //        var viewResult = viewEngine.FindView(ControllerContext, viewName, false);
+
+        //        if (viewResult.Success)
+        //        {
+        //            var viewContext = new ViewContext(
+        //                ControllerContext,
+        //                viewResult.View,
+        //                ViewData,
+        //                TempData,
+        //                sw,
+        //                new HtmlHelperOptions()
+        //            );
+
+        //            await viewResult.View.RenderAsync(viewContext);
+
+        //            return sw.GetStringBuilder().ToString();
+        //        }
+        //        else
+        //        {
+        //            throw new Exception($"View '{viewName}' not found.");
+        //        }
+        //    }
+        //}
+
+
+
+
+
+
+
+
     }
 }

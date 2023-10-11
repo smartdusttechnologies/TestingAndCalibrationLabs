@@ -119,8 +119,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             //    UiPageMetadata = x,
             //    UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
             //})) ;
-            string Table1 = "<html><body><table>";
-            string Table2 = "<table>";
+            //string Table1 = "<html><body><table>";
+            //string Table2 = "<table>";
 
             foreach (var item in hirericheys)
             {
@@ -138,7 +138,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             if (item.UiPageData.Count == 0)
                             {
                                 template = template.Replace(fieldValues, "null");
-                                Table1 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
+                                //Table1 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
 
                             }
 
@@ -147,7 +147,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             else
                             {
                                 template = template.Replace(fieldValues, item.UiPageData.First().Value);
-                                Table1 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
+                               // Table1 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
                             }
                         }
                         //string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
@@ -157,7 +157,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             if (item.UiPageData.Count == 0)
                             {
                                 template = template.Replace(fieldValues, "null");
-                                Table2 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
+                               // Table2 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
 
                             }
 
@@ -166,15 +166,15 @@ namespace TestingAndCalibrationLabs.Business.Services
                             else
                             {
                                 template = template.Replace(fieldValues, item.UiPageData.First().Value);
-                                Table2 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
+                               // Table2 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
                             }
                         }
 
                     }
                 }
             }
-            Table2 += "</table";
-            Table1 += "</table" + Table2;
+            //Table2 += "</table";
+            //Table1 += "</table" + Table2;
             var multiVal = GetMultiControlValue(recordId);
 
             if (multiVal.Fields.Count() > 0)
@@ -194,7 +194,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                     table.Append("</tr>");
                 }
-                Table1 += "</table>" + table + "</body></html";
+               // Table1 += "</table>" + table + "</body></html";
                 template = template.Replace("<table id=\"tableData7\">", table.ToString());
             }
             else
@@ -204,7 +204,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
 
             HtmlToPdf converter = new HtmlToPdf();
-            PdfDocument doc = converter.ConvertHtmlString(Table1);
+            PdfDocument doc = converter.ConvertHtmlString(template);
             var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
             var pdfByte = doc.Save();
             doc.Close();

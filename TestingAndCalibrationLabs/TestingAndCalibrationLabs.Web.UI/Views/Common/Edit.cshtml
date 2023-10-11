@@ -7,7 +7,7 @@
         position: relative;
     }
 </style>*@
-<div class="container-fluid">
+<div class="container-fluid" id="ReportPage">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -58,6 +58,67 @@
 </div>
 
 <script>
+    //function GenerateReport() {
+
+
+
+    //    var labels = document.querySelectorAll('label');
+    //    var result = {};
+
+    //    labels.forEach(function (label) {
+    //        var inputId = label.getAttribute('for');
+    //        if(inputId!=null){
+            
+    //        if (document.getElementById(inputId) != null) {
+    //            var input = document.getElementById(inputId);
+    //            var labelText = label.textContent.trim();
+    //            var inputValue = input.value.trim();
+
+    //            result[labelText] = inputValue;
+    //        }
+    //        else{
+    //            var input =  document.querySelector('label[for="' + inputId + '"]').previousElementSibling;
+                
+    //            var labelText = label.textContent.trim();
+    //            var inputValue = input.value.trim();
+              
+    //            result[labelText] = inputValue;
+    //        }
+    //        }
+            
+    //    });
+    //    var htmlContent = '<html><body>';
+    //    for (var key in result) {
+            
+    //        if (result.hasOwnProperty(key)) {
+    //            htmlContent += '<p><strong>' + key + ':</strong> ' + result[key] + '</p>';
+    //        }
+    //    }
+    //    var MultiValue = document.getElementById('multiValueGrid');
+    //    debugger;
+    //    htmlContent += MultiValue.outerHTML;
+    //    debugger;
+    //    htmlContent += '<!--</body></html>-->';
+
+    //    var blob = new Blob([htmlContent], { type: 'text/html' });
+
+
+    //    var blobURL = window.URL.createObjectURL(blob);
+
+
+    //    var downloadLink = document.createElement('a');
+    //    downloadLink.href = blobURL;
+    //    downloadLink.download = 'downloaded_page.html';
+
+
+    //    downloadLink.click();
+
+
+    //    window.URL.revokeObjectURL(blobURL);
+
+
+
+    //}
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -72,13 +133,17 @@
     }
 </script>
 <script type="text/javascript">
+
+
+
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var moduleId = parseInt($("#ModuleId").val())
     var id = parseInt($("#Id").val())
     var url = $("#commonForm").attr("action");
-    AjaxFormSubmit = () => {
+    
+     AjaxFormSubmit = () => {
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
@@ -90,7 +155,7 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
-        debugger
+        debugger;
         for (let i = 0; i < layout.length; i++) {
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
@@ -101,12 +166,12 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-                if (layout[i].uiPageData != null && layout[i].uiPageData.length != 0){
-                       var pageDataId = layout[i].uiPageData[0].id;
-                       var childIds = layout[i].uiPageData[0].childId;
-                       var RecordIds = layout[i].uiPageData[0].recordId;
-                       var oldValue = layout[i].uiPageData[0].value;
-                       var List;
+                if (layout[i].uiPageData != null && layout[i].uiPageData.length != 0) {
+                    var pageDataId = layout[i].uiPageData[0].id;
+                    var childIds = layout[i].uiPageData[0].childId;
+                    var RecordIds = layout[i].uiPageData[0].recordId;
+                    var oldValue = layout[i].uiPageData[0].value;
+                    var List;
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true) {
                             var filddata = $(fieldId).val();
@@ -115,8 +180,8 @@
                                 var keyValuepair = {};
                                 keyValuepair.Id = pageDataId;
                                 if (x < uiPageData.length) {
-                                keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
-                               }
+                                    keyValuepair.childId = findChildId(uiPageData, uiPageData[x].value); // Call the findChildId function
+                                }
                                 keyValuepair.uiPageMetadataId = metadataId;
                                 keyValuepair.RecordId = id;
                                 keyValuepair.Value = List[x];
@@ -124,20 +189,20 @@
                                 fieldValues.push(keyValuepair)
                             }
                         }
-                     
+
                         function findChildId(uiPageData, value) {
                             var childId = uiPageData.find(item => item.value === value)?.childId;
                             return childId !== undefined ? childId : null;
                         }
-                            if (layout[i].uiPageMetadata.multiValueControl != true) {
-                                keyValuepair.Id = pageDataId;
-                                keyValuepair.childId = childIds;
-                                keyValuepair.uiPageMetadataId = metadataId;
-                                keyValuepair.RecordId = id;
-                                keyValuepair.Value = fieldValue;
-                                keyValuepair.UiPageTypeId = uiPageTypeId;
-                                fieldValues.push(keyValuepair)
-                            }
+                        if (layout[i].uiPageMetadata.multiValueControl != true) {
+                            keyValuepair.Id = pageDataId;
+                            keyValuepair.childId = childIds;
+                            keyValuepair.uiPageMetadataId = metadataId;
+                            keyValuepair.RecordId = id;
+                            keyValuepair.Value = fieldValue;
+                            keyValuepair.UiPageTypeId = uiPageTypeId;
+                            fieldValues.push(keyValuepair)
+                        }
                     }
                     //else {
                     //    var fieldValue = $(fieldId).val();
@@ -147,24 +212,23 @@
                     //    keyValuepair.Value = fieldValue;
                     //    fieldValues.push(keyValuepair)
                     //}
-                    
-                  }
-                else 
-                {
+
+                }
+                else {
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
                     keyValuepair.RecordId = id;
                     keyValuepair.Value = fieldValue;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
-              
+
                 }
             }
         }
         $.ajax({
             type: 'POST',
             url: url,
-            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues},
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();
                 window.location.href = "/common/index/" + moduleId;
@@ -189,4 +253,12 @@
             }
         });
     }
+
+
+
+  
+    
+
+
+
 </script>

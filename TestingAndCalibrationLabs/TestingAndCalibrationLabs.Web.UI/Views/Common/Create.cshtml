@@ -94,7 +94,7 @@
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
-        debugger;
+        
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl" || uiPageMetaData[i].multiValueControl == true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
@@ -115,7 +115,7 @@
                         fieldValues.push(keyValuepair)
                     }
                 }
-                debugger;
+                
                 if (uiPageMetaData[i].multiValueControl != true) {
                     var fieldValue = $(fieldId).val();
                     var keyValuepair = {};

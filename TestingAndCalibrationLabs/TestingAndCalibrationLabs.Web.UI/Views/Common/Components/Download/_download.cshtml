@@ -11,6 +11,9 @@
     function GenerateReport() {
         var metadata = modelData.value.uiPageMetadata.id;
         var id = $("#Id").val();
-        window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}`, '_blank');
+
+
+        var newURL = `/common/DownloadReport/?id=${id}`;
+        window.location.href = newURL;
     }
 </script>

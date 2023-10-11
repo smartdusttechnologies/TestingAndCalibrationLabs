@@ -95,24 +95,7 @@
         });
     }
     //In This Function I am Creating Controls For Save Popup
-    $(document).ready(function () {
-        for (let i = 0; i < metadata.length; i++) {
-            let metadataId = metadata[i].id;
-            let controlTypeName = metadata[i].uiControlTypeName;
-            let star;
-            if (metadata[i].isRequired) {
-                star = "<span class='red-color'>*</span>";
-            } else {
-                star = "";
-            }
-            let controlId = `${controlTypeName}${metadataId}`;
-            let uiControlDisplayName = metadata[i].uiControlDisplayName;
-            let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                                                                                                            <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
-                                                                                                        <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
-            $("#gridPopup").append(insertElement);
-        }
-    });
+       
     //Inserting Record
     let saveRecords = (subRId) => {
         WheelLoader();
@@ -252,6 +235,7 @@
     //Set PreValues To Update Dailog
     let UpdateFieldsWithValue = (headerName, id) => {
         SetHeader(headerName, id);
+        PopupCreateData(metadata);
         for (let x = 0; x < metadata.length; x++) {
             var value;
             let metadataId = metadata[x].id;
@@ -269,5 +253,25 @@
             }
         }
     }
+
+    function PopupCreateData(MetadataValue) {
+        debugger;
+        for (let i = 0; i < MetadataValue.length; i++) {
+            let metadataId = MetadataValue[i].id;
+            let controlTypeName = MetadataValue[i].uiControlTypeName;
+            let star;
+            if (MetadataValue[i].isRequired) {
+                star = "<span class='red-color'>*</span>";
+            } else {
+                star = "";
+            }
+            let controlId = `${controlTypeName}${metadataId}`;
+            let uiControlDisplayName = MetadataValue[i].uiControlDisplayName;
+            let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                                                                                                                <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                                                                                                            <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
+            $("#gridPopup").append(insertElement);
+        }
+    });
 
 </script>
