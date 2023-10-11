@@ -447,18 +447,42 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// </summary>
         public int FileUpload(FileUploadModel File)
         {
-            string query = @"INSERT INTO [ImageUpload](Name,FileType,DataFiles,CreatedOn)
-                             VALUES (@Name,@FileType,@DataFiles,@CreatedOn)";
+            string query = @" INSERT INTO [ImageUpload] (Name, FileType, DataFiles, CreatedOn) OUTPUT INSERTED.ID  VALUES (@Name, @FileType, @DataFiles, @CreatedOn)";
+
+
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, File);
+            return  db.Query<int>(query, File).FirstOrDefault();
         }
         /// <summary>
         /// Image download in Your Local System
         /// </summary>
-        public FileUploadModel ImageDownload(string ImageValue)
+        public FileUploadModel ImageDownload(int ImageValue)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Name = @Name ", new { Name = ImageValue }).FirstOrDefault();
+            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Id = @Name ", new { Name = ImageValue }).FirstOrDefault();
+        }
+        
+
+         public bool FileUpload(int id, FileUploadModel File)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+
+            string query = @"UPDATE [ImageUpload]  SET Name = @Name, FileType = @FileType, DataFiles = @DataFiles, CreatedOn = @CreatedOn  WHERE Id = @Id";
+            var parameters = new
+            {
+                Id = id, 
+                Name = File.Name,
+                FileType = File.FileType,
+                DataFiles = File.DataFiles,
+                CreatedOn = DateTime.Now, 
+            };
+
+            if (db.Execute(query, parameters) > 0)
+            {
+                return true;
+            }
+            else
+                return false;
         }
         #endregion
     }

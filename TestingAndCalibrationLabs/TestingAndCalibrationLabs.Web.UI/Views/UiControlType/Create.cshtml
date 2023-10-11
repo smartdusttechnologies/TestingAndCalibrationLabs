@@ -23,7 +23,7 @@
                     <label for="ControlCategoryId" class="form-label"></label>
                     <select class="form-input width-full black-border" name="ControlCategoryId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="ControlCategoryId">
                         <option disabled="disabled" selected>Select Control ...</option>
-                        @foreach (var item in ViewBag.ControlCategoryName)
+                        @foreach (var item in ViewBag.ControlName)
                         {
                             <option value=@item.ControlCategoryId>@item.ControlCategoryName</option>
                         }

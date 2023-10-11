@@ -74,6 +74,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        FileUploadModel DownloadImage(string ImageValue);
+        FileUploadModel DownloadImage(int ImageValue);
+
+        /// <summary>
+        /// This method to update file 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="fileUpload"></param>
+        /// <returns></returns>
+        bool FileUpdate(int Id, FileUploadModel fileUpload);
      }
 }  

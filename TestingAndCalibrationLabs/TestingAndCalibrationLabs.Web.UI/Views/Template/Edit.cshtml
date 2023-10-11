@@ -1,0 +1,120 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.TemplateDTO
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<h4>Edit</h4>
+<hr />
+
+
+<form asp-action="Edit" _lpchecked="1" class="mb-2" method="post" enctype="multipart/form-data" asp-controller="Template" novalidate>
+    <div asp-validation-summary="All"></div>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style="padding-left:10px; padding-bottom:5px;">
+            <input class="form-input width-full black-border" type="text" name="TemplateName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="TemplateName">
+
+            <label class="form-label" for="TemplateName">TemplateName</label>
+        </div>
+
+    </div>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+
+            <input class="form-input width-full black-border" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="Validate(this)" accept=".html" asp-for="DataUrl" Required>
+            <label class="form-label" for="DataUrl">File Upload</label>
+
+
+        </div>
+        <div class="file-download" id="FileDownload">
+            <a class="download-link" onclick="FileDownload(@Model.FileId)" itemid=@Model.FileId>
+                <i class="fas fa-download"></i> @Model.TemplateName .html
+            </a>
+        </div>
+
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element ">
+        <button class="btn btn-lg btn-submit-print text-white" type="button" id="" name="Preview" value="Preview" style="background-color:#4250b5" onclick="PreviewData()">Preview</button>
+        <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;"  />
+    </div>
+
+
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    function FileDownload(Id) {
+        location.href = '@Url.Action("DownloadImage", "Common")?ImageValue=' + Id;
+
+
+    }
+    function PreviewData() {
+
+        var File = document.getElementById('TRDataUrl');
+        var file = File.files[0];
+        if (file != null) {
+            var formData = new FormData();
+            formData.append("file", file);
+
+
+            var baseUrl = window.location.protocol + '//' + window.location.host;
+            var targetPath = '/Template/FileToPdf';
+            var fullUrl = baseUrl + targetPath;
+
+            $.ajax({
+                url: fullUrl,
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                responseType: 'arraybuffer',
+                success: function (response) {
+
+                    var binaryString = atob(response);
+
+                    // Convert the binary string to a Uint8Array
+                    var byteArray = new Uint8Array(binaryString.length);
+                    for (var i = 0; i < binaryString.length; i++) {
+                        byteArray[i] = binaryString.charCodeAt(i);
+                    }
+
+                    // Create a Blob from the byte array
+                    var blob = new Blob([byteArray], { type: 'application/pdf' });
+
+                    // Create a download link and trigger the download
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "file.Pdf";
+                    link.click();
+                    alert('good work bro ');
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX error:", status, error);
+                }
+            });
+
+        }
+        else {
+            alert('Please Insert File');
+        }
+
+
+
+    }
+
+    function Validate() {
+
+        var File = document.getElementById('TRDataUrl');
+        var file = File.files[0];
+
+        if (file != null)
+            document.getElementById('FileDownload').style.display = "none";
+        else
+            document.getElementById('FileDownload').style.display = "block";
+    }
+
+</script>

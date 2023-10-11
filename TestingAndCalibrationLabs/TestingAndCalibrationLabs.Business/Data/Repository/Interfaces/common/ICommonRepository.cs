@@ -96,6 +96,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         // <summary>
         // Image Download  in database
         //</summary>
-        FileUploadModel ImageDownload(string ImageValue);
+        FileUploadModel ImageDownload(int ImageValue);
+        /// <summary>
+        /// To File Updation 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="File"></param>
+        /// <returns></returns>
+        bool FileUpload(int id, FileUploadModel File);
     }
 }

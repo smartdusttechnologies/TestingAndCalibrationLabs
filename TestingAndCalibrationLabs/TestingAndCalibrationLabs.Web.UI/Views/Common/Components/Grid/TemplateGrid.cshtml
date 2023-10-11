@@ -1,0 +1,57 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
+<input type="hidden" asp -for="ModuleId" />
+<style>
+    #Template {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #Template td, #Template th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #Template tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #Template tr:hover {
+            background-color: #ddd;
+        }
+
+        #Template th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+</style>
+
+
+<table id="Template" >
+            <thead>
+                <tr>
+                    @foreach (var item in Model.Fields)
+                    {
+                        <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName) </th>
+                    }
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FieldValues)
+                {
+                    <tr>
+                        @foreach (var itemValue in item.Value)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => itemValue.Value)
+                            </td>
+                        }
+                      
+                    </tr>
+                }
+            </tbody>
+        </table>

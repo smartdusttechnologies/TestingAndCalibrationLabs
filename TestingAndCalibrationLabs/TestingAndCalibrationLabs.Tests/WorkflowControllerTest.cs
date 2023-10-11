@@ -42,7 +42,7 @@ namespace TestingAndCalibrationLabs.Tests
             workflowModel.Add(new WorkflowModel { Id = 6, Name = "Aman", ModuleId = 5, ModuleName = "aman" });
             workflowModel.Add(new WorkflowModel { Id = 26, Name = "eAman", ModuleId = 25, ModuleName = "eaman" });
 
-            _workflowService = new WorkflowService(workflowRepository.Object,_genericRepository.Object);
+            _workflowService = new WorkflowService(workflowRepository.Object, _genericRepository.Object);
 
             workflowRepository.Setup(x => x.Get()).Returns(workflowModel);
 
@@ -210,7 +210,7 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
-        
+
         public void Delete_Confirmed_IdNull()
         {
 

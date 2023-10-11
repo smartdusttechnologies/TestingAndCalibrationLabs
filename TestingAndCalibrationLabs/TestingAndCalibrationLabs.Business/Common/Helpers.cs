@@ -38,7 +38,8 @@ namespace TestingAndCalibrationLabs.Business.Common
                 {".jpg", "image/jpeg"},
                 {".jpeg", "image/jpeg"},
                 {".gif", "image/gif"},
-                {".csv", "text/csv"}
+                {".csv", "text/csv"},
+                {".html", "text/html"}
             };
         }
 

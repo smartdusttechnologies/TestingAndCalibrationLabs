@@ -1,0 +1,68 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordDTO
+
+
+<div class="container-fluid" id="ReportPage">
+ 
+
+    <div>
+        <div id="commonForm" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" id="Id" name="Id" />
+            <input type="hidden" asp-for="ModuleId" />
+            <input type="hidden" asp-for="UiPageTypeId" />
+            <input type="hidden" asp-for="WorkflowStageId" />
+            <input type="hidden" asp-for="UpdatedDate" />
+            <div class="row ms-1 me-1">
+                @foreach (var item in Model.Layout)
+                {
+                    @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
+                }
+            </div>
+        </div>
+        <div class="form-group" style="margin:6px;" id="sub-mt-btn">
+        <input type="button" id="createbtn" value="Save" class="button-base button-material-primary" onclick="DownloadReport()" />
+        </div>
+    </div>
+    </div>
+
+
+
+   
+   
+<script type="text/javascript">
+    function DownloadReport() {
+        
+        var reportPageHtml = document.getElementById('CssReal').innerHTML;
+         reportPageHtml += document.getElementById('ReportPage').innerHTML;
+
+        // Create a Blob from the HTML content
+        const blob = new Blob([reportPageHtml], { type: 'text/html' });
+
+       
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+
+        link.download = 'report_page.html';
+
+        link.click();
+
+       
+        
+
+    }
+
+
+    var mainModel = JSON.parse('@Json.Serialize(Model)');
+    var updatedDate = mainModel.updatedDate;
+    var uiPageTypeId = parseInt($("#UiPageTypeId").val())
+    var moduleId = parseInt($("#ModuleId").val())
+    var id = parseInt($("#Id").val())
+    var url = $("#commonForm").attr("action");
+
+   
+
+
+
+
+
+</script>

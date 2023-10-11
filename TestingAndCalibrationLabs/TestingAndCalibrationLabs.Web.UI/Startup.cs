@@ -24,6 +24,9 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Services.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -108,7 +111,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IWorkflowService, WorkflowService>();
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
-            
+            services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<ITemplateService, TemplateService>();
+            services.AddScoped<IDocumentService, DocumentService>();
+
 
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
@@ -167,6 +174,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ISurveyRepository, SurveyRepository>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+            services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

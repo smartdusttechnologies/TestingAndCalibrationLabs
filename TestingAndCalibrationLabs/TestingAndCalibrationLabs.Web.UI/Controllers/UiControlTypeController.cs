@@ -95,7 +95,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var controlCategoryType = _uiControlTypeServices.GetControl();
             var controlCategoryTypeList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlCategoryType);
-            ViewBag.ControlCategoryName = controlCategoryTypeList;
+            ViewBag.ControlName = controlCategoryTypeList;
 
             return base.View(new UiControlTypeDTO { Id = id });
         }

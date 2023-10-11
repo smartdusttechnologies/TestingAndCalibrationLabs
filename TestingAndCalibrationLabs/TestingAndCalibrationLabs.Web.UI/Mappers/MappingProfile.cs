@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Core.Model.Common;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Mappers
@@ -36,6 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<WorkflowDTO,WorkflowModel>().ReverseMap();
             CreateMap<WorkflowStageDTO,WorkflowStageModel>().ReverseMap();
             CreateMap<UiPageNavigationModel, UiPageNavigationDTO>().ReverseMap();
+            CreateMap<TemplateModel, TemplateDTO>().ReverseMap();
             CreateMap<LayoutMModel, LayoutMDTO>().ReverseMap();
             CreateMap<ModuleLayoutModel, ModuleLayoutDTO>().ReverseMap();
 
