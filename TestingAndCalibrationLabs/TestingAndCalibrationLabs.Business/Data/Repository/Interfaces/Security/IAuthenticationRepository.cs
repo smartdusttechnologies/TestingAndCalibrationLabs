@@ -12,7 +12,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Interface to select Password on the basis of userID
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
         PasswordLogin GetUserIdPassword(int userId);
         /// <summary>
         /// Interface for save login Token
@@ -35,12 +34,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Inetface to Select Otp.
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
         OtpModel GetOTP(int userId);
         /// Interface for slect Email from DB
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
         OtpModel GetEmail(int userId);
     }
 }
