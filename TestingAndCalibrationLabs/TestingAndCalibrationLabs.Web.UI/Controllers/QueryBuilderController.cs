@@ -8,7 +8,11 @@ using System;
 using TestingAndCalibrationLabs.Business.Core.Model.Dashboard;
 using OfficeOpenXml;
 using System.IO;
-using AspNetCore;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Document = iTextSharp.text.Document;
+using Paragraph = iTextSharp.text.Paragraph;
+using System.Windows.Markup;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -34,124 +38,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View(records);
         }
         /// <summary>
-        /// This method will take the Detail from Query Builder
+        /// This method will  me Common Query Builder method 
         /// </summary>
-        /// <param name="jsonData"></param>
-        /// <param name="JoinData"></param>
-        /// <param name="ConditionData"></param>
-        /// <param name="TemplateName"></param>
         /// <returns></returns>
-        [HttpPost]
-
-
-
-
-        public IActionResult QueryGenerator(string jsonData, string JoinData, string ConditionData, string TemplateName)
-        {
-            //List<string> list = JsonSerializer.Serialize(jsonData);
-
-            //List<UiQueryBuilderColumn> Person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
-            //List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
-            //List<ConditionModelDTO> ConditionInfo = JsonSerializer.Deserialize<List<ConditionModelDTO>>(ConditionData);
-
-            //for (var item = 0; item < Person.Count; item++)
-            //{
-            //    if (item + 65 + 1 <= 91)
-            //    {
-
-            //        Person[item].Alias = Convert.ToChar(item + 65);
-
-            //    }
-            //}
-            //var Records = _mapper.Map<List<Models.UiQueryBuilderColumn>, List<Business.Core.Model.UiQueryGenerator>>(Person);
-            //var recordJoin = _mapper.Map<List<Models.JoinModel>, List<Business.Core.Model.QueryBuilder.JoinModelDTO>>(Join);
-            //var ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
-
-            //var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin, ConditionJoin, "");
-            //var data = Value.ToDictionary(row => (string)row.itemdata, row => (string)row.itemtype);
-            // List<QueryGenerator> models = JsonConvert.DeserializeObject<List<QueryGenerator>>(datainfo);
-            var data = CommonMethod(jsonData, JoinData, ConditionData, TemplateName);
-
-
-            return PartialView("~/Views/Common/Components/Grid/_commongrid.cshtml", data);
-        }
-
-
-        public IActionResult ExportExcel(string jsonData, string JoinData, string ConditionData, string TemplateName)
-        {
-            try
-            {
-                var records = CommonMethod(jsonData, JoinData, ConditionData, TemplateName);
-                if (records != null && records.Dictionary != null)
-                {
-
-                    using (var stream = new MemoryStream())
-                    {
-                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                        using (var package = new ExcelPackage(stream))
-                        {
-                            var worksheet = package.Workbook.Worksheets.Add("DataSheet");
-
-
-                            int rowIndex = 1;
-                            int columnIndex = 1;
-
-                            // Loop through the dictionary
-                            foreach (var keyValuePair in records.Dictionary)
-                            {
-                                worksheet.Cells[1, columnIndex].Value = keyValuePair.Key;
-
-                                // Loop through the values in the dictionary
-                                int valueIndex = rowIndex;
-                                foreach (var value in keyValuePair.Value)
-                                {
-                                    worksheet.Cells[valueIndex, columnIndex].Value = value;
-                                    valueIndex++;
-                                }
-
-                                columnIndex++;
-
-                            }
-
-                            var fileName = $"ExportedData_{DateTime.Now:yyyyMMddHHmmss}.xls"; // Use .xlsx extension
-                            package.Save();
-
-                            //  package.SaveAs(stream);
-                            // byte[] excelBytes = stream.ToArray();
-
-                            //  return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-                          //  byte[] bytedata = System.Text.Encoding.ASCII.GetBytes(worksheet.Cells.Value.ToString());
-                            var dataValue = worksheet.Cells.Value.ToString() ;
-                            return File(dataValue, " application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-
-                            //var FileBytesArray = package.GetAsByteArray();
-                            //return File(FileBytesArray, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName + ".xls");
-
-                            //var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-                            //FileStreamResult FSR = new FileStreamResult(stream, contentType);
-                            //FSR.FileDownloadName = fileName;
-                            //return FSR;
-
-                        }
-                    }
-                }
-                else
-                {
-                    // Handle the case where 'dashboardDTO' or 'dashboardDTO.Dictionary' is null
-                    return NotFound();
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that may occur
-                return BadRequest($"Error: {ex.Message}");
-            }
-        }
-
-
-        public DashboardDTO CommonMethod (string jsonData, string JoinData, string ConditionData, string TemplateName)
+        public DashboardDTO CommonQueryGenerator(string jsonData, string JoinData, string ConditionData, string TemplateName)
         {
             List<UiQueryBuilderColumn> Person = JsonSerializer.Deserialize<List<UiQueryBuilderColumn>>(jsonData);
             List<JoinModel> Join = JsonSerializer.Deserialize<List<JoinModel>>(JoinData);
@@ -174,6 +64,120 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<DashboardModel, DashboardDTO>(Value);
             return records;
 
+        }
+
+        /// <summary>
+        /// This method will take the Detail from Query Builder
+        /// </summary>
+        /// <param name="jsonData"></param>
+        /// <param name="JoinData"></param>
+        /// <param name="ConditionData"></param>
+        /// <param name="TemplateName"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult QueryGenerator(string jsonData, string JoinData, string ConditionData, string TemplateName)
+        {
+            var data = CommonQueryGenerator(jsonData, JoinData, ConditionData, TemplateName);
+            return PartialView("~/Views/Common/Components/Grid/_commongrid.cshtml", data);
+        }
+        /// <summary>
+        /// This method will take the  Export to Excel 
+        /// </summary>
+        public IActionResult ExportExcel(string jsonData, string JoinData, string ConditionData, string TemplateName)
+        {
+            try
+            {
+                var records = CommonQueryGenerator(jsonData, JoinData, ConditionData, TemplateName);
+                var stream = new MemoryStream();
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("SampleData");
+
+                    int rowIndex = 1;
+                    int columnIndex = 1;
+
+                    foreach (var keyValuePair in records.Dictionary)
+                    {
+                        // worksheet.Cells[1, columnIndex].Value = keyValuePair.Key;
+                        worksheet.Cells[1, columnIndex].Value = keyValuePair.Key;
+                        rowIndex++;
+
+                        // Loop through the values in the dictionary
+                        int valueIndex = rowIndex;
+                        foreach (var value in keyValuePair.Value)
+                        {
+                            worksheet.Cells[valueIndex, columnIndex].Value = value;
+
+                            valueIndex++;
+                        }
+
+                        columnIndex++;
+                    }
+
+                    worksheet.Cells.AutoFitColumns();
+                    package.Save();
+                }
+
+                // stream.Seek(0, SeekOrigin.Begin);
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "SampleData.xlsx");
+
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+
+        /// <summary>
+        /// This method will take the  Export to PDF
+        /// </summary>
+        public IActionResult ExportPDF(string jsonData, string JoinData, string ConditionData, string TemplateName)
+        {
+            try
+            {
+                var records = CommonQueryGenerator(jsonData, JoinData, ConditionData, TemplateName);
+
+                Document document = new Document(PageSize.A4);
+                var stream = new MemoryStream();
+                var pdfFileName = "Data.pdf";
+                PdfWriter.GetInstance(document, stream);
+                document.Open();
+
+                foreach (var entry in records.Dictionary)
+                {
+                    document.Add(new Paragraph(entry.Key));
+
+                    if (entry.Value != null)
+                    {
+                        PdfPTable table = new PdfPTable(1); // 1 column, you can change this as needed
+
+                        foreach (var value in entry.Value)
+                        {
+                            if (value != null)
+                            {
+                                PdfPCell cell = new PdfPCell(new Phrase(value.ToString()));
+                                table.AddCell(cell);
+                            }
+                        }
+
+                        document.Add(table);
+                    }
+                }
+
+                document.Close();
+
+                // Return the generated PDF as a downloadable file
+                return File(stream.ToArray(), "application/pdf", pdfFileName);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur
+                return Content($"Error: {ex.Message}");
+            }
         }
 
     }

@@ -218,8 +218,8 @@
                     <span class="eqv-export-buttons">
                         <a class="eqjs-export eqjs-disabled" onclick="ExportToExcel()" id="exportLink">Export to Excel</a>
 
-@*                        <a class="eqjs-export eqjs-disabled"  asp-action="ExportExcel" asp-controller="QueryBuilder" id="exportLink">Export to Excel</a>
-*@                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="pdf" id="exportpdf">Export to PDF</a>
+@*                        <a class="eqjs-export eqjs-disabled"  asp-action="ExportExcel" asp-controller="QueryBuilder" id="exportLink">Export to Excel</a>*@
+                        <a class="eqjs-export eqjs-disabled" onclick="ExportToPDF()" id="exportpdf">Export to PDF</a>
                         <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel-html" id="exportHTML">Export to HTML (Excel-compatible)</a>
                         <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="csv" id="exportCSV">Export to CSV</a>
                     </span>
@@ -531,14 +531,12 @@
         var JoinData = JSON.stringify(JoinValue);
 
 
-
-       
         var jsonItem = {};
         jsonItem.jsonData = jsonData;
         jsonItem.ConditionData = ConditionData;
         jsonItem.JoinData = JoinData;
         jsonItem.TemplateName = TemplateName;
-      return jsonItem;
+        return jsonItem;
     }
     function DataToModel(){
         debugger
@@ -560,34 +558,47 @@
         function enableExportLink() {
             var exportLink = document.getElementById('exportLink');
             exportLink.classList.remove('eqjs-disabled');
-            //  exportLink.href = '#'; // Set the appropriate URL for exporting data
 
             var exportpdf = document.getElementById('exportpdf');
             exportpdf.classList.remove('eqjs-disabled');
-            //exportpdf.href = '#';
 
 
             var exportHTML = document.getElementById('exportHTML');
             exportHTML.classList.remove('eqjs-disabled');
-            //exportHTML.href = '#';
 
             var exportCSV = document.getElementById('exportCSV');
             exportCSV.classList.remove('eqjs-disabled');
-            //exportCSV.href = '#';
         }
 
     }
-       function ExportToExcel() {
+    // This function for Export to Excel 
+
+    function ExportToExcel() {
         var jsonItem = DataGenerateJson();
-         $.ajax({
+        $.ajax({
             url: 'QueryBuilder/ExportExcel',
             method: 'POST',
             data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
-            success: function (response) {
+            xhrFields: {
+                responseType: 'blob' // Receive response as a Blob
+            },
+            success: function (response, status, xhr) {
+                var disposition = xhr.getResponseHeader('content-disposition');
+               var fileName = 'SampleData.xlsx'; // Use the correct file name
+
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        fileName = matches[1];
+                    }
+                }
+
                 var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                // Create a link to trigger the download
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = 'ExportedData.xls'; // Use .xlsx extension
+                link.download = fileName;
                 link.style.display = 'none';
                 document.body.appendChild(link);
                 link.click();
@@ -595,11 +606,53 @@
                 document.body.removeChild(link);
             },
             error: function (xhr, status, error) {
-                alert('bad work bro');
+                alert('Error: ' + error);
             }
+        });
+    }
 
-         });
-       }
+
+    // This function for Export to PDF
+
+    function ExportToPDF() {
+        var jsonItem = DataGenerateJson();
+        $.ajax({
+            url: 'QueryBuilder/ExportPDF', // Update the URL to the PDF export action
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
+            xhrFields: {
+                responseType: 'blob' // Receive response as a Blob
+            },
+            success: function (response, status, xhr) {
+                var disposition = xhr.getResponseHeader('content-disposition');
+                var fileName = 'SampleData.pdf'; // Use the correct file name for PDF
+
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        fileName = matches[1];
+                    }
+                }
+
+                var blob = new Blob([response], { type: 'application/pdf' });
+
+                // Create a link to trigger the download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
+
     function ConditionValueChanger() {
         var ConditionItem = document.getElementById('condition-data').children;
 
