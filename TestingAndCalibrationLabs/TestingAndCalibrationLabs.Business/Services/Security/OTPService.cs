@@ -46,7 +46,6 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// Method to validate OTP
         /// </summary>
         /// <param name="OtpModel"></param>
-        /// <returns></returns>
         public RequestResult<int> ValidateOTP(OtpModel OtpModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -76,7 +75,6 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// Method To Create OTP though user email 
         /// </summary>
         /// <param name="OtpModel"></param>
-        /// <returns></returns>
         public RequestResult<int> CreateOtp(OtpModel otpModel, int userId ,string name )
         {
             string otp = GenerateOTP();
@@ -130,7 +128,6 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// Method To Creat OTP for Sign-up Page
         /// </summary>
         /// <param name="OtpModel"></param>
-        /// <returns></returns>
         public RequestResult<int> ResendOTP(OtpModel OtpModel)
         {
            var Email =  _authenticationRepository.GetEmail(OtpModel.userId);

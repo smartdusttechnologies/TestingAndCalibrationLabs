@@ -22,7 +22,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <summary>
         ///get the data of the required user with specified role[Admin]
         /// </summary>
-        /// <returns></returns>
         List<string> Interfaces.IUserRepository.Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -57,7 +56,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Select User Email At the Time of Email Verify.
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
         public UserModel SelectEmail(int userId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
