@@ -19,8 +19,10 @@
             url: "@Url.Action("MultipleValue","Common")",
             data: { lookupCategoryId: lookupCategoryId },
             success: function (response) {  
+                debugger;
                 var value = [];
                 if (idOfRecord != undefined && uiPageData != null) {
+                    debugger;
                     for (let i = 0; i < uiPageData.length; i++) {
                         var val = uiPageData[i].value;
                         value.push(val);
@@ -39,7 +41,8 @@
                 let listOfLookupes = selectedIdes.toString();
                 $(id).val(listOfLookupes);
                 }
-                comboTree1.onChange(function () {   // sending ids of all string values
+                comboTree1.onChange(function () { 
+                    debugger;// sending ids of all string values
                     let selectedId = this.getSelectedIds();
                     if (selectedId!=null) {
                     let listOfLookup = selectedId.toString();

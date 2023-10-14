@@ -429,16 +429,23 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public bool DeleteMultiValue(RecordModel record)
         {
+            var innerList = record.FieldValues;
             using IDbConnection db = _connectionFactory.GetConnection;
+
             string recordInsertQuery = @"Update [Record] Set
-                                                UpdatedDate = @UpdatedDate
-                                            Where Id = @Id";
-            var updateQurey = @"Update [UiPageData] Set
-                                    IsDeleted = 1
-                                Where RecordId = @RecordId And SubRecordId = @SubRecordId";
+                                UpdatedDate = @UpdatedDate
+                            Where Id = @Id";
+
+            var updateQuery = @"Update [UiPageData] Set
+                        IsDeleted = 1
+                    Where RecordId = @RecordId And Id = @Id";
+
             IDbTransaction transaction = db.BeginTransaction();
             db.Execute(recordInsertQuery, record, transaction);
-            db.Execute(updateQurey, record.FieldValues, transaction);
+                foreach (var item in innerList)
+                {
+                    db.Execute(updateQuery, new { RecordId = item.RecordId, Id = item.Id }, transaction);
+                }
             transaction.Commit();
             return true;
         }

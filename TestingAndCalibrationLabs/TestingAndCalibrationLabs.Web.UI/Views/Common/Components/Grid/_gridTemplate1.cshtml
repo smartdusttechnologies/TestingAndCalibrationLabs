@@ -35,58 +35,80 @@
                     int totalFields = Model.Fields.Count;
                     int fieldIndex = 0;
                     int rowKey = 1; 
-            }
-            @foreach (var item in Model.FieldValues)
-            {
+                 }
                 <tr>
-                    @foreach (var itemValue in item.Value)
-                    {
+                    @foreach (var item in Model.FieldValue)
+                     {
+                    
                         <td>
-                            @Html.DisplayFor(modelItem => itemValue.Value)
+                            @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         fieldIndex++;
                          
-                        rowData.Add(itemValue);
+                        rowData.Add(item);
                         if (fieldIndex % totalFields == 0)
                         {
-
                             <td>
                                 
                             <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@rowKey)"></a>
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@rowKey)"></a>
                             </td>
                             @:</tr><tr>
-                          
-                          
-                           
                           assignedRows[rowKey] = new List<UiPageDataDTO>(rowData);
                           rowData.Clear(); 
                           rowKey++; 
                           fieldIndex = 0; 
                         }
-                          
-                        }
-                   
+                   }
                 </tr>
-            }
+            
         </tbody>
     </table>
 </div>
 </div>
 
 <script>
+        var fieldValuesSublists = [];
+    $(document).ready(function() {
+          var modellist = JSON.parse('@Json.Serialize(Model)');
+          var fieldCount = @Model.Fields.Count;
+          var valuesKey= modellist.id;
+          var data = modellist.fieldValue;
+          var currentKey = 1;
+
+    for (var i = 0; i < data.length; i += fieldCount) {
+        debugger;
+        var sublist = data.slice(i, i + fieldCount);
+        fieldValuesSublists.push({
+            key: currentKey,
+            sublist: sublist
+        });
+        currentKey++;
+    }
+   
+});
+
      //Call the DeleteMultiValue Method Of Common Page
     let deleteFun = (id) => {
-                debugger;
         WheelLoader();
         let fieldValues = [];
-        let keyValuepair = {};
-        keyValuepair.RecordId = recordId;
-        keyValuepair.SubRecordId = id;
-        fieldValues.push(keyValuepair)
+       for(var g = 0; g<fieldValuesSublists.length; g++ ){
+           if( fieldValuesSublists[g].key == id){
+           for(var f = 0; f<fieldValuesSublists[g].sublist.length; f++){
+             let keyValuepair = {};
+                values= fieldValuesSublists[g].sublist;
+                keyValuepair.id =values[f].id ;
+                keyValuepair.MultiValueControl = true;
+                keyValuepair.RecordId = recordId;
+                keyValuepair.value = values[f].value;
+                keyValuepair.childId =values[f].childId;
+                keyValuepair.uiPageMetadataId = values[f].uiPageMetadataId;
+                fieldValues.push(keyValuepair)
+           }
+           }
+       }
         $.ajax({
             type: 'POST',
-            
             url: "@Url.Action("DeleteMultiValue","Common")",
             data: { "Id": recordId, fieldValues, updatedDate },
             success: function (response) {
@@ -164,10 +186,11 @@
                 fieldValues.push(keyValuepair)
             }
             else {
-                for (let i = 0; i < multiPageData[subRId].length; i++) {
-                    if (metadata[y].id == multiPageData[subRId][i].uiPageMetadataId) {
-                        value = multiPageData[subRId][i];
+                for (let i = 0; i < fieldValuesSublists.length; i++) {
+                    if (fieldValuesSublists[i].key == subRId) {
+                        value = fieldValuesSublists[i].sublist[y];
                         keyValuepair.Id = value.id;
+                        keyValuepair.childId = value.childId;
                         keyValuepair.uiPageMetadataId = mId;
                         keyValuepair.RecordId = id;
                         keyValuepair.Value = val;
@@ -218,33 +241,10 @@
         });
     }
    
-    //debugger;
-    //let models = JSON.parse('@Json.Serialize(Model)');
-
-    //var datastore = models.fieldValues;
-    //var list = datastore[0];
-    //groupByFieldId(list);
-    //function groupByFieldId(list) {
-    //    debugger;
-    //    const groupedLists = new Map();
-
-    //    list.forEach(item => {
-    //        debugger;
-    //        const fieldId = item.uiPageMetadataId;
-    //        if (!groupedLists.has(fieldId)) {
-    //            debugger;
-    //            groupedLists.set(fieldId, []);
-    //        }
-    //        groupedLists.get(fieldId).push(item);
-    //    });
-    //    debugger;
-    //    return Array.from(groupedLists.values());
-    //}
-
     let recordId = parseInt($("#Id").val());
     let model = JSON.parse('@Json.Serialize(Model)');
     let metadata = model.fields;
-    let multiPageData = model.fieldValues;
+    let multiPageData = model.fieldValue;
     oTable = $('#multiValueGrid').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -260,14 +260,11 @@
         const inputID = document.querySelector("#MultiValueGridSearch");
         inputID.value = "";
     }
-
-
     
-    //In This Function I am Creating Controls For Save Popup
-    
-    //Set Value To Element eId Is Element Id and sId Is Value Id
-        let setValue = (eId, sId) => $(`#${eId}`).val(sId);
-
+      function setValue(eId, sId) {
+          debugger;
+      $('#' + eId).val(sId);
+     }
      //Set Modal Header
 
    function SetHeader(headerName, rId) {
@@ -275,67 +272,53 @@
     $("#multiGridHeader").text(headerName);
     $("#savebtn").val(rId);
 }
-    //Set PreValues To Update Dailog
-    //let UpdateFieldsWithValue = (headerName, id) => {
-    //    debugger;
-    //    SetHeader(headerName, id);
-    //    for (let x = 0; x < metadata.length; x++) {
-    //        var value;
-    //        let metadataId = metadata[x].id;
-    //        let controlType = metadata[x].uiControlTypeName;
-    //        if (id == 0) {
-    //            $(`#${controlType}${metadataId}`).val("");
-
-    //        } else {
-    //            for (let i = 0; i < multiPageData[id].length; i++) {
-    //                debugger;
-    //                if (metadata[x].id == multiPageData[id][i].uiPageMetadataId) {
-    //                    value = multiPageData[id][i].value;
-    //                    $(`#${controlType}${metadataId}`).val(value);
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
 
     function UpdateFieldsWithValue(headerName, rId) {
     try {
-           debugger;
+                 debugger;
+         var modellist = JSON.parse('@Json.Serialize(Model)');
+         var Controle = modellist.fields;
          SetHeader(headerName, rId);
           Datapop();
-         debugger;
+          var fieldCount = @Model.Fields.Count;
+          var valuesKey= modellist.id;
+          var data = modellist.fieldValue;
+          var uniqueMetadataIds = [...new Set(Controle.map(field => field.id))];
+        if (rId == 0) {
         for (let x = 0; x < metadata.length; x++) {
-            debugger;
             var value;
             let metadataId = metadata[x].id;
             let controlType = metadata[x].uiControlTypeName;
-            if (rId == 0) {
+           
                 $(`#${controlType}${metadataId}`).val("");
             }
+        }
             else {
-                for (let i = 0; i < multiPageData[id].length; i++) {
-                    if (metadata[x].id == multiPageData[id][i].uiPageMetadataId) {
-                        value = multiPageData[id][i].value;
+                for (let a = 0; a < fieldValuesSublists.length; a++) {
+                    if (metadata[a].id == uniqueMetadataIds[a]&&fieldValuesSublists[a].key == rId ) {
+                        for(let j=0; j<fieldValuesSublists[a].sublist.length; j++){
+                             let metadataId = metadata[j].id;
+                             let controlType = metadata[j].uiControlTypeName;
+
+                             value = fieldValuesSublists[a].sublist[j].value;
                         $(`#${controlType}${metadataId}`).val(value);
+                        }
+                        
                     }
                 }
             }
-        }
-        // Rest of your code
-
+       
     } catch (error) {
       
         console.error('Error in UpdateFieldsWithValue:', error);
     }
 
     }
-    debugger;
      function Datapop() {
        debugger;
        document.getElementById('gridPopup').innerHTML=" <div id="+"alert-box"+"></div>"
 
     for (let i = 0; i < metadata.length; i++) {
-            
             let metadataId = metadata[i].id;
             let controlTypeName = metadata[i].uiControlTypeName;
             let star;
@@ -352,5 +335,4 @@
             $("#gridPopup").append(insertElement);
         }
     }
-
 </script>
