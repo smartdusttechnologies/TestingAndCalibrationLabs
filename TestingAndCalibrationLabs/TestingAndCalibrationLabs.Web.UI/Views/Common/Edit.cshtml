@@ -72,7 +72,6 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
@@ -81,7 +80,6 @@
     var url = $("#commonForm").attr("action");
     AjaxFormSubmit = () => {
         WheelLoader();
-        debugger
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
         const getMembers = (member) => {
@@ -92,7 +90,6 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
-        debugger;
         for (let i = 0; i < layout.length; i++) {
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" || layout[i].uiPageMetadata.multiValueControl == true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
