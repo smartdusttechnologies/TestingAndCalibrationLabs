@@ -30,8 +30,6 @@
         </thead>
         <tbody>
                 @{
-                   Dictionary<int, List<UiPageDataDTO>> assignedRows = new Dictionary<int, List<UiPageDataDTO>>();
-                   List<UiPageDataDTO> rowData = new List<UiPageDataDTO>();
                     int totalFields = Model.Fields.Count;
                     int fieldIndex = 0;
                     int rowKey = 1; 
@@ -45,7 +43,6 @@
                         </td>
                         fieldIndex++;
                          
-                        rowData.Add(item);
                         if (fieldIndex % totalFields == 0)
                         {
                             <td>
@@ -54,8 +51,6 @@
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@rowKey)"></a>
                             </td>
                             @:</tr><tr>
-                          assignedRows[rowKey] = new List<UiPageDataDTO>(rowData);
-                          rowData.Clear(); 
                           rowKey++; 
                           fieldIndex = 0; 
                         }
@@ -72,7 +67,6 @@
     $(document).ready(function() {
           var modellist = JSON.parse('@Json.Serialize(Model)');
           var fieldCount = @Model.Fields.Count;
-          var valuesKey= modellist.id;
           var data = modellist.fieldValue;
           var currentKey = 1;
 
@@ -208,7 +202,6 @@
             url: url,
             data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
-                debugger;
                 myFunction();
                 window.location.href = "/common/edit/" + id;
             },
@@ -256,32 +249,27 @@
         oTable.search($(this).val()).draw();
     })
     const clearText = () => {
-        debugger;
         const inputID = document.querySelector("#MultiValueGridSearch");
         inputID.value = "";
     }
     
       function setValue(eId, sId) {
-          debugger;
       $('#' + eId).val(sId);
      }
      //Set Modal Header
 
    function SetHeader(headerName, rId) {
-    debugger;
     $("#multiGridHeader").text(headerName);
     $("#savebtn").val(rId);
 }
 
     function UpdateFieldsWithValue(headerName, rId) {
     try {
-                 debugger;
          var modellist = JSON.parse('@Json.Serialize(Model)');
          var Controle = modellist.fields;
          SetHeader(headerName, rId);
           Datapop();
           var fieldCount = @Model.Fields.Count;
-          var valuesKey= modellist.id;
           var data = modellist.fieldValue;
           var uniqueMetadataIds = [...new Set(Controle.map(field => field.id))];
         if (rId == 0) {
@@ -315,7 +303,6 @@
 
     }
      function Datapop() {
-       debugger;
        document.getElementById('gridPopup').innerHTML=" <div id="+"alert-box"+"></div>"
 
     for (let i = 0; i < metadata.length; i++) {
