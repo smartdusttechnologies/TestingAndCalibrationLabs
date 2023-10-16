@@ -27,21 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
             _emailService = emailservice;
             _hostingEnvironment = hostingEnvironment;
         }
-        /// <summary>
-        /// Method to Validate the Email
-        /// </summary>
-        public RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel)
-        {
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            UserModel existingUser = _authenticationRepository.GetLoginEmail(OtpModel.Email);
-            if (existingUser == null)
-            {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
-                validationMessages.Add(error);
-                return new RequestResult<(int, string)>(default, validationMessages);
-            }
-            return new RequestResult<(int, string)>((existingUser.Id, existingUser.FirstName));
-        }
+
         /// <summary>
         /// Method to validate OTP
         /// </summary>

@@ -5,12 +5,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingA
 {
     public interface IOTPService
     {
-        /// <summary>
-        /// Interface for Email validation for FogetPassword.
-        /// </summary>
-        /// <param name="user"></param>
-        RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel);
-        /// <summary>
         /// Interface for CreateOTP.
         /// </summary>
         /// <param name="user"></param>

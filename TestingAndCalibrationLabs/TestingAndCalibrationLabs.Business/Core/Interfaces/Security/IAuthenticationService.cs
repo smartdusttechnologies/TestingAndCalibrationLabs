@@ -28,9 +28,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="user"></param>
         RequestResult<int> EmailValidationStatus(UserModel user);
         /// <summary>
+        /// Interface for Email validation for FogetPassword.
+        /// </summary>
+        /// <param name="user"></param>
+        RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel);
+        /// <summary>
         /// Interface for verify Email with Existing Email using at the time of signup.
         /// </summary>
         /// <param name="user"></param>
-         RequestResult<int> ExistingEmailVerify(UserModel user);
+        RequestResult<int> ExistingEmailVerify(UserModel user);
     }
 }

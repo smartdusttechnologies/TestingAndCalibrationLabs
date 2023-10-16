@@ -73,8 +73,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ForgotPassword(OtpDTO otpDTO)
         {
                 var emailResult = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-                var userVerify = _otpService.EmailValidateForgotPassword(emailResult);
-                if (userVerify.IsSuccessful)
+            //var userVerify = _otpService.EmailValidateForgotPassword(emailResult);
+            var userVerify = _authenticationService.EmailValidateForgotPassword(emailResult);
+
+            if (userVerify.IsSuccessful)
                 {
                      otpDTO.userId = userVerify.RequestedObject.UserId;
                      otpDTO.Name = userVerify.RequestedObject.UserName; 
