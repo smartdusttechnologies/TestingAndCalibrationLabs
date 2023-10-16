@@ -41,7 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All Record For moduleLayoutDTO based on metadataId
         /// </summary>
         /// <returns></returns>
-        public ModuleLayoutModel GetByUiPageMetadataId(int uiPageMetadataId)
+        public ModuleLayoutModel GetByMetadataId(int uiPageMetadataId)
         {
             return _moduleLayoutRepository.Get(uiPageMetadataId);
         }

@@ -27,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ModuleLayoutModel GetByUiPageMetadataId(int uiPageMetadataId);
+        ModuleLayoutModel GetByMetadataId(int uiPageMetadataId);
         /// <summary>
         /// Get Records By ModuleLayout based on Id
         /// </summary>

@@ -39,7 +39,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get Record In Lookup Based on lookupCategoryId
         /// </summary>
         /// <returns></returns>
-        public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
+        public List<LookupModel> GetByCategoryId(int lookupCategoryId)
         {
 
             return _lookupRepository.GetLookupCategoryId(lookupCategoryId);
