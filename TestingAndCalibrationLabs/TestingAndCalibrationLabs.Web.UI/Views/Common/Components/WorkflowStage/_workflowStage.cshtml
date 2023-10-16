@@ -8,7 +8,6 @@
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        debugger;
         var lookupCategoryId = modelData.value.uiPageMetadata.moduleLayoutId;
         var uiPageData = modelData.value.uiPageData;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
@@ -18,7 +17,6 @@
             url: "@Url.Action("GetByModuleId","WorkflowStage")",
             data: { moduleId: lookupCategoryId },
             success: function (response) {
-                debugger;
                 for (var i = 0; i < response.length; i++) {
                     var lookupId = response[i].id;
                     var lookupName = response[i].name;
