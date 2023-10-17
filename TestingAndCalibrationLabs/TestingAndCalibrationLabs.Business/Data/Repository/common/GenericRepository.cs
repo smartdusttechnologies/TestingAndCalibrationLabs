@@ -84,7 +84,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         #region Private Methods
         private string GenerateInsertQuery()
         {
-            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
+            var insertQuery = new StringBuilder($"INSERT INTO [{_tableName}] ");
 
             insertQuery.Append("(");
 
@@ -104,7 +104,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         }
         private string GenerateUpdateQuery()
         {
-            var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
+            var updateQuery = new StringBuilder($"UPDATE [{_tableName}] SET ");
             var properties = GenerateListOfProperties(typeof(T).GetProperties());
 
             properties.ForEach(property =>
