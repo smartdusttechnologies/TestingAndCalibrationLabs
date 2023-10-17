@@ -13,6 +13,8 @@ using iTextSharp.text;
 using Document = iTextSharp.text.Document;
 using Paragraph = iTextSharp.text.Paragraph;
 using System.Windows.Markup;
+using System.Linq;
+using System.Text;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -60,7 +62,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var recordJoin = _mapper.Map<List<Models.JoinModel>, List<Business.Core.Model.QueryBuilder.JoinModelDTO>>(Join);
             var ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
 
-            var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin, ConditionJoin, "");
+            var Value = _querybuilderService.UiToJsonQueryBuilder(Records, recordJoin, ConditionJoin, TemplateName);
             var records = _mapper.Map<DashboardModel, DashboardDTO>(Value);
             return records;
 
@@ -135,6 +137,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// This method will take the  Export to PDF
         /// </summary>
+
+
         public IActionResult ExportPDF(string jsonData, string JoinData, string ConditionData, string TemplateName)
         {
             try
@@ -147,27 +151,38 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 PdfWriter.GetInstance(document, stream);
                 document.Open();
 
+                // Determine the maximum number of values in a single section
+                int maxRowCount = records.Dictionary.Values.Max(section => section.Count);
+
+                // Create a table with the keys as columns
+                PdfPTable table = new PdfPTable(records.Dictionary.Count);
+                table.WidthPercentage = 100; // Make the table use the whole width of the page
                 foreach (var entry in records.Dictionary)
                 {
-                    document.Add(new Paragraph(entry.Key));
+                    // Add the key as a column header
+                    PdfPCell headerCell = new PdfPCell(new Phrase(entry.Key));
+                    table.AddCell(headerCell);
+                }
 
-                    if (entry.Value != null)
+                // Transpose the data and add it as rows
+                for (int i = 0; i < maxRowCount; i++)
+                {
+                    foreach (var entry in records.Dictionary)
                     {
-                        PdfPTable table = new PdfPTable(1); // 1 column, you can change this as needed
-
-                        foreach (var value in entry.Value)
+                        if (entry.Value != null && i < entry.Value.Count)
                         {
-                            if (value != null)
-                            {
-                                PdfPCell cell = new PdfPCell(new Phrase(value.ToString()));
-                                table.AddCell(cell);
-                            }
+                            PdfPCell cell = new PdfPCell(new Phrase(entry.Value[i]?.ToString() ?? "")); // Handle null values
+                            table.AddCell(cell);
                         }
-
-                        document.Add(table);
+                        else
+                        {
+                            PdfPCell emptyCell = new PdfPCell(new Phrase("")); // Empty cell for missing values
+                            table.AddCell(emptyCell);
+                        }
                     }
                 }
 
+                document.Add(table);
                 document.Close();
 
                 // Return the generated PDF as a downloadable file
@@ -179,6 +194,50 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return Content($"Error: {ex.Message}");
             }
         }
+        /// <summary>
+        /// This method will take the  Export to HTML
+        /// </summary>
+        public IActionResult ExportHTML(string jsonData, string JoinData, string ConditionData, string TemplateName)
+        {
+            var records = CommonQueryGenerator(jsonData, JoinData, ConditionData, TemplateName);
+            // Generate the HTML content
+            var htmlContent = new StringBuilder();
+            htmlContent.AppendLine("<html><head><title>Export to HTML</title></head><body>");
+            htmlContent.AppendLine("<table border='1'>");
+
+            // Create the header row
+            htmlContent.AppendLine("<tr>");
+            foreach (var key in records.Dictionary.Keys)
+            {
+                htmlContent.AppendFormat("<th>{0}</th>", key);
+            }
+            htmlContent.AppendLine("</tr>");
+
+            // Create the data rows
+            int maxRowCount = records.Dictionary.Values.Max(v => v.Count);
+            for (int rowIndex = 0; rowIndex < maxRowCount; rowIndex++)
+            {
+                htmlContent.AppendLine("<tr>");
+                foreach (var key in records.Dictionary.Keys)
+                {
+                    if (rowIndex < records.Dictionary[key].Count)
+                    {
+                        htmlContent.AppendFormat("<td>{0}</td>", records.Dictionary[key][rowIndex]);
+                    }
+                    else
+                    {
+                        htmlContent.AppendLine("<td></td>");
+                    }
+                }
+                htmlContent.AppendLine("</tr>");
+            }
+
+            htmlContent.AppendLine("</table></body></html>");
+
+            // Return the HTML as a FileResult
+            return File(Encoding.UTF8.GetBytes(htmlContent.ToString()), "text/html", "SampleData.html");
+        }
+
 
     }
 }

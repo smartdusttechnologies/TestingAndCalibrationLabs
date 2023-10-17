@@ -27,12 +27,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBui
         /// <returns></returns>
           int QuerySaver(JsonSaveModel model);
 
-
+        /// <summary>
+        /// This Method will sbe execute sql query 
+        /// </summary
+        /// <param name="model"></param>
+        /// <returns></returns>
         DashboardModel ExecuteCustomQuery(string query);
-
-       // List<CommonQueryModel> ExecuteCustomQuery(string query);
-
-
-
     }
 }

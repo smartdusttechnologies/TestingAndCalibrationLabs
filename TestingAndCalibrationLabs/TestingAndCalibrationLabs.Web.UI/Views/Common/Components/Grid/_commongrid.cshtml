@@ -6,7 +6,6 @@
     <style>
         .scrollable-table {
              width: 100%;
-/*            max-width: 1000px; /* Adjust the max-width as needed */
              height: 250px; /* Adjust the height as needed */
             overflow-x: auto; /* Enable horizontal scrolling */
             overflow-y: auto; /* Enable vertical scrolling */
@@ -36,8 +35,7 @@
 <body>
 
     <div class="scrollable-table">
-        <table id="mytable">
-            
+         <table id="mytable">
                 @if (Model.Dictionary != null)
                 {
                     <thead>
@@ -66,13 +64,8 @@
                         </tr>
 
                     </tbody>
-                
-            }
-        </table>
-
-
-
+                }
+         </table>
     </div>
-
 </body>
 </html>
