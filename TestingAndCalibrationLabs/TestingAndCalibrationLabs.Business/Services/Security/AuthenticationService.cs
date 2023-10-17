@@ -15,6 +15,7 @@ using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCa
 using AutoMapper;
 using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Http;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -34,10 +35,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IOTPService _otpService;
         private readonly IMapper _mapper;
+        private readonly IOtpRepsitory _otpRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
+            IOtpRepsitory otpRepository,
             ILogger logger,
             IEmailService emailservice,
             IWebHostEnvironment hostingEnvironment,
@@ -56,6 +59,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _hostingEnvironment = hostingEnvironment;
             _otpService = otpService;
             _mapper = mapper;
+            _otpRepository = otpRepository;
             _httpContextAccessor = httpContextAccessor;
 
         }
@@ -229,7 +233,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            UserModel existingUser = _authenticationRepository.GetLoginEmail(OtpModel.Email);
+            UserModel existingUser = _otpRepository.GetLoginEmail(OtpModel.Email);
             if (existingUser == null)
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };

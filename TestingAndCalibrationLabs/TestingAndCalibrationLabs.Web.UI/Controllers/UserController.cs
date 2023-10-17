@@ -16,14 +16,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOTPService _otpService;
         private readonly IOrganizationService _organizationService;
         private readonly IAuthenticationRepository _authenticationRepository;
+        private readonly IOtpRepsitory _otpRepsitory;
 
-        public UserController(IAuthenticationService authenticationService,IOrganizationService organizationService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository)
+        public UserController(IAuthenticationService authenticationService,IOrganizationService organizationService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository, IOtpRepsitory otpRepsitory)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
             _otpService = otpService;
             _organizationService = organizationService;
             _authenticationRepository = authenticationRepository;
+            _otpRepsitory = otpRepsitory;
         }
         /// <summary>
         /// Default Action of the User Controller

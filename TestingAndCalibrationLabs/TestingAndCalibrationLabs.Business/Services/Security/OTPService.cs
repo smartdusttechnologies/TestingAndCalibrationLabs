@@ -6,6 +6,7 @@ using System.IO;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 
@@ -17,14 +18,16 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IOtpRepsitory _otpRepsitory;
         public OTPservice(IConfiguration configuration,
            IAuthenticationRepository authenticationRepository, 
-           IEmailService emailservice,
+           IEmailService emailservice, IOtpRepsitory otpRepsitory,
            IWebHostEnvironment hostingEnvironment)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
             _emailService = emailservice;
+            _otpRepsitory = otpRepsitory;
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -35,7 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         public RequestResult<int> ValidateOTP(OtpModel OtpModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            OtpModel existingUser = _authenticationRepository.GetOTP(OtpModel.userId);
+            OtpModel existingUser = _otpRepsitory.GetOTP(OtpModel.userId);
             if (OtpModel.OTP == existingUser.OTP)
             {
                 double OTPTime = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
@@ -77,7 +80,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", otp);
             model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*", model.BodyImage);
             model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
-            OtpModel OtpGenerate = _authenticationRepository.InsertOtp(otp, userId);
+            OtpModel OtpGenerate = _otpRepsitory.InsertOtp(otp, userId);
             try
             {
                 _emailService.Sendemail(model);
@@ -116,7 +119,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// <param name="OtpModel"></param>
         public RequestResult<int> ResendOTP(OtpModel OtpModel)
         {
-           var Email =  _authenticationRepository.GetEmail(OtpModel.userId);
+           var Email = _otpRepsitory.GetEmail(OtpModel.userId);
             var userId = OtpModel.userId;
             var name = OtpModel.Name;
             var otp = CreateOtp(Email ,userId,name);

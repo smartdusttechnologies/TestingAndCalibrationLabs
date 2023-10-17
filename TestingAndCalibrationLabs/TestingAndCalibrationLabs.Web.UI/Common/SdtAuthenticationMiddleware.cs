@@ -52,6 +52,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 || context.Request.Path.Value.Equals("/Security/Login", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/User/Add", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/User/SendOtp", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/User/ResendOTP", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/User/VerifyEmail", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/ForgotPassword", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/ValidateOTP", StringComparison.OrdinalIgnoreCase)
