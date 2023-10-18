@@ -83,12 +83,10 @@
 <script>
     //Call the Delete Method Of Common Page
     let deleteFun = (id) => {
-        debugger;
         let moduleId = parseInt($("#ModuleId").val())
         window.location.href = "/common/delete?id=" + id + "&moduleId=" + moduleId;
     }
     oTable = $('#grid').DataTable({
-        debugger
         lengthMenu: [
             [5, 10, 25, 50, -1],
             [5, 10, 25, 50, 'All'],
@@ -96,15 +94,12 @@
         scrollX: true,
     });
     $('#gridSearch').keyup(function () {
-        debugger;
         oTable.search($(this).val()).draw();
     })
     const clearText = () => {
-        debugger;
         const inputID = document.querySelector("#gridSearch");
         inputID.value = "";
     }
-    debugger;
     //Set The Value To Popup Delete Button
     let setValue = (id) => $("#deletePopup").val(id);
     

@@ -178,8 +178,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public ActionResult MultipleValue(int lookupCategoryId)
         {
-            var lookupList = _lookupService.GetLookupByCategoryId(lookupCategoryId);
-
+            var lookupList = _lookupService.GetByCategoryId(lookupCategoryId);
+           
             List<ListSorterModel> listSorterDTOs = new List<ListSorterModel>();
             foreach (var item in lookupList)
             {
@@ -267,7 +267,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public ActionResult DeleteMultiValue(RecordModel record)
         {
-            
             var result = _commonService.DeleteMultiValue(record);
             if (result.IsSuccessful)
             {

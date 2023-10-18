@@ -1,5 +1,5 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="~/css/MaterialDesignIcon.css">
 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
     <input class="form-input width-full black-border" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" id="Emtd-@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder="MultipleSelect" rows="1" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiPageMetadata.UiControlDisplayName" />
     <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
@@ -39,7 +39,8 @@
                 let listOfLookupes = selectedIdes.toString();
                 $(id).val(listOfLookupes);
                 }
-                comboTree1.onChange(function () {   // sending ids of all string values
+                comboTree1.onChange(function () { 
+                   // sending ids of all string values
                     let selectedId = this.getSelectedIds();
                     if (selectedId!=null) {
                     let listOfLookup = selectedId.toString();

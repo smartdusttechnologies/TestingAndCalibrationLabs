@@ -74,7 +74,6 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var moduleId = parseInt($("#ModuleId").val())
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
     var mainModel = JSON.parse('@Json.Serialize(Model)');
@@ -94,14 +93,12 @@
         var uiPageMetaData = _.flatMapDeep(mainModel.layout, getMembers);
         //flatten process end
         var fieldValues = [];
-        
         for (let i = 0; i < uiPageMetaData.length; i++) {
             if (uiPageMetaData[i].controlCategoryName == "DataControl" || uiPageMetaData[i].multiValueControl == true) {
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
-                debugger;
                 var metadataId = uiPageMetaData[i].id;
                 var List;
                 if (uiPageMetaData[i].multiValueControl == true) {
@@ -115,7 +112,6 @@
                         fieldValues.push(keyValuepair)
                     }
                 }
-                
                 if (uiPageMetaData[i].multiValueControl != true) {
                     var fieldValue = $(fieldId).val();
                     var keyValuepair = {};

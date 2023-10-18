@@ -23,12 +23,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         List<ModuleLayoutModel> Get();
         /// <summary>
-        /// Get Records By ModuleLayout based on metadataId
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        ModuleLayoutModel GetByUiPageMetadataId(int uiPageMetadataId);
-        /// <summary>
         /// Get Records By ModuleLayout based on Id
         /// </summary>
         /// <param name="id"></param>

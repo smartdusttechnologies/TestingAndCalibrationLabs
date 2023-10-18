@@ -23,7 +23,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get Record In Lookup Based on lookupCategoryId
         /// </summary>
         /// <returns></returns>
-        List<LookupModel> GetLookupByCategoryId(int lookupCategoryId);
+        List<LookupModel> GetByCategoryId(int lookupCategoryId);
         /// <summary>
         /// Get Record By Id From Lookup
         /// </summary>

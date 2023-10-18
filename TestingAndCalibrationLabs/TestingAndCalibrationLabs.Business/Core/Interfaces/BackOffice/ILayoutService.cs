@@ -13,7 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         List<LayoutMModel> Get();
         /// <summary>
-        /// Get All Records From layout based on id
+        /// Get  Records From layout based on id
         /// </summary>
         /// <returns></returns>
         LayoutMModel GetById(int id);
