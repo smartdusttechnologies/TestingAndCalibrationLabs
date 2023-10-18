@@ -38,7 +38,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             List<TemplateModel> page = _templateService.Get();
             var pageData = _mapper.Map<List<TemplateModel>, List<TemplateDTO>>(page);
-
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                
+                return Json(pageData);
+            }
             return View(pageData.AsEnumerable());
         }
 

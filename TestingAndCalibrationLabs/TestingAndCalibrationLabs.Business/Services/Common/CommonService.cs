@@ -12,6 +12,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
+using TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationService;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -28,6 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWorkflowStageService _workflowStageService;
         private readonly IEmailService _emailService;
+     
         public CommonService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
@@ -36,7 +38,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,
             IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,
             IWorkflowStageService workflowStageService,
-            IEmailService emailService)
+            IEmailService emailService
+           )
 
         {
             _commonRepository = commonRepository;
@@ -82,13 +85,25 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send)
+        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send, int fileId)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);
-            var template = File.ReadAllText(path);
+            string template;
+          
+              var File = DownloadImage(fileId);
+            //string template;
+
+            using (var memoryStream = new MemoryStream(File.DataFiles))
+            using (var reader = new StreamReader(memoryStream))
+            {
+                template = reader.ReadToEnd();
+                
+            }
+         
+
+            //var template = File.ReadAllText(path);
             var workflowStage = _workflowStageService.GetStage(recordMdel.ModuleId, recordMdel.Id);
             var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageId);
             var uiPageData = _commonRepository.GetPageData(recordId);
@@ -100,14 +115,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                 UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList(),
 
             }));
-            //List<LayoutModel> hirericheys = new List<LayoutModel>();
-            //pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
-            //{
-            //    UiPageMetadata = x,
-            //    UiPageData = uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList()
-            //})) ;
-            //string Table1 = "<html><body><table>";
-            //string Table2 = "<table>";
+
+            
+
 
             foreach (var item in hirericheys)
             {
@@ -198,8 +208,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (send)
             {
                 //string emailAd = new string(email);
-                var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
-                var htmlWeb = File.ReadAllText(htmlPath);
+              //  var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
+               // var htmlWeb = File.ReadAllText(htmlPath);
                 using Stream stream = new MemoryStream(pdfByte);
                 Attachment attachment = new Attachment(stream, "report.pdf", "application/pdf");
                 EmailModel emailModel = new EmailModel();
@@ -210,7 +220,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 emailModel.Email = emailAd;
 
                 emailModel.Subject = "Thanks For Visiting Testing And Calibration Labs";
-                emailModel.HtmlMsg = htmlWeb;
+                //emailModel.HtmlMsg = htmlWeb;
                 var atchmt = new List<Attachment>() { attachment };
                 emailModel.Attachments = atchmt;
                 var sendMail = _emailService.Sendemail(emailModel);

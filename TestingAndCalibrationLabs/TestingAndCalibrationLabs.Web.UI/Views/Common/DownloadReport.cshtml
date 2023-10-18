@@ -30,28 +30,7 @@
    
    
 <script type="text/javascript">
-    function DownloadReport() {
-        
-        var reportPageHtml = document.getElementById('CssReal').innerHTML;
-         reportPageHtml += document.getElementById('ReportPage').innerHTML;
-
-        // Create a Blob from the HTML content
-        const blob = new Blob([reportPageHtml], { type: 'text/html' });
-
-       
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-
-        link.download = 'report_page.html';
-
-        link.click();
-
-       
-        
-
-    }
-
-
+   
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())

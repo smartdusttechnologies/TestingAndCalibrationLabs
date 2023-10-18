@@ -120,14 +120,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
-            //  return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
-            return PartialView("~/Views/Common/Components/Grid/TemplateGrid.cshtml", records);
+              return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+            //return PartialView("~/Views/Common/Components/Grid/TemplateGrid.cshtml", records);
 
         }
-        [HttpPost]
-        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send)
+        //[HttpPost]
+        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send,int FileId)
         {
-            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send);
+
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send,FileId);
             
             if (send)
             {

@@ -1,5 +1,6 @@
 ﻿using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
+using Microsoft.AspNetCore.Http;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
@@ -50,7 +51,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="uiPageTypeId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send);
+		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send, int FileId);
         /// <summary>
         /// To Get multi Value Records For Creating Grid
         /// </summary>

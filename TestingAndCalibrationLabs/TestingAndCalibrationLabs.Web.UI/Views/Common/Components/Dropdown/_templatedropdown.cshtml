@@ -1,0 +1,32 @@
+﻿@*@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
+*@
+
+
+<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+    <select class="form-input width-full black-border" name="Dropdonw" id="DropdownItem" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" for="">
+       
+    </select>
+    <label class="form-label" for="Id"> Template</label>
+@*    <span asp-validation-for="" class="text-danger"></span>
+*@</div>
+<script>
+    $(document).ready(function () {
+       
+        $.ajax({
+            
+            url: "@Url.Action("Index","Template")",
+            
+            success: function (response) {
+                debugger;
+                for (var item = 0; item < response.length; item++) {
+                    var TemplateId = response[item].fileId;
+                    var TemplateName = response[item].templateName;
+                    $('#DropdownItem').append("<option value='" + TemplateId + "'>" + TemplateName + "</option>");
+                }
+              
+            },
+            error: function (req, status, error) {
+            }
+        });
+    });
+</script>
