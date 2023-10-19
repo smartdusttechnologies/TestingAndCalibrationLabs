@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace TestingAndCalibrationLabs.Business.Common
 {
@@ -32,6 +34,33 @@ namespace TestingAndCalibrationLabs.Business.Common
             }
             return null;
         }
+        /// <summary>
+        /// To Get All ColumnNames Of A Given Model With DbColumnAttribute
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<string> GetDbColumnName<T>()
+        {
+            var _listOfColumns = new List<string>();
+            var propertieList = GetApplicableProperties(typeof(T).GetProperties().AsEnumerable());
+            foreach (PropertyInfo prop in propertieList)
+            {
+                object[] attributeList = prop.GetCustomAttributes(true);
+                foreach (var attribute in attributeList)
+                {
+                    string columnName;
+                    if (!(attribute is DbColumnAttribute dbColumnAttribute))
+                        continue;
+                    else if (string.IsNullOrEmpty(dbColumnAttribute.Name))
+                        columnName = prop.Name;
+                    else
+                        columnName = dbColumnAttribute.Name;
+
+                    _listOfColumns.Add(columnName);
+                }
+            }
+            return _listOfColumns;
+        }
         public static IEnumerable<Node<T>> Hierarchize<T, TKey, TOrderKey>(this IEnumerable<T> elements, TKey topMostKey, Func<T, TKey> keySelector, Func<T, TKey> parentKeySelector, Func<T, TOrderKey> orderingKeySelector)
         {
             var families = elements.ToLookup(parentKeySelector);
@@ -53,6 +82,14 @@ namespace TestingAndCalibrationLabs.Business.Common
             return childrenFetcher(topMostKey);
         }
         #endregion
-
+        #region private methods
+        private static List<PropertyInfo> GetApplicableProperties(IEnumerable<PropertyInfo> listOfProperties)
+        {
+            return (from prop in listOfProperties
+                    let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
+                    select prop).ToList();
+        }
+        #endregion
     }
 }
