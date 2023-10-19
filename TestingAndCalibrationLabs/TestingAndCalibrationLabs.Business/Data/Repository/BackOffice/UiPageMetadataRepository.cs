@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Getting All Existing From Ui Page Metadata based on moduleLayoutId 
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetExisting(int moduleLayoutId)
+        public List<UiPageMetadataModel> GetExistingMetadata(int moduleLayoutId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var Displaynames = db.Query<UiPageMetadataModel>(@"Select upm.Id,
@@ -148,6 +148,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and ml.IsDeleted = 0
                                                     and ucct.IsDeleted = 0
                                                     and upmmb.IsDeleted = 0
+                                                    and upt.IsDeleted = 0
 													and up.IsDeleted = 0").ToList();
         }
 
@@ -156,7 +157,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public UiPageMetadataModel GetByPageId(int id, int uiPageTypeId, int metadataModuleBridgeId)
+        public UiPageMetadataModel GetByUiPageTypeId(int id, int uiPageTypeId, int metadataModuleBridgeId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
 

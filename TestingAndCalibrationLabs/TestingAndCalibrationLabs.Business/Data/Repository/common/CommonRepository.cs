@@ -236,7 +236,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public bool Save(RecordModel recordModel)
         {
-            var datalist = recordModel.FieldValues;
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
@@ -406,22 +405,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													and mmb.IsDeleted = 0
                                                     and ucct.IsDeleted = 0", new { recordId }).ToList();
         }
-        /// <summary>
-        /// Generate New SubRecordId Based On Previous SubRecordId
-        /// </summary>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public int GenerateNewSubRecordId(int recordId)
-        {
-            using IDbConnection con = _connectionFactory.GetConnection;
-            var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId} and IsDeleted = 0").First();
-            return result + 1;
-        }
-        public List<int> GenerateUiDataId(int recordId)
-        {
-            using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId} and IsDeleted = 0").ToList();
-        }
+        
         /// <summary>
         /// Delete Multi Record Values
         /// </summary>
@@ -429,7 +413,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public bool DeleteMultiValue(RecordModel record)
         {
-            var innerList = record.FieldValues;
             using IDbConnection db = _connectionFactory.GetConnection;
 
             string recordInsertQuery = @"Update [Record] Set
@@ -442,7 +425,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             IDbTransaction transaction = db.BeginTransaction();
             db.Execute(recordInsertQuery, record, transaction);
-                foreach (var item in innerList)
+                foreach (var item in record.FieldValues)
                 {
                     db.Execute(updateQuery, new { RecordId = item.RecordId, Id = item.Id }, transaction);
                 }

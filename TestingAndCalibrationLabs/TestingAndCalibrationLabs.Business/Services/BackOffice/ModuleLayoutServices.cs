@@ -27,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public List<ModuleLayoutModel> GetByMetadataId(int id)
         {
-            return _moduleLayoutRepository.GetByPageMetadataId(id);
+            return _moduleLayoutRepository.GetAllByUiPageMetadataId(id);
         }
         /// <summary>
         /// Get All moduleLayout Record

@@ -31,7 +31,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Execute(query, uiControlTypeModel);
         }
         /// <summary>
-        /// GET ALL Record in UiControlType
+        /// GET ALL Record from UiControlType
         /// </summary>
         /// <param name="uiControlTypeModel"></param>
         /// <returns></returns>

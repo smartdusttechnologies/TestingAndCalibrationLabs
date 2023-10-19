@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        UiPageMetadataModel GetByPageId(int id, int uiPageTypeId, int metadataModuleBridgeId);
+        UiPageMetadataModel GetByUiPageTypeId(int id, int uiPageTypeId, int metadataModuleBridgeId);
         /// <summary>
         /// Insert Record In Ui Metadata
         /// </summary>
@@ -54,6 +54,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        List<UiPageMetadataModel> GetExisting(int moduleLayoutId);
+        List<UiPageMetadataModel> GetExistingMetadata(int moduleLayoutId);
     }
 }

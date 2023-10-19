@@ -40,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<ModuleLayoutModel> GetByPageMetadataId(int id)
+        public List<ModuleLayoutModel> GetAllByUiPageMetadataId(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<ModuleLayoutModel>(@"Select upm.UiPageMetadataId , upt.[Name] as LookupName, upt.Id
@@ -52,19 +52,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and upt.IsDeleted = 0
                                                     ", new { Id = id }).ToList();
         }
-        public ModuleLayoutModel Get(int id)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<ModuleLayoutModel>(@"Select upm.UiPageMetadataId , upt.[Name] as LookupName, lc.[Name] as CategoryName 
-                                                From[UiPageMetadataCharacteristics] upm
-                                                    inner join[LookupCategory] lc on upm.LookupCategoryId = lc.Id
-                                                    inner join[Lookup] upt on lc.Id = upt.LookupCategoryId
-                                                where
-                                                    upm.UiPageMetadataId = @uiPageMetadataId
-                                                    and upm.IsDeleted = 0
-                                                    and upt.IsDeleted = 0
-                                                    and lc.IsDeleted = 0", new { uiPageMetadataId = id }).First();
-        }
+       
         /// <summary>
         /// Create Record From ModuleLayout
         /// </summary>
