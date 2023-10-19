@@ -11,18 +11,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class UiControlTypeController : Controller
     {
         public readonly IUiControlTypeService _uiControlTypeServices;
-        public readonly IListSorterService _listSorterService;
         public readonly IMapper _mapper;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiControlTypeServices"></param>
         /// <param name="mapper"></param>
-        public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper, IListSorterService listSorterService)
+        public UiControlTypeController(IUiControlTypeService uiControlTypeServices,IMapper mapper)
         {
             _uiControlTypeServices = uiControlTypeServices;
             _mapper = mapper;
-            _listSorterService = listSorterService;
         }
         /// <summary>
         /// For Showing All Records Of Ui Control Type
@@ -31,7 +29,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            
             ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
             List<UiControlTypeModel> controlTypeListModel = _uiControlTypeServices.Get();
             var controlTypeList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlTypeListModel);
@@ -71,10 +68,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             if (ModelState.IsValid)
             {
                 var controlTypeEditModel = _mapper.Map<UiControlTypeDTO, UiControlTypeModel>(uiControlTypeDTO);
-                _uiControlTypeServices.Update(controlTypeEditModel);
+                var modal = _uiControlTypeServices.Update(controlTypeEditModel);
                 TempData["IsTrue"] = true;
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
             }
+            
             return View(uiControlTypeDTO);
         }
         /// <summary>
@@ -105,7 +103,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(uiControlTypeDTO);
         }
-
         /// <summary>
         /// For Delete Record View
         /// </summary>
@@ -125,7 +122,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var controlTypeEditModel = _mapper.Map<UiControlTypeModel, UiControlTypeDTO>(getByIdControlType);
             return View(controlTypeEditModel);
         }
-
         /// <summary>
         /// To Delete Record From Ui Control Type
         /// </summary>
