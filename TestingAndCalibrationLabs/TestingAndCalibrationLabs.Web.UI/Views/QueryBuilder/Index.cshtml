@@ -196,7 +196,7 @@
                         <div class="eqv-dropdown-content">
                         </div>
                     </div>
-                    <a class="eqv-button" id="preview" onclick="DataToModel()">Preview Data</a>
+                    <a class="eqv-button" id="preview" onclick="PreviewData()">Preview Data</a>
                     <a class="eqv-button" id="save" onclick="DataToModel()">Save Query</a>
                     <div id="ChangeLocale">
                         <select class="eqv-select">
@@ -208,21 +208,17 @@
                 </div>
             </div>
         </div>
-
         <div class="eqv-bottom-panel">
             <div class="eqv-result-panel" id="Result">
                 <hr class="eqv-result-panel-hr eqv-hr">
                 <div class="eqv-result-panel-title" >
                     Result
                     <span id="ResultCount" style="display:none; margin-left:20px; font-size:small"></span>
-                    <span class="eqv-export-buttons">
+                        <span class="eqv-export-buttons">
                         <a class="eqjs-export eqjs-disabled" onclick="ExportToExcel()" id="exportLink">Export to Excel</a>
-
-@*                        <a class="eqjs-export eqjs-disabled"  asp-action="ExportExcel" asp-controller="QueryBuilder" id="exportLink">Export to Excel</a>*@
                         <a class="eqjs-export eqjs-disabled" onclick="ExportToPDF()" id="exportpdf">Export to PDF</a>
-                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="excel-html" id="exportHTML">Export to HTML (Excel-compatible)</a>
-                        <a class="eqjs-export eqjs-disabled" href="javascript:void(0)" data-format="csv" id="exportCSV">Export to CSV</a>
-                    </span>
+                        <a class="eqjs-export eqjs-disabled" onclick="ExportToHTML()" id="exportHTML">Export to HTML (Excel-compatible)</a>
+                   </span>
                 </div>
                 <div id="partialView"></div>
             </div>
@@ -247,7 +243,6 @@
             select.previousElementSibling.style.display = "inline-block";
         }
     }
-
 
     ///This method to add Join Condition
     function JoinConditionAdd() {
@@ -286,9 +281,6 @@
     function JoinAdd() {
 
         var newElement = document.getElementById('JOINTYPE-Main-Div');
-
-
-
 
         var Data = document.getElementById('JoinPartInfo');
         var datainfo = Data.cloneNode(true);
@@ -338,12 +330,6 @@
         var JoinObject = {};
         var JoinObject1 = null;
         var JoinObject2 = {};
-        //var action = prompt('Choose an action (preview, save, export):');
-        //var itemid = ("#prview");
-        //if (itemid != prview) {
-        let TemplateName = prompt('Type here');
-    
-       // }
         //JOINPART
         for (var JoinItem = 0; JoinItem <= DataItem.children.length; JoinItem++) {
 
@@ -364,7 +350,6 @@
 
                     JoinObject1[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 1].value;
                 }
-
 
             }
             else if (DataItem.children[JoinItem] != null && DataItem.children[JoinItem].id == "JoinConditionMenu0") {
@@ -397,8 +382,6 @@
                 }
 
             }
-
-
 
         }
         if (JoinObject1 != null) {
@@ -460,9 +443,6 @@
 
             data.push({ TableName: arr[i], ColumnName: columnValues });
         }
-
-
-
 
         // Condition Part
         var ConditionItem = document.getElementById('condition-data').children;
@@ -535,16 +515,43 @@
         jsonItem.jsonData = jsonData;
         jsonItem.ConditionData = ConditionData;
         jsonItem.JoinData = JoinData;
-        jsonItem.TemplateName = TemplateName;
         return jsonItem;
     }
-    function DataToModel(){
-        debugger
+
+    // This Function use when we Save QueryBUilder
+    function DataToModel() {
+        // Prompt the user for the template name
+        let TemplateName = prompt('Type here the template name');
+
+        if (TemplateName !== null) {
+            var jsonItem = DataGenerateJson();
+            $.ajax({
+                url: 'QueryBuilder/QueryGenerator',
+                method: 'POST',
+                data: {
+                    'jsonData': jsonItem.jsonData,
+                    'JoinData': jsonItem.JoinData,
+                    'ConditionData': jsonItem.ConditionData,
+                    'TemplateName': TemplateName // Use the user-provided template name
+                },
+                success: function (response) {
+                },
+                error: function (xhr, status, error) {
+                    alert('Bad work bro');
+                }
+            });
+        }
+    }
+
+    // This Function use when we Preview  QueryBUilder
+
+    function PreviewData() {
+        
          var jsonItem = DataGenerateJson();
         $.ajax({
             url: 'QueryBuilder/QueryGenerator',
             method: 'POST',
-            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData, 'TemplateName': jsonItem.TemplateName },
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData},
             success: function (response) {
                 $('#partialView').html(response);
                 enableExportLink();
@@ -652,6 +659,33 @@
         });
     }
 
+    //  This function for export to Html 
+
+    function ExportToHTML() {
+        var jsonItem = DataGenerateJson();
+        $.ajax({
+            url: 'QueryBuilder/ExportHTML', // Replace 'YourControllerName' with the actual controller name
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
+            success: function (response, status, xhr) {
+                // Create a Blob with the HTML content
+                var blob = new Blob([response], { type: 'text/html' });
+
+                // Create a link to trigger the download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'SampleData.html'; // Specify the desired file name
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
 
     function ConditionValueChanger() {
         var ConditionItem = document.getElementById('condition-data').children;

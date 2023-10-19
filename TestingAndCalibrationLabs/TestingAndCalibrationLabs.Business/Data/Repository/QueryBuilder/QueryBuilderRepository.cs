@@ -1,7 +1,4 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -55,27 +52,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder
              db.Execute(query, model);
             return 1;
         }
-        //public List<dynamic> ExecuteCustomQuery(string query)
-        //{
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-        //    db.Execute(query);
-        //    // var value = db.Query(query).ToList();
-        //    var result = db.Query<dynamic>(query).ToList();
-        //    return result;
-        //}
         public DashboardModel ExecuteCustomQuery(string query)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             db.Execute(query);
-            //    var result = db.Query<IDictionary<string, object>>(query).ToList();
-
             var value = db.Query(query);
-
-           
             var data = new DashboardModel();
-           
             data.Dictionary = new Dictionary<string, List<object>>();
-
 
             foreach (var item in value)
             {
@@ -85,20 +68,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder
                     var key = item2.Key;
                      object Value = item2.Value;
 
-
                     if (!data.Dictionary.ContainsKey(key))
                     {
                         data.Dictionary[key] = new List<object>();
                     }
-                    //if (Value == null)
-                    //{
-                    //    data.Dictionary[key].Add(null);
-                    //}
-                    //else
-                    //{
-                    //    data.Dictionary[key].Add(Value);
-                    //}
-
                       data.Dictionary[key].Add(Value);
                  
                 }

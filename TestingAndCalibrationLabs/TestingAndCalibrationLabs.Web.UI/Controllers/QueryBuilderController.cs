@@ -11,8 +11,6 @@ using System.IO;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Document = iTextSharp.text.Document;
-using Paragraph = iTextSharp.text.Paragraph;
-using System.Windows.Markup;
 using System.Linq;
 using System.Text;
 
@@ -58,6 +56,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 }
             }
+
             var Records = _mapper.Map<List<Models.UiQueryBuilderColumn>, List<Business.Core.Model.UiQueryGenerator>>(Person);
             var recordJoin = _mapper.Map<List<Models.JoinModel>, List<Business.Core.Model.QueryBuilder.JoinModelDTO>>(Join);
             var ConditionJoin = _mapper.Map<List<Models.ConditionModelDTO>, List<Business.Core.Model.QueryBuilder.ConditionModel>>(ConditionInfo);
@@ -67,7 +66,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return records;
 
         }
-
         /// <summary>
         /// This method will take the Detail from Query Builder
         /// </summary>
@@ -137,7 +135,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// This method will take the  Export to PDF
         /// </summary>
-
 
         public IActionResult ExportPDF(string jsonData, string JoinData, string ConditionData, string TemplateName)
         {
@@ -237,7 +234,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             // Return the HTML as a FileResult
             return File(Encoding.UTF8.GetBytes(htmlContent.ToString()), "text/html", "SampleData.html");
         }
-
 
     }
 }

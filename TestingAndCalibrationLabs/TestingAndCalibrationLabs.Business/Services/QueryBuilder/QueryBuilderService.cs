@@ -55,13 +55,8 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
         /// <param name="conditionModels"></param>
         /// <param name="TemplateName"></param>
         /// <returns></returns>
-        // public int UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
-       // public List<CommonQueryModel> UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
         public DashboardModel UiToJsonQueryBuilder(List<UiQueryGenerator> person, List<JoinModelDTO> JoinInfo, List<ConditionModel> conditionModels, string TemplateName)
         {
-
-
-
             for (var item = 0; item < JoinInfo.Count; item++)
             {
 
@@ -81,8 +76,6 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
                 }
                 foreach (var info in person)
                 {
-
-
                     if (info.TableName == JoinInfo[item].TableChoice)
                     {
                         JoinInfo[item].TableChoice += " " + info.Alias;
@@ -142,9 +135,6 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
                     OnTypeData = "'on':[ " + OnTypeData + " ]";
                 }
 
-
-
-
                 foriegnData += "{ 'joinType':" + '"' + row.JoinType + '"' + ",  'tableName':" + '"' + row.TableChoice + '"' + ",  'foriegnTableName': " + '"' + row.TableFrom + '"' + ", " + OnTypeData + "  },";
 
             }
@@ -164,38 +154,24 @@ namespace TestingAndCalibrationLabs.Business.Services.QueryBuilder
                 condition += "],";
 
 
-
-
-
-
                 QueryJson = QueryJson + column + condition + foriegn + QueryJsonEnd;
-
 
             }
             else
             {
                 QueryJson = QueryJson + column  + foriegn + QueryJsonEnd;
             }
-
-
-
-
             if (Validator(QueryJson))
             {
                 var model = new JsonSaveModel();
                 model.Template = TemplateName;
                 model.JSON = QueryJson;
-                // return  _querybuilderRepository.QuerySaver(model);
                 var result = SqlConverter.JsonToSql(QueryJson);
                 var data= _querybuilderRepository.ExecuteCustomQuery(result);
-                //  return 1;
                 return data;
-
-
             }
             else
             {
-                // return 0;
                 return null;
             }
         }
