@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {}
+    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
+        "projectUniqueName": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
         "projectName": "TestingAndCalibrationLabs.Business",
-        "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
-        "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\obj\\",
+        "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
+        "packagesPath": "C:\\Users\\apurw\\.nuget\\packages\\",
+        "outputPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\apurw\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.0.123, )"
@@ -120,17 +128,17 @@
         }
       }
     },
-    "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {
+    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+        "projectUniqueName": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
         "projectName": "TestingAndCalibrationLabs.Tests",
-        "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
-        "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
+        "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+        "packagesPath": "C:\\Users\\apurw\\.nuget\\packages\\",
+        "outputPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\apurw\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -144,11 +152,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
-                "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+              "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+                "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
               },
-              "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
-                "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
+              "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+                "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
               }
             }
           }
@@ -208,17 +216,17 @@
         }
       }
     },
-    "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
+        "projectUniqueName": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
         "projectName": "TestingAndCalibrationLabs.Web.UI",
-        "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
-        "packagesPath": "C:\\Users\\Ritesh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\obj\\",
+        "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
+        "packagesPath": "C:\\Users\\apurw\\.nuget\\packages\\",
+        "outputPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ritesh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\apurw\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -233,8 +241,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
-                "projectPath": "C:\\Users\\Ritesh\\Documents\\GitHub\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+              "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+                "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
               }
             }
           }
@@ -251,11 +259,11 @@
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
-              "version": "[11.0.0, )"
+              "version": "[12.0.1, )"
             },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[11.0.0, )"
+              "version": "[12.0.0, )"
             },
             "CloudinaryDotNet": {
               "target": "Package",
@@ -264,6 +272,10 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.0.123, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.10, )"
             },
             "MailKit": {
               "target": "Package",
@@ -292,6 +304,10 @@
             "Vse.Web.Serialization.ControlledSerializationJsonConverter": {
               "target": "Package",
               "version": "[1.0.4, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
             },
             "smartdusttechnologies.util.raj.logger": {
               "target": "Package",
