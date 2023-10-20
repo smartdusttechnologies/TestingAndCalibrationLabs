@@ -1,6 +1,5 @@
 ﻿using TestingAndCalibrationLabs.Business.Core.Model;
 
-
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
 {
     public interface IOtpRepsitory
@@ -21,9 +20,5 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="userId"></param>
         OtpModel GetOTP(int userId);
-        /// Interface for slect Email from DB
-        /// </summary>
-        /// <param name="userId"></param>
-        OtpModel GetEmail(int userId);
     }
 }

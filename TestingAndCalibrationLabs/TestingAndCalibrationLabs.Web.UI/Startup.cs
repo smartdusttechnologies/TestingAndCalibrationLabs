@@ -158,6 +158,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IOtpRepsitory, OtpRepository>();
+            services.AddScoped<IGenericRepository<OtpModel>, GenericRepository<OtpModel>>();
+
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();

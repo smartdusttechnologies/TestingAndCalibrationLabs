@@ -19,16 +19,21 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IOtpRepsitory _otpRepsitory;
+        private readonly IGenericRepository<OtpModel> _genericRepository;
+
+        private readonly IUserRepository _userRepository;
         public OTPservice(IConfiguration configuration,
-           IAuthenticationRepository authenticationRepository, 
+           IAuthenticationRepository authenticationRepository,
            IEmailService emailservice, IOtpRepsitory otpRepsitory,
-           IWebHostEnvironment hostingEnvironment)
+           IWebHostEnvironment hostingEnvironment, IUserRepository userRepository, IGenericRepository<OtpModel> genericRepository)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
             _emailService = emailservice;
             _otpRepsitory = otpRepsitory;
             _hostingEnvironment = hostingEnvironment;
+            _userRepository = userRepository;
+            _genericRepository = genericRepository;
         }
 
         /// <summary>
@@ -44,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
                 double OTPTime = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
                 if (OtpModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
                 {
-                  return new RequestResult<int>(existingUser.Id);
+                    return new RequestResult<int>(existingUser.Id);
                 }
                 else
                 {
@@ -64,7 +69,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// Method To Create OTP though user email 
         /// </summary>
         /// <param name="OtpModel"></param>
-        public RequestResult<int> CreateOtp(OtpModel otpModel, int userId ,string name )
+        public RequestResult<int> CreateOtp(OtpModel otpModel, int userId, string name)
         {
             string otp = GenerateOTP();
             EmailModel model = new EmailModel
@@ -119,10 +124,10 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// <param name="OtpModel"></param>
         public RequestResult<int> ResendOTP(OtpModel OtpModel)
         {
-           var Email = _otpRepsitory.GetEmail(OtpModel.userId);
+            var Email = _genericRepository.Get(OtpModel.userId);
             var userId = OtpModel.userId;
             var name = OtpModel.Name;
-            var otp = CreateOtp(Email ,userId,name);
+            var otp = CreateOtp(Email, userId, name);
             return new RequestResult<int>(0);
         }
     }

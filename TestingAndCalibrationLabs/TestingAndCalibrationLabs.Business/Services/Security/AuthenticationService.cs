@@ -215,7 +215,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
                     OtpModel User = new OtpModel { userId = passwordLogin.UserId, Email = user.Email };
-                    _otpService.CreateOtp(User, passwordLogin.UserId,user.FirstName);
+                    _otpService.CreateOtp(User, passwordLogin.UserId, user.FirstName);
                     user.userId = User.userId;
                     return new RequestResult<bool>(true);
                 }
@@ -268,13 +268,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Method to Validate the Existing User Email.
         /// </summary>
-        private RequestResult<bool> ExistingUservalidation( UserModel user)
+        private RequestResult<bool> ExistingUservalidation(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             UserModel existingUser = _userRepository.Get(user.UserName);
             if (existingUser != null)
             {
-                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error , SourceId = "Username" };
+                var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Username" };
                 validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
@@ -284,10 +284,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Method to Validate Existing Email
         /// </summary>
         /// <param name="user"></param>
-       private RequestResult<string> ExistingEmailvalidation(UserModel user)
+        private RequestResult<string> ExistingEmailvalidation(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            UserModel existingEmail= _userRepository.GetEmail(user.Email);
+            UserModel existingEmail = _userRepository.GetEmail(user.Email);
             if (existingEmail != null)
             {
                 var error = new ValidationMessage { Reason = "Already! Email Exist!", Severity = ValidationSeverity.Error, SourceId = "Email" };
@@ -296,10 +296,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             return new RequestResult<string>(validationMessages);
         }
-       /// <summary>
-       /// Methodt to Verify Email if user did not validate OTP
-       /// </summary>
-       /// <param name="user"></param>
+        /// <summary>
+        /// Methodt to Verify Email if user did not validate OTP
+        /// </summary>
+        /// <param name="user"></param>
         public RequestResult<int> ExistingEmailVerify(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -335,7 +335,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var passwordResult = _securityParameterService.ChangePasswordCondition(UserModel);
                 if (passwordResult.IsSuccessful)
                 {
-                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy( 0, UserModel.Password);
+                    var ValidationResult = _securityParameterService.ValidatePasswordPolicy(0, UserModel.Password);
                     var PasswordLogin = _authenticationRepository.GetUserIdPassword(UserModel.userId);
                     List<ValidationMessage> validationMessages = new List<ValidationMessage>();
                     if (ValidationResult.IsSuccessful)

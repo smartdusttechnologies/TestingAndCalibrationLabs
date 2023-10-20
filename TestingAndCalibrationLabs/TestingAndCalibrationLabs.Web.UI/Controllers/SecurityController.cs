@@ -28,7 +28,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _emailService = emailService;
             _mapper = mapper;
             _otpService = otpService;
-            _authenticationRepository =authenticationRepository;
+            _authenticationRepository = authenticationRepository;
         }
         /// <summary>
         /// UI Shows the Orgnizations names in dropdown list
@@ -72,17 +72,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult ForgotPassword(OtpDTO otpDTO)
         {
-                var emailResult = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            //var userVerify = _otpService.EmailValidateForgotPassword(emailResult);
+            var emailResult = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
             var userVerify = _authenticationService.EmailValidateForgotPassword(emailResult);
-
             if (userVerify.IsSuccessful)
-                {
-                     otpDTO.userId = userVerify.RequestedObject.UserId;
-                     otpDTO.Name = userVerify.RequestedObject.UserName; 
-                    _otpService.CreateOtp(emailResult, otpDTO.userId,otpDTO.Name);
-                    return Ok(otpDTO);
-                }
+            {
+                otpDTO.userId = userVerify.RequestedObject.UserId;
+                otpDTO.Name = userVerify.RequestedObject.UserName;
+                _otpService.CreateOtp(emailResult, otpDTO.userId, otpDTO.Name);
+                return Ok(otpDTO);
+            }
             return BadRequest(userVerify.ValidationMessages);
         }
         /// <summary>
@@ -99,7 +97,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 UserModel userModel = new UserModel { userId = user.RequestedObject };
                 return Ok(userModel);
             }
-             return BadRequest(user.ValidationMessages);
+            return BadRequest(user.ValidationMessages);
         }
         /// <summary>
         /// Reset Password
@@ -108,7 +106,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult ResetPassword(int userId)
         {
-            UserDTO userDTO = new UserDTO { userId=userId};
+            UserDTO userDTO = new UserDTO { userId = userId };
             return View(userDTO);
         }
         /// <summary>
@@ -132,7 +130,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="forgotpassword"></param>
         public IActionResult ResendOTP(OtpDTO otpDTO)
         {
-          return Ok(ForgotPassword(otpDTO));
+            return Ok(ForgotPassword(otpDTO));
         }
     }
 }

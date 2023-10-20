@@ -1,7 +1,9 @@
 ﻿using System;
+using TestingAndCalibrationLabs.Business.Common;
 
 namespace TestingAndCalibrationLabs.Business.Core.Model
 {
+    [DbTable("User")]
     public class OtpModel : Entity
     {
         /// <summary>

@@ -18,7 +18,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IOtpRepsitory _otpRepsitory;
 
-        public UserController(IAuthenticationService authenticationService,IOrganizationService organizationService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository, IOtpRepsitory otpRepsitory)
+        public UserController(IAuthenticationService authenticationService, IOrganizationService organizationService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository, IOtpRepsitory otpRepsitory)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
@@ -44,7 +44,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _authenticationService.Add(userModel, userRequest.Password);
             if (result.IsSuccessful)
             {
-                OtpModel otpModel = new OtpModel {userId= userModel.userId ,Email = userModel.Email};
+                OtpModel otpModel = new OtpModel { userId = userModel.userId, Email = userModel.Email };
                 return Ok(otpModel);
             }
             return BadRequest(result.ValidationMessages);
@@ -55,7 +55,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult SendOtp(int userId)
         {
-            OtpDTO otpDTO = new OtpDTO { userId = userId};
+            OtpDTO otpDTO = new OtpDTO { userId = userId };
             return View(otpDTO);
         }
         ///// <summary>
@@ -69,9 +69,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var user = _otpService.ValidateOTP(otpReturn);
             if (user.IsSuccessful)
             {
-               UserModel userModel = new UserModel { userId = otpReturn.userId, Email = otpReturn.Email };
+                UserModel userModel = new UserModel { userId = otpReturn.userId, Email = otpReturn.Email };
                 _authenticationService.EmailValidationStatus(userModel);
-              return Ok(user.RequestedObject);
+                return Ok(user.RequestedObject);
             }
             return BadRequest(user.ValidationMessages);
         }
@@ -99,7 +99,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="userDTO"></param>
         [HttpPost]
-     
         public IActionResult VerifyEmail(UserDTO userDTO)
         {
             var userModel = _mapper.Map<UserDTO, UserModel>(userDTO);
