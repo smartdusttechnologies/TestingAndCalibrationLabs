@@ -1,0 +1,67 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.GTRLWebsiteDTO
+
+@{
+   ViewData["Title"] = "GTRLWebsite";
+}
+<body>
+    <div id="toplinks">
+        <!-- Navigation links -->
+        <a href="/">Home</a> &nbsp;|&nbsp;
+        <a href="/">Careers</a> &nbsp;|&nbsp;
+        <a href="/">Contact Us</a> &nbsp;|&nbsp;
+        <a href="/">Site Map</a> &nbsp;|&nbsp;
+    </div>
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <div>
+            @foreach (var item in Model.HeaderStrips)
+            {
+                @await Html.PartialAsync("~/Views/Common/Components/HeaderStrip/_headerStrip.cshtml", item)
+            }
+        </div>
+    
+       
+    </nav>
+  
+    <div id="header">
+       @await Html.PartialAsync("~/Views/Common/Components/ImageSlider/_ImageSlider.cshtml")
+    </div>
+  
+</body>
+
+<style>
+    nav ul li  {
+        color: blue;
+        text-decoration: none;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        gap: 1rem;
+    }
+
+        nav ul li {
+            display: inline;
+        }
+
+    .iconstyle {
+        padding: 10px;
+        font-size: 40px;
+        width: 20px;
+        text-align: center;
+        text-decoration: none;
+        margin: 6px 9px;
+        height: 20px;
+        display: inline;
+    }
+
+    #toplinks {
+        float: right;
+        font-size: 12px;
+        font-weight: bold;
+        color: green;
+        margin: 25px 0 0 0;
+        line-height: 24px;
+    }
+</style>

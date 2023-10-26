@@ -1,0 +1,39 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.HeaderStripDTO
+@{
+
+}
+
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="navbar-brand">
+            <img src="@Model.CompanyLogo" height="91" width="600" alt="GLOBAL TESTING AND RESEARCH LABORATORY" loading="lazy" />
+        </a>
+    </li>
+</ul>
+<ul class="navbar-nav">&nbsp;|&nbsp;
+    <li>
+        <a href="@Model.FacebookURL" target="_blank">
+            <i class="fa fa-facebook " alt="Facebook Icon" aria-hidden="true"></i>
+        </a>
+    </li>&nbsp;|&nbsp;
+    <li>
+        <a href="@Model.XUrl" target="_blank">
+            <i class="fa fa-twitter " alt="Twitter Icon" aria-hidden="true"></i>
+        </a>
+    </li>&nbsp;|&nbsp;
+    <li>
+        <a href="@Model.linkedlnURL" target="_blank">
+            <i class="fa fa-linkedin " alt="LinkedIn Icon" aria-hidden="true"></i>
+        </a>
+    </li>&nbsp;|&nbsp;
+   
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<ul>
+    <i class="fas fa-headset" alt="Contact Icon">@Model.Contact </i>
+
+    <i class="fa fa-envelope" alt="Email Icon"> @Model.Email </i> 
+
+</ul>
+
+

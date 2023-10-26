@@ -1,0 +1,46 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.GTRLWebsiteDTO
+
+@{
+    ViewData["Title"] = "GTRLWebsite";
+}
+
+<link rel="stylesheet" href="~/css/ImageSlider.css" />
+
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        @for (var count = 0; count < Model.imageSlider.Count; count++)
+        {
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@count" class="@(count == 0 ? "active" : "")" aria-label="Slide @count"></button>
+        }
+    </div>
+
+    <div class="carousel-inner">
+        @for (var i = 0; i < Model.imageSlider.Count; i++)
+        {
+            var isActive = i == 0 ? "active" : "";
+            <div class="carousel-item @isActive">
+                <img src="@Model.imageSlider[i].Image" class="d-block w-100" alt="Slide Image @i">
+                <div class="carousel-caption">
+                    <h5>@Model.imageSlider[i].Header</h5>
+                    <p>@Model.imageSlider[i].Paragraph</p>
+                </div>
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div id="header">
+    <div class="news-scroller">
+        <marquee align="left" loop="-1" direction="left" scrollamount="2" scrolldelay="30" truespeed="truespeed">
+            Building Material - Civil, Refractory Materials, NDT, Ultrasonic Testing, Geo Technical Investigation, Concrete Mix , Transformer Oil, Food &amp; Water, Nutritional Value, Pharma , Micro Biology, Shelf Life Study, Chemicals, Ferrous &amp; Non Ferrous Metals
+        </marquee>
+    </div>
+</div>
