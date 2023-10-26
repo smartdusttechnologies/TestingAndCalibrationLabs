@@ -122,26 +122,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                     where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
                     select prop.Name).ToList();
         }
-
-        //private static DataTable GetDataTable<T>(IEnumerable<T> list)
-        //{
-        //    var table = new DataTable();
-        //    var properties = typeof(T).GetProperties();
-        //    foreach (var property in properties)
-        //    {
-        //        table.Columns.Add(property.Name, System.Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
-        //    }
-        //    foreach (var item in list)
-        //    {
-        //        var row = table.NewRow();
-        //        foreach (var property in properties)
-        //        {
-        //            row[property.Name] = property.GetValue(item) ?? DBNull.Value;
-        //        }
-        //        table.Rows.Add(row);
-        //    }
-        //    return table;
-        //}
+       
         #endregion
     }
 }

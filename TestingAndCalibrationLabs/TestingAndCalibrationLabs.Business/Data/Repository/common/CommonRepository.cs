@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -156,31 +157,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
                 command.Parameters.AddWithValue("@UpdatedDate", record.UpdatedDate);
-                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(storesingleval));
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(storemultiVal));
+                command.Parameters.AddWithValue("@UiPageDataTVP", GenericUtils.GetDataTable(storesingleval));
+                command.Parameters.AddWithValue("@ChildTvp", GenericUtils.GetDataTable(storemultiVal));
                 command.ExecuteNonQuery();
             }
             return 1;
         }
-        public static DataTable GetDataTable<T>(IEnumerable<T> list)
-        {
-            var table = new DataTable();
-            var properties = typeof(T).GetProperties();
-            foreach (var property in properties)
-            {
-                table.Columns.Add(property.Name, System.Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
-            }
-            foreach (var item in list)
-            {
-                var row = table.NewRow();
-                foreach (var property in properties)
-                {
-                    row[property.Name] = property.GetValue(item) ?? DBNull.Value;
-                }
-                table.Rows.Add(row);
-            }
-            return table;
-        }
+       
         /// <summary>
         /// Get Page Id Based On Current Workflow Stage 
         /// </summary>
@@ -245,7 +228,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@RecordId", recordModel.Id);
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(collectionofdata));
+                command.Parameters.AddWithValue("@ChildTvp", GenericUtils.GetDataTable(collectionofdata));
                 command.ExecuteNonQuery();
             }
             return true;

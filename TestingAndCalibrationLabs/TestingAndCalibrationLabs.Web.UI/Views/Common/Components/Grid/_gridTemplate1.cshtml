@@ -71,7 +71,6 @@
           var currentKey = 1;
 
     for (var i = 0; i < data.length; i += fieldCount) {
-        debugger;
         var sublist = data.slice(i, i + fieldCount);
         fieldValuesSublists.push({
             key: currentKey,
@@ -119,7 +118,6 @@
     }
     //Inserting Record
     let saveRecords = (subRId) => {
-         debugger;
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val());
         const getMembers = (member) => {
