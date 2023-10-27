@@ -176,27 +176,41 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             if (multiVal.Fields.Count() > 0)
             {
-                var table = new StringBuilder("<table id='tableData7'> <tr> ");
+                var table = new StringBuilder("<table class='TemplateTable'> <tr> ");
                 foreach (var item in multiVal.Fields)
                 {
                     table.Append($"<th>{item.UiControlDisplayName}</th>");
                 }
                 table.Append("</tr> ");
-                foreach (var item in multiVal.FieldValues)
+                table.Append("<tr>");
+                var GridItem = 0;
+                
+
+
+                foreach (var item in multiVal.FieldValue)
                 {
-                    table.Append("<tr>");
-                    foreach (var item2 in item.Value)
+                    GridItem++;
+                    
+                    if (GridItem > multiVal.Fields.Count() && GridItem% multiVal.Fields.Count()==1)
                     {
-                        table.Append($"<td> {item2.Value}</td>");
+                        table.Append("<tr>");
                     }
-                    table.Append("</tr>");
+                        table.Append($"<td> {item.Value}</td>");
+                    
+                    if(GridItem % (multiVal.Fields.Count()) == 0)
+                    {
+                        table.Append("</tr> ");
+
+                    }
+                    
                 }
-               // Table1 += "</table>" + table + "</body></html";
-                template = template.Replace("<table id=\"tableData7\">", table.ToString());
+                table.Append("</tr>");
+                // Table1 += "</table>" + table + "</body></html";
+                template = template.Replace(" <table class=\"TemplateTable\" >", table.ToString());
             }
             else
             {
-                template = template.Replace("<table id=\"tableData7\">", "");
+                template = template.Replace(" <table class=\"TemplateTable\" >", "");
             }
 
 
@@ -280,10 +294,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             int uiPageTypeId;
             RecordModel record = new RecordModel() { ModuleId = moduleId, Id = 0 };
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Read).Result.Succeeded)
-            {
-                throw new UnauthorizedAccessException("Your Unauthorized");
-            }
+            //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Read).Result.Succeeded)
+            //{
+            //    throw new UnauthorizedAccessException("Your Unauthorized");
+            //}
             var workflowStage = _workflowStageService.GetStage(moduleId, 0);
             var uiMetadata = GetMetadata(moduleId, 0, out uiPageTypeId);
             foreach (var item in uiMetadata)

@@ -3,7 +3,10 @@
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
-            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@if(@Model.Fields.Count()> 0){@Model.Fields.First().UiPageTypeName}</h2>
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@if (@Model.Fields.Count() > 0)
+                {
+                    @Model.Fields.First().UiPageTypeName
+                }</h2>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
             <a href="/common/create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
@@ -33,7 +36,7 @@
                 {
                     int count = 0;
                     <tr>
-                        @foreach(var itemValue in item.Value)
+                        @foreach (var itemValue in item.Value)
                         {
                             if (count == 4)
                             {
@@ -94,6 +97,7 @@
         scrollX: true,
     });
     $('#gridSearch').keyup(function () {
+        debugger;
         oTable.search($(this).val()).draw();
     })
     const clearText = () => {
@@ -102,5 +106,5 @@
     }
     //Set The Value To Popup Delete Button
     let setValue = (id) => $("#deletePopup").val(id);
-    
+
 </script>

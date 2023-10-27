@@ -30,6 +30,8 @@
         </thead>
         <tbody>
                 @{
+                   Dictionary<int, List<UiPageDataDTO>> assignedRows = new Dictionary<int, List<UiPageDataDTO>>();
+                   List<UiPageDataDTO> rowData = new List<UiPageDataDTO>();
                     int totalFields = Model.Fields.Count;
                     int fieldIndex = 0;
                     int rowKey = 1; 
@@ -43,6 +45,7 @@
                         </td>
                         fieldIndex++;
                          
+                        rowData.Add(item);
                         if (fieldIndex % totalFields == 0)
                         {
                             <td>
@@ -51,6 +54,8 @@
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@rowKey)"></a>
                             </td>
                             @:</tr><tr>
+                          assignedRows[rowKey] = new List<UiPageDataDTO>(rowData);
+                          rowData.Clear(); 
                           rowKey++; 
                           fieldIndex = 0; 
                         }
@@ -67,6 +72,7 @@
     $(document).ready(function() {
           var modellist = JSON.parse('@Json.Serialize(Model)');
           var fieldCount = @Model.Fields.Count;
+          var valuesKey= modellist.id;
           var data = modellist.fieldValue;
           var currentKey = 1;
 
@@ -106,6 +112,7 @@
             url: "@Url.Action("DeleteMultiValue","Common")",
             data: { "Id": recordId, fieldValues, updatedDate },
             success: function (response) {
+                debugger;
                 myFunction();
                 window.location.href = "/common/edit/" + recordId;
             },
@@ -121,8 +128,6 @@
     let saveRecords = (subRId) => {
          debugger;
         WheelLoader();
-        debugger
-        let workflowStageId = parseInt($("#WorkflowStageId").val())
         let workflowStageId = parseInt($("#WorkflowStageId").val());
         const getMembers = (member) => {
             
@@ -140,25 +145,12 @@
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = layout[i].uiPageMetadata.id;
-                debugger
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
-
-                if (fieldValue == "") {
-                    keyValuepair.RecordId = id;
-                    keyValuepair.uiPageMetadataId = metadataId;
-                    keyValuepair.UiPageTypeId = uiPageTypeId;
-                    fieldValues.push(keyValuepair)
-                }
-                //else{
                 var uiPageData = layout[i].uiPageData;
                 if (layout[i].uiPageData != null) {
-                    //var pageDataId = layout[i].uiPageData.id;
-                    for (let j = 0; j < uiPageData.length; j++) {
-                        var pageDataId = layout[i].uiPageData[j].id;
-                        var childIds = layout[i].uiPageData[j].childId;
-                        var oldValue = layout[i].uiPageData[j].value;
-                    }
+                    var pageDataId = layout[i].uiPageData.id;
+                    var oldValue = layout[i].uiPageData.value;
                     if (oldValue != fieldValue) {
                         keyValuepair.Id = pageDataId;
                         keyValuepair.uiPageMetadataId = metadataId;
@@ -166,10 +158,8 @@
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
-
                     }
                 }
-                //}
                 else {
                     keyValuepair.Id = 0;
                     keyValuepair.UiPageMetadataId = metadataId;
@@ -218,6 +208,7 @@
             url: url,
             data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
+                debugger;
                 myFunction();
                 window.location.href = "/common/edit/" + id;
             },
@@ -235,7 +226,7 @@
                     $(sourceId).removeClass("black-border").addClass("red-error-border");
                     if (newErrorMessage[i].messageKey == "True") {
                         ele += `<div class="alert"><span onclick="this.parentElement.style.display='none';" class="closebtn">&times;</span>${msg}</div>`;
-
+                       
                     }
                     else {
                         myFunctionError();                                              //Calling myFunctionError javacript function
@@ -243,7 +234,7 @@
                             document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
                         }
                     }
-                    ErrorMessage(NotificationNumbers++, msg);
+                    ErrorMessage(NotificationNumbers++, msg); 
                 }
                 $("#alert-box").html(ele);
             }
@@ -265,27 +256,32 @@
         oTable.search($(this).val()).draw();
     })
     const clearText = () => {
+        debugger;
         const inputID = document.querySelector("#MultiValueGridSearch");
         inputID.value = "";
     }
     
       function setValue(eId, sId) {
+          debugger;
       $('#' + eId).val(sId);
      }
      //Set Modal Header
 
    function SetHeader(headerName, rId) {
+    debugger;
     $("#multiGridHeader").text(headerName);
     $("#savebtn").val(rId);
 }
 
     function UpdateFieldsWithValue(headerName, rId) {
     try {
+                 debugger;
          var modellist = JSON.parse('@Json.Serialize(Model)');
          var Controle = modellist.fields;
          SetHeader(headerName, rId);
           Datapop();
           var fieldCount = @Model.Fields.Count;
+          var valuesKey= modellist.id;
           var data = modellist.fieldValue;
           var uniqueMetadataIds = [...new Set(Controle.map(field => field.id))];
         if (rId == 0) {
@@ -319,6 +315,7 @@
 
     }
      function Datapop() {
+       debugger;
        document.getElementById('gridPopup').innerHTML=" <div id="+"alert-box"+"></div>"
 
     for (let i = 0; i < metadata.length; i++) {
