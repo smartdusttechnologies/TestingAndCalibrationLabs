@@ -86,6 +86,16 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return moduleLayoutById;
         }
+        public ModuleLayoutModel GetByModuleLayoutId(int moduleId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+
+            var moduleLayoutId = db.Query<ModuleLayoutModel>(@"Select ml.Id
+                                                From[ModuleLayout] ml
+                                                where ml.ModuleId = @ModuleId
+                                                    and ml.IsDeleted = 0", new { ModuleId = moduleId }).FirstOrDefault();
+            return moduleLayoutId;
+        }
         /// <summary>
         /// Update Record From ModuleLayout
         /// </summary>

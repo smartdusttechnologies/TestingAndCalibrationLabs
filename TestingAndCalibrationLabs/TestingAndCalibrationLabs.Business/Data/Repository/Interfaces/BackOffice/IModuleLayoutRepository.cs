@@ -14,6 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Get All Records Of ModuleLayout
         /// </summary>
         /// <returns></returns>
+        ModuleLayoutModel GetByModuleLayoutId(int moduleId);
         List<ModuleLayoutModel> Get();
         /// <summary>
         /// Get Records By UiPageMetadataId

@@ -5,7 +5,7 @@
 <script>
 $(document).ready(function () {
     var modelData = JSON.parse('@Json.Serialize(Model)');
-        var url = "@Url.Action("LoadGrid","Common")" + "?id=" + modelData.value.uiPageMetadata.moduleLayoutId + "&controlCategoryTypeTemplate="+ modelData.value.uiPageMetadata.uiControlCategoryTypeTemplate;
+        var url = "@Url.Action("LoadGrid","Common")" + "?id=" + modelData.value.uiPageMetadata.moduleId + "&controlCategoryTypeTemplate="+ modelData.value.uiPageMetadata.uiControlCategoryTypeTemplate;
         var idNum = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
     $(idNum).load(url);
 });

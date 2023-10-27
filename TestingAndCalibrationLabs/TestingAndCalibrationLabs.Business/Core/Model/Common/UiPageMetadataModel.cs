@@ -110,6 +110,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Id From UiPageMetadata
         /// </summary>
         public int UiPageMetadataId { get; set; }
+        public int ModuleId { get; set; }
+
 
     }
 }

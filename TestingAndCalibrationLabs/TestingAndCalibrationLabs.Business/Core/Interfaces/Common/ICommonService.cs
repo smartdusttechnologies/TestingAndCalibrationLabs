@@ -50,13 +50,13 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="uiPageTypeId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send);
+		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send,int moduleLayoutId);
         /// <summary>
         /// To Get multi Value Records For Creating Grid
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        RecordsModel GetMultiControlValue(int recordId);
+        RecordsModel GetMultiControlValue(int recordId,int moduleLayoutId);
         /// <summary>
         /// To Delete Multi Value Records
         /// </summary>

@@ -72,8 +72,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         uct.[Name] as UiControlTypeName,
                                                         upm.UiControlDisplayName,
                                                         upm.DataTypeId,
+                                                        ml.ModuleId,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
+                                                        upm.UiControlCategoryTypeId,
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
@@ -84,6 +86,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
                                                     inner join [Lookup] l on l.Id = uct.ControlCategoryId
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+                                                    inner join [ModuleLayout] ml on upm.ModuleLayoutId = ml.Id
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
                                                 where mmb.UiPageTypeId = @uiPageId
@@ -92,7 +95,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
 													and mmb.IsDeleted = 0
-                                                    and ucct.IsDeleted = 0", new { uiPageId }).ToList();
+                                                    and ucct.IsDeleted = 0
+                                                    and ml.IsDeleted = 0", new { uiPageId }).ToList();
             return metadata;
         }
         /// <summary>
@@ -118,6 +122,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         upm.UiControlDisplayName,
                                                         upm.DataTypeId,
                                                         dt.Name as DataTypeName,
+                                                        upm.UiControlCategoryTypeId,
                                                         uct.ControlCategoryId,
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
@@ -348,7 +353,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetMultiControlMetadata(int recordId)
+        public List<UiPageMetadataModel> GetMultiControlMetadata(int moduleLayoutId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageMetadataModel>(@"Select upm.Id,
@@ -369,10 +374,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 												        ucct.Template as UiControlCategoryTypeTemplate
-                                                       From [Record] r 
-													inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-													inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
-													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
+                                                       From [UiPageMetadata] upm 
+													  inner join [UiPageMetadataModuleBridge] mmb on upm.Id = mmb.UiPageMetadataId
+
+													inner join [WorkflowStage] ws on mmb.UiPageTypeId = ws.UiPageTypeId
+													
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
@@ -380,13 +386,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                    where r.Id = @recordId and mmb.MultiValueControl = 'true'
+                                                    where upm.ModuleLayoutId = @moduleLayoutId and mmb.MultiValueControl = 'true'
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
 													and mmb.IsDeleted = 0
-                                                    and ucct.IsDeleted = 0", new { recordId }).ToList();
+                                                    and ucct.IsDeleted = 0", new { moduleLayoutId }).ToList();
         }
         
         /// <summary>

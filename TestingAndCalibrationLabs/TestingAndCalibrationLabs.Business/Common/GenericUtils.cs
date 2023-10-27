@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Common
                     where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
                     select prop).ToList();
         }
-        private static DataTable GetDataTable<T>(IEnumerable<T> list)
+        public static DataTable GetDataTable<T>(IEnumerable<T> list)
         {
             var table = new DataTable();
             var properties = typeof(T).GetProperties();

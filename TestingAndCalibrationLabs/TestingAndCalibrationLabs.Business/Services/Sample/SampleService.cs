@@ -20,6 +20,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWebHostEnvironment webHostEnvironment,
+            IModuleLayoutRepository moduleLayoutRepository,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,IWorkflowStageService workflowStageService,
             IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,IEmailService email)
             : base(commonRepository,
@@ -28,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                   uiPageMetadataRepository,
                   webHostEnvironment,
                   uiPageMetadataCharacteristicsService,
-                  authorizationService,httpContextAccessor,workflowStageService,email)
+                  authorizationService,httpContextAccessor,workflowStageService,email, moduleLayoutRepository)
         {
             UI_PAGE_NAME = "SamplePage";
         }

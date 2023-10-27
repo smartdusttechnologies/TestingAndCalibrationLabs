@@ -27,6 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        ModuleLayoutModel GetByModuleLayoutId(int moduleId);
         ModuleLayoutModel GetById(int id);
         /// <summary>
         /// Get Records By ModuleLayout
