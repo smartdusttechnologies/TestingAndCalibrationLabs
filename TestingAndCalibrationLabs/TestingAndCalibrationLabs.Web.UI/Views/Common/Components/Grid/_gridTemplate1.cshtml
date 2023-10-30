@@ -121,7 +121,7 @@
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val());
         const getMembers = (member) => {
-            
+            debugger;
             if (!member.children || !member.children.length) {
                 return member.value;
             }
@@ -130,6 +130,7 @@
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
+            debugger;
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
