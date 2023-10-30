@@ -27,6 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _moduleRepository.Get();
         }
+       
         /// <summary>
         /// Insert Record In Module
         /// </summary>

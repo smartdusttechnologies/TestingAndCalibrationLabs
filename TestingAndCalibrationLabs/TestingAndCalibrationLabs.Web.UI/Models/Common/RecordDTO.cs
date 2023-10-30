@@ -16,6 +16,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public int Id { get; set; }
         public int UiPageTypeId { get; set; }
         public int ModuleId { get; set; }
+        public int ModuleLayoutId { get; set; }
+
         public int WorkflowStageId { get; set; }
         public int RecordId { get; set; }
         public DateTime UpdatedDate { get; set; }

@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         string SelectedOptionSort(List<ListSorterModel> tests);
         /// <summary>
-        /// make a list of list combotree 
+        /// make a list of list Data 
         /// </summary>
         /// <param name="listSorterModels"></param>
         /// <returns></returns>

@@ -101,7 +101,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<UiPageMetadataModel> GetResult( int moduleLayoutId)
         {
 
-            return _uiPageMetadataRepository.GetExisting(moduleLayoutId);
+            return _uiPageMetadataRepository.GetExistingMetadata(moduleLayoutId);
         }
         /// <summary>
         /// Get All UIDisplayName  From Ui Page Metadata Type
@@ -119,7 +119,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public UiPageMetadataModel GetByPageId(int id, int uiPageTypeId, int metadataModuleBridgeId)
         {
 
-            return _uiPageMetadataRepository.GetByPageId(id, uiPageTypeId, metadataModuleBridgeId);
+            return _uiPageMetadataRepository.GetByUiPageTypeId(id, uiPageTypeId, metadataModuleBridgeId);
         }
         #endregion
     }

@@ -77,7 +77,6 @@
           var currentKey = 1;
 
     for (var i = 0; i < data.length; i += fieldCount) {
-        debugger;
         var sublist = data.slice(i, i + fieldCount);
         fieldValuesSublists.push({
             key: currentKey,
@@ -126,11 +125,10 @@
     }
     //Inserting Record
     let saveRecords = (subRId) => {
-         debugger;
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val());
         const getMembers = (member) => {
-            
+            debugger;
             if (!member.children || !member.children.length) {
                 return member.value;
             }
@@ -139,6 +137,7 @@
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
+            debugger;
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {

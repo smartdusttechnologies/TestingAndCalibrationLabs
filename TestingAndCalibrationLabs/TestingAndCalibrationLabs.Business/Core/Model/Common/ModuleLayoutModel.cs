@@ -16,19 +16,19 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// It Contains The ModuleId Of The ModuleLayout 
+        /// It Contains The Id Of The Module 
         /// </summary>
         public int ModuleId { get; set; }
         /// <summary>
-        /// It Contains The ModuleName Of The ModuleLayout 
+        /// It Contains The Name Of The Module 
         /// </summary>
         public string ModuleName { get; set; }
         /// <summary>
-        /// It Contains The LayoutId Of The ModuleLayout 
+        /// It Contains The Id Of The Layout 
         /// </summary>
         public int LayoutId { get; set; }
         /// <summary>
-        /// It Contains The LayoutName Of The ModuleLayout 
+        /// It Contains The Name Of The Layout 
         /// </summary>
         public string LayoutName { get; set; }
     }

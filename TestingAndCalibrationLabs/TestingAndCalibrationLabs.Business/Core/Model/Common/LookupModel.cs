@@ -17,7 +17,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         public int LookupCategoryId { get; set; }
         /// <summary>
-        /// It Contains The ParentId For Lookup
+        /// It Contains The ParentId of Lookup
         /// </summary>
         public int  ParentId { get; set; }
         /// <summary>

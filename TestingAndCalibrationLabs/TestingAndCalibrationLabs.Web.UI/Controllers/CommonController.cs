@@ -114,9 +114,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return PartialView(controlCategoryTypeTemplate, records);
         }
         [HttpGet]
-        public ActionResult MultiValueControlGrid(int id)
+        public ActionResult MultiValueControlGrid(int id, int moduleLayoutId)
         {
-            var pageMetadata = _commonService.GetMultiControlValue(id);
+            var pageMetadata = _commonService.GetMultiControlValue(id, moduleLayoutId);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
@@ -124,11 +124,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             //return PartialView("~/Views/Common/Components/Grid/TemplateGrid.cshtml", records);
 
         }
-        //[HttpPost]
-        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send,int FileId)
+        [HttpPost]
+        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId)
         {
-
-            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send,FileId);
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId);
             
             if (send)
             {

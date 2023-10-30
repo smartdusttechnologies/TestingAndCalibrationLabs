@@ -16,16 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-        /// <summary>
-        /// Get Record in Lookup based on lookupCategoryId
-        /// </summary>
-        /// <returns></returns>
-        public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<LookupModel>(@"select * from Lookup where LookupCategoryId = @LookupCategoryId and IsDeleted = 0", new { LookupCategoryId =lookupCategoryId}).ToList();
-
-        }
+       
         /// <summary>
         /// Insert Record in Lookup
         /// </summary>
@@ -110,7 +101,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                     Where Id = @Id", new { Id = id });
             return true;
         }
-        public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
+        public List<LookupModel> GetAllByLookupCategoryId(int lookupCategoryId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<LookupModel>(@"Select L.* From[Lookup] L INNER JOIN[LookupCategory] lc ON L.LookupCategoryId = lc.Id and lc.IsDeleted = 0 where LookupCategoryId = @LookupCategoryId and L.IsDeleted = 0", new { LookupCategoryId = lookupCategoryId }).ToList(); 

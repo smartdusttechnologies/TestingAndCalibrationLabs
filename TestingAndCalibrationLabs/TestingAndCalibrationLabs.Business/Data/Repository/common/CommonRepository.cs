@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -71,8 +72,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         uct.[Name] as UiControlTypeName,
                                                         upm.UiControlDisplayName,
                                                         upm.DataTypeId,
+                                                        ml.ModuleId,
                                                         dt.Name as DataTypeName,
                                                         uct.ControlCategoryId,
+                                                        upm.UiControlCategoryTypeId,
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 														ucct.Template as UiControlCategoryTypeTemplate
@@ -83,6 +86,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
                                                     inner join [Lookup] l on l.Id = uct.ControlCategoryId
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+                                                    inner join [ModuleLayout] ml on upm.ModuleLayoutId = ml.Id
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
                                                 where mmb.UiPageTypeId = @uiPageId
@@ -91,7 +95,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
 													and mmb.IsDeleted = 0
-                                                    and ucct.IsDeleted = 0", new { uiPageId }).ToList();
+                                                    and ucct.IsDeleted = 0
+                                                    and ml.IsDeleted = 0", new { uiPageId }).ToList();
             return metadata;
         }
         /// <summary>
@@ -117,6 +122,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         upm.UiControlDisplayName,
                                                         upm.DataTypeId,
                                                         dt.Name as DataTypeName,
+                                                        upm.UiControlCategoryTypeId,
                                                         uct.ControlCategoryId,
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
@@ -156,31 +162,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
                 command.Parameters.AddWithValue("@UpdatedDate", record.UpdatedDate);
-                command.Parameters.AddWithValue("@UiPageDataTVP", GetDataTable(storesingleval));
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(storemultiVal));
+                command.Parameters.AddWithValue("@UiPageDataTVP", GenericUtils.GetDataTable(storesingleval));
+                command.Parameters.AddWithValue("@ChildTvp", GenericUtils.GetDataTable(storemultiVal));
                 command.ExecuteNonQuery();
             }
             return 1;
         }
-        public static DataTable GetDataTable<T>(IEnumerable<T> list)
-        {
-            var table = new DataTable();
-            var properties = typeof(T).GetProperties();
-            foreach (var property in properties)
-            {
-                table.Columns.Add(property.Name, System.Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
-            }
-            foreach (var item in list)
-            {
-                var row = table.NewRow();
-                foreach (var property in properties)
-                {
-                    row[property.Name] = property.GetValue(item) ?? DBNull.Value;
-                }
-                table.Rows.Add(row);
-            }
-            return table;
-        }
+       
         /// <summary>
         /// Get Page Id Based On Current Workflow Stage 
         /// </summary>
@@ -236,7 +224,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public bool Save(RecordModel recordModel)
         {
-            var datalist = recordModel.FieldValues;
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
@@ -246,7 +233,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
                 command.Parameters.AddWithValue("@RecordId", recordModel.Id);
                 command.Parameters.AddWithValue("@UpdatedDate", recordModel.UpdatedDate);
-                command.Parameters.AddWithValue("@ChildTvp", GetDataTable(collectionofdata));
+                command.Parameters.AddWithValue("@ChildTvp", GenericUtils.GetDataTable(collectionofdata));
                 command.ExecuteNonQuery();
             }
             return true;
@@ -366,7 +353,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetMultiControlMetadata(int recordId)
+        public List<UiPageMetadataModel> GetMultiControlMetadata(int moduleLayoutId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<UiPageMetadataModel>(@"Select upm.Id,
@@ -387,10 +374,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                         lc.Id as LookupCategoryId,
                                                         l.Name as ControlCategoryName,
 												        ucct.Template as UiControlCategoryTypeTemplate
-                                                       From [Record] r 
-													inner join [WorkflowStage] ws on r.WorkflowStageId = ws.Id
-													inner join [UiPageMetadataModuleBridge] mmb on ws.UiPageTypeId = mmb.UiPageTypeId
-													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
+                                                       From [UiPageMetadata] upm 
+													  inner join [UiPageMetadataModuleBridge] mmb on upm.Id = mmb.UiPageMetadataId
+
+													inner join [WorkflowStage] ws on mmb.UiPageTypeId = ws.UiPageTypeId
+													
                                                     inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
                                                     inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
                                                     inner join [DataType] dt on upm.DataTypeId = dt.Id
@@ -398,30 +386,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                    where r.Id = @recordId and mmb.MultiValueControl = 'true'
+                                                    where upm.ModuleLayoutId = @moduleLayoutId and mmb.MultiValueControl = 'true'
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
 													and mmb.IsDeleted = 0
-                                                    and ucct.IsDeleted = 0", new { recordId }).ToList();
+                                                    and ucct.IsDeleted = 0", new { moduleLayoutId }).ToList();
         }
-        /// <summary>
-        /// Generate New SubRecordId Based On Previous SubRecordId
-        /// </summary>
-        /// <param name="recordId"></param>
-        /// <returns></returns>
-        public int GenerateNewSubRecordId(int recordId)
-        {
-            using IDbConnection con = _connectionFactory.GetConnection;
-            var result = con.Query<int>($"select ISNULL(Max(SubRecordId),0)from UiPageData where RecordId = {recordId} and IsDeleted = 0").First();
-            return result + 1;
-        }
-        public List<int> GenerateUiDataId(int recordId)
-        {
-            using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<int>($"select Id from UiPageData where RecordId = {recordId} and IsDeleted = 0").ToList();
-        }
+        
         /// <summary>
         /// Delete Multi Record Values
         /// </summary>
@@ -429,7 +402,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// <returns></returns>
         public bool DeleteMultiValue(RecordModel record)
         {
-            var innerList = record.FieldValues;
             using IDbConnection db = _connectionFactory.GetConnection;
 
             string recordInsertQuery = @"Update [Record] Set
@@ -442,7 +414,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
             IDbTransaction transaction = db.BeginTransaction();
             db.Execute(recordInsertQuery, record, transaction);
-                foreach (var item in innerList)
+                foreach (var item in record.FieldValues)
                 {
                     db.Execute(updateQuery, new { RecordId = item.RecordId, Id = item.Id }, transaction);
                 }
