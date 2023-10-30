@@ -173,7 +173,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
             //Table2 += "</table";
             //Table1 += "</table" + Table2;
-            var multiVal = GetMultiControlValue(recordId);
+            var multiVal = GetMultiControlValue(recordId, moduleLayoutId);
 
             if (multiVal.Fields.Count() > 0)
             {
