@@ -1,0 +1,159 @@
+﻿.bottom-navigation {
+    display: none;
+}
+
+.test:after {
+    content: '\2807';
+    font-size: 40px;
+    color: #000000;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.overlay a {
+   /* padding: 40px;*/
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+    .overlay a:hover, .overlay a:focus {
+        color: #f1f1f1;
+    }
+
+.overlay .closebtn {
+    position: absolute;
+    top: -50px;
+    right: -15px;
+    font-size: 60px;
+}
+
+.back-arrow {
+    position: absolute;
+    top: -7px;
+    left: 20px;
+    font-size: 60px;
+    color: #818181;
+    display: none;
+    cursor: pointer;
+}
+
+.nav-link {
+    text-align: center;
+}
+
+    .nav-link i {
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+/*.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}*/
+
+@media only screen and (max-width: 500px) {
+    .bottom-navigation {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 5px;
+        box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.main-footer {
+    background-color: #fff;
+    border-top: 1px solid #dee2e6;
+    color: #869099;
+    padding: 1rem;
+}
+
+.bottom-navigation a {
+    /*display: flex;*/
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-size: 18px;
+}
+.submenu {
+    background-color: #333; /* Replace with your desired background color */
+}
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: #adb5bd;
+    text-align: var(--bs-body-text-align);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+/* CSS for the collapse feature */
+
+
+.collapsed {
+    display: none;
+}
+
+.fa, .fas {
+    font-weight: 900;
+}
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free";
+}
+.fa, .fab, .fad, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+.nav-sidebar .nav-link > .right, .nav-sidebar .nav-link > p > .right {
+    position: absolute;
+    right: 1rem;
+    top: 0.7rem;
+}
+
+   
