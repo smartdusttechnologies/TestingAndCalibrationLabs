@@ -19,7 +19,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [Required(ErrorMessage = "Please Select Permission Module Type Name")]
         public int PermissionModuleTypeId { get; set; }
         /// <summary>
-        /// SubPermissionModuleType Name
+        /// PermissionModuleType Name
         /// </summary>
          //[Required(ErrorMessage = "Please Enter Permission Module Type Name")]
         public string PermissionModuleTypeName { get; set; }

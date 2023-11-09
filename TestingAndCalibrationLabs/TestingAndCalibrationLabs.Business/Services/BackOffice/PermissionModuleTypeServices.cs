@@ -14,9 +14,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
         }
         /// <summary>
-        /// Get All Records From Permission Module Type Services With Formated Url.
+        /// Get All Records From Permission Module Type Services 
         /// </summary>
-        /// <returns></returns>
         public List<PermissionModuleTypeModel> Get()
         {
             var pageNavigation = _genericRepository.Get();
@@ -26,7 +25,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Insert Record In Permission Module Type Services
         /// </summary>
         /// <param name="permissionModuleTypeModel"></param>
-        /// <returns></returns>
         public RequestResult<int> Create(PermissionModuleTypeModel permissionModuleTypeModel)
         {
             _genericRepository.Insert(permissionModuleTypeModel);
@@ -37,7 +35,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Delete Record From Permission Module Type Services
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public bool Delete(int id)
         {
             return _genericRepository.Delete(id);
@@ -46,7 +43,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get Record By Id From Permission Module Type Services
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public PermissionModuleTypeModel GetById(int id)
         {
             return _genericRepository.Get(id);
@@ -56,7 +52,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="permissionTypeModel"></param>
-        /// <returns></returns>
         public RequestResult<int> Update(int id, PermissionModuleTypeModel permissionModuleTypeModel)
         {
             _genericRepository.Update(permissionModuleTypeModel);

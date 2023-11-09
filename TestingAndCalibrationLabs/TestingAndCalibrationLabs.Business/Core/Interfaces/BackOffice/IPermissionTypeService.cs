@@ -18,21 +18,18 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice
         /// Insert Record In Permission Type Services
         /// </summary>
         /// <param name="permissionTypeModel"></param>
-        /// <returns></returns>
         RequestResult<int> Create(PermissionTypeModel permissionTypeModel);
 
         /// <summary>
         /// Delete Record In Permission Type Services
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         bool Delete(int id);
 
         /// <summary>
         /// Get Record By Id From Permission Type Services
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         PermissionTypeModel GetById(int id);
 
         /// <summary>
@@ -40,7 +37,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice
         /// </summary>
         /// <param name="permissionTypeModel"></param>
         /// <param Id="id"></param>
-        /// <returns></returns>
         RequestResult<int> Update(int id, PermissionTypeModel permissionTypeModel);
     }
 }

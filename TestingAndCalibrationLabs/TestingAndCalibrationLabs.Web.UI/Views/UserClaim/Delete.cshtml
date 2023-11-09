@@ -1,0 +1,42 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.UserClaimDTO
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>UserClaim</h4>
+
+    <dl class="row">
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PermissionName)
+        </dt>
+
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.PermissionName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClaimTypeName)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.ClaimTypeName)
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

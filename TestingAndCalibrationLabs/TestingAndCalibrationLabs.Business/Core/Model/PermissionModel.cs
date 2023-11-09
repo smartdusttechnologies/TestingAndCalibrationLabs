@@ -14,11 +14,15 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It contains id of Permission
         /// </summary>/// 
         public int Id { get; set; }
+
+        [DbColumn]
         /// <summary>
         /// It Contains the name of the Permission.
         /// </summary>
         [Required(ErrorMessage = "Please Enter Name")]
         public string Name { get; set; }
+
+        [DbColumn]
         /// <summary>
         ///It Contains PermissionModuleTypeId of the Permission.
         /// </summary>
@@ -27,6 +31,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains PermissionModuleTypeName of the Permission.
         /// </summary>
         public string PermissionModuleTypeName { get; set; }
+
+        [DbColumn]
         /// <summary>
         ///It Contains PermissionTypeId of the Permission.
         /// </summary>

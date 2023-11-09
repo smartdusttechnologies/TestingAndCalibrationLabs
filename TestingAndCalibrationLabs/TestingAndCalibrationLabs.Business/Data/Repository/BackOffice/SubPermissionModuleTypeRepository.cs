@@ -22,7 +22,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Insert Record In SubPermissionModuleType 
         /// </summary>
         /// <param name="subPermissionModuleTypeModel"></param>
-        /// <returns></returns>
         public int Create(SubPermissionModuleTypeModel subPermissionModuleTypeModel)
         {
             string query = @"Insert into [SubPermissionModuleType] (Name,PermissionModuleTypeId)
@@ -33,7 +32,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// <summary>
         /// Getting all records from SubPermissionModuleType 
         /// </summary>
-        /// <returns></returns>
         public List<SubPermissionModuleTypeModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -49,7 +47,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Getting Record By Id For SubPermissionModuleType 
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public SubPermissionModuleTypeModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
@@ -65,7 +62,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Edit Record From subPermissionModuleType
         /// </summary>
         /// <param name="subPermissionModuleTypeModel"></param>
-        /// <returns></returns>
         public int Update(SubPermissionModuleTypeModel subPermissionModuleTypeModel)
         {
             string query = @"update [SubPermissionModuleType] Set 

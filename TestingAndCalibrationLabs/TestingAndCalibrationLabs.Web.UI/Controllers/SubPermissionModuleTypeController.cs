@@ -23,7 +23,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Get All Records From Permission Module Type With SubPermissionModuleType And Pass It TO Ajax Call
         /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public IActionResult GetAllPagesWithPermission()
         {
@@ -35,7 +34,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -48,20 +46,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// For Create Record View
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet]
-        public IActionResult Create(int id)
+        public IActionResult Create()
         {
             List<PermissionModuleTypeModel> PermissionModuleType = _permissionModuleTypeService.Get();
             var permissionModuleTypeList = _mapper.Map<List<PermissionModuleTypeModel>, List<PermissionModuleTypeDTO>>(PermissionModuleType);
             ViewBag.PermissionModuleType = permissionModuleTypeList;
-            return base.View(new SubPermissionModuleTypeDTO { Id = id });
+            return base.View(new SubPermissionModuleTypeDTO {});
         }
         /// <summary>
         /// To Create Record In SubPermissionModuleType
         /// </summary>
         /// <param name="subPermissionModuleTypeDTO"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] SubPermissionModuleTypeDTO subPermissionModuleTypeDTO)
@@ -81,9 +77,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <param name="Name"></param>
         /// <param name="permissionModuletypeId"></param>
-        /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int id, string Name, int permissionModuletypeId)
+        public IActionResult Edit(int? id, string Name, int permissionModuletypeId)
         {
             if (id == null)
             {
@@ -106,7 +101,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="subPermissionModuleTypeDTO"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] SubPermissionModuleTypeDTO subPermissionModuleTypeDTO)
@@ -124,14 +118,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// For Delete Record View
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var getByIdSubPermissionTypeModule = _isubPermissionModuleTypeServices.GetById(id);
+            var getByIdSubPermissionTypeModule = _isubPermissionModuleTypeServices.GetById((int)id);
             var subPermissionModuleType = _mapper.Map<SubPermissionModuleTypeModel, SubPermissionModuleTypeDTO>(getByIdSubPermissionTypeModule);
             return View(subPermissionModuleType);
         }
@@ -139,7 +132,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Delete Record From SubPermissionModuleType
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)

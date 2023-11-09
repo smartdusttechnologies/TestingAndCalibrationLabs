@@ -25,34 +25,25 @@ namespace TestingAndCalibrationLabs.Business.Services.BackOffice
         /// <summary>
         /// Get All Records From Permission.
         /// </summary>
-        /// <returns></returns
         public List<PermissionModel> Get()
         {
             var pageNavigation = _permissionRepository.Get();
-            bool IgnoreNone = pageNavigation.Any(x => x.Id != (int)Helpers.None.Id);
-            if (IgnoreNone)
-            {
-                pageNavigation = pageNavigation.Where(x => x.Id != (int)Helpers.None.Id).ToList();
-                // write code to hide None element.
-            }
             pageNavigation.ForEach(x =>x.Name = string.Format( x.Name, x.PermissionModuleTypeId, x.PermissionTypeId));
             return pageNavigation;
         }
         /// <summary>
         /// Insert Record In Permission
         /// </summary>
-        /// <param name="PermissionModel"></param>
-        /// <returns></returns>
-        public RequestResult<int> Create(PermissionModel PermissionModel)
+        /// <param name="permissionModel"></param>
+        public RequestResult<int> Create(PermissionModel permissionModel)
         {
-            _permissionRepository.Create(PermissionModel);
+            _permissionRepository.Create(permissionModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
         /// Delete Record From Permission.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public bool Delete(int id)
         {
             return _genericRepository.Delete(id);
@@ -61,7 +52,6 @@ namespace TestingAndCalibrationLabs.Business.Services.BackOffice
         /// Get Record By Id From Permission.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public PermissionModel GetById(int id)
         {
             return _permissionRepository.GetById(id);
@@ -71,7 +61,6 @@ namespace TestingAndCalibrationLabs.Business.Services.BackOffice
         /// </summary>
         /// <param name="id"></param>
         /// <param name="permissionModel"></param>
-        /// <returns></returns>
         public RequestResult<int> Update(int id, PermissionModel permissionModel)
         {
             _permissionRepository.Update(permissionModel);

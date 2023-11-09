@@ -5,12 +5,8 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Infrastructure;
-
-namespace TestingAndCalibrationLabs.Business.Data.Repository
+namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
 {
-    /// <summary>
-    /// Repository class for Permission
-    /// </summary>
     public class PermissionRepository : IPermissionRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -22,26 +18,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Insert Record In Permission
         /// </summary>
         /// <param name="permissionModel"></param>
-        /// <returns></returns>
         public int Create(PermissionModel permissionModel)
         {
-            string query = @"Insert into [permission] (Name,PermissionModuleTypeId,PermissionTypeId)
-                                values (@Name,@PermissionModuleTypeId,@PermissionTypeId)";
+            string query = @"Insert into [Permission] (PermissionModuleTypeId, PermissionTypeId)
+                                values (@PermissionModuleTypeId, @PermissionTypeId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, permissionModel);
         }
         /// <summary>
         /// Getting all records from Permission
         /// </summary>
-        /// <returns></returns>
         public List<PermissionModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<PermissionModel>(@"SELECT p.Id, p.Name, p.PermissionModuleTypeId, p.PermissionTypeId, pmt.[Name] as PermissionModuleTypeName, 
+            return db.Query<PermissionModel>(@"SELECT p.Id, p.[Name], p.PermissionModuleTypeId, pmt.[Name] as PermissionModuleTypeName,  p.PermissionTypeId,
                                                     pt.[Name] as PermissionTypeName
                                                 From[Permission] p
-                                                    inner join[PermissionModuleType] pmt on pmt.Id= p.PermissionModuleTypeId
-                                                    inner join[PermissionType] pt on pt.Id= p.PermissionTypeId
+                                                    inner join[PermissionModuleType] pmt on p.PermissionModuleTypeId = pmt.Id
+                                                    inner join[PermissionType] pt on p.PermissionTypeId = pt.Id
 											  where
                                                     pmt.IsDeleted = 0
                                                     and pt.IsDeleted = 0
@@ -52,17 +46,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Getting Record By Id For Permission
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public PermissionModel GetById(int id)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<PermissionModel>(@"SELECT p.Id, p.Name, p.PermissionModuleTypeId, p.PermissionTypeId, pmt.[Name] as PermissionModuleTypeName, 
+            return db.Query<PermissionModel>(@"SELECT p.Id, p.[Name], p.PermissionModuleTypeId, pmt.[Name] as PermissionModuleTypeName,  p.PermissionTypeId,
                                                     pt.[Name] as PermissionTypeName
                                                 From[Permission] p
-                                                    inner join[PermissionModuleType] pmt on pmt.Id= p.PermissionModuleTypeId
-                                                    inner join[PermissionType] pt on pt.Id= p.PermissionTypeId
+                                                    inner join[PermissionModuleType] pmt on p.PermissionModuleTypeId = pmt.Id
+                                                    inner join[PermissionType] pt on p.PermissionTypeId = pt.Id
 											  where
-                                                    pmt.IsDeleted = 0
+                                                        p.Id = @Id
+                                                    and pmt.IsDeleted = 0
                                                     and pt.IsDeleted = 0
                                                     and p.IsDeleted = 0", new { isDeleted = 0, Id = id }).FirstOrDefault();
         }
@@ -70,12 +64,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// Edit Record From Permission
         /// </summary>
         /// <param name="permissionModel"></param>
-        /// <returns></returns>
         public int Update(PermissionModel permissionModel)
         {
             string query = @"update [Permission] Set 
-                                    Name=@Name,
-                                  PermissionModuleTypeId = @PermissionModuleTypeId
+                                  PermissionModuleTypeId = @PermissionModuleTypeId,
+                                  PermissionTypeId = @PermissionTypeId
                                  Where
                                 IsDeleted = 0 and
                                 Id = @Id";

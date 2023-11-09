@@ -23,7 +23,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             /// <summary>
             /// Get All Records From SubPermissionModuleType.
             /// </summary>
-            /// <returns></returns>
             public List<SubPermissionModuleTypeModel> Get()
             {
             var pageNavigation = _subPermissionModuleTypeRepository.Get();
@@ -37,39 +36,35 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return pageNavigation;
             }
             /// <summary>
-            /// Insert Record In Ui Page Navigation 
+            /// Insert Record In SubPermissionModuleType
             /// </summary>
             /// <param name="subPermissionModuleTypeModel"></param>
-            /// <returns></returns>
             public RequestResult<int> Create(SubPermissionModuleTypeModel subPermissionModuleTypeModel)
             {
                 _subPermissionModuleTypeRepository.Create(subPermissionModuleTypeModel);
                 return new RequestResult<int>(1);
             }
             /// <summary>
-            /// Delete Record From Ui Page Validation
+            /// Delete Record From SubPermissionModuleType
             /// </summary>
             /// <param name="id"></param>
-            /// <returns></returns>
             public bool Delete(int id)
             {
                 return _genericRepository.Delete(id);
             }
             /// <summary>
-            /// Get Record By Id From Ui Page Navigation
+            /// Get Record By Id From SubPermissionModuleType
             /// </summary>
             /// <param name="id"></param>
-            /// <returns></returns>
             public SubPermissionModuleTypeModel GetById(int id)
             {
                 return _subPermissionModuleTypeRepository.GetById(id);
             }
             /// <summary>
-            /// Edit Record By Ui Page Navigation
+            /// Edit Record By SubPermissionModuleType
             /// </summary>
             /// <param name="id"></param>
             /// <param name="subPermissionModuleTypeModel"></param>
-            /// <returns></returns>
             public RequestResult<int> Update(int id, SubPermissionModuleTypeModel subPermissionModuleTypeModel)
             {
                 _subPermissionModuleTypeRepository.Update(subPermissionModuleTypeModel);

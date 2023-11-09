@@ -2,14 +2,13 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -26,6 +25,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly ISecurityParameterService _securityParameterService;
         private readonly ILoggerRepository _loggerRepository;
         private readonly IRoleRepository _roleRepository;
+        private object id;
+
         public AuthenticationService(IConfiguration configuration,
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             ILogger logger,
@@ -40,6 +41,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _securityParameterService = securityParameterService;
             _loggerRepository = loggerRepository;
             _roleRepository = roleRepository;
+
 
         }
         /// <summary>
@@ -242,6 +244,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages);
             }
             return new RequestResult<bool>(validationMessages);
+        }
+        public List<UserModel> Get()
+        {
+            return _userRepository.GetByListid();
         }
     }
 }

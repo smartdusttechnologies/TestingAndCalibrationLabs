@@ -40,6 +40,16 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<PermissionModuleTypeDTO, PermissionModuleTypeModel>().ReverseMap();
             CreateMap<PermissionDTO, PermissionModel>().ReverseMap();
             CreateMap<SubPermissionModuleTypeDTO, SubPermissionModuleTypeModel>().ReverseMap();
+            CreateMap<GroupDTO, GroupModel>().ReverseMap();
+            CreateMap<UserGroupDTO, UserGroupModel>().ReverseMap();
+            CreateMap<ClaimTypeDTO, ClaimTypeModel>().ReverseMap();
+            CreateMap<GroupClaimDTO, GroupClaimModel>().ReverseMap();
+            CreateMap<UserClaimDTO, UserClaimModel>().ReverseMap();
+            CreateMap<RoleDTO, RoleModel>().ReverseMap();
+            CreateMap<UserRoleDTO, UserRoleModel>().ReverseMap();
+            CreateMap<RoleClaimDTO, RoleClaimModel>().ReverseMap();
+            CreateMap<UserRoleClaimDTO, UserRoleClaimModel>().ReverseMap();
+
         }
     }
 }

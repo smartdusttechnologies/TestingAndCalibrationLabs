@@ -12,29 +12,25 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice
         List<SubPermissionModuleTypeModel> Get();
 
         /// <summary>
-        /// Get Record By Id From SubPermissionModuleType Service
+        /// Get Record By Id From SubPermissionModuleType
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         SubPermissionModuleTypeModel GetById(int id);
         /// <summary>
         /// Insert Record In SubPermissionModuleType
         /// </summary>
         /// <param name="subPermissionModuleTypeModel"></param>
-        /// <returns></returns>
         RequestResult<int> Create(SubPermissionModuleTypeModel subPermissionModuleTypeModel);
         /// <summary>
         /// Edit Record From SubPermissionModuleType
         /// </summary>
         /// <param name="subPermissionModuleTypeModel"></param>
         /// <param Id="id"></param>
-        /// <returns></returns>
         RequestResult<int> Update(int id, SubPermissionModuleTypeModel subPermissionModuleTypeModel);
         /// <summary>
         /// Delete Record From SubPermissionModuleType
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         bool Delete(int id);
     }
 

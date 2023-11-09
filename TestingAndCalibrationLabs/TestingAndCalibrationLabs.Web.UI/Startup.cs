@@ -115,6 +115,14 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IPermissionModuleTypeService, PermissionModuleTypeService>();
             services.AddScoped<ISubPermissionModuleTypeService, SubPermissionModuleTypeServices>();
             services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IUserGroupServices, UserGroupServices>();
+            services.AddScoped<IClaimTypeService, ClaimTypeService>();
+            services.AddScoped<IGroupClaimService, GroupClaimService>();
+            services.AddScoped<IUserClaimService, UserClaimService>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
+            services.AddScoped<IRoleClaimService, RoleClaimService>();
+            services.AddScoped<IUserRoleClaimService, UserRoleClaimService>();
 
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
@@ -151,10 +159,21 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IGenericRepository<WorkflowModel>, GenericRepository<WorkflowModel>>();
             services.AddScoped<IGenericRepository<PermissionTypeModel>, GenericRepository<PermissionTypeModel>>();
             services.AddScoped<IGenericRepository<PermissionModuleTypeModel>, GenericRepository<PermissionModuleTypeModel>>();
+            services.AddScoped<IGenericRepository<SubPermissionModuleTypeModel>, GenericRepository<SubPermissionModuleTypeModel>>();
+            services.AddScoped<IGenericRepository<UserModel>, GenericRepository<UserModel>>();
+            services.AddScoped<IGenericRepository<PermissionModel>, GenericRepository<PermissionModel>>();
+            services.AddScoped<IGenericRepository<GroupModel>, GenericRepository<GroupModel>>();
+            services.AddScoped<IGenericRepository<UserGroupModel>, GenericRepository<UserGroupModel>>();
+            services.AddScoped<IGenericRepository<ClaimTypeModel>, GenericRepository<ClaimTypeModel>>();
+            services.AddScoped<IGenericRepository<UserClaimModel>, GenericRepository<UserClaimModel>>();
+            services.AddScoped<IGenericRepository<RoleModel>, GenericRepository<RoleModel>>();
+            services.AddScoped<IGenericRepository<UserRoleModel>, GenericRepository<UserRoleModel>>();
+            services.AddScoped<IGenericRepository<RoleClaimModel>, GenericRepository<RoleClaimModel>>();
+            services.AddScoped<IGenericRepository<UserRoleClaimModel>, GenericRepository<UserRoleClaimModel>>();
             services.AddScoped<ISubPermissionModuleTypeRepository, SubPermissionModuleTypeRepository>();
             services.AddScoped<IPermissionRepository, PermissionRepository>();
-            services.AddScoped<IGenericRepository<SubPermissionModuleTypeModel>, GenericRepository<SubPermissionModuleTypeModel>>();
-            services.AddScoped<IGenericRepository<PermissionModel>, GenericRepository<PermissionModel>>();
+            services.AddScoped<IUserGroupRepository, UserGroupRepository>();
+            services.AddScoped<IGenericRepository<GroupClaimModel>, GenericRepository<GroupClaimModel>>();
             services.AddScoped<ISampleRepository, SampleRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<ILoggerRepository, LoggerRepository>();
@@ -166,6 +185,11 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<IGroupClaimRepository, GroupClaimRepository>();
+            services.AddScoped<IUserClaimRepository, UserClaimRepository>();
+            services.AddScoped<IRoleClaimRepository, RoleClaimRepository>();
+            services.AddScoped<IUserRoleClaimRepository, UserRoleClaimRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();

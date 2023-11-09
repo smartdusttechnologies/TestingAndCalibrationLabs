@@ -1,4 +1,5 @@
-﻿using TestingAndCalibrationLabs.Business.Common;
+﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
@@ -19,5 +20,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         //TODo: This should be moved to User service.
         RequestResult<bool> Add(UserModel user, string password);
+
+        List<UserModel> Get();
+
     }
 }

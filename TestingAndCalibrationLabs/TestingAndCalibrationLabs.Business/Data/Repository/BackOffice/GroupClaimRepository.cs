@@ -5,7 +5,6 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Infrastructure;
-
 namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
 {
     public class GroupClaimRepository : IGroupClaimRepository
@@ -21,8 +20,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.BackOffice
         /// <param name="groupClaimModel"></param>
         public int Create(GroupClaimModel groupClaimModel)
         {
-            string query = @"Insert into [GroupClaim] (GroupId,ClaimTypeId,PermissionId)
-                                values (@GroupId,@ClaimTypeId,@PermissionId)";
+            string query = @"Insert into [GroupClaim] (GroupId,PermissionId,ClaimTypeId)
+                                values (@GroupId, @PermissionId, @ClaimTypeId)";
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, groupClaimModel);
         }

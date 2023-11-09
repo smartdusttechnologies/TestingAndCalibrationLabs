@@ -17,9 +17,9 @@
 
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
 
-                    <select class="form-input width-full " name="PermissionModuleTypeId" id="PermissionModuleTypeId" onchange="this.setAttribute('value',this.value)" asp-for="PermissionModuleTypeId">
+                    <select class="form-input width-full " name="PermissionModuleTypeId" id="PermissionModuleType" onchange="this.setAttribute('value',this.value)" asp-for="PermissionModuleTypeId">
 
-                        @foreach (var item in ViewBag.Permission)
+                        @foreach (var item in ViewBag.PermissionModuleType)
                         {
                             if (@item.Id == @ViewBag.PermissionModuleTypeId)
                             {
@@ -32,14 +32,14 @@
 
                         }
                     </select>
-                    <label for="Module" class="form-label">PermissionModuleTypeName</label>
+                    <label for="PermissionModuleType" class="form-label">PermissionModuleTypeName</label>
                 </div>
 
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
 
-                    <select class="form-input width-full " name="PermissionTypeId" id="PermissionTypeId" onchange="this.setAttribute('value',this.value)" asp-for="PermissionTypeId">
+                    <select class="form-input width-full " name="PermissionTypeId" id="PermissionType" onchange="this.setAttribute('value',this.value)" asp-for="PermissionTypeId">
 
-                        @foreach (var item in ViewBag.Permission)
+                        @foreach (var item in ViewBag.PermissionType)
                         {
                             if (@item.Id == @ViewBag.PermissionTypeId)
                             {
@@ -52,7 +52,7 @@
 
                         }
                     </select>
-                    <label for="UiNavigationCategory" class="form-label">PermissionTypeName</label>
+                    <label for="PermissionType" class="form-label">PermissionTypeName</label>
                 </div>
 
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">

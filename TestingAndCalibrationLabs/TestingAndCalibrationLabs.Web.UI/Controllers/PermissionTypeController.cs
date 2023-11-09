@@ -21,7 +21,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <summary>
         /// Get All The Pages From Database
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
@@ -34,17 +33,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// For Create Record View
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet]
-        public ActionResult Create(int id)
+        public ActionResult Create()
         {
-            return base.View(new Models.PermissionTypeDTO { Id = id });
+            return View(new PermissionTypeDTO {});
         }
         /// <summary>
         /// To Create Record In Permission Type
         /// </summary>
         /// <param name="permissionTypeDTO"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] PermissionTypeDTO permissionTypeDTO)
@@ -63,7 +60,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="permissionType"></param>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -84,7 +80,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Edit Record In Permission Type 
         /// </summary>
         /// <param name="permissionType"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] PermissionTypeDTO permissionTypeDTO)
@@ -103,7 +98,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// For Delete Record View
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -122,7 +116,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Delete Record From Permission Type
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
