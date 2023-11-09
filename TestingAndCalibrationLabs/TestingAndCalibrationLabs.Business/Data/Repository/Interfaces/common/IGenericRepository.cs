@@ -19,5 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         T Get(int id);
         T Get(string name);
         bool Delete(int id);
+        //List<UserModel> GetByListid(object id);
     }
 }

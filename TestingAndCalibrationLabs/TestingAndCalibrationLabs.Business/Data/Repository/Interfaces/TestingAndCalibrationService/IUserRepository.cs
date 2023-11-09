@@ -8,6 +8,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         List<string> Get();
         UserModel Get(int id);
         UserModel Get(string userName);
+        List<UserModel> GetByListid();
+        //List<UserModel> GetByclaimListid();
         int Insert(UserModel user, PasswordLogin passwordLogin);
+
     }
 }

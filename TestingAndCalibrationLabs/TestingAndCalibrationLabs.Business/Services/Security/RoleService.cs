@@ -3,6 +3,8 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
+using TestingAndCalibrationLabs.Business.Data.Repository;
+using TestingAndCalibrationLabs.Business.Data.Repository.common;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -12,10 +14,12 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class RoleService : IRoleService
     {
         private readonly IRoleRepository _roleRepository;
+        private readonly IGenericRepository<RoleModel> _genericRepository;
 
-        public RoleService(IRoleRepository roleRepository)
+        public RoleService(IRoleRepository roleRepository, IGenericRepository<RoleModel> genericRepository )
         {
             _roleRepository = roleRepository;
+            _genericRepository = genericRepository;
         }
         /// <summary>
         /// 
@@ -79,5 +83,52 @@ namespace TestingAndCalibrationLabs.Business.Services
         //{
         //    return _roleRepository.GetRequiredClaimsForModule(permissionModuleType);
         //}
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get All Records From Role Service
+        /// </summary>
+        public List<RoleModel> Get()
+        {
+            var pageNavigation = _genericRepository.Get();
+            return pageNavigation;
+        }
+        /// <summary>
+        /// Insert Record In Role Service
+        /// </summary>
+        /// <param name="roleModel"></param>
+        public RequestResult<int> Create(RoleModel roleModel)
+        {
+            _genericRepository.Insert(roleModel);
+
+            return new RequestResult<int>(1);
+        }
+        /// <summary>
+        /// Delete Record From Role Service
+        /// </summary>
+        /// <param name="id"></param>
+        public bool Delete(int id)
+        {
+            return _genericRepository.Delete(id);
+        }
+        /// <summary>
+        /// Get Record By Id From Role Service
+        /// </summary>
+        /// <param name="id"></param>
+        public RoleModel GetById(int id)
+        {
+            return _genericRepository.Get(id);
+        }
+        /// <summary>
+        /// Edit Record By Role Service
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="roleModel"></param>
+        public RequestResult<int> Update(int id, RoleModel roleModel)
+        {
+            _genericRepository.Update(roleModel);
+            return new RequestResult<int>(1);
+        }
     }
 }

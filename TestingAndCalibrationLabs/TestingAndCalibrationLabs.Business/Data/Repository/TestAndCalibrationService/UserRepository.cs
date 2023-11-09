@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -93,6 +92,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             transaction.Commit();
 
             return insertedUserId;
+        }
+       public List<UserModel> GetByListid()
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UserModel>(@"SELECT u.Id, u.[UserName] as UserName
+                                         FROM[User] u
+                                         WHERE 
+                                         u.IsDeleted=0").ToList();
         }
     }
 }
