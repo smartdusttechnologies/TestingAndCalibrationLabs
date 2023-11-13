@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IDataTypeService _dataTypeService;
         private readonly IUiControlCategoryTypeService _uiControlCategoryTypeService;
+        private readonly Microsoft.Extensions.Logging.ILogger _logger;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
@@ -25,8 +28,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="mapper"></param>
         /// <param name="uiPageTypeService"></param>
         /// <param name="uiPageMetadataService"></param>
-        /// <param name="lookupService"></param>
-        public UiPageMetadataController(IUiControlCategoryTypeService uiControlCategoryTypeService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
+        /// <param name="looger"></param>
+        public UiPageMetadataController(Microsoft.Extensions.Logging.ILogger logger,IUiControlCategoryTypeService uiControlCategoryTypeService,IDataTypeService dataTypeService, IUiControlTypeService uiControlTypeService, IMapper mapper, IUiPageTypeService uiPageTypeService ,IUiPageMetadataService uiPageMetadataService)
         {
             _uiPageMetadataService = uiPageMetadataService;
             _uiPageTypeService = uiPageTypeService;
@@ -34,6 +37,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _uiControlTypeService = uiControlTypeService;
             _dataTypeService = dataTypeService;
             _uiControlCategoryTypeService = uiControlCategoryTypeService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -43,10 +47,20 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
-            var pageMetadata = _uiPageMetadataService.Get();
-            var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
-            return View(pageMetadatas.AsEnumerable());
+            try
+            {              
+                ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
+                var pageMetadata = _uiPageMetadataService.Get();
+                var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
+                _logger.LogInformation("UiPageMetadata index has been successfully accessed");
+                return View(pageMetadatas.AsEnumerable());               
+            }
+            catch(Exception exception)
+            {
+                _logger.LogError(""+exception.Message);
+            }
+
+            return View();
         }
 
         /// <summary>
@@ -57,23 +71,32 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Create(int id)
         {
-           var pageList = _uiPageTypeService.Get();
-           var controlList = _uiControlTypeService.Get();
-           var  dataList = _dataTypeService.Get();
-            var controlCategoryType = _uiControlCategoryTypeService.Get();
-            var pageMetadata = _uiPageMetadataService.Get();
-            var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
-            var controlCategoryTypeList = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(controlCategoryType);
-            var pages = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageList);
-            var controles = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlList);
-            var datas = _mapper.Map<List<DataTypeModel>, List<DataTypeDTO>>(dataList);
-           // var dropdownssss =    categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
-            ViewBag.UiControlTypes = controles;
-            ViewBag.DataTypes = datas;
-            ViewBag.UiPageTypes = pages;
-            ViewBag.UiControlCategoryType = controlCategoryTypeList;
-            ViewBag.UiPageMetadata = pageMetadatas;
-            return base.View(new Models.UiPageMetadataDTO { Id = id});
+            try
+            {             
+                var pageList = _uiPageTypeService.Get();
+                var controlList = _uiControlTypeService.Get();
+                var dataList = _dataTypeService.Get();
+                var controlCategoryType = _uiControlCategoryTypeService.Get();
+                var pageMetadata = _uiPageMetadataService.Get();
+                var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadata);
+                var controlCategoryTypeList = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(controlCategoryType);
+                var pages = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pageList);
+                var controles = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controlList);
+                var datas = _mapper.Map<List<DataTypeModel>, List<DataTypeDTO>>(dataList);
+                // var dropdownssss =    categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+                ViewBag.UiControlTypes = controles;
+                ViewBag.DataTypes = datas;
+                ViewBag.UiPageTypes = pages;
+                ViewBag.UiControlCategoryType = controlCategoryTypeList;
+                ViewBag.UiPageMetadata = pageMetadatas;
+                _logger.LogInformation("UiPageMetadata create get method has been successfully accessed");
+                return base.View(new Models.UiPageMetadataDTO { Id = id });
+            }
+           catch(Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
         }
 
         /// <summary>
@@ -85,16 +108,27 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind] UiPageMetadataDTO uiPageMetadataDTO)
         {
-            if (ModelState.IsValid)
+            try
             {
-               
-                var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
                 
-                _uiPageMetadataService.Create(createMetadataModel);
-                TempData["IsTrue"] = true;
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+
+                    var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
+
+                    _uiPageMetadataService.Create(createMetadataModel);
+                    TempData["IsTrue"] = true;
+                    _logger.LogInformation("UiPageMetadata create post has been accessed");
+                    return RedirectToAction("Index");
+                }
+                _logger.LogError("you are unauthorized");
+                return View(uiPageMetadataDTO);
             }
-            return View(uiPageMetadataDTO);
+            catch(Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
         }
 
         /// <summary>
@@ -109,34 +143,46 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult Edit(int? id,int parentId,int uiPageTypeId,int uiControlTypeId,int dataTypeId , int uiControlCategoryTypeId)
         {
-            if(id == null)
+            try
             {
-                return NotFound();
-            }
-            ViewBag.UiControlTypeId = uiControlTypeId;
-            ViewBag.DataTypeId = dataTypeId;
-            ViewBag.UiPageTypeId = uiPageTypeId;
-            ViewBag.UiPageMetadataId = parentId;
-            ViewBag.UiControlCategoryTypeId = uiControlCategoryTypeId;
-            var pages = _uiPageTypeService.Get();
-            var controls = _uiControlTypeService.Get();
-            var datas = _dataTypeService.Get();
-            var controlCategoryType = _uiControlCategoryTypeService.Get();
-            var pageMetadataList = _uiPageMetadataService.Get();
-            var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadataList);
-            var controlCategoryTypeList = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(controlCategoryType);
+                if (id == null)
+                {
+                    _logger.LogError("id is null");
+                    return NotFound();
 
-            var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pages);
-            var controlList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controls);
-            var dataList = _mapper.Map<List<DataTypeModel>, List<DataTypeDTO>>(datas);
-            ViewBag.UiControlTypes = controlList;
-            ViewBag.DataTypes = dataList;
-            ViewBag.UiPageTypes = pageList;
-            ViewBag.UiControlCategoryType = controlCategoryTypeList;
-            ViewBag.UiPageMetadata = pageMetadatas;
-            UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
-            var pageMetadata = _mapper.Map<UiPageMetadataModel,UiPageMetadataDTO>(pageMetadataModel);
-            return View(pageMetadata);
+                }
+                ViewBag.UiControlTypeId = uiControlTypeId;
+                ViewBag.DataTypeId = dataTypeId;
+                ViewBag.UiPageTypeId = uiPageTypeId;
+                ViewBag.UiPageMetadataId = parentId;
+                ViewBag.UiControlCategoryTypeId = uiControlCategoryTypeId;
+                var pages = _uiPageTypeService.Get();
+                var controls = _uiControlTypeService.Get();
+                var datas = _dataTypeService.Get();
+                var controlCategoryType = _uiControlCategoryTypeService.Get();
+                var pageMetadataList = _uiPageMetadataService.Get();
+                var pageMetadatas = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(pageMetadataList);
+                var controlCategoryTypeList = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(controlCategoryType);
+
+                var pageList = _mapper.Map<List<UiPageTypeModel>, List<UiPageTypeDTO>>(pages);
+                var controlList = _mapper.Map<List<UiControlTypeModel>, List<UiControlTypeDTO>>(controls);
+                var dataList = _mapper.Map<List<DataTypeModel>, List<DataTypeDTO>>(datas);
+                ViewBag.UiControlTypes = controlList;
+                ViewBag.DataTypes = dataList;
+                ViewBag.UiPageTypes = pageList;
+                ViewBag.UiControlCategoryType = controlCategoryTypeList;
+                ViewBag.UiPageMetadata = pageMetadatas;
+                UiPageMetadataModel pageMetadataModel = _uiPageMetadataService.GetById((int)id);
+                var pageMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(pageMetadataModel);
+                _logger.LogInformation("UiPageMetadata edit get has been accessed");
+                return View(pageMetadata);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
+
         }
 
         /// <summary>
@@ -149,19 +195,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind] UiPageMetadataDTO uiPageMetadataDTO)
         {
-            if (id != uiPageMetadataDTO.Id)
+            try
             {
-                return NotFound();
+                if (id != uiPageMetadataDTO.Id)
+                {
+                    _logger.LogError("id is null");
+                    return NotFound();
+                }
+                if (ModelState.IsValid)
+                {
+
+                    var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
+                    _uiPageMetadataService.Update(id, editMetadata);
+                    TempData["IsTrue"] = true;
+                    _logger.LogInformation("UiPageMetadata edit post  has been accessed");
+                    return RedirectToAction("Index");
+                }
+                _logger.LogError("you are unauthorized");
+                return View(uiPageMetadataDTO);
             }
-            if (ModelState.IsValid)
+            catch (Exception exception)
             {
-                
-                var editMetadata = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
-                _uiPageMetadataService.Update(id, editMetadata);
-                TempData["IsTrue"] = true;
-                return RedirectToAction("Index");
+                _logger.LogError("." + exception.Message);
             }
-            return View(uiPageMetadataDTO);
+            return View();
         }
 
         /// <summary>
@@ -169,15 +226,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int?id)
         {
-            if(id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    _logger.LogError("id is null");
+                    return NotFound();
+                }
+                UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetById((int)id);
+                var deleteMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(uiPageMetadataModel);
+                _logger.LogInformation("UiPageMetadata delete  has been accessed");
+                return View(deleteMetadata);
             }
-            UiPageMetadataModel uiPageMetadataModel = _uiPageMetadataService.GetById((int)id);
-            var deleteMetadata = _mapper.Map<UiPageMetadataModel, UiPageMetadataDTO>(uiPageMetadataModel);
-            return View(deleteMetadata);
+            catch (Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
         }
 
         /// <summary>
@@ -189,13 +256,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
         {
-            if(id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    _logger.LogError("id is null");
+                    return NotFound();
+                }
+                _uiPageMetadataService.Delete((int)id);
+                TempData["IsTrue"] = true;
+                _logger.LogInformation("UiPageMetadata delete  has been accessed");
+                return RedirectToAction("Index");
             }
-            _uiPageMetadataService.Delete((int)id);
-            TempData["IsTrue"] = false;
-            return RedirectToAction("Index");
+            catch (Exception exception)
+            {
+                _logger.LogError("." + exception.Message);
+            }
+            return View();
         }
     }
 }
