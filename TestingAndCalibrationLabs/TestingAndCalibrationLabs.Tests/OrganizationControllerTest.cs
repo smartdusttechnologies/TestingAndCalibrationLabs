@@ -47,7 +47,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             _organizationService = new OrganizationService(_organizationRepository.Object,_logger.Object, _genericRepository.Object);
 
-            _genericRepository.Setup(x => x.Get()).Returns(organization);
+            _genericRepository.Setup(x => x.Get(false)).Returns(organization);
 
             var controller = new OrganizationController(_organizationService, _mapper);
 

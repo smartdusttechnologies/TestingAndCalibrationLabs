@@ -34,10 +34,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
 
-        public List<T> Get()
+        public List<T> Get(bool none = false)
         {
+            string query = none ? "AND Id != 0" : "";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<T>(string.Format("Select * From [{0}] where IsDeleted=0", _tableName)).ToList();
+            return db.Query<T>(string.Format(@"Select * From [{0}] where IsDeleted=0 {1}", _tableName,query)).ToList();
         }
 
         public List<T> Get<FType>(string columnName, FType value)
