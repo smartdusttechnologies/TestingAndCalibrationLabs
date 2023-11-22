@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             _tableName = GenericUtils.GetDbTableName<T>();
             _columnName = GenericUtils.GetDbColumnName<T>();
         }
-
+        
         public bool Delete(int id)
         {
             string query = string.Format("update [{0}] Set IsDeleted = @IsDeleted Where Id = @Id and  Id=@id", _tableName);
@@ -34,11 +34,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
 
-        public List<T> Get(bool none = false)
+        public List<T> Get(bool allowNoneId = false)
         {
-            string query = none ? "AND Id != 0" : "";
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<T>(string.Format(@"Select * From [{0}] where IsDeleted=0 {1}", _tableName,query)).ToList();
+            var xc = db.Query<T>(string.Format(@"Select * From [{0}] where IsDeleted=0", _tableName)).ToList().ExcludeNoneId(true);
+            return xc;
         }
 
         public List<T> Get<FType>(string columnName, FType value)

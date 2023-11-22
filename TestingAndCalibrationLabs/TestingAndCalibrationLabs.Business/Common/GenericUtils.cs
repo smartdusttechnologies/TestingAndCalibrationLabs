@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Common
 {
@@ -22,7 +23,15 @@ namespace TestingAndCalibrationLabs.Business.Common
         {
             return obj == null ? new List<T>() : obj.ToList();
         }
+        public static List<T> ExcludeNoneId<T>(this IEnumerable<T> obj, bool allowNoneId)
+        {
+            if (allowNoneId)
+            {
+                var ti = obj.Where(x => (x as Entity).Id != 0).ToList();
+            }
+            return obj.ToList();
 
+        }
         public static string GetDbTableName<T>()
         {
             var tableAttribute = typeof(T).GetCustomAttributes(
