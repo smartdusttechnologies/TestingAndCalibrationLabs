@@ -37,7 +37,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<T> Get(bool allowNoneId = false)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            var xc = db.Query<T>(string.Format(@"Select * From [{0}] where IsDeleted=0", _tableName)).ToList().ExcludeNoneId(true);
+            var xc = db.Query<T>(string.Format(@"Select * From [{0}] where IsDeleted=0", _tableName)).ToList().ExcludeNoneId(allowNoneId);
             return xc;
         }
 
