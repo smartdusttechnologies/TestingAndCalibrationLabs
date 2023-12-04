@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Mail;
+using System.Security;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -17,7 +18,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// It is to access the Appsetting.json file.
         /// </summary>
         private readonly IConfiguration _configuration;
-
         /// <summary>
         /// Constructor call.
         /// </summary>
@@ -49,7 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     mm.Subject = emailModel.Subject;
                     mm.Body = emailModel.HtmlMsg;
                     mm.IsBodyHtml = true;
-                    if(emailModel.Attachments.Count > 0)
+                    if(emailModel.Attachments != null)
                     {
                         emailModel.Attachments.ForEach(x=>mm.Attachments.Add(x));
                     }

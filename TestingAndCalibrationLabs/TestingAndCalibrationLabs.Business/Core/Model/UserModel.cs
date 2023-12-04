@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿using System;
+
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class UserModel : Entity
     {
@@ -59,7 +61,29 @@
         /// </summary>
         public string Organizations { get; set; }
         public int AdminLevel { get; set; }
-        public string Password { get; set; }    
+        /// <summary>
+        /// For password
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// For Re-Enterpassword
+        /// </summary>
         public string ReEnterPassword { get; set; }
+        /// <summary>
+        /// It is used for UserId
+        /// </summary>
+        public int userId { get; set; }
+        /// <summary>
+        /// This is for PasswordHash
+        /// </summary>
+        public string PasswordHash { get; set; }
+        /// <summary>
+        /// This is for PasswordSalt
+        /// </summary>
+        public string PasswordSalt { get; set; }
+        /// <summary>
+        /// This used for ChangeDate
+        /// </summary>
+        public DateTime ChangeDate { get; set; }
     }
 }

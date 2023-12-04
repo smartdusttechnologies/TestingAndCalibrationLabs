@@ -24,6 +24,8 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
+using TestingAndCalibrationLabs.Business.Services.Security;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -109,6 +111,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped <IOTPService,OTPservice>();
+
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
@@ -153,6 +157,9 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped< IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+            services.AddScoped<IOtpRepsitory, OtpRepository>();
+            services.AddScoped<IGenericRepository<OtpModel>, GenericRepository<OtpModel>>();
+
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();

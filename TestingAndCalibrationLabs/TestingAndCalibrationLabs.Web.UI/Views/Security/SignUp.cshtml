@@ -5,6 +5,7 @@
 *@
 <div class="padding-login bg-white">
     <form id="SignUpData" asp-controller="User" asp-action="Add">
+        <input type="hidden" asp-for="userId">
         <div class="col-lg-12 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input">
             <input class="form-input  inputForSignUp gray-border" type="text" id="FirstName" placeholder=" " name="FirstName" item.IsRequired onchange="this.setAttribute('value',this.value)">
             <label class="form-label" style="color:gray;" for=FirstName>
@@ -157,7 +158,7 @@
 </div>
 
 <script>
-    //User validation 
+    //User validation
     function myFunction() {
 
         var x = document.getElementById("snackbarsuccess");
@@ -171,25 +172,30 @@
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
     }
     function User() {
+        WheelLoader();
         //remove highlight column
         var under = ["#FirstName", "#LastName", "#Mobile", "#Email", "#ReEnterPassword", "#EnterPassword", "#Organizations", "#Country", "#Username"];
         for (var i = 0; i < under.length; i++) {
             if ($(under[i]).hasClass("red-error-border")) {
                 $(under[i]).removeClass("red-error-border").addClass("gray-border");
-        }
+            }
         }
         // validation messages
+
         $.ajax({
             type: "POST",
             url: "@Url.Action("Add","User")",
             data: $('#SignUpData').serialize(),
             dataType: 'json',
             success: function (result) {
+                HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
-                window.location.href = '@Url.Action("index","security")';
+                var userId = result.userId;
+                window.location.href = '@Url.Action("SendOtp","User")' + '?userId=' + userId;
             },
             error: function (result) {
+                HideWheelLoader();
                 var newresponseJSON = result.responseJSON;
                 var newErrorMessage = newresponseJSON;
                 for (var i = 0; i < newErrorMessage.length; i++) {
@@ -201,7 +207,5 @@
                 }
             }
         });
-
     }
-
 </script>

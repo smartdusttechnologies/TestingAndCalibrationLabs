@@ -12,12 +12,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IOrganizationRepository _organizationRepository;
         private readonly IGenericRepository<Organization> _genericRepository;
         private readonly ILogger _logger;
+
         public OrganizationService(IOrganizationRepository organizationRepository, ILogger logger, IGenericRepository<Organization> genericRepository)
         {
             _organizationRepository = organizationRepository;
             _logger = logger;
             _genericRepository = genericRepository;
         }
+
 
         /// <summary>
         /// Method to Get Orgnization Details from DB
