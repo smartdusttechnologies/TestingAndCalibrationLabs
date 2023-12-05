@@ -126,18 +126,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return PartialView(controlCategoryTypeTemplate, records);
         }
         [HttpGet]
-        public ActionResult MultiValueControlGrid(int id, int moduleLayoutId)
+        public ActionResult MultiValueControlGrid(int id, int moduleLayoutId, int UipagetypeId)
         {
-            var pageMetadata = _commonService.GetMultiControlValue(id, moduleLayoutId);
+            var pageMetadata = _commonService.GetMultiControlValue(id, moduleLayoutId, UipagetypeId);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
         }
         [HttpPost]
-        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId)
+        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId, int UipagetypeId)
         {
-            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId);
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId, UipagetypeId);
             
             if (send)
             {
@@ -212,6 +212,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
             if (adddata.IsSuccessful)
             {
+                result.Id = records.Id;
                 return Ok(result);
             }
             result.FieldValues = record.FieldValues;
@@ -282,6 +283,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return RedirectToAction("Edit", new { id = record.Id });
             }
             return BadRequest();
+        }
+
+        public ActionResult GenerateRecord(int ModuleId,int  WorkflowStageId)
+        {
+            var recordId = _commonService.GenerateRecordId(ModuleId, WorkflowStageId);
+            return Ok(recordId);
         }
     }
 }

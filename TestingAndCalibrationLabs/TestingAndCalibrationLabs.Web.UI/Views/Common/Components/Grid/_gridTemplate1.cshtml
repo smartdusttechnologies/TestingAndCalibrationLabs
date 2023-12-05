@@ -1,6 +1,7 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
 <input type="hidden" asp-for="ModuleId" />
 
+
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
@@ -119,7 +120,14 @@
     //Inserting Record
     let saveRecords = (subRId) => {
         WheelLoader();
+        debugger;
         let workflowStageId = parseInt($("#WorkflowStageId").val());
+        var modellist = JSON.parse('@Json.Serialize(Model)');
+        var ModuleId= modellist.moduleId;
+        var WorkflowStageId= modellist.workflowStageId;
+
+        var RecordId = modellist.id;
+        
         const getMembers = (member) => {
             debugger;
             if (!member.children || !member.children.length) {
@@ -129,6 +137,9 @@
         }
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
+       if (RecordId == 0) {
+               
+        
         for (let i = 0; i < layout.length; i++) {
             debugger;
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
@@ -143,22 +154,26 @@
                 if (layout[i].uiPageData != null) {
                     var pageDataId = layout[i].uiPageData.id;
                     var oldValue = layout[i].uiPageData.value;
-                    if (oldValue != fieldValue) {
+                    if (oldValue != fieldValue &&fieldValue != "" ) {
+                        debugger;
                         keyValuepair.Id = pageDataId;
                         keyValuepair.uiPageMetadataId = metadataId;
-                        keyValuepair.RecordId = id;
+                        keyValuepair.RecordId = 0;
                         keyValuepair.Value = fieldValue;
                         keyValuepair.UiPageTypeId = uiPageTypeId;
                         fieldValues.push(keyValuepair)
                     }
                 }
                 else {
+                    if(fieldValue!= ""){
+                    debugger;
                     keyValuepair.Id = 0;
                     keyValuepair.UiPageMetadataId = metadataId;
-                    keyValuepair.RecordId = id;
+                    keyValuepair.RecordId = 0;
                     keyValuepair.Value = fieldValue;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
                     fieldValues.push(keyValuepair)
+                    }
                 }
             }
         }
@@ -171,6 +186,84 @@
             if (subRId == 0) {
                 keyValuepair.Id = 0;
                 keyValuepair.UiPageMetadataId = mId;
+                debugger;
+                keyValuepair.RecordId = 0;
+                keyValuepair.Value = val;
+                keyValuepair.UiPageTypeId = uiPageTypeId;
+                keyValuepair.MultiValueControl = true;
+                fieldValues.push(keyValuepair)
+            }
+            else {
+                for (let i = 0; i < fieldValuesSublists.length; i++) {
+                    if (fieldValuesSublists[i].key == subRId) {
+                        value = fieldValuesSublists[i].sublist[y];
+                        keyValuepair.Id = value.id;
+                        keyValuepair.childId = value.childId;
+                        keyValuepair.uiPageMetadataId = mId;
+                        keyValuepair.RecordId = 0;
+                        keyValuepair.Value = val;
+                        keyValuepair.UiPageTypeId = uiPageTypeId;
+                        keyValuepair.MultiValueControl = true;
+                        keyValuepair.SubRecordId = value.subRecordId;
+                        fieldValues.push(keyValuepair)
+                    }
+                }
+
+            }
+        }
+       }
+     else{
+       
+        
+        for (let i = 0; i < layout.length; i++) {
+            debugger;
+            if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
+                var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
+                if ($(fieldId).hasClass("red-error-border")) {
+                    $(fieldId).removeClass("red-error-border").addClass("black-border");
+                }
+                var metadataId = layout[i].uiPageMetadata.id;
+                var fieldValue = $(fieldId).val();
+                var keyValuepair = {};
+                var uiPageData = layout[i].uiPageData;
+                if (layout[i].uiPageData != null) {
+                  for(let t = 0; t < layout[i].uiPageData.length; t++){
+                    var pageDataId = layout[i].uiPageData[t].id;
+                    var oldValue = layout[i].uiPageData[t].value;
+                            if (oldValue != fieldValue &&fieldValue != "" ) {
+                                debugger;
+                                keyValuepair.Id = pageDataId;
+                                keyValuepair.uiPageMetadataId = metadataId;
+                                keyValuepair.RecordId = id;
+                                keyValuepair.Value = fieldValue;
+                                keyValuepair.UiPageTypeId = uiPageTypeId;
+                                fieldValues.push(keyValuepair)
+                            }
+                  }
+                }
+                else {
+                    if(fieldValue!= ""){
+                    debugger;
+                    keyValuepair.Id = 0;
+                    keyValuepair.UiPageMetadataId = metadataId;
+                    keyValuepair.RecordId = id;
+                    keyValuepair.Value = fieldValue;
+                    keyValuepair.UiPageTypeId = uiPageTypeId;
+                    fieldValues.push(keyValuepair)
+                    }
+                }
+            }
+        }
+        for (let y = 0; y < metadata.length; y++) {
+            var value;
+            var keyValuepair = {};
+            let mId = metadata[y].id;
+            let controlType = metadata[y].uiControlTypeName;
+            let val = $(`#${controlType}${mId}`).val();
+            if (subRId == 0) {
+                keyValuepair.Id = 0;
+                keyValuepair.UiPageMetadataId = mId;
+                debugger;
                 keyValuepair.RecordId = id;
                 keyValuepair.Value = val;
                 keyValuepair.UiPageTypeId = uiPageTypeId;
@@ -195,14 +288,25 @@
 
             }
         }
+     }
         $.ajax({
             type: 'POST',
             url: url,
-            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
+            data: {
+                    // other properties...
+                    id: id ? id : 0,  // If id is truthy, use id; otherwise, use 0
+                    workflowStageId: workflowStageId,
+                    updatedDate: updatedDate,
+                    moduleId: moduleId,
+                    uiPageTypeId: uiPageTypeId,
+                    fieldValues: fieldValues
+                },            
             success: function (response) {
-                myFunction();
-                window.location.href = "/common/edit/" + id;
-            },
+                debugger;
+                        myFunction();
+                         id = response.id;
+                         window.location.href = "/common/edit/" + id;
+                    },
             failure: function (response) {
                 alert(response.responseText);
             },

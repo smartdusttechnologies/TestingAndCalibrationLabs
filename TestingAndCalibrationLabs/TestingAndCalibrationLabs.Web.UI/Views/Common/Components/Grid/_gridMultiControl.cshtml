@@ -76,10 +76,11 @@
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        var moduleLayoutId = modelData.value.uiPageMetadata.moduleLayoutId
+        var moduleLayoutId = modelData.value.uiPageMetadata.moduleLayoutId;
+        var UipagetypeId = modelData.value.uiPageMetadata.uiPageTypeId;
         let id = $("#Id").val();
         debugger;
-        var url = "@Url.Action("MultiValueControlGrid","Common")" + "?id=" + id + "&moduleLayoutId=" + moduleLayoutId;
+        var url = "@Url.Action("MultiValueControlGrid","Common")" + "?id=" + id + "&moduleLayoutId=" + moduleLayoutId + "&UipagetypeId=" + UipagetypeId;
         $("#tableMultiValue").load(url); 
 
     });

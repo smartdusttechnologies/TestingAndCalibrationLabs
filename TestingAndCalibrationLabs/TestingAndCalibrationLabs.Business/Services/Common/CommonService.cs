@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Data.Repository;
+using static TestingAndCalibrationLabs.Business.Core.Model.PolicyTypes;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -72,7 +73,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 record.UpdatedDate = DateTime.Now;
                 //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
-                record.Id = _commonRepository.Insert(record);
+                 _commonRepository.Insert(record);
                 // record.WorkflowStageId = workflowStageId;
                 //_workflowActivityService.WorkflowActivity(record)
                 return new RequestResult<bool>(true);
@@ -86,7 +87,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send,int moduleLayoutId)
+        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send,int moduleLayoutId, int UipagetypeId)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
@@ -116,7 +117,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
                 }
             }
-            var multiVal = GetMultiControlValue(recordId, moduleLayoutId);
+            var multiVal = GetMultiControlValue(recordId, moduleLayoutId, UipagetypeId);
             if (multiVal.Fields.Count() > 0)
             {
                 var table = new StringBuilder("<table class='multiValueGrid'  cellspacing='0'> <tr>");
@@ -240,8 +241,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             f => f.UiPageMetadata.Orders // The property on your object that specifies the order within its parent
              );
 
-             record = new RecordModel
+            record = new RecordModel
             {
+                
                 ModuleId = moduleId,
                 UiPageTypeId = uiPageTypeId,
                 Layout = hierarchy,
@@ -316,16 +318,31 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId)
+        public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId, int UipagetypeId)
         {
-            var uiMetadata = _commonRepository.GetMultiControlMetadata(moduleLayoutId);
-            var uiPageData = _commonRepository.GetMultiPageData(recordId);
+            var uiMetadata = _commonRepository.GetMultiControlMetadata(moduleLayoutId, UipagetypeId);
+            var uiPageData = _commonRepository.GetMultiPageData(recordId, uiMetadata);
             var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
-            //Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
-            //uiPageData.GroupBy(x => x.RecordId).ToList()
-            //    .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
-
-            return new RecordsModel { Id = recordId, Fields = metadata, FieldValue = uiPageData };
+            int maxItemCount = 0;
+            int Controles = 0;
+            List<UiPageMetadataModel> unmatchedMetadata = new List<UiPageMetadataModel>();
+            foreach (var metadataItem in metadata)
+            {
+                var controlsValueList = uiPageData
+                    .Where(data => data.UiPageMetadataId == metadataItem.Id)
+                    .ToList();
+                int itemCount = controlsValueList.Count;
+                if (itemCount > maxItemCount)
+                {
+                    maxItemCount = itemCount;
+                }
+                if (itemCount == Controles)
+                {
+                    unmatchedMetadata.Add(metadataItem);
+                }
+            }
+           
+            return new RecordsModel { Id = recordId, Fields = metadata, FieldValue = uiPageData  , ModuleId = uiMetadata[0].ModuleId, WorkflowStageId= uiMetadata[0].WorkflowStageId };
         }
         /// <summary>
         /// Delete Multi Value Records
@@ -365,7 +382,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
             return metadata;
         }
-      
+        public int GenerateRecordId(int ModuleId,int  WorkflowStageId)
+        {
+            var getRecordid = _commonRepository.GetRecordId(ModuleId, WorkflowStageId);
+            return getRecordid;
+        }
+
+
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageTypeId);

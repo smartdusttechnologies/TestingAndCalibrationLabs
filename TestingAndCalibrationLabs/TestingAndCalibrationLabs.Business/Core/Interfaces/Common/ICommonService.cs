@@ -50,13 +50,13 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="uiPageTypeId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send,int moduleLayoutId);
+		byte[] TemplateGenerate(int uiPageTypeId, int metadataId, string email, bool send,int moduleLayoutId,int UipagetypeId);
         /// <summary>
         /// To Get multi Value Records For Creating Grid
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        RecordsModel GetMultiControlValue(int recordId,int moduleLayoutId);
+        RecordsModel GetMultiControlValue(int recordId,int moduleLayoutId, int UipagetypeId);
         /// <summary>
         /// To Delete Multi Value Records
         /// </summary>
@@ -75,5 +75,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="fileId"></param>
         /// <returns></returns>
         FileUploadModel DownloadImage(string ImageValue);
+        int GenerateRecordId(int ModuleId,int WorkflowStageId);
      }
 }  

@@ -14,6 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name of The Layout
         /// </summary>
+        [DbColumn]
         public string Name { get; set; }
 
     }

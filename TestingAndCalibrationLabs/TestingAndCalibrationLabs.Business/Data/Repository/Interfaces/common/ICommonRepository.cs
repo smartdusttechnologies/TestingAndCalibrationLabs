@@ -9,12 +9,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface ICommonRepository
     {
+        int GetRecordId(int ModuleId,int  WorkflowStageId);
         /// <summary>
         /// To Insert Record
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        int Insert(RecordModel record);
+        RecordModel Insert(RecordModel record);
         /// <summary>
         /// To Get Records Based on ModuleId
         /// </summary>
@@ -76,13 +77,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="id"></param>
         /// <param name="uiPageTypeId"></param>
         /// <returns></returns>
-        List<UiPageDataModel> GetMultiPageData(int id);
+        List<UiPageDataModel> GetMultiPageData(int id,List<UiPageMetadataModel> uiMetadata);
         /// <summary>
         /// Get All UiPageMetadata Based On Record Id
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        List<UiPageMetadataModel> GetMultiControlMetadata(int recordId);
+        List<UiPageMetadataModel> GetMultiControlMetadata(int moduleLayoutId, int UiPageTypeId);
         /// <summary>
         /// Delete Multi Value Records
         /// </summary>

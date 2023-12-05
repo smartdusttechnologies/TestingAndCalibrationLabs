@@ -115,6 +115,8 @@
         /// </summary>
         public int UiPageMetadataId { get; set; }
         public int ModuleId { get; set; }
+        public int WorkflowStageId { get; set; }
+
 
     }
 }
