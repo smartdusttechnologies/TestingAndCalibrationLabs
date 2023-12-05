@@ -14,10 +14,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Used For Email.
         /// </summary>
         public string Email { get; set; }
+        public bool IsCall { get; set; }
+        public string MobileNumber { get; set; }
         /// <summary>
         /// It Contain UserId 
         /// </summary>
-        public int userId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// It Is used For OTP
         /// </summary>

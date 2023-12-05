@@ -38,5 +38,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         {
             CreatedDate = DateTime.Now;
         }
+        public string MobileNumber { get; set; }
     }
 }

@@ -311,7 +311,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 if (existingEmailUser.Email == user.Email)
                 {
-                    OtpModel otpModel = new OtpModel { Email = user.Email, userId = user.userId, Name = user.UserName };
+                    OtpModel otpModel = new OtpModel { Email = user.Email, userId = user.userId, Name = user.UserName,MobileNumber = user.Mobile };
                     _otpService.CreateOtp(otpModel, user.userId, user.FirstName);
                     return new RequestResult<int>(1, validationMessages);
                 }
