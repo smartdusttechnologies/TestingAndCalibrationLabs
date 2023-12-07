@@ -13,12 +13,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
-        private readonly IOTPService _otpService;
+        private readonly IOtpService _otpService;
         private readonly IOrganizationService _organizationService;
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IOtpRepsitory _otpRepsitory;
 
-        public UserController(IAuthenticationService authenticationService, IOrganizationService organizationService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository, IOtpRepsitory otpRepsitory)
+        public UserController(IAuthenticationService authenticationService, IOrganizationService organizationService, IMapper mapper, IOtpService otpService, IAuthenticationRepository authenticationRepository, IOtpRepsitory otpRepsitory)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
@@ -44,18 +44,21 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var result = _authenticationService.Add(userModel, userRequest.Password);
             if (result.IsSuccessful)
             {
-                OtpModel otpModel = new OtpModel { userId = userModel.userId, Email = userModel.Email };
+                OtpModel otpModel = new OtpModel { UserId = userModel.userId, Email = userModel.Email,MobileNumber = userModel.Mobile };
                 return Ok(otpModel);
             }
             return BadRequest(result.ValidationMessages);
         }
+        #region Email Otp Logics
         /// <summary>
         /// Method for Sign-up OTP
         /// </summary>
         [HttpGet]
-        public IActionResult SendOtp(int userId)
+        public IActionResult EmailVerify()
         {
-            OtpDTO otpDTO = new OtpDTO { userId = userId };
+            var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
+            var userId = sdtUserIdentity.UserId;
+            OtpDTO otpDTO = new OtpDTO { userId = userId };     
             return View(otpDTO);
         }
         ///// <summary>
@@ -63,13 +66,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         ///// </summary>
         ///// <param name="userDTO"></param>
         [HttpPost]
-        public IActionResult SendOtp(OtpDTO otpDTO)
+        public IActionResult EmailVerify(OtpDTO otpDTO)
         {
             var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            var user = _otpService.ValidateOTP(otpReturn);
+            var user = _otpService.VerifyOtp(otpReturn,false);
             if (user.IsSuccessful)
             {
-                UserModel userModel = new UserModel { userId = otpReturn.userId, Email = otpReturn.Email };
+                UserModel userModel = new UserModel { userId = otpReturn.UserId, Email = otpReturn.Email };
                 _authenticationService.EmailValidationStatus(userModel);
                 return Ok(user.RequestedObject);
             }
@@ -82,7 +85,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ResendOTP(OtpDTO otpDTO)
         {
             var resendOtp = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            _otpService.ResendOTP(resendOtp);
+            _otpService.ResendOtp(resendOtp, false  );
             return Ok(otpDTO);
         }
         /// <summary>
@@ -109,5 +112,31 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest(existingEmail.ValidationMessages);
         }
+        #endregion
+        #region Phone Otp Logics
+        [HttpGet]
+        public IActionResult VerifyPhone(int userId)
+        {
+            OtpDTO otpDTO = new OtpDTO { userId = userId };
+            return View(otpDTO);
+        }
+        ///// <summary>
+        ///// Method to validate otp for Sign-up
+        ///// </summary>
+        ///// <param name="userDTO"></param>
+        [HttpPost]
+        public IActionResult VerifyPhone(OtpDTO otpDTO)
+        {
+            var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
+            var user = _otpService.VerifyOtp(otpReturn, false);
+            if (user.IsSuccessful)
+            {
+                UserModel userModel = new UserModel { userId = otpReturn.UserId, Email = otpReturn.Email };
+                _authenticationService.EmailValidationStatus(userModel);
+                return Ok(user.RequestedObject);
+            }
+            return BadRequest(user.ValidationMessages);
+        }
+        #endregion
     }
 }

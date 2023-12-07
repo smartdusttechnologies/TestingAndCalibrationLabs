@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IRoleRepository _roleRepository;
         private readonly IEmailService _emailService;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IOTPService _otpService;
+        private readonly IOtpService _otpService;
         private readonly IMapper _mapper;
         private readonly IOtpRepsitory _otpRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -46,7 +46,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
-              IRoleRepository roleRepository, IOTPService otpService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+              IRoleRepository roleRepository, IOtpService otpService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -166,7 +166,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             return loginToken;
         }
         /// <summary>
-        ///Method to Get Token Cliams
+        ///Method to Get Token Cliams From here We Can Update Whatever data we want to store in claim
         /// </summary>
         private List<Claim> GetTokenClaims(string sub, DateTime dateTime)
         {
@@ -214,9 +214,9 @@ namespace TestingAndCalibrationLabs.Business.Services
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
-                    OtpModel User = new OtpModel { userId = passwordLogin.UserId, Email = user.Email };
-                    _otpService.CreateOtp(User, passwordLogin.UserId, user.FirstName);
-                    user.userId = User.userId;
+                    OtpModel User = new OtpModel { UserId = passwordLogin.UserId, Email = user.Email };
+                    _otpService.SendOtp(User,false);
+                    user.userId = User.UserId;
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
@@ -311,8 +311,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 if (existingEmailUser.Email == user.Email)
                 {
-                    OtpModel otpModel = new OtpModel { Email = user.Email, userId = user.userId, Name = user.UserName,MobileNumber = user.Mobile };
-                    _otpService.CreateOtp(otpModel, user.userId, user.FirstName);
+                    OtpModel otpModel = new OtpModel { Email = user.Email, UserId = user.userId, Name = user.UserName,MobileNumber = user.Mobile };
+                    _otpService.SendOtp(otpModel,false);
                     return new RequestResult<int>(1, validationMessages);
                 }
                 else

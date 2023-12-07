@@ -191,8 +191,30 @@
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
+                //login for registerd user
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: '@Url.Action("Login", "Security")',
+                        data: {
+                            UserName: $('#Username').val(),
+                            Password: $('#EnterPassword').val()
+                        },
+                        error: function (result) {
+                            alert("There is a Problem, Try Again! to login");
+                        },
+                        success: function (result) {
+                            if (result.status == true) {
+                                window.location.href = '@Url.Action("EmailVerify","User")';
+                               // window.location.href = '@Url.Action("Index", "TestReport")';
+                            }
+                            else {
+                                alert(result.message);
+                            }
+                        }
+                    });
                 var userId = result.userId;
-                window.location.href = '@Url.Action("SendOtp","User")' + '?userId=' + userId;
+               // window.location.href = '@Url.Action("AccountVerify","User")';
             },
             error: function (result) {
                 HideWheelLoader();

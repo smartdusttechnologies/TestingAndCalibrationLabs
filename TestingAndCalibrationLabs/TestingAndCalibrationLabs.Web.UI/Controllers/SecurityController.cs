@@ -19,9 +19,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOrganizationService _orgnizationService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
-        private readonly IOTPService _otpService;
+        private readonly IOtpService _otpService;
         private readonly IAuthenticationRepository _authenticationRepository;
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOTPService otpService, IAuthenticationRepository authenticationRepository)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOtpService otpService, IAuthenticationRepository authenticationRepository)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
@@ -78,7 +78,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 otpDTO.userId = userVerify.RequestedObject.UserId;
                 otpDTO.Name = userVerify.RequestedObject.UserName;
-                _otpService.CreateOtp(emailResult, otpDTO.userId, otpDTO.Name);
+                _otpService.SendOtp(emailResult,false);
                 return Ok(otpDTO);
             }
             return BadRequest(userVerify.ValidationMessages);
@@ -91,10 +91,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ValidateOTP(OtpDTO otpDTO)
         {
             var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            var user = _otpService.ValidateOTP(otpReturn);
+            var user = _otpService.VerifyOtp(otpReturn, false);
             if (user.IsSuccessful)
             {
-                UserModel userModel = new UserModel { userId = user.RequestedObject };
+                UserModel userModel = new UserModel { userId = otpDTO.userId };
                 return Ok(userModel);
             }
             return BadRequest(user.ValidationMessages);

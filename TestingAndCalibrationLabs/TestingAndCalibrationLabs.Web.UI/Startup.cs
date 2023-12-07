@@ -111,7 +111,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
-            services.AddScoped <IOTPService,OTPservice>();
+            services.AddScoped <IOtpService,OtpService>();
 
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();

@@ -2,11 +2,16 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -18,7 +23,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
 {
 
 
-    public class OtpService : IOtoService
+    public class OtpService : IOtpService
     {
         private readonly IConfiguration _configuration;
         private readonly IAuthenticationRepository _authenticationRepository;
@@ -218,6 +223,30 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         }
         #endregion
         #region Private Methods
+        private async Task<RequestResult<bool>> OtpSend(OtpModel r)
+        {
+            var otp = GenerateOTP();
+            String message = HttpUtility.UrlEncode("This is your message");
+            var client = new HttpClient();
+            var parameters = new Dictionary<string, string> {
+                {"apikey" , "yourapiKey"},
+                {"numbers" , "918123456789"},
+                {"message" , message},
+                {"sender" , "TXTLCL"} 
+            };
+            var encodedContent = new FormUrlEncodedContent(parameters);
+            using (var response = await client.PostAsync("https://api.textlocal.in/send/", encodedContent).ConfigureAwait(false))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    return new RequestResult<bool>(true);
+                }
+                return new RequestResult<bool>(false);
+
+            }
+        }
         /// <summary>
         /// Method To Generate OTP
         /// </summary>

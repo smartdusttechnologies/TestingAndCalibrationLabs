@@ -5,6 +5,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -45,6 +46,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 if (userIdentity != null)
                 {
                     context.User = new SdtPrincipal(userIdentity);
+                    //if(true) {
+                    //    context.Response.Redirect("/User/AccountVerify");
+                    //}
                     await _next(context);
                 }
             }

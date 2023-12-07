@@ -3,7 +3,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration
 {
-    public interface IOTPservice
+    public interface IOtpService
     {
         RequestResult<bool> ResendEmailOtp(OtpModel OtpModel);
         RequestResult<bool> ResendOtp(OtpModel r, bool isMobile);

@@ -1,6 +1,6 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.OtpDTO
 @{
-    ViewData["Title"] = "SendOtp";
+    ViewData["Title"] = "Email Verify";
 }
 <div class="padding-login bg-white d-flex flex-column min-vh-100 justify-content-center align-items-center bg-login" style="margin-bottom:80px;">
     <div id="SendOtp" asp-action="SendOtp" asp-controller="User" method="post">
@@ -60,7 +60,9 @@
                     <button type="submit" class="btn btn-success text-center btn-block" onclick="OtpMatch()" style="width:80px; margin-left:20px">Submit</button>
                 </center>
                 <div>
-             <a href="#" onclick="ResendOTP()" style="float:right;">Resend OTP?</a>
+                
+                <a href="#" onclick="ResendOTP()" style="all:unset;float:right;">Resend <i class="fa fa-info" data-toggle="tooltip" title="Didn't Get Otp Send Again!"></i></a>
+                <a href="/" style="all:unset;padding-right:10px;float:right;">Skip</a>
                     <span class="timer">
                         <span id="counter"></span>
                     </span>
@@ -97,6 +99,9 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
     function OtpMatch() {
         WheelLoader();
         var keyValuepair = {};
@@ -104,14 +109,14 @@
         keyValuepair.OTP = $("#OTP").val();
         $.ajax({
             type: "POST",
-            url: "@Url.Action( "SendOtp","User")",
+            url: "@Url.Action( "EmailVerify","User")",
             dataType: 'json',
             data: keyValuepair,
             success: function (result) {
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "We Send OTP successfully!");
-                window.location.href = '@Url.Action("index","Security")';
+                window.location.href = '@Url.Action("MobileVerify","User")';
             },
             error: function (result) {
                 HideWheelLoader();
