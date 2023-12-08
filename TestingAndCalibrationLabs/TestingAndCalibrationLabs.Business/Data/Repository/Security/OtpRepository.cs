@@ -1,9 +1,7 @@
 ﻿using Dapper;
 using System.Data;
 using System.Linq;
-using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository.common;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
 
@@ -12,21 +10,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
     public class OtpRepository : IOtpRepsitory
     {
         private readonly IConnectionFactory _connectionFactory;
-        private readonly IGenericRepository<OtpModel> _genericRepository;
-        private readonly string _tableName;
-        public OtpRepository(IConnectionFactory connectionFactory, IGenericRepository<OtpModel> genericRepository)
+        public OtpRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
-            _genericRepository = genericRepository;
-        }
-        /// <summary>
-        /// Save Email Token in DB
-        /// </summary>
-        /// <param name="Email"></param>
-        public UserModel GetLoginEmail(string email)
-        {
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UserModel>("Select top 1  * From[User] where Email=@Email and(IsDeleted=0 AND Locked=0 AND IsActive=1)", new { email }).FirstOrDefault();
         }
         /// <summary>
         /// Insert OTP in DB

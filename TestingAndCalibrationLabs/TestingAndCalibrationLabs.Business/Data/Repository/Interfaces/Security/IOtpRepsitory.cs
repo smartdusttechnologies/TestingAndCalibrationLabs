@@ -5,11 +5,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IOtpRepsitory
     {
         /// <summary>
-        /// Interface to select Email for FogetPassword.
-        /// </summary>
-        /// <param name="email"></param>
-        UserModel GetLoginEmail(string email);
-        /// <summary>
         /// Interface to insert and update otp in DB.
         /// </summary>
         /// <param name="otp"></param>

@@ -9,8 +9,6 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 
@@ -219,7 +217,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            UserModel existingUser = _otpRepository.GetLoginEmail(OtpModel.Email);
+            UserModel existingUser = _userRepository.Get(OtpModel.Email);
             if (existingUser == null)
             {
                 var error = new ValidationMessage { Reason = "The UserName not available", Severity = ValidationSeverity.Error, SourceId = "Email" };
