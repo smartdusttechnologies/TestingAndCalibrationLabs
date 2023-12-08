@@ -51,3 +51,4 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/Properties/PublishProfiles
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/bin/Release/netcoreapp3.1
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/temp/internal-nlog.txt
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.sqlproj.user
