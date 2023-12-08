@@ -46,9 +46,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 if (userIdentity != null)
                 {
                     context.User = new SdtPrincipal(userIdentity);
-                    //if(true) {
-                    //    context.Response.Redirect("/User/AccountVerify");
-                    //}
                     await _next(context);
                 }
             }

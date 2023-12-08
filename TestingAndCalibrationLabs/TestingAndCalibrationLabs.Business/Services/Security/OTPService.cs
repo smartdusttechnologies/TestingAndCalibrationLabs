@@ -2,20 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Data;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Threading;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
-using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 
@@ -32,21 +26,44 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         private readonly IOtpRepsitory _otpRepsitory;
         private readonly IGenericRepository<OtpModel> _genericRepository;
 
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
         public OtpService(IConfiguration configuration,
            IAuthenticationRepository authenticationRepository,
            IEmailService emailservice, IOtpRepsitory otpRepsitory,
-           IWebHostEnvironment hostingEnvironment, IUserRepository userRepository, IGenericRepository<OtpModel> genericRepository)
+           IWebHostEnvironment hostingEnvironment, IUserService userService, IGenericRepository<OtpModel> genericRepository)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
             _emailService = emailservice;
             _otpRepsitory = otpRepsitory;
             _hostingEnvironment = hostingEnvironment;
-            _userRepository = userRepository;
+            _userService = userService;
             _genericRepository = genericRepository;
         }
         #region Common Public Methods
+        public RequestResult<bool> MobileValidate(int userId)
+        {
+            var data = _userService.MobileValidationStatus(userId);
+            return new RequestResult<bool>(data.RequestedObject == 1 ? true : false );
+        }
+        public RequestResult<bool> MobileVerify(string mobile,int userId)
+        {
+            List<ValidationMessage> errors = new List<ValidationMessage>();
+            var user = _userService.Get(userId);
+            if (user == null)
+            {
+                errors.Add(new ValidationMessage() { Reason = "Account Is Not available", Severity = ValidationSeverity.Error, Description = "User Cannot found",SourceId="mobile" });
+            }
+            else if(user.Mobile == mobile)
+            {
+                return new RequestResult<bool>(true);
+            }
+            else if(user.Mobile != mobile)
+            {
+                errors.Add(new ValidationMessage() { Reason = "Unable To procced", Severity = ValidationSeverity.Error, Description = "Enter Correct Mobile Number", SourceId = "mobile" });
+            }
+            return new RequestResult<bool>(false,errors);
+        }
         public RequestResult<bool> SendOtp(OtpModel r, bool isMobile)
         {
             if (isMobile) return SendMobileOtp(r).Result;
@@ -68,15 +85,16 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// Method to validate OTP
         /// </summary>
         /// <param name="OtpModel"></param>
-        private RequestResult<bool> VerifyEmailOtp(OtpModel OtpModel)
+        private RequestResult<bool> VerifyEmailOtp(OtpModel r)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            OtpModel existingUser = _otpRepsitory.GetOTP(OtpModel.UserId);
-            if (OtpModel.OTP == existingUser.OTP)
+            OtpModel existingUser = _otpRepsitory.GetOTP(r.UserId);
+            if (r.OTP == existingUser.OTP)
             {
-                double OTPTime = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
-                if (OtpModel.CreatedDate <= existingUser.CreatedDate.AddMinutes(OTPTime))
+                double validationTimeLimit = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
+                if (r.CreatedDate <= existingUser.CreatedDate.AddMinutes(validationTimeLimit))
                 {
+                    _userService.EmailValidationStatus(r.UserId);
                     return new RequestResult<bool>(true);
                 }
                 else
@@ -99,6 +117,9 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
         /// <param name="OtpModel"></param>
         private RequestResult<bool> SendEmailOtp(OtpModel otpModel)
         {
+            var user = _userService.Get(otpModel.UserId);
+            otpModel.Email = user.Email;
+            otpModel.Name = user.FirstName;
             string otp = GenerateOTP();
             EmailModel model = new EmailModel
             {

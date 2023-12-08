@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Apis.Drive.v3.Data;
 using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -14,18 +15,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
         private readonly IOtpService _otpService;
-        private readonly IOrganizationService _organizationService;
-        private readonly IAuthenticationRepository _authenticationRepository;
-        private readonly IOtpRepsitory _otpRepsitory;
 
-        public UserController(IAuthenticationService authenticationService, IOrganizationService organizationService, IMapper mapper, IOtpService otpService, IAuthenticationRepository authenticationRepository, IOtpRepsitory otpRepsitory)
+        public UserController(IAuthenticationService authenticationService, IMapper mapper, IOtpService otpService)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
             _otpService = otpService;
-            _organizationService = organizationService;
-            _authenticationRepository = authenticationRepository;
-            _otpRepsitory = otpRepsitory;
         }
         /// <summary>
         /// Default Action of the User Controller
@@ -58,8 +53,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
             var userId = sdtUserIdentity.UserId;
-            OtpDTO otpDTO = new OtpDTO { userId = userId };     
-            return View(otpDTO);
+            OtpDTO data = new OtpDTO { userId = userId };   
+            var otpModel = _mapper.Map<OtpDTO, OtpModel>(data);
+            _otpService.SendOtp(otpModel, false);  
+            return View(data);
         }
         ///// <summary>
         ///// Method to validate otp for Sign-up
@@ -72,8 +69,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var user = _otpService.VerifyOtp(otpReturn,false);
             if (user.IsSuccessful)
             {
-                UserModel userModel = new UserModel { userId = otpReturn.UserId, Email = otpReturn.Email };
-                _authenticationService.EmailValidationStatus(userModel);
                 return Ok(user.RequestedObject);
             }
             return BadRequest(user.ValidationMessages);
@@ -84,7 +79,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="otpDTO"></param>
         public IActionResult ResendOTP(OtpDTO otpDTO)
         {
+            var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
+            var userId = sdtUserIdentity.UserId;
             var resendOtp = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
+            resendOtp.UserId = userId;
             _otpService.ResendOtp(resendOtp, false  );
             return Ok(otpDTO);
         }
@@ -115,27 +113,38 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         #endregion
         #region Phone Otp Logics
         [HttpGet]
-        public IActionResult VerifyPhone(int userId)
+        public IActionResult MobileVerify()
         {
-            OtpDTO otpDTO = new OtpDTO { userId = userId };
+            OtpDTO otpDTO = new OtpDTO { };
             return View(otpDTO);
+        }
+        [HttpPost]
+        public IActionResult MobileVerify(string mobile)
+        {
+            var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
+            var userId = sdtUserIdentity.UserId;
+            var result = _otpService.MobileVerify(mobile, userId);
+            if (result.IsSuccessful)
+            {
+                return Ok(result.RequestedObject);
+            }
+            return BadRequest(result.ValidationMessages);
         }
         ///// <summary>
         ///// Method to validate otp for Sign-up
         ///// </summary>
         ///// <param name="userDTO"></param>
         [HttpPost]
-        public IActionResult VerifyPhone(OtpDTO otpDTO)
+        public IActionResult MobileValidate()
         {
-            var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            var user = _otpService.VerifyOtp(otpReturn, false);
-            if (user.IsSuccessful)
+            var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
+            var userId = sdtUserIdentity.UserId;
+            var result = _otpService.MobileValidate(userId);
+            if (result.IsSuccessful)
             {
-                UserModel userModel = new UserModel { userId = otpReturn.UserId, Email = otpReturn.Email };
-                _authenticationService.EmailValidationStatus(userModel);
-                return Ok(user.RequestedObject);
+                return Ok(result.RequestedObject);
             }
-            return BadRequest(user.ValidationMessages);
+            return BadRequest(result.ValidationMessages);
         }
         #endregion
     }

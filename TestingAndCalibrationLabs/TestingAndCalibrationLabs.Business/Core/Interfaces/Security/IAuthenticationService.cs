@@ -23,11 +23,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="UserModel"></param>
         RequestResult<bool> UpdatePassword(UserModel UserModel);
         /// <summary>
-        /// Interface for Update EmailValidationStatus if user sign-up Successfully with OTP validation.
-        /// </summary>
-        /// <param name="user"></param>
-        RequestResult<int> EmailValidationStatus(UserModel user);
-        /// <summary>
         /// Interface for Email validation for FogetPassword.
         /// </summary>
         /// <param name="user"></param>

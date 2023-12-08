@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Tests
     public class OrganizationControllerTest
     {
         IOrganizationService _organizationService;
-        IOTPService _otpServices;
+        IOtpService _otpServices;
         IMapper _mapper;
         Mock<IGenericRepository<Organization>> _genericRepository = new Mock<IGenericRepository<Organization>>();
         Mock<IOrganizationRepository> _organizationRepository = new Mock<IOrganizationRepository>();

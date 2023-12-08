@@ -71,6 +71,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UserModel>("UPDATE [User] SET EmailValidationStatus='1' WHERE Id=@userId", new { userId }).FirstOrDefault();
         }
         /// <summary>
+        /// Update MobileValidationStatusUpdate
+        /// </summary>
+        /// <param name="userId"></param>
+        public UserModel MobileValidationStatusUpdate(int userId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UserModel>("UPDATE [User] SET MobileValidationStatus='1' WHERE Id=@userId", new { userId }).FirstOrDefault();
+        }
+        /// <summary>
         /// Method to Insert User Info in DB
         /// </summary>
         public int Insert(UserModel user, PasswordLogin passwordLogin)

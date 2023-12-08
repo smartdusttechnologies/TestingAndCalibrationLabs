@@ -30,6 +30,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="UserModel"></param>
         int UpdatePassword(UserModel UserModel);
         /// <summary>
+        /// Interface for Update MobileValidationStatus if user Complete Mobile Verfication Successfully with OTP validation.
+        /// </summary>
+        /// <param name="user"></param>
+        UserModel MobileValidationStatusUpdate(int userId);
+        /// <summary>
         /// Interface for Update EmailValidationStatus if user sign-up Successfully with OTP validation.
         /// </summary>
         /// <param name="user"></param>

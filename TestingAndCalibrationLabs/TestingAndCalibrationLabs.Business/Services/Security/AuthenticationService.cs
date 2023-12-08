@@ -214,9 +214,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                     PasswordLogin passwordLogin = Hasher.HashPassword(user.Password);
                     user.IsActive = true;
                     _userRepository.Insert(user, passwordLogin);
-                    OtpModel User = new OtpModel { UserId = passwordLogin.UserId, Email = user.Email };
-                    _otpService.SendOtp(User,false);
-                    user.userId = User.UserId;
                     return new RequestResult<bool>(true);
                 }
                 return new RequestResult<bool>(false, validationResult.ValidationMessages);
@@ -360,15 +357,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 return new RequestResult<bool>(false);
             }
-        }
-        /// <summary>
-        /// Method to EmailValidation Status update in DB after OTP validation.
-        /// </summary>
-        /// <param name="user"></param>
-        public RequestResult<int> EmailValidationStatus(UserModel user)
-        {
-            _userRepository.EmailValidationStatusUpdate(user.userId);
-            return new RequestResult<int>(1);
         }
     }
 }

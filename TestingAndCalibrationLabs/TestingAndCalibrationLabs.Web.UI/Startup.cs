@@ -82,6 +82,7 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
             //Authorization Handler Initalization Start
             services.AddScoped<IAuthorizationHandler, UiPageTypeAuthorizationHandler>();
             services.AddScoped<IAuthorizationHandler, UiControlTypeAuthorizationHandler>();

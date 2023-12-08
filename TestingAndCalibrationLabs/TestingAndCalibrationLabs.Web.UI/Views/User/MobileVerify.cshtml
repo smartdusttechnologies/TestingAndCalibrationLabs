@@ -51,26 +51,26 @@
             </section>
             <center>
                 <div class="col-lg-20 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input" style="margin:20px;">
-                    <input class="form-input width-full black-border" style="width:200px;" type="text" placeholder=" " name="mobile" id="mobile" asp-validation-for="Mobile" , maxlength="10" , item.IsRequired onchange="this.setAttribute('value',this.value)" required>
-                    <label class="form-label" style="color:gray;" for=OTP>
+                    <input class="form-input width-full black-border" style="width:200px;" type="text" placeholder=" " name="mobile" id="mobile" asp-validation-for="mobile" , maxlength="10" , item.IsRequired onchange="this.setAttribute('value',this.value)" required>
+                    <label class="form-label" style="color:gray;" for=mobile>
                         Mobile Number
                         <span class="red-color">*</span>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-success text-center btn-block" onclick="OtpSend()" style="width:80px; margin-left:20px">Submit</button>
+                <button type="submit" class="btn btn-success text-center btn-block" onclick="otpSendHandler()" style="width:80px; margin-left:20px">Submit</button>
             </center>
             <div>
 
-                <a href="#" onclick="ResendOTP()" style="all:unset;float:right;">Resend <i class="fa fa-info" data-toggle="tooltip" title="Didn't Get Otp Send Again!"></i></a>
-                <a href="/" style="all:unset;padding-right:10px;float:right;">Skip</a>
-                <span class="timer">
+               @* <a href="#" onclick="ResendOTP()" style="all:unset;float:right;">Resend <i class="fa fa-info" data-toggle="tooltip" title="Didn't Get Otp Send Again!"></i></a>
+               *@ <a href="/" style="all:unset;padding-right:10px;float:right;">Skip</a>
+               @* <span class="timer">
                     <span id="counter"></span>
-                </span>
+                </span>*@
             </div>
         </div>
 
     </div>
-    <div id="otpForm">
+    <div id="otpForm" style="display:none">
         <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
             <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
                 <li class="nav-item login-tab-click" role="presentation" style="width:100%; margin:20px;">
@@ -123,7 +123,7 @@
                         <span class="red-color">*</span>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-success text-center btn-block" onclick="OtpMatch()" style="width:80px; margin-left:20px">Submit</button>
+                <button type="submit" class="btn btn-success text-center btn-block" onclick="otpVerifyHandler()" style="width:80px; margin-left:20px">Submit</button>
             </center>
             <div>
 
@@ -169,35 +169,19 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
     var otpSendHandler = () =>{
-        $("#mobileForm").hide();
-        $("#otpForm").show();
-        var mobileNum = ("#mobile").val();
-        sendOtp(mobileNum, (data) => SuccessMessage(NotificationNumbers++, "We Send Otp successfully!"), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
-    }
-    var otpVerifyHandler = ()=>{
-        var otp = $("#OTP").val();
-        verifyOtp(otp, (data) => verifyOperation(data), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
-    }
-    var verifyOperation = (data) =>{
-        console.log(data);
-        SuccessMessage(NotificationNumbers++, "Account Verified Successfully!");
-        //put logic to update that phone num has been verified 
-    }
-    function OtpMatch() {
         WheelLoader();
-        var keyValuepair = {};
-        keyValuepair.userId = $("#userId").val();
-        keyValuepair.OTP = $("#OTP").val();
+        var mobile = $("#mobile").val();
         $.ajax({
             type: "POST",
-            url: "@Url.Action( "EmailVerify","User")",
+            url: "@Url.Action( "MobileVerify","User")",
             dataType: 'json',
-            data: keyValuepair,
+            data: {'mobile':mobile},
             success: function (result) {
                 HideWheelLoader();
                 myFunction();
-                SuccessMessage(NotificationNumbers++, "We Send OTP successfully!");
-                window.location.href = '@Url.Action("MobileVerify","User")';
+                $("#mobileForm").hide();
+                $("#otpForm").show();
+                sendOtp('91'+mobile, (data) => SnackbarSuccess(), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
             },
             error: function (result) {
                 HideWheelLoader();
@@ -212,6 +196,38 @@
             }
         });
     }
+    var otpVerifyHandler = ()=>{
+        WheelLoader();
+        var otp = $("#OTP").val();
+        verifyOtp(otp, (data) => verifyOperation(data), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
+    }
+    var verifyOperation = (data) =>{
+        console.log(data);
+        //put logic to update that phone num has been verified 
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action( "MobileValidate","User")",
+            dataType: 'json',
+            success: function (result) {
+                HideWheelLoader();
+                myFunction();
+                SuccessMessage(NotificationNumbers++, "Account Verified Successfully!");
+                window.location.href = '/';
+            },
+            error: function (result) {
+                HideWheelLoader();
+                var newresponseJSON = result.responseJSON;
+                var newErrorMessage = newresponseJSON;
+                for (var i = 0; i <= newErrorMessage.length; i++) {
+                    myFunctionError();
+                    document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
+                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
+                    document.getElementById(newErrorMessage[i].sourceId).style.border = "2px solid red";
+                }
+            }
+        });
+    }
+   
     var minutes = 15;
     var seconds = 0;
     var timer;
@@ -245,7 +261,6 @@
         var refreshTime = 10;
         setTimeout(enableResendButton, refreshTime * 1000);
     }
-    countdown();
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -260,32 +275,30 @@
     }
     function ResendOTP() {
         WheelLoader();
-        var keyValuepair = {};
-        keyValuepair.Email = $("#Email").val();
-        keyValuepair.userId = $("#userId").val();
-        keyValuepair.OTP = $("#OTP").val();
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("ResendOTP","User")",
-            dataType: 'json',
-            data: keyValuepair,
-            success: function (result) {
-                HideWheelLoader();
-                myFunction();
-                SuccessMessage(NotificationNumbers++, "ResendOTP successfully!");
-                resetCountdown();
-            },
-            error: function (result) {
-                HideWheelLoader();
-                var newresponseJSON = result.responseJSON;
-                var newErrorMessage = newresponseJSON;
-                for (var i = 0; i <= newErrorMessage.length; i++) {
-                    myFunctionError();
-                    document.getElementById("errormessage").innerHTML = newErrorMessage[i].reason;
-                    ErrorMessage(NotificationNumbers++, newErrorMessage[i].reason);
-                    document.getElementById(newErrorMessage[i].sourceId).style.border = "2px solid red";
-                }
-            }
-        });
+        var mobileNum = ("#mobile").val();
+        sendOtp('91'+ mobileNum, (data) => SnackbarSuccess(), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
+    }
+    var SnackbarSuccess = () => {
+        HideWheelLoader();
+        countdown();
+        SuccessMessage(NotificationNumbers++, "We Send Otp successfully!")
     }
 </script>
+@section scripts {
+    <script type="text/javascript">
+        var configuration = {
+            widgetId: "336c6670775a343136383037",
+            tokenAuth: "411291TsZRJs35G657054f0P1",
+            exposeMethods: "true",  // When true will expose the methods for OTP verification. Refer 'How it works?' for more details
+            success: (data) => {
+                // get verified token in response
+                console.log('success response', data);
+            },
+            failure: (error) => {
+                // handle error
+                console.log('failure reason', error);
+            },
+        };
+    </script>
+    <script type="text/javascript" onload="initSendOTP(configuration)" src="https://control.msg91.com/app/assets/otp-provider/otp-provider.js"> </script>
+}
