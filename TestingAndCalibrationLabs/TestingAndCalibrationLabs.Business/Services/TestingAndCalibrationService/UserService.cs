@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -51,14 +49,14 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         {
             return _userRepository.SelectEmail(userId);
         }
-
+        
         public int UpdatePassword(UserModel UserModel)
         {
             return _userRepository.UpdatePassword(UserModel);
         }
 
         /// <summary>
-        /// Method to EmailValidation Status update in DB after OTP validation.
+        /// Method to EmailValidation Status update in DB after Email validation.
         /// </summary>
         /// <param name="user"></param>
         public RequestResult<int> EmailValidationStatus(int userId)
@@ -68,7 +66,7 @@ namespace TestingAndCalibrationLabs.Business.Services.TestingAndCalibrationServi
         }
 
         /// <summary>
-        /// Method to EmailValidation Status update in DB after OTP validation.
+        /// Method to MobileValidation Status update in DB after Mobile validation.
         /// </summary>
         /// <param name="user"></param>
         public RequestResult<int> MobileValidationStatus(int userId)

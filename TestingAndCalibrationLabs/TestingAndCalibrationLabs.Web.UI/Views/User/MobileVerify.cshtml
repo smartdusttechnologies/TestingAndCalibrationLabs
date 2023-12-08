@@ -8,7 +8,7 @@
         <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
             <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
                 <li class="nav-item login-tab-click" role="presentation" style="width:100%; margin:20px;">
-                    <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%"><b>VERIFICATION CODE</b></button>
+                    <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%"><b>Mobile Verification</b></button>
                 </li>
             </ul>
             <section>
@@ -51,7 +51,7 @@
             </section>
             <center>
                 <div class="col-lg-20 col-sm-0 col-xs-0 mt-2 form-element-for-common-control right-pd-frm-input" style="margin:20px;">
-                    <input class="form-input width-full black-border" style="width:200px;" type="text" placeholder=" " name="mobile" id="mobile" asp-validation-for="mobile" , maxlength="10" , item.IsRequired onchange="this.setAttribute('value',this.value)" required>
+                    <input class="form-input width-full black-border" style="width:280px;" type="text" placeholder=" " name="mobile" id="mobile" asp-validation-for="mobile" , maxlength="10" , item.IsRequired onchange="this.setAttribute('value',this.value)" required>
                     <label class="form-label" style="color:gray;" for=mobile>
                         Mobile Number
                         <span class="red-color">*</span>
@@ -59,13 +59,8 @@
                 </div>
                 <button type="submit" class="btn btn-success text-center btn-block" onclick="otpSendHandler()" style="width:80px; margin-left:20px">Submit</button>
             </center>
-            <div>
-
-               @* <a href="#" onclick="ResendOTP()" style="all:unset;float:right;">Resend <i class="fa fa-info" data-toggle="tooltip" title="Didn't Get Otp Send Again!"></i></a>
-               *@ <a href="/" style="all:unset;padding-right:10px;float:right;">Skip</a>
-               @* <span class="timer">
-                    <span id="counter"></span>
-                </span>*@
+            <div style="padding-bottom: 20px;">
+                <a href="/" style="all:unset;padding-right:10px;float:right;">Skip</a>
             </div>
         </div>
 
@@ -74,7 +69,7 @@
         <div class="container bg-white" style="max-width:2050px;border-radius:6px;padding:10px;">
             <ul class="nav nav-tabs topnav" id="myTab" role="tablist" style="width:100%;">
                 <li class="nav-item login-tab-click" role="presentation" style="width:100%; margin:20px;">
-                    <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%"><b>VERIFICATION CODE</b></button>
+                    <button class="nav-link login-tab-click active" id="home-tab" data-bs-toggle="tab" data-bs-target="#Sign-In" type="button" role="tab" aria-controls="home" aria-selected="true" href="#signInBoot" style="width:100%"><b>Mobile Verification</b></button>
                 </li>
             </ul>
             <section>
@@ -110,7 +105,7 @@
                     <div class="title">
                         <b>
                             We Sent Verification Code <br>
-                            On Your Registered Email!!
+                            On <span id="last-num"></span> !!
                         </b>
                     </div>
                 </center>
@@ -181,6 +176,7 @@
                 myFunction();
                 $("#mobileForm").hide();
                 $("#otpForm").show();
+                $("#last-num").append(mobileNumHide(mobile));
                 sendOtp('91'+mobile, (data) => SnackbarSuccess(), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
             },
             error: function (result) {
@@ -275,13 +271,22 @@
     }
     function ResendOTP() {
         WheelLoader();
-        var mobileNum = ("#mobile").val();
+        var mobileNum = $("#mobile").val();
         sendOtp('91'+ mobileNum, (data) => SnackbarSuccess(), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
     }
     var SnackbarSuccess = () => {
         HideWheelLoader();
         countdown();
         SuccessMessage(NotificationNumbers++, "We Send Otp successfully!")
+    }
+    //hide mid four nums of mobile number
+    var mobileNumHide = (num) => {
+        var mNum = `${num}`;
+        var result = '+91 '
+        result += mNum.slice(0, 3);
+        result += '****';
+        result += mNum.substr(-3);
+        return result;
     }
 </script>
 @section scripts {

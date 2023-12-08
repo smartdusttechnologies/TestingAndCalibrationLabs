@@ -45,7 +45,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="user"></param>
         UserModel GetEmail(string Email);
         /// <summary>
-        /// Inteface for slect the user existing email at the time of verify email.
+        /// Inteface for slect the user existing email based on userId.
         /// </summary>
         /// <param name="userId"></param>
         UserModel SelectEmail(int userId);

@@ -84,7 +84,7 @@
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "We Send OTP successfully!!");
                 var userId = result;
-                window.location.href = '@Url.Action("SendOtp","User")' + '?userId=' + userId;
+                window.location.href = '@Url.Action("EmailVerify","User")';
             },
             error: function (result) {
                 HideWheelLoader();

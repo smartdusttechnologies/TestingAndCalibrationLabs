@@ -24,8 +24,8 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
-using TestingAndCalibrationLabs.Business.Services.Security;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
+using TestingAndCalibrationLabs.Business.Services.Otp;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -112,7 +112,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
-            services.AddScoped <IOtpService,OtpService>();
+            services.AddScoped <IOtpEmailService,OtpEmailService>();
+            services.AddScoped <IOtpMobileService,OtpMobileService>();
 
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();

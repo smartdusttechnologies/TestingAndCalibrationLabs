@@ -62,7 +62,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<UserModel>("select u.Id,u.Mobile, u.Email From [User] u where u.Id = @userId", new { userId }).FirstOrDefault();
         }
         /// <summary>
-        /// Update EmailValidatioStatus for Sign-up Page
+        /// Update EmailValidatioStatus after validation
+        /// <returns>UserModel</returns>
         /// </summary>
         /// <param name="userId"></param>
         public UserModel EmailValidationStatusUpdate(int userId)

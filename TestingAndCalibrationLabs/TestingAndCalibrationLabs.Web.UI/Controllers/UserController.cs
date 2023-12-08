@@ -2,9 +2,9 @@
 using Google.Apis.Drive.v3.Data;
 using Microsoft.AspNetCore.Mvc;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -14,13 +14,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IMapper _mapper;
-        private readonly IOtpService _otpService;
-
-        public UserController(IAuthenticationService authenticationService, IMapper mapper, IOtpService otpService)
+        private readonly IOtpEmailService _otpEmailService;
+        private readonly IOtpMobileService _otpMobileService;
+        public UserController(IAuthenticationService authenticationService, IMapper mapper, IOtpEmailService otpEmailService, IOtpMobileService otpMobileService)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
-            _otpService = otpService;
+            _otpEmailService = otpEmailService;
+            _otpMobileService = otpMobileService;
         }
         /// <summary>
         /// Default Action of the User Controller
@@ -44,7 +45,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest(result.ValidationMessages);
         }
-        #region Email Otp Logics
+        #region Otp Email 
         /// <summary>
         /// Method for Sign-up OTP
         /// </summary>
@@ -55,7 +56,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var userId = sdtUserIdentity.UserId;
             OtpDTO data = new OtpDTO { userId = userId };   
             var otpModel = _mapper.Map<OtpDTO, OtpModel>(data);
-            _otpService.SendOtp(otpModel, false);  
+            _otpEmailService.SendOtp(otpModel);  
             return View(data);
         }
         ///// <summary>
@@ -66,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult EmailVerify(OtpDTO otpDTO)
         {
             var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            var user = _otpService.VerifyOtp(otpReturn,false);
+            var user = _otpEmailService.VerifyOtp(otpReturn);
             if (user.IsSuccessful)
             {
                 return Ok(user.RequestedObject);
@@ -83,7 +84,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var userId = sdtUserIdentity.UserId;
             var resendOtp = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
             resendOtp.UserId = userId;
-            _otpService.ResendOtp(resendOtp, false  );
+            _otpEmailService.ResendOtp(resendOtp);
             return Ok(otpDTO);
         }
         /// <summary>
@@ -123,7 +124,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
             var userId = sdtUserIdentity.UserId;
-            var result = _otpService.MobileVerify(mobile, userId);
+            var result = _otpMobileService.MobileVerify(mobile, userId);
             if (result.IsSuccessful)
             {
                 return Ok(result.RequestedObject);
@@ -139,7 +140,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
             var userId = sdtUserIdentity.UserId;
-            var result = _otpService.MobileValidate(userId);
+            var result = _otpMobileService.MobileValidate(userId);
             if (result.IsSuccessful)
             {
                 return Ok(result.RequestedObject);

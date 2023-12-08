@@ -3,7 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Common;
@@ -11,11 +10,9 @@ using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Hosting;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using AutoMapper;
-using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Http;
-using TestingAndCalibrationLabs.Business.Data.Repository;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -31,10 +28,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly ISecurityParameterService _securityParameterService;
         private readonly ILoggerRepository _loggerRepository;
         private readonly IRoleRepository _roleRepository;
-        private readonly IEmailService _emailService;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IOtpService _otpService;
-        private readonly IMapper _mapper;
+        private readonly IOtpEmailService _otpEmailService;
         private readonly IOtpRepsitory _otpRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -42,11 +36,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             IAuthenticationRepository authenticationRepository, IUserRepository userRepository,
             IOtpRepsitory otpRepository,
             ILogger logger,
-            IEmailService emailservice,
-            IWebHostEnvironment hostingEnvironment,
              ISecurityParameterService securityParameterService,
              ILoggerRepository loggerRepository,
-              IRoleRepository roleRepository, IOtpService otpService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+              IRoleRepository roleRepository, IOtpEmailService otpEmailService, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
             _authenticationRepository = authenticationRepository;
@@ -55,10 +47,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             _securityParameterService = securityParameterService;
             _loggerRepository = loggerRepository;
             _roleRepository = roleRepository;
-            _emailService = emailservice;
-            _hostingEnvironment = hostingEnvironment;
-            _otpService = otpService;
-            _mapper = mapper;
+            _otpEmailService = otpEmailService;
             _otpRepository = otpRepository;
             _httpContextAccessor = httpContextAccessor;
 
@@ -309,7 +298,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 if (existingEmailUser.Email == user.Email)
                 {
                     OtpModel otpModel = new OtpModel { Email = user.Email, UserId = user.userId, Name = user.UserName,MobileNumber = user.Mobile };
-                    _otpService.SendOtp(otpModel,false);
+                    _otpEmailService.SendOtp(otpModel);
                     return new RequestResult<int>(1, validationMessages);
                 }
                 else

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -19,15 +19,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IOrganizationService _orgnizationService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
-        private readonly IOtpService _otpService;
+        private readonly IOtpEmailService _otpEmailService;
         private readonly IAuthenticationRepository _authenticationRepository;
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOtpService otpService, IAuthenticationRepository authenticationRepository)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IEmailService emailService, IMapper mapper, IOtpEmailService otpService, IAuthenticationRepository authenticationRepository)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _emailService = emailService;
             _mapper = mapper;
-            _otpService = otpService;
+            _otpEmailService = otpService;
             _authenticationRepository = authenticationRepository;
         }
         /// <summary>
@@ -78,7 +78,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 otpDTO.userId = userVerify.RequestedObject.UserId;
                 otpDTO.Name = userVerify.RequestedObject.UserName;
-                _otpService.SendOtp(emailResult,false);
+                _otpEmailService.SendOtp(emailResult);
                 return Ok(otpDTO);
             }
             return BadRequest(userVerify.ValidationMessages);
@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public IActionResult ValidateOTP(OtpDTO otpDTO)
         {
             var otpReturn = _mapper.Map<OtpDTO, OtpModel>(otpDTO);
-            var user = _otpService.VerifyOtp(otpReturn, false);
+            var user = _otpEmailService.VerifyOtp(otpReturn);
             if (user.IsSuccessful)
             {
                 UserModel userModel = new UserModel { userId = otpDTO.userId };

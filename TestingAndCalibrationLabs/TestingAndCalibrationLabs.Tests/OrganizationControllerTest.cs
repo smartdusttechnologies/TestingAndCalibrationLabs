@@ -7,9 +7,9 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.TestingAndCalibration;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Controllers;
 using TestingAndCalibrationLabs.Web.UI.Mappers;
@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Tests
     public class OrganizationControllerTest
     {
         IOrganizationService _organizationService;
-        IOtpService _otpServices;
+        IOtpEmailService _otpServices;
         IMapper _mapper;
         Mock<IGenericRepository<Organization>> _genericRepository = new Mock<IGenericRepository<Organization>>();
         Mock<IOrganizationRepository> _organizationRepository = new Mock<IOrganizationRepository>();
