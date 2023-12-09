@@ -383,7 +383,9 @@ BEGIN
 			   (13,N'Organization',1,0),
 			   (14,N'Lookup',1,0),
 			   (15,N'Lookup Category',1,0),
-			   (16,N'FullPage',1,0)
+			   (16,N'FullPage',1,0),
+			   (17,N'Email Verify',1,0),
+			   (18,N'Mobile Verify',1,0)
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
 END
@@ -710,7 +712,9 @@ BEGIN
 			  (16,N'/Module/Index/',11,1002,0),
 			  (17,N'/WorkflowActivity/Index/',12,1002,0),
 			  (18,N'/Organization/Index/',13,1002,0),
-			  (19,N'/#/',16,1002,0)
+			  (19,N'/#/',16,1002,0),
+			  (20,N'/User/VerifyEmail/',17,1003,0),
+			  (21,N'/User/MobileVerify/',18,1003,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
