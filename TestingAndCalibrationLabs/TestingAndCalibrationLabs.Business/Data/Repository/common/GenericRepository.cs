@@ -17,13 +17,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly string _tableName;
+        private readonly List<string> _columnName;
         #region Public Methods
         public GenericRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
             _tableName = GenericUtils.GetDbTableName<T>();
+            _columnName = GenericUtils.GetDbColumnName<T>();
         }
-
+        
         public bool Delete(int id)
         {
             string query = string.Format("update [{0}] Set IsDeleted = @IsDeleted Where Id = @Id and  Id=@id", _tableName);
@@ -32,10 +34,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             return true;
         }
 
-        public List<T> Get()
+        public List<T> Get(bool allowNoneId = false)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<T>(string.Format("Select * From [{0}] where IsDeleted=0", _tableName)).ToList();
+            var xc = db.Query<T>(string.Format(@"Select * From [{0}] where IsDeleted=0", _tableName)).ToList().ExcludeNoneId(allowNoneId);
+            return xc;
         }
 
         public List<T> Get<FType>(string columnName, FType value)
@@ -84,48 +87,34 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         #region Private Methods
         private string GenerateInsertQuery()
         {
-            var insertQuery = new StringBuilder($"INSERT INTO {_tableName} ");
+            var insertQuery = new StringBuilder($"INSERT INTO [{_tableName}] (");
+            var columnValues = new StringBuilder();
 
-            insertQuery.Append("(");
-
-            var properties = GenerateListOfProperties(typeof(T).GetProperties());
-            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"[{prop}],"); } });
+            _columnName.ForEach(colName => {
+                insertQuery.Append($"{colName},");
+                columnValues.Append($"@{colName},");
+            });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(") VALUES (");
-            properties.ForEach(prop => { if (prop.ToLower() != "id") { insertQuery.Append($"@{prop},"); } });
 
-            insertQuery
-                .Remove(insertQuery.Length - 1, 1)
+            columnValues
+                .Remove(columnValues.Length - 1, 1)
                 .Append(")");
 
-            return insertQuery.ToString();
+            return insertQuery.Append(columnValues).ToString();
         }
         private string GenerateUpdateQuery()
         {
-            var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
-            var properties = GenerateListOfProperties(typeof(T).GetProperties());
-
-            properties.ForEach(property =>
+            var updateQuery = new StringBuilder($"UPDATE [{_tableName}] SET ");
+            _columnName.ForEach(property =>
             {
-                if (!property.Equals("Id"))
-                {
-                    updateQuery.Append($"{property}=@{property},");
-                }
+                updateQuery.Append($"{property}=@{property},");
             });
-
             updateQuery.Remove(updateQuery.Length - 1, 1); //remove last comma
             updateQuery.Append(" WHERE Id=@Id");
-
             return updateQuery.ToString();
-        }
-        private static List<string> GenerateListOfProperties(IEnumerable<PropertyInfo> listOfProperties)
-        {
-            return (from prop in listOfProperties
-                    let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                    where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
-                    select prop.Name).ToList();
         }
         #endregion
     }
