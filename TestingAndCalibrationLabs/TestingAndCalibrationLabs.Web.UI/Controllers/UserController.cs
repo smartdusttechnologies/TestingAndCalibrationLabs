@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -14,12 +15,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IMapper _mapper;
         private readonly IOtpEmailService _otpEmailService;
         private readonly IOtpMobileService _otpMobileService;
-        public UserController(IAuthenticationService authenticationService, IMapper mapper, IOtpEmailService otpEmailService, IOtpMobileService otpMobileService)
+        private readonly IConfiguration _configuration;
+        public UserController(IAuthenticationService authenticationService, IMapper mapper, IOtpEmailService otpEmailService, IOtpMobileService otpMobileService, IConfiguration configuration)
         {
             _authenticationService = authenticationService;
             _mapper = mapper;
             _otpEmailService = otpEmailService;
             _otpMobileService = otpMobileService;
+            _configuration = configuration;
         }
         /// <summary>
         /// Default Action of the User Controller
@@ -114,6 +117,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult MobileVerify()
         {
+            ViewBag.WidgetId = _configuration["Msg91:WidgetId"];
+            ViewBag.TokenAuth = _configuration["Msg91:TokenAuth"];
             OtpDTO otpDTO = new OtpDTO { };
             return View(otpDTO);
         }

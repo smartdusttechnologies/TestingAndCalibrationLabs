@@ -208,7 +208,7 @@
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Account Verified Successfully!");
-                window.location.href = '/';
+                window.location.href = '@Url.Action("Index","TestReport")';
             },
             error: function (result) {
                 HideWheelLoader();
@@ -292,8 +292,8 @@
 @section scripts {
     <script type="text/javascript">
         var configuration = {
-            widgetId: "336c6670775a343136383037",
-            tokenAuth: "411291TsZRJs35G657054f0P1",
+            widgetId: "@ViewBag.WidgetId",
+            tokenAuth: "@ViewBag.TokenAuth",
             exposeMethods: "true",  // When true will expose the methods for OTP verification. Refer 'How it works?' for more details
             success: (data) => {
                 // get verified token in response
