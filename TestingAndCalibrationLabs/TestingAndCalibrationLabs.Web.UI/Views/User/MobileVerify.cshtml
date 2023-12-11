@@ -177,7 +177,7 @@
                 $("#mobileForm").hide();
                 $("#otpForm").show();
                 $("#last-num").append(mobileNumHide(mobile));
-                sendOtp('91'+mobile, (data) => SnackbarSuccess(), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
+                sendOtp('91' + mobile, (data) => SnackbarSuccess(), (error) => SnackbarError("Sorry! Unable To Handle Your Request Right Now."));
             },
             error: function (result) {
                 HideWheelLoader();
@@ -195,10 +195,9 @@
     var otpVerifyHandler = ()=>{
         WheelLoader();
         var otp = $("#OTP").val();
-        verifyOtp(otp, (data) => verifyOperation(data), (error) => ErrorMessage(NotificationNumbers++, "Sorry! Unable To Handle Your Request Right Now."));
+        verifyOtp(otp, (data) => verifyOperation(data), (error) => SnackbarError("You have enterd Wrong Otp."));
     }
     var verifyOperation = (data) =>{
-        console.log(data);
         //put logic to update that phone num has been verified 
         $.ajax({
             type: "POST",
@@ -278,6 +277,10 @@
         HideWheelLoader();
         countdown();
         SuccessMessage(NotificationNumbers++, "We Send Otp successfully!")
+    }
+    var SnackbarError = (p) => {
+        HideWheelLoader();
+        SuccessMessage(NotificationNumbers++, p)
     }
     //hide mid four nums of mobile number
     var mobileNumHide = (num) => {

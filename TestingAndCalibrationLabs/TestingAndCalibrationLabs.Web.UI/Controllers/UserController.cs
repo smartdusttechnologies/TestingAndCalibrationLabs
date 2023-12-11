@@ -55,9 +55,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var sdtUserIdentity = HttpContext.User.Identity as SdtUserIdentity;
             var userId = sdtUserIdentity.UserId;
-            OtpDTO data = new OtpDTO { userId = userId };   
-            var otpModel = _mapper.Map<OtpDTO, OtpModel>(data);
-            _otpEmailService.SendOtp(otpModel);  
+            OtpDTO data = new OtpDTO { userId = userId };
             return View(data);
         }
         ///// <summary>
