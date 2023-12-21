@@ -114,7 +114,7 @@
 </html>
 <script>
     $(document).ready(function () {
-        var originalData = [];
+        var PageNavigationData = [];
 
         function createTopNavItem(item) {
             var dropdownCode = `  <li class="nav-item dropdown"><a class="nav-link" data-toggle="dropdown" href="#"><i class="${item.iconName} nav-icon"style="font-size:15px;"></i></a>  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">`;
@@ -177,7 +177,7 @@
             const dynamicRightSideNavbar = $("#RightNavMenu");
             const dynamicTopNavbar = $("#TopNavItem");
             const dynamicBottomNavContainer = $("#dynamicBottomContainer");
-            originalData.forEach((item) => {
+            PageNavigationData.forEach((item) => {
                 if (item.navigationTypes === 1025) {
                     dynamicNavContainer.append(createNavItem(item));
                 }
@@ -202,7 +202,7 @@
                     if (a.orders > b.orders) { return -1; }
                     return 0;
                 });
-                originalData = response;
+                PageNavigationData = response;
                 renderNavigation();
             },
             error: function (req, status, error) {
