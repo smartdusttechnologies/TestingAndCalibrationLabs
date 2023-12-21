@@ -54,5 +54,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
+        
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
     }
 }
