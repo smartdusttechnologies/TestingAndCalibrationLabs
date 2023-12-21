@@ -423,7 +423,8 @@ BEGIN
 			  (1005, N'Country', 0),
 			  (1006, N'ActitvityMetadataType', 0),
 			  (1007, N'TestReport', 0),
-			  (1008, N'Payment', 0)
+			  (1008, N'Payment', 0),
+			  (1009, N'NavigationType', 0)
     SET IDENTITY_INSERT [dbo].[LookupCategory]  OFF
 END
 GO
@@ -446,7 +447,12 @@ BEGIN
 			 (1015, N'Static', 1006, 0),
 			 (1016, N'Dynamic', 1006, 0),
 			 (1020, N'_testReport.html', 1007, 0),
-			 (1021, N'_payment.html', 1008, 0)
+			 (1021, N'_payment.html', 1008, 0),
+			 (1022, N'Top', 1009, 0),
+			 (1023, N'Bottom', 1009, 0),
+			 (1024, N'Right', 1009, 0),
+			 (1025, N'Left', 1009, 0)
+
     SET IDENTITY_INSERT [dbo].[Lookup]  OFF
 END
 GO
@@ -721,14 +727,18 @@ IF NOT EXISTS (SELECT 1 FROM [UiNavigationCategory] WHERE Id = 0)
 BEGIN
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  ON
 
-    INSERT INTO [dbo].[UiNavigationCategory]
-               ([Id], [Name], [Orders], [IsDeleted])
+  INSERT INTO [dbo].[UiNavigationCategory]
+           ([Name]
+           ,[Orders]
+           ,[IsDeleted]
+           ,[IconName]
+           ,[NavigationTypeId])
 			   VALUES
-              (1, N'Testing', 2, 0),
-			  (2, N'Home', 1, 0),
-			  (1002, N'Settings', 3, 0),
-			  (1003, N'Profile', 4, 0),
-			  (1004, N'Notifications', 5, 0)
+              (1, N'Testing', 2, 0, 'fa fa-pencil',1023),
+			  (2, N'Home', 1, 0,'fa fa-pencil',1023),
+			  (1002, N'Settings', 3, 0 ,'fa fa-pencil',1024),
+			  (1003, N'Profile', 4, 0,'fa fa-pencil',1023),
+			  (1004, N'Notifications', 5, 0,'fa fa-pencil',1024)
 			  
     SET IDENTITY_INSERT [dbo].[UiNavigationCategory]  OFF
 END
