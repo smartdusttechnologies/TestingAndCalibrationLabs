@@ -200,12 +200,12 @@
             url: "@Url.Action("GetExistingResult","UiPageMetadata")",
             data: { moduleLayoutId: moduleLayoutId },
             success: function (response) {
-                debugger;
+                
                 // Clear drop down list
                 $("#UiPageMetadata").empty();
                 document.getElementById('UiControlType').style.display = 'none';
                 // Fill drop down list with new data
-                debugger;
+                
                 for (var i = 0; i < response.length; i++) {
                     var MetadataId = response[i].id;
                     var ControleName = response[i].controlTypeName;
@@ -231,7 +231,7 @@
     var dataAvailable
     function NonExixt() {
         var selectElement = document.querySelector('.ui-page-metadata-select');
-        debugger;
+        
         // Check if data is available and set visibility
         if (dataAvailable) {
             selectElement.style.display = 'block';  // Show the dropdown

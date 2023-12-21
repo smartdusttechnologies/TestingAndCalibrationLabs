@@ -25,5 +25,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [Required(ErrorMessage = "Please Enter Orders")]
         [Range(0, int.MaxValue, ErrorMessage = "Please Enter  Number Greater than 0 in Orders")]
         public string Orders { get; set; }
+
+        /// <summary>
+        /// IconName in which icon will show
+        /// </summary>
+        public string IconName { get; set; }
+        /// <summary>
+        /// It will take the place to show the Icon 
+        /// </summary>
+
+        public int NavigationTypeId { get; set; }
     }
 }

@@ -23,6 +23,9 @@
                  <th>
                     <h6><b>Ui NavigationCategory Name</b></h6>
                 </th>
+                <th>
+                    <h6><b>IconName</b></h6>
+                </th>
 
                 <th>
                     Actions
@@ -41,6 +44,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UiNavigationCategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IconName)
                     </td>
                     <td>
                     <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="UiPageNavigation" asp-action="Edit" asp-route-id="@item.Id"></a>|
