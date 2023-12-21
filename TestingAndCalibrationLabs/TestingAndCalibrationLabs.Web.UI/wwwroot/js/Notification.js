@@ -7,7 +7,7 @@ const NotificationItem = [];
 //To hide or display the BellIcon
 function DisplayNotification() {
 
-    var Icon = document.getElementById("Menu");
+    var Icon = document.getElementById("BellIconMenu");
     var IconRotate = document.getElementById("rotate");
     if (Icon.style.display == "none") {
 
@@ -82,9 +82,14 @@ function Delete() {
 
 //To close the BellIcon on Outside Click
 window.onclick = function () {
-    var Icon = document.getElementById("Menu");
-    if (Icon.style.display == "block") {
-        DisplayNotification();
+    var Icon = document.getElementById("BellIconMenu");
+    if (Icon) {
+
+        if (Icon.style.display == "block" && Icon !== null) {
+            DisplayNotification();
+        }
+
     }
+  
 }
 

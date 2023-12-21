@@ -9,13 +9,13 @@
 
     function category(categoryInput) {
         var categoryValue = categoryInput.value;
-        debugger;
+        
         $.ajax({
             type: "POST",
             url: "@Url.Action("LookupByCategory","Lookup")",
             data: { categoryName: categoryValue },
             success: function (response) {
-                debugger;
+                
                 LookupByCategory(response);
             },
             error: function (req, status, error) {

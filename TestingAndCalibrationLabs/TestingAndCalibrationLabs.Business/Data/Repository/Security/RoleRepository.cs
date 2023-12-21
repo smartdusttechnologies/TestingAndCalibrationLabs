@@ -21,6 +21,18 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             _connectionFactory = connectionFactory;
         }
         /// <summary>
+        /// Get Role with Role Id based on UserId
+        /// </summary>
+        public List<(int, string)> GetRole(int id)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            string query = @"Select r.Id, r.Name from [UserRole] ur 
+                                inner join [Role] r on r.Id = ur.RoleId
+                             where ur.UserId=@id and ur.IsDeleted=0 and r.IsDeleted=0";
+
+            return db.Query<(int, string)>(query, new { id }).ToList();
+        }
+        /// <summary>
         /// Get Role with Orgnization based on UserName
         /// </summary>
         public List<(int, string)> GetRoleWithOrg(string userName)

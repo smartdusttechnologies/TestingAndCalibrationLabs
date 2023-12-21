@@ -3,7 +3,6 @@
     [UiPageMetadataId]     INT          NOT NULL,
     [UiPageTypeId]         INT          NOT NULL,
     [IsDeleted]            BIT          CONSTRAINT [DF_UiPageMetadataModuleBridge_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [ModuleId]             INT          NULL,
     [ParentId]             INT          NULL,
     [Orders]               INT          NULL,
     [UiControlDisplayName] VARCHAR (50) NULL,

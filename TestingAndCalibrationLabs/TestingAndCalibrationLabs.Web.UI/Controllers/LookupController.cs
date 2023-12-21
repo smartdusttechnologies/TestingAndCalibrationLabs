@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -12,21 +13,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
     public class LookupController : Controller
     {
         private readonly ILookupService _lookupService;
+        private readonly IListSorterService _listSorter;
         private readonly ILookupCategoryService _lookupCategoryService;
         private readonly IMapper _mapper;
-        /// <summary>
-        /// passing parameter via varibales for establing connection
-        /// </summary>
-        /// <param name="lookupService"></param>
-        /// <param name="mapper"></param>
-        /// <param name="lookupCategoryService"></param>
-       
-        public LookupController(IMapper mapper, ILookupService lookupService, ILookupCategoryService lookupCategoryService)
+        public LookupController(ILookupService lookupService, IListSorterService listSorter, IMapper mapper, ILookupCategoryService lookupCategoryService)
         {
             _lookupService = lookupService;
+            _listSorter = listSorter;
             _mapper = mapper;
             _lookupCategoryService = lookupCategoryService;
-
         }
         /// <summary>
         /// Get All The Pages From Database
@@ -40,7 +35,35 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<LookupModel>, List<LookupDTO>>(page);
             return View(pageData.AsEnumerable());
         }
-
+        /// <summary>
+        /// Get All Category Based Lookup Name
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult LookupByCategory(int categoryName)
+        {
+            var lookupList = _lookupService.GetLookup();
+            var lookupByCategory = lookupList.Where(x => x.LookupCategoryId == categoryName).ToList();
+            List<ListSorterModel> listSorterDTO = new List<ListSorterModel>();
+            foreach (var item in lookupByCategory)
+            {
+                listSorterDTO.Add(new ListSorterModel { Id = item.Id, Name = item.Name });
+            }
+            var jsonFormated = _listSorter.SortListToJson(listSorterDTO);
+            var jsonObjectConverted = JsonConvert.DeserializeObject(jsonFormated);
+            return Ok(jsonObjectConverted);
+        }
+        /// <summary>
+        /// Get All lookup data based on lookupCategoryId
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult LookupByCategoryId(int lookupCategoryId)
+        {
+            var lookupList = _lookupService.GetByCategoryId(lookupCategoryId);
+            var lookupListDTO = _mapper.Map<List<LookupModel>, List<LookupDTO>>(lookupList);
+            return Ok(lookupListDTO);
+        }
         /// <summary>
         /// For Edit Records View
         /// </summary>

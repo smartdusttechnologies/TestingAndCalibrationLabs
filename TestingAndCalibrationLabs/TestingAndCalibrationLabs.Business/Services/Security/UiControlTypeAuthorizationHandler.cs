@@ -31,7 +31,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId,PermissionModuleType.UiControlTypePermission.ToString(), PermissionModuleType.UiControlTypePermission.ToString(), CustomClaimType.ApplicationPermission);
             var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiControlTypePermission.ToString(), PermissionModuleType.UiControlTypePermission.ToString(), CustomClaimType.ApplicationPermission);
             var groupClaim = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiControlTypePermission.ToString(), PermissionModuleType.UiControlTypePermission.ToString(), CustomClaimType.ApplicationPermission);
-
+            var userRoles = _roleService.GetRole(sdtUserIdentity.UserId);
             // Validate the requirement against the resource and identity.
             //if (user.HasClaim(p => p.Type == CustomClaimType.ApplicationPermission.ToString() && p.Value == requirement.Name))
             if (userRoleClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
@@ -39,6 +39,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             else if (userClaims.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
                 context.Succeed(requirement);
             else if (groupClaim.Any(p => p.ClaimType == CustomClaimType.ApplicationPermission && p.ClaimValue == requirement.Name))
+                context.Succeed(requirement);
+            bool role = userRoles.Any(x => x.Item2 == "Sysadmin");
+            if (role)
                 context.Succeed(requirement);
             return Task.CompletedTask;
         }
