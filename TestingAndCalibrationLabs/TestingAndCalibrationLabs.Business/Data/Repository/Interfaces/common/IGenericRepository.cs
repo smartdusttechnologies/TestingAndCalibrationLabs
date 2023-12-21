@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
@@ -14,7 +15,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         int Insert(T lookupTypeModel);
         int InsertCollection(List<T> model);
         int Update(T lookupTypeModel);
-        List<T> Get();
+        List<T> Get(bool none = false);
         List<T> Get<FType>(string columnName, FType value);
         T Get(int id);
         T Get(string name);
