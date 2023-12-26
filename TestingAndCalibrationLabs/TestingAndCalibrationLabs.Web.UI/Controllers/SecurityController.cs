@@ -132,5 +132,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return Ok(ForgotPassword(otpDTO));
         }
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
     }
 }
