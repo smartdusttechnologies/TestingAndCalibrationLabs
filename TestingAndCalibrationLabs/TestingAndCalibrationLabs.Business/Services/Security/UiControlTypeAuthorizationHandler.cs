@@ -43,6 +43,4 @@ namespace TestingAndCalibrationLabs.Business.Services
             return Task.CompletedTask;
         }
     }
-
-
 }

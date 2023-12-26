@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
-namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
+
+namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         /// <summary>
         /// Interface To Select User.
@@ -30,11 +32,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="UserModel"></param>
         int UpdatePassword(UserModel UserModel);
         /// <summary>
-        /// Interface for Update MobileValidationStatus if user Complete Mobile Verfication Successfully with OTP validation.
-        /// </summary>
-        /// <param name="user"></param>
-        UserModel MobileValidationStatusUpdate(int userId);
-        /// <summary>
         /// Interface for Update EmailValidationStatus if user sign-up Successfully with OTP validation.
         /// </summary>
         /// <param name="user"></param>
@@ -45,9 +42,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="user"></param>
         UserModel GetEmail(string Email);
         /// <summary>
-        /// Inteface for slect the user existing email based on userId.
+        /// Inteface for slect the user existing email at the time of verify email.
         /// </summary>
         /// <param name="userId"></param>
         UserModel SelectEmail(int userId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        RequestResult<int> EmailValidationStatus(int userId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        RequestResult<int> MobileValidationStatus(int userId);
     }
 }

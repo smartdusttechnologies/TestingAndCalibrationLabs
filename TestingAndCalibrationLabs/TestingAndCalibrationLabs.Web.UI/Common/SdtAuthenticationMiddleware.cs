@@ -5,6 +5,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -50,6 +51,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
             }
             else if (context.Request.Path.Value.Equals("/Security/Index", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/Login", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/User/Add", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/User/SendOtp", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/User/ResendOTP", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/User/VerifyEmail", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/ForgotPassword", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/ValidateOTP", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/ResendOTP", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Security/ResetPassword", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RefreshToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RevokeToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase)
