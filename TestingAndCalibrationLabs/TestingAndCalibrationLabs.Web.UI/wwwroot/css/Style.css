@@ -100,26 +100,6 @@
     font-size: 35px;
 }
 
-#footer {
-    /*margin-top: 30px;
-    position: page;
-    column-gap: 40px;
-    row-gap: 00px;
-    width: 100%;
-    align-content: center;
-    display: inline-flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    padding: 0;
-    margin-top: 200px;*/
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
-    text-align: center;
-}
 
 nav .search_box input {
     width: 100%;
@@ -132,4 +112,13 @@ nav ol {
 
 .navbar-brand-a {
     font-size: 14px;
+}
+@media screen and (max-width: 390px){
+
+    #LoginpageInfo {
+        margin-top: 106px !important;
+    }
+    #LoginPage {
+        margin-bottom: 162px !important;
+    }
 }
