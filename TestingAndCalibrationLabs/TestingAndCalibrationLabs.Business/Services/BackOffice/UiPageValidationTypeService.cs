@@ -15,7 +15,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             _genericRepository = genericRepository;
         }
-
         #region Public methods
         /// <summary>
         /// Get All Records From Ui Page Validation Type
@@ -24,7 +23,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         public List<UiPageValidationTypeModel> Get()
         {
             return _genericRepository.Get();
-
         }
         #endregion
 

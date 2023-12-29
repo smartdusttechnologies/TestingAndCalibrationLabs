@@ -9,16 +9,29 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     public class UiPageMetadataCharacteristicsModel : Entity
     {
         /// <summary>
-        /// It Contains The Id Of The Ui Page Metadata
+        /// It Contains The UiPageMetadataId Of The UiPageMetadataCharacteristics
         /// </summary>
         public int UiPageMetadataId { get; set; }
         /// <summary>
-        /// It Contains The Id Of The Lookup 
+        /// It Contains The UiControlDisplayName Of The UiPageMetadataCharacteristics
         /// </summary>
-        public int LookupCategoryId { get; set; }
+        public string UiControlDisplayName { get; set; }
         /// <summary>
-        /// It Contains The Name Of The Lookup
+        /// It Contains The LookupId Of The UiPageMetadataCharacteristics
+        /// </summary>
+        public int LookupId { get; set; }
+        /// <summary>
+        /// It Contains Name For Lookup
         /// </summary>
         public string LookupName { get; set; }
+        /// <summary>
+        /// It Contains LookupCategoryId For UiPageMetadataCharacteristics
+        /// </summary>
+        public string LookupCategoryId { get; set; }
+        /// <summary>
+        /// It Contains Name For LookupCategory
+        /// </summary>
+        public string LookupCategoryName { get; set; }
+
     }
 }

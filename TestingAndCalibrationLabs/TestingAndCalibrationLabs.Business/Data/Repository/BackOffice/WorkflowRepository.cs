@@ -26,7 +26,15 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public WorkflowModel GetByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<WorkflowModel>(@"select * from Workflow where ModuleId = @ModuleId and IsDeleted = 0", new { ModuleId = moduleId }).FirstOrDefault();
+            return db.Query<WorkflowModel>(@" Select   wf.Id,
+                                                       wf.ModuleId,
+					                                   wf.Name                                                                                                                 
+											           From [Workflow] wf                                                  
+											          inner join [ModuleLayout]ml on wf.ModuleId = ml.ModuleId
+											        where ml.Id = @ModuleId 
+											        and wf.IsDeleted = 0 
+											        and ml.IsDeleted = 0 ", new { ModuleId = moduleId }).FirstOrDefault();
+                                                   
         }
         /// <summary>
         /// Insert Record in Workflow

@@ -48,5 +48,9 @@ TestingAndCalibrationLabs/TestingAndCalibrationLabs.Tests/bin
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/obj
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/bin/Debug/netcoreapp3.1
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/obj
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/Properties/PublishProfiles
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Business/bin/Release/netcoreapp3.1
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/temp/internal-nlog.txt
+/TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.sqlproj.user
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.DB/TestingAndCalibrationLabs.DB.sqlproj.user
 /TestingAndCalibrationLabs/TestingAndCalibrationLabs.Web.UI/bin/Release/netcoreapp3.1

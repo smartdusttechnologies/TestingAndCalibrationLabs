@@ -20,6 +20,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         UiPageMetadataModel GetById(int id);
         /// <summary>
+        /// Get Record By Id and uiPageTypeId,metadataModuleBridgeId From Ui Page Metadata
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UiPageMetadataModel GetByUiPageTypeId(int id, int uiPageTypeId, int metadataModuleBridgeId);
+        /// <summary>
         /// Insert Record In Ui Metadata
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
@@ -32,10 +38,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         int Update(UiPageMetadataModel uiPageMetadataModel);
         /// <summary>
-        /// Delete Record From Ui Page Metadata By Id
+        /// Delete Record From Ui Page Metadata By Id and metadataModuleBridgeId 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool Delete(int id);
+        bool Delete(int id,int metadataModuleBridgeId);
+        /// <summary>
+        /// Get UiDisplayName From Ui Page Metadata
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<UiPageMetadataModel> GetDisplayName();
+        /// <summary>
+        /// Existing Record In Ui Page Metadata based on moduleLayoutId
+        /// </summary>
+        /// <param name="uiPageMetadataModel"></param>
+        /// <returns></returns>
+        List<UiPageMetadataModel> GetExistingMetadata(int moduleLayoutId);
     }
 }
