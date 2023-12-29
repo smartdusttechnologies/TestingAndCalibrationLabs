@@ -14,8 +14,8 @@ BEGIN
 	DECLARE @UId int
 	DECLARE @Tvpcount int = (select count(*) from @UiPageDataTVP);
 	declare @ind int = 1
-	declare @tempTable table (Id int NOT NULL identity(1,1), UiPageMetadataId int,UiPageTypeId int,Value  varchar(200))
-	insert into @tempTable (UiPageMetadataId,UiPageTypeId,Value)
+	declare @tempTable table (Id int NOT NULL identity(1,1), UiPageMetadataId int,UiPageTypeId int,Value  varchar(200),SubRecordId int)
+	insert into @tempTable (UiPageMetadataId,UiPageTypeId,Value,SubRecordId)
 	select * from @UiPageDataTVP
     -- Insert data into Table1
     
@@ -25,29 +25,29 @@ BEGIN
 	
 	while @Tvpcount >= @ind begin
 
-	INSERT INTO UiPageData(UiPageMetadataId,RecordId,UiPageTypeId)
-	SELECT UiPageMetadataId, @Id,UiPageTypeId  FROM @tempTable where Id = @ind
+	INSERT INTO UiPageData(UiPageMetadataId,RecordId,UiPageTypeId,SubRecordId)
+	SELECT UiPageMetadataId, @Id,UiPageTypeId,SubRecordId FROM @tempTable where Id = @ind
 	set @UId  = SCOPE_IDENTITY()
 	
-	INSERT INTO UiPageStringType ( UiPageMetadataId,Value,UiPageDataId,RecordId)
-	select   temp.UiPageMetadataId,ctvp.Value, @UId, @Id from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId
+	INSERT INTO UiPageStringType ( UiPageMetadataId,Value,UiPageDataId,RecordId,SubRecordId)
+	select   temp.UiPageMetadataId,ctvp.Value, @UId, @Id,ctvp.SubRecordId from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId
 	join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id 
 where upmd.DataTypeId=2 and 
 	temp.Id=@ind
 	
 
 
- INSERT INTO UiPageFileAttachType (UiPageMetadataId, Value,UiPageDataId,RecordId)
-	select  temp.UiPageMetadataId,ctvp.Value, @UId, @Id from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=3 and
+ INSERT INTO UiPageFileAttachType (UiPageMetadataId, Value,UiPageDataId,RecordId,SubRecordId)
+	select  temp.UiPageMetadataId,ctvp.Value, @UId, @Id,ctvp.SubRecordId from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=3 and
 		temp.Id=@ind
 
 
- INSERT INTO UiPageIntType ( UiPageMetadataId,Value, UiPageDataId,RecordId)
-  select temp.UiPageMetadataId,ctvp.Value,  @UId ,  @Id  from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=1 and
+ INSERT INTO UiPageIntType ( UiPageMetadataId,Value, UiPageDataId,RecordId,SubRecordId)
+  select temp.UiPageMetadataId,ctvp.Value,  @UId ,  @Id,ctvp.SubRecordId  from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=1 and
   	temp.Id=@ind
 
-	 INSERT INTO UiPageDateType (UiPageMetadataId, Value,UiPageDataId,RecordId)
-	select  temp.UiPageMetadataId,ctvp.Value, @UId, @Id from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=5 and
+	 INSERT INTO UiPageDateType (UiPageMetadataId, Value,UiPageDataId,RecordId,SubRecordId)
+	select  temp.UiPageMetadataId,ctvp.Value, @UId, @Id,ctvp.SubRecordId from @ChildTvp ctvp join @tempTable temp on ctvp.UiPageMetadataId = temp.UiPageMetadataId join UiPageMetadata upmd on temp.UiPageMetadataId = upmd.Id where upmd.DataTypeId=5 and
 		temp.Id=@ind
 
 
