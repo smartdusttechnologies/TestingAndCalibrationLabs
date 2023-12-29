@@ -3,7 +3,8 @@
 	@WorkflowStageId int ,
 	@UpdatedDate DateTime,
 	@UiPageDataTVP  UiPageDataTVP READONLY,
-	@ChildTvp childData READONLY
+	@ChildTvp childData READONLY,
+	@RecordId INT OUTPUT
 	
 	
 AS
@@ -52,4 +53,5 @@ where upmd.DataTypeId=2 and
 
  SET @ind += 1;  
 	end 
+	SET @RecordId = @Id;
 END
