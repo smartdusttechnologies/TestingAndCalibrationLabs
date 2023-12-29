@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using NPOI.HSSF.Record;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -174,8 +175,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var storesingleval = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value }).ToList();
-                var storemultiVal = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value }).ToList();
+                var storesingleval = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value , SubRecordId = x.First().SubRecordId}).ToList();
+                var storemultiVal = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value , SubRecordId  = x.SubRecordId}).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
@@ -454,7 +455,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public int Getkey()
         {
             string query = @"
-                SELECT MAX(SubRecordId) AS MaxSubRecordId
+                SELECT COALESCE(MAX(SubRecordId), 0) AS MaxSubRecordId
                 FROM (
                     SELECT SubRecordId FROM UiPageIntType
                     UNION ALL

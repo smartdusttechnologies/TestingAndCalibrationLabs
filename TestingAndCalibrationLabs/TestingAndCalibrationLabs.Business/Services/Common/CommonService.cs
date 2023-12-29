@@ -68,9 +68,28 @@ namespace TestingAndCalibrationLabs.Business.Services
             //{
             //    throw new UnauthorizedAccessException("Your Unauthorized");
             //}
+            int multikeys = 0;
+
             requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
+                var alllists = record.FieldValues;
+
+                var lastmultikeys = _commonRepository.Getkey();
+                if (alllists[0].SubRecordId == 0)
+                {
+                    for (var i = 0; i < alllists.Count;   i++)
+                    {
+                        if (alllists[i].MultiValueControl == true)
+                        {
+
+                            multikeys = lastmultikeys;
+                            alllists[i].SubRecordId = multikeys;
+                        }
+
+                    }
+                }
+
                 record.UpdatedDate = DateTime.Now;
                 //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
                  _commonRepository.Insert(record);
@@ -211,13 +230,13 @@ namespace TestingAndCalibrationLabs.Business.Services
                 {
                     if (alllists[0].SubRecordId ==0) 
                     {
-                        for (var i = 0; i < alllists.Count && alllists[i].MultiValueControl == true; i++)
+                        for (var i = 0; i < alllists.Count;  i++)
                         {
-
+                            if(alllists[i].MultiValueControl == true){
                             multikeys = lastmultikeys;
                             alllists[i].SubRecordId = multikeys;
 
-
+                        }
                         }
                     }
                     record.UpdatedDate = DateTime.Now;
