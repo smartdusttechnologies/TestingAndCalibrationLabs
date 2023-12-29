@@ -387,7 +387,10 @@ BEGIN
 			   (17,N'Layout',1,0),
 			   (18,N'ModuleLayout',1,0),
 			   (19,N'UiPageNavigation',1,0),
-			   (20,N'UiPageMetadataCharacteristics',1,0)
+			   (20,N'UiPageMetadataCharacteristics',1,0),
+			     (21,N'Email Verify',1,0),
+			   (22,N'Mobile Verify',1,0),
+			    (23,N'Logout',1,0)
 
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
@@ -761,7 +764,11 @@ BEGIN
 			  (20,N'/Layout/Index/',17,1002,0),
 			  (21,N'/ModuleLayout/Index/',18,1002,0),
 			  (22,N'/UiPageNavigation/Index/', 19,1002,0),
-			  (23,N'/UiPageMetadataCharacteristics/Index/',20,1002,0)
+			  (23,N'/UiPageMetadataCharacteristics/Index/',20,1002,0),
+			 
+			  (24,N'/User/VerifyEmail/',21,1003,0),
+			  (25,N'/User/MobileVerify/',22,1003,0)
+	       (26,N'/Security/Logout',23,1003,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO

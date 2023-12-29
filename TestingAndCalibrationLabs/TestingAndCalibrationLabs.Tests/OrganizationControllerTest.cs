@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Services;
@@ -21,6 +20,7 @@ namespace TestingAndCalibrationLabs.Tests
     public class OrganizationControllerTest
     {
         IOrganizationService _organizationService;
+        IOtpEmailService _otpServices;
         IMapper _mapper;
         Mock<IGenericRepository<Organization>> _genericRepository = new Mock<IGenericRepository<Organization>>();
         Mock<IOrganizationRepository> _organizationRepository = new Mock<IOrganizationRepository>();
@@ -33,9 +33,6 @@ namespace TestingAndCalibrationLabs.Tests
             var Configuration = new MapperConfiguration(x => x.AddProfile(profile));
             var mapper = new Mapper(Configuration);
             _mapper = mapper;
-
-
-
         }
         [Test]
         public void Index_Method_Test()
@@ -47,7 +44,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             _organizationService = new OrganizationService(_organizationRepository.Object,_logger.Object, _genericRepository.Object);
 
-            _genericRepository.Setup(x => x.Get()).Returns(organization);
+            _genericRepository.Setup(x => x.Get(false)).Returns(organization);
 
             var controller = new OrganizationController(_organizationService, _mapper);
 

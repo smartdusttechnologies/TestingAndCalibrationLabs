@@ -51,7 +51,7 @@ namespace TestingAndCalibrationLabs.Tests
 
             _applicationService = new ApplicationService(genericRepository.Object);
 
-            genericRepository.Setup(x => x.Get()).Returns(applicationModel);
+            genericRepository.Setup(x => x.Get(false)).Returns(applicationModel);
 
             var controller = new ApplicationController(_applicationService, _mapper, _uiNavigationCategoryService);
 

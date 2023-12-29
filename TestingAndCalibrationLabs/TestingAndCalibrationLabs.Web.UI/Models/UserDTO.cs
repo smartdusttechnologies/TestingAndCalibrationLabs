@@ -1,31 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class UserDTO
     {
         /// <summary>
-        /// UserName for Registration
+        /// User Name.
         /// </summary>
         public string UserName { get; set; }
         /// <summary>
-        /// Email for Registration
-        /// </summary>
-        public string Email { get; set; }
-        /// <summary>
-        /// Password for Registration
-        /// </summary>
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Reenter Password for Registration
-        /// </summary>
-        [DataType(DataType.Password)]
-        public string ReEnterPassword { get; set; }
-
-        /// <summary>
-        /// FirstName for Registration
+        /// First Name.
         /// </summary>
         public string FirstName { get; set; }
         /// <summary>
@@ -33,7 +18,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// </summary>
         public string LastName { get; set; }
         /// <summary>
-        /// Mobile Number.
+        /// Email Address.
+        /// </summary>
+        public string Email { get; set; }
+        /// <summary>
+        /// Mobile.
         /// </summary>
         public string Mobile { get; set; }
         /// <summary>
@@ -67,13 +56,28 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// Organization Id.
         /// </summary>
-        public string Organizations { get; set; }
-
+        public int OrgId { get; set; }
         /// <summary>
         /// Admin Level.
         /// </summary>
+        public string Organizations { get; set; }
+        /// <summary>
+        /// Used at the time of insert in DB.
+        /// </summary>
         public int AdminLevel { get; set; }
+        /// <summary>
+        /// For Password
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// For ReEnterPassword
+        /// </summary>
+        public string ReEnterPassword { get; set; }
+        /// <summary>
+        /// It Contain User Id 
+        /// </summary>
+        public int userId { get; set; }
+        //public DateTime ChangeDate { get; set; }
 
-        
     }
 }
