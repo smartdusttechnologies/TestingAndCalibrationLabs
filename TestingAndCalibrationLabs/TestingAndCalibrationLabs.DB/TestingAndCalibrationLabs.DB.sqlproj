@@ -128,11 +128,9 @@
     <Build Include="dbo\Tables\Logs.sql" />
     <Build Include="dbo\Stored Procedures\usp_Logs_AddEntry.sql" />
     <Build Include="dbo\Tables\UserRoleClaim.sql" />
+    <Build Include="dbo\Stored Procedures\Store_Proc_GridMultipleData.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="dbo\Stored Procedures\Store_Proc_GridMultipleData.sql" />
   </ItemGroup>
 </Project>
