@@ -193,6 +193,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<bool> Save(RecordModel record)
         {
+            int multikeys =0;
+
             RequestResult<bool> requestResult = new RequestResult<bool>();
             //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Update).Result.Succeeded)
             //{
@@ -201,9 +203,23 @@ namespace TestingAndCalibrationLabs.Business.Services
             requestResult = Validate(record);
             if (requestResult.IsSuccessful)
             {
+                var lastmultikeys = _commonRepository.Getkey();
+                var alllists = record.FieldValues;
+
                 var oldRecord = _recordGenericRepository.Get(record.Id);
                 if (oldRecord.UpdatedDate == record.UpdatedDate)
                 {
+                    if (alllists[0].SubRecordId ==0) 
+                    {
+                        for (var i = 0; i < alllists.Count && alllists[i].MultiValueControl == true; i++)
+                        {
+
+                            multikeys = lastmultikeys;
+                            alllists[i].SubRecordId = multikeys;
+
+
+                        }
+                    }
                     record.UpdatedDate = DateTime.Now;
                     _commonRepository.Save(record);
                     //record.WorkflowStageId = oldRecord.WorkflowStageId;
@@ -321,28 +337,11 @@ namespace TestingAndCalibrationLabs.Business.Services
         public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId, int UipagetypeId)
         {
             var uiMetadata = _commonRepository.GetMultiControlMetadata(moduleLayoutId, UipagetypeId);
-            var uiPageData = _commonRepository.GetMultiPageData(recordId, uiMetadata);
+            var uiPageData = _commonRepository.GetMultiPageData(recordId, UipagetypeId);
             var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
-            int maxItemCount = 0;
-            int Controles = 0;
-            List<UiPageMetadataModel> unmatchedMetadata = new List<UiPageMetadataModel>();
-            foreach (var metadataItem in metadata)
-            {
-                var controlsValueList = uiPageData
-                    .Where(data => data.UiPageMetadataId == metadataItem.Id)
-                    .ToList();
-                int itemCount = controlsValueList.Count;
-                if (itemCount > maxItemCount)
-                {
-                    maxItemCount = itemCount;
-                }
-                if (itemCount == Controles)
-                {
-                    unmatchedMetadata.Add(metadataItem);
-                }
-            }
+          
            
-            return new RecordsModel { Id = recordId, Fields = metadata, FieldValue = uiPageData  , ModuleId = uiMetadata[0].ModuleId, WorkflowStageId= uiMetadata[0].WorkflowStageId };
+            return new RecordsModel { Id = recordId, Fields = metadata, FieldValue = uiPageData, ModuleId = uiMetadata[0].ModuleId, WorkflowStageId= uiMetadata[0].WorkflowStageId };
         }
         /// <summary>
         /// Delete Multi Value Records

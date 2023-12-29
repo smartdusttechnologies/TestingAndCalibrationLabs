@@ -65,23 +65,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         int GetWorkflowStageBasedOnOrder(int moduleId);
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="recordId"
-        /// <param name="uiPageTypeId"
         /// <returns></returns>
         List<UiPageDataModel> GetPageData(int recordId);
         /// <summary>
-        /// 
-        /// </summary>
+        /// Get all Grid data
         /// <param name="id"></param>
-        /// <param name="uiPageTypeId"></param>
+        /// <param name="uiMetadata"></param>
         /// <returns></returns>
-        List<UiPageDataModel> GetMultiPageData(int id,List<UiPageMetadataModel> uiMetadata);
+        List<UiPageDataModel> GetMultiPageData(int id,int uiMetadata);
         /// <summary>
-        /// Get All UiPageMetadata Based On Record Id
+        /// Get All UiPageMetadata Based On moduleLayoutId and UiPageTypeId
         /// </summary>
-        /// <param name="recordId"></param>
+        /// <param name="moduleLayoutId"></param>
+        /// <param name="UiPageTypeId"></param>
         /// <returns></returns>
         List<UiPageMetadataModel> GetMultiControlMetadata(int moduleLayoutId, int UiPageTypeId);
         /// <summary>
@@ -98,5 +96,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         // Image Download  in database
         //</summary>
         FileUploadModel ImageDownload(string ImageValue);
+        // <summary>
+        // Get SubrecordId  
+        //</summary>
+        int Getkey();
     }
 }

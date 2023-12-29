@@ -79,7 +79,6 @@
         var moduleLayoutId = modelData.value.uiPageMetadata.moduleLayoutId;
         var UipagetypeId = modelData.value.uiPageMetadata.uiPageTypeId;
         let id = $("#Id").val();
-        debugger;
         var url = "@Url.Action("MultiValueControlGrid","Common")" + "?id=" + id + "&moduleLayoutId=" + moduleLayoutId + "&UipagetypeId=" + UipagetypeId;
         $("#tableMultiValue").load(url); 
 

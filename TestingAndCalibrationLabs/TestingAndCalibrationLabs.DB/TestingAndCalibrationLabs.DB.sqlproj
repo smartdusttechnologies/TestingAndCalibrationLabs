@@ -132,4 +132,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\Store_Proc_GridMultipleData.sql" />
+  </ItemGroup>
 </Project>

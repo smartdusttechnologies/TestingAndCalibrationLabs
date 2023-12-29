@@ -1,10 +1,9 @@
-﻿CREATE TYPE [dbo].[updatechildDatas] AS TABLE (
-    [Id]               INT           NULL,
-    [UiPageMetadataId] INT           NULL,
-    [ChildId]          INT           NULL,
-    [RecordId]         INT           NULL,
-    [UiPageTypeId]     INT           NULL,
-    [Value]            VARCHAR (200) NULL);
-
-
-
+﻿CREATE TYPE [dbo].[updatechildDatas] AS TABLE(
+	[Id] [int] NULL,
+	[UiPageMetadataId] [int] NULL,
+	[ChildId] [int] NULL,
+	[RecordId] [int] NULL,
+	[UiPageTypeId] [int] NULL,
+	[Value] [varchar](200) NULL,
+	[SubRecordId] [int] NULL
+)

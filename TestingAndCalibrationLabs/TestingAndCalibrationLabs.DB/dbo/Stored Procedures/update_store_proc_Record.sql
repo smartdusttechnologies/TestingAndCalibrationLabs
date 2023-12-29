@@ -11,9 +11,9 @@ BEGIN
 	DECLARE @Id INT
 	declare @ind int = 1
 	DECLARE @Tvpcount int = (select count(*) from @ChildTvp);
-	declare @tempTable table (Id int NOT NULL identity(1,1),UipagedataId int ,UiPageMetadataId int,ChildId int,RecordId int,UiPageTypeId int,Value  varchar(200))
-	insert into @tempTable ( UipagedataId,UiPageMetadataId,ChildId,RecordId,UiPageTypeId,Value)
-	select Id,UiPageMetadataId,ChildId,RecordId,UiPageTypeId,Value from @ChildTvp
+	declare @tempTable table (Id int NOT NULL identity(1,1),UipagedataId int ,UiPageMetadataId int,ChildId int,RecordId int,UiPageTypeId int,Value  varchar(200),SubRecordId int)
+	insert into @tempTable ( UipagedataId,UiPageMetadataId,ChildId,RecordId,UiPageTypeId,Value,SubRecordId)
+	select Id,UiPageMetadataId,ChildId,RecordId,UiPageTypeId,Value,SubRecordId from @ChildTvp
 
 	
 	-- Insert data into Record table
@@ -31,8 +31,8 @@ BEGIN
       UPDATE SET @Id = source.UipagedataId
 	WHEN NOT MATCHED BY target and source.Id = @ind
 	THEN 
-	   INSERT (UiPageMetadataId ,RecordId,UiPageTypeId)
-		VALUES (source.UiPageMetadataId,source.RecordId,source.UiPageTypeId);
+	   INSERT (UiPageMetadataId ,RecordId,UiPageTypeId,SubRecordId)
+		VALUES (source.UiPageMetadataId,source.RecordId,source.UiPageTypeId,source.SubRecordId);
 		set @Id  = SCOPE_IDENTITY();
 		
 
@@ -47,8 +47,8 @@ BEGIN
 		-- WHEN NOT MATCHED SO INSERT INTO UiPageStringType
 		WHEN NOT MATCHED BY target AND source.UiPageMetadataId IN (SELECT Id FROM UiPageMetadata WHERE DataTypeId = 2 and source.Id = @ind)
 		THEN 
-		INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId)
-		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId)
+		INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId,SubRecordId)
+		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId,source.SubRecordId)
        WHEN NOT MATCHED BY source AND target.UiPageDataId IN (SELECT Id FROM @ChildTvp ) THEN 
         DELETE;
 
@@ -62,8 +62,8 @@ BEGIN
         UPDATE SET target.Value = source.Value
 		-- WHEN NOT MATCHED SO INSERT INTO UiPageStringType
 		WHEN NOT MATCHED BY target AND source.UiPageMetadataId IN (SELECT Id FROM UiPageMetadata WHERE DataTypeId = 3 and source.Id = @ind) 
-		THEN INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId)
-		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId)
+		THEN INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId,SubRecordId)
+		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId,source.SubRecordId)
 		WHEN NOT MATCHED BY source AND target.UiPageDataId IN (SELECT Id FROM @ChildTvp ) THEN 
         DELETE;
 
@@ -77,8 +77,8 @@ BEGIN
         UPDATE SET target.Value = source.Value
 		-- WHEN NOT MATCHED SO INSERT INTO UiPageStringType
 		WHEN NOT MATCHED BY target AND source.UiPageMetadataId IN (SELECT Id FROM UiPageMetadata WHERE DataTypeId = 1 and source.Id = @ind ) 
-		THEN INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId)
-		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId)
+		THEN INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId,SubRecordId)
+		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId,source.SubRecordId)
 		WHEN NOT MATCHED BY source AND target.UiPageDataId IN (SELECT Id FROM @ChildTvp ) THEN 
         DELETE;
 
@@ -92,8 +92,8 @@ BEGIN
         UPDATE SET target.Value = source.Value
 		-- WHEN NOT MATCHED SO INSERT INTO UiPageStringType
 		WHEN NOT MATCHED BY target AND source.UiPageMetadataId IN (SELECT Id FROM UiPageMetadata WHERE DataTypeId = 5 and source.Id = @ind) 
-		THEN INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId)
-		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId)
+		THEN INSERT (UiPageMetadataId ,Value,UiPageDataId,RecordId,SubRecordId)
+		VALUES (source.UiPageMetadataId,source.Value, @Id,source.RecordId,source.SubRecordId)
 		WHEN NOT MATCHED BY source AND target.UiPageDataId IN (SELECT Id FROM @ChildTvp ) THEN 
         DELETE;
 		--WHEN NOT MATCHED BY source AND target.UiPageMetadataId IN (SELECT Id FROM UiPageMetadata WHERE DataTypeId = 1)

@@ -72,7 +72,6 @@
     }
 </script>
 <script type="text/javascript">
-    debugger;
     var mainModel = JSON.parse('@Json.Serialize(Model)');
     var updatedDate = mainModel.updatedDate;
     var uiPageTypeId = parseInt($("#UiPageTypeId").val())
@@ -92,7 +91,6 @@
         var layout = _.flatMapDeep(mainModel.layout, getMembers);
         var fieldValues = [];
         for (let i = 0; i < layout.length; i++) {
-            debugger;
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" ) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
@@ -108,10 +106,8 @@
                        var RecordIds = layout[i].uiPageData[0].recordId;
                        var oldValue = layout[i].uiPageData[0].value;
                        var List;
-                       debugger;
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true && fieldValue !=null) {
-                            debugger;
                             var filddata = $(fieldId).val();
                             if(filddata != undefined){
                                  List = filddata.split(",");
@@ -149,7 +145,6 @@
                     
                   }
                 else {
-                    debugger;
                     if (fieldValue != null){
                     keyValuepair.Id = 0;
                     keyValuepair.uiPageMetadataId = metadataId;
@@ -166,7 +161,6 @@
             url: url,
             data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues},
             success: function (response) {
-                debugger;
                 myFunction();
                 window.location.href = "/common/index/" + moduleId;
             },

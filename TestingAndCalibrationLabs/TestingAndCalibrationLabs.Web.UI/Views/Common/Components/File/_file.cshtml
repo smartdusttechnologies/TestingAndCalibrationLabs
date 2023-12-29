@@ -32,7 +32,6 @@
     var fileModel = JSON.parse('@Json.Serialize(Model)');
     $(document).ready(function () {
         if (fileModel.value.uiPageData != null) {
-            debugger;
             let metadataId = fileModel.value.uiPageMetadata.id;
             let value = fileModel.value.uiPageData.value;
             $(`#pop-up-${metadataId}`).append(`<img  src="https://drive.google.com/uc?export=view&id=${value}"></img>`);

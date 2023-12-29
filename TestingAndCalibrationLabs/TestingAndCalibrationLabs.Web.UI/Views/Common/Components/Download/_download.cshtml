@@ -24,10 +24,8 @@
 <script>
     var modelData;
     $(document).ready(function () {
-        debugger;
         modelData = JSON.parse('@Json.Serialize(Model)');
         var displayName = modelData.value.uiPageMetadata.uiControlDisplayName;
-        debugger;
         var downloadHtml = '<input type="button" value="' + displayName + '" class="button-base button-material-primary" onclick="GenerateReport()" />'
         var sendHtml = '<input type="button" value="Send" class="button-base button-material-primary" data-toggle="modal" data-target="#sendModal" />'
         $("#sub-mt-btn").append(downloadHtml);

@@ -1,12 +1,12 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
 <input type="hidden" asp-for="ModuleId" />
 
-
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
             <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@Model.Fields.First().UiPageTypeName</h2>
         </div>
+       
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
             <a data-toggle="modal" data-target="#saveModal" onclick="UpdateFieldsWithValue('Create',0)"><i class="fa fa-plus icon-plus"></i></a>
         </div>
@@ -24,64 +24,62 @@
             <tr>
                 @foreach (var item in Model.Fields)
                 {
-                    <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
+                    <th id="@item.Id"> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
                 }
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-                @{
-                    int totalFields = Model.Fields.Count;
-                    int fieldIndex = 0;
-                    int rowKey = 1; 
-                 }
+            @{
+                var allControlIds = Model.Fields.Select(item => item.Id).Distinct().ToList();
+                var allControlsGrouped = Model.FieldValue.Where(x => x.SubRecordId != 0).GroupBy(x => x.SubRecordId).ToList();
+
+}
+
+            @foreach (var group in allControlsGrouped)
+            {
+                var currentGroupSubRecordId = group.FirstOrDefault()?.SubRecordId;
                 <tr>
-                    @foreach (var item in Model.FieldValue)
-                     {
-                    
+                    @foreach (var controlId in allControlIds)
+                    {
+                        var controlData = group.FirstOrDefault(item => item.UiPageMetadataId == controlId);
+
                         <td>
-                            @Html.DisplayFor(modelItem => item.Value)
+                            @if (controlData != null)
+                            {
+                                @Html.DisplayFor(modelItem => controlData.Value)
+                            }
+                            else
+                            {
+                                @Html.Raw("&nbsp;") 
+                            }
                         </td>
-                        fieldIndex++;
-                         
-                        if (fieldIndex % totalFields == 0)
-                        {
-                            <td>
-                                
-                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@rowKey)"></a>
-                            <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@rowKey)"></a>
-                            </td>
-                            @:</tr><tr>
-                          rowKey++; 
-                          fieldIndex = 0; 
-                        }
-                   }
+                    }
+
+                    <td>
+                        <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" data-bs-toggle="modal" data-bs-target="#saveModal" onclick="UpdateFieldsWithValue('Update',@currentGroupSubRecordId)"></a>
+                        <a class="fa fa-trash" style="margin:5px;color:red;" data-bs-toggle="modal" data-bs-target="#deleteModalPopup" onclick="setValue('deletePopup',@currentGroupSubRecordId)"></a>
+                    </td>
                 </tr>
-            
-        </tbody>
+            }
+</tbody>
     </table>
 </div>
 </div>
 
 <script>
         var fieldValuesSublists = [];
+    var groupedData = @Html.Raw(Json.Serialize(allControlsGrouped));
     $(document).ready(function() {
-          var modellist = JSON.parse('@Json.Serialize(Model)');
-          var fieldCount = @Model.Fields.Count;
-          var data = modellist.fieldValue;
-          var currentKey = 1;
-
-    for (var i = 0; i < data.length; i += fieldCount) {
-        var sublist = data.slice(i, i + fieldCount);
-        fieldValuesSublists.push({
-            key: currentKey,
-            sublist: sublist
-        });
-        currentKey++;
-    }
-   
+        var modellist = JSON.parse('@Json.Serialize(Model)');
+        for (var j = 0; j < groupedData.length; j++) {
+            var currentGroup = groupedData[j];
+            var sublist = currentGroup;
+             fieldValuesSublists.push ({
+                key: currentGroup[0].subRecordId, // Assuming SubRecordId is present in the first item of the group
+                sublist: sublist
+            });
+        }
 });
-
      //Call the DeleteMultiValue Method Of Common Page
     let deleteFun = (id) => {
         WheelLoader();
@@ -120,16 +118,15 @@
     //Inserting Record
     let saveRecords = (subRId) => {
         WheelLoader();
-        debugger;
         let workflowStageId = parseInt($("#WorkflowStageId").val());
         var modellist = JSON.parse('@Json.Serialize(Model)');
         var ModuleId= modellist.moduleId;
         var WorkflowStageId= modellist.workflowStageId;
+                                  var SubrecordId= modellist.fieldValue[0].subRecordId;
 
         var RecordId = modellist.id;
         
         const getMembers = (member) => {
-            debugger;
             if (!member.children || !member.children.length) {
                 return member.value;
             }
@@ -141,13 +138,13 @@
                
         
         for (let i = 0; i < layout.length; i++) {
-            debugger;
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
                 }
                 var metadataId = layout[i].uiPageMetadata.id;
+
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
@@ -155,7 +152,6 @@
                     var pageDataId = layout[i].uiPageData.id;
                     var oldValue = layout[i].uiPageData.value;
                     if (oldValue != fieldValue &&fieldValue != "" ) {
-                        debugger;
                         keyValuepair.Id = pageDataId;
                         keyValuepair.uiPageMetadataId = metadataId;
                         keyValuepair.RecordId = 0;
@@ -166,7 +162,6 @@
                 }
                 else {
                     if(fieldValue!= ""){
-                    debugger;
                     keyValuepair.Id = 0;
                     keyValuepair.UiPageMetadataId = metadataId;
                     keyValuepair.RecordId = 0;
@@ -186,10 +181,10 @@
             if (subRId == 0) {
                 keyValuepair.Id = 0;
                 keyValuepair.UiPageMetadataId = mId;
-                debugger;
                 keyValuepair.RecordId = 0;
                 keyValuepair.Value = val;
                 keyValuepair.UiPageTypeId = uiPageTypeId;
+                keyValuepair.Sub
                 keyValuepair.MultiValueControl = true;
                 fieldValues.push(keyValuepair)
             }
@@ -216,7 +211,6 @@
        
         
         for (let i = 0; i < layout.length; i++) {
-            debugger;
             if (layout[i].uiPageMetadata.controlCategoryName == "DataControl" && layout[i].uiPageMetadata.multiValueControl != true) {
                 var fieldId = "#" + layout[i].uiPageMetadata.uiControlTypeName + layout[i].uiPageMetadata.id;
                 if ($(fieldId).hasClass("red-error-border")) {
@@ -231,7 +225,6 @@
                     var pageDataId = layout[i].uiPageData[t].id;
                     var oldValue = layout[i].uiPageData[t].value;
                             if (oldValue != fieldValue &&fieldValue != "" ) {
-                                debugger;
                                 keyValuepair.Id = pageDataId;
                                 keyValuepair.uiPageMetadataId = metadataId;
                                 keyValuepair.RecordId = id;
@@ -243,7 +236,6 @@
                 }
                 else {
                     if(fieldValue!= ""){
-                    debugger;
                     keyValuepair.Id = 0;
                     keyValuepair.UiPageMetadataId = metadataId;
                     keyValuepair.RecordId = id;
@@ -258,12 +250,12 @@
             var value;
             var keyValuepair = {};
             let mId = metadata[y].id;
+            let Subrecordid ;
             let controlType = metadata[y].uiControlTypeName;
             let val = $(`#${controlType}${mId}`).val();
             if (subRId == 0) {
                 keyValuepair.Id = 0;
                 keyValuepair.UiPageMetadataId = mId;
-                debugger;
                 keyValuepair.RecordId = id;
                 keyValuepair.Value = val;
                 keyValuepair.UiPageTypeId = uiPageTypeId;
@@ -273,7 +265,10 @@
             else {
                 for (let i = 0; i < fieldValuesSublists.length; i++) {
                     if (fieldValuesSublists[i].key == subRId) {
+                            var onelist = fieldValuesSublists[i].sublist;
+                        Subrecordid=onelist[0].subRecordId;
                         value = fieldValuesSublists[i].sublist[y];
+                        if (value != undefined) {
                         keyValuepair.Id = value.id;
                         keyValuepair.childId = value.childId;
                         keyValuepair.uiPageMetadataId = mId;
@@ -283,7 +278,20 @@
                         keyValuepair.MultiValueControl = true;
                         keyValuepair.SubRecordId = value.subRecordId;
                         fieldValues.push(keyValuepair)
+                        }
+                        else{
+                                keyValuepair.Id = 0;
+                                keyValuepair.UiPageMetadataId = mId;
+                                keyValuepair.RecordId = id;
+                                keyValuepair.Value = val;
+                                keyValuepair.UiPageTypeId = uiPageTypeId;
+                                keyValuepair.MultiValueControl = true;
+                                keyValuepair.SubRecordId = Subrecordid;
+                                fieldValues.push(keyValuepair)
+
+                        }
                     }
+
                 }
 
             }
@@ -302,7 +310,6 @@
                     fieldValues: fieldValues
                 },            
             success: function (response) {
-                debugger;
                         myFunction();
                          id = response.id;
                          window.location.href = "/common/edit/" + id;
@@ -386,14 +393,24 @@
             else {
                 for (let a = 0; a < fieldValuesSublists.length; a++) {
                     if (metadata[a].id == uniqueMetadataIds[a]&&fieldValuesSublists[a].key == rId ) {
-                        for(let j=0; j<fieldValuesSublists[a].sublist.length; j++){
-                             let metadataId = metadata[j].id;
-                             let controlType = metadata[j].uiControlTypeName;
+                        for (let l = 0; l<metadata.length;)
+                        {
+                            for (let j = 0; j < fieldValuesSublists[a].sublist.length; ) {
+                           
+                                 let metadataId = metadata[l].id;
+                                    if (metadataId == fieldValuesSublists[a].sublist[j].uiPageMetadataId){
+                                         let controlType = metadata[j].uiControlTypeName;
 
-                             value = fieldValuesSublists[a].sublist[j].value;
-                        $(`#${controlType}${metadataId}`).val(value);
+                                         value = fieldValuesSublists[a].sublist[j].value;
+                                        $(`#${controlType}${metadataId}`).val(value);
+                                    j++
+
+                                    }
+                                l++
+                            }
+                            
+                            
                         }
-                        
                     }
                 }
             }
@@ -406,7 +423,6 @@
     }
      function Datapop() {
        document.getElementById('gridPopup').innerHTML=" <div id="+"alert-box"+"></div>"
-
     for (let i = 0; i < metadata.length; i++) {
             let metadataId = metadata[i].id;
             let controlTypeName = metadata[i].uiControlTypeName;
@@ -419,9 +435,11 @@
             let controlId = `${controlTypeName}${metadataId}`;
             let uiControlDisplayName = metadata[i].uiControlDisplayName;
             let insertElement = `<div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                                                                                                        <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
-                                                                                                    <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
+                                <input class="form-input width-full black-border" type="text" id="${controlId}" name="${controlId}" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                               <label class="form-label" for="${controlId}">${uiControlDisplayName}${star}</label></div>`;
             $("#gridPopup").append(insertElement);
         }
+  
     }
+
 </script>
