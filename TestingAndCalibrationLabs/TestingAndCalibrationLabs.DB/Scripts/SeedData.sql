@@ -767,7 +767,7 @@ BEGIN
 			  (23,N'/UiPageMetadataCharacteristics/Index/',20,1002,0),
 			 
 			  (24,N'/User/VerifyEmail/',21,1003,0),
-			  (25,N'/User/MobileVerify/',22,1003,0)
+			  (25,N'/User/MobileVerify/',22,1003,0),
 	       (26,N'/Security/Logout',23,1003,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
