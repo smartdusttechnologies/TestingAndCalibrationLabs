@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[GridMultipleData]
+﻿CREATE PROCEDURE [dbo].[Store_Proc_GridMultipleData]
     @UiPageTypeId INT,
     @Id INT
 AS

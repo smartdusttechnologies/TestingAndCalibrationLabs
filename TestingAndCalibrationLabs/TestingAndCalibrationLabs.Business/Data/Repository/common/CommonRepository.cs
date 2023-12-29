@@ -328,7 +328,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             var parameters = new { Id = id, UiPageTypeId = UipagetypeId };
 
             var result = db.Query<UiPageDataModel>(
-                "GridMultipleData",
+                "Store_Proc_GridMultipleData",
                 parameters,
                 commandType: CommandType.StoredProcedure
             ).ToList();
