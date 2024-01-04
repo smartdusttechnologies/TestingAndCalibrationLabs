@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AutoMapper.Internal.Mappers;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -48,7 +49,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// IconName in which icon will show
         /// </summary>
         public string IconName { get; set; }
-
         /// <summary>
         /// it will store the uipageNavigation  Icon
         /// </summary>
@@ -58,5 +58,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It will store the Type of the Navigation
         /// </summary>
         public int NavigationType { get; set; }
+
     }
 }

@@ -14,6 +14,7 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class ListSorterService : IListSorterService 
     {
         public string jsonData;
+        //public string MethodName(List<ListSorterModel> listOfModels);
         /// <summary>
         /// To Sort List To Json Object For Using ComboTree jquery Plugin
         /// </summary>
@@ -37,8 +38,8 @@ namespace TestingAndCalibrationLabs.Business.Services
                             {
                                 if (listOfModels[i].Id == listOfModels[j].ParentId)
                                 {
-                                    if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += ",";
-                                    jsonData += "{id:" + listOfModels[j].Id + ",title:'" + listOfModels[j].Name + "'";
+                                    if (jsonData.Substring(jsonData.Length - 6) != "subs:[") jsonData += "," ;
+                                    jsonData += "{id:" + listOfModels[j].Id + ",title:'" + listOfModels[j].Name + "'" ;
                                     //Check for child
                                     returnChildern(listOfModels[j].Id, j,listOfModels);
                                     jsonData += "}";

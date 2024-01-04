@@ -113,7 +113,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<LookupModel>(@"Select L.* From[Lookup] L INNER JOIN[LookupCategory] lc ON L.LookupCategoryId = lc.Id and lc.IsDeleted = 0 where LookupCategoryId = @LookupCategoryId and L.IsDeleted = 0", new { LookupCategoryId = lookupCategoryId }).ToList();
+            return db.Query<LookupModel>(@"Select L.* From[Lookup] L INNER JOIN[LookupCategory] lc ON L.LookupCategoryId = lc.Id and lc.IsDeleted = 0 where LookupCategoryId = @LookupCategoryId and L.IsDeleted = 0", new { LookupCategoryId = lookupCategoryId }).ToList(); 
 
         }
     }

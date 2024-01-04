@@ -29,15 +29,15 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <summary>
         /// Insert Record In Ui Page Metadata Type
         /// </summary>
-        /// <param name="pageControl"></param>
+        /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Create(UiPageMetadataModel pageControl)
+        public RequestResult<int> Create(UiPageMetadataModel uiPageMetadataModel)
         {
-            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, pageControl, new[] { Operations.Create }).Result.Succeeded)
+            if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageMetadataModel, new[] { Operations.Create }).Result.Succeeded)
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            int id = _uiPageMetadataRepository.Create(pageControl);
+            int id = _uiPageMetadataRepository.Create(uiPageMetadataModel);
             return new RequestResult<int>(1);
 
         }
@@ -46,13 +46,13 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id)
+        public bool Delete(int id, int metadataModuleBridgeId)
         {
             if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, new UiPageMetadataModel(), new[] { Operations.Delete }).Result.Succeeded)
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return _uiPageMetadataRepository.Delete(id);
+            return _uiPageMetadataRepository.Delete(id, metadataModuleBridgeId);
         }
         /// <summary>
         /// Get Record by Id For Ui Page Metadata Type
@@ -73,7 +73,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="id"></param>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        public RequestResult<int> Update(int id, UiPageMetadataModel uiPageMetadataModel)
+        public RequestResult<int> Update(UiPageMetadataModel uiPageMetadataModel)
         {
             if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, uiPageMetadataModel, new[] { Operations.Update }).Result.Succeeded)
             {
@@ -93,6 +93,33 @@ namespace TestingAndCalibrationLabs.Business.Services
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
             return _uiPageMetadataRepository.Get();
+        }
+        /// <summary>
+        /// Get All Records by moduleLayoutId From Ui Page Metadata Type
+        /// </summary>
+        /// <returns></returns>
+        public List<UiPageMetadataModel> GetResult( int moduleLayoutId)
+        {
+
+            return _uiPageMetadataRepository.GetExisting(moduleLayoutId);
+        }
+        /// <summary>
+        /// Get All UIDisplayName  From Ui Page Metadata Type
+        /// </summary>
+        /// <returns></returns>
+        public List<UiPageMetadataModel> GetDisplayName()
+        {
+            return _uiPageMetadataRepository.GetDisplayName();
+        }
+        /// <summary>
+        /// Get Record by Id and uiPageTypeId ,metadataModuleBridgeId For Ui Page Metadata Type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public UiPageMetadataModel GetByPageId(int id, int uiPageTypeId, int metadataModuleBridgeId)
+        {
+
+            return _uiPageMetadataRepository.GetByPageId(id, uiPageTypeId, metadataModuleBridgeId);
         }
         #endregion
     }

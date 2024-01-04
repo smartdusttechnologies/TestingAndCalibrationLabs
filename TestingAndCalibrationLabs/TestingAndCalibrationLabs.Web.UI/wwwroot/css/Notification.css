@@ -1,10 +1,10 @@
 ﻿
-/*for bell Icon rotation*/
-.fa-bell.down {
-    -moz-transform: rotate(40deg);
-    -webkit-transform: rotate(40deg);
-    transform: rotate(40deg);
-}
+    /*for bell Icon rotation*/
+    .fa-bell.down {
+        -moz-transform: rotate(40deg);
+        -webkit-transform: rotate(40deg);
+        transform: rotate(40deg);
+    }
 
 /*For Position Notification content*/
 @media (min-width: 1025px) {
@@ -22,7 +22,7 @@
     position: relative;
 }
 
-/* .notification-ui_icon .fa-bell__badge {
+   /* .notification-ui_icon .fa-bell__badge {
         display: inline-block;
         height: 15px;
         width: 13px;
@@ -36,12 +36,12 @@
     }*/
 
 @media (min-width: 900px) {
-    /* .notification-ui_icon .fa-bell__badge {
+   /* .notification-ui_icon .fa-bell__badge {
         left: 8px;
         top: -5px;
     }*/
 
-    /* .notification-ui {
+   /* .notification-ui {
         padding-top: 5px;
     }*/
 }
@@ -136,6 +136,7 @@
     .notification-overlay {
         margin: 10px;
         margin-left: -262px;
+       
     }
 
     .notification-ui_dd:after {

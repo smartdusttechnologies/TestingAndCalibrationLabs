@@ -18,7 +18,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public int WorkflowStageId { get; set; }
         public DateTime UpdatedDate { get; set; }
         public List<UiPageMetadataModel> Fields { get; set; }
-        public string ModuleName { get; set; }
         public List<UiPageDataModel> FieldValues { get; set; }
         public IEnumerable<Node<LayoutModel>> Layout { get; set; }
         #endregion

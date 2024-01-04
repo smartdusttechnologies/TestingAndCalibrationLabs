@@ -19,7 +19,18 @@
                     <input class="form-input width-full black-border" type="text" id="DisplayName" name="DisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="DisplayName">
                     <label class="form-label" for="DisplayName">DisplayName</label>
                 </div>
-                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input" style=" margin-bottom:5px;">
+                <div class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <label for="ControlCategoryId" class="form-label"></label>
+                    <select class="form-input width-full black-border" name="ControlCategoryId" id="UiControlType" onchange="this.setAttribute('value',this.value)" asp-for="ControlCategoryId">
+                        <option disabled="disabled" selected>Select Control ...</option>
+                        @foreach (var item in ViewBag.ControlCategoryName)
+                        {
+                            <option value=@item.ControlCategoryId>@item.ControlCategoryName</option>
+                        }
+                    </select>
+                </div>
+                <input type="hidden" asp-for="ControlCategoryName">
+                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input" style=" margin-bottom:5px;">
                 <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
             </div>
             </div>

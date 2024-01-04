@@ -36,7 +36,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
             if (pageNavigationList != null && pageNavigationList.Count > 0)
             {
-                var dataAfterSorting = pageNavigationList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders, x.UiPageNavigationCategoryIcon, x.NavigationType }).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, IconName = x.Key.UiPageNavigationCategoryIcon, NavigationTypes = x.Key.NavigationType, Childrens = x.ToList() });
+                var dataAfterSorting = pageNavigationList.GroupBy(x => new { x.UiNavigationCategoryId, x.UiNavigationCategoryName, x.Orders , x.UiPageNavigationCategoryIcon, x.NavigationType}).Select(x => new { Id = x.Key.UiNavigationCategoryId, Name = x.Key.UiNavigationCategoryName, Orders = x.Key.Orders, IconName = x.Key.UiPageNavigationCategoryIcon, NavigationTypes = x.Key.NavigationType, Childrens = x.ToList() });
+               
                 return Ok(dataAfterSorting);
             }
             return BadRequest();

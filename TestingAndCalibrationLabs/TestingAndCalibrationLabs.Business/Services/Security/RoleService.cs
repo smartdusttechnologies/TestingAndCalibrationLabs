@@ -18,6 +18,15 @@ namespace TestingAndCalibrationLabs.Business.Services
             _roleRepository = roleRepository;
         }
         /// <summary>
+        /// Get Role Based On User Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<(int, string)> GetRole(int id)
+        {
+            return _roleRepository.GetRole(id);
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="userName"></param>

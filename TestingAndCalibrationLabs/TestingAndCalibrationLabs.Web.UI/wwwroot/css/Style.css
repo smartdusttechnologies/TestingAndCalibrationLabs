@@ -113,13 +113,11 @@ nav ol {
 .navbar-brand-a {
     font-size: 14px;
 }
-
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 390px){
 
     #LoginpageInfo {
         margin-top: 106px !important;
     }
-
     #LoginPage {
         margin-bottom: 162px !important;
     }

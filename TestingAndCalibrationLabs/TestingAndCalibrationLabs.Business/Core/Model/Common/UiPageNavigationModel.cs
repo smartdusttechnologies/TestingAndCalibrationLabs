@@ -57,5 +57,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It will store the Type of the Navigation
         /// </summary>
         public int NavigationType { get; set; }
+
+
     }
 }

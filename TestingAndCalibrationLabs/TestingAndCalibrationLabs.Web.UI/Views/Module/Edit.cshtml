@@ -14,8 +14,8 @@
                 <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                 <label class="form-label" for="Name">Name</label>
             </div>
-            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">               
-                <select class="form-input " name="ApplicationId" id="ApplicationId" onchange="this.setAttribute('value',this.value)" asp-for="ApplicationId">
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="ApplicationId" id="ApplicationId" onchange="this.setAttribute('value',this.value)" asp-for="ApplicationId">
                     <option disabled="disabled" selected>....</option>
                     @foreach (var item in ViewBag.Application)
                     {

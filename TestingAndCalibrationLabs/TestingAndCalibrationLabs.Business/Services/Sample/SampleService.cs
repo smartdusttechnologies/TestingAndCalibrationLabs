@@ -14,6 +14,9 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
         public SampleService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
+            IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
+            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
+            IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWebHostEnvironment webHostEnvironment,

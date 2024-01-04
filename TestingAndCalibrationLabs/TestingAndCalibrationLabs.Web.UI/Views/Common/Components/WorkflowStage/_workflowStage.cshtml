@@ -8,10 +8,11 @@
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
+        var lookupCategoryId = modelData.value.uiPageMetadata.moduleLayoutId;
         var uiPageData = modelData.value.uiPageData;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
         $.ajax({
+           
             type: "POST",
             url: "@Url.Action("GetByModuleId","WorkflowStage")",
             data: { moduleId: lookupCategoryId },
@@ -28,7 +29,7 @@
                 }
                 var idOfRecord = $("#Id").val();
                     if (idOfRecord != undefined) {
-                        var selectedId = uiPageData.value;
+                        var selectedId = uiPageData[0].value;
                         var changeId = id + " [value=" + selectedId + "]";
                         $(changeId).attr('selected', 'true');
                     $("#WorkflowStageId").val(selectedId);
@@ -37,11 +38,9 @@
             error: function (req, status, error) {
             }
         });
-       
             $(id).change(function(){
                 var stageId = this.value;
                 $("#WorkflowStageId").val(stageId);
             });
-        
     });
 </script>
