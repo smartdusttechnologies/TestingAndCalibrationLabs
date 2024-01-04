@@ -6,7 +6,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface ILookupRepository
     {
         /// <summary>
-        /// Get All Records From Lookup based on LookupCategoryId
+        /// Get All Records From 
         /// </summary>
         /// <returns></returns>
         List<LookupModel> GetByLookupCategoryId(int lookupCategoryId);
@@ -14,6 +14,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// Get All Records From Lookup
         /// </summary>
         /// <returns></returns>
+        List<LookupModel> GetLookupCategoryId(int lookupCategoryId);
+        /// <summary>
+        /// Get All Records From Lookup based on LookupCategoryId
+        /// </summary>
+        /// <returns></returns>
+
         List<LookupModel> Get();
         /// <summary>
         /// Get Record By Id From Lookup
@@ -39,7 +45,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
 
     }
 }

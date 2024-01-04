@@ -1,24 +1,10 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap);
-
-/* BellIcon Style */
-.notification-ui_icon.fa-bell {
-    position: relative;
-    cursor: pointer;
-    border-radius: 50px;
+﻿
+/*for bell Icon rotation*/
+.fa-bell.down {
+    -moz-transform: rotate(40deg);
+    -webkit-transform: rotate(40deg);
+    transform: rotate(40deg);
 }
-
-.fa-bell {
-    -moz-transition: all .6s linear;
-    -webkit-transition: all .6s linear;
-    transition: all .6s linear;
-}
-
-    /*for bell Icon rotation*/
-    .fa-bell.down {
-        -moz-transform: rotate(40deg);
-        -webkit-transform: rotate(40deg);
-        transform: rotate(40deg);
-    }
 
 /*For Position Notification content*/
 @media (min-width: 1025px) {
@@ -36,7 +22,7 @@
     position: relative;
 }
 
-    .notification-ui_icon .fa-bell__badge {
+/* .notification-ui_icon .fa-bell__badge {
         display: inline-block;
         height: 15px;
         width: 13px;
@@ -47,17 +33,17 @@
         top: -9px;
         left: 9px;
         font-size: x-small;
-    }
+    }*/
 
 @media (min-width: 900px) {
-    .notification-ui_icon .fa-bell__badge {
+    /* .notification-ui_icon .fa-bell__badge {
         left: 8px;
         top: -5px;
-    }
+    }*/
 
-    .notification-ui {
+    /* .notification-ui {
         padding-top: 5px;
-    }
+    }*/
 }
 
 .notification-ui_dd {
@@ -149,11 +135,11 @@
 
     .notification-overlay {
         margin: 10px;
-        margin-left: -10px;
+        margin-left: -262px;
     }
 
     .notification-ui_dd:after {
-        left: calc(55% - 7px);
+        left: calc(77% - 7px);
     }
 }
 
@@ -164,6 +150,7 @@
         margin-left: 150px;
     }
 }
+
 @media (min-width: 1200px) {
     .navbar-expand-xl .navbar-nav .dropdown-menu {
         position: absolute;

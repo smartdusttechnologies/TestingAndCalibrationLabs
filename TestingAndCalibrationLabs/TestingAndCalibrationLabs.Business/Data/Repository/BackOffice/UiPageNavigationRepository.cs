@@ -32,22 +32,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, uiPageNavigationModel);
         }
-         /// <summary>
+        /// <summary>
         /// Getting all records from Ui Page Navigation
         /// </summary>
         /// <returns></returns>
         public List<UiPageNavigationModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageNavigationModel>(@"SELECT upt.Id, upt.ModuleId, upt.UiNavigationCategoryId , unc.[Name] as UiNavigationCategoryName, 
-                                                    pt.Name as ModuleName, upt.Url, unc.[Orders] as Orders
-                                                From[UiPageNavigation] upt
-                                                    inner join[UiNavigationCategory] unc on upt.UiNavigationCategoryId = unc.Id
-                                                    inner join[Module] pt on upt.ModuleId = pt.Id
-											  where
-                                                    upt.IsDeleted = 0
-                                                    and unc.IsDeleted = 0
-                                                    and pt.IsDeleted = 0").ToList();
+            return db.Query<UiPageNavigationModel>(@"SELECT upt.Id, upt.ModuleId, upt.UiNavigationCategoryId, unc.[Name] as UiNavigationCategoryName,
+                                                unc.[NavigationTypeId] as NavigationType, pt.Name as ModuleName, upt.Url, unc.[Orders] as Orders,
+                                                upt.IconName as IconName, unc.IconName as UiPageNavigationCategoryIcon
+                                                  FROM [UiPageNavigation] upt
+                                                INNER JOIN [UiNavigationCategory] unc ON upt.UiNavigationCategoryId = unc.Id
+                                                INNER JOIN [Module] pt ON upt.ModuleId = pt.Id
+                                               WHERE upt.IsDeleted = 0
+                                              AND unc.IsDeleted = 0
+                                           AND pt.IsDeleted = 0").ToList();
         }
 
         /// <summary>

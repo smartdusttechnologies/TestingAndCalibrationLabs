@@ -9,7 +9,7 @@
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Ui Page Navigation</h4>
-    
+
     <dl class="row">
 
 
@@ -19,7 +19,7 @@
         <dd class="col-sm-12">
             @Html.DisplayFor(model => model.Url)
         </dd>
-         <dt class="col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ModuleName)
         </dt>
 
@@ -29,10 +29,15 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UiNavigationCategoryName)
         </dt>
-         <dd class="col-sm-12">
+        <dd class="col-sm-12">
             @Html.DisplayFor(model => model.UiNavigationCategoryName)
         </dd>
-
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IconName)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.IconName)
+        </dd>
     </dl>
 
     <form asp-action="Delete">

@@ -1,0 +1,161 @@
+﻿
+
+
+
+.bottom-navigation {
+    display: none;
+}
+
+@media only screen and (max-width: 500px ) {
+
+    .NavSidebar {
+        display: none;
+    }
+
+    .right-sideMenu {
+        display: none;
+    }
+
+
+    .navbar-brand navbarBrandWithATag text-dark {
+    }
+
+    #logo {
+        padding-left: 79px;
+    }
+
+    .bottom-navigation {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 5px;
+        box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.main-footer {
+    background-color: #fff;
+    border-top: 1px solid #dee2e6;
+    color: #869099;
+    padding: 1rem;
+}
+
+
+.submenu {
+    background-color: #333;
+}
+
+.nav-sidebar .nav-link > .right, .nav-sidebar .nav-link > p > .right {
+    position: absolute;
+    right: 1rem;
+    top: 0.7rem;
+}
+
+
+#sideMainDropdown {
+    display: none;
+}
+
+@media only screen and (min-width: 500px) {
+
+    #sideMainDropdown {
+        display: block;
+    }
+
+    .SideBottomButton {
+        background-color: #3498DB;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .SideBottomButton:hover, .SideBottomButton:focus {
+            background-color: #2980B9;
+        }
+
+    .SideBottomMenu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .SideBottomMenu-content {
+        display: none;
+        left: -200px;
+        height: 404px;
+        border-radius: 1rem;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 267px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        transition: height 0.5s ease;
+    }
+
+        .SideBottomMenu-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .SideItemsMenu {
+        display: flex;
+        align-items: center;
+        margin: 10px;
+    }
+
+        .SideItemsMenu .material-icons {
+            font-size: 35px;
+            color: blue;
+            margin-right: 5px;
+        }
+
+        .SideItemsMenu span {
+            margin-left: 24px;
+            font-size: 24px;
+        }
+
+    .SideBottomMenu a:hover {
+        background-color: #ddd;
+    }
+
+    .show {
+        display: block;
+    }
+}
+
+@media (max-width: 420px) {
+    .right-sideMenu li .SideIconName {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .dropdown-menu {
+        right: -95PX !important;
+    }
+
+    #RightSideMenuAside {
+        max-height: calc(100vh - 160px) !important;
+    }
+
+        #RightSideMenuAside mt-2 {
+            max-height: 80vh;
+        }
+}
+#footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}

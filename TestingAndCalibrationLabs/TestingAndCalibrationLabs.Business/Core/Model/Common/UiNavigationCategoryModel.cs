@@ -16,6 +16,16 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains The Orders of The Ui Navigation Category
         /// </summary>
         public string Orders { get; set; }
-           
+
+        /// <summary>
+        /// IconName in which icon will show
+        /// </summary>
+        public string IconName { get; set; }
+        /// <summary>
+        /// It will take the place to show the Icon 
+        /// </summary>
+
+        public int NavigationTypeId { get; set; }
+
     }
 }

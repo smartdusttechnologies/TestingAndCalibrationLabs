@@ -7,6 +7,7 @@ using System.Linq;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -16,12 +17,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IOrganizationService _orgnizationService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper)
+        public SecurityController(IAuthenticationService authenticationService, IOrganizationService orgnizationService, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _authenticationService = authenticationService;
             _orgnizationService = orgnizationService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -50,7 +53,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             {
                 HttpContext.Session.SetString("Token", result.RequestedObject.AccessToken);
 
-                return Json(new { status = true, message = "Login Successfull!" });
+                return Json(new { status = true, message = "Login Successfull!", userName= result.RequestedObject.UserName });
             }
             return View();
         }
@@ -60,6 +63,23 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult UserInfo()
+        {
+
+           
+                var context = _httpContextAccessor.HttpContext;
+            if(context != null)
+            {
+                var user = context.User.Identity.Name;
+                return Json(new { status = true, user = context.User.Identities } );
+
+            }
+            return Json(new {status = false});
+            
+           
         }
     }
 }

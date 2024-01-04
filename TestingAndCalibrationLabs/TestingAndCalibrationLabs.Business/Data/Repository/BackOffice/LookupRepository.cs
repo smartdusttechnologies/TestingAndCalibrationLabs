@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
-    
+
     public class LookupRepository : ILookupRepository
     {
         private readonly IConnectionFactory _connectionFactory;
@@ -16,11 +16,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         {
             _connectionFactory = connectionFactory;
         }
-
+        /// <summary>
+        /// Get Record in Lookup based on lookupCategoryId
+        /// </summary>
+        /// <returns></returns>
         public List<LookupModel> GetByLookupCategoryId(int lookupCategoryId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<LookupModel>(@"select * from Lookup where LookupCategoryId = @LookupCategoryId and IsDeleted = 0", new { LookupCategoryId =lookupCategoryId}).ToList();
+            return db.Query<LookupModel>(@"select * from Lookup where LookupCategoryId = @LookupCategoryId and IsDeleted = 0", new { LookupCategoryId = lookupCategoryId }).ToList();
 
         }
         /// <summary>
@@ -46,9 +49,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             return db.Query<LookupModel>(@"Select   l.Id,
                                                             l.LookupCategoryId,
                                                             lc.[Name] as LookupCategoryName, 
-                                                            
                                                             l.Name
-                                                                                                                   
                                                     From [Lookup] l
                                                     inner join [LookupCategory] lc on l.LookupCategoryId = lc.Id
                                                     
@@ -109,6 +110,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                     Where Id = @Id", new { Id = id });
             return true;
         }
+        public List<LookupModel> GetLookupCategoryId(int lookupCategoryId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<LookupModel>(@"Select L.* From[Lookup] L INNER JOIN[LookupCategory] lc ON L.LookupCategoryId = lc.Id and lc.IsDeleted = 0 where LookupCategoryId = @LookupCategoryId and L.IsDeleted = 0", new { LookupCategoryId = lookupCategoryId }).ToList();
 
+        }
     }
 }

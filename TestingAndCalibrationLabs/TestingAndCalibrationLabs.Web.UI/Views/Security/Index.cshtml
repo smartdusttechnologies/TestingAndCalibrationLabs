@@ -36,12 +36,18 @@
                     UserName: $('#UserName').val(),
                     Password: $('#Password').val()
                 },
-                error: function(result) {
+                error: function (result) {
                     alert("There is a Problem, Try Again!");
                 },
-                success: function(result) {
+                success: function (result) {
+
                     if (result.status == true) {
+                      debugger;
                         window.location.href = '@Url.Action("Index", "TestReport")';
+                        var sidebar = document.getElementById('LeftAsideBar');
+                        sidebar.style.display = "block";
+                        document.getElementById('UserValue').innerHTML = result.userName;
+
                     }
                     else {
                         alert(result.message);

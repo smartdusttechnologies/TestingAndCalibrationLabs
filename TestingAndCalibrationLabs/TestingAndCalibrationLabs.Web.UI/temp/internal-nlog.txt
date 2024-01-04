@@ -28,3 +28,648 @@
    at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
    at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
    at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2023-12-28 17:19:59.0998 Info Message Template Auto Format enabled
+2023-12-28 17:19:59.1501 Info Loading assembly: NLog.Web.AspNetCore
+2023-12-28 17:19:59.2183 Info Adding target DatabaseTarget(Name=db)
+2023-12-28 17:19:59.3357 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2023-12-28 17:20:00.5315 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2023-12-28 17:50:20.9737 Info Message Template Auto Format enabled
+2023-12-28 17:50:20.9887 Info Loading assembly: NLog.Web.AspNetCore
+2023-12-28 17:50:21.0112 Info Adding target DatabaseTarget(Name=db)
+2023-12-28 17:50:21.0558 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2023-12-28 17:50:21.5283 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2023-12-28 18:27:48.1163 Info Message Template Auto Format enabled
+2023-12-28 18:27:48.2123 Info Loading assembly: NLog.Web.AspNetCore
+2023-12-28 18:27:48.2465 Info Adding target DatabaseTarget(Name=db)
+2023-12-28 18:27:48.3057 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2023-12-28 18:27:48.7065 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 11:38:19.7312 Info Message Template Auto Format enabled
+2024-01-02 11:38:19.7628 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 11:38:19.8113 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 11:38:19.9043 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 11:38:20.7648 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 12:51:09.4454 Info Message Template Auto Format enabled
+2024-01-02 12:51:09.4655 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 12:51:09.5011 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 12:51:09.5638 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 12:51:10.1970 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 13:07:01.0194 Info Message Template Auto Format enabled
+2024-01-02 13:07:01.0434 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 13:07:01.0803 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 13:07:01.1948 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 13:07:01.7475 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 13:12:11.2204 Info Message Template Auto Format enabled
+2024-01-02 13:12:11.2383 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 13:12:11.2657 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 13:12:11.3066 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 13:12:11.7347 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 13:14:36.7691 Info Message Template Auto Format enabled
+2024-01-02 13:14:36.7822 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 13:14:36.8036 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 13:14:36.8552 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 13:14:37.2729 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 13:20:26.5774 Info Message Template Auto Format enabled
+2024-01-02 13:20:26.5943 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 13:20:26.6136 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 13:20:26.6621 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 13:20:27.0397 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 13:29:43.1513 Info Message Template Auto Format enabled
+2024-01-02 13:29:43.2845 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 13:29:43.3304 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 13:29:43.4818 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 13:29:48.7487 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 15:51:09.1748 Info Message Template Auto Format enabled
+2024-01-02 15:51:09.2057 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 15:51:09.2512 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 15:51:09.3419 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 15:51:10.3284 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 15:53:49.5038 Info Message Template Auto Format enabled
+2024-01-02 15:53:49.5423 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 15:53:49.6088 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 15:53:49.7364 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 15:53:52.0231 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 17:38:48.4565 Info Message Template Auto Format enabled
+2024-01-02 17:38:48.4866 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 17:38:48.5495 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 17:38:48.6379 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 17:38:49.5915 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 18:27:19.7353 Info Message Template Auto Format enabled
+2024-01-02 18:27:19.7660 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 18:27:19.8128 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 18:27:19.9035 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 18:27:20.8897 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 22:42:47.8585 Info Message Template Auto Format enabled
+2024-01-02 22:42:47.8835 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 22:42:47.9342 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 22:42:48.0368 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 22:42:49.3902 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-02 23:10:50.9641 Info Message Template Auto Format enabled
+2024-01-02 23:10:50.9904 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-02 23:10:51.0439 Info Adding target DatabaseTarget(Name=db)
+2024-01-02 23:10:51.1348 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-02 23:10:51.9798 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 10:54:53.4503 Info Message Template Auto Format enabled
+2024-01-03 10:54:53.4641 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 10:54:53.4838 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 10:54:53.5662 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 10:54:54.0923 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:07:26.7280 Info Message Template Auto Format enabled
+2024-01-03 11:07:26.7416 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:07:26.7641 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:07:26.8055 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:07:27.1601 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:15:14.5974 Info Message Template Auto Format enabled
+2024-01-03 11:15:14.6118 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:15:14.6313 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:15:14.6689 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:15:15.0121 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:25:42.2066 Info Message Template Auto Format enabled
+2024-01-03 11:25:42.2186 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:25:42.2362 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:25:42.2723 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:25:42.6167 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:28:30.3961 Info Message Template Auto Format enabled
+2024-01-03 11:28:30.3961 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:28:30.4274 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:28:30.4684 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:28:30.7501 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:32:43.5303 Info Message Template Auto Format enabled
+2024-01-03 11:32:43.5445 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:32:43.5676 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:32:43.6052 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:32:43.9457 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:37:20.6564 Info Message Template Auto Format enabled
+2024-01-03 11:37:20.6684 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:37:20.6943 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:37:20.7333 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:37:21.0910 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:41:26.3603 Info Message Template Auto Format enabled
+2024-01-03 11:41:26.3699 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:41:26.3899 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:41:26.4278 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:41:26.7066 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:43:15.6742 Info Message Template Auto Format enabled
+2024-01-03 11:43:15.6851 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:43:15.7032 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:43:15.7610 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:43:16.0769 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 11:58:13.8709 Info Message Template Auto Format enabled
+2024-01-03 11:58:13.8869 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 11:58:13.9122 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 11:58:13.9638 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 11:58:14.4315 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 12:01:13.5838 Info Message Template Auto Format enabled
+2024-01-03 12:01:13.6185 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 12:01:13.6811 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 12:01:13.7987 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 12:01:14.6079 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 12:04:36.0404 Info Message Template Auto Format enabled
+2024-01-03 12:04:36.0663 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 12:04:36.1147 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 12:04:36.2028 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 12:04:37.0718 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 12:09:26.9871 Info Message Template Auto Format enabled
+2024-01-03 12:09:27.0147 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 12:09:27.0672 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 12:09:27.1395 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 12:09:27.8930 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 13:44:47.0241 Info Message Template Auto Format enabled
+2024-01-03 13:44:47.0547 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 13:44:47.1043 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 13:44:47.1927 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 13:44:48.1106 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 18:09:58.8342 Info Message Template Auto Format enabled
+2024-01-03 18:09:58.8694 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 18:09:58.9281 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 18:09:59.0373 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 18:10:00.1555 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 22:24:08.7676 Info Message Template Auto Format enabled
+2024-01-03 22:24:08.7925 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 22:24:08.8349 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 22:24:08.9156 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 22:24:09.8408 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 22:30:25.3924 Info Message Template Auto Format enabled
+2024-01-03 22:30:25.4234 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 22:30:25.4765 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 22:30:25.5709 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 22:30:26.4666 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-03 23:41:32.0409 Info Message Template Auto Format enabled
+2024-01-03 23:41:32.0714 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-03 23:41:32.1325 Info Adding target DatabaseTarget(Name=db)
+2024-01-03 23:41:32.2102 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-03 23:41:33.4238 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:15:19.1422 Info Message Template Auto Format enabled
+2024-01-04 12:15:19.1861 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:15:19.2443 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:15:19.4340 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:15:20.3212 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:23:13.8918 Info Message Template Auto Format enabled
+2024-01-04 12:23:13.9175 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:23:13.9632 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:23:14.0545 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:23:14.8340 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:27:08.6590 Info Message Template Auto Format enabled
+2024-01-04 12:27:08.6869 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:27:08.7415 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:27:08.8215 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:27:09.5952 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:29:29.4202 Info Message Template Auto Format enabled
+2024-01-04 12:29:29.4418 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:29:29.4807 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:29:29.5582 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:29:30.1124 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:40:10.5408 Info Message Template Auto Format enabled
+2024-01-04 12:40:10.5686 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:40:10.6159 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:40:10.6921 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:40:11.4999 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:44:45.9493 Info Message Template Auto Format enabled
+2024-01-04 12:44:45.9730 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:44:46.0200 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:44:46.0969 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:44:46.8834 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:50:48.8548 Info Message Template Auto Format enabled
+2024-01-04 12:50:48.8817 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:50:48.9342 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:50:49.0258 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:50:49.8589 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:52:50.7268 Info Message Template Auto Format enabled
+2024-01-04 12:52:50.7498 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:52:50.8080 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:52:50.8833 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:52:51.5239 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+2024-01-04 12:54:55.8325 Info Message Template Auto Format enabled
+2024-01-04 12:54:55.8510 Info Loading assembly: NLog.Web.AspNetCore
+2024-01-04 12:54:55.8962 Info Adding target DatabaseTarget(Name=db)
+2024-01-04 12:54:55.9618 Info Validating config: TargetNames=db, ConfigItems=27, FilePath=C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Debug\netcoreapp3.1\nlog.config
+2024-01-04 12:54:56.5185 Error DatabaseTarget(Name=db): Error when writing to database. Exception: System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)

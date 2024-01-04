@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <style>
+        .ritListItem ul {
+            background: #fff;
+            width: 100%;
+            list-style: none;
+        }
+
+            .ritListItem ul li {
+                line-height: 60px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+                .ritListItem ul li:last-child {
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                }
+                
+                .ritListItem ul li a {
+                    position: relative;
+                    color: #000000e6;
+                    text-decoration: none;
+                    font-size: 18px;
+                    padding-left: 40px;
+                    font-weight: 500;
+                    display: block;
+                    width: 100%;
+                    border-left: 3px solid transparent;
+                    text-align: justify;
+                }
+
+                .ritListItem ul li.active a {
+                    color: cyan;
+                    background: #1e1e1e;
+                    border-left-color: cyan;
+                }
+
+                .ritListItem ul li a:hover {
+                    background: linen;
+                }
+
+            .ritListItem ul ul {
+                position: static;
+                display: none;
+            }
+
+            .ritListItem ul .feat-show.show,
+            .ritListItem ul .serv-show.show1 {
+                overflow: auto;
+                display: block;
+            }
+
+            .ritListItem ul ul li {
+                line-height: 42px;
+                border-top: none;
+            }
+
+                .ritListItem ul ul li a {
+                    font-size: 17px;
+                    color: #292323d4;
+                    padding-left: 80px;
+                    white-space: nowrap;
+                }
+
+            .ritListItem ul li.active ul li a {
+                color: #e6e6e6;
+                background: #1b1b1b;
+                border-left-color: transparent;
+            }
+
+            .ritListItem ul li.active a {
+                color: cyan;
+                background: #1e1e1e;
+                border-left-color: cyan;
+            }
+
+            .ritListItem ul ul li a:hover {
+                color: cyan !important;
+                background: #1e1e1e !important;
+            }
+
+            .ritListItem ul li a span {
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                transform: translateY(-50%);
+                font-size: 22px;
+                transition: transform 0.4s;
+            }
+
+                .ritListItem ul li a span.rotate {
+                    transform: translateY(-50%) rotate(-180deg);
+                }
+
+        .sideMenuBtn {
+            width: 55px;
+            text-align: center;
+            border-radius: 23px;
+            cursor: pointer;
+            transition: top 0.3s ease;
+            margin: auto;
+        }
+
+            .sideMenuBtn span {
+                line-height: 22px;
+            }
+
+            .sideMenuBtn.click span:before {
+                content: '\f00d';
+            }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            z-index: 2;
+        }
+
+        .BottomSidebarMenu {
+            margin-top: 50px;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            right: 0px;
+            background-color: #fff;
+            transition: right 0.4s ease;
+        }
+
+            .BottomSidebarMenu.show {
+                right: 0px;
+            }
+
+            .BottomSidebarMenu .text {
+                color: white;
+                font-size: 25px;
+                font-weight: 600;
+                line-height: 65px;
+                text-align: center;
+                background: #1e1e1e;
+                letter-spacing: 1px;
+            }
+
+        li a i {
+            margin-right: 5px;
+        }
+    </style>
+    <script>
+        function showdropdown(item) {
+            $(item).next('ul').toggleClass("show");
+            $(item).find('.fa-caret-down').toggleClass("rotate");
+        }
+
+        function openFooterNav() {
+            if (document.getElementById("sideMenu").style.display === 'none') {
+                document.getElementById("sideMenu").style.display = "block";
+            }
+            else {
+                document.getElementById("sideMenu").style.display = "none";
+            }
+        }
+        function dialorButton() {
+            window.location.href = 'tel:+8709282126';
+        }
+    </script>
+</head>
+<body>
+    <div class="sideMenuBtn" onclick="dialorButton()">
+        <i class="fa fa-Phone" style="font-size:27px;color:green" aria-hidden="true"></i>
+        <span style="font:5px">Phone</span>
+    </div>
+    <div class="sideMenuBtn">
+        <a href="mailto:8709282126.rk@gmail.com?subject=Hello%20Gmail&body=Write%20your%20message%20here">
+            <i class="fa fa-envelope" style="font-size:27px;color:firebrick" aria-hidden="true"></i>
+        </a>
+        <span style="font:5px">Mail</span>
+    </div>
+    <div class="sideMenuBtn">
+        <a href="https://www.facebook.com/profile.php?id=100071813210648" target="_blank">
+            <i class="fa-brands fa-facebook" style="font-size:27px;color:blue" aria-hidden="true"></i>
+        </a> <span style="font:5px">Facebook</span>
+    </div>
+    <div class="sideMenuBtn" onclick="openFooterNav()">
+        <i class="fa-solid fa-ellipsis-vertical" style="font-size: 28px; color: blue;" aria-hidden="true"></i>
+        <span style="display: block; font-size: 12px; text-align: center; margin-top: 2px;">Action</span>
+    </div>
+    <nav class="BottomSidebarMenu ritListItem" id="sideMenu" style="display:none">
+        <div class="close-btn">
+            <span class="fas fa-times" onclick="openFooterNav()"></span>
+        </div>
+        <div class="text">
+            Side Menu
+        </div>
+        <ul id="dynamicBottomContainer" style="overflow-y: auto;  overflow-x: auto;  min-height: 40px; max-height: 746px;">
+        </ul>
+    </nav>
+</body>
+</html>
+
+
