@@ -39,6 +39,15 @@
     <script type="text/JavaScript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+@*    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">*@
+    <link rel="stylesheet" href="https://itsjavi.com/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css">
+  @*  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>*@
+   @* <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+@*    <script src="https://itsjavi.com/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js"></script>*@
+    <script src="~/js/IconPicker.js"></script>
     <style>
         label:not(.form-check-label):not(.custom-file-label) {
             font-weight: normal;
@@ -83,14 +92,19 @@
         #RightSideMenuAside {
             overflow: auto;
         }
+
     </style>
 </head>
 
 <body class="sidebar-mini sidebar-collapse" style="margin: 0;padding: 0; overflow:hidden">
-    <div class="wrapper">
+    <div class="wrapper"  >
+      
+
+
+       
         @await Html.PartialAsync("~/Views/Shared/_Navbar.cshtml")
         @await Html.PartialAsync("~/Views/Shared/_SideBar.cshtml")
-        <div class="content-wrapper" id="Contents">
+        <div class="content-wrapper" id="Contents" style="background:white">
             @RenderBody()
         </div>
         <footer class="border-top-footer text-muted" id=footer style="background-color: #2a4472; position:fixed">
@@ -113,6 +127,12 @@
 </body>
 </html>
 <script>
+
+
+
+      
+    $('.icp-auto').iconpicker();
+
     $(document).ready(function () {
         var PageNavigationData = [];
 

@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
@@ -42,9 +44,17 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
             {
                 // attach user to context on successful jwt token validation
                 var userIdentity = GetUserIdentity(validatedToken);
-                if (userIdentity != null)
+
+                var identity = new ClaimsIdentity(new[]{    new Claim(ClaimTypes.Name, validatedToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value)},CookieAuthenticationDefaults.AuthenticationScheme);
+
+                if (identity != null)
                 {
-                    context.User = new SdtPrincipal(userIdentity);
+                    var sdtPrincipal = new SdtPrincipal(identity)
+                    {
+                        SdtUserIdentity = userIdentity
+                    };
+                    context.User = sdtPrincipal;
+
                     await _next(context);
                 }
             }
@@ -72,7 +82,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 UserName = jwtSecurityToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value,
                 OrganizationId = int.Parse(jwtSecurityToken.Claims.Single(x => x.Type == CustomClaimType.OrganizationId.ToString()).Value),
                 UserId = int.Parse(jwtSecurityToken.Claims.Single(x => x.Type == CustomClaimType.UserId.ToString()).Value),
+                
+
             };
+           
+
             //var roleByOrganizationWithClaims = _roleService.GetRoleByOrganizationWithClaims(userIdentity.UserName).Where(x => x.OrgId == userIdentity.OrganizationId);
             //var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName)).Distinct().ToList();
             //var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName)).Distinct().ToList();
@@ -106,6 +120,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                     IssuerSigningKey = new SymmetricSecurityKey(encodedKey),
                     ValidateIssuer = false,
                     ValidateAudience = false,
+                    
                     // set clockskew to zero. So, tokens expire exactly at token expiration time.
                     ClockSkew = TimeSpan.Zero
                 };

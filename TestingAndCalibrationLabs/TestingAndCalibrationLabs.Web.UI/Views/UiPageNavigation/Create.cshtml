@@ -44,7 +44,7 @@
                     <label for="UiNavigationCategoryId" class="form-label">UiNavigationCategoryName</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" style="padding-left:10px; padding-bottom:5px;">
-                    <input class="form-input width-full black-border" type="text" id="Url" name="IconName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="IconName">
+                    <input class="form-input width-full black-border icp icp-auto iconpicker-element iconpicker-input" value="" type="text" name="IconName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="IconName">
                     <label class="form-label" for="IconName">IconName</label>
                 </div>
 
@@ -58,6 +58,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

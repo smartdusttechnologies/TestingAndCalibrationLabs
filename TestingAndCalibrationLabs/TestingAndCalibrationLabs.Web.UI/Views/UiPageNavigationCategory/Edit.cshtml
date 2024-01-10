@@ -24,9 +24,9 @@
                     <label class="form-label" for="Orders">Orders</label>
                 </div>
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
-                    <input class="form-input width-full black-border" type="text" id="Orders" name="IconName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="IconName">
+                    <input class="form-input width-full black-border icp icp-auto iconpicker-element iconpicker-input" type="text" name="IconName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="IconName">
                     <label class="form-label" for="IconName">IconName</label>
-                    </div>
+                </div>
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
                     <select class="form-input width-full black-border" name="NavigationTypeId" id="NavigationPage" onchange="this.setAttribute('value',this.value)" asp-for="NavigationTypeId">
                        
@@ -64,38 +64,6 @@
                         optionElement.value = option.id;
                         optionElement.text = option.name;
                         optionElement.selected = true; 
-                        selectElement.appendChild(optionElement);
-                    } else {
-                        var optionElement = document.createElement('option');
-                        optionElement.value = option.id;
-                        optionElement.text = option.name;
-                        selectElement.appendChild(optionElement);
-                    }
-                });
-            }
-        });
-    });
-
-
-</script>
-
-    $(document).ready(function () {
-
-        var id = @Model.NavigationTypeId;
-
-        var lookupCategoryId = 1009;
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("LookupByCategoryId","Lookup")",
-            data: { lookupCategoryId: 1009 },
-            success: function (response) {
-                var selectElement = document.getElementById('NavigationPage');
-                response.forEach(function (option) {
-                    if (id === option.id) {
-                        var optionElement = document.createElement('option');
-                        optionElement.value = option.id;
-                        optionElement.text = option.name;
-                        optionElement.selected = true;
                         selectElement.appendChild(optionElement);
                     } else {
                         var optionElement = document.createElement('option');

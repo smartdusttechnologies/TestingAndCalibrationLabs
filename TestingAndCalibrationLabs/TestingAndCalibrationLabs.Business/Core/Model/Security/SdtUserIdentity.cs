@@ -21,5 +21,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         public int UserId { get; set; }
 
+        
+
+
+
+
     }
 }

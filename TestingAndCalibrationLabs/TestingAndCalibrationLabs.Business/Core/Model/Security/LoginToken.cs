@@ -11,6 +11,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// User Name.
         /// </summary>
+
+
         public string UserName { get; set; }
         /// <summary>
         /// Access Token.
@@ -36,5 +38,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// Device Name.
         /// </summary>
         public string DeviceName { get; set; }
+
+
     }
 }

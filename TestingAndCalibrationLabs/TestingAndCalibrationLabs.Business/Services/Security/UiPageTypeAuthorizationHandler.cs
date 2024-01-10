@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var user = context.User as SdtPrincipal;
             if (user == null) return Task.CompletedTask;
 
-            var sdtUserIdentity = user.Identity as SdtUserIdentity;
+            var sdtUserIdentity = user.SdtUserIdentity;
             var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
             var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);
             var groupClaims = _roleService.GetGroupClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, PermissionModuleType.UiPageTypePermission.ToString(), PermissionModuleType.UiPageTypePermission.ToString(), CustomClaimType.ApplicationPermission);

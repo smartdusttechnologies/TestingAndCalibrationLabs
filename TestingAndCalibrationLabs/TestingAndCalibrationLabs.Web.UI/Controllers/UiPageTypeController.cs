@@ -42,7 +42,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             try
             {
                 var context = _httpContextAccessor.HttpContext;
-                var user = context.User.Identity.Name;
+                
 
                 ViewBag.IsSuccess = TempData["IsTrue"] != null ? TempData["IsTrue"] : false;
                 List<UiPageTypeModel> page = _uiPageTypeService.Get();

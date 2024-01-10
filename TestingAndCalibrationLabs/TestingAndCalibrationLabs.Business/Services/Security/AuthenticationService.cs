@@ -125,6 +125,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             var encodedAccessJwt = new JwtSecurityTokenHandler().WriteToken(accessJwt);
 
             var refreshJwt = new JwtSecurityToken(
+
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 claims: claims,
@@ -136,6 +137,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             var loginToken = new LoginToken
             {
+                
                 UserName = userName,
                 AccessToken = encodedAccessJwt,
                 AccessTokenExpiry = DateTime.Now.AddDays(1),
@@ -176,7 +178,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             claims.Add(new Claim(CustomClaimType.UserId.ToString(), userModel.Id.ToString()));
 
             if (sub.ToLower() == "sysadmin")
+            {
                 claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), "0"));
+                
+            }
             else
                 claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), userModel.OrgId.ToString()));
 

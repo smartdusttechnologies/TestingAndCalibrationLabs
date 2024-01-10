@@ -4,9 +4,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     public class SdtPrincipal : ClaimsPrincipal
     {
-        public SdtPrincipal(SdtUserIdentity userIdentity) : base(userIdentity)
+        public SdtPrincipal(ClaimsIdentity userIdentity) : base(userIdentity)
         {
 
         }
+        public SdtUserIdentity SdtUserIdentity { get; set; }
     }
 }

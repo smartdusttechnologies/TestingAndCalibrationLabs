@@ -212,18 +212,17 @@ namespace TestingAndCalibrationLabs.Web.UI
                 var token = context.Session.GetString("Token");
                 if (!string.IsNullOrEmpty(token))
                 {
-                    //context.Request.Headers.Add("Authorization", "Bearer " + token);
                     context.Request.Headers.Add("Authorization", token);
                 }
                 await next();
             });
             app.UseStaticFiles();
-            
+
             app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseMiddleware<SdtAuthenticationMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
