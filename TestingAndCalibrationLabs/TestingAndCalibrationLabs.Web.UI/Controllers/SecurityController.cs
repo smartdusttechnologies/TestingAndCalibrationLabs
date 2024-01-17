@@ -66,21 +66,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult UserInfo()
-        {
-
-           
-                var context = _httpContextAccessor.HttpContext;
-            if(context != null)
-            {
-                var user = context.User.Identity.Name;
-                return Json(new { status = true, user = context.User.Identities } );
-
-            }
-            return Json(new {status = false});
-            
-           
-        }
+       
     }
 }

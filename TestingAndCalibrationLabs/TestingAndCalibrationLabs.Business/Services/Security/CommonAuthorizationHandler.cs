@@ -27,7 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Security
             var user = context.User as SdtPrincipal;
             if (user == null) return Task.CompletedTask;
             var workflow = _workflowStageService.GetStage(resource.ModuleId, resource.Id);
-            var sdtUserIdentity = user.Identity as SdtUserIdentity;
+           var sdtUserIdentity = user.SdtUserIdentity;
 
             var userRoleClaims = _roleService.GetUserRoleClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, workflow.ModuleName, workflow.Name, CustomClaimType.ApplicationPermission);
             var userClaims = _roleService.GetUserClaims(sdtUserIdentity.OrganizationId, sdtUserIdentity.UserId, workflow.ModuleName, workflow.Name, CustomClaimType.ApplicationPermission);

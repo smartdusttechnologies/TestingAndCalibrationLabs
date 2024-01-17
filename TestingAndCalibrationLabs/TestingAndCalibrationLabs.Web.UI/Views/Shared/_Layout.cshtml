@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
     <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="~/adminlte.min.css">
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
@@ -40,13 +42,8 @@
     <!-- Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-
-@*    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">*@
     <link rel="stylesheet" href="https://itsjavi.com/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css">
-  @*  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>*@
-   @* <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
-@*    <script src="https://itsjavi.com/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js"></script>*@
+   
     <script src="~/js/IconPicker.js"></script>
     <style>
         label:not(.form-check-label):not(.custom-file-label) {
@@ -84,7 +81,7 @@
             overflow: auto;
         }
 
-        
+
         #RightSideMenuAside::-webkit-scrollbar {
             width: 4px;
         }
@@ -93,15 +90,19 @@
             overflow: auto;
         }
 
+        .control-sidebar-hidden {
+            display: none !important;
+        }
+
     </style>
 </head>
 
-<body class="sidebar-mini sidebar-collapse" style="margin: 0;padding: 0; overflow:hidden">
-    <div class="wrapper"  >
-      
+<body class="sidebar-mini sidebar-collapse  layout-fixed" style="margin: 0;padding: 0; overflow:hidden">
+    <div class="wrapper">
 
 
-       
+
+
         @await Html.PartialAsync("~/Views/Shared/_Navbar.cshtml")
         @await Html.PartialAsync("~/Views/Shared/_SideBar.cshtml")
         <div class="content-wrapper" id="Contents" style="background:white">
@@ -116,121 +117,20 @@
                 @await Html.PartialAsync("~/Views/Shared/_MobileNavigation.cshtml")
             </div>
         </footer>
-        <aside class="control-sidebar control" id="RightSideMenuAside" style="background:white; /*max-height: calc(100vh - 56px);*/">
+        <aside class="control-sidebar control-sidebar-dark" id="control-sidebar-1"></aside>
+       
+        <aside class="ritesh" id="RightSideMenuAside" style="background:white; /*max-height: calc(100vh - 56px);*/">
             <nav class="mt-2" style=" min-height:595px; overflow-x:hidden;   flex-basis:0.000000001px">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" id="RightNavMenu" role="menu" data-accordion="false">
                 </ul>
             </nav>
         </aside>
+
     </div>
     @RenderSection("scripts", required: false)
 </body>
 </html>
-<script>
+<script src="~/js/SideStyle.js"></script>
+<script src="~/js/Layout.js"></script>
 
-
-
-      
-    $('.icp-auto').iconpicker();
-
-    $(document).ready(function () {
-        var PageNavigationData = [];
-
-        function createTopNavItem(item) {
-            var dropdownCode = `  <li class="nav-item dropdown"><a class="nav-link" data-toggle="dropdown" href="#"><i class="${item.iconName} nav-icon"style="font-size:15px;"></i></a>  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">`;
-
-            if (item.childrens) {
-                var code = createTopNavMenu(item.childrens);
-                dropdownCode += code;
-            }
-            dropdownCode += "</li>";
-            return dropdownCode;
-        }
-
-        function createTopNavMenu(menuItems) {
-            let htmlCode = '';
-            menuItems.forEach(item => {
-                htmlCode += `<a href="${item.url}"class="dropdown-item"><i class="${item.iconName}  nav-icon"></i>  ${item.moduleName} </a> <div class="dropdown-divider"></div> `;
-            });
-            htmlCode += '</div>';
-            return htmlCode;
-        }
-
-        function createNavBottomItem(item) {
-            var dropdownCode = `<li><a  href="#"  class="feat-btn" onclick="showdropdown(this)"><i class="${item.iconName}"></i> ${item.name}<span class="fas fa-caret-down "></span></a>`;
-            if (item.childrens) {
-                var code = createBottomNavMenu(item.childrens);
-                dropdownCode += code;
-            }
-            dropdownCode += "</li>";
-            return dropdownCode;
-        }
-
-        function createBottomNavMenu(menuItems) {
-            let htmlCode = '<ul class="feat-show">';
-            menuItems.forEach(item => {
-                htmlCode += `<li><a href="${item.url}"><i class="${item.iconName}"></i> ${item.moduleName}</a></li>`;
-            });
-            htmlCode += '</ul>';
-            return htmlCode;
-        }
-        function createNavItem(item) {
-            var dropdownCode = `   <li class="nav-item"><a href="#" class="nav-link active" ><i class="${item.iconName} nav-icon"></i><p> ${item.name}<i class="right fas fa-angle-left "></i></p></a>`;
-            if (item.childrens) {
-                var code = createNavMenu(item.childrens);
-                dropdownCode += code;
-            }
-            dropdownCode += "</li>";
-            return dropdownCode;
-        }
-
-        function createNavMenu(menuItems) {
-            let htmlCode = '<ul class="nav nav-treeview">';
-            menuItems.forEach(item => {
-                htmlCode += `<li class="nav-item" ><a href="${item.url}"class="nav-link "><i class="${item.iconName}  nav-icon"></i><p>  ${item.moduleName}</p> </a>  </li>`;
-            });
-            htmlCode += '</ul>';
-            return htmlCode;
-        }
-        function renderNavigation() {
-            const dynamicNavContainer = $("#SideBar-ContentDropdown");
-            const dynamicRightSideNavbar = $("#RightNavMenu");
-            const dynamicTopNavbar = $("#TopNavItem");
-            const dynamicBottomNavContainer = $("#dynamicBottomContainer");
-            PageNavigationData.forEach((item) => {
-                if (item.navigationTypes === 1025) {
-                    dynamicNavContainer.append(createNavItem(item));
-                }
-                if (item.navigationTypes === 1024) {
-                    dynamicRightSideNavbar.append(createNavItem(item));
-                }
-                if (item.navigationTypes === 1022) {
-                    dynamicTopNavbar.prepend(createTopNavItem(item));
-                }
-                if (item.navigationTypes === 1023) {
-                    dynamicBottomNavContainer.append(createNavBottomItem(item));
-                }
-            });
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/UiPageNavigation/GetAllPagesWithNavigation",
-            success: function (response) {
-                response.sort(function (a, b) {
-                    if (a.orders < b.orders) { return 1; }
-                    if (a.orders > b.orders) { return -1; }
-                    return 0;
-                });
-                PageNavigationData = response;
-                renderNavigation();
-            },
-            error: function (req, status, error) {
-                console.log(req);
-                console.log(status);
-                console.log(error);
-            }
-        });
-    });
-</script>
 
