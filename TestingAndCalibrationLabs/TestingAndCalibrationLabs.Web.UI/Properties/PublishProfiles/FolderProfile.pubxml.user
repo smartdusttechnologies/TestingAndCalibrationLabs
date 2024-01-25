@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Ritesh\Documents\TestingAndCalibrationLabs\WorkflowChild\TestingAndCalibrationLabs\TestingAndCalibrationLabs.Web.UI\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <History>True|2024-01-23T13:47:45.2020686Z;True|2024-01-10T20:24:16.8143873+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
