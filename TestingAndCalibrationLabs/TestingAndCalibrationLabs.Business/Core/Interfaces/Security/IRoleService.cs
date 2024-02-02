@@ -53,5 +53,34 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="claimType"></param>
         /// <returns></returns>
         List<UserClaim> GetUserClaims(int organizationId, int userId, string moduleId, string stageId, CustomClaimType claimType);
+        /// <summary>
+        /// Get All Record From Role Service
+        /// </summary>
+        List<RoleModel> Get();
+        /// <summary>
+        /// Insert Record In Role Service
+        /// </summary>
+        /// <param name="roleModel"></param>
+        RequestResult<int> Create(RoleModel roleModel);
+
+        /// <summary>
+        /// Delete Record In Role Service
+        /// </summary>
+        /// <param name="id"></param>
+        bool Delete(int id);
+
+        /// <summary>
+        /// Get Record By Id From Role Service
+        /// </summary>
+        /// <param name="id"></param>
+        RoleModel GetById(int id);
+
+        /// <summary>
+        /// Edit Record From Role Service
+        /// </summary>
+        /// <param name="roleModel"></param>
+        /// <param Id="id"></param>
+        RequestResult<int> Update(int id, RoleModel roleModel);
     }
+
 }

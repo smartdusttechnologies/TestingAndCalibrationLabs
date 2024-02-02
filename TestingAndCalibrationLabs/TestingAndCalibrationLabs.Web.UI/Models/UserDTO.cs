@@ -4,6 +4,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     public class UserDTO
     {
+        public int Id { get; set; }
+        /// <summary>
+        /// It Contains the name of the User.
+        /// </summary>
+        [Required(ErrorMessage = "Please Enter Name")]
+        public string Name { get; set; }
         /// <summary>
         /// UserName for Registration
         /// </summary>

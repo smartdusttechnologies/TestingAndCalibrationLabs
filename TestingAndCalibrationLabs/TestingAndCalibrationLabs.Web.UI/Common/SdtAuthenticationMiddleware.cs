@@ -58,6 +58,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 await _next(context);
             }
             return;
+        
         }
         /// <summary>
         /// To Get User Identity Based On JWT Security Token
