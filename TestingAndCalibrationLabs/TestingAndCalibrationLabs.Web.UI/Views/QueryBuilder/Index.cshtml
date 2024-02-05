@@ -1,0 +1,795 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.QueryBuilderRecordDTO
+<link rel="stylesheet" href="https://cdn.korzh.com/eq/7.2.0/eq.core.min.css">
+<link rel="stylesheet" href="~/css/QueryBuilder.css" />
+
+
+<h1>Query Builder</h1>
+
+<div class="container">
+
+    <div id="eqv-content">
+        <div class="eqv-header-panel">
+            <div class="eqv-entities-block">
+                <hr class="eqv-entities-hr eqv-hr">
+                <div class="eqv-entities-title">Entities</div>
+                <div class="eqv-entities-panel-container">
+                    <div id="EntitiesPanel" onselectstart="return false" class="eqjs-ep-panel eqjs-mobile">
+                        <div class="eqjs-ep-entity eqjs-mobile" style="top:0px" id="LeftPanel">
+
+                            @*yaha tak ka cllss*@
+
+                            <div class="eqjs-ep-entity-children eqjs-mobile">
+                                @foreach (var item in Model.FieldValues)
+                                {
+
+                                    @*this is for title part*@
+                                    <div class="eqjs-ep-entity-node eqjs-mobile">
+                                        <div class="eqjs-ep-entity-node-button" onclick="DropdownContent('@item.Key.TableName')"></div>
+                                        <label class="eqjs-ep-entity-node-label">
+                                            <input type="checkbox" name="@item.Key.TableName" value="@item.Key.TableName" class="Parent-item" id="@item.Key.TableName" onclick="FunctionBox('@item.Key.TableName','@item.Value.Count')"> @Html.DisplayFor(tables => item.Key.TableName)
+                                        </label>
+                                    </div>
+                                    <div class="eqjs-ep-entity-children eqjs-mobile" id="flush-@item.Key.TableName" style="display:none">
+                                        @for (var pos = 0; pos < item.Value.Count; pos++)
+                                        {
+
+                                            <div class="eqjs-ep-entity-attr">
+                                                <label class="eqjs-ep-entity-attr-label">
+                                                    <div class="eqjs-ep-entity-offset" style="width:30px;"></div>
+                                                    <input type="checkbox" class="child-item" name="@item.Key.TableName" id="@item.Key.TableName@pos" value="@item.Value[pos].ColoumnName" />@Html.DisplayFor(colNames =>@item.Value[pos].ColoumnName)
+                                                </label>
+                                            </div>
+
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                        <div class="eqjs-ep-tool-panel eqjs-mobile">
+                            <div class="eqjs-ep-tool-panel-left-side">
+                                <div class="eqjs-ep-tool-panel-deselect-all" title="Clear selection"></div>
+                            </div>
+                            <div class="eqjs-ep-tool-panel-right-side">
+                                <div class="eqjs-ep-tool-panel-add-columns" title="Add column(s)" onclick="CheckboxContent()"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="eqv-central-block" style="overflow: auto;">
+
+                <div class="eqv-columns-block">
+                    <hr class="eqv-columns-hr eqv-hr" />
+                    <div class="eqv-columns-title">Columns</div>
+                    <div class="eqv-columns-panel-container">
+
+                        <div id="ColumnsPanel" class="eqjs-qc-panel">
+                            <div class="eqjs-qc-header" style="display:block">
+                                <div class="eqjs-qc-header-expression">Expression</div>
+                                <div class="eqjs-qc-header-title">Title</div>
+                            </div>
+                            <div class="eqjs-qc-columns" id="ColumnData">
+                            </div>
+
+                            <div class="eqjs-addrow eqjs-qc-addrow eqjs-addrow-empty eqjs-mobile">
+                                <a href="javascript:void(0)">[Add new column]</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @*For Join Type*@
+                <div class="eqv-columns-block" id="JOINDIV" style="display:none">
+                    <hr class="eqv-columns-hr eqv-hr" />
+                    <div class="eqv-columns-title">JOIN</div>
+                    <div class="" id="JOINTYPE-Main-Div" style=" height: 100px;overflow: auto;">
+
+                        <div id="JoinPartInfo" style="display:inline-block">
+                            <label for="JoinType">Choose JoinType:</label>
+                            <select name="JOINS" id="JOINTYPE">
+                                <option value="">Select</option>
+                                <option value="INNER JOIN">INNER JOIN</option>
+                                <option value="LEFT JOIN">LEFT JOIN</option>
+                                <option value="RIGHT JOIN">RIGHT JOIN</option>
+                                <option value="FULL JOIN">FULL JOIN</option>
+
+                            </select>
+                            <label for="TableChoice">Choose TableName:</label>
+                            <select name="TableName" id="JoinTableinfo">
+                                <option value="">Select</option>
+                            </select>
+                            <label for="TableFrom">From Table:</label>
+                            <select name="TableName" id="TableName">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                       
+                        <div class="eqjs-qp-row" id="JoinConditionMenu0" style="display:block">
+                            <label for="Columns" style="padding-left:20px" id="ColumnDropDownLabel">Select column</label>
+                            <select name="ColumnDropdown" id="ColumnDropDown" style="width:auto" onchange-required>
+                                <option value="">Select</option>
+                            </select>
+                            <label for="Operator" style="padding-left:20px">Select Operator</label>
+                            <select name="Operator" id="Operator-Dropdown" style="width:auto" onchange-required>
+                                <option selected>Select</option>
+                                <option value=">">></option>
+                                <option value="<"> < </option>
+                                <option value="=">=</option>
+                                <option value=">=">>=</option>
+                                <option value="<="><=</option>
+                                <option value="Like">Like</option>
+                            </select>
+                            <label for="Column2" style="padding-left:20px" id="ColumnDropDown2Label">Select Column2</label>
+
+                            <select name="ColumnDropdown2" id="ColumnDropdown2" onchange="chargeother(this)" style=" width:auto" onchange-required>
+                                <option selected>Select</option>
+
+                                <option value="input">input</option>
+
+                            </select>
+                            <div class="input-dropdown" style="display:none; ">
+                                <input type="text" name="InputInfo" style=" width:100px;">
+                                <select style="margin-left:-5.1px; height:21px" onclick="chargeother(this.parentElement)" onchange-required>
+                                    <option selected>Select</option>
+                                </select>
+                            </div>
+                            <div class="eqjs-qp-condition-buttonsBlock" style=" float:right;display: inline-block;">
+                                <div class="eqjs-qp-button-placeholder">
+                                    <div class="eqjs-qp-condition-button eqjs-qp-condition-button-menu eqjs-qp-condition-button-active" onclick="MultipleJoin(this)" tabindex="0" title="Show menu">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+                @* For Condition Block*@
+                <div class="eqv-conditions-block">
+                    <hr class="eqv-conditions-hr eqv-hr">
+                    <div class="eqv-conditions-title">Conditions</div>
+                    <div class="eqv-query-panel-container">
+                        <div id="queryPanel" class="eqjs-qp-panel eqjs-mobile">
+                            <div data-group>
+                                <div class="eqjs-qp-row eqjs-qp-row-group eqjs-qp-row-group-root" data-group-row="">
+                                    <span class="eqjs-qp-grelement">Select records where </span>
+                                    <a href="javascript:void(0)" onclick="ConditionAll(this)" title="all" class="eqjs-qp-grelement" id="conditionValue">all</a>
+                                    <span class="eqjs-qp-grelement"> of the following apply</span>
+                                    <div class="eqjs-qp-condition-buttonsBlock">
+                                        <div class="eqjs-qp-button-placeholder" data-btnplaceholder="">
+                                            <div class="eqjs-qp-condition-button eqjs-qp-condition-button-addCondition" tabindex="0" data-button="" title="Add condition"></div>
+                                        </div>
+                                        <div class="eqjs-qp-button-placeholder" data-btnplaceholder="">
+                                            <div class="eqjs-qp-condition-button eqjs-qp-condition-button-addPredicate" tabindex="0" data-button="" title="Add group of conditions"></div>
+                                        </div>
+                                    </div>
+                                    <div class="eqjs-qp-conditions null eqjs-qp-conditions-root" data-conditions=""></div>
+                                </div>
+                                <div class="eqjs-qp-conditions null eqjs-qp-conditions-root" id="condition-data">
+                                </div>
+                            </div>
+                            <div class="eqjs-addrow eqjs-qp-addrow eqjs-mobile">
+                                <a href="javascript:void(0)" onclick="NewConditionMenu(this)" title="[Add new condition]">[Add new condition]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="eqv-menu-block">
+                <hr class="eqv-menu-hr eqv-hr">
+                <div class="eqv-menu-title">Query Menu</div>
+                <div class="eqv-menu-content">
+                    @*New Query button*@
+                    <div id="QueryNameLabel" class="eqjs-query-name eqjs-mobile">
+                        <div class="eqjs-query-name-text eqjs-query-name-theme">[New query]</div>
+                        <span class="eqjs-query-name-asterisk" style="visibility: visible;">*</span>
+                        <span class="eqjs-query-name-tooltip eqjs-query-name-theme">[New query]</span>
+                    </div>
+                    <a id="ClearQueryButton" class="eqv-button">Clear</a>
+                    <div class="eqv-dropdown-container">
+                        <a id="LoadQueryButton" class="eqv-button eqv-drop-button">Load <span style="float: right">▼</span></a>
+                        <div class="eqv-dropdown-content">
+                        </div>
+                    </div>
+                    <a class="eqv-button" id="preview" onclick="PreviewData()">Preview Data</a>
+                    <a class="eqv-button" id="save" onclick="DataToModel()">Save Query</a>
+                    <div id="ChangeLocale">
+                        <select class="eqv-select">
+                            <option value="en-US">English - English</option>
+                            <option value="ru">Russian - русский</option>
+                            <option value="es">Spanish - español</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="eqv-bottom-panel">
+            <div class="eqv-result-panel" id="Result">
+                <hr class="eqv-result-panel-hr eqv-hr">
+                <div class="eqv-result-panel-title" >
+                    Result
+                    <span id="ResultCount" style="display:none; margin-left:20px; font-size:small"></span>
+                        <span class="eqv-export-buttons">
+                        <a class="eqjs-export eqjs-disabled" onclick="ExportToExcel()" id="exportLink">Export to Excel</a>
+                        <a class="eqjs-export eqjs-disabled" onclick="ExportToPDF()" id="exportpdf">Export to PDF</a>
+                        <a class="eqjs-export eqjs-disabled" onclick="ExportToHTML()" id="exportHTML">Export to HTML (Excel-compatible)</a>
+                   </span>
+                </div>
+                <div id="partialView"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var Key = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Keys));
+    var KeyValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FieldValues.Values));
+
+    ///This method will change input to Value and value to input
+    function chargeother(select) {
+        if (select.value == "input") {
+            select.style.display = "none";
+
+            select.nextElementSibling.style.display = "inline-block";
+        }
+        if (select.className == "input-dropdown") {
+            select.style.display = "none";
+            select.previousElementSibling.style.display = "inline-block";
+        }
+    }
+
+    ///This method to add Join Condition
+    function JoinConditionAdd() {
+        var newElement = document.getElementById('JOINTYPE-Main-Div');
+        var LabelItem = document.createElement('label');
+        LabelItem.name = "Condition";
+        LabelItem.innerHTML = "Condition";
+        const options = ['OR', 'AND', 'NOT'];
+
+        newElement.appendChild(LabelItem);
+
+        var selectMenu = document.createElement('select');
+        selectMenu.name = "Condition";
+        newElement.appendChild(LabelItem);
+        options.forEach(option => {
+
+            const newOption = document.createElement('option');
+
+            newOption.text = option;
+
+
+            newOption.value = option;
+
+
+            selectMenu.appendChild(newOption);
+        });
+
+        newElement.appendChild(selectMenu);
+
+        var Data = document.getElementById('JoinConditionMenu0');
+        var dataInfo = Data.cloneNode(true);
+        newElement.appendChild(dataInfo);
+    }
+    
+    //This method is used to add Join
+    function JoinAdd() {
+
+        var newElement = document.getElementById('JOINTYPE-Main-Div');
+
+        var Data = document.getElementById('JoinPartInfo');
+        var datainfo = Data.cloneNode(true);
+        datainfo.lastElementChild.remove();
+        datainfo.lastElementChild.remove();
+
+        newElement.appendChild(datainfo);
+
+        Data = (Data.nextElementSibling);
+        datainfo = Data.cloneNode(true);
+        newElement.appendChild(datainfo);
+
+
+    }
+
+    //This Method to make MultipleJoin 
+    function MultipleJoin(Data) {
+        ParentElementDiv = Data.parentElement.parentElement.parentElement;
+        var stringPosition = Data.getBoundingClientRect();
+        var Aggregates = document.getElementById('JOIN-ADD-MENU')
+        Aggregates.style.display = "block";
+        Aggregates.style.top = (stringPosition.bottom + 5) + "px";
+        Aggregates.style.left = (stringPosition.left + 2) + "px";
+    }
+    ///This method to delete the Join
+    function JoinRowDel() {
+
+
+        if (ParentElementDiv.previousElementSibling.previousElementSibling.innerHTML == "Condition") {
+            $(ParentElementDiv.previousElementSibling).remove();
+            $(ParentElementDiv.previousElementSibling).remove();
+            $(ParentElementDiv).remove();
+            ParentElementDiv = null;
+        }
+        else if (ParentElementDiv.previousElementSibling.previousElementSibling.previousElementSibling != null) {
+            $(ParentElementDiv.previousElementSibling).remove();
+            $(ParentElementDiv).remove();
+            ParentElementDiv = null;
+        }
+    }
+  
+     ///This method to convert data to model format  and send to controller for Json Conversion
+    function DataGenerateJson() {
+
+        var DataItem = document.getElementById('JOINTYPE-Main-Div');
+        var JoinValue = [];
+        var JoinObject = {};
+        var JoinObject1 = null;
+        var JoinObject2 = {};
+        //JOINPART
+        for (var JoinItem = 0; JoinItem <= DataItem.children.length; JoinItem++) {
+
+
+            if (DataItem.children[JoinItem] != null && DataItem.children[JoinItem].id == "JoinPartInfo") {
+                if (JoinObject1 != null) {
+
+                    JoinValue.push(JoinObject1);
+                    JoinObject1 = {};
+                    JoinObject2 = {};
+
+                }
+                else {
+                    JoinObject1 = {};
+                }
+
+                for (var item = 0; item < DataItem.children[JoinItem].children.length; item = (item + 2)) {
+
+                    JoinObject1[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 1].value;
+                }
+
+            }
+            else if (DataItem.children[JoinItem] != null && DataItem.children[JoinItem].id == "JoinConditionMenu0") {
+                for (var item = 0; item < DataItem.children[JoinItem].children.length; item = item + 2) {
+                    if (DataItem.children[JoinItem].children[item + 1].value == "input") {
+                        JoinObject2[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 2].children[0].value;
+
+                    }
+                    else {
+                        JoinObject2[DataItem.children[JoinItem].children[item].htmlFor] = DataItem.children[JoinItem].children[item + 1].value;
+
+                    }
+
+                }
+                if (DataItem.children[JoinItem + 1] != null && DataItem.children[JoinItem + 1].name == "Condition") {
+                    JoinObject2[DataItem.children[JoinItem + 1].name] = DataItem.children[JoinItem + 2].value;
+
+                    JoinItem = JoinItem + 2;
+                }
+
+                if (JoinObject1['JoinInfo']) {
+                    JoinObject1['JoinInfo'].push(JoinObject2);
+                    JoinObject2 = {};
+
+                }
+                else {
+                    JoinObject1['JoinInfo'] = [];
+                    JoinObject1['JoinInfo'].push(JoinObject2);
+                    JoinObject2 = {};
+                }
+
+            }
+
+        }
+        if (JoinObject1 != null) {
+            JoinValue.push(JoinObject1);
+            JoinObject1 = {};
+            JoinObject2 = {};
+
+        }
+        var dataDetail = document.getElementById('ColumnData');
+
+        var datainfo = {};
+        var arr = [];
+        var TitleStorage = {};
+
+        //ColumnPart
+        for (var item = 0; item < dataDetail.children.length; item++) {
+
+            var details = dataDetail.children[item].children[2].innerText;
+            var Title = dataDetail.children[item].children[3].innerText;
+
+            var value = details.split(' ')[0];
+
+
+            var info = details.split(' ')[1];
+            if (datainfo[value]) {
+
+                
+                datainfo[value][info] = Title;
+                TitleStorage[value].push(info);
+
+
+            } else {
+
+                datainfo[value] = [];
+                datainfo[value][info] = Title;
+
+                TitleStorage[value] = [];
+                TitleStorage[value].push(info);
+
+               
+                arr.push(value);
+
+
+            }
+
+
+        }
+
+        var data = [];
+
+
+        for (var i = 0; i < arr.length; i++) {
+            var columnValues = [];
+            for (j = 0; j < TitleStorage[arr[i]].length; j++) {
+
+                columnValues.push({ Name: TitleStorage[arr[i]][j], Title: datainfo[arr[i]][TitleStorage[arr[i]][j]] });
+
+            }
+
+            data.push({ TableName: arr[i], ColumnName: columnValues });
+        }
+
+        // Condition Part
+        var ConditionItem = document.getElementById('condition-data').children;
+        var ConditionBlock = [];
+        for (var condition = 0; condition < ConditionItem.length; condition++) {
+
+
+            var conditionObject = {};
+
+            if (condition == 0) {
+
+                var table = ConditionItem[condition].children[0].innerText.substring(0, ConditionItem[condition].children[0].innerText.indexOf(' '));
+
+                var column = ConditionItem[condition].children[0].innerText.substring(ConditionItem[condition].children[0].innerText.indexOf(' ') + 1);
+                if (ConditionItem[condition].children[1].children[0].innerText == "starts with" || ConditionItem[condition].children[1].children[0].innerText == "does not start with") {
+                    // add % from right
+                    ConditionItem[condition].children[1].innerText = ConditionItem[condition].children[2].innerText + "%";
+
+                }
+                else if (ConditionItem[condition].children[1].children[0].innerText == "contains" || ConditionItem[condition].children[1].children[0].innerText == "does not contain") {
+                    //add % from left and right
+                    ConditionItem[condition].children[2].innerText = "%" + ConditionItem[condition].children[2].innerText + "%";
+
+                }
+                conditionObject['Where'] = column;
+                conditionObject['operators'] = ConditionItem[condition].children[1].children[0].getAttribute("value");
+                conditionObject['value'] = ConditionItem[condition].children[2].innerText;
+                conditionObject['TableName'] = table;
+            }
+            else {
+                var table = ConditionItem[condition].children[1].innerText.substring(0, ConditionItem[condition].children[1].innerText.indexOf(' '));
+
+                var column = ConditionItem[condition].children[1].innerText.substring(ConditionItem[condition].children[1].innerText.indexOf(' ') + 1);
+                conditionObject['Where'] = column;
+
+                if (ConditionItem[condition].children[2].children[0].innerText == "starts with" || ConditionItem[condition].children[2].children[0].innerText == "does not start with") {
+                    // add % from right
+                    ConditionItem[condition].children[3].innerText = ConditionItem[condition].children[3].innerText + "%";
+
+                }
+                else if (ConditionItem[condition].children[2].children[0].innerText == "contains" || ConditionItem[condition].children[2].children[0].innerText == "does not contain") {
+                    //add % from left and right
+
+                    ConditionItem[condition].children[3].innerText = "%" + ConditionItem[condition].children[3].innerText + "%";
+
+                }
+
+                conditionObject['operators'] = ConditionItem[condition].children[2].children[0].getAttribute("value");
+
+
+                conditionObject['value'] = ConditionItem[condition].children[3].innerText;
+                conditionObject['TableName'] = table;
+                conditionObject['OperatorType'] = ConditionItem[condition].children[0].value;
+
+            }
+
+            ConditionBlock.push(conditionObject);
+
+        }
+
+
+        var jsonData = JSON.stringify(data);
+
+        var ConditionData = JSON.stringify(ConditionBlock);
+
+        var JoinData = JSON.stringify(JoinValue);
+
+
+        var jsonItem = {};
+        jsonItem.jsonData = jsonData;
+        jsonItem.ConditionData = ConditionData;
+        jsonItem.JoinData = JoinData;
+        return jsonItem;
+    }
+
+    // This Function use when we Save QueryBUilder
+    function DataToModel() {
+        // Prompt the user for the template name
+        let TemplateName = prompt('Type here the template name');
+
+        if (TemplateName !== null) {
+            var jsonItem = DataGenerateJson();
+            $.ajax({
+                url: 'QueryBuilder/QueryGenerator',
+                method: 'POST',
+                data: {
+                    'jsonData': jsonItem.jsonData,
+                    'JoinData': jsonItem.JoinData,
+                    'ConditionData': jsonItem.ConditionData,
+                    'TemplateName': TemplateName // Use the user-provided template name
+                },
+                success: function (response) {
+                },
+                error: function (xhr, status, error) {
+                    alert('Bad work bro');
+                }
+            });
+        }
+    }
+
+    // This Function use when we Preview  QueryBUilder
+
+    function PreviewData() {
+        
+         var jsonItem = DataGenerateJson();
+        $.ajax({
+            url: 'QueryBuilder/QueryGenerator',
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData},
+            success: function (response) {
+                $('#partialView').html(response);
+                enableExportLink();
+            },
+            error: function (xhr, status, error) {
+                alert('bad work bro');
+            }
+
+        });
+
+        function enableExportLink() {
+            var exportLink = document.getElementById('exportLink');
+            exportLink.classList.remove('eqjs-disabled');
+
+            var exportpdf = document.getElementById('exportpdf');
+            exportpdf.classList.remove('eqjs-disabled');
+
+
+            var exportHTML = document.getElementById('exportHTML');
+            exportHTML.classList.remove('eqjs-disabled');
+
+            var exportCSV = document.getElementById('exportCSV');
+            exportCSV.classList.remove('eqjs-disabled');
+        }
+
+    }
+    // This function for Export to Excel 
+
+    function ExportToExcel() {
+        var jsonItem = DataGenerateJson();
+        $.ajax({
+            url: 'QueryBuilder/ExportExcel',
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
+            xhrFields: {
+                responseType: 'blob' // Receive response as a Blob
+            },
+            success: function (response, status, xhr) {
+                var disposition = xhr.getResponseHeader('content-disposition');
+               var fileName = 'SampleData.xlsx'; // Use the correct file name
+
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        fileName = matches[1];
+                    }
+                }
+
+                var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                // Create a link to trigger the download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
+
+    // This function for Export to PDF
+
+    function ExportToPDF() {
+        var jsonItem = DataGenerateJson();
+        $.ajax({
+            url: 'QueryBuilder/ExportPDF', // Update the URL to the PDF export action
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
+            xhrFields: {
+                responseType: 'blob' // Receive response as a Blob
+            },
+            success: function (response, status, xhr) {
+                var disposition = xhr.getResponseHeader('content-disposition');
+                var fileName = 'SampleData.pdf'; // Use the correct file name for PDF
+
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        fileName = matches[1];
+                    }
+                }
+
+                var blob = new Blob([response], { type: 'application/pdf' });
+
+                // Create a link to trigger the download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
+    //  This function for export to Html 
+
+    function ExportToHTML() {
+        var jsonItem = DataGenerateJson();
+        $.ajax({
+            url: 'QueryBuilder/ExportHTML', // Replace 'YourControllerName' with the actual controller name
+            method: 'POST',
+            data: { 'jsonData': jsonItem.jsonData, 'JoinData': jsonItem.JoinData, 'ConditionData': jsonItem.ConditionData },
+            success: function (response, status, xhr) {
+                // Create a Blob with the HTML content
+                var blob = new Blob([response], { type: 'text/html' });
+
+                // Create a link to trigger the download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'SampleData.html'; // Specify the desired file name
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                window.URL.revokeObjectURL(link.href);
+                document.body.removeChild(link);
+            },
+            error: function (xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
+    function ConditionValueChanger() {
+        var ConditionItem = document.getElementById('condition-data').children;
+
+    }
+</script>
+
+<script src="~/js/QueryBuilder.js"></script>
+<div class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 721px; top: 193px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(1)">Count</div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(2)">Distinct count</div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(3)">Minimum</div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(4)">Maximum</div>
+        <div class="eqjs-menu-itemDiv"><hr></div>
+        <div class="eqjs-menu-itemDiv" onclick="AggregateFunctionAdd(5)">Custom Expression</div>
+    </div>
+</div>
+
+<div id="ColumnsPanel-SortMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 280px; top: 193px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(0)">Not sorted</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(1)">Ascending</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(2)">Descending</div>
+        <div class="eqjs-menu-itemDiv"><hr></div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(3)">Move to the first</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(4)">Move to the previous</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(5)">Move to the next</div>
+        <div class="eqjs-menu-itemDiv" onclick="ExpressionPositioning(6)">Move to the last</div>
+    </div>
+</div>
+<div id="DataTypeMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 614px; top: 189px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Unknown</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">String</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Byte</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Word</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Int32</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Int64</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Bool</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Float</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Currency</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">BCD</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Date</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Time</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">DateTime</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Autoinc</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Memo</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Blob</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">FixedChar</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Guid</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Geometry</div>
+        <div class="eqjs-menu-itemDiv" onclick="DataTypeMenuFunc(this)">Geography</div>
+    </div>
+</div>
+
+
+<div id="QueryPanel-LinkTypeMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 500px; top: 365px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv" onclick="ConditionADD(this)">all</div>
+        <div class="eqjs-menu-itemDiv" onclick="ConditionADD(this)">any</div>
+        <div class="eqjs-menu-itemDiv" onclick="ConditionADD(this)">none</div>
+        <div class="eqjs-menu-itemDiv" onclick="ConditionADD(this)">not all</div>
+    </div>
+</div>
+
+
+<div id="QueryPanel-EntitiesMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow-y:  auto; position: relative; width: auto; height: 200px;"></div>
+</div>
+
+<div id="QueryPanel-EntitiesMenu-children" class="eqjs-menu-levelDiv" style="position: absolute; display: none; ">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" id="" style="overflow-y: auto; position: relative; width: auto; max-height: 200px;"></div>
+</div>
+
+
+@*Condition Dropdown*@
+<div id="Query-Dropdown" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 502px; top: 383px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: 383px;">
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="LIKE">starts with</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="LIKE ">contains</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="=">is equal to</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="NOT LIKE ">does not start with</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="NOT LIKE ">does not contain</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="<>">is not equal to</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="IS NULL">is null</div>
+        <div class="eqjs-menu-itemDiv" onclick="QueryCondition(this)" value="IS NOT NULL">is not null</div>
+    </div>
+</div>
+
+<div id="QueryPanel-ConditionMenu" class="eqjs-menu-rootLevel eqjs-menu-levelDiv" style="position: absolute; display: none; visibility: visible; left: 1018px; top: 395px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="eqjs-menu-scrollDiv" style="overflow: hidden auto; position: relative; width: auto; height: auto;">
+        <div class="eqjs-menu-itemDiv eqjs-menu-selected">Enabled</div>
+        <div class="eqjs-menu-itemDiv" onclick="ButtonBlockMenufunction(2)">Delete</div>
+        <div class="eqjs-menu-itemDiv"><hr></div>
+        <div class="eqjs-menu-itemDiv">Parameterized</div>
+        <div class="eqjs-menu-itemDiv">Use in JOIN</div>
+    </div>
+</div>
+<div id="JOIN-ADD-MENU" class="JoinMenu" style="background: #fff;border: 1px solid silver;padding: 5px 0;position: absolute; display: none; visibility: visible; left: 1018px; top: 395px; z-index: 10000; font-size: 14px;">
+    <div tabindex="1" class="ScrollItemJoin" style="    min-width: 140px; white-space: nowrap;overflow: hidden auto; position: relative; width: auto; height: auto;">
+
+        <div class="eqjs-menu-itemDiv" onclick="JoinConditionAdd()">Add Condition </div>
+        <div class="eqjs-menu-itemDiv" onclick="JoinAdd()">Add JOIN</div>
+        <div class="eqjs-menu-itemDiv" onclick="JoinRowDel()">Delete</div>
+    </div>
+</div>
