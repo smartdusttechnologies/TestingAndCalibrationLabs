@@ -521,7 +521,8 @@
             $main_header.addClass('navbar-light')
             $(this).addClass(color)
         }
-
+        $main_header.removeClass();
+        $main_header.addClass('main-header navbar navbar-expand navbar-light ')
         $main_header.addClass(color)
     })
 
