@@ -45,7 +45,10 @@
                     @Html.DisplayNameFor(model => model.ChangeIntervalDays)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.OrgId)
+                    Organization
+                </th>
+                <th>
+                    Actions
                 </th>
             </tr>
         </thead>
@@ -82,7 +85,7 @@
                         @Html.DisplayFor(modelItem => item.ChangeIntervalDays)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.OrgId)
+                        @Html.DisplayFor(modelItem => item.OrgName)
                     </td>
                     <td>
                         <!-- Create action links for editing and deleting Password Policies -->

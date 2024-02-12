@@ -44,5 +44,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public int ChangeIntervalDays { get; set; }
         // ID of the organization associated with the password policy
         public int OrgId { get; set; }
+        public string OrgName { get; set; }
     }
 }

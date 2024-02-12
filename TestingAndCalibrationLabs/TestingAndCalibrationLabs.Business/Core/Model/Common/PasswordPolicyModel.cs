@@ -8,11 +8,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
     // This class represents the model for a password policy configuration.
     // It holds various properties that define the rules and settings for passwords.
     [DbTable("PasswordPolicy")]
-    public class PasswordPolicyModel
+    public class PasswordPolicyModel : Entity
     {
-        [DbColumn]
-        // The unique identifier for the password policy.
-        public int Id { get; set; }
         [DbColumn]
         // The minimum number of uppercase letters required in a password.
         public int MinCaps { get; set; }
@@ -43,8 +40,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         [DbColumn]
         // The organization identifier associated with the password policy.
         public int OrgId { get; set; }
-
-        [DbColumn]
         public string OrgName { get; set; }
     }
 }

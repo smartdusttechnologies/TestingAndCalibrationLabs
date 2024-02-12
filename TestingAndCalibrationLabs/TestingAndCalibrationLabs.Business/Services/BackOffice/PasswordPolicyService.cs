@@ -12,9 +12,11 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class PasswordPolicyService : IPasswordPolicyService
     {
         private readonly IGenericRepository<PasswordPolicyModel> _genericRepository;
-        public PasswordPolicyService(IGenericRepository<PasswordPolicyModel> genericRepository)
+        private readonly IPasswordPolicyRepository _passwordPolicyRepository;
+        public PasswordPolicyService(IGenericRepository<PasswordPolicyModel> genericRepository, IPasswordPolicyRepository passwordPolicyRepository)
         {
             _genericRepository = genericRepository;
+            _passwordPolicyRepository = passwordPolicyRepository;
         }
         #region Public Methods
         /// <summary>
@@ -52,7 +54,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns>A list of all Password Policy records</returns>
         public List<PasswordPolicyModel> Get()
         {
-            return _genericRepository.Get();
+            return _passwordPolicyRepository.Get();
         }
         /// <summary>
         /// Get a Password Policy record by its ID
@@ -61,10 +63,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns>The Password Policy record with the specified ID</returns>
         public PasswordPolicyModel GetById(int id)
         {
-            return _genericRepository.Get(id);
+            return _passwordPolicyRepository.Get(id);
         }
-        #endregion
-        #region Private Methods
         #endregion
     }
 }
