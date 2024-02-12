@@ -41,13 +41,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="orgId">The organization ID</param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Edit(int? id, int orgId)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            ViewBag.organization = orgId;
             List<Organization> OrganizationType = _organizationService.Get();
             var organizationList = _mapper.Map<List<Organization>, List<OrganizationDTO>>(OrganizationType);
             ViewBag.organization = organizationList;
@@ -57,7 +56,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return NotFound();
             }
             var pageData = _mapper.Map<PasswordPolicyModel, PasswordPolicyDTO>(getByIdPageModel);
-
+            ViewBag.orgId = pageData.OrgId;
             return View(pageData);
         }
         /// <summary>
@@ -76,6 +75,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 TempData["IsTrue"] = true;
                 return RedirectToAction("Index");
             }
+            List<Organization> OrganizationType = _organizationService.Get(); 
+            var organizationList = _mapper.Map<List<Organization>, List<OrganizationDTO>>(OrganizationType);
+            ViewBag.organization = organizationList;
             return View(passwordPolicyDTO);
         }
         /// <summary>

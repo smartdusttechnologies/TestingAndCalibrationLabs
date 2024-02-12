@@ -64,10 +64,10 @@
                         <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.organization)
                         {
-                            <option value=@item.Id>@item.Id</option>
+                            <option value=@item.Id>@item.OrgName</option>
                         }
                     </select>
-                    <label for="OrgId" class="form-label">OrgId</label>
+                    <label for="OrgId" class="form-label">Organization</label>
                 </div>
                 <!-- Submit button for creating a new Password Policy -->
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input" style=" margin-bottom:5px;">

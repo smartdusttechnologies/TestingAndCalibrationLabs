@@ -64,10 +64,16 @@
                         <option disabled="disabled" selected>...</option>
                         @foreach (var item in ViewBag.organization)
                         {
-                            <option value=@item.Id>@item.Id</option>
+                            if (item.Id == ViewBag.orgId)
+                            {
+
+                                <option selected value=@item.Id>@item.OrgName</option>
+                            }else{
+                            <option value=@item.Id>@item.OrgName</option>
+                            }
                         }
                     </select>
-                    <label for="OrgId" class="form-label">OrgId</label>
+                    <label for="OrgId" class="form-label">Oragnization</label>
                 </div>
                 <!-- Submit Button -->
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
