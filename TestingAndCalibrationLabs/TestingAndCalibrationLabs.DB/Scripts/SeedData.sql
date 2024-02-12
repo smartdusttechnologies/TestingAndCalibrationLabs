@@ -70,23 +70,24 @@ BEGIN
     INSERT INTO [dbo].[Permission]
                ([Id], [Name], [PermissionModuleTypeId], [PermissionTypeId], [IsDeleted])
          VALUES
-               (0, N'none', 1, 0),			   
-			   (1, N'Cube Testing', 1, 0),			   
-			   (2, N'Water Testing', 1, 0),		   
-			   (3, N'Customer', 1, 0),
-			   (4, N'Ui Page Type', 1, 0),
-			   (5, N'Ui Control Type', 1, 0),
-			   (6, N'Ui Page Metadata', 1, 0),
-			   (7, N'Ui Page Validation',1,0),
-			   (8, N'Application',1,0),
-			   (9, N'Workflow',1,0),
-			   (10,N'Workflow Stage',1,0),
-			   (11,N'Module',1,0),
-			   (12,N'Workflow Activitiy',1,0),
-			   (13,N'Organization',1,0),
-			   (14,N'Lookup',1,0),
-			   (15,N'Lookup Category',1,0),
-			   (16,N'FullPage',1,0)
+               (1, N'uiPageType.add', 1, 1, 0),
+			   (2, N'uiPageType.edit', 1, 2, 0),
+			   (3, N'uiPageType.read', 1, 3, 0),
+			   (4, N'uiPageType.delete', 1, 4, 0),
+			   (5, N'uiPageMetadata.add', 2, 1, 0),
+			   (6, N'uiPageMetadata.edit', 2, 2, 0),
+			   (7, N'uiPageMetadata.read', 2, 3, 0),
+			   (8, N'uiPageMetadata.delete', 2, 4, 0),
+			   (9, N'testPlan.add', 3, 1, 0),
+			   (10, N'testPlan.read', 3, 3, 0),
+			   (12, N'sample.add', 4, 1, 0),
+			   (13, N'sample.read', 4, 3, 0),
+			   (1011, N'uiControlType.add', 8, 1, 0),
+			   (1012, N'uiControlType.read', 8, 3, 0),
+			   (1013, N'uiC.ad', 5, 3, 0),
+			   (1014, N'uiC.read', 5, 1, 0),
+			   (1015, N'j', 4, 2, 0),
+			   (1016, N'k', 4, 4, 0)
 
     SET IDENTITY_INSERT [dbo].[Permission]  OFF
 END
@@ -713,7 +714,7 @@ BEGIN
 			  (18,N'/Organization/Index/',13,1002,0),
 			  (19,N'/#/',16,1002,0),
 	                  (20,N'/Security/Logout',17,1003,0),
-	                  (21,N'/PasswordPolicy/Index',18,1002,0)
+					  (21,N'/PasswordPolicy/Index',19,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
