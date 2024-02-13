@@ -31,19 +31,28 @@
             <tbody>
                 @foreach (var item in Model.FieldValues)
                 {
+                    int t = 0;
                     int count = 0;
+                    var fields = Model.Fields;
                     <tr>
-                        @foreach(var itemValue in item.Value)
-                        {
-                            if (count == 4)
+                       
+                          @foreach (var items in Model.Fields)
+                          {
+                            @foreach (var itemValue in item.Value)
                             {
-                                break;
-                            }
-                            <td>
-                                @Html.DisplayFor(modelItem => itemValue.Value)
-                            </td>
+                                if (items.Id == itemValue.UiPageMetadataId)
+                                {
+                                    if (count == 4)
+                                    {
+                                        break;
+                                    }
+                                    <td>
+                                        @Html.DisplayFor(modelItem => itemValue.Value)
+                                    </td>
 
-                            count++;
+                                    count++;
+                                }
+                            }
                         }
                         <td>
                             @Html.DisplayFor(modelitem=>Model.WorkflowStageName)
@@ -83,6 +92,7 @@
 <script>
     //Call the Delete Method Of Common Page
     let deleteFun = (id) => {
+        debugger;
         let moduleId = parseInt($("#ModuleId").val())
         window.location.href = "/common/delete?id=" + id + "&moduleId=" + moduleId;
     }

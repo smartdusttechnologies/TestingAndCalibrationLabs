@@ -31,17 +31,62 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public List<UiPageDataModel> GetUiPageDataByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<UiPageDataModel>(@" Select upd.Id,upd.RecordId,upd.SubRecordId,upd.UiPageMetadataId,upd.UiPageTypeId , updst.Value 
-                 From[UiPageData] upd
-                 INNER JOIN[Record] r ON upd.RecordId = r.Id
-                 INNER JOIN[UiPageStringType] updst on r.Id = updst.RecordId
-				 INNER JOIN[UiPageMetadata] upm on upd.UiPageMetadataId = upm.Id
-				 INNER JOIN[UiPageMetadataModuleBridge] upmmb on upm.Id=upmmb.UiPageMetadataId
-                 where r.ModuleId=@moduleId   and  upmmb.MultiValueControl != 'true'
-                 and updst.RecordId = r.Id
-                 and r.IsDeleted = 0
-                 and upd.IsDeleted=0
-				 ", new { moduleId }).ToList();
+            return db.Query<UiPageDataModel>(@" SELECT DISTINCT
+                                                                    t1.Id, t1.RecordId, t1.SubRecordId, t1.UiPageMetadataId, t1.UiPageTypeId, t2.Value
+                                                                FROM
+                                                                    UiPageData t1
+                                                                    JOIN [UiPageStringType] t2 ON t1.Id = t2.UiPageDataId
+                                                                    JOIN [Record] t7 ON t7.Id = t2.RecordId
+                                                                    JOIN [UiPageMetadata] upm ON t1.UiPageMetadataId = upm.Id
+                                                                    JOIN [UiPageMetadataModuleBridge] upmmb ON upm.Id = upmmb.UiPageMetadataId
+                                                                WHERE
+                                                                    t7.ModuleId = @moduleId
+                                                                    AND upmmb.MultiValueControl != 'true'
+                                                                    AND t2.IsDeleted = 0
+                                                                    AND upm.IsDeleted = 0
+                                                                    AND upmmb.IsDeleted = 0
+                                                                    AND t1.IsDeleted = 0
+                                                                    AND t7.IsDeleted = 0
+
+                                                                UNION ALL
+
+                                                                SELECT DISTINCT
+                                                                    t3.Id, t3.RecordId, t3.SubRecordId, t3.UiPageMetadataId, t3.UiPageTypeId, CAST(t4.Value AS varchar) AS Value
+                                                                FROM
+                                                                    UiPageData t3
+                                                                    JOIN [UiPageIntType] t4 ON t3.Id = t4.UiPageDataId
+                                                                    JOIN [Record] t6 ON t6.Id = t3.RecordId
+                                                                    JOIN [UiPageMetadata] upm ON t3.UiPageMetadataId = upm.Id
+                                                                    JOIN [UiPageMetadataModuleBridge] upmmb ON upm.Id = upmmb.UiPageMetadataId
+                                                                WHERE
+                                                                    t6.ModuleId = @moduleId
+                                                                    AND upmmb.MultiValueControl != 'true'
+                                                                    AND upm.IsDeleted = 0
+                                                                    AND upmmb.IsDeleted = 0
+                                                                    AND t4.IsDeleted = 0
+                                                                    AND t3.IsDeleted = 0
+                                                                    AND t6.IsDeleted = 0
+
+                                                                UNION ALL
+
+                                                                SELECT DISTINCT
+                                                                    t5.Id, t5.RecordId, t5.SubRecordId, t5.UiPageMetadataId, t5.UiPageTypeId, CAST(t9.Value AS varchar) AS Value
+                                                                FROM
+                                                                    UiPageData t5
+                                                                    JOIN [UiPageDateType] t9 ON t5.Id = t9.UiPageDataId
+                                                                    JOIN [Record] t8 ON t8.Id = t5.RecordId
+                                                                    JOIN [UiPageMetadata] upm ON t5.UiPageMetadataId = upm.Id
+                                                                    JOIN [UiPageMetadataModuleBridge] upmmb ON upm.Id = upmmb.UiPageMetadataId
+                                                                WHERE
+                                                                    t8.ModuleId = @moduleId
+                                                                    AND upmmb.MultiValueControl != 'true'
+                                                                    AND t9.IsDeleted = 0
+                                                                    AND upm.IsDeleted = 0
+                                                                    AND upmmb.IsDeleted = 0
+                                                                    AND t5.IsDeleted = 0
+                                                                    AND t8.IsDeleted = 0;
+
+				                                                             ", new { moduleId }).ToList();
         }
         /// <summary>
         /// Get All Validations Based On UiPageTypeId
