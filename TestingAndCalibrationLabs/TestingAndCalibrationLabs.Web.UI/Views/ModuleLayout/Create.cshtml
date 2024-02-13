@@ -1,0 +1,57 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.ModuleLayoutDTO
+@{
+    ViewData["Title"] = "Create";
+}
+<h1>ModuleLayout </h1>
+<h4>Create</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" _lpchecked="1" class="mb-2" id="valForm" method="post" asp-controller="ModuleLayout" novalidate>
+            <div asp-validation-summary="All"></div>
+            <div class="row ms-1 me-1">
+
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ">
+                    <select class="form-input width-full black-border " name="ModuleId" id="Module" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                        <option disabled="disabled" selected>Select Module ...</option>
+                        @foreach (var item in ViewBag.ModuleName)
+                        {
+                                <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                    <label for="Module" class="form-label">
+                        ModuleName
+                    </label>
+                </div>
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border" name="LayoutId" id="Layout" onchange="this.setAttribute('value',this.value)" asp-for="LayoutId">
+                        <option disabled="disabled" selected>Select Layout ...</option>
+                        @foreach (var item in ViewBag.LayoutName)
+                        {
+                                <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                    <label for="LayoutId" class="form-label">
+                        LayoutName
+                    </label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input " style="padding-left:10px; padding-bottom:5px;">
+                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <label class="form-label" for="Name">Name</label>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                    <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return  DisplayProgressMessage(this, 'Saving...');" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

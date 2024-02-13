@@ -15,13 +15,15 @@ namespace TestingAndCalibrationLabs.Business.Services
     public class UiControlTypeService : IUiControlTypeService
     {
         private readonly IGenericRepository<UiControlTypeModel> _genericRepository;
+        public readonly IUiControlTypeRepository _uiControlTypeRepository;
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UiControlTypeService(IGenericRepository<UiControlTypeModel> genericRepository, IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor)
+        public UiControlTypeService(IUiControlTypeRepository uiControlTypeRepository,IGenericRepository<UiControlTypeModel> genericRepository, IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor)
         {
             _genericRepository = genericRepository;
             _authorizationService = authorizationService;
             _httpContextAccessor = httpContextAccessor;
+            _uiControlTypeRepository = uiControlTypeRepository;
         }
         #region Public methods
         /// <summary>
@@ -35,7 +37,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return _genericRepository.Get(id);
+            return _uiControlTypeRepository.GetById(id);
         }
         /// <summary>
         /// Get All Record For Ui Control Type
@@ -47,7 +49,15 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return _genericRepository.Get();
+            return _uiControlTypeRepository.Get();
+        }
+        /// <summary>
+        /// Get All Record For Control Type 
+        /// </summary>
+        /// <returns></returns>
+        public List<UiControlTypeModel> GetControl()
+        {
+            return _uiControlTypeRepository.GetControl();
         }
         /// <summary>
         /// Edit Record From Ui Control Type
@@ -62,7 +72,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            _genericRepository.Update(uiControlTypeModel);
+            _uiControlTypeRepository.Update(uiControlTypeModel);
             return result;
         }
         /// <summary>
@@ -76,7 +86,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            _genericRepository.Insert(uiControlTypeModel);
+            _uiControlTypeRepository.Create(uiControlTypeModel);
             return new RequestResult<int>(1);
         }
         /// <summary>
@@ -90,7 +100,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            return _genericRepository.Delete(id);
+            return _uiControlTypeRepository.Delete(id);
         }
         #endregion
     }

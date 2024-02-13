@@ -15,10 +15,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         //this is only used for validation only dont use any other place without any resone 
         public int UiPageTypeId { get; set; }
         public int ModuleId { get; set; }
+        public int ModuleLayoutId { get; set; }
         public int WorkflowStageId { get; set; }
         public DateTime UpdatedDate { get; set; }
         public List<UiPageMetadataModel> Fields { get; set; }
-        public string ModuleName { get; set; }
         public List<UiPageDataModel> FieldValues { get; set; }
         public IEnumerable<Node<LayoutModel>> Layout { get; set; }
         #endregion

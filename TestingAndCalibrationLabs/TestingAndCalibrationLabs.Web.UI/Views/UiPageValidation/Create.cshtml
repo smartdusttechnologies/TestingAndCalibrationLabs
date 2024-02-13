@@ -12,7 +12,7 @@
             <div class="row ms-1 me-1">
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageTypeId" class="form-label"></label>
-                    <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+                    <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         <option disabled="disabled" selected>Select Pages ...</option>
                         @foreach (var item in ViewBag.UiPageTypes)
                         {
@@ -20,9 +20,9 @@
                         }
                     </select>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control ">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-input">
                     <label for="UiPageMetadataId" class="form-label"></label>
-                    <select class="form-input " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
+                    <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId">
                         <option disabled="disabled" selected>Select Metadata ...</option>
                         @foreach (var item in ViewBag.UiPageMetadata)
                         {
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <label for="UiPageValidationTypeId" class="form-label"></label>
-                    <select class="form-input" name="UiPageValidationTypeId" id="UiPageValidationType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
+                    <select class="form-input width-full black-border" name="UiPageValidationTypeId" id="UiPageValidationType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageValidationTypeId">
                         <option disabled="disabled" selected>Select Validation Type ...</option>
                         @foreach (var item in ViewBag.UiPageValidationTypes)
                         {

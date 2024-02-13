@@ -21,5 +21,18 @@
         /// It Contains Name For Lookup
         /// </summary>
         public string LookupName { get; set; }
+        /// <summary>
+        /// It Contains Id For LookupCategory
+        /// </summary>
+        public int LookupCategoryId { get; set; }
+        /// <summary>
+        /// It Contains Name For LookupCategory
+        /// </summary>
+        public string LookupCategoryName { get; set; }
+        /// <summary>
+        /// It Contains UiControlDisplayName For Lookup
+        /// </summary>
+        public string UiControlDisplayName { get; set; }
+
     }
 }

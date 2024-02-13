@@ -31,25 +31,34 @@
             <tbody>
                 @foreach (var item in Model.FieldValues)
                 {
+                    int t = 0;
                     int count = 0;
+                    var fields = Model.Fields;
                     <tr>
-                        @foreach(var itemValue in item.Value)
-                        {
-                            if (count == 4)
+                       
+                          @foreach (var items in Model.Fields)
+                          {
+                            @foreach (var itemValue in item.Value)
                             {
-                                break;
-                            }
-                            <td>
-                                @Html.DisplayFor(modelItem => itemValue.Value)
-                            </td>
+                                if (items.Id == itemValue.UiPageMetadataId)
+                                {
+                                    if (count == 4)
+                                    {
+                                        break;
+                                    }
+                                    <td>
+                                        @Html.DisplayFor(modelItem => itemValue.Value)
+                                    </td>
 
-                            count++;
+                                    count++;
+                                }
+                            }
                         }
                         <td>
                             @Html.DisplayFor(modelitem=>Model.WorkflowStageName)
                         </td>
                         <td>
-                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>|
+                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-toggle="modal" data-target="#deleteModalPopup" onclick="setValue(@item.Key)"></a>
                         </td>
 
@@ -81,6 +90,12 @@
     </div>
 </div>
 <script>
+    //Call the Delete Method Of Common Page
+    let deleteFun = (id) => {
+        debugger;
+        let moduleId = parseInt($("#ModuleId").val())
+        window.location.href = "/common/delete?id=" + id + "&moduleId=" + moduleId;
+    }
     oTable = $('#grid').DataTable({
         lengthMenu: [
             [5, 10, 25, 50, -1],
@@ -97,9 +112,5 @@
     }
     //Set The Value To Popup Delete Button
     let setValue = (id) => $("#deletePopup").val(id);
-    //Call the Delete Method Of Common Page 
-    let deleteFun = (id) =>{
-        let moduleId = parseInt($("#ModuleId").val())
-        window.location.href = "/common/delete?id=" + id+ "&moduleId=" + moduleId;
-    }
+    
 </script>

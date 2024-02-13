@@ -57,6 +57,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\User Defined Types\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Record.sql" />
@@ -105,6 +106,20 @@
     <Build Include="dbo\Tables\Application.sql" />
     <Build Include="dbo\Tables\Activity.sql" />
     <Build Include="dbo\Tables\ActivityMetadata.sql" />
+    <Build Include="dbo\Tables\UiPageStringType.sql" />
+    <Build Include="dbo\Tables\UiPageIntType.sql" />
+    <Build Include="dbo\Tables\UiPageFileAttachType.sql" />
+    <Build Include="dbo\Stored Procedures\update_store_proc_Record.sql" />
+    <Build Include="dbo\Stored Procedures\store_proc_Record.sql" />
+    <Build Include="dbo\User Defined Types\updatechildDatas.sql" />
+    <Build Include="dbo\User Defined Types\UiPageDataTVP.sql" />
+    <Build Include="dbo\User Defined Types\childData.sql" />
+    <Build Include="dbo\Tables\UiPageDecimalType.sql" />
+    <Build Include="dbo\Tables\UiPageDateType.sql" />
+    <Build Include="dbo\Tables\UiPageBoolType.sql" />
+    <Build Include="dbo\Tables\ImageUpload.sql" />
+    <Build Include="dbo\Tables\ModuleLayout.sql" />
+    <Build Include="dbo\Tables\Layout.sql" />
     <Build Include="dbo\Tables\GroupClaim.sql" />
     <Build Include="dbo\Tables\Group.sql" />
     <Build Include="dbo\Tables\UserGroup.sql" />
@@ -113,6 +128,7 @@
     <Build Include="dbo\Tables\Logs.sql" />
     <Build Include="dbo\Stored Procedures\usp_Logs_AddEntry.sql" />
     <Build Include="dbo\Tables\UserRoleClaim.sql" />
+    <Build Include="dbo\Stored Procedures\Store_Proc_GridMultipleData.sql" />
     <Build Include="dbo\Tables\UserOtp.sql" />
   </ItemGroup>
   <ItemGroup>

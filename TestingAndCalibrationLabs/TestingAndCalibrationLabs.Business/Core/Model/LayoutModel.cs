@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Business.Core.Model
+﻿using System.Collections.Generic;
+
+namespace TestingAndCalibrationLabs.Business.Core.Model
 {
     /// <summary>
     /// It Contains Properties Of Layout
@@ -12,6 +14,7 @@
         /// <summary>
         /// It Contains List Of UiPageData
         /// </summary>
-        public UiPageDataModel UiPageData { get; set; }
+        public List<UiPageDataModel> UiPageData { get; set; }
+
     }
 }

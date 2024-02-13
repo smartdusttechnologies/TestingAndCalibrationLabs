@@ -14,8 +14,8 @@
                     <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
                     <label class="form-label" for="Name">Name</label>
                 </div>          
-            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">             
-                <select class="form-input " name="WorkflowId" id="WorkflowId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowId">
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="WorkflowId" id="WorkflowId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowId">
                     <option disabled="disabled" selected>....</option>
                     @foreach (var item in ViewBag.Workflow)
                     {
@@ -24,8 +24,8 @@
                 </select>
                 <label class="form-label" for="WorkflowId">WorkflowName</label>
             </div>
-            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">             
-                <select class="form-input " name="UiPageTypeId" id="UiPageTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+            <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border" name="UiPageTypeId" id="UiPageTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                     <option disabled="disabled" selected>....</option>
                     @foreach (var item in ViewBag.UiPageTypes)
                     {

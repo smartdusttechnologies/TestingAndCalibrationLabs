@@ -21,10 +21,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains Id For Lookup Category
         /// </summary>
         [Required(ErrorMessage = "Please choose LookupCategory Name")]
-
         public int LookupCategoryId { get; set; }
         /// <summary>
-        /// It Contains The Name of  LookupCategory
+        /// It Contains ParentId For Lookup
+        /// </summary>
+        public int ParentId { get; set; }
+        /// <summary>
+        /// It Contains LookupCategoryName based on LookupCategoryId
         /// </summary>
         public string LookupCategoryName { get; set; }
 

@@ -14,9 +14,13 @@ namespace TestingAndCalibrationLabs.Business.Services
     {
         public SampleService(ICommonRepository commonRepository,
             IGenericRepository<RecordModel> recordGenericRepository,
+            IGenericRepository<UiPageTypeModel> uiPageTypeGenericRepository,
+            IGenericRepository<UiPageDataModel> uiPageDataGenericRepository,
+            IGenericRepository<UiPageMetadataModel> uiPageMetaDataGenericRepository,
             IGenericRepository<UiPageValidationTypeModel> uiPageValidationTypesGenericRepository,
             IUiPageMetadataRepository uiPageMetadataRepository,
             IWebHostEnvironment webHostEnvironment,
+            IModuleLayoutRepository moduleLayoutRepository,
             IUiPageMetadataCharacteristicsService uiPageMetadataCharacteristicsService,IWorkflowStageService workflowStageService,
             IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor,IEmailService email)
             : base(commonRepository,
@@ -25,7 +29,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                   uiPageMetadataRepository,
                   webHostEnvironment,
                   uiPageMetadataCharacteristicsService,
-                  authorizationService,httpContextAccessor,workflowStageService,email)
+                  authorizationService,httpContextAccessor,workflowStageService,email, moduleLayoutRepository)
         {
             UI_PAGE_NAME = "SamplePage";
         }
