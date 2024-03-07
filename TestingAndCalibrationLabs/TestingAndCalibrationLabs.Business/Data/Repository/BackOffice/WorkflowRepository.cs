@@ -5,6 +5,7 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using Dapper;
 using System.Linq;
+using System;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
@@ -34,20 +35,72 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 											        where ml.Id = @ModuleId 
 											        and wf.IsDeleted = 0 
 											        and ml.IsDeleted = 0 ", new { ModuleId = moduleId }).FirstOrDefault();
-                                                   
+
         }
         /// <summary>
         /// Insert Record in Workflow
         /// </summary>
         /// <param name="workflowModel"></param>
         /// <returns></returns>
+        //public int Create(WorkflowModel workflowModel)
+        //{
+        //    string query = @"Insert into [Workflow] (Name,ModuleId)
+        //                                          values (@Name,@ModuleId)";
+        //    using IDbConnection db = _connectionFactory.GetConnection;
+        //    return db.Execute(query, workflowModel);
+        //}
         public int Create(WorkflowModel workflowModel)
         {
-            string query = @"Insert into [Workflow] (Name,ModuleId)
-                                                  values (@Name,@ModuleId)";
-            using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Execute(query, workflowModel);
+            using (IDbConnection db = _connectionFactory.GetConnection)
+            {
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        string moduleLayoutQuery = @"SELECT Id FROM ModuleLayout WHERE ModuleId = @ModuleId";
+                        int moduleLayoutId = db.QuerySingle<int>(moduleLayoutQuery, new { ModuleId = workflowModel.ModuleId }, transaction);
+
+                        
+                        string uiPageMetadataQuery = @"
+                    INSERT INTO UiPageMetadata (UiControlTypeId, IsRequired, UiControlDisplayName, 
+                                                 DataTypeId, UiControlCategoryTypeId, Name, ModuleLayoutId)
+                    VALUES (@UiControlTypeId, @IsRequired, @UiControlDisplayName, 
+                            @DataTypeId, @UiControlCategoryTypeId, @Name, @ModuleLayoutId);
+                    SELECT CAST(SCOPE_IDENTITY() as int)";
+
+                        int uiPageMetadataId = db.QuerySingle<int>(uiPageMetadataQuery, new
+                        {
+                            UiControlTypeId = 25,
+                            IsRequired = 0,
+                            UiControlDisplayName = workflowModel.Name + "Prog",
+                            DataTypeId = 1,
+                            UiControlCategoryTypeId = 1012,
+                            Name = workflowModel.Name,
+                            ModuleLayoutId = moduleLayoutId 
+                        }, transaction);
+
+                        
+                        string workflowQuery = @"INSERT INTO [Workflow] (Name, ModuleId)
+                                          VALUES (@Name, @ModuleId)";
+                        int rowsAffected = db.Execute(workflowQuery, new
+                        {
+                            Name = workflowModel.Name,
+                            ModuleId = workflowModel.ModuleId,
+                        }, transaction);
+
+                        transaction.Commit();
+
+                        return rowsAffected; 
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
         }
+
         /// <summary>
         /// Getting All Records From Workflow
         /// </summary>
@@ -96,7 +149,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 ModuleId = @ModuleId,                                
                                 Name = @Name                              
                                 Where Id = @Id";
-            using IDbConnection db = _connectionFactory.GetConnection;        
+            using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, workflowModel);
         }
     }

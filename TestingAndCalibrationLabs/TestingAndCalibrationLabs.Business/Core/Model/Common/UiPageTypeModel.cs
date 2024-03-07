@@ -15,7 +15,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         [DbColumn]
         
         public string Name { get; set; }
-        
+      
+        public string ModuleName { get; set; }
+        public int ModuleId { get; set; }
+       
+        public string WorkflowStageName { get; set; }
+
+        public int WorkflowStageId { get; set; }
+
     }
 
 }

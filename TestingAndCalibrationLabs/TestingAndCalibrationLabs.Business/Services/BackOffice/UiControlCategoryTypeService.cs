@@ -45,6 +45,12 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _uiControlCategoryTypeRepository.Get();
         }
+        public List<UiControlCategoryTypeModel> GetControlCategoryType(int ControlId)
+        {
+            return _uiControlCategoryTypeRepository.GetControlCategoryType( ControlId);
+        }
+        
+
         /// <summary>
         /// Edit Record From Ui Control Category Type
         /// </summary>

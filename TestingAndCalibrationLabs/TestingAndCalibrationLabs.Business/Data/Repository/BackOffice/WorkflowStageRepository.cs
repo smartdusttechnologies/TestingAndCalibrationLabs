@@ -5,6 +5,8 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using Dapper;
 using System.Linq;
+using System;
+using System.Reflection;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
@@ -60,6 +62,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<WorkflowStageModel>(@"select * from WorkflowStage where WorkflowId = @WorkflowId and IsDeleted = 0", new { WorkflowId = workflowId }).ToList();
         }
+
+
+
+        public List<WorkflowStageModel> GetbyModuleId(int ModuleId)
+        {
+            using IDbConnection db= _connectionFactory.GetConnection;
+            return db.Query<WorkflowStageModel>(@"select ws.Id, ws.Name,ws.Orders,ws.UiPageTypeId
+		                                            From WorkflowStage ws
+		                                             inner join Workflow w on  w.Id = ws.WorkflowId
+		                                             Where w.ModuleId = @moduleId
+		                                             and w.IsDeleted=0
+		                                             and ws.IsDeleted=0
+                                                         ", new { moduleId = ModuleId }).ToList();
+
+        }
         /// <summary>
         /// Get Record By ModuleId
         /// </summary>
@@ -82,6 +99,78 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, workflowStageModel);
         }
+        //public int Create(WorkflowStageModel workflowStageModel)
+        //{
+        //    using IDbConnection db = _connectionFactory.GetConnection;
+        //    {
+
+        //        db.Open();
+        //        using (var transaction = db.BeginTransaction())
+        //        {
+        //            try
+        //            {
+
+        //                    string WorkflowQuery = @"SELECT ModuleLayout.Id
+        //                                                        FROM Workflow w
+        //                                                        inner JOIN ModuleLayout ON w.ModuleId = ModuleLayout.ModuleId
+
+        //                                                        where w.Id = @WorkflowId
+        //                                                        and w.IsDeleted = 0
+        //                                                        and ModuleLayout.IsDeleted = 0";
+        //                int moduleLayoutId = db.QuerySingle<int>(WorkflowQuery, new { WorkflowId = workflowStageModel.WorkflowId }, transaction);
+        //                string uiPageMetadataQuery = @"
+        //            INSERT INTO UiPageMetadata (UiControlTypeId, IsRequired, UiControlDisplayName, 
+        //                                         DataTypeId, UiControlCategoryTypeId, Name, ModuleLayoutId)
+        //            VALUES (@UiControlTypeId, @IsRequired, @UiControlDisplayName, 
+        //                    @DataTypeId, @UiControlCategoryTypeId, @Name, @ModuleLayoutId);
+        //            SELECT CAST(SCOPE_IDENTITY() as int)";
+
+        //                int uiPageMetadataId = db.QuerySingle<int>(uiPageMetadataQuery, new
+        //                {
+        //                    UiControlTypeId = 29,
+        //                    IsRequired = 0,
+        //                    UiControlDisplayName = workflowStageModel.Name,
+        //                    DataTypeId = 1,
+        //                    UiControlCategoryTypeId = 1017,
+        //                    Name = workflowStageModel.Name,
+        //                    ModuleLayoutId = moduleLayoutId
+        //                }, transaction);
+
+
+
+        //              //  string uiPageMetadataQuery = @"INSERT INTO UiPageMetadata (UiControlTypeId,IsRequired,UiControlDisplayName,DataTypeId,UiControlCategoryTypeId,Name,ModuleLayoutId) 
+        //              //VALUES (@UiControlTypeId,@IsRequired,@UiControlDisplayName,@DataTypeId,@UiControlCategoryTypeId,@Name,@ModuleLayoutId);
+        //              //                          SELECT CAST(SCOPE_IDENTITY() as int)";
+        //              //  int uiPageMetadataId = db.QuerySingle<int>(uiPageMetadataQuery, new { Name = workflowStageModel.Name });
+
+        //                string uiPageMetadataModuleBridgeQuery = @"INSERT INTO UiPageMetadataModuleBridge (UiPageMetadataId, ModuleId) 
+        //                                                   VALUES (@UiPageMetadataId, @ModuleId)";
+        //                db.Execute(uiPageMetadataModuleBridgeQuery, new { UiPageMetadataId = uiPageMetadataId, ModuleId = workflowStageModel.ModuleId });
+
+        //                string workflowStageQuery = @"INSERT INTO WorkflowStage (WorkflowId, Name, UiPageTypeId, Orders) 
+        //                                      VALUES (@WorkflowId, @Name, @UiPageTypeId, @Orders)";
+        //                int rowsAffected = db.Execute(workflowStageQuery, new
+        //                {
+        //                    WorkflowId = workflowStageModel.WorkflowId,
+        //                    Name = workflowStageModel.Name,
+        //                    UiPageTypeId = workflowStageModel.UiPageTypeId,
+        //                    Orders = workflowStageModel.Orders
+        //                });
+
+        //                transaction.Commit();
+
+        //                return rowsAffected;
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                // Handle exceptions
+        //                transaction.Rollback();
+        //                throw ex;
+        //            }
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// Getting All Records From Workflow Stage
         /// </summary>

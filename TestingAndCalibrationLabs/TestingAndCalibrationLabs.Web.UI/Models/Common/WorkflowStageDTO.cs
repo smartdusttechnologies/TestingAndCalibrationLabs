@@ -17,8 +17,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains Id Name of UiPageType
         /// </summary>
-        [Required(ErrorMessage = "Please Choose UiPageTypeName")]
-        public int UiPageTypeId { get; set; }
+        
+        public int? UiPageTypeId { get; set; }
         /// <summary>
         /// It Contains The Name of UiPageType
         /// </summary>

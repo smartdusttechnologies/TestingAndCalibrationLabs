@@ -27,10 +27,11 @@
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">                  
                     <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
                         <option disabled="disabled" selected>....</option>
-                        @foreach (var item in ViewBag.UiPageTypes)
+                        <option value="">Null</option> <!-- Null option added -->
+                       @* @foreach (var item in ViewBag.UiPageTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
-                        }
+                        }*@
                     </select>
                     <label class="form-label" for="UiPageTypeId">UiPageTypeName</label>
                 </div>                         

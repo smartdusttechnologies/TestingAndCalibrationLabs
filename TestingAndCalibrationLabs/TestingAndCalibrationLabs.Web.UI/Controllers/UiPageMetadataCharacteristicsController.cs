@@ -60,14 +60,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             UiPageMetadataCharacteristicsModel uiPageMetadataCharacteristicsModel = _uiPageMetadataCharacteristicsService.GetById((int)id);
             var controlCategoryType = _lookupCategoryService.Get();
-            var pageMetadata = _uiPageMetadataService.GetDisplayName();
+            //var pageMetadata = _uiPageMetadataService.GetDisplayName();
 
             if (uiPageMetadataCharacteristicsModel == null)
             {
                 return NotFound();
             }
             ViewBag.ControlCategoryName = controlCategoryType;
-            ViewBag.DisplayName = pageMetadata;
+           // ViewBag.DisplayName = pageMetadata;
 
             var controlTypeEditModel = _mapper.Map<UiPageMetadataCharacteristicsModel, UiPageMetadataCharacteristicsDTO>(uiPageMetadataCharacteristicsModel);
             return View(controlTypeEditModel);
@@ -98,12 +98,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            var pageMetadata = _uiPageMetadataService.GetDisplayName();
+            //var pageMetadata = _uiPageMetadataService.GetDisplayName();
 
             var controlCategoryType = _lookupCategoryService.Get();
             var controlCategoryTypeList = _mapper.Map<List<LookupCategoryModel>, List<LookupCategoryDTO>>(controlCategoryType);
             ViewBag.ControlCategoryName = controlCategoryTypeList;
-            ViewBag.DisplayName = pageMetadata;
+            //ViewBag.DisplayName = pageMetadata;
 
             return base.View(new UiPageMetadataCharacteristicsDTO { Id = id });
         }

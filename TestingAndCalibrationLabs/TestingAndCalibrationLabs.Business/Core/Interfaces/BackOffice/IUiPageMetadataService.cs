@@ -13,7 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All UIDisplayName From Ui Page Metadata
         /// </summary>
         /// <returns></returns>
-        List<UiPageMetadataModel> GetDisplayName();
+        List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int ModuleIds);
         /// <summary>
         /// Get Record By moduleLayoutId From Ui Page Metadata
         /// </summary>
@@ -56,5 +56,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id,int metadataModuleBridgeId);
+
+        List<UiPageTypeModel> Getpages(int moduleLayoutId);
     }
 }

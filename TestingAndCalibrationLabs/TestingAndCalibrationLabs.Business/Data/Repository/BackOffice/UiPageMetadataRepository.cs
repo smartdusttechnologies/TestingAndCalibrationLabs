@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Transactions;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -68,23 +69,152 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             }
         }
 
+
+        public int CreateUsingPages(UiPageMetadataModel uiPageMetadataModel, int StagesCount)
+        {
+            string queryParent = @"INSERT INTO [UiPageMetadata] (Name, UiControlTypeId, DataTypeId, IsRequired, UiControlDisplayName, UiControlCategoryTypeId, ModuleLayoutId)
+                        VALUES (@Name, @UiControlTypeId, @DataTypeId, @IsRequired, @UiControlDisplayName, @UiControlCategoryTypeId, @ModuleLayoutId);
+                        SELECT SCOPE_IDENTITY();";
+
+            string insertuipage = @"INSERT INTO [UiPageType] (Name)
+                                            VALUES (@Name);
+                                         SELECT SCOPE_IDENTITY();";
+
+            string UPDATESTAGE = @"UPDATE [WorkflowStage] SET  
+                            UiPageTypeId = @UiPageTypeId                                
+                            WHERE Id = @WorkflowStageId";
+
+            string queryDisplaynames = @"SELECT upm.Id, upm.UiControlTypeId, upm.UiControlDisplayName, l.Name
+                                    FROM [UiPageMetadata] upm
+                                    INNER JOIN [UiControlCategoryType] ucct ON ucct.Id = upm.UiControlCategoryTypeId
+                                    INNER JOIN [UiControlType] uct ON uct.id = ucct.UiControlTypeId
+                                    INNER JOIN [Lookup] l ON l.Id = uct.ControlCategoryId
+                                    WHERE upm.ModuleLayoutId = @ModuleLayoutId 
+                                    AND l.Name != 'DataControl'
+                                    AND upm.IsDeleted = 0 
+                                    AND ucct.IsDeleted = 0
+                                    AND uct.IsDeleted = 0
+                                    AND l.IsDeleted = 0";
+
+            var insertModulebridge = @"INSERT INTO [UiPageMetadataModuleBridge] (UiPageMetadataId, UiPageTypeId, ParentId, Orders, UiControlDisplayName, MultiValueControl)
+                                                VALUES (@UiPageMetadataId, @UiPageTypeId, @ParentId, @Orders, @UiControlDisplayName, @MultiValueControl);
+                                                 SELECT SCOPE_IDENTITY();";
+            var getGetcurrentStagedetails = @"select ws.Id, ws.Name,ws.Orders,ws.UiPageTypeId
+		                                            From WorkflowStage ws
+		                                             inner join Workflow w on  w.Id = ws.WorkflowId
+		                                             Where w.ModuleId = @moduleId
+		                                             and w.IsDeleted=0
+		                                             and ws.IsDeleted=0";
+
+            using (IDbConnection db = _connectionFactory.GetConnection)
+            {
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        if (uiPageMetadataModel.UiPageMetadataId == 0)
+                        {
+                            int parentId = db.ExecuteScalar<int>(queryParent, uiPageMetadataModel, transaction: transaction);
+
+                            int uiPageTypeId = db.ExecuteScalar<int>(insertuipage, new { Name = uiPageMetadataModel.UiControlDisplayName }, transaction: transaction);
+
+                            db.Execute(UPDATESTAGE, new { UiPageTypeId = uiPageTypeId, WorkflowStageId = uiPageMetadataModel.WorkflowStageId }, transaction: transaction);
+                            transaction.Commit();
+                            var DetailsMetatadata = db.Query<UiPageMetadataModel>(queryDisplaynames, new { ModuleLayoutId = uiPageMetadataModel.ModuleLayoutId }, transaction: transaction).ToList();
+                            var Detailsstage = db.Query<WorkflowStageModel>(getGetcurrentStagedetails, new { moduleId = uiPageMetadataModel.ModuleId }, transaction: transaction).ToList();
+
+                            List<UiPageMetadataModel> valuesgetList = new List<UiPageMetadataModel>();
+                            List<UiPageMetadataModel> controlsWithUiControlTypeId25 = new List<UiPageMetadataModel>();
+
+
+                            if (DetailsMetatadata.Count - 1 == StagesCount)
+                            {
+                                controlsWithUiControlTypeId25 = DetailsMetatadata
+                                    .Where(control => control.UiControlTypeId == 25)
+                                    .ToList();
+
+                                DetailsMetatadata.RemoveAll(control => control.UiControlTypeId == 25);
+
+                                int parentIdFor25 = controlsWithUiControlTypeId25[0].Id; ; 
+                                foreach (var Detail in DetailsMetatadata)
+                                {
+                                    //UiPageMetadataModel Valuesget = new UiPageMetadataModel();
+                                    int j = 0;
+                                    if (controlsWithUiControlTypeId25[0].UiControlTypeId == 25)
+                                    {
+                                        
+                                        UiPageMetadataModel Valuesget = new UiPageMetadataModel();
+                                        Valuesget.UiPageMetadataId = controlsWithUiControlTypeId25[0].Id;
+                                        Valuesget.UiPageTypeId = Detailsstage[j].UiPageTypeId;
+                                        Valuesget.ParentId = 0;
+                                        Valuesget.Orders = 0;
+                                        Valuesget.UiControlDisplayName = Detail.UiControlDisplayName;
+                                        Valuesget.MultiValueControl = false;
+                                        valuesgetList.Add(Valuesget);
+
+                                    }
+                                    //else {
+                                   
+                                    for (int i = 0; i < StagesCount; i++)
+                                        {
+                                        UiPageMetadataModel Valuesget = new UiPageMetadataModel();
+                                        Valuesget.UiPageMetadataId = DetailsMetatadata[i].Id;
+                                            Valuesget.UiPageTypeId = Detailsstage[j].UiPageTypeId;
+                                        Valuesget.ParentId = parentIdFor25;
+                                            Valuesget.Orders = i + 1;
+                                        Valuesget.UiControlDisplayName = Detailsstage[i].Name;
+                                        Valuesget.MultiValueControl = false;
+
+                                        valuesgetList.Add(Valuesget);
+                                    }
+                                    j++;
+                                    //}
+                                }
+                               
+                            }
+                            transaction.Commit();
+
+                            return parentId;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            return 0;
+        }
+
+
+
+
         /// <summary>
         /// Getting All Records From Ui Page Metadata 
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetDisplayName()
+        public List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int ModuleIds)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var Displaynames = db.Query<UiPageMetadataModel>(@"Select upm.Id,
-                                                       
-                                                        upm.UiControlDisplayName
+                                                           
+                                                        upm.UiControlDisplayName,
+														l.Name
                                                      
                                                     From [UiPageMetadata] upm
-
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													inner join [UiControlType] uct on uct.id=ucct.UiControlTypeId
+													inner join [Lookup] l on l.Id = uct.ControlCategoryId
+													inner join [UiPageMetadataModuleBridge] upmmb on upmmb.UiPageMetadataId=upm.Id
+													
                                                     
-                                                where 
-                                                    upm.IsDeleted = 0 
-                                                    ").ToList();
+                                                where upm.ModuleLayoutId=@moduleIds and l.Name !='DataControl' and upmmb.UiPageTypeId=@ModuleLayoutId
+                                                 and    upm.IsDeleted = 0 
+												 and ucct.IsDeleted=0
+												 and uct.IsDeleted=0
+												 and l.IsDeleted=0
+                                                    ", new { ModuleLayoutId = moduleLayoutId , moduleIds = ModuleIds }).ToList();
             return Displaynames;
         }
         /// <summary>
@@ -104,6 +234,28 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
 
             return Displaynames;
+        }
+
+        public List<UiPageTypeModel> GetPages (int moduleLayoutId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var Pages = db.Query<UiPageTypeModel>(@"Select up.Id,
+                                                      up.Name	
+                                                    From [ModuleLayout] upm
+													
+													inner join [Workflow] w on w.ModuleId=upm.ModuleId
+													inner join [WorkflowStage] ws on ws.WorkflowId	=  w.Id
+													inner join [UiPageType] up on up.Id=ws.UiPageTypeId
+                                                   where upm.Id = @ModuleLayoutId
+                                                   and ws.IsDeleted = 0
+                                                   and w.IsDeleted = 0
+												   and up.IsDeleted=0
+												   and upm.IsDeleted=0", new { ModuleLayoutId = moduleLayoutId}).ToList();
+
+
+            return Pages;
+
+                                                                                           
         }
 
         /// <summary>

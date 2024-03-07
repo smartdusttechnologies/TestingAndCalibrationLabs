@@ -43,6 +43,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         UiControlCategoryTypeModel GetById(int id);
+        List<UiControlCategoryTypeModel> GetControlCategoryType(int ControlId);
 
     }
 }

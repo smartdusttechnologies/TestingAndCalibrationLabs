@@ -48,12 +48,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<UiPageMetadataModel> GetDisplayName();
+        List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId, int ModuleIds);
         /// <summary>
         /// Existing Record In Ui Page Metadata based on moduleLayoutId
         /// </summary>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
         List<UiPageMetadataModel> GetExistingMetadata(int moduleLayoutId);
+        List<UiPageTypeModel> GetPages(int moduleLayoutId);
+
+        int CreateUsingPages(UiPageMetadataModel uiPageMetadataModel, int StagesCount);
+
+
     }
 }

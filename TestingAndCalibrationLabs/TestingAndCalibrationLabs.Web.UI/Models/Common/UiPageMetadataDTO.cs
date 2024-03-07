@@ -1,4 +1,6 @@
-﻿namespace TestingAndCalibrationLabs.Web.UI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestingAndCalibrationLabs.Web.UI.Models
 {
     /// <summary>
     /// It Conatains The Properties for Ui Page Metadata 
@@ -12,6 +14,7 @@
         /// <summary>
         /// It Contains The Name of The UiPageMetadata
         /// </summary>
+
         public string Name { get; set; }
         /// <summary>
         /// It Contains The UiPageTypeId of The UiPageMetadata
@@ -24,6 +27,7 @@
         /// <summary>
         /// It Contains The UiControlTypeId of The UiPageMetadata
         /// </summary>
+
         public int UiControlTypeId { get; set; }
         /// <summary>
         /// It Contains The Name of The Ui Control Type
@@ -36,10 +40,12 @@
         /// <summary>
         /// It Contains The UiControlDisplayName of The Ui Page Metadata
         /// </summary>
+
         public string UiControlDisplayName { get; set; }
         /// <summary>
         /// It Contains The Id of The Data Type
         /// </summary>
+
         public int DataTypeId { get; set; }
         /// <summary>
         /// It Contains The Name of The Data Type
@@ -77,6 +83,7 @@
         /// <summary>
         /// It Contains The ParentId From UiPageMetadataModuleBridge
         /// </summary>
+
         public int ParentId { get; set; }
         /// <summary>
         /// It Contains The ParentDisplayName From ComboTree
