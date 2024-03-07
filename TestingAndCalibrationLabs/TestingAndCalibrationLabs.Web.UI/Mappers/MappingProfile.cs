@@ -36,7 +36,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<WorkflowDTO,WorkflowModel>().ReverseMap();
             CreateMap<WorkflowStageDTO,WorkflowStageModel>().ReverseMap();
             CreateMap<UiPageNavigationModel, UiPageNavigationDTO>().ReverseMap();
-            CreateMap<PasswordPolicyModel, PasswordPolicyDTO>().ReverseMap();
+            CreateMap<LayoutModel, LayoutDTO>().ReverseMap();
+         //   CreateMap<ModuleLayoutModel, ModuleLayoutDTO>().ReverseMap();
+
+            //CreateMap<OtpDTO, OtpModel>().ReverseMap();
+
+            CreateMap<ExternalLogin, UserModel>().ReverseMap();
         }
     }
 }

@@ -94,5 +94,43 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return insertedUserId;
         }
+        /// <summary>
+        /// Method to External Insert User Info in DB
+        /// </summary>
+        public int ExternalInsert(UserModel user)
+        {
+            var p = new DynamicParameters();
+            p.Add("Id", 0, DbType.Int32, ParameterDirection.Output);
+            p.Add("@UserName", user.UserName);
+            p.Add("@FirstName", user.FirstName);
+            p.Add("@LastName", user.LastName);
+            p.Add("@Email", user.Email);
+            p.Add("@ISDCode", user.ISDCode);
+            p.Add("@TwoFactor", user.TwoFactor);
+            p.Add("@Locked", user.Locked);
+            p.Add("@IsActive", user.IsActive);
+            p.Add("@EmailValidationStatus", user.EmailValidationStatus);
+            p.Add("@Orgid", user.OrgId);
+            p.Add("@AdminLevel", user.AdminLevel);
+
+            string userInsertQuery = @"Insert into [User](UserName, FirstName, LastName, Email, TwoFactor, Locked, IsActive, EmailValidationStatus,Orgid, AdminLevel) 
+                values (@UserName, @FirstName, @LastName, @Email, @TwoFactor, @Locked, @IsActive, @EmailValidationStatus,@Orgid, @AdminLevel);
+                SELECT @Id = @@IDENTITY";
+
+            string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
+
+            using IDbConnection db = _connectionFactory.GetConnection;
+            using var transaction = db.BeginTransaction();
+            db.Execute(userInsertQuery, p, transaction);
+
+
+            int insertedUserId = p.Get<int>("@Id");
+
+            // assign the general user role by default.
+            db.Execute(userRoleInsertQuery, new { UserId = insertedUserId, RoleId = 2 }, transaction);
+            transaction.Commit();
+
+            return insertedUserId;
+        }
     }
 }

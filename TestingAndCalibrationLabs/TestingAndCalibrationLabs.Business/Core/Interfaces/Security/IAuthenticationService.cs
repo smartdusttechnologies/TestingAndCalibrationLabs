@@ -19,5 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         //TODo: This should be moved to User service.
         RequestResult<bool> Add(UserModel user, string password);
+        RequestResult<LoginToken> ExternalAdd(UserModel userModel);
     }
 }

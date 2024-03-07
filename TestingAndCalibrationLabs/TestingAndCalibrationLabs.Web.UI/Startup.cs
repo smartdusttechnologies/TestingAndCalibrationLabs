@@ -24,6 +24,10 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+//using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
+//using TestingAndCalibrationLabs.Business.Services.Otp;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -48,12 +52,20 @@ namespace TestingAndCalibrationLabs.Web.UI
 
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-          .AddJwtBearer(options =>
-          {
-              options.TokenValidationParameters = tokenValidationParameters;
-          });
+
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            }).AddCookie()
+    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    {
+        options.ClientId =Configuration.GetSection("GoogleKeys:ClientId").Value;
+        options.ClientSecret = Configuration.GetSection("GoogleKeys:ClientSecret").Value;
+    })
+    .AddMicrosoftAccount("Microsoft", options =>
+    {
+        options.ClientId = Configuration.GetSection("MicrosoftKeys:ClientId").Value;
+        options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Value;
+    }); ;
 
             //PolicyBases Authorization
             services.AddAuthorization(options =>

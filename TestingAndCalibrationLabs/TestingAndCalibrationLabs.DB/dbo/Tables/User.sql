@@ -4,7 +4,7 @@ CREATE TABLE [dbo].[User] (
     [FirstName]              NVARCHAR (50)  NOT NULL,
     [LastName]               NVARCHAR (50)  NULL,
     [Email]                  NVARCHAR (100) NOT NULL,
-    [Mobile]                 NVARCHAR (50)  NOT NULL,
+    [Mobile]                 NVARCHAR (50)  NULL,
     [Country]                NVARCHAR (100) NULL,
     [ISDCode]                NVARCHAR (50)  NULL,
     [TwoFactor]              BIT            NULL,

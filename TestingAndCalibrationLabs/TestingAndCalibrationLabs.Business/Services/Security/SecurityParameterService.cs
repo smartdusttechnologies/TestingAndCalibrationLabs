@@ -62,6 +62,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }
         }
+        
         //}
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
@@ -149,6 +150,54 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter confirm password ", Severity = ValidationSeverity.Error, SourceId = "ReEnterPassword" });
             }
             return new RequestResult<bool>(validationMessages);
+        }
+        private RequestResult<bool> ValidateExternalnewuser(UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            if (user.FirstName == null)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter first name", Severity = ValidationSeverity.Error, SourceId = "FirstName" });
+            }
+
+            if (user.Email == null)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Email should have a fromat", Severity = ValidationSeverity.Error, SourceId = "Email" });
+            }
+            if (user.Email != null && !Helpers.ValidateMinimumSpecialCharsemail(user.Email))
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the email should have is 1 ", Severity = ValidationSeverity.Error, SourceId = "Email" });
+            }
+            if (user.LastName == null)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter last name", Severity = ValidationSeverity.Error, SourceId = "LastName" });
+            }
+
+            if (user.Organizations == null)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please select a Organizations", Severity = ValidationSeverity.Error, SourceId = "Organizations" });
+            }
+            if (user.UserName == null)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Please enter user name", Severity = ValidationSeverity.Error, SourceId = "Username" });
+            }
+
+            return new RequestResult<bool>(validationMessages);
+        }
+
+        public RequestResult<bool> ValidateExternalNewuserPolicy(UserModel user)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            try
+            {
+                var newuservalidation = ValidateExternalnewuser(user);
+                return (newuservalidation);
+            }
+            catch (Exception ex)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
+                return new RequestResult<bool>(false, validationMessages);
+
+            }
         }
     }
 }
