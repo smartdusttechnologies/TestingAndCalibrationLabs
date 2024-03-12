@@ -184,6 +184,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RequestResult<bool>(validationMessages);
         }
 
+        /// <summary>
+        /// Method to validate that all details of user is correct or not
+        /// </summary>
+
         public RequestResult<bool> ValidateExternalNewuserPolicy(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
