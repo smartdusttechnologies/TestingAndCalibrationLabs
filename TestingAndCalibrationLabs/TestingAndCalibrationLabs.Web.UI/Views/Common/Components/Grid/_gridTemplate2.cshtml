@@ -1,27 +1,22 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
-
 <style>
     table {
         border-collapse: collapse;
         width: 100%;
     }
-
     th, td {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
         position: relative;
     }
-
     th {
         background-color: #f2f2f2;
         cursor: move;
     }
-
     .checkbox-container {
         margin-bottom: 10px;
     }
-
     .options-indicator {
         position: absolute;
         top: 50%;
@@ -29,7 +24,6 @@
         transform: translateY(-50%);
         cursor: pointer;
     }
-
     .checkbox-dropdown {
         display: none;
         position: absolute;
@@ -37,27 +31,22 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         z-index: 1;
     }
-
         .checkbox-dropdown label {
             display: block;
             padding: 6px;
         }
-
         .checkbox-dropdown input {
             display: block;
             padding: 6px;
         }
-
     .scrollable-menu {
         height: auto;
         max-height: 200px;
         overflow-x: hidden;
     }
-
     th:hover {
         cursor: pointer;
     }
-
     /* Style for the rounded checkbox */
     .rounded-checkbox {
         display: inline-block;
@@ -66,14 +55,12 @@
         cursor: pointer;
         user-select: none;
     }
-
         /* Hide the default checkbox */
         .rounded-checkbox input {
             position: absolute;
             opacity: 0;
             cursor: pointer;
         }
-
     /* Style for the custom rounded checkbox */
     .checkmark {
         position: absolute;
@@ -82,7 +69,6 @@
         border: 1px solid #2288d3;
         border-radius: 50%;
     }
-
         /* Style for the check symbol inside the checkbox */
         .checkmark:after {
             top: 1px;
@@ -96,26 +82,21 @@
             border-right: 2px solid #2288d3;
             rotate: 45deg;
         }
-
     /* Show the check symbol when the checkbox is checked */
     .rounded-checkbox input:checked + .checkmark:after {
         display: block;
     }
-
     ::-webkit-scrollbar {
         width: 7px;
     }
-
     ::-webkit-scrollbar-thumb {
         background: gray;
         border-radius: 10px;
     }
-
     .dataTables_wrapper table.dataTable thead th,
     .dataTables_wrapper table.dataTable tbody td {
         white-space: normal;
     }
-
 </style>
 <input type="hidden" asp-for="ModuleId" />
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
@@ -148,7 +129,7 @@
                     }
                     @foreach (var item in Model.Fields)
                     {
-                        <th id="col+@nt" style="@(nt > 4 ? "display: none;": "");min-width:200px">
+                        <th id="col_@nt" style="@(nt > 4 ? "display: none;": "");min-width:200px">
                             <div class="row">
                                 <div class="col-10 wrapcolname">
                                     @Html.DisplayFor(fieldItem => item.UiControlDisplayName)
@@ -157,9 +138,7 @@
                                     <span class="options-indicator px-2 text-center border " onclick="toggleDropdown(@nt,this)">&#8942;</span>
                                 </div>
                             </div>
-
                         </th>
-
                         nt++;
                     }
                     <th style="min-width:200px">Actions</th>
@@ -177,10 +156,9 @@
                             {
                                 break;
                             }
-                            <td data-column="col+@tdcount" style="@(tdcount > 4 ? "display: none;" : "");min-width:200px">
+                            <td data-column="col_@tdcount" style="@(tdcount > 4 ? "display: none;" : "");min-width:200px">
                                 @Html.DisplayFor(modelItem => itemValue.Value)
                             </td>
-
                             count++;
                             tdcount++;
                         }
@@ -191,14 +169,12 @@
                             <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-toggle="modal" data-target="#deleteModalPopup" onclick="setValue(@item.Key)"></a>
                         </td>
-
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="deleteModalPopup" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -219,7 +195,6 @@
         </div>
     </div>
 </div>
-
 <!--Dropdown-->
 <div id="colDropdown" class="checkbox-dropdown dropdown-indicator">
     <div class="rounded text-light py-2 row" style="background-color:#2288d3;width:100%;margin:auto;"><small class="px-3 col-9 my-auto"><i class="fa fa-th" aria-hidden="true"></i> Columns</small><span class="col-2 text-center text-dark "><i class="fa fa-window-close" aria-hidden="true"></i></span></div>
@@ -232,9 +207,8 @@
         {
             <label class="rounded-checkbox mx-2 dropdown-indicator collabel" style="margin:-2px 1px;">
 
-                <input type="checkbox" class="dropdown-checkbox mx-2 dropdown-indicator" id="colcheckinput@(colcheck)" data-column="col+@colcheck"><span class="checkmark m-2 dropdown-indicator"></span>&nbsp;&nbsp;&nbsp;&nbsp;<small class="ml-3 dropdown-indicator">@Html.DisplayFor(fieldItem => colmn.UiControlDisplayName)</small>
+                <input type="checkbox" class="dropdown-checkbox mx-2 dropdown-indicator" id="colcheckinput@(colcheck)" data-column="col_@colcheck"><span class="checkmark m-2 dropdown-indicator"></span>&nbsp;&nbsp;&nbsp;&nbsp;<small class="ml-3 dropdown-indicator">@Html.DisplayFor(fieldItem => colmn.UiControlDisplayName)</small>
             </label>
-
             colcheck++;
         }
     </div>
@@ -247,40 +221,30 @@
                 [5, 10, 25, 50, -1],
                 [5, 10, 25, 50, 'All'],
             ],
-
             scrollX: true,
             "bDestroy": true
         });
         $('#gridSearch').keyup(function () {
             oTable.search($(this).val()).draw();
         })
-
         // Disable sorting when clicking on the three-dot icon
         $('.options-indicator').on('click', function (e) {
             console.log('button clicked');
             e.stopPropagation();
         });
-
-
     });
-
     //Call the Delete Method Of Common Page
     let deleteFun = (id) => {
         let moduleId = parseInt($("#ModuleId").val())
         window.location.href = "/common/delete?id=" + id + "&moduleId=" + moduleId;
     }
-
     const clearText = () => {
         const inputID = document.querySelector("#gridSearch");
         inputID.value = "";
     }
-
-
     //Set The Value To Popup Delete Button
     let setValue = (id) => $("#deletePopup").val(id);
-
     const dropdowns = document.querySelectorAll('.checkbox-dropdown');
-
     function toggleDropdown(colnumber, threedot) {
         var checkcolinput = document.getElementById("myInput");
         checkcolinput.value = "";
@@ -293,8 +257,6 @@
         dropdownContent.style.display = 'none';
         checkinput = "colcheckinput" + colnumber;
         const checkboxxes = document.querySelectorAll('.dropdown-checkbox');
-
-
         // Add event listener to each checkbox in the dropdown
         checkboxxes.forEach((checkboxinputs, index) => {
             if (checkboxinputs.id == checkinput) {
@@ -308,8 +270,6 @@
                 checkboxinputs.nextElementSibling.style.background = "";
             }
         });
-
-
         dropdowns.forEach(dropdownn => {
             if (dropdownn.id != dropdownId) {
                 dropdownn.style.display = 'none';
@@ -323,19 +283,11 @@
                 dropdownn.style.display = dropdownn.style.display === 'block' ? 'none' : 'block';
                 console.log('no');
             }
-
         });
-
-
     }
-
-
-
     document.addEventListener('DOMContentLoaded', function () {
         // Get all checkboxes and dropdowns
         const checkboxes = document.querySelectorAll('.dropdown-checkbox');
-
-
         // Add event listener to each checkbox in the dropdown
         checkboxes.forEach((checkbox, index) => {
             if (index < 4) {
@@ -345,15 +297,12 @@
                 if (!Array.from(checkboxes).some(c => c.checked)) {
                     this.checked = true;
                 }
-
                 // Toggle the visibility of the corresponding column
                 const columnId = this.getAttribute('data-column');
                 const cellsInColumn = document.querySelectorAll(`td[data-column="${columnId}"], th[id="${columnId}"]`);
-
                 cellsInColumn.forEach(cell => {
                     cell.style.display = this.checked ? 'table-cell' : 'none';
                 });
-
                 // Uncheck the corresponding checkbox in other dropdowns
                 document.querySelectorAll(`.dropdown-checkbox[data-column="${columnId}"]`)
                     .forEach(otherCheckbox => {
@@ -361,29 +310,24 @@
                             otherCheckbox.checked = this.checked;
                         }
                     });
-
                 oTable = $('#gridtable').DataTable({
                     lengthMenu: [
                         [5, 10, 25, 50, -1],
                         [5, 10, 25, 50, 'All'],
                     ],
-
                     scrollX: true,
                     "bDestroy": true
                 });
                 $('#gridSearch').keyup(function () {
                     oTable.search($(this).val()).draw();
                 })
-
                 // Disable sorting when clicking on the three-dot icon
                 $('.options-indicator').on('click', function (e) {
                     console.log('button clicked');
                     e.stopPropagation();
                 });
-
             });
         });
-
         // Close the dropdowns when clicking outside of them
         document.addEventListener('click', function (event) {
             if (!event.target.matches('.options-indicator')) {
@@ -395,7 +339,6 @@
             }
         });
     });
-
     function filterFunction(num) {
         var input, filter, ul, li, a, i;
         input = document.getElementById("myInput");
@@ -413,4 +356,3 @@
         }
     }
 </script>
-

@@ -7,7 +7,6 @@ using TestingAndCalibrationLabs.Web.UI.Models;
 using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
     /// <summary>
@@ -22,7 +21,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _authenticationService = authenticationService;
             _mapper = mapper;
         }
-
         /// <summary>
         /// Method to get the user details from google.
         /// </summary>
@@ -34,33 +32,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     RedirectUri = Url.Action("GoogleResponse")
                 });
         }
-
         /// <summary>
         /// Method to process login using google details.
         /// </summary>
         public async Task<IActionResult> GoogleResponse()
-        {
-            
-            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
- 
+        {            
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme); 
             var user = result.Principal;
             var email = user.FindFirstValue(ClaimTypes.Email);
             var firstName = user.FindFirstValue(ClaimTypes.GivenName);
             var lastName = user.FindFirstValue(ClaimTypes.Surname);
             var orgid = 0;
-
-
             var externalLogin = new ExternalLogin
             {
-
                 UserName = email,
                 Email = email,
                 FirstName = firstName,
                 LastName = lastName,
                 Organizations="0",
                 OrgId=orgid,
-
-
             };
             var userModel = _mapper.Map<ExternalLogin, UserModel>(externalLogin);
             var resultt = _authenticationService.ExternalAdd(userModel);
@@ -70,13 +60,10 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return RedirectToAction("Index", "TestReport");
             }
             return BadRequest(resultt.ValidationMessages);
-
         }
-
         /// <summary>
         /// Method to get the user details from Microsoft.
         /// </summary>
-
         public async Task LoginWithMicrosoft()
         {
             await HttpContext.ChallengeAsync("Microsoft",
@@ -85,32 +72,25 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     RedirectUri = Url.Action("MicrosoftResponse")
                 });
         }
-
-
         /// <summary>
         /// Method to process login using microsoft details.
         /// </summary>
         public async Task<IActionResult> MicrosoftResponse()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             var user = result.Principal;
             var email = user.FindFirstValue(ClaimTypes.Email);
             var firstName = user.FindFirstValue(ClaimTypes.GivenName);
             var lastName = user.FindFirstValue(ClaimTypes.Surname);
             var orgid = 0;
-
-
             var externalLogin = new ExternalLogin
             {
-
                 UserName = email,
                 Email = email,
                 FirstName = firstName,
                 LastName = lastName,
                 Organizations = "0",
                 OrgId = orgid,
-
             };
             var userModel = _mapper.Map<ExternalLogin, UserModel>(externalLogin);
             var resultt = _authenticationService.ExternalAdd(userModel);
@@ -120,9 +100,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 return RedirectToAction("Index", "TestReport");
             }
             return BadRequest(resultt.ValidationMessages);
-
         }
-
-
     }
 }

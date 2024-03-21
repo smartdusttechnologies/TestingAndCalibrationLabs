@@ -7,7 +7,6 @@ using System.Text;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
-
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
     public class UserRepository : IUserRepository
@@ -16,7 +15,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// using the userRespository
         /// </summary>
         private readonly IConnectionFactory _connectionFactory;
-
         public UserRepository(IConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
@@ -67,31 +65,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             p.Add("@MobileValidationStatus", user.MobileValidationStatus);
             p.Add("@OrgId", user.OrgId);
             p.Add("@AdminLevel", user.AdminLevel);
-
             string userInsertQuery = @"Insert into [User](UserName, FirstName, LastName, Email, Mobile, Country, ISDCode, TwoFactor, Locked, IsActive, EmailValidationStatus, MobileValidationStatus, OrgId, AdminLevel) 
                 values (@UserName, @FirstName, @LastName, @Email, @Mobile, @Country, @ISDCode, @TwoFactor, @Locked, @IsActive, @EmailValidationStatus, @MobileValidationStatus, @OrgId, @AdminLevel);
                 SELECT @Id = @@IDENTITY";
-
             string passwordLoginInsertQuery = @"Insert into [PasswordLogin](PasswordHash, PasswordSalt, UserId, ChangeDate) 
                 values (@PasswordHash, @PasswordSalt, @UserId, @ChangeDate)";
-
             string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
-
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(userInsertQuery, p, transaction);
-
-
             int insertedUserId = p.Get<int>("@Id");
-
             passwordLogin.UserId = insertedUserId;
             passwordLogin.ChangeDate = DateTime.Now;
             db.Execute(passwordLoginInsertQuery, passwordLogin, transaction);
-
             // assign the general user role by default.
             db.Execute(userRoleInsertQuery, new { UserId = insertedUserId, RoleId = 2 }, transaction);
             transaction.Commit();
-
             return insertedUserId;
         }
         /// <summary>
@@ -112,24 +101,17 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             p.Add("@EmailValidationStatus", user.EmailValidationStatus);
             p.Add("@Orgid", user.OrgId);
             p.Add("@AdminLevel", user.AdminLevel);
-
             string userInsertQuery = @"Insert into [User](UserName, FirstName, LastName, Email, TwoFactor, Locked, IsActive, EmailValidationStatus,Orgid, AdminLevel) 
                 values (@UserName, @FirstName, @LastName, @Email, @TwoFactor, @Locked, @IsActive, @EmailValidationStatus,@Orgid, @AdminLevel);
                 SELECT @Id = @@IDENTITY";
-
             string userRoleInsertQuery = @"Insert into [UserRole](UserId, RoleId) values (@UserId, @RoleId)";
-
             using IDbConnection db = _connectionFactory.GetConnection;
             using var transaction = db.BeginTransaction();
             db.Execute(userInsertQuery, p, transaction);
-
-
             int insertedUserId = p.Get<int>("@Id");
-
             // assign the general user role by default.
             db.Execute(userRoleInsertQuery, new { UserId = insertedUserId, RoleId = 2 }, transaction);
             transaction.Commit();
-
             return insertedUserId;
         }
     }

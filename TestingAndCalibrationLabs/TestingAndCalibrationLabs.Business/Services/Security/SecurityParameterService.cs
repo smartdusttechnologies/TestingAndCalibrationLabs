@@ -8,26 +8,20 @@ using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
-
 namespace TestingAndCalibrationLabs.Business.Services
 {
     public class SecurityParameterService : ISecurityParameterService
     {
-
         private readonly ISecurityParameterRepository _securityParameterRepository;
         private readonly ILogger _logger;
-
         public SecurityParameterService()
         {
-
         }
         public SecurityParameterService(ISecurityParameterRepository securityParameterRepository, ILogger logger)
         {
             _securityParameterRepository = securityParameterRepository;
             _logger = logger;
-
         }
-
         /// <summary>
         /// Method to validate Newuser Policy
         /// </summary>
@@ -44,7 +38,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
         }
         public RequestResult<bool> ValidateNewuserPolicy(UserModel user)
@@ -59,10 +52,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages); ;
-
             }
-        }
-        
+        }     
         //}
         /// <summary>
         /// Method to validate the password like Length, Uppercaps, LowerCaps, Min and Max Digits
@@ -70,7 +61,6 @@ namespace TestingAndCalibrationLabs.Business.Services
         private RequestResult<bool> ValidatePassword(string password, SecurityParameter securityParameter)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-
             if (password == null || password.Length < securityParameter.MinLength)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum length of the password should be " + securityParameter.MinLength + "characters long", Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
@@ -81,25 +71,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of small characters the password should have is " + securityParameter.MinSmallChars, Severity = ValidationSeverity.Error , SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumCapsChars(password, securityParameter.MinCaps))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of capital characters the password should have is " + securityParameter.MinCaps, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumDigits(password, securityParameter.MinNumber))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of numeric characters the password should have is " + securityParameter.MinNumber, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateMinimumSpecialChars(password, securityParameter.MinSpecialChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Minimum number of special characters the password should have is " + securityParameter.MinSpecialChars, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
                 return new RequestResult<bool>(false, validationMessages); ;
             }
-
             if (!Helpers.ValidateDisallowedChars(password, securityParameter.DisAllowedChars))
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Characters which are not allowed in password are " + securityParameter.DisAllowedChars, Severity = ValidationSeverity.Error, SourceId = "EnterPassword" });
@@ -158,7 +144,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter first name", Severity = ValidationSeverity.Error, SourceId = "FirstName" });
             }
-
             if (user.Email == null)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Email should have a fromat", Severity = ValidationSeverity.Error, SourceId = "Email" });
@@ -171,7 +156,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter last name", Severity = ValidationSeverity.Error, SourceId = "LastName" });
             }
-
             if (user.Organizations == null)
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please select a Organizations", Severity = ValidationSeverity.Error, SourceId = "Organizations" });
@@ -180,14 +164,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Please enter user name", Severity = ValidationSeverity.Error, SourceId = "Username" });
             }
-
             return new RequestResult<bool>(validationMessages);
         }
-
         /// <summary>
         /// Method to validate that all details of user is correct or not
         /// </summary>
-
         public RequestResult<bool> ValidateExternalNewuserPolicy(UserModel user)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -200,7 +181,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 validationMessages.Add(new ValidationMessage { Reason = "Validation failed!", Severity = ValidationSeverity.Error });
                 return new RequestResult<bool>(false, validationMessages);
-
             }
         }
     }

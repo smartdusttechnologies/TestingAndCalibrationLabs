@@ -24,8 +24,6 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
-//using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
-//using TestingAndCalibrationLabs.Business.Services.Otp;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 
@@ -37,10 +35,8 @@ namespace TestingAndCalibrationLabs.Web.UI
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-        public static TokenValidationParameters tokenValidationParameters;
-        
+        public static TokenValidationParameters tokenValidationParameters;        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -49,10 +45,8 @@ namespace TestingAndCalibrationLabs.Web.UI
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddNewtonsoftJson();
-
             services.AddAuthentication(options =>
             {
-
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
             }).AddCookie()
@@ -65,13 +59,15 @@ namespace TestingAndCalibrationLabs.Web.UI
     {
         options.ClientId = Configuration.GetSection("MicrosoftKeys:ClientId").Value;
         options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Value;
-    }); ;
-
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = tokenValidationParameters;
+    }); 
             //PolicyBases Authorization
             services.AddAuthorization(options =>
             {
-                     
-                     options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Add); });
+                options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Add); });
                 options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Edit); });
                 options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimType.ApplicationPermission.ToString(), Permissions.UsersPermissions.Read); });
                 //options.AddPolicy(PolicyTypes.Users.Manage, policy => { policy.RequireClaim(CustomClaimTypes.Permission, Permissions.UsersPermissions.Delete); });

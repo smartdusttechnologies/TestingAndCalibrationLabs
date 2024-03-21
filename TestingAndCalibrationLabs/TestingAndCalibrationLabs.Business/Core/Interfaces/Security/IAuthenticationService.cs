@@ -19,7 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// </summary>
         //TODo: This should be moved to User service.
         RequestResult<bool> Add(UserModel user, string password);
-
         /// <summary>
         /// Interfaces to External Add new and validate existing user for Registration
         /// </summary>
