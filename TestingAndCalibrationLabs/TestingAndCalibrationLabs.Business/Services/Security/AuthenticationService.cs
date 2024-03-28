@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -78,15 +83,12 @@ namespace TestingAndCalibrationLabs.Business.Services
                 //    return new RequestResult<LoginToken>(validationMessages);
                 //}
                 #endregion
-
                 loginRequest.Id = passwordLogin.UserId;
                 token = GenerateTokens(loginRequest.UserName);
-
                 //TODO: this should be a async operation and can be made more cross-cutting design feature rather than calling inside the actual feature.
                 loginRequest.LoginDate = DateTime.Now;
                 loginRequest.PasswordHash = valueHash;
                 _logger.LoginLog(loginRequest);
-
                 return new RequestResult<LoginToken>(token, validationMessages);
             }
             catch (Exception ex)
@@ -109,10 +111,8 @@ namespace TestingAndCalibrationLabs.Business.Services
         private LoginToken GenerateTokens(string userName)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
-
             DateTime now = DateTime.Now;
             var claims = GetTokenClaims(userName, now);
-
             var accessJwt = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -121,9 +121,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 expires: now.AddDays(1),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
             );
-
             var encodedAccessJwt = new JwtSecurityTokenHandler().WriteToken(accessJwt);
-
             var refreshJwt = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
@@ -133,7 +131,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
             );
             var encodedRefreshJwt = new JwtSecurityTokenHandler().WriteToken(refreshJwt);
-
             var loginToken = new LoginToken
             {
                 UserName = userName,
@@ -154,11 +151,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
             // You can add other claims here, if you want:
-
             var userModel = _roleRepository.GetUserByUserName(sub);
             //var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName));
             //var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName));
-
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, sub),
@@ -172,17 +167,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             //{
             //    claims.Add(new Claim(ClaimTypes.Role, role.Item2));
             //}
-
             claims.Add(new Claim(CustomClaimType.UserId.ToString(), userModel.Id.ToString()));
-
             if (sub.ToLower() == "sysadmin")
                 claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), "0"));
             else
                 claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), userModel.OrgId.ToString()));
-
             return claims;
         }
-
         /// <summary>
         /// Method to Add new and validate existing user for Registration
         /// </summary>
@@ -206,6 +197,32 @@ namespace TestingAndCalibrationLabs.Business.Services
             }
         }
         /// <summary>
+        /// Method to Add new user and validate existing user for given external details  
+        /// </summary>
+        public RequestResult<LoginToken> ExternalAdd(UserModel user)
+        {
+            try
+            {
+                int userID;
+                UserModel existingUser = _userRepository.Get(user.UserName);
+                if (existingUser == null)
+                {
+                    user.IsActive = true;
+                    userID = _userRepository.ExternalInsert(user);
+                }
+                else
+                {
+                    userID = existingUser.Id;
+                }                    
+                    RequestResult<LoginToken> resullt =  ExternalLoginUser(user , userID);
+                    return resullt ;
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<LoginToken>();
+            }
+        }
+        /// <summary>
         /// Method to Validate the New User Registation
         /// </summary>
         private RequestResult<bool> ValidateNewUserRegistration(UserModel user, string password)
@@ -213,7 +230,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             var validatePasswordResult = _securityParameterService.ValidatePasswordPolicy(user.OrgId, password);
             var validateUserfieldsResult = _securityParameterService.ValidateNewuserPolicy(user);
-
             var validateexistinguser = ExistingUservalidation(user);
             //UserModel existingUser = _userRepository.Get(user.UserName);
             //if (existingUser != null)
@@ -225,9 +241,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             validationMessages.AddRange(validatePasswordResult.ValidationMessages);
             validationMessages.AddRange(validateexistinguser.ValidationMessages);
             validationMessages.AddRange(validateUserfieldsResult.ValidationMessages);
-
             return new RequestResult<bool>(validationMessages);
-        }
+        }        
         /// <summary>
         /// Method to Validate the Existing User
         /// </summary>
@@ -242,6 +257,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages);
             }
             return new RequestResult<bool>(validationMessages);
+        }
+        /// <summary>
+        /// Method to get details from db table for external login and sent to generate token method
+        /// </summary>
+        private RequestResult<LoginToken> ExternalLoginUser( UserModel users , int userId )
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            var user = _userRepository.Get(userId);
+            if (!user.IsActive && user.Locked)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Access denied.", Severity = ValidationSeverity.Error });
+                return new RequestResult<LoginToken>(validationMessages);
+            }           
+           var token = GenerateTokens(users.UserName);
+           return new RequestResult<LoginToken>(token, validationMessages);
         }
     }
 }

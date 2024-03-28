@@ -1,65 +1,180 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        position: relative;
+    }
+    th {
+        background-color: #f2f2f2;
+        cursor: move;
+    }
+    .checkbox-container {
+        margin-bottom: 10px;
+    }
+    .options-indicator {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    .checkbox-dropdown {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+        .checkbox-dropdown label {
+            display: block;
+            padding: 6px;
+        }
+        .checkbox-dropdown input {
+            display: block;
+            padding: 6px;
+        }
+    .scrollable-menu {
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+    }
+    th:hover {
+        cursor: pointer;
+    }
+    /* Style for the rounded checkbox */
+    .rounded-checkbox {
+        display: inline-block;
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        user-select: none;
+    }
+        /* Hide the default checkbox */
+        .rounded-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+    /* Style for the custom rounded checkbox */
+    .checkmark {
+        position: absolute;
+        height: 13px;
+        width: 13px;
+        border: 1px solid #2288d3;
+        border-radius: 50%;
+    }
+        /* Style for the check symbol inside the checkbox */
+        .checkmark:after {
+            top: 1px;
+            right: 3px;
+            content: " ";
+            position: absolute;
+            display: none;
+            width: 5px;
+            height: 7px;
+            border-bottom: 2px solid #2288d3;
+            border-right: 2px solid #2288d3;
+            rotate: 45deg;
+        }
+    /* Show the check symbol when the checkbox is checked */
+    .rounded-checkbox input:checked + .checkmark:after {
+        display: block;
+    }
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: gray;
+        border-radius: 10px;
+    }
+    .dataTables_wrapper table.dataTable thead th,
+    .dataTables_wrapper table.dataTable tbody td {
+        white-space: normal;
+    }
+</style>
 <input type="hidden" asp-for="ModuleId" />
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">
     <div class="row mb-1">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-6 mt-2">
-            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">@if(@Model.Fields.Count()> 0){@Model.Fields.First().UiPageTypeName}</h2>
+            <h2 class="mb-2 ms-1 me-1" style="padding:0px 12px;">
+                @if (@Model.Fields.Count() > 0)
+                {
+                    @Model.Fields.First().UiPageTypeName
+                }
+            </h2>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-2">
             <a href="/common/create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-3">
-            <div class="inputSearchGrid text-right">
-                <input type="text" id="gridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
-                <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
-                <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
-            </div>
+            @*  <div class="inputSearchGrid text-right">
+            <input type="text" id="gridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
+            <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
+            <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
+            </div> *@
         </div>
     </div>
     <div class="table-responsive simple-pagination card shadow border-radius-grid">
-        <table id="grid" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
+        <table id="gridtable" class="table table-striped dt-responsive nowrap cell-border" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    @{
+                        int nt = 1;
+                    }
                     @foreach (var item in Model.Fields)
                     {
-                        <th> @Html.DisplayFor(fieldItem => item.UiControlDisplayName)</th>
+                        <th id="col_@nt" style="@(nt > 4 ? "display: none;": "");min-width:200px">
+                            <div class="row">
+                                <div class="col-10 wrapcolname">
+                                    @Html.DisplayFor(fieldItem => item.UiControlDisplayName)
+                                </div>
+                                <div class="col-2 ">
+                                    <span class="options-indicator px-2 text-center border " onclick="toggleDropdown(@nt,this)">&#8942;</span>
+                                </div>
+                            </div>
+                        </th>
+                        nt++;
                     }
-                    <th>Stage</th>
-                    <th>Actions</th>
+                    <th style="min-width:200px">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="gridtbody">
                 @foreach (var item in Model.FieldValues)
                 {
                     int count = 0;
+                    int tdcount = 1;
                     <tr>
-                        @foreach(var itemValue in item.Value)
+                        @foreach (var itemValue in item.Value)
                         {
-                            if (count == 4)
+                            if (tdcount == nt)
                             {
                                 break;
                             }
-                            <td>
+                            <td data-column="col_@tdcount" style="@(tdcount > 4 ? "display: none;" : "");min-width:200px">
                                 @Html.DisplayFor(modelItem => itemValue.Value)
                             </td>
-
                             count++;
+                            tdcount++;
                         }
-                        <td>
-                            @Html.DisplayFor(modelitem=>Model.WorkflowStageName)
-                        </td>
-                        <td>
-                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>|
+                        @*   <td>
+                    @Html.DisplayFor(modelitem => Model.WorkflowStageName)
+                    </td> *@
+                        <td style="min-width:200px">
+                            <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-toggle="modal" data-target="#deleteModalPopup" onclick="setValue(@item.Key)"></a>
                         </td>
-
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="deleteModalPopup" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -80,26 +195,164 @@
         </div>
     </div>
 </div>
+<!--Dropdown-->
+<div id="colDropdown" class="checkbox-dropdown dropdown-indicator">
+    <div class="rounded text-light py-2 row" style="background-color:#2288d3;width:100%;margin:auto;"><small class="px-3 col-9 my-auto"><i class="fa fa-th" aria-hidden="true"></i> Columns</small><span class="col-2 text-center text-dark "><i class="fa fa-window-close" aria-hidden="true"></i></span></div>
+    <input type="text" placeholder="Search Here.." id="myInput" onkeyup="filterFunction(@nt)" class="form-control dropdown-indicator" style="height:30px">
+    @{
+        int colcheck = 1;
+    }
+    <div class="scrollable-menu dropdown-indicator">
+        @foreach (var colmn in Model.Fields)
+        {
+            <label class="rounded-checkbox mx-2 dropdown-indicator collabel" style="margin:-2px 1px;">
+
+                <input type="checkbox" class="dropdown-checkbox mx-2 dropdown-indicator" id="colcheckinput@(colcheck)" data-column="col_@colcheck"><span class="checkmark m-2 dropdown-indicator"></span>&nbsp;&nbsp;&nbsp;&nbsp;<small class="ml-3 dropdown-indicator">@Html.DisplayFor(fieldItem => colmn.UiControlDisplayName)</small>
+            </label>
+            colcheck++;
+        }
+    </div>
+</div>
 <script>
-    oTable = $('#grid').DataTable({
-        lengthMenu: [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, 'All'],
-        ],
-        scrollX: true,
+    $(document).ready(function () {
+        // Initialize DataTable
+        oTable = $('#gridtable').DataTable({
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, 'All'],
+            ],
+            scrollX: true,
+            "bDestroy": true
+        });
+        $('#gridSearch').keyup(function () {
+            oTable.search($(this).val()).draw();
+        })
+        // Disable sorting when clicking on the three-dot icon
+        $('.options-indicator').on('click', function (e) {
+            console.log('button clicked');
+            e.stopPropagation();
+        });
     });
-    $('#gridSearch').keyup(function () {
-        oTable.search($(this).val()).draw();
-    })
+    //Call the Delete Method Of Common Page
+    let deleteFun = (id) => {
+        let moduleId = parseInt($("#ModuleId").val())
+        window.location.href = "/common/delete?id=" + id + "&moduleId=" + moduleId;
+    }
     const clearText = () => {
         const inputID = document.querySelector("#gridSearch");
         inputID.value = "";
     }
     //Set The Value To Popup Delete Button
     let setValue = (id) => $("#deletePopup").val(id);
-    //Call the Delete Method Of Common Page 
-    let deleteFun = (id) =>{
-        let moduleId = parseInt($("#ModuleId").val())
-        window.location.href = "/common/delete?id=" + id+ "&moduleId=" + moduleId;
+    const dropdowns = document.querySelectorAll('.checkbox-dropdown');
+    function toggleDropdown(colnumber, threedot) {
+        var checkcolinput = document.getElementById("myInput");
+        checkcolinput.value = "";
+        var checkboxlabels = document.querySelectorAll('.collabel');
+        checkboxlabels.forEach((checkboxlabel, index) => {
+            checkboxlabel.style.display = "";
+        });
+        var dropdownId = 'colDropdown';
+        var dropdownContent = document.getElementById(dropdownId);
+        dropdownContent.style.display = 'none';
+        checkinput = "colcheckinput" + colnumber;
+        const checkboxxes = document.querySelectorAll('.dropdown-checkbox');
+        // Add event listener to each checkbox in the dropdown
+        checkboxxes.forEach((checkboxinputs, index) => {
+            if (checkboxinputs.id == checkinput) {
+                checkboxinputs.disabled = true;
+                checkboxinputs.nextElementSibling.style.background = "gray";
+                // Iterate over the selected elements and disable them
+                // checkboxinputs.forEach(function (checkboxinput) {
+            }
+            else {
+                checkboxinputs.disabled = false;
+                checkboxinputs.nextElementSibling.style.background = "";
+            }
+        });
+        dropdowns.forEach(dropdownn => {
+            if (dropdownn.id != dropdownId) {
+                dropdownn.style.display = 'none';
+                console.log('yes');
+            } else {
+                // Calculate the position of the dropdown content relative to the dropdown button
+                const rect = threedot.getBoundingClientRect();
+                dropdownn.style.top = (rect.bottom + window.scrollY) + "px"; // Adjust for scroll position
+                dropdownn.style.left = rect.left + "px";
+
+                dropdownn.style.display = dropdownn.style.display === 'block' ? 'none' : 'block';
+                console.log('no');
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all checkboxes and dropdowns
+        const checkboxes = document.querySelectorAll('.dropdown-checkbox');
+        // Add event listener to each checkbox in the dropdown
+        checkboxes.forEach((checkbox, index) => {
+            if (index < 4) {
+                checkbox.checked = true;
+            }
+            checkbox.addEventListener('change', function () {
+                if (!Array.from(checkboxes).some(c => c.checked)) {
+                    this.checked = true;
+                }
+                // Toggle the visibility of the corresponding column
+                const columnId = this.getAttribute('data-column');
+                const cellsInColumn = document.querySelectorAll(`td[data-column="${columnId}"], th[id="${columnId}"]`);
+                cellsInColumn.forEach(cell => {
+                    cell.style.display = this.checked ? 'table-cell' : 'none';
+                });
+                // Uncheck the corresponding checkbox in other dropdowns
+                document.querySelectorAll(`.dropdown-checkbox[data-column="${columnId}"]`)
+                    .forEach(otherCheckbox => {
+                        if (otherCheckbox !== this) {
+                            otherCheckbox.checked = this.checked;
+                        }
+                    });
+                oTable = $('#gridtable').DataTable({
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, 'All'],
+                    ],
+                    scrollX: true,
+                    "bDestroy": true
+                });
+                $('#gridSearch').keyup(function () {
+                    oTable.search($(this).val()).draw();
+                })
+                // Disable sorting when clicking on the three-dot icon
+                $('.options-indicator').on('click', function (e) {
+                    console.log('button clicked');
+                    e.stopPropagation();
+                });
+            });
+        });
+        // Close the dropdowns when clicking outside of them
+        document.addEventListener('click', function (event) {
+            if (!event.target.matches('.options-indicator')) {
+                if (!event.target.matches('.dropdown-indicator')) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            }
+        });
+    });
+    function filterFunction(num) {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        console.log(input);
+        filter = input.value.toUpperCase();
+        div = document.getElementById("colDropdown");
+        a = div.getElementsByTagName("label");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
     }
 </script>

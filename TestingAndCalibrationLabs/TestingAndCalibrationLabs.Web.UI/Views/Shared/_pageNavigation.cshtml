@@ -37,6 +37,10 @@
             <i class="fas fa-user-circle"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" id="dropdownContentProfile" aria-labelledby="navbarDropdownPro">
+            @if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                <a class="dropdown-item">@User.Identity.Name</a>
+            }
         </div>
     </li>
 </ul>
