@@ -714,7 +714,7 @@ BEGIN
 			  (18,N'/Organization/Index/',13,1002,0),
 			  (19,N'/#/',16,1002,0),
 	                  (20,N'/Security/Logout',17,1003,0),
-					  (21,N'/PasswordPolicy/Index',19,1002,0)
+					  (21,N'/PasswordPolicy/Index',18,1002,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
