@@ -5,13 +5,31 @@
 <h1>Ui Page Metadata</h1>
 <h4>Edit</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
+ <div class="row">
+    <div class="row ms-1 me-1">
+            <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
+
             <div asp-validation-summary="All"></div>
-            <div class="row ms-1 me-1">
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border " name="ModuleLayoutId" id="ModuleLayout" onchange="this.setAttribute('value',this.value)" asp-for="ModuleLayoutId">
+            <div id="error-message-top" style="color: red; display: none;"></div>
+
+            <div class="row">
+                <div class=" col-lg-6  col-sm-12 col-xs-12 mt-3 ms-3">
+                    <div id="payInvoice" class="floatBlock">
+                        <label for="paymentInv">
+                            <input id="paymentInv" onclick="NonExixt()" name="paymentType" type="radio" value="INVOICE" disabled /> New
+                        </label>
+                    </div>
+                    <div id="pay3rdParty" class="floatBlock">
+                        <label for="payment3rd">
+                            <input id="payment3rd" onclick="ModuleGet()" name="paymentType" type="radio" checked /> Existing
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="ModuleLayoutId" id="ModuleLayout" onchange="this.setAttribute('value',this.value)" asp-for="ModuleLayoutId" required>
                         <option disabled="disabled" selected="selected">Select ModuleLayoutName ...</option>
                         @foreach (var item in ViewBag.Modulelist)
                         {
@@ -29,8 +47,8 @@
                         ModuleLayoutName
                     </label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
+                <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" id="Pagetype">
+                    <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId" required>
                         <option disabled="disabled" selected>Select Pages ...</option>
                         @foreach (var item in ViewBag.UiPageTypes)
                         {
@@ -48,21 +66,10 @@
                         UiPageTypeName
                     </label>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 ms-3">
-                    <div id="payInvoice" class="floatBlock">
-                        <label for="paymentInv">
-                            <input id="paymentInv" onclick="NonExixt()" name="paymentType" type="radio" value="INVOICE" /> New
-                        </label>
-                    </div>
-                    <div id="pay3rdParty" class="floatBlock">
-                        <label for="payment3rd">
-                            <input id="payment3rd" onclick="ModuleGet()" name="paymentType" type="radio" /> Existing
-                        </label>
-                    </div>
-                </div>
-               
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" id="UiControlType">
-                    <select class="form-input width-full black-border" name="UiControlTypeId"  onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId">
+            </div>
+            <div class="row">
+                <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadataControl-select " id="UiControlType">
+                    <select class="form-input width-full black-border" name="UiControlTypeId" id="UiControlTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId" required>
                         <option disabled="disabled" selected>Select ControlType ...</option>
                         @foreach (var item in ViewBag.UiControlTypes)
                         {
@@ -75,14 +82,16 @@
                                 <option value=@item.Id>@item.Name</option>
                             }
                         }
+
                     </select>
                     <label for="UiControlTypeId" class="form-label">
-                    UiControlTypeName
+                        UiControlTypeName
                     </label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border " name="UiControlCategoryTypeId" id="UiControlCategoryType" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId">
-                        <option disabled="disabled" selected>Select CategoryType ...</option>
+
+                <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadataCategry-select" id="UiControlCategoryType">
+                    <select class="form-input width-full black-border " name="UiControlCategoryTypeId" id="UiControlCategoryTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId" required>
+                        <option disabled="disabled" selected>Select ControlCategory...</option>
                         @foreach (var item in ViewBag.UiControlCategoryType)
                         {
                             if (@item.Id == @ViewBag.UiControlCategoryTypeId)
@@ -99,8 +108,10 @@
                         UiControlCategoryTypeName
                     </label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId">
+            </div>
+            <div class="row">
+                <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-Datatype-select" id="DataTypeId">
+                    <select class="form-input width-full black-border" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId" required>
                         <option disabled="disabled" selected>Select Data Type ...</option>
                         @foreach (var item in ViewBag.DataTypes)
                         {
@@ -118,16 +129,15 @@
                         DataType
                     </label>
                 </div>
-                <div class="row ms-1 me-1">
-                    <div class="col-lg-3  col-sm-12 col-xs-12 mt-3">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
-                            </label>
-                        </div>
-                    </div>
+               
+                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input ui-Name-select">
+                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                    <label class="form-label" for="Name">Name</label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <select class="form-input width-full black-border" name="ParentId" id="Parent" onchange="this.setAttribute('value',this.value)" asp-for="ParentId">
                         <option disabled="disabled" selected>Select ParentName ...</option>
                         @foreach (var item in ViewBag.displayName)
@@ -146,14 +156,18 @@
                         ParentName
                     </label>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadata-select">
-                    <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" for="UiPageMetadataId" />
+               
+                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadata-select">
+                    <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" for="UiPageMetadataId">
                     <option disabled="disabled" selected>Select UiPageMetadata ...</option>
                     </select>
-                                        <label class="form-label" for="UiPageMetadataId"> UiPageMetadata</label>
-                     <span asp-validation-for="UiPageMetadataId" class="text-danger"></span>
+                    <label class="form-label" for="UiPageMetadataId"> UiPageMetadata</label>
+                    <span asp-validation-for="UiPageMetadataId" class="text-danger"></span>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+            </div>
+            <div class="row">
+               
+                <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <select class="form-input width-full black-border" name="MultiValueControl" id="MultiValueControl" onchange="this.setAttribute('value',this.value)" asp-for="MultiValueControl">
                         <option disabled="disabled" selected>Select MultiValueControl ...</option>
                         <option value="True">True</option>
@@ -163,24 +177,34 @@
                         MultiValueControl
                     </label>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+
+                
+                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
                     <label class="form-label" for="Orders">Orders</label>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+            </div>
+            <div class="row">
+              
+                <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName">
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
-                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
-                    <label class="form-label" for="Name">Name</label>
-                </div>
                 
-                <div class ="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                    @Html.HiddenFor(m => m.Id)
-                    @Html.HiddenFor(m => m.MetadataModuleBridgeId)
-                    <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                <div class="col-lg-6 col-lg-3 col-sm-12 col-xs-12 mt-3 ui-Required-select" id="Required">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsRequired" /> 
+                            @Html.DisplayNameFor(model => model.IsRequired)
+                        </label>
+                    </div>
                 </div>
+
+            </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.MetadataModuleBridgeId)
+                <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
             </div>
         </form>
     </div>
@@ -190,10 +214,28 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <script>
-    
-    function ModuleGet() {
+
+    window.onload = function () {
         var selectElement = document.querySelector('.ui-page-metadata-select');
-        selectElement.style.display = 'block';  // Show the dropdown
+        selectElement.style.pointerEvents = 'auto';  // Enable pointer events
+        selectElement.style.opacity = '1'; // Set full opacity for visibility and indicate it's editable
+        var selectElement = document.querySelector('.ui-page-metadataControl-select');
+        selectElement.style.pointerEvents = 'none';
+        selectElement.style.opacity = '0.5';
+        var selectElement = document.querySelector('.ui-page-metadataCategry-select');
+        selectElement.style.pointerEvents = 'none';
+        selectElement.style.opacity = '0.5';
+        var selectElement = document.querySelector('.ui-page-Datatype-select');
+        selectElement.style.pointerEvents = 'none';
+        selectElement.style.opacity = '0.5';
+        var selectElement = document.querySelector('.ui-Required-select');
+        selectElement.style.pointerEvents = 'none';
+        selectElement.style.opacity = '0.5';
+        var selectElement = document.querySelector('.ui-Name-select');
+        selectElement.style.pointerEvents = 'none';
+        selectElement.style.opacity = '0.5';
+
+
         var moduleLayoutId = document.getElementById('ModuleLayout').value
         $.ajax({
             type: "GET",
@@ -202,7 +244,6 @@
             success: function (response) {
                 // Clear drop down list
                 $("#UiPageMetadata").empty();
-                document.getElementById('UiControlType').style.display = 'none';
                 // Fill drop down list with new data
                 for (var i = 0; i < response.length; i++) {
                     var MetadataId = response[i].id;
@@ -225,7 +266,7 @@
             error: function (req, status, error) {
             }
         });
-    }
+    };
     var dataAvailable
     function NonExixt() {
         var selectElement = document.querySelector('.ui-page-metadata-select');

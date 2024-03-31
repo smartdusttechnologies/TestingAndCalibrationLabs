@@ -7,25 +7,28 @@
 <hr />
 <style>
     .scrollling-text-container {
-        width: 100%; /* Adjust width as needed */
-        overflow: hidden; /* Hide overflowing content */
+        width: 100%; 
+        overflow: hidden; 
     }
 
     .scrolling-content {
-        display: inline-block; /* Use inline-block to keep elements in one line */
-        white-space: nowrap; /* Prevent text from wrapping */
-        /*animation: moveRightToLeft 10s linear infinite;*/ /* Adjust animation duration and timing as needed */
+        display: inline-block; 
+        white-space: nowrap; 
+        
         display: flex;
         color: darkturquoise;
     }
 
+    .error-border {
+        border-color: red !important;
+    }
 </style>
 <div class="row">
     <div class="row ms-1 me-1">
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageMetadata" novalidate>
             <div asp-validation-summary="All"></div>
             <div id="error-message-top" style="color: red; display: none;"></div>
-            @*<div class="row ms-1 me-1">*@
+           
 
             <div class="row">
                 <div class=" col-lg-6  col-sm-12 col-xs-12 mt-3 ms-3">
@@ -44,7 +47,7 @@
             </div>
             <div class="row">
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border " name="ModuleLayoutId" id="ModuleLayout" onchange="this.setAttribute('value',this.value)" asp-for="ModuleLayoutId" required>
+                    <select class="form-input width-full black-border " name="ModuleLayoutId" id="ModuleLayout"  asp-for="ModuleLayoutId" >
                         <option disabled="disabled" selected="selected">Select ModuleLayoutName ...</option>
                         @foreach (var item in ViewBag.Modulelist)
                         {
@@ -56,7 +59,7 @@
                     </label>
                 </div>
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" id="Pagetype">
-                    <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId" required>
+                    <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" asp-for="UiPageTypeId" >
                         <option disabled="disabled" selected>Select Pages ...</option>
 
                     </select>
@@ -67,7 +70,7 @@
             </div>
             <div class="row">
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadataControl-select " id="UiControlType">
-                    <select class="form-input width-full black-border" name="UiControlTypeId" id="UiControlTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiControlTypeId" required>
+                    <select class="form-input width-full black-border" name="UiControlTypeId" id="UiControlTypeId"  asp-for="UiControlTypeId" >
                         <option disabled="disabled" selected>Select ControlType ...</option>
                         @foreach (var item in ViewBag.UiControlTypes)
                         {
@@ -81,7 +84,7 @@
                 </div>
 
                 <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadataCategry-select" id="UiControlCategoryType">
-                    <select class="form-input width-full black-border " name="UiControlCategoryTypeId" id="UiControlCategoryTypeId" onchange="this.setAttribute('value',this.value)" asp-for="UiControlCategoryTypeId" required>
+                    <select class="form-input width-full black-border " name="UiControlCategoryTypeId" id="UiControlCategoryTypeId"  asp-for="UiControlCategoryTypeId" >
                         <option disabled="disabled" selected>Select ControlCategory...</option>
 
                     </select>
@@ -92,7 +95,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-Datatype-select" id="DataTypeId">
-                    <select class="form-input width-full black-border" name="DataTypeId" id="DataType" onchange="this.setAttribute('value',this.value)" asp-for="DataTypeId" required>
+                    <select class="form-input width-full black-border" name="DataTypeId" id="DataType"  asp-for="DataTypeId" >
                         <option disabled="disabled" selected>Select Data Type ...</option>
                         @foreach (var item in ViewBag.DataTypes)
                         {
@@ -104,17 +107,15 @@
                     </label>
                 </div>
 
-
-                <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input ui-Name-select" id="NameContyrol">
-                    <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name" required>
+                <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-Name-select" id="NameContyrol">
+                    <input class="form-input width-full black-border Name-Input" type="text" id="Name" name="Name" placeholder=" " style="" asp-for="Name" >
                     <label class="form-label" for="Name">Name</label>
                 </div>
-
 
             </div>
             <div class="row">
                 <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border" name="ParentId" id="Parent" onchange="this.setAttribute('value',this.value)" asp-for="ParentId" data-val="false" data-val-required="false">
+                    <select class="form-input width-full black-border" name="ParentId" id="Parent"  asp-for="ParentId" data-val="false" >
                         <option disabled="disabled" selected>Select ParentName ...</option>
 
                     </select>
@@ -124,16 +125,16 @@
                 </div>
 
 
-                <div class=" col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadata-select">
-                    <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" asp-for="UiPageMetadataId" required>
+                <div class=" col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadata-select" id="UiPageMetadataId">
+                    <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" placeholder=" " rows="1" asp-for="UiPageMetadataId" >
                         <option disabled="disabled" selected>Select UiPageMetadata ...</option>
                     </select>
-                    <label class="form-label" for="UiPageMetadataId"> UiPageMetadata</label>
+                    <label class="form-label" for="UiPageMetadata"> UiPageMetadata</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" id="MultiValueControlId">
-                    <select class="form-input width-full black-border" name="MultiValueControl" onchange="this.setAttribute('value',this.value)" asp-for="MultiValueControl">
+                    <select class="form-input width-full black-border" name="MultiValueControl"  asp-for="MultiValueControl">
                         <option disabled="disabled" selected>Select MultiValueControl ...</option>
                         <option value="True">True</option>
                         <option value="False">False</option>
@@ -145,29 +146,28 @@
 
 
                 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                    <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
+                    <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" "  asp-for="Orders">
                     <label class="form-label" for="Orders">Orders</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                    <input class="form-input width-full black-border" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="UiControlDisplayName" required>
+                    <input class="form-input width-full black-border" type="text" id="UiControlDisplayName" name="UiControlDisplayName" placeholder=" "  asp-for="UiControlDisplayName" >
                     <label class="form-label" for="UiControlDisplayName">UiControlDisplayName</label>
                 </div>
 
                 <div class=" col-lg-6 col-lg-3 col-sm-12 col-xs-12 mt-3 ui-Required-select" id="Required">
                     <label class="form-check-label-met">
-                        <input class="form-check-input" asp-for="IsRequired" />
+                        <input class="form-check-input" id="RequiredId"asp-for="IsRequired" />
                         @Html.DisplayNameFor(model => model.IsRequired)
                     </label>
                 </div>
 
             </div>
             <div class="col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
-                <input type="submit" id="createButton" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onchange="this.setAttribute('value',this.value)" />
+                <input type="submit" id="createButton" onclick="validateNew(event)" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" />
                 <div id="error-message" style="color: red;"></div>
             </div>
-            @* </div>*@
         </form>
     </div>
 </div>
@@ -175,42 +175,181 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <script>
+    var validationSummary = document.querySelector('[asp-validation-summary="All"]');
+
+    function validateNew(event) {
+        event.preventDefault();
+        var isValid = true;
+
+        if (!validationSummary) {
+            validationSummary = document.createElement('div');
+            validationSummary.setAttribute('asp-validation-summary', 'All');
+            validationSummary.style.color = 'red'; // Set text color to red
+            document.getElementById('pageForm').prepend(validationSummary);
+        }
+
+        validationSummary.innerHTML = '';
+
+        var formElements = document.querySelectorAll('select');
+        var inputWlement = document.querySelectorAll('input');
+
+        var errorMessages = [];
+
+        formElements.forEach(function (selectElement) {
+
+            if (selectElement.style.pointerEvents === 'none' || selectElement.style.opacity === '0.5') {
+                return;
+            }
+
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            if (selectedOption.disabled) {
+
+                errorMessages.push('Please select an option for ' + selectElement.getAttribute('name'));
+                isValid = false;
+                selectElement.style.borderColor = 'red';
+            } else if (selectElement.hasAttribute('required') && selectElement.value.trim() === '') {
+                errorMessages.push('Please select an option for ' + selectElement.getAttribute('name'));
+                isValid = false;
+                selectElement.style.borderColor = 'red';
+            }
+            else {
+                // Reset border color to default
+                selectElement.style.borderColor = ''; // Empty string removes any applied color
+            }
+        });
+        inputWlement.forEach(function (inputElement) {
+            debugger;
+            var inputId = inputElement.id;
+            if (inputElement.style.pointerEvents === 'none' || inputElement.style.opacity === '0.5') {
+                return;
+            }
+            if (inputId === 'RequiredId' && inputElement.tagName.toLowerCase() === 'input') {
+                return; 
+            }
+            var selectedOption = inputElement.value; 
+
+            if (!selectedOption) { 
+                errorMessages.push('Please enter ' + inputElement.getAttribute('name'));
+                isValid = false;
+                inputElement.style.borderColor = 'red';
+            }
+            else {
+                // Reset border color to default
+                inputElement.style.borderColor = ''; // Empty string removes any applied color
+            }
+        });
+
+
+        debugger;
+        if (isValid) {
+            
+            var formData = {};
+            $('#pageForm').find(':input').each(function () {
+                var input = $(this);
+                debugger;
+                if (input.is(':button, :submit, :reset, :hidden, :radio') || input.attr('id') === 'paymentInv' || input.attr('id') === 'payment3rd') {
+                    return;
+                }
+
+                if (input.is('select')) {
+                    var name = input.attr('name');
+                    var value = input.val() || 0 ;
+
+                    formData[name] = value;
+                
+                }
+                else { 
+                    var name = input.attr('name');
+                    var value = input.val() || 0 ;
+
+                    formData[name] = value;
+                }
+            });
+            if (errorMessages.length === 0) { 
+                // Submit the form
+                document.getElementById('pageForm').submit();
+            }
+
+        } 
+        else {
+            errorMessages.forEach(function (errorMessage) {
+                var errorElement = document.createElement('div');
+                errorElement.innerText = errorMessage;
+                validationSummary.appendChild(errorElement);
+            });
+            return false;
+        }
+      
+    }
+
     function ModuleGet() {
         debugger;
+
+        if (validationSummary && validationSummary.innerHTML.trim() !== '') {
+            validationSummary.innerHTML = '';
+        }
+
+
+        var form = document.getElementById('pageForm'); // Assuming 'pageForm' is the id of your form
+        // Reset border color for all form controls
+        if (form) {
+            var formControls = form.querySelectorAll('input, select, textarea');
+            formControls.forEach(function (control) {
+                control.style.borderColor = ''; // Reset the border color
+            });
+        }
+        // Get the input element
         var selectElement = document.querySelector('.ui-page-metadata-select');
-        selectElement.style.pointerEvents = 'auto';  // Enable pointer events
+        selectElement.style.pointerEvents = 'auto';  
         selectElement.style.opacity = '1'; // Set full opacity for visibility and indicate it's editable
+        var inputElement = document.getElementById("UiPageMetadata");
+        inputElement.style.opacity = '1';  // Hide the dropdown
+
+
 
         var selectElement = document.querySelector('.ui-page-metadataControl-select');
         selectElement.style.pointerEvents = 'none';
-        selectElement.style.opacity = '0.5';
+       
+        var inputElement = document.getElementById("UiControlTypeId");
+        inputElement.style.opacity = '0.5';
 
         var selectElement = document.querySelector('.ui-page-metadataCategry-select');
         selectElement.style.pointerEvents = 'none';
-        selectElement.style.opacity = '0.5';
+       
+        var inputElement = document.getElementById("UiControlCategoryTypeId");
+        inputElement.style.opacity = '0.5';
 
         var selectElement = document.querySelector('.ui-page-Datatype-select');
         selectElement.style.pointerEvents = 'none';
-        selectElement.style.opacity = '0.5';
-
+        
+        var inputElement = document.getElementById("DataType");
+        inputElement.style.opacity = '0.5';
+           
         var selectElement = document.querySelector('.ui-Required-select');
         selectElement.style.pointerEvents = 'none';
         selectElement.style.opacity = '0.5';
-
-        var selectElement = document.querySelector('.ui-Name-select');
-        selectElement.style.pointerEvents = 'none';
+       
+        var inputElement = document.getElementById("RequiredId");
+       
+         var selectElement = document.querySelector('.Name-Input');
+         selectElement.style.pointerEvents = 'none';
         selectElement.style.opacity = '0.5';
+
+      
+        var inputElement = document.getElementById("NameContyrol");
+        inputElement.style.pointerEvents = 'none';
+        inputElement.style.opacity = '0.5';
+
+       
     }
 
     $('#ModuleLayout').change(function () {
         var selectedId = $(this).val();
-        debugger;
         $.ajax({
             type: 'GET',
             url: "@Url.Action("GetPages","UiPageMetadata")",
             data: { id: selectedId }, // Send selected ID as parameter
             success: function (response) {
-                debugger;
                 $("#UiPageType").empty();
                 $("#UiPageType").append("<option disabled selected>Select UipageType ...</option>");
 
@@ -251,13 +390,11 @@
     Pagetype
     $('#UiControlTypeId').change(function () {
         var Control = $(this).val();
-        debugger;
         $.ajax({
             type: 'GET',
             url: "@Url.Action("GetControlCategoryType","UiPageMetadata")",
             data: { id: Control }, // Send selected ID as parameter
             success: function (response) {
-                debugger;
                 $("#UiControlCategoryTypeId").empty();
                 $("#UiControlCategoryTypeId").append("<option disabled selected>Select UiControlCategoryType ...</option>");
                 for (var i = 0; i < response.length; i++) {
@@ -277,17 +414,14 @@
     $('#UiPageType').change(function () {
         var Control = $(this).val();
         var ModuleValue = document.getElementById('ModuleLayout').value;
-        debugger;
         $.ajax({
             type: 'GET',
             url: "@Url.Action("GetparentType","UiPageMetadata")",
             data: { id: Control, ModuleIds: ModuleValue }, // Send selected ID as parameter
             success: function (response) {
-                debugger;
                 $("#Parent").empty();
                 $("#Parent").append("<option disabled selected>Select ParentName ...</option>");
 
-                // Loop through the response data and append options
                 for (var i = 0; i < response.length; i++) {
                     var MetadataId = response[i].id;
                     var ControleName = response[i].uiControlDisplayName;
@@ -302,25 +436,66 @@
 
     });
 
+   
+
     var dataAvailable
     function NonExixt() {
-        debugger;
 
+        if (validationSummary && validationSummary.innerHTML.trim() !== '') {
+            validationSummary.innerHTML = '';
+        }
+
+
+        var form = document.getElementById('pageForm'); // Assuming 'pageForm' is the id of your form
+        // Reset border color for all form controls
+        if (form) {
+            var formControls = form.querySelectorAll('input, select, textarea');
+            formControls.forEach(function (control) {
+                control.style.borderColor = ''; // Reset the border color
+            });
+        }
         var selectElement = document.querySelector('.ui-page-metadata-select');
+        var inputElement = document.getElementById("UiPageMetadata");
+
         if (dataAvailable) {
             selectElement.style.pointerEvents = 'auto';
             selectElement.style.opacity = '1'; // Reset opacity to make controls fully visible
+           
         } else {
             selectElement.style.pointerEvents = 'none';
-            selectElement.style.opacity = '0.5';  // Hide the dropdown
-            document.getElementById('UiControlType').style.pointerEvents = 'auto';
-            document.getElementById('UiControlType').style.opacity = '1';
-            document.getElementById('UiControlCategoryType').style.pointerEvents = 'auto';
-            document.getElementById('UiControlCategoryType').style.opacity = '1';
-            document.getElementById('DataTypeId').style.pointerEvents = 'auto';
-            document.getElementById('DataTypeId').style.opacity = '1';
-            document.getElementById('Required').style.pointerEvents = 'auto';
+          
+            inputElement.style.opacity = '0.5';  // Hide the dropdown
+
+            var selectElement = document.querySelector('.ui-page-metadataControl-select');
+            selectElement.style.pointerEvents = 'auto';
+            document.getElementById('UiControlTypeId').style.opacity = '1';
+
+
+
+
+            var selectElement = document.querySelector('.ui-page-metadataCategry-select');
+            selectElement.style.pointerEvents = 'auto';
+            document.getElementById('UiControlCategoryTypeId').style.opacity = '1';
+
+
+
+
+            var selectElement = document.querySelector('.ui-page-Datatype-select');
+            selectElement.style.pointerEvents = 'auto';
+            document.getElementById('DataType').style.opacity = '1';
+
+
+
+
+            var selectElement = document.querySelector('.ui-Required-select');
+            selectElement.style.pointerEvents = 'auto';
             document.getElementById('Required').style.opacity = '1';
+
+
+            var selectElement = document.querySelector('.Name-Input');
+            selectElement.style.pointerEvents = 'auto';
+            selectElement.style.opacity = '1';
+
             document.getElementById('NameContyrol').style.pointerEvents = 'auto';
             document.getElementById('NameContyrol').style.opacity = '1';
 
@@ -352,8 +527,9 @@
 
 </script>
 
-@section Scripts {
+@* @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     }
+ *@
