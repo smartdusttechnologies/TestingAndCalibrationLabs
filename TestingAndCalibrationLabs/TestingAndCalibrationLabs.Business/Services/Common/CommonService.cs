@@ -228,7 +228,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var oldRecord = _recordGenericRepository.Get(record.Id);
                 if (oldRecord.UpdatedDate == record.UpdatedDate)
                 {
-                    if (alllists[0].SubRecordId ==0) 
+                    if (alllists.Count > 0 && alllists[0].SubRecordId ==0) 
                     {
                         for (var i = 0; i < alllists.Count;  i++)
                         {

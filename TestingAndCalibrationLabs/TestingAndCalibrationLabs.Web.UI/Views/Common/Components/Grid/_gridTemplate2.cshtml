@@ -92,6 +92,7 @@
 <script>
     //Call the Delete Method Of Common Page
     let deleteFun = (id) => {
+        debugger;
         let moduleId = parseInt($("#ModuleId").val())
         window.location.href = "/common/delete?id=" + id + "&moduleId=" + moduleId;
     }
@@ -110,6 +111,7 @@
         inputID.value = "";
     }
     //Set The Value To Popup Delete Button
+    debugger;
     let setValue = (id) => $("#deletePopup").val(id);
     
 </script>
