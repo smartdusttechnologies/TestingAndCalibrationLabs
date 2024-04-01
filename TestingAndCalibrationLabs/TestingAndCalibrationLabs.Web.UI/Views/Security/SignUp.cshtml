@@ -105,7 +105,7 @@
     <div class="row">
         <div class="col">
             <button class="btn btn-primary btn-block" style=" ">
-                <i class="fab fa-twitter me-2 float-left"></i>Twitter
+                <a asp-controller="Login" asp-action="LoginWithMicrosoft" class="text-light"> <i class="fab fa-microsoft me-2 float-left"></i>Microsoft</a>
             </button>
         </div>
         <div class="col">
@@ -118,7 +118,9 @@
     <div class="row">
         <div class="col">
             <button class="btn btn-danger btn-block" style="">
-                <i class="fa-brands fa-google me-2 float-left"></i>Google
+                <a asp-controller="Login" asp-action="Login" class=" text-light">
+                    <i class="fa-brands fa-google me-2 float-left"></i>Google
+                </a>
             </button>
         </div>
         <div class="col" style="">
