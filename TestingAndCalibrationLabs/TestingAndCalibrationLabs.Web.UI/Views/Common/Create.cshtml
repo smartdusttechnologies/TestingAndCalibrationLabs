@@ -100,9 +100,7 @@
         //flatten process end
         var fieldValues = [];
         for (let i = 0; i < uiPageMetaData.length; i++) {
-            debugger;
             if (uiPageMetaData[i].controlCategoryName == "DataControl") {
-                debugger;
                 var fieldId = "#" + uiPageMetaData[i].uiControlTypeName + uiPageMetaData[i].id;
                 if ($(fieldId).hasClass("red-error-border")) {
                     $(fieldId).removeClass("red-error-border").addClass("black-border");
@@ -137,7 +135,6 @@
             url: url,
             data: { moduleId, workflowStageId, uiPageTypeId, fieldValues },
             success: function (response) {
-                debugger;
                 myFunction();                      //Calling myFunction javascript function
                 SuccessMessage(NotificationNumbers++, "Saved Successfully");
                 HideWheelLoader();
@@ -147,10 +144,8 @@
                 alert(response.responseText);
             },
             error: function (response) {
-                debugger;
                 HideWheelLoader();
                 var newresponseJSON = response.responseJSON;                    //assiging the values of responseJson to  newresponseJSON
-                debugger;
                 var newErrorMessage = newresponseJSON.errorMessage;               //assiging the values of errorMessage to  newErrorMessage
                 for (var i = 0; i < newErrorMessage.length; i++) {
                     var sourceId = "#" + newErrorMessage[i].sourceId;

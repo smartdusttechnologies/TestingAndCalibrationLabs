@@ -65,27 +65,23 @@
 
 <script>
     function myFunction(Title) {
-        debugger;
         $('.modal-title').html(Title);
         $('.modal').modal('show');;
     }
 
     $('#ModuleId').change(function () {
         var ModuleId = $(this).val();
-        debugger;
         $.ajax({
             type: 'GET',
             url: "@Url.Action("GetStagebyModuleId","UiPageType")",
             data: { moduleId: ModuleId }, // Send selected ID as parameter
             success: function (response) {
-                debugger;
                 $("#WorkflowStageId").empty();
                 $("#WorkflowStageId").append("<option disabled selected>Select WorkflowStage...</option>");
                 for (var i = 0; i < response.length; i++) {
                     var StageId = response[i].id;
                     var Stagename = response[i].name;
 
-                    //$("#WorkflowStageId").append("<option value='" + StageId + "'>" + Stagename + "</option>");
                     var UipageId = response[i].uiPageTypeId;
                         
 

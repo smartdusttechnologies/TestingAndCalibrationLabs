@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Transactions;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using TestingAndCalibrationLabs.Business.Infrastructure;
@@ -70,7 +71,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             }
         }
 
-
+        /// <summary>
+        /// Insert Pages and UiPageMetadata and UiPageMetadataModuleBridge and Update in WorkflowStage
+        /// </summary>
+        /// <param name="uiPageMetadataModel"></param>
+        /// <returns></returns>
         public int CreateUsingPages(UiPageMetadataModel uiPageMetadataModel, int StagesCount)
         {
             string queryParent = @"INSERT INTO [UiPageMetadata] (Name, UiControlTypeId, DataTypeId, IsRequired, UiControlDisplayName, UiControlCategoryTypeId, ModuleLayoutId)
@@ -158,33 +163,24 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                             List<UiPageMetadataModel> valuesgetList = new List<UiPageMetadataModel>();
                             List<UiPageMetadataModel> controlsWithUiControlTypeId25 = new List<UiPageMetadataModel>();
 
-                           
-
                             if (DetailsMetatadata.Count - 1 == StagesCount)
                             {
                                 controlsWithUiControlTypeId25 = DetailsMetatadata
                                     .Where(control => control.UiControlTypeId == 25)
                                     .ToList();
 
-
-
-                                DetailsMetatadata.RemoveAll(control => control.UiControlTypeId == 25);
+                                DetailsMetatadata.RemoveAll(control => control.UiControlTypeId == (int)UiControlTypeId.num);
 
                                 int parentIdFor25 = controlsWithUiControlTypeId25[0].Id;
                                 int j = 0;
                                 int k = 0;
                                 foreach (var Detail in DetailsMetatadata)
                                 {
-                                   
-                                    //foreach (var stage in Detailsstage)
-                                    //{
                                         // Check if Detailsstage[k].UiPageTypeId is not available in groupby.key
                                         if (!groupbybasedonMetadataId.Any(g => g.Key == Detail.Id))
                                         {
-                                            //UiPageMetadataModel Valuesget = new UiPageMetadataModel();
-                                            if (controlsWithUiControlTypeId25[0].UiControlTypeId == 25)
+                                            if (controlsWithUiControlTypeId25[0].UiControlTypeId == (int)UiControlTypeId.num)
                                             {
-
                                                 UiPageMetadataModel Valuesget = new UiPageMetadataModel();
                                                 Valuesget.UiPageMetadataId = controlsWithUiControlTypeId25[0].Id;
                                                 Valuesget.UiPageTypeId = Detailsstage[j].UiPageTypeId;
@@ -193,14 +189,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                 Valuesget.UiControlDisplayName = Detail.Name;
                                                 Valuesget.MultiValueControl = false;
                                                 valuesgetList.Add(Valuesget);
-                                            
                                                 
                                             }
                                         }
 
-                                    //}
-
-                                    //else {
                                     if (!groupbybasedonMetadataId.Any(g => g.Key == Detail.Id))
                                     {
                                         for (int i = 0; i < StagesCount; i++)
@@ -218,7 +210,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                     }
                                     k++;
                                     j++;
-                                    //}
                                 }
                                 foreach (var daetails in groupbypageId)
                                 {
@@ -228,9 +219,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                         for (; i < StagesCount; i++)
                                         {
                                             var getdetails = daetails.First();
-
-
-
                                             UiPageMetadataModel Valuesget = new UiPageMetadataModel();
                                             Valuesget.UiPageMetadataId = DetailsMetatadata[i].Id;
                                             Valuesget.UiPageTypeId = getdetails.UiPageTypeId;
@@ -262,7 +250,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                 int rowsAffected = db.Execute(bulkInsertQuery, parameters, transaction: transaction);
 
                             }
-                            //transaction.Commit();
 
                             return parentId;
                         }
@@ -276,9 +263,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             }
             return 0;
         }
-
-
-
 
         /// <summary>
         /// Getting All Records From Ui Page Metadata 
@@ -297,8 +281,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 													inner join [UiControlType] uct on uct.id=ucct.UiControlTypeId
 													inner join [Lookup] l on l.Id = uct.ControlCategoryId
 													inner join [UiPageMetadataModuleBridge] upmmb on upmmb.UiPageMetadataId=upm.Id
-													
-                                                    
                                                 where upm.ModuleLayoutId=@moduleIds and l.Name !='DataControl' and upmmb.UiPageTypeId=@ModuleLayoutId
                                                  and   upm.IsDeleted = 0 
 												 and ucct.IsDeleted=0
@@ -325,27 +307,26 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 
             return Displaynames;
         }
-
+        /// <summary>
+        /// Getting All Pages based on moduleLayoutId 
+        /// </summary>
+        /// <returns></returns>
         public List<UiPageTypeModel> GetPages (int moduleLayoutId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var Pages = db.Query<UiPageTypeModel>(@"Select up.Id,
                                                       up.Name	
-                                                    From [ModuleLayout] upm
-													
-													inner join [Workflow] w on w.ModuleId=upm.ModuleId
+                                                    From [ModuleLayout] ml
+													inner join [Workflow] w on w.ModuleId=ml.ModuleId
 													inner join [WorkflowStage] ws on ws.WorkflowId	=  w.Id
 													inner join [UiPageType] up on up.Id=ws.UiPageTypeId
-                                                   where upm.Id = @ModuleLayoutId
+                                                   where ml.Id = @ModuleLayoutId
                                                    and ws.IsDeleted = 0
                                                    and w.IsDeleted = 0
 												   and up.IsDeleted=0
-												   and upm.IsDeleted=0", new { ModuleLayoutId = moduleLayoutId}).ToList();
-
+												   and ml.IsDeleted=0", new { ModuleLayoutId = moduleLayoutId}).ToList();
 
             return Pages;
-
-                                                                                           
         }
 
         /// <summary>

@@ -100,5 +100,9 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         // Get SubrecordId  
         //</summary>
         int Getkey();
+        // <summary>
+        // Get AllrecordCommonIndex
+        //</summary>
+        List<UiPageMetadataModel> GetrecordIndexbyModuleId(int moduleId);
     }
 }

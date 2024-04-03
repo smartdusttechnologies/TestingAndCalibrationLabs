@@ -52,11 +52,20 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <summary>
         /// Existing Record In Ui Page Metadata based on moduleLayoutId
         /// </summary>
-        /// <param name="uiPageMetadataModel"></param>
+        /// <param name="moduleLayoutId"></param>
         /// <returns></returns>
         List<UiPageMetadataModel> GetExistingMetadata(int moduleLayoutId);
+        /// <summary>
+        /// Get all pages based on moduleLayoutId
+        /// </summary>
+        /// <param name="moduleLayoutId"></param>
+        /// <returns></returns>
         List<UiPageTypeModel> GetPages(int moduleLayoutId);
-
+        /// <summary>
+        /// Create Pages in Metadata and UiPageMetadataModuleBridge
+        /// </summary>
+        /// <param name="StagesCount"></param>
+        /// <returns></returns>
         int CreateUsingPages(UiPageMetadataModel uiPageMetadataModel, int StagesCount);
 
 

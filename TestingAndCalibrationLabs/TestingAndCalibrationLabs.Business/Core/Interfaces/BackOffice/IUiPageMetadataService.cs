@@ -54,9 +54,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Delete Record From Ui Metadata
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="metadataModuleBridgeId"></param>
         /// <returns></returns>
         bool Delete(int id,int metadataModuleBridgeId);
-
+        /// <summary>
+        /// Get all Pages based on moduleLayoutId
+        /// </summary>
+        /// <param name="moduleLayoutId"></param>
+        /// <returns></returns>
         List<UiPageTypeModel> Getpages(int moduleLayoutId);
     }
 }

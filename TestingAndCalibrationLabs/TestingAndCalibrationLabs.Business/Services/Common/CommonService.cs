@@ -303,12 +303,30 @@ namespace TestingAndCalibrationLabs.Business.Services
             return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
         }
 
-    /// <summary>
-    /// Get Record By Record Id
-    /// </summary>
-    /// <param name="recordId"></param>
-    /// <returns></returns>
-    public RecordModel GetRecordById(int recordId)
+        /// <summary>
+        /// This Method Return Data For Grid
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public RecordsModel GetRecordsIndex(int moduleId)
+        {
+            var uiMetadata = _commonRepository.GetrecordIndexbyModuleId(moduleId);
+            var uiPageData = _commonRepository.GetUiPageDataByModuleId(moduleId);
+            var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
+            Dictionary<int, List<UiPageDataModel>> uiPageDataModels = new Dictionary<int, List<UiPageDataModel>>();
+            uiPageData.GroupBy(x => x.RecordId).ToList()
+                .ForEach(t => uiPageDataModels.Add(t.Key, t.OrderBy(o => o.UiPageMetadataId).ToList()));
+            return new RecordsModel { ModuleId = moduleId, Fields = metadata, FieldValues = uiPageDataModels };
+        }
+
+
+
+        /// <summary>
+        /// Get Record By Record Id
+        /// </summary>
+        /// <param name="recordId"></param>
+        /// <returns></returns>
+        public RecordModel GetRecordById(int recordId)
         {
             int uiPageTypeId;
             var recordMdel = _recordGenericRepository.Get(recordId);

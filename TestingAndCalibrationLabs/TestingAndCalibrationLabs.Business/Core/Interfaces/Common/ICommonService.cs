@@ -76,5 +76,8 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <returns></returns>
         FileUploadModel DownloadImage(string ImageValue);
         int GenerateRecordId(int ModuleId,int WorkflowStageId);
+
+        RecordsModel GetRecordsIndex(int moduleId);
+
      }
 }  

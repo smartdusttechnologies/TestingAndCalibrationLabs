@@ -218,7 +218,6 @@
             }
         });
         inputWlement.forEach(function (inputElement) {
-            debugger;
             var inputId = inputElement.id;
             if (inputElement.style.pointerEvents === 'none' || inputElement.style.opacity === '0.5') {
                 return;
@@ -240,13 +239,11 @@
         });
 
 
-        debugger;
         if (isValid) {
             
             var formData = {};
             $('#pageForm').find(':input').each(function () {
                 var input = $(this);
-                debugger;
                 if (input.is(':button, :submit, :reset, :hidden, :radio') || input.attr('id') === 'paymentInv' || input.attr('id') === 'payment3rd') {
                     return;
                 }
@@ -283,7 +280,6 @@
     }
 
     function ModuleGet() {
-        debugger;
 
         if (validationSummary && validationSummary.innerHTML.trim() !== '') {
             validationSummary.innerHTML = '';
@@ -372,7 +368,6 @@
             url: "@Url.Action("GetExistingResult","UiPageMetadata")",
             data: { moduleLayoutId: moduleLayoutId },
             success: function (response) {
-                debugger;
                 $("#UiPageMetadata").empty();
                 $("#UiPageMetadata").append("<option disabled selected>Select UiPageMetadata ...</option>");
                 for (var i = 0; i < response.length; i++) {

@@ -170,7 +170,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         /// </summary>
         /// <param name="moduleId"></param>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int modulelayoutId)
+        public List<UiPageMetadataModel> GetUiPageMetadataByModuleId(int moduleId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id,
@@ -201,13 +201,59 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                where ml.ModuleId = @modulelayoutId
+                                                where ml.ModuleId = @moduleId
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
                                                     and dt.IsDeleted = 0
 													and mmb.IsDeleted = 0
-                                                    and ucct.IsDeleted = 0", new { modulelayoutId }).ToList();
+                                                    and ucct.IsDeleted = 0", new { moduleId }).ToList();
+            return metadata;
+        }
+
+        /// <summary>
+        /// Get Ui Page Metadata Based On Module Id
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public List<UiPageMetadataModel> GetrecordIndexbyModuleId(int moduleId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var metadata = db.Query<UiPageMetadataModel>(@"Select upm.Id,
+                                                        mmb.UiPageTypeId,
+														mmb.Orders,
+                                                        mmb.MultiValueControl,
+														mmb.ParentId,
+														upm.ModuleLayoutId,
+                                                        upt.[Name] as UiPageTypeName,
+                                                         upm.IsRequired,
+                                                        upm.UiControlTypeId,
+                                                        uct.[Name] as UiControlTypeName,
+                                                        upm.UiControlDisplayName,
+                                                        upm.DataTypeId,
+                                                        dt.Name as DataTypeName,
+                                                        upm.UiControlCategoryTypeId,
+                                                        uct.ControlCategoryId,
+                                                        lc.Id as LookupCategoryId,
+                                                        l.Name as ControlCategoryName,
+														ucct.Template as UiControlCategoryTypeTemplate
+                                                    From [UiPageMetadataModuleBridge] mmb
+													inner join [UiPageMetadata] upm on mmb.UiPageMetadataId = upm.Id
+                                                    inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
+                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
+                                                    inner join [DataType] dt on upm.DataTypeId = dt.Id
+													inner join [ModuleLayout] ml on ml.Id = upm.ModuleLayoutId
+                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
+                                                where ml.ModuleId = @moduleId and mmb.MultiValueControl != 'true'
+                                                    and upm.IsDeleted = 0 
+                                                    and upt.IsDeleted = 0 
+                                                    and uct.IsDeleted = 0
+                                                    and dt.IsDeleted = 0
+													and mmb.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0", new { moduleId }).ToList();
             return metadata;
         }
         /// <summary>

@@ -55,7 +55,6 @@ namespace TestingAndCalibrationLabs.Business.Services
                
                 var WorkflowStages = _workflowStageRepository.GetbyModuleId(uiPageTypeModel.ModuleId);
                 var getModuleId = _moduleLayoutRepository.GetByModuleLayoutId(uiPageTypeModel.ModuleId);
-                //var getallrecordmetadataById = _uiPageMetadataRepository.getdetails(getModuleId.Id);
                 var CountStage = WorkflowStages.Count;
                 var lists = new UiPageMetadataModel();
 

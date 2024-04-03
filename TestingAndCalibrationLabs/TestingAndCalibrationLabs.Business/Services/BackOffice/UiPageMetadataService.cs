@@ -82,7 +82,10 @@ namespace TestingAndCalibrationLabs.Business.Services
             _uiPageMetadataRepository.Update(uiPageMetadataModel);
             return new RequestResult<int>(1);
         }
-
+        /// <summary>
+        /// <param name="moduleLayoutId"></param>
+        /// Get all page based on moduleLayoutId
+        /// <returns></returns>
         public List<UiPageTypeModel> Getpages(int moduleLayoutId )
         {
           return  _uiPageMetadataRepository.GetPages(moduleLayoutId);
