@@ -166,10 +166,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                             if (DetailsMetatadata.Count - 1 == StagesCount)
                             {
                                 controlsWithUiControlTypeId25 = DetailsMetatadata
-                                    .Where(control => control.UiControlTypeId == 25)
+                                    .Where(control => control.UiControlTypeId == (int)UiControlTypeId.uiControlTypeId)
                                     .ToList();
 
-                                DetailsMetatadata.RemoveAll(control => control.UiControlTypeId == (int)UiControlTypeId.num);
+                                DetailsMetatadata.RemoveAll(control => control.UiControlTypeId == (int)UiControlTypeId.uiControlTypeId);
 
                                 int parentIdFor25 = controlsWithUiControlTypeId25[0].Id;
                                 int j = 0;
@@ -179,7 +179,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                         // Check if Detailsstage[k].UiPageTypeId is not available in groupby.key
                                         if (!groupbybasedonMetadataId.Any(g => g.Key == Detail.Id))
                                         {
-                                            if (controlsWithUiControlTypeId25[0].UiControlTypeId == (int)UiControlTypeId.num)
+                                            if (controlsWithUiControlTypeId25[0].UiControlTypeId == (int)UiControlTypeId.uiControlTypeId)
                                             {
                                                 UiPageMetadataModel Valuesget = new UiPageMetadataModel();
                                                 Valuesget.UiPageMetadataId = controlsWithUiControlTypeId25[0].Id;

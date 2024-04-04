@@ -4,6 +4,10 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Core.Interfaces
 {
+    /// <summary>
+    /// Service Interface For LayoutService
+    /// </summary>
+    /// <returns></returns>
     public interface ILayoutService
     {
 
@@ -35,6 +39,5 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
     }
 }
