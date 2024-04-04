@@ -40,6 +40,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<ModuleLayoutModel, ModuleLayoutDTO>().ReverseMap();
 
             CreateMap<OtpDTO, OtpModel>().ReverseMap();
+            CreateMap<ExternalLogin, UserModel>().ReverseMap();
         }
     }
 }

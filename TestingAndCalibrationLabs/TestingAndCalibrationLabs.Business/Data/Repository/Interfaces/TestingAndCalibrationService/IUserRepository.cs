@@ -25,6 +25,10 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="passwordLogin"></param>
         int Insert(UserModel user, PasswordLogin passwordLogin);
         /// <summary>
+        /// create for add user details of external login
+        /// </summary>
+        int ExternalInsert(UserModel user);
+        /// <summary>
         /// Interface to update the user password when user forget password and reset password
         /// </summary>
         /// <param name="UserModel"></param>

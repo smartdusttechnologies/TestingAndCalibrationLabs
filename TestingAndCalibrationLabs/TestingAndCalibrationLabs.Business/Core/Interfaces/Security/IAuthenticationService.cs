@@ -18,6 +18,10 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         //TODo: This should be moved to User service.
         RequestResult<bool> Add(UserModel user, string password);
         /// <summary>
+        /// Interfaces to External Add new and validate existing user for Registration
+        /// </summary>
+        RequestResult<LoginToken> ExternalAdd(UserModel userModel);
+        /// <summary>
         /// Interface to update the user password when user forget password and reset password
         /// </summary>
         /// <param name="UserModel"></param>

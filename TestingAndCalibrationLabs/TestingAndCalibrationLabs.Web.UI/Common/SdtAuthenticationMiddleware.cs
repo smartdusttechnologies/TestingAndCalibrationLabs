@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,7 +63,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 || context.Request.Path.Value.Equals("/Security/RefreshToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.Equals("/Security/RevokeToken", StringComparison.OrdinalIgnoreCase)
                 || context.Request.Path.Value.StartsWith("/Swagger", StringComparison.OrdinalIgnoreCase)
-                || context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase))
+                || context.Request.Path.Value.Equals("/", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Login/Login", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Login/GoogleResponse", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Login/LoginWithMicrosoft", StringComparison.OrdinalIgnoreCase)
+                || context.Request.Path.Value.Equals("/Login/MicrosoftResponse", StringComparison.OrdinalIgnoreCase))
             {
                 await _next(context);
             }
@@ -82,6 +87,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Common
                 OrganizationId = int.Parse(jwtSecurityToken.Claims.Single(x => x.Type == CustomClaimType.OrganizationId.ToString()).Value),
                 UserId = int.Parse(jwtSecurityToken.Claims.Single(x => x.Type == CustomClaimType.UserId.ToString()).Value),
             };
+            var userNameClaim = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+            if (userNameClaim != null)
+            {
+                // Set the context.User to the new ClaimsPrincipal
+                userIdentity.AddClaim(new Claim(ClaimTypes.Name, userNameClaim.Value));
+            }
             //var roleByOrganizationWithClaims = _roleService.GetRoleByOrganizationWithClaims(userIdentity.UserName).Where(x => x.OrgId == userIdentity.OrganizationId);
             //var roleClaims = roleByOrganizationWithClaims.Select(x => new Claim(ClaimTypes.Role, x.RoleName)).Distinct().ToList();
             //var userRoleClaim = roleByOrganizationWithClaims.Select(x => new Claim(CustomClaimTypes.Permission, x.ClaimName)).Distinct().ToList();
