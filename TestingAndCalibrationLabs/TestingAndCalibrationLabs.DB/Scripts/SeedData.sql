@@ -390,7 +390,8 @@ BEGIN
 			   (20,N'UiPageMetadataCharacteristics',1,0),
 			     (21,N'Email Verify',1,0),
 			   (22,N'Mobile Verify',1,0),
-			    (23,N'Logout',1,0)
+			    (23,N'Logout',1,0),
+				(24,N'UserCreationSteps',1,0)
 
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF
@@ -768,7 +769,8 @@ BEGIN
 			 
 			  (24,N'/User/VerifyEmail/',21,1003,0),
 			  (25,N'/User/MobileVerify/',22,1003,0),
-	       (26,N'/Security/Logout',23,1003,0)
+	       (26,N'/Security/Logout',23,1003,0),
+		   (27,N'/UiPageMetadata/UserSteps/',24,1,0)
     SET IDENTITY_INSERT [dbo].[UiPageNavigation]  OFF
 END
 GO
