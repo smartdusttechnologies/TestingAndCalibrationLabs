@@ -72,11 +72,21 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <summary>
         /// Image Download
         /// </summary>
-        /// <param name="fileId"></param>
+        /// <param name="ImageValue"></param>
         /// <returns></returns>
         FileUploadModel DownloadImage(string ImageValue);
+        /// <summary>
+        /// Get all Record With grid
+        /// </summary>
+        /// <param name="ModuleId"></param>
+        /// <param name="WorkflowStageId"></param>
+        /// <returns></returns>
         int GenerateRecordId(int ModuleId,int WorkflowStageId);
-
+        /// <summary>
+        /// Get all Common Index Record
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         RecordsModel GetRecordsIndex(int moduleId);
 
      }

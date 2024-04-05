@@ -45,6 +45,10 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _moduleLayoutRepository.GetByModuleLayoutId(moduleId);
         }
+        /// <summary>
+        /// Get Records By ModuleLayout based on Id and also match Id with module and Layout Id
+        /// </summary>
+        /// <returns></returns>
         public ModuleLayoutModel GetById(int id)
         {
             return _moduleLayoutRepository.GetById(id);

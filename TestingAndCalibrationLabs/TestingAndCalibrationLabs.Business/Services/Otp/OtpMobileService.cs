@@ -46,13 +46,13 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             }
             return new RequestResult<bool>(false, errors);
         }
-        public async Task<RequestResult<bool>> VerifyOtp(OtpModel r)
+        public async Task<RequestResult<bool>> VerifyOtp(OtpModel OtpModel)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp/verify?otp=${r.OTP}&mobile=${r.MobileNumber}"),
+                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp/verify?otp=${OtpModel.OTP}&mobile=${OtpModel.MobileNumber}"),
                 Headers =
             {
                 { "accept", "application/json" },
@@ -70,7 +70,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
                 return new RequestResult<bool>(false);
             }
         }
-        public async Task<RequestResult<bool>> SendOtp(OtpModel r)
+        public async Task<RequestResult<bool>> SendOtp(OtpModel OtpModel)
         {
             var client = new HttpClient();
             var template_id = _configuration["msg91:template_id"];
@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp?template_id=${template_id}&mobile=${r.MobileNumber}&otp_length=${otp_length}&otp_expiry=${otp_expiry}"),
+                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp?template_id=${template_id}&mobile=${OtpModel.MobileNumber}&otp_length=${otp_length}&otp_expiry=${otp_expiry}"),
                 Headers =
                   {
                       { "accept", "application/json" },

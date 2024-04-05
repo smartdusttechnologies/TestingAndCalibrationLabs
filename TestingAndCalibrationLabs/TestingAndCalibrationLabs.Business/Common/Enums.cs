@@ -63,7 +63,7 @@
 
     public enum UiControlTypeId
     {
-        num = 25,
+        uiControlTypeId = 25,
         
     }
 
@@ -72,9 +72,6 @@
         num = 2010,
         MultiControlGrid
     }
-
-
-
 
     /// <summary>
     /// Enum For Permission Module Type

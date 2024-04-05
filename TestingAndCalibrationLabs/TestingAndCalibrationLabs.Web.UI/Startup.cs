@@ -131,6 +131,8 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped <IOtpEmailService,OtpEmailService>();
             services.AddScoped <IOtpMobileService,OtpMobileService>();
 
+            services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
+
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
@@ -182,8 +184,12 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IOtpRepsitory, OtpRepository>();
             services.AddScoped<IGenericRepository<OtpModel>, GenericRepository<OtpModel>>();
+
+            services.AddScoped<IPasswordPolicyRepository, PasswordPolicyRepository>();
+
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
+            services.AddScoped<IGenericRepository<PasswordPolicyModel>, GenericRepository<PasswordPolicyModel>>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

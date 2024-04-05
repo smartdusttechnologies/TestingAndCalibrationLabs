@@ -50,9 +50,11 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool Delete(int id);
-
-
-
+        /// <summary>
+        /// Get The WorkflowStage Records Based on ModuleId
+        /// </summary>
+        /// <param name="ModuleId"></param>
+        /// <returns></returns>
         List<WorkflowStageModel> GetbyModuleId(int ModuleId);
     }
 }

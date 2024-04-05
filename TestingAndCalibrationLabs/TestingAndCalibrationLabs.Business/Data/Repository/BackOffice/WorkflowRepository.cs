@@ -42,13 +42,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         /// </summary>
         /// <param name="workflowModel"></param>
         /// <returns></returns>
-        //public int Create(WorkflowModel workflowModel)
-        //{
-        //    string query = @"Insert into [Workflow] (Name,ModuleId)
-        //                                          values (@Name,@ModuleId)";
-        //    using IDbConnection db = _connectionFactory.GetConnection;
-        //    return db.Execute(query, workflowModel);
-        //}
         public int Create(WorkflowModel workflowModel)
         {
             using (IDbConnection db = _connectionFactory.GetConnection)
