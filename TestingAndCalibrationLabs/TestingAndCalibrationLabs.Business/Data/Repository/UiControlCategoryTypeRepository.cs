@@ -32,7 +32,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and ct.IsDeleted = 0
                                                     ").ToList();
         }
-        public List<UiControlCategoryTypeModel> GetControlCategoryType(int ControlId)
+        public List<UiControlCategoryTypeModel> GetControlCategoryType(int controlId)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
             var ControlCategory= db.Query<UiControlCategoryTypeModel>(@" select cct.Id,cct.Name,cct.Template
@@ -42,7 +42,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                    and  uct.IsDeleted = 0 
 												   
                                                     and cct.IsDeleted = 0
-                                                    ", new { ControlId = ControlId }).ToList();
+                                                    ", new { ControlId = controlId }).ToList();
 
             return ControlCategory;
         }

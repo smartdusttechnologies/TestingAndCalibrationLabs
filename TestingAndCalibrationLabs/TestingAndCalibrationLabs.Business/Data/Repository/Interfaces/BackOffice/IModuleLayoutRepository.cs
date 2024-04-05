@@ -11,10 +11,14 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     public interface IModuleLayoutRepository
     {
         /// <summary>
-        /// Get All Records Of ModuleLayout
+        /// Get All Records Of ModuleLayout based on moduleId
         /// </summary>
         /// <returns></returns>
         ModuleLayoutModel GetByModuleLayoutId(int moduleId);
+        /// <summary>
+        /// Get All Records Of ModuleLayout
+        /// </summary>
+        /// <returns></returns>
         List<ModuleLayoutModel> Get();
         /// <summary>
         /// Get Records By UiPageMetadataId
