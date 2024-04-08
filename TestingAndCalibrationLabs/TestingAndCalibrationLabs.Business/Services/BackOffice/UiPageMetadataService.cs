@@ -116,9 +116,9 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// Get All UIDisplayName  From Ui Page Metadata Type
         /// </summary>
         /// <returns></returns>
-        public List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int ModuleIds)
+        public List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int moduleId)
         {
-            return _uiPageMetadataRepository.GetDisplayName(moduleLayoutId, ModuleIds);
+            return _uiPageMetadataRepository.GetDisplayName(moduleLayoutId, moduleId);
         }
         /// <summary>
         /// Get Record by Id and uiPageTypeId ,metadataModuleBridgeId For Ui Page Metadata Type

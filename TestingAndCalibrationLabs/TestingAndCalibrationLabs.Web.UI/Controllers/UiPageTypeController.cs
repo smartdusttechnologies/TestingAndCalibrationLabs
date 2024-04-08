@@ -122,7 +122,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -131,18 +130,12 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-           
             try
             {
-                
                 var pageList = _moduleService.Get();
                 var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
                 pages = pages.Where(x => x.Id != (int)Helpers.None.Id).ToList();
-               
-                //var var WorkflowStagese = _workflowStageService.GetByWorkflowId();
                 ViewBag.module = pages;
-
-
                 return base.View(new Models.UiPageTypeDTO { Id = id });
             }
             catch (Exception ex)
@@ -152,6 +145,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return View();
 
         }
+        /// <summary>
+        /// get Workflowstage bsed on moduleId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
         public IActionResult GetStagebyModuleId(int moduleId)
         {
             var WorkflowStages = _workflowStageService.GetbyModuleId(moduleId);

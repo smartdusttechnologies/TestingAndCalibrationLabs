@@ -318,11 +318,11 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// To Get all Parent name based on CurrentModule
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="ModuleIds"></param>
+        /// <param name="moduleId"></param>
         /// <returns></returns>
-        public IActionResult GetparentType(int id,int ModuleIds)
+        public IActionResult GetparentType(int id,int moduleId)
         {
-            var Getpages = _uiPageMetadataService.GetDisplayName(id, ModuleIds);
+            var Getpages = _uiPageMetadataService.GetDisplayName(id, moduleId);
             var Pages = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(Getpages);
             return Ok(Pages);
         }
@@ -332,7 +332,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult UserSteps()
         {
-
             return View();
         }
 

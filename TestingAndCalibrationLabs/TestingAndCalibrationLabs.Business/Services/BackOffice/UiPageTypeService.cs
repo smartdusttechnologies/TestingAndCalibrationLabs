@@ -53,9 +53,9 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (uiPageTypeModel.WorkflowStageId !=0 && uiPageTypeModel.WorkflowStageId != null)
             {
                
-                var WorkflowStages = _workflowStageRepository.GetbyModuleId(uiPageTypeModel.ModuleId);
+                var workflowStages = _workflowStageRepository.GetbyModuleId(uiPageTypeModel.ModuleId);
                 var getModuleId = _moduleLayoutRepository.GetByModuleLayoutId(uiPageTypeModel.ModuleId);
-                var CountStage = WorkflowStages.Count;
+                var CountStage = workflowStages.Count;
                 var lists = new UiPageMetadataModel();
 
                 lists.UiControlTypeId = 29;
@@ -67,13 +67,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 lists.ModuleLayoutId = getModuleId.Id;
                 lists.WorkflowStageId = uiPageTypeModel.WorkflowStageId;
                 lists.ModuleId = uiPageTypeModel.ModuleId;
-
-               
-                    var InsertMetadata = _uiPageMetadataRepository.CreateUsingPages(lists, CountStage);
-
-
-
-
+                    var insertMetadata = _uiPageMetadataRepository.CreateUsingPages(lists, CountStage);
             }
             return new RequestResult<int>(1);
         }
