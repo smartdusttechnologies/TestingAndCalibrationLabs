@@ -52,15 +52,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                     {
                         string moduleLayoutQuery = @"SELECT Id FROM ModuleLayout WHERE ModuleId = @ModuleId";
                         int moduleLayoutId = db.QuerySingle<int>(moduleLayoutQuery, new { ModuleId = workflowModel.ModuleId }, transaction);
-
-                        
                         string uiPageMetadataQuery = @"
                     INSERT INTO UiPageMetadata (UiControlTypeId, IsRequired, UiControlDisplayName, 
                                                  DataTypeId, UiControlCategoryTypeId, Name, ModuleLayoutId)
                     VALUES (@UiControlTypeId, @IsRequired, @UiControlDisplayName, 
                             @DataTypeId, @UiControlCategoryTypeId, @Name, @ModuleLayoutId);
                     SELECT CAST(SCOPE_IDENTITY() as int)";
-
                         int uiPageMetadataId = db.QuerySingle<int>(uiPageMetadataQuery, new
                         {
                             UiControlTypeId = 25,
@@ -71,8 +68,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                             Name = workflowModel.Name,
                             ModuleLayoutId = moduleLayoutId 
                         }, transaction);
-
-                        
                         string workflowQuery = @"INSERT INTO [Workflow] (Name, ModuleId)
                                           VALUES (@Name, @ModuleId)";
                         int rowsAffected = db.Execute(workflowQuery, new
@@ -80,9 +75,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                             Name = workflowModel.Name,
                             ModuleId = workflowModel.ModuleId,
                         }, transaction);
-
                         transaction.Commit();
-
                         return rowsAffected; 
                     }
                     catch (Exception ex)
@@ -93,7 +86,6 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                 }
             }
         }
-
         /// <summary>
         /// Getting All Records From Workflow
         /// </summary>

@@ -55,19 +55,19 @@ namespace TestingAndCalibrationLabs.Business.Services
                
                 var workflowStages = _workflowStageRepository.GetbyModuleId(uiPageTypeModel.ModuleId);
                 var getModuleId = _moduleLayoutRepository.GetByModuleLayoutId(uiPageTypeModel.ModuleId);
-                var CountStage = workflowStages.Count;
+                var countstage = workflowStages.Count;
                 var lists = new UiPageMetadataModel();
 
-                lists.UiControlTypeId = 29;
+                lists.UiControlTypeId = (int)UiControlTypeId.UiControlType;
                 lists.IsRequired = false;
                 lists.UiControlDisplayName = uiPageTypeModel.Name;
-                lists.DataTypeId = 1;
-                lists.UiControlCategoryTypeId = 1017;
+                lists.DataTypeId = (int)UiControlTypeId.DataTypeId;
+                lists.UiControlCategoryTypeId = (int)UiControlTypeId.UiControlCategoryTypeId;
                 lists.Name = uiPageTypeModel.Name;
                 lists.ModuleLayoutId = getModuleId.Id;
                 lists.WorkflowStageId = uiPageTypeModel.WorkflowStageId;
                 lists.ModuleId = uiPageTypeModel.ModuleId;
-                    var insertMetadata = _uiPageMetadataRepository.CreateUsingPages(lists, CountStage);
+                    var insertMetadata = _uiPageMetadataRepository.CreateUsingPages(lists, countstage);
             }
             return new RequestResult<int>(1);
         }

@@ -64,7 +64,9 @@
     public enum UiControlTypeId
     {
         uiControlTypeId = 25,
-        
+        UiControlType = 29,
+        UiControlCategoryTypeId = 1017,
+        DataTypeId = 1
     }
 
     public enum UiControlCategoryType

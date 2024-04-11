@@ -152,9 +152,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult GetStagebyModuleId(int moduleId)
         {
-            var WorkflowStages = _workflowStageService.GetbyModuleId(moduleId);
-            var WorkflowStage= _mapper.Map<List<WorkflowStageModel>,List<WorkflowStageDTO>>(WorkflowStages);
-            return Ok(WorkflowStage);
+            var workflowStages = _workflowStageService.GetbyModuleId(moduleId);
+            var workflowStage= _mapper.Map<List<WorkflowStageModel>,List<WorkflowStageDTO>>(workflowStages);
+            return Ok(workflowStage);
         }
         /// <summary>
         /// To Create Record In Ui Page Type

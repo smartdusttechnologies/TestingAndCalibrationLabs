@@ -297,9 +297,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult GetPages(int id)
         {
-            var Getpages=_uiPageMetadataService.Getpages(id);
-            var Pages=_mapper.Map<List<UiPageTypeModel>,List<UiPageTypeDTO>>(Getpages);
-            return Ok(Pages);
+            var getpages=_uiPageMetadataService.Getpages(id);
+            var pages=_mapper.Map<List<UiPageTypeModel>,List<UiPageTypeDTO>>(getpages);
+            return Ok(pages);
 
         }
         /// <summary>
@@ -310,9 +310,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpGet]
         public IActionResult GetControlCategoryType(int id)
         {
-            var Getpages = _uiControlCategoryTypeService.GetControlCategoryType(id);
-            var Pages = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(Getpages);
-            return Ok(Pages);
+            var getpages = _uiControlCategoryTypeService.GetControlCategoryType(id);
+            var pages = _mapper.Map<List<UiControlCategoryTypeModel>, List<UiControlCategoryTypeDTO>>(getpages);
+            return Ok(pages);
         }
         /// <summary>
         /// To Get all Parent name based on CurrentModule
@@ -322,9 +322,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <returns></returns>
         public IActionResult GetparentType(int id,int moduleId)
         {
-            var Getpages = _uiPageMetadataService.GetDisplayName(id, moduleId);
-            var Pages = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(Getpages);
-            return Ok(Pages);
+            var getpages = _uiPageMetadataService.GetDisplayName(id, moduleId);
+            var pages = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(getpages);
+            return Ok(pages);
         }
         /// <summary>
         /// To Create UserCreation Steps
