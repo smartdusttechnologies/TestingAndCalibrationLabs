@@ -34,35 +34,35 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             _userService = userService;
             _genericRepository = genericRepository;
         }
-        
+
         #region Public Methods
         /// <summary>
         /// Method to validate OTP
         /// </summary>
-        /// <param name="Otpmodel"></param>
-        public RequestResult<bool> VerifyOtp(OtpModel Otpmodel)
+        /// <param name="otpmodel"></param>
+        public RequestResult<bool> VerifyOtp(OtpModel otpmodel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            OtpModel existingUser = _otpRepsitory.GetOTP(Otpmodel.UserId);
-            if (Otpmodel.OTP == existingUser.OTP)
+            OtpModel existingUser = _otpRepsitory.GetOTP(otpmodel.UserId);
+            if (otpmodel.OTP == existingUser.OTP)
             {
                 double validationTimeLimit = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
-                if (Otpmodel.CreatedDate <= existingUser.CreatedDate.AddMinutes(validationTimeLimit))
+                if (otpmodel.CreatedDate <= existingUser.CreatedDate.AddMinutes(validationTimeLimit))
                 {
-                    _userService.EmailValidationStatus(Otpmodel.UserId);
+                    _userService.EmailValidationStatus(otpmodel.UserId);
                     return new RequestResult<bool>(true);
                 }
                 else
                 {
-                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
-                    validationMessages.Add(Error);
+                    var error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
+                    validationMessages.Add(error);
                     return new RequestResult<bool>(false, validationMessages);
                 }
             }
             else
             {
-                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error, SourceId = "OTP" };
-                validationMessages.Add(Error);
+                var error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error, SourceId = "OTP" };
+                validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
         }

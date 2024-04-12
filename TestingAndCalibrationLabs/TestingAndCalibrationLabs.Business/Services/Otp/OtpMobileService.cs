@@ -70,7 +70,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
                 return new RequestResult<bool>(false);
             }
         }
-        public async Task<RequestResult<bool>> SendOtp(OtpModel OtpModel)
+        public async Task<RequestResult<bool>> SendOtp(OtpModel otpmodel)
         {
             var client = new HttpClient();
             var template_id = _configuration["msg91:template_id"];
@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp?template_id=${template_id}&mobile=${OtpModel.MobileNumber}&otp_length=${otp_length}&otp_expiry=${otp_expiry}"),
+                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp?template_id=${template_id}&mobile=${otpmodel.MobileNumber}&otp_length=${otp_length}&otp_expiry=${otp_expiry}"),
                 Headers =
                   {
                       { "accept", "application/json" },
@@ -104,14 +104,14 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
                 return new RequestResult<bool>(false);
             }
         }
-        public async Task<RequestResult<bool>> ResendOtp(OtpModel r)
+        public async Task<RequestResult<bool>> ResendOtp(OtpModel otpmodel)
         {
-            var rType = r.IsCall ? "Voice" : "text";
+            var rType = otpmodel.IsCall ? "Voice" : "text";
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp/retry?retrytype=${rType}&mobile=${r.MobileNumber}"),
+                RequestUri = new Uri($"https://control.msg91.com/api/v5/otp/retry?retrytype=${rType}&mobile=${otpmodel.MobileNumber}"),
                 Headers =
                 {
                     { "accept", "application/json" },

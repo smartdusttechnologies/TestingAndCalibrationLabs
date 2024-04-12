@@ -17,12 +17,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.Otp
         /// <param name="r"></param>
         /// <param name="isMobile"></param>
         /// <returns></returns>
-        RequestResult<bool> SendOtp(OtpModel r);
+        RequestResult<bool> SendOtp(OtpModel otpmodel);
         /// <summary>
         /// It  Varify The Otp
         /// </summary>
         /// <param name="Otpmodel"></param>
         /// <returns></returns>
-        RequestResult<bool> VerifyOtp(OtpModel Otpmodel);
+        RequestResult<bool> VerifyOtp(OtpModel otpmodel);
     }
 }
