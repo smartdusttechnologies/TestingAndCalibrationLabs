@@ -167,7 +167,7 @@
 @media (min-width: 1200px) {
     .navbar-expand-xl .navbar-nav .dropdown-menu {
         position: absolute;
-        width: 10px;
+       /* width: 10px;*/
         left: auto;
     }
 }

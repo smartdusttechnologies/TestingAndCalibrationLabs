@@ -24,17 +24,6 @@
                     </select>              
                     <label class="form-label" for="WorkflowId">WorkflowName</label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">                  
-                    <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-                        <option disabled="disabled" selected>....</option>
-                        <option value="">Null</option> <!-- Null option added -->
-                       @* @foreach (var item in ViewBag.UiPageTypes)
-                        {
-                            <option value=@item.Id>@item.Name</option>
-                        }*@
-                    </select>
-                    <label class="form-label" for="UiPageTypeId">UiPageTypeName</label>
-                </div>                         
                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
                     <label class="form-label" for="Orders">Orders</label>

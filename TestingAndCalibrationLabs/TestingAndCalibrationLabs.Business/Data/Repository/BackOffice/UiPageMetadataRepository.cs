@@ -347,6 +347,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 														upm.Name,
 														upmmb.Orders,
 														upmmb.ParentId,
+                                                        upmmb.MultiValueControl,
 														up.UiControlDisplayName as ParentDisplayName,
 														upmmb.Id as MetadataModuleBridgeId,
                                                         dt.Name as DataTypeName,

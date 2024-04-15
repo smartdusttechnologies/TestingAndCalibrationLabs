@@ -82,9 +82,15 @@
                         @Html.DisplayFor(modelItem => item.ParentDisplayName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MultiValueControl)
+                        @if (item.MultiValueControl)
+                        {
+                            <text>true</text>
+                        }
+                        else
+                        {
+                            <text>false</text>
+                        }
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => item.Orders)
                     </td>
