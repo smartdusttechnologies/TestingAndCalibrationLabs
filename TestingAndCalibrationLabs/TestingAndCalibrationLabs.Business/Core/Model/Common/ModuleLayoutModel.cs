@@ -22,7 +22,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name Of The Module 
         /// </summary>
-        public string ModuleName { get; set; }
+        public string Module { get; set; }
         /// <summary>
         /// It Contains The Id Of The Layout 
         /// </summary>
@@ -30,6 +30,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains The Name Of The Layout 
         /// </summary>
-        public string LayoutName { get; set; }
+        public string Layout { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains Name For Module
         /// </summary>
-        public string ModuleName { get; set; }
+        public string Module { get; set; }
         /// <summary>
         /// It Contains LayoutId For ModuleLayout
         /// </summary>
@@ -33,7 +33,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains Name For Layout
         /// </summary>
-        public string LayoutName { get; set; }      
+        public string Layout { get; set; }      
 
     }
 }

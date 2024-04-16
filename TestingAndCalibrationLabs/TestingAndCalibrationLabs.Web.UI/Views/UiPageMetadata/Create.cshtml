@@ -412,7 +412,7 @@
         $.ajax({
             type: 'GET',
             url: "@Url.Action("GetparentType","UiPageMetadata")",
-            data: { id: Control, ModuleIds: ModuleValue }, // Send selected ID as parameter
+            data: { id: Control, moduleIds: ModuleValue }, // Send selected ID as parameter
             success: function (response) {
                 $("#Parent").empty();
                 $("#Parent").append("<option disabled selected>Select ParentName ...</option>");

@@ -320,9 +320,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// <param name="id"></param>
         /// <param name="moduleId"></param>
         /// <returns></returns>
-        public IActionResult GetparentType(int id,int moduleId)
+        public IActionResult GetparentType(int id,int moduleIds)
         {
-            var getpages = _uiPageMetadataService.GetDisplayName(id, moduleId);
+            var getpages = _uiPageMetadataService.GetDisplayName(id, moduleIds);
             var pages = _mapper.Map<List<UiPageMetadataModel>, List<UiPageMetadataDTO>>(getpages);
             return Ok(pages);
         }
