@@ -48,30 +48,30 @@
             <div class="row">
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <select class="form-input width-full black-border " name="ModuleLayoutId" id="ModuleLayout"  asp-for="ModuleLayoutId" >
-                        <option disabled="disabled" selected="selected">Select ModuleLayoutName ...</option>
+                        <option disabled="disabled" selected="selected">Select ModuleLayout...</option>
                         @foreach (var item in ViewBag.Modulelist)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>
                     <label for="ModuleLayoutId" class="form-label">
-                        ModuleLayoutName
+                        ModuleLayout
                     </label>
                 </div>
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" id="Pagetype">
                     <select class="form-input width-full black-border " name="UiPageTypeId" id="UiPageType" asp-for="UiPageTypeId" >
-                        <option disabled="disabled" selected>Select Pages ...</option>
+                        <option disabled="disabled" selected>Select Pages...</option>
 
                     </select>
                     <label for="UiPageTypeId" class="form-label">
-                        UiPageTypeName
+                        UiPageType
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadataControl-select " id="UiControlType">
                     <select class="form-input width-full black-border" name="UiControlTypeId" id="UiControlTypeId"  asp-for="UiControlTypeId" >
-                        <option disabled="disabled" selected>Select ControlType ...</option>
+                        <option disabled="disabled" selected>Select ControlType...</option>
                         @foreach (var item in ViewBag.UiControlTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
@@ -79,7 +79,7 @@
 
                     </select>
                     <label for="UiControlTypeId" class="form-label">
-                        UiControlTypeName
+                        UiControlType
                     </label>
                 </div>
 
@@ -89,14 +89,14 @@
 
                     </select>
                     <label for="UiControlCategoryTypeId" class="form-label">
-                        UiControlCategoryTypeName
+                        UiControlCategoryType
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-Datatype-select" id="DataTypeId">
                     <select class="form-input width-full black-border" name="DataTypeId" id="DataType"  asp-for="DataTypeId" >
-                        <option disabled="disabled" selected>Select Data Type ...</option>
+                        <option disabled="disabled" selected>Select Data Type...</option>
                         @foreach (var item in ViewBag.DataTypes)
                         {
                             <option value=@item.Id>@item.Name</option>
@@ -116,7 +116,7 @@
             <div class="row">
                 <div class="col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <select class="form-input width-full black-border" name="ParentId" id="Parent"  asp-for="ParentId" data-val="false" >
-                        <option disabled="disabled" selected>Select ParentName ...</option>
+                        <option disabled="disabled" selected>Select ParentName...</option>
 
                     </select>
                     <label for="ParentId" class="form-label">
@@ -127,7 +127,7 @@
 
                 <div class=" col-lg-6  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input ui-page-metadata-select" id="UiPageMetadataId">
                     <select class="form-input width-full black-border " name="UiPageMetadataId" id="UiPageMetadata" placeholder=" " rows="1" asp-for="UiPageMetadataId" >
-                        <option disabled="disabled" selected>Select UiPageMetadata ...</option>
+                        <option disabled="disabled" selected>Select UiPageMetadata...</option>
                     </select>
                     <label class="form-label" for="UiPageMetadata"> UiPageMetadata</label>
                 </div>

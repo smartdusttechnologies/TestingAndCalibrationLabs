@@ -30,7 +30,7 @@
             <div class="row">
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
                     <select class="form-input width-full black-border " name="ModuleLayoutId" id="ModuleLayout" onchange="this.setAttribute('value',this.value)" asp-for="ModuleLayoutId" required>
-                        <option disabled="disabled" selected="selected">Select ModuleLayoutName ...</option>
+                        <option disabled="disabled" selected="selected">Select ModuleLayout...</option>
                         @foreach (var item in ViewBag.Modulelist)
                         {
                             if (@item.Id == @ViewBag.ModuleLayoutId)
@@ -44,7 +44,7 @@
                         }
                     </select>
                     <label for="ModuleLayoutId" class="form-label">
-                        ModuleLayoutName
+                        ModuleLayout
                     </label>
                 </div>
                 <div class=" col-lg-6   col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" id="Pagetype">
@@ -63,7 +63,7 @@
                         }
                     </select>
                     <label for="UiPageTypeId" class="form-label">
-                        UiPageTypeName
+                        UiPageType
                     </label>
                 </div>
             </div>
@@ -85,7 +85,7 @@
 
                     </select>
                     <label for="UiControlTypeId" class="form-label">
-                        UiControlTypeName
+                        UiControlType
                     </label>
                 </div>
 
@@ -105,7 +105,7 @@
                         }
                     </select>
                     <label for="UiControlCategoryTypeId" class="form-label">
-                        UiControlCategoryTypeName
+                        UiControlCategoryType
                     </label>
                 </div>
             </div>
