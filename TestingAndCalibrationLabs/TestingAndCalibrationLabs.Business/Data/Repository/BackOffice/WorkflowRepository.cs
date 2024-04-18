@@ -95,7 +95,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<WorkflowModel>(@"Select         wf.Id,
                                                             wf.ModuleId,
-                                                            m.[Name] as ModuleName,                                                          
+                                                            m.[Name] as Module,                                                          
                                                             wf.Name                                                                                                                 
                                                     From [Workflow] wf                                                  
                                                    inner join [Module] m on wf.ModuleId = m.Id
@@ -113,7 +113,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             var workflowById = db.Query<WorkflowModel>(@"Select wf.Id,
                                                        wf.ModuleId,     
-													 m.[Name] as ModuleName, 								
+													 m.[Name] as Module, 								
                                                      wf.Name
                                                     From [Workflow] wf													
                                                    inner join [Module] m on wf.ModuleId = m.Id                                              
