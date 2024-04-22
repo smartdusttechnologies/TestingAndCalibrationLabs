@@ -44,7 +44,12 @@
                         window.location.href = '@Url.Action("Index", "TestReport")';
                     }
                     else {
-                        alert(result.message);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                            footer: `<a href="#">${result.message}?</a>`
+                        });
                     }
                 }
             });
