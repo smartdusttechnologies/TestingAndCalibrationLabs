@@ -100,7 +100,9 @@
         DefaultClaim,
         ApplicationPermission,
         UserId,
-        OrganizationId
+        OrganizationId,
+        MobileValidationStatus,
+        EmailValidationStatus
     }
     /// <summary>
     /// Enum For Permission Type
