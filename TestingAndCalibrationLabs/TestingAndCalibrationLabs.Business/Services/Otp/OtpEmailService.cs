@@ -74,7 +74,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
-            var user = _userService.Get(otpModel.UserId);
+            var user = _userService.Get(otpModel.Id);
             otpModel.Email = user.Email;
             otpModel.Name = user.FirstName;
             string otp = GenerateOTP();
@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", otp);
             model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*", model.BodyImage);
             model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
-            OtpModel OtpGenerate = _otpRepsitory.InsertOtp(otp, otpModel.UserId);
+            OtpModel OtpGenerate = _otpRepsitory.InsertOtp(otp, otpModel.Id);
             try
             {
                 _emailService.Sendemail(model);
