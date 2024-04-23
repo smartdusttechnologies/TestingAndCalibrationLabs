@@ -55,7 +55,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
                 return Json(new { status = true, message = "Login Successfull!" });
             }
-            return View();
+             return Json(new { status = false, message = "Login Failed!" }); ;
         }
         ///<summary>
         /// Methods to Forget Password

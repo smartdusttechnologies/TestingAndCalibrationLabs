@@ -416,6 +416,7 @@
             success: function (response) {
                 $("#Parent").empty();
                 $("#Parent").append("<option disabled selected>Select ParentName ...</option>");
+                $("#Parent").append("<option value='0'>ROOT</option>");
 
                 for (var i = 0; i < response.length; i++) {
                     var MetadataId = response[i].id;
