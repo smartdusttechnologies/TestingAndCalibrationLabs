@@ -188,6 +188,7 @@
             data: $('#SignUpData').serialize(),
             dataType: 'json',
             success: function (result) {
+                debugger;
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
@@ -204,8 +205,15 @@
                             alert("There is a Problem, Try Again! to login");
                         },
                         success: function (result) {
+                            debugger;
+
                             if (result.status == true) {
-                                window.location.href = '@Url.Action("EmailVerify","User")';
+                                // Append the query string to the URL
+                                var url = '@Url.Action("EmailVerify", "User")' + '?' + result;
+
+                                // Redirect to the new URL
+                                window.location.href = url;
+                                // window.location.href = '@Url.Action("EmailVerify","User")';
                                // window.location.href = '@Url.Action("Index", "TestReport")';
                             }
                             else {
