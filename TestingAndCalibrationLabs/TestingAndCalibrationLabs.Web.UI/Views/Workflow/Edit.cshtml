@@ -16,14 +16,14 @@
                     <label class="form-label" for="Name">Name</label>
                 </div>
             <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                <select class="form-input " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                    <select class="form-input width-full black-border " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
                     <option disabled="disabled" selected>....</option>
                     @foreach (var item in ViewBag.Module)
                     {                 
                     <option value=@item.Id>@item.Name</option>
                     }
                 </select>
-                    <label class="form-label" for="ModuleId">Module Name</label>
+                    <label class="form-label" for="ModuleId">Module</label>
             </div>
             <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                 <div class="form-group">

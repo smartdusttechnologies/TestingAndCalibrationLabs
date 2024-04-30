@@ -53,6 +53,14 @@ namespace TestingAndCalibrationLabs.Business.Services
             return _workflowStageRepository.GetByWorkflowId(workflowData.Id);
         }
         /// <summary>
+        /// Get The WorkflowStage Records Based on ModuleId
+        /// </summary>
+        /// <returns></returns>
+        public List<WorkflowStageModel> GetbyModuleId(int ModuleId)
+        {
+            return  _workflowStageRepository.GetbyModuleId(ModuleId);
+        }
+        /// <summary>
         /// Insert Record In WorkflowStage
         /// </summary>
         /// <param name="pageControl"></param>

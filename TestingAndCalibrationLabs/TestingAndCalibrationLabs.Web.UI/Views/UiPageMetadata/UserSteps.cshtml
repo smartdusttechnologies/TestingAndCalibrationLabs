@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Instructions</title>
+    <style>
+        /* CSS styles for the steps */
+        .step-content {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* CSS styles for the step descriptions */
+        .step-description {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* CSS styles for the buttons */
+        .buttonur {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* CSS styles for the step numbers */
+        .step-number {
+            width: auto; /* Change fixed width to auto */
+            min-width: 30px; /* Set minimum width to ensure circular shape */
+            height: 30px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            flex-shrink: 0; /* Prevent step number from shrinking */
+        }
+
+        .head_start {
+            text-shadow: 2px 2px 5px white;
+           
+            text-align: center;
+            border: ridge;
+            border-block-color: inherit;
+            color: deepskyblue;
+        }
+       
+    </style>
+</head>
+<body>
+    <h2 class="head_start">Follow This Steps </h2>
+    <!-- Hardcoded steps -->
+    <div class="step-content" id="created-steps">
+        <div class="step-description">
+            <span class="step-number">1</span>
+            <span class="text_set">Go to Setting and Create a Module Name (Create a module because this is the conection in the ModuleLayout).</span>
+        </div>
+        <div class="step-description">
+            <span class="step-number">2</span>
+            <p class="text_set">Go to Setting and Create a Layout(Also this will be connected with ModuleLayout this will help to create a own Common Pages).</p>
+        </div>
+        <div class="step-description">
+            <span class="step-number">3</span>
+            <span class="text_set">Go to Setting and Create a Module Layout(This is the one of the connecttion in the Your Common Pages ).</span>
+        </div>
+        
+         <div class="step-description">
+            <span class="step-number">4</span>
+            <p class="text_set">Go to Setting and Create a Workflow (Here you can define your Workflow .means what type of Common page making ). </p>
+        </div>
+        <div class="step-description">
+            <span class="step-number">6</span>
+            <p class="text_set">Go to Setting and Create a Workflow Stage(Here you can define what is the your workflow_stage name means How many types of pages do you want to create, give complete details here).</p>
+        </div>
+        <div class="step-description">
+            <span class="step-number">4</span>
+            <p class="text_set">Go to Setting and Create a UipageType related to your Workflow Stage(Create your page here with whatever stage name you have defined in the workflow stage. Here you can create your page with your workflow stage using modulelayout.). </p>
+        </div>
+         <div class="step-description">
+            <span class="step-number">7</span>
+            <span class="text_set">Go to Setting and Create a UiPagenavigation.</span>
+        </div>
+        <div class="step-description">
+            <span class="step-number">8</span>
+            <span class="text_set">Now go to setting and create a UipageMetadat related to your new page(This will help you in adding new controls to your page. ) </span>
+        </div>
+       
+        
+    </div>
+
+    <script>
+        // JavaScript function to handle button click
+        function clickMe(step, event) {
+            event.preventDefault();
+            console.log("Clicked step " + step);
+            // Perform your step-specific actions here
+        }
+    </script>
+</body>
+</html>

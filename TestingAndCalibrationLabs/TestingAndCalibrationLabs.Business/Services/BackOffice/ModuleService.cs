@@ -19,8 +19,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             _genericRepository = genericRepository;
             _moduleRepository = moduleRepository;
         }
-
-
         /// <summary>
         /// Get All Records From Module
         /// </summary>
@@ -29,6 +27,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         {
             return _moduleRepository.Get();
         }
+       
         /// <summary>
         /// Insert Record In Module
         /// </summary>

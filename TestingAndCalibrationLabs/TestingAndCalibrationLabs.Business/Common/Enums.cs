@@ -58,7 +58,23 @@
         year,
         question,
         workflowStage
+       
     }
+
+    public enum UiControlTypeId
+    {
+        uiControlTypeId = 25,
+        UiControlType = 29,
+        UiControlCategoryTypeId = 1017,
+        DataTypeId = 1
+    }
+
+    public enum UiControlCategoryType
+    {
+        num = 2010,
+        MultiControlGrid
+    }
+
     /// <summary>
     /// Enum For Permission Module Type
     /// </summary>
@@ -84,7 +100,9 @@
         DefaultClaim,
         ApplicationPermission,
         UserId,
-        OrganizationId
+        OrganizationId,
+        MobileValidationStatus,
+        EmailValidationStatus
     }
     /// <summary>
     /// Enum For Permission Type

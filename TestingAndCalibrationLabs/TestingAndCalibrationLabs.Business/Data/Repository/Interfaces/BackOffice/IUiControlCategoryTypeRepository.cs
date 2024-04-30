@@ -37,5 +37,11 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         UiControlCategoryTypeModel GetById(int id);
+        /// <summary>
+        /// Get Record By ControlId From Ui Control Category Type
+        /// </summary>
+        /// <param name="ControlId"></param>
+        /// <returns></returns>
+        List<UiControlCategoryTypeModel> GetControlCategoryType(int controlId);
     }
 }

@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="TestingAndCalibrationLabs\Business\Core\Model\" />
     <Folder Include="Views\Common\Components\Url\" />
   </ItemGroup>
 

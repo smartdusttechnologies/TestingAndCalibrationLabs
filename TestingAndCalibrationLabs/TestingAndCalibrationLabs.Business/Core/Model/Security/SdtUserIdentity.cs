@@ -20,6 +20,15 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// It Contains Id Of User
         /// </summary>
         public int UserId { get; set; }
+        /// <summary>
+        /// It Contains Id Of User
+        /// </summary>
+        public bool EmailValidationStatus { get; set; }
+        /// <summary>
+        /// It Contains Id Of User
+        /// </summary>
+        public bool MobileValidationStatus { get; set; }
+
 
     }
 }

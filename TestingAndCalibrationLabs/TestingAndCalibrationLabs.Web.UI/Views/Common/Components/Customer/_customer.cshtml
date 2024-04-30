@@ -8,7 +8,7 @@
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        var lookupCategoryId = modelData.value.uiPageMetadata.moduleId;
+        var lookupCategoryId = modelData.value.uiPageMetadata.moduleLayoutId;
         var uiPageData = modelData.value.uiPageData;
         var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
         $.ajax({

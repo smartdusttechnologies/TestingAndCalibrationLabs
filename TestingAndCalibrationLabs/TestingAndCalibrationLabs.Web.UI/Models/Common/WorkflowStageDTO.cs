@@ -17,8 +17,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains Id Name of UiPageType
         /// </summary>
-        [Required(ErrorMessage = "Please Choose UiPageTypeName")]
-        public int UiPageTypeId { get; set; }
+        
+        public int? UiPageTypeId { get; set; }
         /// <summary>
         /// It Contains The Name of UiPageType
         /// </summary>
@@ -36,7 +36,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// It Contains The Orders of WorkflowStage
         /// </summary>
         [Required(ErrorMessage = "Please Enter Orders ")]
-        [Range(1, int.MaxValue, ErrorMessage = "Please Enter  Number Greater Than 0 In Orders")]
+        [Range(0, int.MaxValue, ErrorMessage = "Please Enter  Number Greater Than 0 or 0 In Orders")]
         public string Orders { get; set; }
     }
 }

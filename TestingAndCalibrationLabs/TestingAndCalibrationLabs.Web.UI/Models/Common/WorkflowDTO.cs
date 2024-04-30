@@ -22,6 +22,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         /// <summary>
         /// It Contains The Name of Module
         /// </summary>
-        public string ModuleName { get; set; }
+        public string Module { get; set; }
     }
 }

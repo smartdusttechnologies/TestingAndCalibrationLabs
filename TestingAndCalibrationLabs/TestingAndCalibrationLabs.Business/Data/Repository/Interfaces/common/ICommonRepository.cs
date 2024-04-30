@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
@@ -8,12 +9,13 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
     /// </summary>
     public interface ICommonRepository
     {
+        int GetRecordId(int ModuleId,int  WorkflowStageId);
         /// <summary>
         /// To Insert Record
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        int Insert(RecordModel record);
+        RecordModel Insert(RecordModel record);
         /// <summary>
         /// To Get Records Based on ModuleId
         /// </summary>
@@ -63,30 +65,44 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         int GetWorkflowStageBasedOnOrder(int moduleId);
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="recordId"
-        /// <param name="uiPageTypeId"
         /// <returns></returns>
         List<UiPageDataModel> GetPageData(int recordId);
         /// <summary>
-        /// 
-        /// </summary>
+        /// Get all Grid data
         /// <param name="id"></param>
-        /// <param name="uiPageTypeId"></param>
+        /// <param name="uiMetadata"></param>
         /// <returns></returns>
-        List<UiPageDataModel> GetMultiPageData(int id);
+        List<UiPageDataModel> GetMultiPageData(int id,int uiMetadata);
         /// <summary>
-        /// Get All UiPageMetadata Based On Record Id
+        /// Get All UiPageMetadata Based On moduleLayoutId and UiPageTypeId
         /// </summary>
-        /// <param name="recordId"></param>
+        /// <param name="moduleLayoutId"></param>
+        /// <param name="UiPageTypeId"></param>
         /// <returns></returns>
-        List<UiPageMetadataModel> GetMultiControlMetadata(int recordId);
+        List<UiPageMetadataModel> GetMultiControlMetadata(int moduleLayoutId, int UiPageTypeId);
         /// <summary>
         /// Delete Multi Value Records
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
         bool DeleteMultiValue(RecordModel record);
+        // <summary>
+        // Image Upload in database
+        //</summary>
+        int FileUpload(FileUploadModel File);
+        // <summary>
+        // Image Download  in database
+        //</summary>
+        FileUploadModel ImageDownload(string ImageValue);
+        // <summary>
+        // Get SubrecordId  
+        //</summary>
+        int Getkey();
+        // <summary>
+        // Get AllrecordCommonIndex
+        //</summary>
+        List<UiPageMetadataModel> GetrecordIndexbyModuleId(int moduleId);
     }
 }

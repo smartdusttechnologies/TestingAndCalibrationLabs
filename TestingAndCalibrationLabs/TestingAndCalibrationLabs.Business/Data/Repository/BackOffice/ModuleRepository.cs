@@ -40,7 +40,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<ModuleModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<ModuleModel>(@"Select           m.Id,
+            return db.Query<ModuleModel>(@"Select         m.Id,
                                                             m.ApplicationId,
                                                             a.[Name] as ApplicationName,                                                             
                                                             m.Name                                                                                                                

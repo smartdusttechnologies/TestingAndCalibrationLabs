@@ -32,6 +32,22 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
                                                     and ct.IsDeleted = 0
                                                     ").ToList();
         }
+        public List<UiControlCategoryTypeModel> GetControlCategoryType(int controlId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            var ControlCategory= db.Query<UiControlCategoryTypeModel>(@" select cct.Id,cct.Name,cct.Template
+                                                    From [UiControlType] uct
+                                                    inner join [UiControlCategoryType] cct on uct.id = cct.UiControlTypeId
+                                                    where uct.id=@ControlId
+                                                   and  uct.IsDeleted = 0 
+												   
+                                                    and cct.IsDeleted = 0
+                                                    ", new { ControlId = controlId }).ToList();
+
+            return ControlCategory;
+        }
+
+        
         /// <summary>
         /// Insert Record in UiControlCategoryType
         /// </summary>

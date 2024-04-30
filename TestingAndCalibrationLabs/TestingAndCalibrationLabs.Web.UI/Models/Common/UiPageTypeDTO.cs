@@ -19,7 +19,13 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         [Required(ErrorMessage = "Please Enter Page Name")]
         
         public string Name { get; set; }
-       
+
+        public int ModuleId { get; set; }
+        public string ModuleName { get; set; }
+
+        public int WorkflowStageId { get; set; }
+        public string WorkflowStageName { get; set; }
+
         #endregion
     }
 }

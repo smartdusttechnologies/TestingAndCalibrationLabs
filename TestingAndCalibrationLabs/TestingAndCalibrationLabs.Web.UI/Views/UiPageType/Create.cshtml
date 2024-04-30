@@ -9,12 +9,11 @@
             <div class="modal-header">
 
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-
-
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h>Hello Everyone</h>
+                <p>Hello Everyone </p>
+                <h>This will help to create a page</h>
             </div>
             <div class="modal-footer">
             </div>
@@ -29,12 +28,33 @@
         <form asp-action="Create" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageType" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div style="display:flex" class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style="padding-left:10px; padding-bottom:5px;">
-                    <input class="form-input change width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name"><i style="color:Teal; margin:15px;" data-bs-toggle="modal" onclick="myFunction('Select Pages')" data-bs-target="#exampleModal" class="fa" title="Need Help">&#xf05a;</i>
+                <div style="display:flex" class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " @*style="padding-left:10px; padding-bottom:5px;"*@>
+                    <input class="form-input change width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name"><i style="color:Teal; margin:15px;" data-bs-toggle="modal" onclick="myFunction('Select Pages',this)" data-bs-target="#exampleModal" class="fa" title="Need Help">&#xf05a;</i>
                     <label class="form-label" for="Name">Name</label>
+                </div>
+                <div style="display:flex" class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="Module" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                        <option disabled="disabled" selected>....</option>
+                        @foreach (var item in ViewBag.module)
+                        {
+                            <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                    <i style="color:Teal; margin:15px;" data-bs-toggle="modal" onclick="myFunction('Select Pages',this)" data-bs-target="#exampleModal" class="fa" title="Need Help">&#xf05a;</i>
+                    <label class="form-label" for="ModuleId">Module</label>
+                </div>
+                <div style="display:flex" class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+                    <select class="form-input width-full black-border " name="WorkflowStage" id="WorkflowStageId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
+                        <option disabled="disabled" selected>Select WorkflowStage...</option>
+
+                    </select>
+                    <i style="color:Teal; margin:15px;" data-bs-toggle="modal" onclick="myFunction('Select Pages',this)" data-bs-target="#exampleModal" class="fa" title="Need Help">&#xf05a;</i>
+                    <label class="form-label" for="WorkflowStageId">WorkflowStage</label>
                 </div>
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
                     <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+                </div>
+            </div>
         </form>
     </div>
 </div>
@@ -43,8 +63,61 @@
 </div>
 
 <script>
-    function myFunction(Title) {
-        $('.modal-title').html(Title);
-        $('.modal').modal('show');;
+   
+    function myFunction(Title, control) {
+        debugger;
+        var modalBody = $('.modal-body');
+
+        // Get the name of the control
+        var controlName = $(control).prev().attr('name');
+        var controlType = $(control).prev().prop('tagName').toLowerCase();
+        // Use the controlName as needed
+        console.log("Control Name:", controlName);
+
+        // Set the modal title and show the modal
+        if (controlType == 'input') {
+            $('.modal-title').html('Enter ' + controlName);
+            $('.modal').modal('show');;
+        }
+        else {
+            $('.modal-title').html('Select ' + controlName);
+            $('.modal').modal('show');;
+        }
+        // Add additional text to the modal body
+       
     }
+
+    $('#ModuleId').change(function () {
+        var ModuleId = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: "@Url.Action("GetStagebyModuleId","UiPageType")",
+            data: { moduleId: ModuleId }, // Send selected ID as parameter
+            success: function (response) {
+                $("#WorkflowStageId").empty();
+                $("#WorkflowStageId").append("<option disabled selected>Select WorkflowStage...</option>");
+                for (var i = 0; i < response.length; i++) {
+                    var StageId = response[i].id;
+                    var Stagename = response[i].name;
+
+                    var UipageId = response[i].uiPageTypeId;
+                        
+
+                    // Check if UipageId is zero
+                    if (UipageId === null) {
+                        // If UipageId is zero, the option is selectable
+                        $("#WorkflowStageId").append("<option value='" + StageId + "'>" + Stagename + "</option>");
+                    } else {
+                        // If UipageId is not zero, the option is not selectable
+                        $("#WorkflowStageId").append("<option value='" + StageId + "' disabled>" + Stagename + "</option>");
+                    }
+
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
+    });
 </script>

@@ -10,7 +10,18 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
     public interface IUiPageMetadataService
     {
         /// <summary>
-        /// Get All Records From Ui Page Metadata
+        /// Get All UIDisplayName From Ui Page Metadata
+        /// </summary>
+        /// <returns></returns>
+        List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int moduleId);
+        /// <summary>
+        /// Get Record By moduleLayoutId From Ui Page Metadata
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        List<UiPageMetadataModel> GetResult(int moduleLayoutId);
+        /// <summary>
+        /// Get All Record From Ui Page Metadata
         /// </summary>
         /// <returns></returns>
         List<UiPageMetadataModel> Get();
@@ -20,6 +31,12 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         UiPageMetadataModel GetById(int id);
+        /// <summary>
+        /// Get Record By Id and uiPageTypeId,metadataModuleBridgeId  From Ui Page Metadata
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UiPageMetadataModel GetByPageId(int id, int uiPageTypeId,int metadataModuleBridgeId);
         /// <summary>
         /// Insert Record In Ui Metadata
         /// </summary>
@@ -32,12 +49,19 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// <param name="id"></param>
         /// <param name="uiPageMetadataModel"></param>
         /// <returns></returns>
-        RequestResult <int> Update(int id , UiPageMetadataModel uiPageMetadataModel);
+        RequestResult <int> Update(UiPageMetadataModel uiPageMetadataModel);
         /// <summary>
         /// Delete Record From Ui Metadata
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="metadataModuleBridgeId"></param>
         /// <returns></returns>
-        bool Delete(int id);
+        bool Delete(int id,int metadataModuleBridgeId);
+        /// <summary>
+        /// Get all Pages based on moduleLayoutId
+        /// </summary>
+        /// <param name="moduleLayoutId"></param>
+        /// <returns></returns>
+        List<UiPageTypeModel> Getpages(int moduleLayoutId);
     }
 }

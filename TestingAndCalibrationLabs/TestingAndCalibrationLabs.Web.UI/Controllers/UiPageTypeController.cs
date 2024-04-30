@@ -5,8 +5,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Web.UI.Models;
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
@@ -18,18 +21,22 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
+        private readonly IModuleService _moduleService;
+        private readonly IWorkflowStageService _workflowStageService;
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="uiPageTypeService"></param>
         /// <param name="mapper"></param>
         /// <param name="uiNavigationCategoryService"></param>
-        public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper, ILogger<UiPageTypeController> logger)
+        public UiPageTypeController(IHttpContextAccessor httpContextAccessor, IUiPageTypeService uiPageTypeService, IMapper mapper, ILogger<UiPageTypeController> logger, IModuleService moduleService, IWorkflowStageService workflowStageService)
         {
             _uiPageTypeService = uiPageTypeService;
             _mapper = mapper;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
+            _moduleService = moduleService;
+            _workflowStageService = workflowStageService;
         }
 
         /// <summary>
@@ -115,7 +122,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -126,16 +132,30 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             try
             {
+                var pageList = _moduleService.Get();
+                var pages = _mapper.Map<List<ModuleModel>, List<ModuleDTO>>(pageList);
+                pages = pages.Where(x => x.Id != (int)Helpers.None.Id).ToList();
+                ViewBag.module = pages;
                 return base.View(new Models.UiPageTypeDTO { Id = id });
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("you are unauthorized");
+                _logger.LogError("." + ex.Message);
             }
             return View();
 
         }
-
+        /// <summary>
+        /// get Workflowstage bsed on moduleId
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
+        public IActionResult GetStagebyModuleId(int moduleId)
+        {
+            var workflowStages = _workflowStageService.GetbyModuleId(moduleId);
+            var workflowStage= _mapper.Map<List<WorkflowStageModel>,List<WorkflowStageDTO>>(workflowStages);
+            return Ok(workflowStage);
+        }
         /// <summary>
         /// To Create Record In Ui Page Type
         /// </summary>

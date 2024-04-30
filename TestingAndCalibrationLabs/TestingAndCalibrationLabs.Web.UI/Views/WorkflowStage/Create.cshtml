@@ -15,25 +15,15 @@
                     <label class="form-label" for="Name">Name</label>
                 </div>
                 <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">                  
-                    <select class="form-input " name="WorkflowId" id="Workflow" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowId">
+                    <select class="form-input width-full black-border " name="WorkflowId" id="Workflow" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowId">
                         <option disabled="disabled" selected>....</option>
                         @foreach (var item in ViewBag.Workflow)
                         {
                             <option value=@item.Id>@item.Name</option>
                         }
                     </select>              
-                    <label class="form-label" for="WorkflowId">WorkflowName</label>
+                    <label class="form-label" for="WorkflowId">Workflow</label>
                 </div>
-                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">                  
-                    <select class="form-input " name="UiPageTypeId" id="UiPageType" onchange="this.setAttribute('value',this.value)" asp-for="UiPageTypeId">
-                        <option disabled="disabled" selected>....</option>
-                        @foreach (var item in ViewBag.UiPageTypes)
-                        {
-                            <option value=@item.Id>@item.Name</option>
-                        }
-                    </select>
-                    <label class="form-label" for="UiPageTypeId">UiPageTypeName</label>
-                </div>                         
                <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
                     <input class="form-input width-full black-border" type="text" id="Orders" name="Orders" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Orders">
                     <label class="form-label" for="Orders">Orders</label>

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
+using TestingAndCalibrationLabs.Business.Data.Repository;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 
 namespace TestingAndCalibrationLabs.Business.Services
@@ -17,12 +19,18 @@ namespace TestingAndCalibrationLabs.Business.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAuthorizationService _authorizationService;
         private readonly IGenericRepository<UiPageTypeModel> _genericRepository;
+        private readonly IWorkflowStageRepository _workflowStageRepository;
+        public readonly IUiPageMetadataRepository _uiPageMetadataRepository;
+        private readonly IModuleLayoutRepository _moduleLayoutRepository;
         public UiPageTypeService(IHttpContextAccessor httpContextAccessor, IGenericRepository<UiPageTypeModel> genericRepository,
-            IAuthorizationService authorizationService)
+            IAuthorizationService authorizationService, IWorkflowStageRepository workflowStageRepository, IUiPageMetadataRepository uiPageMetadataRepository, IModuleLayoutRepository moduleLayoutRepository)
         {
+            _workflowStageRepository = workflowStageRepository;
             _httpContextAccessor = httpContextAccessor;
             _authorizationService = authorizationService;
             _genericRepository = genericRepository;
+            _uiPageMetadataRepository = uiPageMetadataRepository;
+            _moduleLayoutRepository = moduleLayoutRepository;
         }
 
         #region Public methods
@@ -37,7 +45,30 @@ namespace TestingAndCalibrationLabs.Business.Services
             {
                 throw new UnauthorizedAccessException("Your Unauthorized");
             }
-            _genericRepository.Insert(uiPageTypeModel);
+            if (uiPageTypeModel.WorkflowStageId == 0 && uiPageTypeModel.WorkflowStageId == null)
+            {
+                _genericRepository.Insert(uiPageTypeModel);
+
+            }
+            if (uiPageTypeModel.WorkflowStageId !=0 && uiPageTypeModel.WorkflowStageId != null)
+            {
+               
+                var workflowStages = _workflowStageRepository.GetbyModuleId(uiPageTypeModel.ModuleId);
+                var getModuleId = _moduleLayoutRepository.GetByModuleLayoutId(uiPageTypeModel.ModuleId);
+                var countstage = workflowStages.Count;
+                var lists = new UiPageMetadataModel();
+
+                lists.UiControlTypeId = (int)UiControlTypeId.UiControlType;
+                lists.IsRequired = false;
+                lists.UiControlDisplayName = uiPageTypeModel.Name;
+                lists.DataTypeId = (int)UiControlTypeId.DataTypeId;
+                lists.UiControlCategoryTypeId = (int)UiControlTypeId.UiControlCategoryTypeId;
+                lists.Name = uiPageTypeModel.Name;
+                lists.ModuleLayoutId = getModuleId.Id;
+                lists.WorkflowStageId = uiPageTypeModel.WorkflowStageId;
+                lists.ModuleId = uiPageTypeModel.ModuleId;
+                    var insertMetadata = _uiPageMetadataRepository.CreateUsingPages(lists, countstage);
+            }
             return new RequestResult<int>(1);
         }
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using TestingAndCalibrationLabs.Business.Core.Model;
@@ -80,6 +81,7 @@ namespace TestingAndCalibrationLabs.Business.Common
 
             return childrenFetcher(topMostKey);
         }
+       
         #endregion
         #region private methods
         private static List<PropertyInfo> GetApplicableProperties(IEnumerable<PropertyInfo> listOfProperties)
@@ -88,6 +90,25 @@ namespace TestingAndCalibrationLabs.Business.Common
                     let attributes = prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
                     where attributes.Length <= 0 || (attributes[0] as DescriptionAttribute)?.Description != "ignore"
                     select prop).ToList();
+        }
+        public static DataTable GetDataTable<T>(IEnumerable<T> list)
+        {
+            var table = new DataTable();
+            var properties = typeof(T).GetProperties();
+            foreach (var property in properties)
+            {
+                table.Columns.Add(property.Name, System.Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
+            }
+            foreach (var item in list)
+            {
+                var row = table.NewRow();
+                foreach (var property in properties)
+                {
+                    row[property.Name] = property.GetValue(item) ?? DBNull.Value;
+                }
+                table.Rows.Add(row);
+            }
+            return table;
         }
         #endregion
     }

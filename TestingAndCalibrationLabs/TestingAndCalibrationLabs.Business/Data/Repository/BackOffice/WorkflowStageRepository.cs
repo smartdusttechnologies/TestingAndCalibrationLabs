@@ -5,6 +5,8 @@ using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces;
 using Dapper;
 using System.Linq;
+using System;
+using System.Reflection;
 
 namespace TestingAndCalibrationLabs.Business.Data.Repository
 {
@@ -60,6 +62,21 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Query<WorkflowStageModel>(@"select * from WorkflowStage where WorkflowId = @WorkflowId and IsDeleted = 0", new { WorkflowId = workflowId }).ToList();
         }
+
+
+
+        public List<WorkflowStageModel> GetbyModuleId(int ModuleId)
+        {
+            using IDbConnection db= _connectionFactory.GetConnection;
+            return db.Query<WorkflowStageModel>(@"select ws.Id, ws.Name,ws.Orders,ws.UiPageTypeId
+		                                            From WorkflowStage ws
+		                                             inner join Workflow w on  w.Id = ws.WorkflowId
+		                                             Where w.ModuleId = @moduleId
+		                                             and w.IsDeleted=0
+		                                             and ws.IsDeleted=0
+                                                         ", new { moduleId = ModuleId }).ToList();
+
+        }
         /// <summary>
         /// Get Record By ModuleId
         /// </summary>
@@ -82,6 +99,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
             using IDbConnection db = _connectionFactory.GetConnection;
             return db.Execute(query, workflowStageModel);
         }
+       
+
         /// <summary>
         /// Getting All Records From Workflow Stage
         /// </summary>

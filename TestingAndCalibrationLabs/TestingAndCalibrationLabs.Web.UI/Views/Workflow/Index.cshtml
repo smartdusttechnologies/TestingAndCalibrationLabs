@@ -18,7 +18,7 @@
                     <h6><b>Name</b></h6>
                 </th>
                 <th>
-                    <h6><b>ModuleName</b></h6>
+                    <h6><b>Module</b></h6>
                 </th>            
                 <th>
                     <h6><b>Actions</b></h6>
@@ -33,7 +33,7 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ModuleName)
+                        @Html.DisplayFor(modelItem => item.Module)
                     </td>                
                     <td>
                         <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black; asp-controller="WorkFlow" asp-action="Edit" asp-route-id="@item.Id"></a>|

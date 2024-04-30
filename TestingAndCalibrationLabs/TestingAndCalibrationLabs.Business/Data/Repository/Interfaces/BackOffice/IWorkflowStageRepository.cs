@@ -48,11 +48,18 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <returns></returns>
         WorkflowStageModel GetPageIdBasedOnCurrentWorkflowStage(int workflowStageId);
         /// <summary>
-        /// Get Get UiPageTypeId Based On ModuleId 
+        /// Get UiPageTypeId Based On ModuleId 
         /// </summary>
         /// <param name="moduleId"></param>
         /// <returns></returns>
         WorkflowStageModel GetPageIdBasedOnOrder(int moduleId);
-       
+        /// <summary>
+        /// Get the Workflow record Based On ModuleId 
+        /// </summary>
+        /// <param name="ModuleId"></param>
+        /// <returns></returns>
+        List<WorkflowStageModel> GetbyModuleId(int ModuleId);
+
+
     }
 }

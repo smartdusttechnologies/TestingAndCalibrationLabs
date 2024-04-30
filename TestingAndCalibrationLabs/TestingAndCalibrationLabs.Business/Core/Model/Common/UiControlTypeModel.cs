@@ -18,5 +18,14 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// </summary>
         [DbColumn]
         public string DisplayName { get; set; }
+        /// <summary>
+        /// It Contains The Id of The Lookup
+        /// </summary>
+        public int ControlCategoryId { get; set; }
+        /// <summary>
+        /// It Contains The Name of The Lookup
+        /// </summary>
+        public string ControlCategoryName { get; set;}
+
     }
 }

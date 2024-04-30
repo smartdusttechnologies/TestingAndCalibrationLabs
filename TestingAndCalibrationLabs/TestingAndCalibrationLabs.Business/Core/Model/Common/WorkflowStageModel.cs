@@ -16,7 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         /// <summary>
         /// It Contains Id Of UiPageType
         /// </summary>
-        public int UiPageTypeId { get; set; }
+        public int? UiPageTypeId { get; set; }
         /// <summary>
         /// It Contains Name Of UiPageType
         /// </summary>

@@ -10,14 +10,14 @@
         <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="UiPageNavigation" novalidate>
             <div asp-validation-summary="All"></div>
             <div class="row ms-1 me-1">
-                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
-                    <input class="form-input width-full" type="text" id="Url" name="Url" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Url">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" style="padding-left:10px; padding-bottom:5px;">
+                    <input class="form-input width-full black-border" type="text" id="Url" name="Url" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Url">
                     <label class="form-label" for="Url">Url</label>
                 </div>
                
-                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" style="padding-left:10px; padding-bottom:5px;">
 
-                    <select class="form-input width-full " name="ModuleId" id="Module" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                    <select class="form-input width-full black-border " name="ModuleId" id="Module" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
 
                         @foreach (var item in ViewBag.Module)
                         {
@@ -32,12 +32,12 @@
 
                         }
                     </select>
-                    <label for="Module" class="form-label">ModuleName</label>
+                    <label for="Module" class="form-label">Module</label>
                 </div>
               
-                <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control" style="padding-left:10px; padding-bottom:5px;">
+                <div class="col-lg-8  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input" style="padding-left:10px; padding-bottom:5px;">
 
-                    <select class="form-input width-full " name="UiNavigationCategoryId" id="UiNavigationCategory" onchange="this.setAttribute('value',this.value)" asp-for="UiNavigationCategoryId">
+                    <select class="form-input width-full black-border " name="UiNavigationCategoryId" id="UiNavigationCategory" onchange="this.setAttribute('value',this.value)" asp-for="UiNavigationCategoryId">
 
                         @foreach (var item in ViewBag.UiNavigationCategory)
                         {
@@ -52,7 +52,7 @@
 
                         }
                     </select>
-                    <label for="UiNavigationCategory" class="form-label">UiNavigationCategoryName</label>
+                    <label for="UiNavigationCategory" class="form-label">UiNavigationCategory</label>
                 </div>
 
                 <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
