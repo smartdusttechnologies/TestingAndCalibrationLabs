@@ -62,8 +62,15 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var passwordLogin = _authenticationRepository.GetLoginPassword(loginRequest.UserName);
 
                 string valueHash = string.Empty;
-                if (passwordLogin != null && !Hasher.ValidateHash(loginRequest.Password, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                 if (passwordLogin != null)
                 {
+                    if (!Hasher.ValidateHash(loginRequest.Password, passwordLogin.PasswordSalt, passwordLogin.PasswordHash, out valueHash))
+                    {
+                        validationMessages.Add(new ValidationMessage { Reason = "UserName or password mismatch.", Severity = ValidationSeverity.Error });
+                        return new RequestResult<LoginToken>(validationMessages);
+                    }
+                }
+                else{
                     validationMessages.Add(new ValidationMessage { Reason = "UserName or password mismatch.", Severity = ValidationSeverity.Error });
                     return new RequestResult<LoginToken>(validationMessages);
                 }
@@ -179,7 +186,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             //}
 
             claims.Add(new Claim(CustomClaimType.UserId.ToString(), userModel.Id.ToString()));
-
+            claims.Add(new Claim(CustomClaimType.EmailValidationStatus.ToString(), userModel.EmailValidationStatus.ToString(),ClaimValueTypes.Integer64));
+            claims.Add(new Claim(CustomClaimType.MobileValidationStatus.ToString(), userModel.MobileValidationStatus.ToString(),ClaimValueTypes.Integer64));
             if (sub.ToLower() == "sysadmin")
                 claims.Add(new Claim(CustomClaimType.OrganizationId.ToString(), "0"));
             else

@@ -284,10 +284,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
+        /// <summary>
+        /// generate Id in Record
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <returns></returns>
 
-        public ActionResult GenerateRecord(int ModuleId,int  WorkflowStageId)
+        public ActionResult GenerateRecord(int moduleId,int  workflowStageId)
         {
-            var recordId = _commonService.GenerateRecordId(ModuleId, WorkflowStageId);
+            var recordId = _commonService.GenerateRecordId(moduleId, workflowStageId);
             return Ok(recordId);
         }
     }

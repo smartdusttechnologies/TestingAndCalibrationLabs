@@ -8,23 +8,21 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces.Otp
         /// <summary>
         /// It resends the otp.
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="isMobile"></param>
+        /// <param name="otpmodel"></param>
         /// <returns></returns>
-        RequestResult<bool> ResendOtp(OtpModel r);
+        RequestResult<bool> ResendOtp(OtpModel otpmodel);
         /// <summary>
         /// It Send The otp
         /// </summary>
         /// <param name="r"></param>
         /// <param name="isMobile"></param>
         /// <returns></returns>
-        RequestResult<bool> SendOtp(OtpModel r);
+        RequestResult<bool> SendOtp(OtpModel otpmodel);
         /// <summary>
         /// It  Varify The Otp
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="isMobile"></param>
+        /// <param name="Otpmodel"></param>
         /// <returns></returns>
-        RequestResult<bool> VerifyOtp(OtpModel r);
+        RequestResult<bool> VerifyOtp(OtpModel otpmodel);
     }
 }

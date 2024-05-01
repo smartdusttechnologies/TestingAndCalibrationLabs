@@ -89,19 +89,12 @@ namespace TestingAndCalibrationLabs.Business.Services
 
                     }
                 }
-
                 record.UpdatedDate = DateTime.Now;
-                //record.WorkflowStageId = GetWorkflowStageId(record.ModuleId);
                  _commonRepository.Insert(record);
-                // record.WorkflowStageId = workflowStageId;
-                //_workflowActivityService.WorkflowActivity(record)
                 return new RequestResult<bool>(true);
             }
             return requestResult;
         }
-
-        /// <summary>
-        /// 
         /// </summary>
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>

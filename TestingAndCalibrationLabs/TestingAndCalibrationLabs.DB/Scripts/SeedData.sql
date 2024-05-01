@@ -391,7 +391,7 @@ BEGIN
 			     (21,N'Email Verify',1,0),
 			   (22,N'Mobile Verify',1,0),
 			    (23,N'Logout',1,0),
-				(24,N'UserCreationSteps',1,0)
+				(24,N'UserManualGuide',1,0)
 
 
     SET IDENTITY_INSERT [dbo].[Module]  OFF

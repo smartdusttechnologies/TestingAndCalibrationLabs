@@ -64,7 +64,9 @@
     public enum UiControlTypeId
     {
         uiControlTypeId = 25,
-        
+        UiControlType = 29,
+        UiControlCategoryTypeId = 1017,
+        DataTypeId = 1
     }
 
     public enum UiControlCategoryType
@@ -98,7 +100,9 @@
         DefaultClaim,
         ApplicationPermission,
         UserId,
-        OrganizationId
+        OrganizationId,
+        MobileValidationStatus,
+        EmailValidationStatus
     }
     /// <summary>
     /// Enum For Permission Type

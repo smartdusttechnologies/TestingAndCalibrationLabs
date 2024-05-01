@@ -39,7 +39,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageData = _mapper.Map<List<LayoutMModel>, List<LayoutMDTO>>(page);
             return View(pageData.AsEnumerable());
         }
-
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -79,7 +78,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View(layout2DTO);
         }
-
         /// <summary>
         /// For Create Record View
         /// </summary>
@@ -90,7 +88,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             return base.View(new Models.LayoutMDTO { Id = id });
         }
-
         /// <summary>
         /// To Create Record In layout
         /// </summary>
@@ -128,7 +125,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var pageModel = _mapper.Map<LayoutMModel, LayoutMDTO>(getByIdPageModel);
             return View(pageModel);
         }
-
         /// <summary>
         /// To Delete Record In layout
         /// </summary>

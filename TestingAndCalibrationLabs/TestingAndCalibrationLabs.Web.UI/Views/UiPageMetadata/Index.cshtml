@@ -19,16 +19,16 @@
         <thead>
             <tr>
                 <th>
-                    <h6><b>ModuleLayoutName</b></h6>
+                    <h6><b>ModuleLayout</b></h6>
                 </th>
                 <th>
-                    <h6><b>Ui PageName</b></h6>
+                    <h6><b>Ui PageType</b></h6>
                 </th>
                 <th>
                     <h6><b>Ui ControlType</b></h6>
                 </th>
                 <th>
-                    <h6><b>UiControlCategoryTypeName</b></h6>
+                    <h6><b>UiControlCategoryType</b></h6>
                 </th>
                 <th>
                     <h6><b>Ui DataType</b></h6>
@@ -76,15 +76,28 @@
                         @Html.DisplayFor(modelItem => item.DataTypeName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsRequired)
+                        @if (item.IsRequired)
+                        {
+                            <text>true</text>
+                        }
+                        else
+                        {
+                            <text>false</text>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ParentDisplayName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MultiValueControl)
+                        @if (item.MultiValueControl)
+                        {
+                            <text>true</text>
+                        }
+                        else
+                        {
+                            <text>false</text>
+                        }
                     </td>
-
                     <td>
                         @Html.DisplayFor(modelItem => item.Orders)
                     </td>

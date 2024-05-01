@@ -25,7 +25,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
         public List<ModuleLayoutModel> Get()
         {
             using IDbConnection db = _connectionFactory.GetConnection;
-            return db.Query<ModuleLayoutModel>(@" Select ml.Id,ml.Name, ml.LayoutId,ml.ModuleId,l.Name as LayoutName,m.Name as ModuleName 
+            return db.Query<ModuleLayoutModel>(@"Select ml.Id,ml.Name, ml.LayoutId,ml.ModuleId,l.Name as Layout,m.Name as Module 
                                                 From[ModuleLayout] ml
                                                     inner join [Layout] l on ml.LayoutId = l.Id
                                                     inner join[Module] m on ml.ModuleId = m.Id

@@ -13,7 +13,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         /// Get All UIDisplayName From Ui Page Metadata
         /// </summary>
         /// <returns></returns>
-        List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int ModuleIds);
+        List<UiPageMetadataModel> GetDisplayName(int moduleLayoutId,int moduleId);
         /// <summary>
         /// Get Record By moduleLayoutId From Ui Page Metadata
         /// </summary>

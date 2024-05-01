@@ -16,6 +16,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IListSorterService _listSorter;
         private readonly ILookupCategoryService _lookupCategoryService;
         private readonly IMapper _mapper;
+        /// <summary>
+        /// passing parameter via varibales for establing connection
+        /// </summary>
         public LookupController(ILookupService lookupService, IListSorterService listSorter, IMapper mapper, ILookupCategoryService lookupCategoryService)
         {
             _lookupService = lookupService;

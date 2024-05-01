@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -33,35 +34,35 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             _userService = userService;
             _genericRepository = genericRepository;
         }
-        
+
         #region Public Methods
         /// <summary>
         /// Method to validate OTP
         /// </summary>
-        /// <param name="OtpModel"></param>
-        public RequestResult<bool> VerifyOtp(OtpModel r)
+        /// <param name="otpmodel"></param>
+        public RequestResult<bool> VerifyOtp(OtpModel otpmodel)
         {
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
-            OtpModel existingUser = _otpRepsitory.GetOTP(r.UserId);
-            if (r.OTP == existingUser.OTP)
+            OtpModel existingUser = _otpRepsitory.GetOTP(otpmodel.UserId);
+            if (otpmodel.OTP == existingUser.OTP)
             {
                 double validationTimeLimit = double.Parse(_configuration["ValidateOTP:ValidityMinute"]);
-                if (r.CreatedDate <= existingUser.CreatedDate.AddMinutes(validationTimeLimit))
+                if (otpmodel.CreatedDate <= existingUser.CreatedDate.AddMinutes(validationTimeLimit))
                 {
-                    _userService.EmailValidationStatus(r.UserId);
+                    _userService.EmailValidationStatus(otpmodel.UserId);
                     return new RequestResult<bool>(true);
                 }
                 else
                 {
-                    var Error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
-                    validationMessages.Add(Error);
+                    var error = new ValidationMessage { Reason = "Sorry!!! The OTP Time Out", Severity = ValidationSeverity.Error, SourceId = "OTP" };
+                    validationMessages.Add(error);
                     return new RequestResult<bool>(false, validationMessages);
                 }
             }
             else
             {
-                var Error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error, SourceId = "OTP" };
-                validationMessages.Add(Error);
+                var error = new ValidationMessage { Reason = "The OTP not match", Severity = ValidationSeverity.Error, SourceId = "OTP" };
+                validationMessages.Add(error);
                 return new RequestResult<bool>(false, validationMessages);
             }
         }
@@ -71,7 +72,9 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
         /// <param name="OtpModel"></param>
         public RequestResult<bool> SendOtp(OtpModel otpModel)
         {
-            var user = _userService.Get(otpModel.UserId);
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+
+            var user = _userService.Get(otpModel.Id);
             otpModel.Email = user.Email;
             otpModel.Name = user.FirstName;
             string otp = GenerateOTP();
@@ -88,25 +91,27 @@ namespace TestingAndCalibrationLabs.Business.Services.Otp
             model.HtmlMsg = model.HtmlMsg.Replace("*OTP*", otp);
             model.HtmlMsg = model.HtmlMsg.Replace("*BodyImageLink*", model.BodyImage);
             model.HtmlMsg = model.HtmlMsg.Replace("*LogoLink*", model.LogoImage);
-            OtpModel OtpGenerate = _otpRepsitory.InsertOtp(otp, otpModel.UserId);
+            OtpModel OtpGenerate = _otpRepsitory.InsertOtp(otp, otpModel.Id);
             try
             {
                 _emailService.Sendemail(model);
             }
             catch (Exception ex)
             {
-                return new RequestResult<bool>(false);
+                var Error = new ValidationMessage { Reason = "Email format is invalid. Please provide a valid email address.", Severity = ValidationSeverity.Error, SourceId = "OTP" };
+                validationMessages.Add(Error);
+                return new RequestResult<bool>(false, validationMessages);
             }
             return new RequestResult<bool>(true);
         }
         /// <summary>
         /// Method To Creat OTP for Sign-up Page
         /// </summary>
-        /// <param name="OtpModel"></param>
-        public RequestResult<bool> ResendOtp(OtpModel OtpModel)
+        /// <param name="otpmodel"></param>
+        public RequestResult<bool> ResendOtp(OtpModel otpmodel)
         {
-            var Email = _genericRepository.Get(OtpModel.UserId);
-            var otp = SendOtp(Email);
+            var emaildetail = _genericRepository.Get(otpmodel.UserId);
+            var otp = SendOtp(emaildetail);
             return new RequestResult<bool>(true);
         }
         #endregion

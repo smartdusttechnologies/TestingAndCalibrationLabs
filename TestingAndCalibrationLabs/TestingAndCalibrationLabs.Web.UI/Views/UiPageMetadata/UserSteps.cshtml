@@ -33,7 +33,8 @@
 
         /* CSS styles for the step numbers */
         .step-number {
-            width: 30px;
+            width: auto; /* Change fixed width to auto */
+            min-width: 30px; /* Set minimum width to ensure circular shape */
             height: 30px;
             background-color: #007bff;
             color: #fff;
@@ -41,6 +42,7 @@
             text-align: center;
             line-height: 30px;
             margin-right: 10px;
+            flex-shrink: 0; /* Prevent step number from shrinking */
         }
 
         .head_start {
@@ -60,28 +62,28 @@
     <div class="step-content" id="created-steps">
         <div class="step-description">
             <span class="step-number">1</span>
-            <span class="text_set">Go to Setting and Create a Module Name.</span>
+            <span class="text_set">Go to Setting and Create a Module Name (Create a module because this is the conection in the ModuleLayout).</span>
         </div>
         <div class="step-description">
             <span class="step-number">2</span>
-            <span class="text_set">Go to Setting and Create a Layout.</span>
+            <p class="text_set">Go to Setting and Create a Layout(Also this will be connected with ModuleLayout this will help to create a own Common Pages).</p>
         </div>
         <div class="step-description">
             <span class="step-number">3</span>
-            <span class="text_set">Go to Setting and Create a Module Layout.</span>
+            <span class="text_set">Go to Setting and Create a Module Layout(This is the one of the connecttion in the Your Common Pages ).</span>
         </div>
         
          <div class="step-description">
             <span class="step-number">4</span>
-            <span class="text_set">Go to Setting and Create a Workflow. </span>
+            <p class="text_set">Go to Setting and Create a Workflow (Here you can define your Workflow .means what type of Common page making ). </p>
         </div>
         <div class="step-description">
             <span class="step-number">6</span>
-            <span class="text_set">Go to Setting and Create a Workflow Stage.</span>
+            <p class="text_set">Go to Setting and Create a Workflow Stage(Here you can define what is the your workflow_stage name means How many types of pages do you want to create, give complete details here).</p>
         </div>
         <div class="step-description">
             <span class="step-number">4</span>
-            <span class="text_set">Go to Setting and Create a UipageType related to your Workflow Stage. </span>
+            <p class="text_set">Go to Setting and Create a UipageType related to your Workflow Stage(Create your page here with whatever stage name you have defined in the workflow stage. Here you can create your page with your workflow stage using modulelayout.). </p>
         </div>
          <div class="step-description">
             <span class="step-number">7</span>
