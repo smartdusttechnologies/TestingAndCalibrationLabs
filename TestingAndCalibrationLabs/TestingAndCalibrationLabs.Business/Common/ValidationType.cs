@@ -13,6 +13,14 @@ namespace TestingAndCalibrationLabs.Business.Common
         Year,
         Name,
         IsRequired,
-        Password
+        Password,
+        DataType,
+        Int = 1,
+        String = 2,
+        bit =3 ,
+        Decimal = 4,
+        Date = 5,
+        Boolean =6
     }
+   
 }

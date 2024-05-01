@@ -110,12 +110,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             try
             {
-                
                 if (ModelState.IsValid)
                 {
-
                     var createMetadataModel = _mapper.Map<Models.UiPageMetadataDTO, Business.Core.Model.UiPageMetadataModel>(uiPageMetadataDTO);
-
                     _uiPageMetadataService.Create(createMetadataModel);
                     TempData["IsTrue"] = true;
                     _logger.LogInformation("UiPageMetadata create post has been accessed");
@@ -130,7 +127,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return View();
         }
-
         /// <summary>
         /// For Edit Records View
         /// </summary>
@@ -149,7 +145,6 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 {
                     _logger.LogError("id is null");
                     return NotFound();
-
                 }
                 var pageList = _uiPageTypeService.Get();
                 var controlList = _uiControlTypeService.Get();

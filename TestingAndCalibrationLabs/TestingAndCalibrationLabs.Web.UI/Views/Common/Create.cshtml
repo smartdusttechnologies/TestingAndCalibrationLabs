@@ -81,8 +81,6 @@
     var updatedDate = mainModel.updatedDate;
     var url = $("#commonForm").attr("action");
     var id = parseInt($("#Id").val())
-
-
     function AjaxFormSubmit() {
         WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
@@ -119,12 +117,17 @@
                         fieldValues.push(keyValuepair)
                     }
                     }
+                       
+                   
                 }
                 if (uiPageMetaData[i].multiValueControl != true) {
+                    debugger;
                     var fieldValue = $(fieldId).val();
                     var keyValuepair = {};
                     keyValuepair.UiPageMetadataId = metadataId;
                     keyValuepair.UiPageTypeId = uiPageTypeId;
+                    keyValuepair.dataTypeId = uiPageMetaData[i].dataTypeId;
+                    keyValuepair.dataTypeName = uiPageMetaData[i].dataTypeName;
                     keyValuepair.Value = fieldValue;
                     fieldValues.push(keyValuepair)
                 }

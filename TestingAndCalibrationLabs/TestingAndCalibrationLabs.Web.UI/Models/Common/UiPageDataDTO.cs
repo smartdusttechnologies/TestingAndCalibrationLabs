@@ -37,6 +37,13 @@
         /// It Contains The Value of The UiPageData
         /// </summary>
         public string Value { get; set; }
-
+        /// <summary>
+        /// It Contains The Id of The Data Type
+        /// </summary>
+        public int DataTypeId { get; set; }
+        /// <summary>
+        /// It Contains The Name of The Data Type
+        /// </summary>
+        public string DataTypeName { get; set; }
     }
 }

@@ -479,9 +479,41 @@ namespace TestingAndCalibrationLabs.Business.Services
                                 if (field.Value.Length != minLengtYear)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
+
                         }
                     }
                 }
+                foreach (var items in validationtypes) {
+                    if (items.Id == 8 && field.Value != "") {
+                        var validationlist = _uiPageValidationTypesGenericRepository.Get(items.Id);
+
+                        var uipagedata = _uiPageMetadataRepository.GetById(field.UiPageMetadataId);
+                        string metadataId;
+                        metadataId = Helpers.GenerateUiControlId(uipagedata.UiControlTypeName, field.UiPageMetadataId);
+                        if (field.DataTypeId == (int)ValidationType.Int)
+                        {
+                            if (!int.TryParse(field.Value, out _))
+                            {
+                                string errorMessage = string.Format(validationlist.Message, $"{uipagedata.DataTypeName} {uipagedata.UiControlDisplayName}");
+                                validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
+                                
+                            }
+                        }
+                        if (field.DataTypeId == (int)ValidationType.String)
+                        {
+                            if (int.TryParse(field.Value, out _))
+                            {
+                                string errorMessage = string.Format(validationlist.Message, $"{uipagedata.DataTypeName} {uipagedata.UiControlDisplayName}");
+                                validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
+
+                            }
+                        }
+
+
+                    }
+                
+                }
+
             }
             return new RequestResult<bool>(validationMessages);
         }

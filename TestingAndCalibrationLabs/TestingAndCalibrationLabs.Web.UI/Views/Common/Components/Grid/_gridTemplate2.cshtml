@@ -116,11 +116,7 @@
             <a href="/common/create/@Model.ModuleId"><i class="fa fa-plus icon-plus"></i></a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 mt-3">
-            @*  <div class="inputSearchGrid text-right">
-            <input type="text" id="gridSearch" onkeyup="function()" class="light-table-filter inputWithIconSearch " data-table="table-info" placeholder="Search">
-            <i class="fa fa-solid fa-magnifying-glass iconForSearchLeft"></i>
-            <i class="fa fa-solid fa-xmark iconForSearchRight" onclick="clearText()"></i>
-            </div> *@
+           
         </div>
     </div>
     <div class="table-responsive simple-pagination card shadow border-radius-grid">
@@ -133,7 +129,9 @@
                     @foreach (var item in Model.Fields)
                     {
                         <th id="col_@nt" style="@(nt > 4 ? "display: none;": "");min-width:200px">
-                            <div class="row">
+
+
+                         <div class="row">
                                 <div class="col-10 wrapcolname">
                                     @Html.DisplayFor(fieldItem => item.UiControlDisplayName)
                                 </div>
@@ -167,20 +165,21 @@
                             if (FildsAllValue.ContainsKey(items.Id))
                             {
                                 <td data-column="col_@tdcount" style="@(tdcount > 4 ? "display: none;" : "");min-width:200px">
-                                    @Html.DisplayFor(modelitem => FildsAllValue[items.Id])
+
+
+                                   @Html.DisplayFor(modelitem => FildsAllValue[items.Id])
                                 </td>
                                 count++;
                             }
                             else
                             {
                                 <td data-column="col_@tdcount" style="@(tdcount > 4 ? "display: none;" : "");min-width:200px">
+
                                 </td>
                             }
                             tdcount++;
                         }
-                        @*   <td>
-                    @Html.DisplayFor(modelitem => Model.WorkflowStageName)
-                    </td> *@
+                      
                         <td style="min-width:200px">
                             <a class="fas fa-edit" style="margin:5px;color:rebeccapurple;" color:black;" asp-controller="Common" asp-action="Edit" asp-route-id="@item.Key"></a>
                             <a class="fa fa-trash" style="margin:5px;color:red;" data-toggle="modal" data-target="#deleteModalPopup" onclick="setValue(@item.Key)"></a>
@@ -231,16 +230,26 @@
 </div>
 <script>
     $(document).ready(function () {
+        var selectedLengthOption;
+
         // Initialize DataTable
         oTable = $('#gridtable').DataTable({
+
             lengthMenu: [
                 [5, 10, 25, 50, -1],
                 [5, 10, 25, 50, 'All'],
             ],
             scrollX: true,
             "bDestroy": true
+            
         });
+        // Event listener for lengthMenu event
+        $('#gridtable').on('length.dt', function (e, settings, len) {
+            selectedLengthOption = len;
+        });
+
         $('#gridSearch').keyup(function () {
+
             oTable.search($(this).val()).draw();
         })
         // Disable sorting when clicking on the three-dot icon
@@ -259,10 +268,10 @@
         inputID.value = "";
     }
     //Set The Value To Popup Delete Button
-    debugger;
     let setValue = (id) => $("#deletePopup").val(id);
     const dropdowns = document.querySelectorAll('.checkbox-dropdown');
     function toggleDropdown(colnumber, threedot) {
+
         var checkcolinput = document.getElementById("myInput");
         checkcolinput.value = "";
         var checkboxlabels = document.querySelectorAll('.collabel');
@@ -276,6 +285,7 @@
         const checkboxxes = document.querySelectorAll('.dropdown-checkbox');
         // Add event listener to each checkbox in the dropdown
         checkboxxes.forEach((checkboxinputs, index) => {
+
             if (checkboxinputs.id == checkinput) {
                 checkboxinputs.disabled = true;
                 checkboxinputs.nextElementSibling.style.background = "gray";
@@ -289,6 +299,7 @@
         });
         dropdowns.forEach(dropdownn => {
             if (dropdownn.id != dropdownId) {
+
                 dropdownn.style.display = 'none';
                 console.log('yes');
             } else {
@@ -303,10 +314,12 @@
         });
     }
     document.addEventListener('DOMContentLoaded', function () {
+
         // Get all checkboxes and dropdowns
         const checkboxes = document.querySelectorAll('.dropdown-checkbox');
         // Add event listener to each checkbox in the dropdown
         checkboxes.forEach((checkbox, index) => {
+
             if (index < 4) {
                 checkbox.checked = true;
             }
@@ -314,6 +327,7 @@
                 if (!Array.from(checkboxes).some(c => c.checked)) {
                     this.checked = true;
                 }
+
                 // Toggle the visibility of the corresponding column
                 const columnId = this.getAttribute('data-column');
                 const cellsInColumn = document.querySelectorAll(`td[data-column="${columnId}"], th[id="${columnId}"]`);
@@ -323,17 +337,23 @@
                 // Uncheck the corresponding checkbox in other dropdowns
                 document.querySelectorAll(`.dropdown-checkbox[data-column="${columnId}"]`)
                     .forEach(otherCheckbox => {
+
                         if (otherCheckbox !== this) {
                             otherCheckbox.checked = this.checked;
                         }
                     });
                 oTable = $('#gridtable').DataTable({
+
                     lengthMenu: [
                         [5, 10, 25, 50, -1],
                         [5, 10, 25, 50, 'All'],
                     ],
                     scrollX: true,
-                    "bDestroy": true
+                    "bDestroy": true,
+                            drawCallback: function (settings) {
+                        // Ensure proper display of data when adding new columns
+                        updateColumnVisibility();
+                    }
                 });
                 $('#gridSearch').keyup(function () {
                     oTable.search($(this).val()).draw();
@@ -347,6 +367,7 @@
         });
         // Close the dropdowns when clicking outside of them
         document.addEventListener('click', function (event) {
+
             if (!event.target.matches('.options-indicator')) {
                 if (!event.target.matches('.dropdown-indicator')) {
                     dropdowns.forEach(dropdown => {
@@ -371,5 +392,22 @@
                 a[i].style.display = "none";
             }
         }
+    }
+    // Function to update column visibility and row data
+    function updateColumnVisibility() {
+        // Get all checkboxes
+        const checkboxes = document.querySelectorAll('.dropdown-checkbox');
+
+        // Iterate through each checkbox
+        checkboxes.forEach((checkbox, index) => {
+            const columnId = checkbox.getAttribute('data-column');
+            const cellsInColumn = document.querySelectorAll(`td[data-column="${columnId}"], th[id="${columnId}"]`);
+
+            // Toggle the visibility of the corresponding column
+            cellsInColumn.forEach(cell => {
+                cell.style.display = checkbox.checked ? 'table-cell' : 'none';
+            });
+        });
+
     }
 </script>
