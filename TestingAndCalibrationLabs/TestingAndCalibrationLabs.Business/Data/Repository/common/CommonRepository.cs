@@ -469,7 +469,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
 													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
 													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
-                                                    where upm.ModuleLayoutId = @moduleLayoutId and mmb.MultiValueControl = 'true' and mmb.UiPageTypeId = @UiPageTypeId
+                                                    where upm.ModuleLayoutId = @moduleLayoutId and mmb.MultiValueControl = 'true' and mmb.UiPageTypeId = @UiPageTypeId 
                                                     and upm.IsDeleted = 0 
                                                     and upt.IsDeleted = 0 
                                                     and uct.IsDeleted = 0
@@ -478,8 +478,56 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and ucct.IsDeleted = 0
 													and m.IsDeleted = 0
 													and wf.IsDeleted = 0
-													and ws.IsDeleted = 0", new { moduleLayoutId , UiPageTypeId }).ToList();
+													and ws.IsDeleted = 0", new { moduleLayoutId , UiPageTypeId  }).ToList();
         }
+
+        public List<UiPageMetadataModel> GetMultiControlMetadataByparentId(int moduleLayoutId, int UiPageTypeId, int parentId)
+        {
+            using IDbConnection db = _connectionFactory.GetConnection;
+            return db.Query<UiPageMetadataModel>(@"Select upm.Id,
+                                                        mmb.UiPageTypeId,
+														mmb.Orders,
+                                                        mmb.MultiValueControl,
+														mmb.ParentId,
+														upm.ModuleLayoutId,
+                                                        mmb.[UiControlDisplayName] as MetadataModuleBridgeUiControlDisplayName,
+                                                        upt.[Name] as UiPageTypeName,
+                                                         upm.IsRequired,
+                                                        upm.UiControlTypeId,
+                                                        uct.[Name] as UiControlTypeName,
+                                                        upm.UiControlDisplayName,
+                                                        upm.DataTypeId,
+                                                        dt.Name as DataTypeName,
+                                                        uct.ControlCategoryId,
+                                                        lc.Id as LookupCategoryId,
+                                                        l.Name as ControlCategoryName,
+												        ucct.Template as UiControlCategoryTypeTemplate,
+														ws.Id as WorkflowStageId,
+														m.Id as ModuleId
+                                                       From [UiPageMetadata] upm 
+													  inner join [UiPageMetadataModuleBridge] mmb on upm.Id = mmb.UiPageMetadataId
+													inner join [WorkflowStage] ws on mmb.UiPageTypeId = ws.UiPageTypeId
+													inner join [Workflow] wf on ws.WorkflowId = wf.Id
+													inner join [Module] m on wf.ModuleId = m.Id
+                                                    inner join [UiPageType] upt on mmb.UiPageTypeId = upt.Id
+                                                    inner join [UiControlType] uct on upm.UiControlTypeId = uct.Id
+                                                    inner join [DataType] dt on upm.DataTypeId = dt.Id
+                                                    inner join [Lookup] l on l.Id = uct.ControlCategoryId
+													inner join [UiControlCategoryType] ucct on ucct.Id = upm.UiControlCategoryTypeId
+													left join [UiPageMetadataCharacteristics] upmc on upmc.UiPageMetadataId = upm.Id and upmc.IsDeleted = 0
+													left join [LookupCategory] lc on lc.Id = upmc.LookupCategoryId
+                                                    where upm.ModuleLayoutId = @moduleLayoutId and mmb.MultiValueControl = 'true' and mmb.UiPageTypeId = @UiPageTypeId and mmb.ParentId = @parentId
+                                                    and upm.IsDeleted = 0 
+                                                    and upt.IsDeleted = 0 
+                                                    and uct.IsDeleted = 0
+                                                    and dt.IsDeleted = 0
+													and mmb.IsDeleted = 0
+                                                    and ucct.IsDeleted = 0
+													and m.IsDeleted = 0
+													and wf.IsDeleted = 0
+													and ws.IsDeleted = 0", new { moduleLayoutId, UiPageTypeId, parentId }).ToList();
+        }
+
 
         /// <summary>
         /// Delete Multi Record Values

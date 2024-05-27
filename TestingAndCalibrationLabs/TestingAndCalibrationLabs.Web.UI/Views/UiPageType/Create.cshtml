@@ -33,7 +33,7 @@
                     <label class="form-label" for="Name">Name</label>
                 </div>
                 <div style="display:flex" class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border " name="Module" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
+                    <select class="form-input width-full black-border " name="ModuleId" id="ModuleId" onchange="this.setAttribute('value',this.value)" asp-for="ModuleId">
                         <option disabled="disabled" selected>....</option>
                         @foreach (var item in ViewBag.module)
                         {
@@ -44,7 +44,7 @@
                     <label class="form-label" for="ModuleId">Module</label>
                 </div>
                 <div style="display:flex" class="col-lg-12  col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
-                    <select class="form-input width-full black-border " name="WorkflowStage" id="WorkflowStageId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
+                    <select class="form-input width-full black-border " name="WorkflowStageId" id="WorkflowStageId" onchange="this.setAttribute('value',this.value)" asp-for="WorkflowStageId">
                         <option disabled="disabled" selected>Select WorkflowStage...</option>
 
                     </select>
@@ -65,9 +65,7 @@
 <script>
    
     function myFunction(Title, control) {
-        debugger;
         var modalBody = $('.modal-body');
-
         // Get the name of the control
         var controlName = $(control).prev().attr('name');
         var controlType = $(control).prev().prop('tagName').toLowerCase();
@@ -101,8 +99,6 @@
                     var Stagename = response[i].name;
 
                     var UipageId = response[i].uiPageTypeId;
-                        
-
                     // Check if UipageId is zero
                     if (UipageId === null) {
                         // If UipageId is zero, the option is selectable

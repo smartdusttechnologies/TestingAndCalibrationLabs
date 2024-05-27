@@ -47,7 +47,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="ripple button-base button-second" data-bs-dismiss="modal">Cancle</button>
-                <button type="button" onclick="saveRecords(this.value)" id="savebtn" class="ripple button-base button-material-primary">Save</button>
+                <button type="button" onclick="saveRecords(this.value,@Model.Value.UiPageMetadata.Id)" id="savebtn" class="ripple button-base button-material-primary">Save</button>
             </div>
         </div>
     </div>
@@ -73,14 +73,35 @@
 </div>
 <!-- Multi Value Table -->
 <div id="tableMultiValue"></div>
+
 <script>
+    // Declare a global variable to store modelData
+    var globalModelData = {};
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
+        childrendetails = modelData.children;
+        // Check if globalModelData has an entry for the parent ID
+        if (childrendetails.length != 0) {
+            if (!globalModelData[childrendetails[0].value.uiPageMetadata.parentId]) {
+                globalModelData[childrendetails[0].value.uiPageMetadata.parentId] = [];
+            }
+
+            globalModelData[childrendetails[0].value.uiPageMetadata.parentId].push(childrendetails);
+        }
         var moduleLayoutId = modelData.value.uiPageMetadata.moduleLayoutId;
         var UipagetypeId = modelData.value.uiPageMetadata.uiPageTypeId;
+        var parentId = modelData.value.uiPageMetadata.id;
         let id = $("#Id").val();
-        var url = "@Url.Action("MultiValueControlGrid","Common")" + "?id=" + id + "&moduleLayoutId=" + moduleLayoutId + "&UipagetypeId=" + UipagetypeId;
-        $("#tableMultiValue").load(url); 
+        var url = "@Url.Action("MultiValueControlGrid", "Common")" + "?id=" + id + "&moduleLayoutId=" + moduleLayoutId + "&UipagetypeId=" + UipagetypeId + "&parentId=" + parentId;
 
+        var newDivId = "dynamic_div_" + Math.floor(Math.random() * 1000);
+        var newDiv = $('<div id="' + newDivId + '"></div>');
+        $("#tableMultiValue").append(newDiv);
+
+        $.get(url, function (data) {
+            $("#" + newDivId).html(data);
+        }).fail(function () {
+            console.error("Failed to load content from URL: " + url);
+        });
     });
-</script>       
+</script>

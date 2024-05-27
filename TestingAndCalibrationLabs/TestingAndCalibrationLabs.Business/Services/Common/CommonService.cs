@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net.Mail;
 using TestingAndCalibrationLabs.Business.Data.Repository;
 using static TestingAndCalibrationLabs.Business.Core.Model.PolicyTypes;
+using NPOI.POIFS.Properties;
 
 namespace TestingAndCalibrationLabs.Business.Services
 {
@@ -99,7 +100,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send,int moduleLayoutId, int UipagetypeId)
+        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send,int moduleLayoutId, int UipagetypeId,int parentId)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
@@ -129,7 +130,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
                 }
             }
-            var multiVal = GetMultiControlValue(recordId, moduleLayoutId, UipagetypeId);
+            var multiVal = GetMultiControlValue(recordId, moduleLayoutId, UipagetypeId, parentId);
             if (multiVal.Fields.Count() > 0)
             {
                 var table = new StringBuilder("<table class='multiValueGrid'  cellspacing='0'> <tr>");
@@ -364,14 +365,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId, int UipagetypeId)
+        public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId, int UipagetypeId,int parentId)
         {
             var uiMetadata = _commonRepository.GetMultiControlMetadata(moduleLayoutId, UipagetypeId);
             var uiPageData = _commonRepository.GetMultiPageData(recordId, UipagetypeId);
-            var metadata = uiMetadata.GroupBy(x => x.Id).Select(y => y.First());
-          
-           
-            return new RecordsModel { Id = recordId, Fields = metadata, FieldValue = uiPageData, ModuleId = uiMetadata[0].ModuleId, WorkflowStageId= uiMetadata[0].WorkflowStageId };
+            var metadata = uiMetadata.GroupBy(x => x.ParentId).Select(y => y.ToList());
+          var parentbaseddata = _commonRepository.GetMultiControlMetadataByparentId(moduleLayoutId, UipagetypeId, parentId);
+
+            return new RecordsModel { Id = recordId, ParentFields = parentbaseddata, Fields = uiMetadata, FieldValue = uiPageData, ModuleId = uiMetadata[0].ModuleId, WorkflowStageId= uiMetadata[0].WorkflowStageId };
         }
         /// <summary>
         /// Delete Multi Value Records

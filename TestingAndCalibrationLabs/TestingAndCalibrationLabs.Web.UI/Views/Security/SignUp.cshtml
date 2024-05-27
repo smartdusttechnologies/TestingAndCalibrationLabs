@@ -190,7 +190,6 @@
             data: $('#SignUpData').serialize(),
             dataType: 'json',
             success: function (result) {
-                debugger;
                 HideWheelLoader();
                 myFunction();
                 SuccessMessage(NotificationNumbers++, "Sign-Up successfully!");
@@ -207,7 +206,6 @@
                             alert("There is a Problem, Try Again! to login");
                         },
                         success: function (result) {
-                            debugger;
 
                             if (result.status == true) {
                                 // Append the query string to the URL
