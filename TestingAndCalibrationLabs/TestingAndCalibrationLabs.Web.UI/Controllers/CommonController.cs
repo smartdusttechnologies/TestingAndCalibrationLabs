@@ -53,7 +53,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetRecordsIndex(id.Value);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
-            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").Take(4).ToList();
+            records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return View(records);
         }
         /// <summary>
@@ -126,18 +126,18 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             return PartialView(controlCategoryTypeTemplate, records);
         }
         [HttpGet]
-        public ActionResult MultiValueControlGrid(int id, int moduleLayoutId, int UipagetypeId)
+        public ActionResult MultiValueControlGrid(int id, int moduleLayoutId, int UipagetypeId, int parentId)
         {
-            var pageMetadata = _commonService.GetMultiControlValue(id, moduleLayoutId, UipagetypeId);
+            var pageMetadata = _commonService.GetMultiControlValue(id, moduleLayoutId, UipagetypeId, parentId);
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
             return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
         }
         [HttpPost]
-        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId, int UipagetypeId)
+        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId, int UipagetypeId,int parentId)
         {
-            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId, UipagetypeId);
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId, UipagetypeId, parentId);
             
             if (send)
             {

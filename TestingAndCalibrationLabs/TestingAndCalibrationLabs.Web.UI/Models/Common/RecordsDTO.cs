@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TestingAndCalibrationLabs.Business.Core.Model;
 
 namespace TestingAndCalibrationLabs.Web.UI.Models
 {
@@ -11,6 +12,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Models
         public int ModuleId { get; set; }
         public string WorkflowStageName { get; set; }
         public int WorkflowStageId { get; set; }
+        public IEnumerable<UiPageMetadataModel> ParentFields { get; set; }
 
         public List<UiPageMetadataDTO> Fields { get; set; }
         public Dictionary<int, List<UiPageDataDTO>> FieldValues { get; set; }

@@ -82,6 +82,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         /// <param name="UiPageTypeId"></param>
         /// <returns></returns>
         List<UiPageMetadataModel> GetMultiControlMetadata(int moduleLayoutId, int UiPageTypeId);
+
+        List<UiPageMetadataModel> GetMultiControlMetadataByparentId(int moduleLayoutId, int UiPageTypeId, int parentId);
         /// <summary>
         /// Delete Multi Value Records
         /// </summary>

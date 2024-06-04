@@ -220,6 +220,32 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         /// <summary>
+        /// Method to Add new user and validate existing user for given external details  
+        /// </summary>
+        public RequestResult<LoginToken> ExternalAdd(UserModel user)
+        {
+            try
+            {
+                int userID;
+                UserModel existingUser = _userRepository.Get(user.UserName);
+                if (existingUser == null)
+                {
+                    user.IsActive = true;
+                    userID = _userRepository.ExternalInsert(user);
+                }
+                else
+                {
+                    userID = existingUser.Id;
+                }
+                RequestResult<LoginToken> resullt = ExternalLoginUser(user, userID);
+                return resullt;
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<LoginToken>();
+            }
+        }
+        /// <summary>
         /// Method to Validate the Email
         /// </summary>
         public RequestResult<(int UserId, string UserName)> EmailValidateForgotPassword(OtpModel OtpModel)
@@ -271,6 +297,21 @@ namespace TestingAndCalibrationLabs.Business.Services
                 return new RequestResult<bool>(false, validationMessages);
             }
             return new RequestResult<bool>(validationMessages);
+        }
+        /// <summary>
+        /// Method to get details from db table for external login and sent to generate token method
+        /// </summary>
+        private RequestResult<LoginToken> ExternalLoginUser(UserModel users, int userId)
+        {
+            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            var user = _userRepository.Get(userId);
+            if (!user.IsActive && user.Locked)
+            {
+                validationMessages.Add(new ValidationMessage { Reason = "Access denied.", Severity = ValidationSeverity.Error });
+                return new RequestResult<LoginToken>(validationMessages);
+            }
+            var token = GenerateTokens(users.UserName);
+            return new RequestResult<LoginToken>(token, validationMessages);
         }
         /// <summary>
         /// Method to Validate Existing Email
