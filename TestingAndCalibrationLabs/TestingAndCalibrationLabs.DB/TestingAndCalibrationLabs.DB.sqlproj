@@ -130,6 +130,7 @@
     <Build Include="dbo\Tables\UserRoleClaim.sql" />
     <Build Include="dbo\Stored Procedures\Store_Proc_GridMultipleData.sql" />
     <Build Include="dbo\Tables\UserOtp.sql" />
+    <Build Include="dbo\Tables\Template.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\UserRole.sql" />

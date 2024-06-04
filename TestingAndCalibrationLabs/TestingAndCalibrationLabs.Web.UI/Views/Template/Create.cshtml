@@ -1,0 +1,87 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.TemplateDTO
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+<h4>Create</h4>
+<hr />
+
+
+<form asp-action="Create" _lpchecked="1" class="mb-2" method="post" enctype="multipart/form-data" asp-controller="Template" novalidate>
+    <div asp-validation-summary="All"></div>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control " style="padding-left:10px; padding-bottom:5px;">
+            <input class="form-input width-full black-border" type="text" name="TemplateName" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="TemplateName">
+            <label class="form-label" for="TemplateName">TemplateName</label>
+        </div>
+
+    </div>
+    <div class="row ms-1 me-1">
+        <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-input">
+            <input class="form-input width-full black-border" type="file" name="DataUrl" id="TRDataUrl" placeholder=" " onchange="validateForImages(this)" accept=".html" asp-for="DataUrl" Required>
+            <label class="form-label" for="DataUrl">File Upload</label>
+
+
+        </div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element ">
+
+        <button class="btn btn-lg btn-submit-print text-white" type="button" id="" name="Preview" value="Preview" style="background-color:#4250b5" onclick="PreviewData()">Preview</button>
+        <input type="submit" value="Create" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+    </div>
+
+
+
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    function PreviewData(){
+        
+        var File = document.getElementById('TRDataUrl');
+        var file = File.files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+
+        
+
+        $.ajax({
+            url: 'FileToPdf/Template',
+            method: 'POST',
+            data:  formData ,
+            contentType: false,
+             processData: false,
+            responseType: 'arraybuffer',
+            success: function (response) {
+               
+                var binaryString = atob(response);
+
+                // Convert the binary string to a Uint8Array
+                var byteArray = new Uint8Array(binaryString.length);
+                for (var i = 0; i < binaryString.length; i++) {
+                    byteArray[i] = binaryString.charCodeAt(i);
+                }
+
+                // Create a Blob from the byte array
+                var blob = new Blob([byteArray], { type: 'application/pdf' });
+
+                // Create a download link and trigger the download
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = "file.Pdf";
+                link.click();
+                alert('good work bro ');
+            },
+            error: function (xhr, status, error) {
+                alert('bad work bro');
+            }
+        });
+        
+
+    }
+</script>
+

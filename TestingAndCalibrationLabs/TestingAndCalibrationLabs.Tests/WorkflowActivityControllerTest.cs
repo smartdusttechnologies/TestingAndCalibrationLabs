@@ -50,7 +50,7 @@ namespace TestingAndCalibrationLabs.Tests
             workflowActivityModel.Add(new WorkflowActivityModel { Id = 36, Name = "wAman", ActivityId = 35, ActivityName = "faman", WorkflowStageId = 65, WorkflowStageName = "writesh" });
 
 
-            _workflowActivityService = new WorkflowActivityService(configuration.Object,webhost.Object,emailservice.Object,activity.Object, workflowActivityRepository.Object, genericRepository.Object,activityGeneric.Object);
+            _workflowActivityService = new WorkflowActivityService(configuration.Object, webhost.Object, emailservice.Object, activity.Object, workflowActivityRepository.Object, genericRepository.Object, activityGeneric.Object);
 
             workflowActivityRepository.Setup(x => x.Get()).Returns(workflowActivityModel);
 

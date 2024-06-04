@@ -105,8 +105,20 @@ namespace TestingAndCalibrationLabs.Business.Services
             var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
-            var path = Path.Combine(_webHostEnvironment.WebRootPath, lookupM.LookupName);
-            var template = File.ReadAllText(path);
+            string template;
+          
+              var File = DownloadImage(fileId);
+            //string template;
+
+            using (var memoryStream = new MemoryStream(File.DataFiles))
+            using (var reader = new StreamReader(memoryStream))
+            {
+                template = reader.ReadToEnd();
+                
+            }
+         
+
+            //var template = File.ReadAllText(path);
             var workflowStage = _workflowStageService.GetStage(recordMdel.ModuleId, recordMdel.Id);
             var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageId);
             var uiPageData = _commonRepository.GetPageData(recordId);
@@ -115,8 +127,13 @@ namespace TestingAndCalibrationLabs.Business.Services
             pageMetadata.ForEach(x => hirericheys.Add(new LayoutModel
             {
                 UiPageMetadata = x,
-                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id)
+                UiPageData = (List<UiPageDataModel>)uiPageData.Where(y => y.UiPageMetadataId == x.Id).ToList(),
+
             }));
+
+            
+
+
             foreach (var item in hirericheys)
             {
                 if (item.UiPageMetadata.ControlCategoryName == "DataControl" && item.UiPageMetadata.MultiValueControl != true)
@@ -125,36 +142,92 @@ namespace TestingAndCalibrationLabs.Business.Services
                     {
                         item.UiPageMetadata.UiControlDisplayName = item.UiPageMetadata.MetadataModuleBridgeUiControlDisplayName;
                     }
-                    string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
-                    var fieldValues = string.Format("**fieldvalue{0}**", item.UiPageMetadata.Orders);
-                    template = template.Replace(fieldName, item.UiPageMetadata.UiControlDisplayName).Replace(fieldValues, item.UiPageData.First().Value);
+                    if (item.UiPageMetadata.Orders != 0)
+                    {
+                        if (item.UiPageMetadata.Orders % 2 == 0)
+                        {
+                            string fieldValues = "{" + item.UiPageMetadata.UiControlDisplayName + "}";
+                            if (item.UiPageData.Count == 0)
+                            {
+                                template = template.Replace(fieldValues, "null");
+                                //Table1 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
+
+                            }
+
+
+
+                            else
+                            {
+                                template = template.Replace(fieldValues, item.UiPageData.First().Value);
+                               // Table1 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
+                            }
+                        }
+                        //string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
+                        else
+                        {
+                            string fieldValues = "{" + item.UiPageMetadata.UiControlDisplayName + "}";
+                            if (item.UiPageData.Count == 0)
+                            {
+                                template = template.Replace(fieldValues, "null");
+                               // Table2 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
+
+                            }
+
+
+
+                            else
+                            {
+                                template = template.Replace(fieldValues, item.UiPageData.First().Value);
+                               // Table2 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
+                            }
+                        }
+
+                    }
                 }
             }
-            var multiVal = GetMultiControlValue(recordId, moduleLayoutId, UipagetypeId, parentId);
+            //Table2 += "</table";
+            //Table1 += "</table" + Table2;
+            var multiVal = GetMultiControlValue(recordId, moduleLayoutId);
+
             if (multiVal.Fields.Count() > 0)
             {
-                var table = new StringBuilder("<table class='multiValueGrid'  cellspacing='0'> <tr>");
+                var table = new StringBuilder("<table class='TemplateTable'> <tr> ");
                 foreach (var item in multiVal.Fields)
                 {
                     table.Append($"<th>{item.UiControlDisplayName}</th>");
                 }
                 table.Append("</tr> ");
-                foreach (var item in multiVal.FieldValues)
+                table.Append("<tr>");
+                var GridItem = 0;
+                
+
+
+                foreach (var item in multiVal.FieldValue)
                 {
-                    table.Append("<tr>");
-                    foreach (var node in item.Value)
+                    GridItem++;
+                    
+                    if (GridItem > multiVal.Fields.Count() && GridItem% multiVal.Fields.Count()==1)
                     {
-                        table.Append($"<td> {node.Value}</td>");
+                        table.Append("<tr>");
                     }
-                    table.Append("</tr>");
+                        table.Append($"<td> {item.Value}</td>");
+                    
+                    if(GridItem % (multiVal.Fields.Count()) == 0)
+                    {
+                        table.Append("</tr> ");
+
+                    }
+                    
                 }
-                table.Append("</table>");
-                template = template.Replace("**gridTableMulti**", table.ToString());
+                table.Append("</tr>");
+                // Table1 += "</table>" + table + "</body></html";
+                template = template.Replace(" <table class=\"TemplateTable\" >", table.ToString());
             }
             else
             {
-                template = template.Replace("**gridTableMulti**", "");
+                template = template.Replace(" <table class=\"TemplateTable\" >", "");
             }
+
 
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template);
@@ -164,8 +237,8 @@ namespace TestingAndCalibrationLabs.Business.Services
             if (send)
             {
                 //string emailAd = new string(email);
-                var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
-                var htmlWeb = File.ReadAllText(htmlPath);
+              //  var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
+               // var htmlWeb = File.ReadAllText(htmlPath);
                 using Stream stream = new MemoryStream(pdfByte);
                 Attachment attachment = new Attachment(stream, "report.pdf", "application/pdf");
                 EmailModel emailModel = new EmailModel();
@@ -176,7 +249,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 emailModel.Email = emailAd;
 
                 emailModel.Subject = "Thanks For Visiting Testing And Calibration Labs";
-                emailModel.HtmlMsg = htmlWeb;
+                //emailModel.HtmlMsg = htmlWeb;
                 var atchmt = new List<Attachment>() { attachment };
                 emailModel.Attachments = atchmt;
                 var sendMail = _emailService.Sendemail(emailModel);
@@ -256,7 +329,6 @@ namespace TestingAndCalibrationLabs.Business.Services
             //{
             //    throw new UnauthorizedAccessException("Your Unauthorized");
             //}
-            var moduleLayoutId =_moduleLayoutRepository.GetByModuleLayoutId(moduleId);
             var workflowStage = _workflowStageService.GetStage(moduleId, 0);
             var uiMetadata = GetMetadata(moduleId, 0, out uiPageTypeId);
             foreach (var item in uiMetadata)
@@ -350,14 +422,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         }
 
         #region Multi Value Control
-        public int ImageUpload (FileUploadModel fileUpload)
+        public int ImageUpload(FileUploadModel fileUpload)
         {
-           var dataDownloaded = _commonRepository.FileUpload(fileUpload);
-              return dataDownloaded;
+            var dataDownloaded = _commonRepository.FileUpload(fileUpload);
+            return dataDownloaded;
         }
-        public FileUploadModel  DownloadImage(string ImageValue)
-        { 
-             var image = _commonRepository.ImageDownload(ImageValue);
+        public FileUploadModel DownloadImage(int ImageValue)
+        {
+            var image = _commonRepository.ImageDownload(ImageValue);
             return image;
         }
         /// <summary>
@@ -392,6 +464,12 @@ namespace TestingAndCalibrationLabs.Business.Services
                 result = false;
             }
             return new RequestResult<bool>(result);
+        }
+
+        public bool FileUpdate(int id, FileUploadModel fileUploadModel)
+        {
+            return _commonRepository.FileUpload(id, fileUploadModel);
+
         }
         #endregion
         #endregion
@@ -434,41 +512,41 @@ namespace TestingAndCalibrationLabs.Business.Services
                         var uipagedata = _uiPageMetadataRepository.GetById(item.UiPageMetadataId);
                         string metadataId;
                         metadataId = Helpers.GenerateUiControlId(uipagedata.UiControlTypeName, item.UiPageMetadataId);
-                        switch ((ValidationType)item.UiPageValidationTypeId)
+                        switch ((Common.ValidationType)item.UiPageValidationTypeId)
                         {
-                            case ValidationType.IsRequired:
+                            case Common.ValidationType.IsRequired:
                                 if (string.IsNullOrEmpty(field.Value))
                                 {
                                     string errorMessage = string.Format(validationlist.Message, uipagedata.UiControlDisplayName);
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 }
                                 break;
-                            case ValidationType.MinPasswordLength:
+                            case Common.ValidationType.MinPasswordLength:
                                 int minLength = int.Parse(item.Value);
                                 if (field.Value.Length < minLength)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
-                            case ValidationType.Email:
+                            case Common.ValidationType.Email:
                                 int minLengthEmail = int.Parse(item.Value);
                                 if (field.Value.Length < minLengthEmail)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
-                            case ValidationType.AdharLength:
+                            case Common.ValidationType.AdharLength:
                                 int minLengthAdhar = int.Parse(item.Value);
                                 if (field.Value.Length != minLengthAdhar)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
-                            case ValidationType.MobileNumberLength:
+                            case Common.ValidationType.MobileNumberLength:
                                 int minLengtMobileNumberLength = int.Parse(item.Value);
                                 if (field.Value.Length != minLengtMobileNumberLength)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
-                            case ValidationType.Name:
+                            case Common.ValidationType.Name:
                                 int minLengtName = int.Parse(item.Value);
                                 if (field.Value.Length < minLengtName)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });
                                 break;
-                            case ValidationType.Year:
+                            case Common.ValidationType.Year:
                                 int minLengtYear = int.Parse(item.Value);
                                 if (field.Value.Length != minLengtYear)
                                     validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = validationlist.Message, SourceId = metadataId, Severity = ValidationSeverity.Error });

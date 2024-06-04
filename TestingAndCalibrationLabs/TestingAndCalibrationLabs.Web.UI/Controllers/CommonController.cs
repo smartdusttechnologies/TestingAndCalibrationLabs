@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
 using TestingAndCalibrationLabs.Business.Core.Model;
 using TestingAndCalibrationLabs.Web.UI.Models;
+
 
 namespace TestingAndCalibrationLabs.Web.UI.Controllers
 {
@@ -26,14 +28,15 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         private readonly IGoogleDriveService _googleDriveService;
         private readonly IWorkflowStageService _workflowStageService;
         private readonly IListSorterService _listSorterService;
-         
+        private readonly IDocumentService _documentService;
+
         /// <summary>
         /// passing parameter via varibales for establing connection
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="commonService"></param>
         /// <param name="mapper"></param>
-        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService, IListSorterService listSorterService, ILookupService lookupService)
+        public CommonController(IGoogleDriveService googleDriveService, ILogger<CommonController> logger, ICommonService commonService, IMapper mapper, IWorkflowStageService workflowStageService, IListSorterService listSorterService, ILookupService lookupService, IDocumentService documentService)
         {
             _logger = logger;
             _commonService = commonService;
@@ -42,6 +45,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             _workflowStageService = workflowStageService;
             _listSorterService = listSorterService;
             _lookupService = lookupService;
+            _documentService = documentService;
         }
 
         /// <summary>
@@ -63,7 +67,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult FileUpload()
         {
-            List<string> imageId = new List<string>();
+            List<int> imageId = new List<int>();
 
             foreach (var imagelenth in Request.Form.Files)
             {
@@ -71,25 +75,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                 {
                     if (imagelenth.Length > 0)
                     {
-                        //Getting FileName
-                        var ImageName = Path.GetFileName(imagelenth.FileName);
-                        //Getting file Extension
-                        var ImageExtension = Path.GetExtension(ImageName);
-                        // concatenating  FileName + FileExtension
-                        var NewImageName = String.Concat(Convert.ToString(Guid.NewGuid()), ImageExtension);
-                        var ObjImage = new FileUploadModel()
-                        {
-                            Name= NewImageName,
-                            FileType = ImageExtension,
-                            CreatedOn = DateTime.Now
-                        };
-                        using (var target = new MemoryStream())
-                        {
-                            imagelenth.CopyTo(target);
-                            ObjImage.DataFiles = target.ToArray();
-                        }
-                       var Imagecollection = _commonService.ImageUpload(ObjImage);
-                        imageId.Add(NewImageName.ToString());
+                        var ObjImage = _documentService.FileUpload(imagelenth);
+                        var Imagecollection = _commonService.ImageUpload(ObjImage);
+                        imageId.Add(Imagecollection);
                     }
                 }
             }
@@ -99,14 +87,14 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method To download Images 
         /// </summary>
         /// <returns></returns>
-        public IActionResult DownloadImage(string ImageValue)
+        public IActionResult DownloadImage(int ImageValue)
         {
-           
+
             FileUploadModel attachment = _commonService.DownloadImage(ImageValue);
-           
+
             if (attachment != null)
             {
-                 return File(new MemoryStream(attachment.DataFiles),Helpers.GetMimeTypes()[attachment.FileType] , attachment.Name);
+                return File(new MemoryStream(attachment.DataFiles), Helpers.GetMimeTypes()[attachment.FileType], attachment.Name);
             }
             return Ok("Can't find the Image");
         }
@@ -132,7 +120,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             var records = _mapper.Map<RecordsModel, RecordsDTO>(pageMetadata);
             //TODO: this is the temporary work later we will change it confiqq kendo ui
             records.Fields = records.Fields.Where(x => x.ControlCategoryName == "DataControl").ToList();
-            return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+              return PartialView("~/Views/Common/Components/Grid/_gridTemplate1.cshtml", records);
+            //return PartialView("~/Views/Common/Components/Grid/TemplateGrid.cshtml", records);
+
         }
         [HttpPost]
         public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId, int UipagetypeId,int parentId)
@@ -175,7 +165,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         {
             var pageMetadata = _commonService.GetUiPageMetadataCreate(id);
             var result = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
-            
+
             return base.View(result);
 
         }
@@ -185,7 +175,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// </summary>
         /// <param name="lookupCategoryId"></param>
         /// <returns></returns>
-        public ActionResult MultipleValue(int lookupCategoryId  )
+        public ActionResult MultipleValue(int lookupCategoryId)
         {
             var lookupList = _lookupService.GetByCategoryId(lookupCategoryId);
            
@@ -242,7 +232,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         public ActionResult Edit(RecordDTO record)
         {
             var records = _mapper.Map<RecordDTO, RecordModel>(record);
-            var adddata = _commonService.Save(records); 
+            var adddata = _commonService.Save(records);
             var pageMetadata = _commonService.GetRecordById(record.Id);
             Models.RecordDTO recordModel = _mapper.Map<RecordModel, RecordDTO>(pageMetadata);
 
@@ -284,16 +274,148 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
             }
             return BadRequest();
         }
-        /// <summary>
-        /// generate Id in Record
-        /// </summary>
-        /// <param name="moduleId"></param>
-        /// <returns></returns>
 
-        public ActionResult GenerateRecord(int moduleId,int  workflowStageId)
+
+        [HttpGet]
+        public IActionResult DownloadReport(int id)
         {
-            var recordId = _commonService.GenerateRecordId(moduleId, workflowStageId);
-            return Ok(recordId);
+            var pageMetadata = _commonService.GetRecordById(id);
+            RecordModel Record = new RecordModel();
+            Record.Id = pageMetadata.Id;
+            Record.Fields = pageMetadata.Fields;
+            Record.FieldValues = pageMetadata.FieldValues;
+            Record.ModuleId = pageMetadata.ModuleId;
+            Record.UiPageTypeId = pageMetadata.UiPageTypeId;
+            Record.UpdatedDate = pageMetadata.UpdatedDate;
+             //var value = new List<Models.Node<LayoutModel>>();
+            //var PageDataList = pageMetadata.Layout;
+            foreach (var item in pageMetadata.Layout)
+            {
+                //Record.Layout = PageDataList;
+
+
+                var itemChildren = item.Children.ToList();
+                //item.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/_LabelValue.cshtml";
+
+
+                foreach (var item2 in item.Children)
+                {
+                    if (item2.Children.Count != 0)
+                    {
+
+
+                        foreach (var item3 in item2.Children)
+                        {
+                            if (!item3.Value.UiPageMetadata.MultiValueControl && item3.Value.UiPageMetadata.ControlCategoryName == "DataControl")
+                            {
+                                 
+                                
+                                item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/_LabelValue.cshtml";
+                            }
+                            //else if (!item3.Value.UiPageMetadata.MultiValueControl && item3.Value.UiPageMetadata.ControlCategoryName == "NonDataControl"&& item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate!= "~/Views/Common/Components/Grid/_gridMultiControl.cshtml")
+                            //{
+                            //item3.Value.UiPageMetadata.ControlCategoryName = "DataControl";
+                            //item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/Empty.cshtml";
+                           if(item3.Value.UiPageMetadata.ControlCategoryName != "DataControl") {
+                                itemChildren.Remove(item3);
+                            }
+
+
+                        }
+                    }
+
+
+                    //for (var item2 = 0; item2 < item.Children.Count; item2++)
+                    //{
+                    //    /*if (item2.Children.Count != 0) */
+                    //    if (item.Children[item2].Children.Count != 0)
+                    //    {
+
+
+                    //        for (var item3 = 0; item3 < item.Children[item2].Children.Count; item3++)
+                    //        {
+                    //            if (!item.Children[item2].Children[item3].Value.UiPageMetadata.MultiValueControl && item.Children[item2].Children[item3].Value.UiPageMetadata.ControlCategoryName == "DataControl")
+                    //            {
+
+
+                    //                item.Children[item2].Children[item3].Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/_LabelValue.cshtml";
+                    //            }
+                    //            //else if (!item3.Value.UiPageMetadata.MultiValueControl && item3.Value.UiPageMetadata.ControlCategoryName == "NonDataControl"&& item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate!= "~/Views/Common/Components/Grid/_gridMultiControl.cshtml")
+                    //            //{
+                    //            //item3.Value.UiPageMetadata.ControlCategoryName = "DataControl";
+                    //            //item3.Value.UiPageMetadata.UiControlCategoryTypeTemplate = "~/Views/Common/Components/Custom/Empty.cshtml";
+                    //            if (item.Children[item2].Children[item3].Value.UiPageMetadata.ControlCategoryName != "DataControl")
+                    //            {
+                    //                // itemChildren[item2].Children[item3].Clear();
+                    //            }
+
+
+                    //        }
+                    //    }
+                    //    //else
+                    //    //{
+                    //    //    itemChildren.Remove(item2);
+
+                    //    //}
+
+                    //}
+                    //else
+                    //{
+                    //    itemChildren.Remove(item2);
+
+                    //}
+
+                }
+                Record.Layout =  itemChildren ;
+
+            }
+
+
+
+
+
+            //}
+            var record = _mapper.Map<RecordModel, RecordDTO>(Record);
+
+            return View(record);
         }
+
+        //private async Task<string> RenderRazorViewToString(string viewName, object model)
+        //{
+        //    ViewData.Model = model;
+        //    using (var sw = new StringWriter())
+        //    {
+        //        var viewEngine = HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+        //        var viewResult = viewEngine.FindView(ControllerContext, viewName, false);
+
+        //        if (viewResult.Success)
+        //        {
+        //            var viewContext = new ViewContext(
+        //                ControllerContext,
+        //                viewResult.View,
+        //                ViewData,
+        //                TempData,
+        //                sw,
+        //                new HtmlHelperOptions()
+        //            );
+
+        //            await viewResult.View.RenderAsync(viewContext);
+
+        //            return sw.GetStringBuilder().ToString();
+        //        }
+        //        else
+        //        {
+        //            throw new Exception($"View '{viewName}' not found.");
+        //        }
+        //    }
+        //}
+
+
+
+
+
+
+
+
     }
 }

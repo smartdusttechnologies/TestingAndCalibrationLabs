@@ -2,12 +2,12 @@
 @{
     ViewData["Title"] = "CreateLayout";
 }
-<style>
+@*<style>
     .fixed-bottom {
         position: relative;
     }
-</style>
-<div class="container-fluid">
+</style>*@
+<div class="container-fluid" id="ReportPage">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -21,6 +21,7 @@
                 {
                     @await Html.PartialAsync("~/Views/Common/Components/_control.cshtml", item)
                 }
+                
             </div>
         </form>
         <div class="form-group" style="margin:6px;" id="sub-mt-btn">
@@ -58,6 +59,67 @@
 </div>
 
 <script>
+    //function GenerateReport() {
+
+
+
+    //    var labels = document.querySelectorAll('label');
+    //    var result = {};
+
+    //    labels.forEach(function (label) {
+    //        var inputId = label.getAttribute('for');
+    //        if(inputId!=null){
+            
+    //        if (document.getElementById(inputId) != null) {
+    //            var input = document.getElementById(inputId);
+    //            var labelText = label.textContent.trim();
+    //            var inputValue = input.value.trim();
+
+    //            result[labelText] = inputValue;
+    //        }
+    //        else{
+    //            var input =  document.querySelector('label[for="' + inputId + '"]').previousElementSibling;
+                
+    //            var labelText = label.textContent.trim();
+    //            var inputValue = input.value.trim();
+              
+    //            result[labelText] = inputValue;
+    //        }
+    //        }
+            
+    //    });
+    //    var htmlContent = '<html><body>';
+    //    for (var key in result) {
+            
+    //        if (result.hasOwnProperty(key)) {
+    //            htmlContent += '<p><strong>' + key + ':</strong> ' + result[key] + '</p>';
+    //        }
+    //    }
+    //    var MultiValue = document.getElementById('multiValueGrid');
+    //    debugger;
+    //    htmlContent += MultiValue.outerHTML;
+    //    debugger;
+    //    htmlContent += '<!--</body></html>-->';
+
+    //    var blob = new Blob([htmlContent], { type: 'text/html' });
+
+
+    //    var blobURL = window.URL.createObjectURL(blob);
+
+
+    //    var downloadLink = document.createElement('a');
+    //    downloadLink.href = blobURL;
+    //    downloadLink.download = 'downloaded_page.html';
+
+
+    //    downloadLink.click();
+
+
+    //    window.URL.revokeObjectURL(blobURL);
+
+
+
+    //}
     //This function will display the success snackbar
     function myFunction() {
         var x = document.getElementById("snackbarsuccess");
@@ -78,7 +140,8 @@
     var moduleId = parseInt($("#ModuleId").val())
     var id = parseInt($("#Id").val())
     var url = $("#commonForm").attr("action");
-    AjaxFormSubmit = () => {
+    
+     AjaxFormSubmit = () => {
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
@@ -100,12 +163,12 @@
                 var fieldValue = $(fieldId).val();
                 var keyValuepair = {};
                 var uiPageData = layout[i].uiPageData;
-                if (layout[i].uiPageData != null && layout[i].uiPageData.length != 0){
-                       var pageDataId = layout[i].uiPageData[0].id;
-                       var childIds = layout[i].uiPageData[0].childId;
-                       var RecordIds = layout[i].uiPageData[0].recordId;
-                       var oldValue = layout[i].uiPageData[0].value;
-                       var List;
+                if (layout[i].uiPageData != null && layout[i].uiPageData.length != 0) {
+                    var pageDataId = layout[i].uiPageData[0].id;
+                    var childIds = layout[i].uiPageData[0].childId;
+                    var RecordIds = layout[i].uiPageData[0].recordId;
+                    var oldValue = layout[i].uiPageData[0].value;
+                    var List;
                     if (oldValue != fieldValue) {
                         if (layout[i].uiPageMetadata.multiValueControl == true && fieldValue !=null) {
                             var filddata = $(fieldId).val();
@@ -141,8 +204,16 @@
                                 fieldValues.push(keyValuepair)
                             }
                     }
-                    
-                  }
+                    //else {
+                    //    var fieldValue = $(fieldId).val();
+                    //    var keyValuepair = {};
+                    //    keyValuepair.UiPageMetadataId = metadataId;
+                    //    keyValuepair.UiPageTypeId = uiPageTypeId;
+                    //    keyValuepair.Value = fieldValue;
+                    //    fieldValues.push(keyValuepair)
+                    //}
+
+                }
                 else {
                     if (fieldValue != null){
                     keyValuepair.Id = 0;
@@ -158,7 +229,7 @@
         $.ajax({
             type: 'POST',
             url: url,
-            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues},
+            data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
                 myFunction();
                 window.location.href = "/common/index/" + moduleId;
@@ -183,4 +254,12 @@
             }
         });
     }
+
+
+
+  
+    
+
+
+
 </script>

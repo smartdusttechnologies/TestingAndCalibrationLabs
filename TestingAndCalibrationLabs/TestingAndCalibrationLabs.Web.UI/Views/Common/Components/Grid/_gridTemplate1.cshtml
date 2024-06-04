@@ -121,6 +121,7 @@
             url: "@Url.Action("DeleteMultiValue", "Common")",
             data: { "Id": recordId, fieldValues, updatedDate },
             success: function (response) {
+                debugger;
                 myFunction();
                 window.location.href = "/common/edit/" + recordId;
             },
@@ -315,6 +316,7 @@
                 fieldValues: fieldValues
             },
             success: function (response) {
+                debugger;
                 myFunction();
                 id = response.id;
                 window.location.href = "/common/edit/" + id;

@@ -44,7 +44,7 @@ namespace TestingAndCalibrationLabs.Tests
             workflowStageModel.Add(new WorkflowStageModel { Id = 26, Name = "wAman", UiPageTypeId = 75, UiPageTypeName = "daman", WorkflowId = 46, WorkflowName = "jritesh", Orders = 54 });
 
 
-            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object,genericRepository.Object,workflowService.Object);
+            _workflowStageService = new WorkflowStageService(workflowStageRepository.Object, genericRepository.Object, workflowService.Object);
 
             workflowStageRepository.Setup(x => x.Get()).Returns(workflowStageModel);
 
@@ -219,7 +219,7 @@ namespace TestingAndCalibrationLabs.Tests
 
 
         }
-        
+
         [Test]
         public void Delete_Confirmed_IdNull()
         {

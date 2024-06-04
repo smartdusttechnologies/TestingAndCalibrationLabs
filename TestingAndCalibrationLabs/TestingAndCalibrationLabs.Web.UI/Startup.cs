@@ -24,6 +24,8 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Services.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Services.Otp;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -123,7 +125,11 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<IWorkflowService, WorkflowService>();
             services.AddScoped<IWorkflowStageService, WorkflowStageService>();
             services.AddScoped<IUiPageMetadataCharacteristicsService, UiPageMetadataCharacteristicsService>();
-            
+            services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<ITemplateService, TemplateService>();
+            services.AddScoped<IDocumentService, DocumentService>();
+
 
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
@@ -188,6 +194,7 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<IPasswordPolicyRepository, PasswordPolicyRepository>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+            services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
             services.AddScoped<IGenericRepository<PasswordPolicyModel>, GenericRepository<PasswordPolicyModel>>();
         }

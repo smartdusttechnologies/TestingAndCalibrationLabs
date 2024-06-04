@@ -12,10 +12,6 @@
           crossorigin="anonymous" />
 
     <style>
-        .multiValueGrid {
-            width: 100%;
-            height: inherit;
-        }
         .centre {
             display: flex;
             justify-content: center;
@@ -26,15 +22,41 @@
             display: grid;
         }
 
+        .report-content {
+           /* border: 3px solid black;
+            width: 100%;*/
+            padding: 9px;
+            /*box-shadow: 10px 10px 10px #888888;
+            
+            margin-top: 2%;*/
+        }
+
+        .report-header {
+            border: 0px solid black;
+            height: 150px;
+        }
+
         .report-body {
             margin-top: 80px;
             border: 0px solid black;
+            height: 300px;
             text-align: center;
             font-size: 100px;
             padding: 100px;
             transform: rotate(-50deg);
             color: grey;
             text-transform: uppercase;
+        }
+
+        .report-sign {
+            border: 0px solid black;
+            height: 100px;
+            margin: 30px 30px;
+        }
+
+        .report-footer {
+            border: 0px solid black;
+            height: 150px;
         }
 
         img {
@@ -60,111 +82,199 @@
             text-align: left;
             padding: 10px;
         }
-        th {
-            font-size: 25px;
+
+        .boldtext {
+            font-weight: bold;
         }
-        .imag {
-            background-image: url('https://i.ibb.co/5MnKgM9/sdt-Things.jpg');
-            background-size: 100%;
+
+        #logo {
+            height: 100px;
             width: 100%;
-            background-repeat:no-repeat;
-            height: 1682px;
-            object-fit: contain;
         }
 
-        .container {
-            margin-top: 460px;
+        #tableData7  {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
         }
 
-        td, .txt-un {
-            font: 1em sans-serif;
-            font-size: 20px;
+        #tableData7 th  {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #tableData7 td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
         }
 
-        .mx-text {
-            font-size: 25px;
-            font-weight: 500;
-            margin-top: 270px;
+        #tableData7 th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
-<body class="imag">
-    <div>
+
+
+<body>
+    <div id="logo" style="display:block"><img src="http://www.gtrl.org.in/images/logo.gif" alt="" border="0" ></div>
+
+    <div class="report-content">
+        <!--<div class="report-header">
+            <img src="https://labsmart-healthcare-trial.s3.us-west-2.amazonaws.com/diagnostic_lab_524/sample_report_header.jpg"
+                 alt="lab-name-header" />
+        </div>-->
         <div class="patient-details">
             <div class="container">
                 <div class="row">
                     <div class="col center">
                         <table border="0" class="">
                             <tr>
-                                <td>**field0**</td>
-                                <td class="align-left">**fieldvalue0**</td>
-                            </tr>
-                            <tr>
-                                <td>**field1**</td>
-                                <td class="align-left">**fieldvalue1**</td>
-                            </tr>
-                            <tr>
-                                <td>**field2**</td>
-                                <td class="align-left">**fieldvalue2**</td>
-                            </tr>
-                            <tr>
-                                <td>**field3**</td>
-                                <td class="align-left">**fieldvalue3**</td>
-                            </tr>
-                            <tr>
-                                <td>**field4**</td>
-                                <td class="align-left">**fieldvalue4**</td>
-                            </tr>
-                            <tr>
-                                <td>**field5**</td>
-                                <td class="align-left">**fieldvalue5**</td>
-                            </tr>
-                            <tr>
-                                <td>**field6**</td>
-                                <td class="align-left">**fieldvalue6**</td>
+                                <td class="boldtext">
+                                    Issued to:<br />
+                                    Assistant Manager,<br />
+                                    Indian Oil Corporation Limited,<br />
+                                    CGD-Aurangabad GA.
+
+                                </td>
                             </tr>
                         </table>
                     </div>
                     <div class="col">
                         <table border="0" class="table-centre">
                             <tr>
-                                <td>**field8**</td>
-                                <td class="align-left">**fieldvalue8**</td>
+                                <td class="boldtext">Date of Report</td>
+                                <td class="align-left">{Date Of Report}</td>
                             </tr>
                             <tr>
-                                <td>**field9**</td>
-                                <td class="align-left">**fieldvalue9**</td>
+                                <td class="boldtext">Report No:</td>
+                                <td class="align-left">{Report No}</td>
                             </tr>
                             <tr>
-                                <td>**field10**</td>
-                                <td class="align-left">**fieldvalue11**</td>
+                                <td class="boldtext">Date of Sample Receipt </td>
+                                <td class="align-left">**fieldvalue3**</td>
                             </tr>
                             <tr>
-                                <td>**field12**</td>
-                                <td class="align-left">**fieldvalue12**</td>
+                                <td class="boldtext">Period of Testing</td>
+                                <td class="align-left">**fieldvalue4**</td>
                             </tr>
                             <tr>
-                                <td>**field13**</td>
-                                <td class="align-left">**fieldvalue13**</td>
+                                <td class="boldtext">JOB.S. NO.</td>
+                                <td class="align-left">{Job Serial No}</td>
                             </tr>
                             <tr>
-                                <td>**field14**</td>
-                                <td class="align-left">**fieldvalue14**</td>
+                                <td class="boldtext">JOB CODE NO.</td>
+                                <td class="align-left">{Job Order No / Ref No}</td>
                             </tr>
                             <tr>
-                                <td>**field15**</td>
-                                <td class="align-left">**fieldvalue15**</td>
+                                <td class="boldtext">ULR No.</td>
+                                <td class="align-left">{ULR No}</td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <p class="table-centre mx-text">Test Method: IS:516(Part-1/Sec-1):2021/IS:516(Par-2/Sec-1):2018</p>
-                **gridTableMulti**
+                <div class="row">
+                    <div class="col">
+                        <table border="0" class="">
+                            <tr>
+                                <td class="boldtext">Name of Customer :</td>
+                                <td class="align-left">{Contact Person Name}</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Customer Ref. No. to GTRL: </td>
+                                <td class="align-left">**fieldvalue9**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Customer-Client Agreement No.</td>
+                                <td class="align-left">**fieldvalue10**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Sample Description</td>
+                                <td class="align-left">**fieldvalue11**</td>
+                            </tr>
+                            <tr>
+                                <td class="boldtext">Name of Work:</td>
+                                <td class="align-left">**fieldvalue12**</td>
+                            </tr>
+                           
+                        </table>
+                    </div>
+                </div>
+               
+                <!--<div class="row">
+                    <div class="col">
+                        <table>
+
+                            <tr class="table-centre">
+                                <th>S.No.</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Test</th>
+                            </tr>
+                            <table>
+                               
+                            </table>
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Test Method</th>
+                            </tr>
+
+                            
+
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Results</th>
+                            </tr>
+
+                           
+
+
+
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Requirement Ref. IS No<br /> 456:2000 (Clause. 5.4)</th>
+                            </tr>
+
+                            
+
+                        </table>
+                    </div>
+                    <div class="col table-centre">
+                        <table>
+                            <tr class="table-centre">
+                                <th>Conformity</th>
+                            </tr>
+
+
+
+                        </table>
+                    </div>
+                </div>-->
+                <div >
+                    <table id="tableData7"></table>
+                </div>
             </div>
-            
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-                    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-                    crossorigin="anonymous"></script>
+            <!-- <hr>
+
+            <hr> -->
         </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+            integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+            crossorigin="anonymous"></script>
 </body>
 </html>

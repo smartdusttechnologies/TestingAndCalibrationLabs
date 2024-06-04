@@ -106,5 +106,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         // Get AllrecordCommonIndex
         //</summary>
         List<UiPageMetadataModel> GetrecordIndexbyModuleId(int moduleId);
+  
+        bool FileUpload(int id, FileUploadModel File);
     }
 }

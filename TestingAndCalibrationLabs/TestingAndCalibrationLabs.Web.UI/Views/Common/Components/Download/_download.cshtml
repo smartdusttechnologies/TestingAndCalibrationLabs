@@ -33,7 +33,8 @@
     });
     function GenerateReport() {
         var metadata = modelData.value.uiPageMetadata.id;
-        window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}&email=null&send=false`, '_blank');
+        Fileid = document.getElementById('DropdownItem').value;
+        window.open(`/common/templateGenerate/?recordId=${id}&metadataId=${metadata}&email=null&send=false&FileId=${Fileid}`, '_blank');
     }
     function SendMail(){
         let emailId = $("#sendMailEmail").val();
@@ -49,5 +50,9 @@
             error: function (req, status, error) {
             }
         });
+
+
+        var newURL = `/common/DownloadReport/?id=${id}`;
+        window.location.href = newURL;
     }
 </script>
