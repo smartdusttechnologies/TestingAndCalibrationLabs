@@ -125,9 +125,9 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
 
         }
         [HttpPost]
-        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId, int UipagetypeId,int parentId)
+        public ActionResult TemplateGenerate(int recordId, int metadataId,string email,bool send, int moduleLayoutId, int UipagetypeId,int parentId,int fileId)
         {
-            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId, UipagetypeId, parentId);
+            var reportByte = _commonService.TemplateGenerate(recordId, metadataId,email,send, moduleLayoutId, UipagetypeId, parentId, fileId);
             
             if (send)
             {

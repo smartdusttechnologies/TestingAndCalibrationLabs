@@ -79,7 +79,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var lastmultikeys = _commonRepository.Getkey();
                 if (alllists[0].SubRecordId == 0)
                 {
-                    for (var i = 0; i < alllists.Count;   i++)
+                    for (var i = 0; i < alllists.Count; i++)
                     {
                         if (alllists[i].MultiValueControl == true)
                         {
@@ -91,7 +91,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                     }
                 }
                 record.UpdatedDate = DateTime.Now;
-                 _commonRepository.Insert(record);
+                _commonRepository.Insert(record);
                 return new RequestResult<bool>(true);
             }
             return requestResult;
@@ -100,24 +100,24 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <param name="recordId"></param>
         /// <param name="metadataId"></param>
         /// <returns></returns>
-        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send,int moduleLayoutId, int UipagetypeId,int parentId)
+        public byte[] TemplateGenerate(int recordId, int metadataId, string email, bool send, int moduleLayoutId, int UipagetypeId, int parentId, int fileId)
         {
             var lookupM = _uiPageMetadataCharacteristicsService.GetByMetadataId(metadataId);
             int uiPageId;
             var recordMdel = _recordGenericRepository.Get(recordId);
             string template;
-          
-              var File = DownloadImage(fileId);
+
+            //var File = DownloadImage(/*fileId*/);
+            var File = DownloadImage(fileId);
+
             //string template;
 
             using (var memoryStream = new MemoryStream(File.DataFiles))
             using (var reader = new StreamReader(memoryStream))
             {
                 template = reader.ReadToEnd();
-                
-            }
-         
 
+            }
             //var template = File.ReadAllText(path);
             var workflowStage = _workflowStageService.GetStage(recordMdel.ModuleId, recordMdel.Id);
             var pageMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageId);
@@ -131,9 +131,6 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             }));
 
-            
-
-
             foreach (var item in hirericheys)
             {
                 if (item.UiPageMetadata.ControlCategoryName == "DataControl" && item.UiPageMetadata.MultiValueControl != true)
@@ -142,118 +139,86 @@ namespace TestingAndCalibrationLabs.Business.Services
                     {
                         item.UiPageMetadata.UiControlDisplayName = item.UiPageMetadata.MetadataModuleBridgeUiControlDisplayName;
                     }
-                    if (item.UiPageMetadata.Orders != 0)
-                    {
-                        if (item.UiPageMetadata.Orders % 2 == 0)
-                        {
-                            string fieldValues = "{" + item.UiPageMetadata.UiControlDisplayName + "}";
-                            if (item.UiPageData.Count == 0)
-                            {
-                                template = template.Replace(fieldValues, "null");
-                                //Table1 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
 
-                            }
+                    string fieldValues = "**" + item.UiPageMetadata.UiControlDisplayName + "**";
+                    string replacementValue = item.UiPageData.Count == 0 ? "null" : item.UiPageData.First().Value;
 
-
-
-                            else
-                            {
-                                template = template.Replace(fieldValues, item.UiPageData.First().Value);
-                               // Table1 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
-                            }
-                        }
-                        //string fieldName = string.Format("**field{0}**", item.UiPageMetadata.Orders);
-                        else
-                        {
-                            string fieldValues = "{" + item.UiPageMetadata.UiControlDisplayName + "}";
-                            if (item.UiPageData.Count == 0)
-                            {
-                                template = template.Replace(fieldValues, "null");
-                               // Table2 += $"<tr><td>{fieldValues}</td><td>{"null"}</td></tr>";
-
-                            }
-
-
-
-                            else
-                            {
-                                template = template.Replace(fieldValues, item.UiPageData.First().Value);
-                               // Table2 += $"<tr><td>{fieldValues}</td><td>{item.UiPageData.First().Value}</td></tr>";
-                            }
-                        }
-
-                    }
+                    template = template.Replace(fieldValues, replacementValue);
                 }
             }
-            //Table2 += "</table";
-            //Table1 += "</table" + Table2;
-            var multiVal = GetMultiControlValue(recordId, moduleLayoutId);
 
-            if (multiVal.Fields.Count() > 0)
+            // Process multi-value controls
+            var multiVal = GetMultiControlValue(recordId, moduleLayoutId, UipagetypeId, parentId);
+
+            if (multiVal != null && multiVal.Fields.Count() > 0)
             {
-                var table = new StringBuilder("<table class='TemplateTable'> <tr> ");
-                foreach (var item in multiVal.Fields)
+                var groupedData = multiVal.FieldValue
+                    .GroupBy(fv => fv.SubRecordId)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                var fieldRows = new Dictionary<string, StringBuilder>();
+
+                // Initialize StringBuilder for each field
+                foreach (var field in multiVal.Fields)
                 {
-                    table.Append($"<th>{item.UiControlDisplayName}</th>");
+                    fieldRows[field.UiControlDisplayName] = new StringBuilder();
                 }
-                table.Append("</tr> ");
-                table.Append("<tr>");
-                var GridItem = 0;
-                
 
-
-                foreach (var item in multiVal.FieldValue)
+                // Generate the rows for each field
+                foreach (var group in groupedData)
                 {
-                    GridItem++;
-                    
-                    if (GridItem > multiVal.Fields.Count() && GridItem% multiVal.Fields.Count()==1)
+                    foreach (var field in multiVal.Fields)
                     {
-                        table.Append("<tr>");
-                    }
-                        table.Append($"<td> {item.Value}</td>");
-                    
-                    if(GridItem % (multiVal.Fields.Count()) == 0)
-                    {
-                        table.Append("</tr> ");
+                        var values = group.Value.Where(fv => fv.UiPageMetadataId == field.Id)
+                                                .Select(fv => System.Net.WebUtility.HtmlEncode(fv.Value))
+                                                .ToList();
 
+                        foreach (var value in values)
+                        {
+                            fieldRows[field.UiControlDisplayName].AppendLine($"<tr class='table-centre'><td>{value}</td></tr>");
+                        }
                     }
-                    
                 }
-                table.Append("</tr>");
-                // Table1 += "</table>" + table + "</body></html";
-                template = template.Replace(" <table class=\"TemplateTable\" >", table.ToString());
+
+                // Replace placeholders in the template with generated rows
+                foreach (var field in fieldRows)
+                {
+                    string placeholder = $"{{{field.Key}}}";
+                    template = template.Replace(placeholder, field.Value.ToString().TrimEnd());
+                }
+
+                // Debug log for final template
+                Console.WriteLine("Final Template: " + template);
+
             }
+
             else
             {
-                template = template.Replace(" <table class=\"TemplateTable\" >", "");
+                template = template.Replace("<table class=\"TemplateTable\" >", "");
             }
 
-
+            // Generate PDF
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template);
-            var pdfPath = Path.Combine(_webHostEnvironment.WebRootPath, "reportTemplate.pdf");
             var pdfByte = doc.Save();
             doc.Close();
+
+            // Send PDF via email if required
             if (send)
             {
-                //string emailAd = new string(email);
-              //  var htmlPath = Path.Combine(_webHostEnvironment.WebRootPath, "HtmlMsg.txt");
-               // var htmlWeb = File.ReadAllText(htmlPath);
                 using Stream stream = new MemoryStream(pdfByte);
                 Attachment attachment = new Attachment(stream, "report.pdf", "application/pdf");
-                EmailModel emailModel = new EmailModel();
-                var emailAd = new List<string>
-                {
-                    email
-                };
-                emailModel.Email = emailAd;
 
-                emailModel.Subject = "Thanks For Visiting Testing And Calibration Labs";
-                //emailModel.HtmlMsg = htmlWeb;
-                var atchmt = new List<Attachment>() { attachment };
-                emailModel.Attachments = atchmt;
+                EmailModel emailModel = new EmailModel
+                {
+                    Email = new List<string> { email },
+                    Subject = "Thanks For Visiting Testing And Calibration Labs",
+                    Attachments = new List<Attachment> { attachment }
+                };
+
                 var sendMail = _emailService.Sendemail(emailModel);
             }
+
             return pdfByte;
         }
         /// <summary>
@@ -279,7 +244,7 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// <returns></returns>
         public RequestResult<bool> Save(RecordModel record)
         {
-            int multikeys =0;
+            int multikeys = 0;
 
             RequestResult<bool> requestResult = new RequestResult<bool>();
             //if (!_authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, record, Operations.Update).Result.Succeeded)
@@ -295,15 +260,16 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var oldRecord = _recordGenericRepository.Get(record.Id);
                 if (oldRecord.UpdatedDate == record.UpdatedDate)
                 {
-                    if (alllists.Count > 0 && alllists[0].SubRecordId ==0) 
+                    if (alllists.Count > 0 && alllists[0].SubRecordId == 0)
                     {
-                        for (var i = 0; i < alllists.Count;  i++)
+                        for (var i = 0; i < alllists.Count; i++)
                         {
-                            if(alllists[i].MultiValueControl == true){
-                            multikeys = lastmultikeys;
-                            alllists[i].SubRecordId = multikeys;
+                            if (alllists[i].MultiValueControl == true)
+                            {
+                                multikeys = lastmultikeys;
+                                alllists[i].SubRecordId = multikeys;
 
-                        }
+                            }
                         }
                     }
                     record.UpdatedDate = DateTime.Now;
@@ -344,12 +310,14 @@ namespace TestingAndCalibrationLabs.Business.Services
 
             record = new RecordModel
             {
-                
+
                 ModuleId = moduleId,
                 UiPageTypeId = uiPageTypeId,
                 Layout = hierarchy,
-                ModuleLayoutId = moduleLayoutId.Id
-             };
+                //ModuleLayoutId = moduleLayoutId.Id
+                ModuleLayoutId = 1
+
+            };
             return record;
         }
 
@@ -400,7 +368,7 @@ namespace TestingAndCalibrationLabs.Business.Services
             //{
             //    throw new UnauthorizedAccessException("Your Unauthorized");
             //}
-            
+
             var uiMetadata = GetMetadata(recordMdel.ModuleId, recordMdel.WorkflowStageId, out uiPageTypeId);
             foreach (var item in uiMetadata)
             { if (item.MetadataModuleBridgeUiControlDisplayName != null) { item.UiControlDisplayName = item.MetadataModuleBridgeUiControlDisplayName; } }
@@ -437,14 +405,14 @@ namespace TestingAndCalibrationLabs.Business.Services
         /// </summary>
         /// <param name="recordId"></param>
         /// <returns></returns>
-        public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId, int UipagetypeId,int parentId)
+        public RecordsModel GetMultiControlValue(int recordId, int moduleLayoutId, int UipagetypeId, int parentId)
         {
             var uiMetadata = _commonRepository.GetMultiControlMetadata(moduleLayoutId, UipagetypeId);
             var uiPageData = _commonRepository.GetMultiPageData(recordId, UipagetypeId);
             var metadata = uiMetadata.GroupBy(x => x.ParentId).Select(y => y.ToList());
-          var parentbaseddata = _commonRepository.GetMultiControlMetadataByparentId(moduleLayoutId, UipagetypeId, parentId);
+            var parentbaseddata = _commonRepository.GetMultiControlMetadataByparentId(moduleLayoutId, UipagetypeId, parentId);
 
-            return new RecordsModel { Id = recordId, ParentFields = parentbaseddata, Fields = uiMetadata, FieldValue = uiPageData, ModuleId = uiMetadata[0].ModuleId, WorkflowStageId= uiMetadata[0].WorkflowStageId };
+            return new RecordsModel { Id = recordId, ParentFields = parentbaseddata, Fields = uiMetadata, FieldValue = uiPageData, ModuleId = uiMetadata[0].ModuleId, WorkflowStageId = uiMetadata[0].WorkflowStageId };
         }
         /// <summary>
         /// Delete Multi Value Records
@@ -490,13 +458,11 @@ namespace TestingAndCalibrationLabs.Business.Services
             var metadata = _commonRepository.GetUiPageMetadata(uiPageId);
             return metadata;
         }
-        public int GenerateRecordId(int ModuleId,int  WorkflowStageId)
+        public int GenerateRecordId(int ModuleId, int WorkflowStageId)
         {
             var getRecordid = _commonRepository.GetRecordId(ModuleId, WorkflowStageId);
             return getRecordid;
         }
-
-
         private RequestResult<bool> Validate(RecordModel record)
         {
             List<UiPageValidationModel> validations = _commonRepository.GetUiPageValidations(record.UiPageTypeId);
@@ -555,8 +521,10 @@ namespace TestingAndCalibrationLabs.Business.Services
                         }
                     }
                 }
-                foreach (var items in validationtypes) {
-                    if (items.Id == 8 && field.Value != "") {
+                foreach (var items in validationtypes)
+                {
+                    if (items.Id == 8 && field.Value != "")
+                    {
                         var validationlist = _uiPageValidationTypesGenericRepository.Get(items.Id);
 
                         var uipagedata = _uiPageMetadataRepository.GetById(field.UiPageMetadataId);
@@ -568,7 +536,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                             {
                                 string errorMessage = string.Format(validationlist.Message, $"{uipagedata.DataTypeName} {uipagedata.UiControlDisplayName}");
                                 validationMessages.Add(new ValidationMessage { MessageKey = field.MultiValueControl.ToString(), Reason = errorMessage, SourceId = metadataId, Severity = ValidationSeverity.Error });
-                                
+
                             }
                         }
                         if (field.DataTypeId == (int)ValidationType.String)
@@ -583,7 +551,7 @@ namespace TestingAndCalibrationLabs.Business.Services
 
 
                     }
-                
+
                 }
 
             }

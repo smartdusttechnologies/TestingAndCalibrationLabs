@@ -59,69 +59,11 @@
 </div>
 
 <script>
-    //function GenerateReport() {
-
-
-
-    //    var labels = document.querySelectorAll('label');
-    //    var result = {};
-
-    //    labels.forEach(function (label) {
-    //        var inputId = label.getAttribute('for');
-    //        if(inputId!=null){
-            
-    //        if (document.getElementById(inputId) != null) {
-    //            var input = document.getElementById(inputId);
-    //            var labelText = label.textContent.trim();
-    //            var inputValue = input.value.trim();
-
-    //            result[labelText] = inputValue;
-    //        }
-    //        else{
-    //            var input =  document.querySelector('label[for="' + inputId + '"]').previousElementSibling;
-                
-    //            var labelText = label.textContent.trim();
-    //            var inputValue = input.value.trim();
-              
-    //            result[labelText] = inputValue;
-    //        }
-    //        }
-            
-    //    });
-    //    var htmlContent = '<html><body>';
-    //    for (var key in result) {
-            
-    //        if (result.hasOwnProperty(key)) {
-    //            htmlContent += '<p><strong>' + key + ':</strong> ' + result[key] + '</p>';
-    //        }
-    //    }
-    //    var MultiValue = document.getElementById('multiValueGrid');
-    //    debugger;
-    //    htmlContent += MultiValue.outerHTML;
-    //    debugger;
-    //    htmlContent += '<!--</body></html>-->';
-
-    //    var blob = new Blob([htmlContent], { type: 'text/html' });
-
-
-    //    var blobURL = window.URL.createObjectURL(blob);
-
-
-    //    var downloadLink = document.createElement('a');
-    //    downloadLink.href = blobURL;
-    //    downloadLink.download = 'downloaded_page.html';
-
-
-    //    downloadLink.click();
-
-
-    //    window.URL.revokeObjectURL(blobURL);
-
-
-
-    //}
+ 
     //This function will display the success snackbar
     function myFunction() {
+        debugger;
+
         var x = document.getElementById("snackbarsuccess");
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
@@ -142,6 +84,8 @@
     var url = $("#commonForm").attr("action");
     
      AjaxFormSubmit = () => {
+        debugger;
+
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
@@ -231,6 +175,7 @@
             url: url,
             data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
+                debugger;
                 myFunction();
                 window.location.href = "/common/index/" + moduleId;
             },
@@ -254,12 +199,5 @@
             }
         });
     }
-
-
-
-  
-    
-
-
 
 </script>

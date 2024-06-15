@@ -48,12 +48,13 @@
 
 <script>
     function FileDownload(Id) {
-        location.href = '@Url.Action("DownloadImage", "Common")?ImageValue=' + Id;
+        debugger;
 
+        location.href = '@Url.Action("DownloadImage", "Common")?ImageValue=' + Id;
 
     }
     function PreviewData() {
-
+        debugger;
         var File = document.getElementById('TRDataUrl');
         var file = File.files[0];
         if (file != null) {
@@ -73,7 +74,7 @@
                 processData: false,
                 responseType: 'arraybuffer',
                 success: function (response) {
-
+                    debugger;
                     var binaryString = atob(response);
 
                     // Convert the binary string to a Uint8Array
@@ -107,7 +108,7 @@
     }
 
     function Validate() {
-
+        debugger;
         var File = document.getElementById('TRDataUrl');
         var file = File.files[0];
 
