@@ -62,8 +62,6 @@
  
     //This function will display the success snackbar
     function myFunction() {
-        debugger;
-
         var x = document.getElementById("snackbarsuccess");
         x.className = "show";
         setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
@@ -84,8 +82,6 @@
     var url = $("#commonForm").attr("action");
     
      AjaxFormSubmit = () => {
-        debugger;
-
         WheelLoader();
         let workflowStageId = parseInt($("#WorkflowStageId").val())
         //here I am flatting the hirarchy of Node<Layout> To A List of Layout
@@ -175,7 +171,6 @@
             url: url,
             data: { id, workflowStageId, updatedDate, moduleId, uiPageTypeId, fieldValues },
             success: function (response) {
-                debugger;
                 myFunction();
                 window.location.href = "/common/index/" + moduleId;
             },

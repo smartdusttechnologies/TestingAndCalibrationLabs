@@ -48,24 +48,17 @@
 
 <script>
     function FileDownload(Id) {
-        debugger;
-
         location.href = '@Url.Action("DownloadImage", "Common")?ImageValue=' + Id;
-
     }
     function PreviewData() {
-        debugger;
         var File = document.getElementById('TRDataUrl');
         var file = File.files[0];
         if (file != null) {
             var formData = new FormData();
             formData.append("file", file);
-
-
             var baseUrl = window.location.protocol + '//' + window.location.host;
             var targetPath = '/Template/FileToPdf';
             var fullUrl = baseUrl + targetPath;
-
             $.ajax({
                 url: fullUrl,
                 method: 'POST',
@@ -74,7 +67,6 @@
                 processData: false,
                 responseType: 'arraybuffer',
                 success: function (response) {
-                    debugger;
                     var binaryString = atob(response);
 
                     // Convert the binary string to a Uint8Array
@@ -108,7 +100,6 @@
     }
 
     function Validate() {
-        debugger;
         var File = document.getElementById('TRDataUrl');
         var file = File.files[0];
 

@@ -16,5 +16,7 @@ namespace TestingAndCalibrationLabs.Business.Core.Model
         public byte[] DataFiles { get; set; }
         //Image Create Date
         public DateTime? CreatedOn { get; set; }
+
+        public string TemplateName { get; set; }
     }
 }

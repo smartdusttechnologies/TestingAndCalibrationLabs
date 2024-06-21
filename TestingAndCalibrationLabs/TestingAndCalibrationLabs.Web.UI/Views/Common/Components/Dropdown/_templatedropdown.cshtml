@@ -23,7 +23,6 @@
             url: '@Url.Action("Index", "Template")',
            
             success: function (response) {
-                debugger;
                 for (var item = 0; item < response.length; item++) {
                     var TemplateId = response[item].fileId;
                     var TemplateName = response[item].templateName;

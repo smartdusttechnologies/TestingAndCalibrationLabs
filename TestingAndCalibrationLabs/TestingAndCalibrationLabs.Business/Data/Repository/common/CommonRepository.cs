@@ -586,7 +586,12 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
         public FileUploadModel ImageDownload(int ImageValue)
         {
             using IDbConnection con = _connectionFactory.GetConnection;
-            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Id = @Name ", new { Name = ImageValue }).FirstOrDefault();
+            return con.Query<FileUploadModel>(@"select iu.Id,iu.Name,iu.FileType,iu.DataFiles,iu.CreatedOn , t.TemplateName as TemplateName
+                                                                                                             from [ImageUpload] iu
+			                                                                                                 inner join [Template] t on t.FileId=iu.Id
+
+			                                                                                                 where iu.Id=@Name
+			                                                                                                 and t.IsDeleted=0 ", new { Name = ImageValue }).FirstOrDefault();
         }
         
 

@@ -156,47 +156,44 @@ namespace TestingAndCalibrationLabs.Business.Services
                     .GroupBy(fv => fv.SubRecordId)
                     .ToDictionary(g => g.Key, g => g.ToList());
 
-                var fieldRows = new Dictionary<string, StringBuilder>();
+                var fieldNames = multiVal.Fields.Select(f => f.UiControlDisplayName).ToList();
+                var rowBuilder = new StringBuilder();
+                var headbuilder = new StringBuilder();
 
-                // Initialize StringBuilder for each field
-                foreach (var field in multiVal.Fields)
-                {
-                    fieldRows[field.UiControlDisplayName] = new StringBuilder();
-                }
-
-                // Generate the rows for each field
-                foreach (var group in groupedData)
-                {
+                //foreach (var hedname in multiVal.Fields)
+                //{
+                    headbuilder.Append("<tr>");
                     foreach (var field in multiVal.Fields)
                     {
-                        var values = group.Value.Where(fv => fv.UiPageMetadataId == field.Id)
-                                                .Select(fv => System.Net.WebUtility.HtmlEncode(fv.Value))
-                                                .ToList();
-
-                        foreach (var value in values)
-                        {
-                            fieldRows[field.UiControlDisplayName].AppendLine($"<tr class='table-centre'><td>{value}</td></tr>");
-                        }
+                        var value = field.UiControlDisplayName;
+                        headbuilder.Append($"<th>{System.Net.WebUtility.HtmlEncode(value ?? "null")}</th>");
                     }
-                }
-
-                // Replace placeholders in the template with generated rows
-                foreach (var field in fieldRows)
+                    headbuilder.Append("</tr>");
+                //}
+                // Generate the rows for the table body
+                foreach (var group in groupedData)
                 {
-                    string placeholder = $"{{{field.Key}}}";
-                    template = template.Replace(placeholder, field.Value.ToString().TrimEnd());
+                    rowBuilder.Append("<tr>");
+                    foreach (var field in multiVal.Fields)
+                    {
+                        var value = group.Value.FirstOrDefault(fv => fv.UiPageMetadataId == field.Id)?.Value;
+                        rowBuilder.Append($"<td>{System.Net.WebUtility.HtmlEncode(value ?? "null")}</td>");
+                    }
+                    rowBuilder.Append("</tr>");
                 }
+                string placeholderhed = "{tablehead}";
+                template = template.Replace(placeholderhed, headbuilder.ToString());
+                // Replace the placeholder in the template with generated rows
+                string placeholder = "{tableRows}";
+                template = template.Replace(placeholder, rowBuilder.ToString());
 
                 // Debug log for final template
                 Console.WriteLine("Final Template: " + template);
-
             }
-
             else
             {
                 template = template.Replace("<table class=\"TemplateTable\" >", "");
             }
-
             // Generate PDF
             HtmlToPdf converter = new HtmlToPdf();
             PdfDocument doc = converter.ConvertHtmlString(template);
@@ -219,7 +216,7 @@ namespace TestingAndCalibrationLabs.Business.Services
                 var sendMail = _emailService.Sendemail(emailModel);
             }
 
-            return pdfByte;
+            return (pdfByte);
         }
         /// <summary>
         /// to Delete Record

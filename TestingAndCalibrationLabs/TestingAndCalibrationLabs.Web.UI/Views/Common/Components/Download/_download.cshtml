@@ -63,7 +63,6 @@
 <script>
     var modelData;
     $(document).ready(function () {
-        debugger;
 
         modelData = JSON.parse('@Json.Serialize(Model)');
         var displayName = modelData.value.uiPageMetadata.uiControlDisplayName;
@@ -79,7 +78,6 @@
     // }
     function GenerateReport() {
 
-        debugger;
         // Show the loader
         $('#loader-overlay').show();
         // var id = modelData.value.uiPageMetadata.someId; // Ensure this is correctly defined and valid
@@ -111,7 +109,6 @@
         })
             .then(response => response.blob()) // Convert response to Blob
             .then(blob => {
-                debugger;
                 // Create object URL for the PDF blob
                 const pdfUrl = URL.createObjectURL(blob);
 
