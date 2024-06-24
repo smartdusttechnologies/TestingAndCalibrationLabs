@@ -5,6 +5,7 @@ using TestingAndCalibrationLabs.Business.Infrastructure;
 using TestingAndCalibrationLabs.Business.Services;
 using TestingAndCalibrationLabs.Business.Common;
 using Microsoft.AspNetCore.Builder;
+using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,10 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Services.BackOffice;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
@@ -90,7 +95,9 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<ISampleService, SampleService>();
             services.AddScoped<ITestReportService, TestReportService>();
             services.AddScoped<IGoogleDriveService, GoogleDriveService>();
-            services.AddScoped<IEmailService, EmailService >();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IQueryBuilderService,QueryBuilderService>();
+
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IWorkflowActivityService, WorkflowActivityService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
@@ -139,6 +146,12 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
 
             services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
 
+            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
+            services.AddScoped<IDashboardService, DashboardService>();
+            
+
+
+
             //Repository
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
@@ -166,9 +179,9 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<IGenericRepository<LayoutMModel>, GenericRepository<LayoutMModel>>();
             services.AddScoped<IGenericRepository<UiPageNavigationModel>, GenericRepository<UiPageNavigationModel>>();
             services.AddScoped<IGenericRepository<RecordModel>, GenericRepository<RecordModel>>();
-            services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository < DataTypeModel >> ();
-            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository < UiPageValidationTypeModel >> ();
-            services.AddScoped<IGenericRepository<UiPageValidationModel>, GenericRepository < UiPageValidationModel >> ();
+            services.AddScoped<IGenericRepository<DataTypeModel>, GenericRepository<DataTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageValidationTypeModel>, GenericRepository<UiPageValidationTypeModel>>();
+            services.AddScoped<IGenericRepository<UiPageValidationModel>, GenericRepository<UiPageValidationModel>>();
             services.AddScoped<IGenericRepository<UiControlTypeModel>, GenericRepository<UiControlTypeModel>>();
             services.AddScoped<IGenericRepository<UiPageMetadataModel>, GenericRepository<UiPageMetadataModel>>();
             services.AddScoped<IGenericRepository<ApplicationModel>, GenericRepository<ApplicationModel>>();
@@ -184,8 +197,8 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<ISecurityParameterRepository, SecurityParameterRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-            services.AddScoped< ITestReportRepository, TestReportRepository >();
-            services.AddScoped< IUserRepository, UserRepository>();
+            services.AddScoped<ITestReportRepository, TestReportRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddScoped<IOtpRepsitory, OtpRepository>();
@@ -197,6 +210,8 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUiControlCategoryTypeRepository, UiControlCategoryTypeRepository>();
             services.AddScoped<IGenericRepository<PasswordPolicyModel>, GenericRepository<PasswordPolicyModel>>();
+            services.AddScoped<IQueryBuilderRepository, QueryBuilderRepository>();
+            services.AddScoped<IDashboardRepository,DashboardRepository>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

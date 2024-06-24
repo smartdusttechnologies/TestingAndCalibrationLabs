@@ -1,0 +1,70 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.DashboardDTO
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .scrollable-table {
+             width: 100%;
+             height: 250px; /* Adjust the height as needed */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border-spacing: 0;
+            margin: 10px;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 3px solid #ddd;
+            width: auto;
+            line-height: 2;
+            font-size: 12px;
+        }
+        td{
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scrollable-table">
+         <table id="mytable">
+                @if (Model.Dictionary != null)
+                {
+                    <thead>
+                        <tr>
+                            @foreach (var keyValuePair in Model.Dictionary)
+                            {
+                                <th>
+                                    @keyValuePair.Key
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach (var keyValuePair in Model.Dictionary)
+                            {
+                                <td>
+                                    @foreach (var item in keyValuePair.Value)
+                                    {
+                                        <div>@(
+                                          item == null ? "null" : item)
+                                       </div>
+                                    }
+                                </td>
+                            }
+                        </tr>
+
+                    </tbody>
+                }
+         </table>
+    </div>
+</body>
+</html>

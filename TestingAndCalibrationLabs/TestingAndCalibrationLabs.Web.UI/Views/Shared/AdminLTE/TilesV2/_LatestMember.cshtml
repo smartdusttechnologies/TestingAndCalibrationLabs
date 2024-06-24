@@ -1,0 +1,84 @@
+﻿
+@{
+    var value = ViewData["Control"] as DashboardV2;
+}
+<style>
+    .users-list-name{
+        color:white;
+    }
+
+    .users-list-date{
+        color:white;
+    }
+</style>
+<div class="col-md-6">
+   
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Latest Members</h3>
+
+            <div class="card-tools">
+                <span class="badge badge-danger">8 New Members</span>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+       
+        <div class="card-body p-0">
+            <ul class="users-list clearfix" id="ImageClass">
+                <li>
+                    <img src="~/img/user1-128x128.jpg" alt="User Image" >
+                    <a class="users-list-name" href="#">Alexander Pierce</a>
+                    <span class="users-list-date">Today</span>
+                </li>
+                <li>
+                    <img src="~/img/user8-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Norman</a>
+                    <span class="users-list-date">Yesterday</span>
+                </li>
+                <li>
+                    <img src="~/img/user7-128x128.jpg" alt="User Image">
+                    <a class="users-list-name" href="#">Jane</a>
+                    <span class="users-list-date">12 Jan</span>
+                </li>
+               
+            </ul>
+        </div>
+        <div class="card-footer text-center">
+            <a href="javascript:">View All Users</a>
+        </div>
+    </div>
+</div>
+<script>
+    var Data = JSON.parse('@Html.Raw(Json.Serialize(value.Member))');
+     
+
+    let Element = document.getElementById("ImageClass");
+
+    for(item=0;item<4;item++)
+    {
+    let List = document.createElement("li");
+     
+     let Image = document.createElement("img");
+     Image.alt= "User Image";
+        Image.src = Data.imageLink[item];
+     List.appendChild(Image);
+
+     let Name = document.createElement("a");
+     Name.className = "users-list-name";
+        Name.innerText = Data.name[item];
+     List.appendChild(Name);
+
+     let Date = document.createElement("span");
+     Date.className= "users-list-date";
+        Date.innerText = Data.date[item];
+     List.appendChild(Date);
+      
+     Element.appendChild(List);
+     }
+
+</script>
