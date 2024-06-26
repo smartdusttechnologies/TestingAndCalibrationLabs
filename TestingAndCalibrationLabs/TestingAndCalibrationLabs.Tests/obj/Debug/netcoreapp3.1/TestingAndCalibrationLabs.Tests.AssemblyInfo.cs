@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestingAndCalibrationLabs.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f08723122d6fde97adf41de9fdc02b0d5b8f515")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestingAndCalibrationLabs.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestingAndCalibrationLabs.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

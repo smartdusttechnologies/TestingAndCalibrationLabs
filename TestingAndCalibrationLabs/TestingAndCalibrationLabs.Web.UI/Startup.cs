@@ -25,16 +25,16 @@ using TestingAndCalibrationLabs.Business.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TestingAndCalibrationLabs.Business.Data.Repository.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.BackOffice;
-using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
-using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
-using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
-using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 using TestingAndCalibrationLabs.Business.Services.BackOffice;
 using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.BackOffice;
 using TestingAndCalibrationLabs.Business.Core.Interfaces.Otp;
 using TestingAndCalibrationLabs.Business.Services.Otp;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using TestingAndCalibrationLabs.Business.Data.Repository.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Data.Repository.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Core.Interfaces.QueryBuilder;
+using TestingAndCalibrationLabs.Business.Services.QueryBuilder;
 
 namespace TestingAndCalibrationLabs.Web.UI
 {
@@ -145,8 +145,6 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped <IOtpMobileService,OtpMobileService>();
 
             services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
-
-            services.AddScoped<IActivityMetadataService, ActivityMetadataService>();
             services.AddScoped<IDashboardService, DashboardService>();
             
 
@@ -266,7 +264,12 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Security}/{action=Index}/{id?}");
-            });           
+            });
+        //                    pattern: "{controller=QueryBuilder}/{action=Index}/{id?}");
+        //pattern: "{controller=DashboardV2}/{action=Index}/{id?}");
+
+            //            });
+
         }
     }
 }
