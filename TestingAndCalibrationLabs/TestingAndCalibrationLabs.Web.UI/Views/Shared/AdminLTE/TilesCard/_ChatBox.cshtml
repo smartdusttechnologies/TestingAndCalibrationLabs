@@ -39,7 +39,6 @@
 
     var Data = JSON.parse('@Html.Raw(Json.Serialize(value.ChatData))');
     for (item = 0; item < 6; item++) {
-        debugger;
         if (Data[item].name == "Raj") {
 
             let element = document.getElementById('ChatBox');
