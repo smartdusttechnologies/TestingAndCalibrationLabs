@@ -397,6 +397,12 @@ namespace TestingAndCalibrationLabs.Business.Services
             var image = _commonRepository.ImageDownload(ImageValue);
             return image;
         }
+
+        public FileUploadModel OnlyimageDownload(string ImageValue)
+        {
+            var image = _commonRepository.ImageonlyDownload(ImageValue);
+            return image;
+        }
         /// <summary>
         /// This Method Returns Data For Multi Value Grid
         /// </summary>

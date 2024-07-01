@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using TestingAndCalibrationLabs.Business.Common;
 using TestingAndCalibrationLabs.Business.Core.Interfaces;
@@ -67,7 +68,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         [HttpPost]
         public IActionResult FileUpload()
         {
-            List<int> imageId = new List<int>();
+            List<String> imageId = new List<String>();
 
             foreach (var imagelenth in Request.Form.Files)
             {
@@ -77,7 +78,7 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
                     {
                         var ObjImage = _documentService.FileUpload(imagelenth);
                         var Imagecollection = _commonService.ImageUpload(ObjImage);
-                        imageId.Add(Imagecollection);
+                        imageId.Add(ObjImage.Name);
                     }
                 }
             }
@@ -87,15 +88,26 @@ namespace TestingAndCalibrationLabs.Web.UI.Controllers
         /// Method To download Images 
         /// </summary>
         /// <returns></returns>
-        public IActionResult DownloadImage(int ImageValue)
+        public IActionResult DownloadImage(string ImageValue)
         {
-
-            FileUploadModel attachment = _commonService.DownloadImage(ImageValue);
-
-            if (attachment != null)
+            if (ImageValue != null)
             {
-                return File(new MemoryStream(attachment.DataFiles), Helpers.GetMimeTypes()[attachment.FileType], attachment.Name);
+                FileUploadModel attachment = _commonService.OnlyimageDownload(ImageValue);
+                if (attachment != null)
+                {
+                    return File(new MemoryStream(attachment.DataFiles), Helpers.GetMimeTypes()[attachment.FileType], attachment.Name);
+                }
             }
+            if(int.TryParse(ImageValue, out int imageIds))
+            {
+                FileUploadModel attachment = _commonService.DownloadImage(imageIds);
+
+                if (attachment != null)
+                {
+                    return File(new MemoryStream(attachment.DataFiles), Helpers.GetMimeTypes()[attachment.FileType], attachment.Name);
+                }
+            }
+            
             return Ok("Can't find the Image");
         }
         /// <summary>

@@ -266,8 +266,8 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var storesingleval = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value , SubRecordId = x.First().SubRecordId}).ToList();
-                var storemultiVal = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value , SubRecordId  = x.SubRecordId}).ToList();
+                var storesingleval = record.FieldValues.GroupBy(x => x.UiPageMetadataId).Select(x => new { UiPageMetadataId = x.Key, UiPageTypeId = x.First().UiPageTypeId, Value = x.First().Value, SubRecordId = x.First().SubRecordId }).ToList();
+                var storemultiVal = record.FieldValues.Select(x => new { UiPageMetadataId = x.UiPageMetadataId, Value = x.Value, SubRecordId = x.SubRecordId }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@WorkflowStageId", record.WorkflowStageId);
                 command.Parameters.AddWithValue("@ModuleId", record.ModuleId);
@@ -351,7 +351,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             using IDbConnection db = _connectionFactory.GetConnection;
             using (var command = new System.Data.SqlClient.SqlCommand("update_store_proc_Record", (System.Data.SqlClient.SqlConnection)db))
             {
-                var collectionofdata = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, UiPageTypeId = x.UiPageTypeId, Value = x.Value , SubRecordId = x.SubRecordId }).ToList();
+                var collectionofdata = recordModel.FieldValues.Select(x => new { Id = x.Id, UiPageMetadataId = x.UiPageMetadataId, ChildId = x.ChildId, RecordId = x.RecordId, UiPageTypeId = x.UiPageTypeId, Value = x.Value, SubRecordId = x.SubRecordId }).ToList();
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ModuleId", recordModel.ModuleId);
                 command.Parameters.AddWithValue("@WorkflowStageId", recordModel.WorkflowStageId);
@@ -478,7 +478,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
                                                     and ucct.IsDeleted = 0
 													and m.IsDeleted = 0
 													and wf.IsDeleted = 0
-													and ws.IsDeleted = 0", new { moduleLayoutId , UiPageTypeId  }).ToList();
+													and ws.IsDeleted = 0", new { moduleLayoutId, UiPageTypeId }).ToList();
         }
 
         public List<UiPageMetadataModel> GetMultiControlMetadataByparentId(int moduleLayoutId, int UiPageTypeId, int parentId)
@@ -554,7 +554,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
             db.Execute(recordInsertQuery, record, transaction);
             foreach (var item in record.FieldValues)
             {
-                db.Execute(updateQuery, new { RecordId = item.RecordId, Id = item.Id ,item.UiPageTypeId}, transaction);
+                db.Execute(updateQuery, new { RecordId = item.RecordId, Id = item.Id, item.UiPageTypeId }, transaction);
                 // Update UiPageStringType
                 db.Execute(updateQueryst, new { RecordId = item.RecordId, Id = item.ChildId }, transaction);
                 // Update UiPageIntType
@@ -578,7 +578,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 
 
             using IDbConnection db = _connectionFactory.GetConnection;
-            return  db.Query<int>(query, File).FirstOrDefault();
+            return db.Query<int>(query, File).FirstOrDefault();
         }
         /// <summary>
         /// Image download in Your Local System
@@ -593,20 +593,25 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.common
 			                                                                                                 where iu.Id=@Name
 			                                                                                                 and t.IsDeleted=0 ", new { Name = ImageValue }).FirstOrDefault();
         }
-        
 
-         public bool FileUpload(int id, FileUploadModel File)
+        public FileUploadModel ImageonlyDownload(string ImageValue)
+        {
+            using IDbConnection con = _connectionFactory.GetConnection;
+            return con.Query<FileUploadModel>(@"select * from [ImageUpload] where Name = @Name ", new { Name = ImageValue }).FirstOrDefault();
+        }
+
+        public bool FileUpload(int id, FileUploadModel File)
         {
             using IDbConnection db = _connectionFactory.GetConnection;
 
             string query = @"UPDATE [ImageUpload]  SET Name = @Name, FileType = @FileType, DataFiles = @DataFiles, CreatedOn = @CreatedOn  WHERE Id = @Id";
             var parameters = new
             {
-                Id = id, 
+                Id = id,
                 Name = File.Name,
                 FileType = File.FileType,
                 DataFiles = File.DataFiles,
-                CreatedOn = DateTime.Now, 
+                CreatedOn = DateTime.Now,
             };
 
             if (db.Execute(query, parameters) > 0)

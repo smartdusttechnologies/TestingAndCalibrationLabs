@@ -95,8 +95,8 @@
         border: 1px solid;
         border-radius: 4px;
         border-color: rgba(0, 0, 0, 0.23);
-        padding-top: 24px;
-        padding-bottom: 24px;
+        padding-top: 50px;
+        padding-bottom: 50px;
         padding-left: 8px;
         padding-right: 8px;
         margin: 12px;
@@ -132,7 +132,7 @@
         flex-wrap: wrap;
         list-style: none;
         padding: 4px;
-        margin: 0px;
+        margin: -3px;
         font-family: sans-serif;
         text-align: center;
     }
@@ -213,7 +213,8 @@
     .li-parent {
         font-family: sans-serif;
         list-style: none;
-        margin: 4px;
+        margin: 0px;
+        margin-top: 55px;
     }
 
     .sub-li {
@@ -246,21 +247,21 @@
         max-width: 200px;
     }
 
-    .upload-btn {
+    .file-btn {
         list-style: none;
         -webkit-tap-highlight-color: transparent;
         font-family: "Roboto","Helvetica","Arial",sans-serif;
         white-space: nowrap;
         cursor: default;
         user-select: none;
-        width: 1em;
-        height: 1em;
+        width: 2em;
+        height: 2em;
         display: inline-block;
         fill: currentColor;
-        flex-shrink: 0;
+       /*  flex-shrink: 0; */
         transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         font-size: 1.5rem;
-        color: #616161;
+        color: rgba(0, 0, 0, .2);
         margin-right: -6px;
         margin-left: 4px;
     }
@@ -326,6 +327,8 @@
     var uiPageData = fileModel.value.uiPageData;
     let metadataId = fileModel.value.uiPageMetadata.id;  
     if (idOfRecord != undefined && uiPageData != null) {
+        debugger;
+
         var value = [];
         var lookupCategoryId = fileModel.value.uiPageMetadata.moduleId;
         var id = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
@@ -336,20 +339,24 @@
             }
         }
         for (let j = 0; j < value.length; j++) {
+            debugger;
             let valx = value[j];
-            let fileInfo = `<li class="li-parent"><div class="sub-li" onclick="Download('${valx}')"  tabindex="0" role="button"><svg class="upload-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
+            let fileInfo = `<li class="li-parent"><div class="sub-li" onclick="Download('${valx}')"  tabindex="0" role="button"><svg class="file-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
                              </svg><span class="span-txt">${valx}</span><svg class="delete-svg"  focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
             $(`#file-showcase-${metadataId}`).append(fileInfo);
         }
         $(id).val(val);
     }
     $(document).ready(function () {
+        debugger;
         // Remove the parent element when a button is clicked
         $('.delete-svg').click(function () {
             $(this).parent().remove();
         });
     });
     $(`#btn-upload-${metadataId}`).click(function () {
+        debugger;
+
         $(`#image-${metadataId}`).click();
     });
         function validateForImages(input) {
@@ -384,12 +391,14 @@
                         $(input).val('');
                         break;
                 }
-            let fileInfo = `<li class="li-parent"><div class="sub-li" tabindex="0" role="button"><svg class="upload-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
+            let fileInfo = `<li class="li-parent"><div class="sub-li" tabindex="0" role="button"><svg class="file-btn" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="UploadFileIcon"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11z"></path>
                                 </svg><span class="span-txt">${fileName}</span><svg class="delete-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true" data-testid="CancelIcon"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg></div></li>`;
             $(`#file-showcase-${metadataId}`).append(fileInfo);
             file.append(fileName, input.files[i]);
 
             $(document).ready(function () {
+                debugger;
+
                 // Remove the parent element when a button is clicked
                 $('.delete-svg').click(function () {
                     $(this).parent().remove();
@@ -403,6 +412,8 @@
                 processData: false,
                 data: file,
                 success: function (response) {
+                debugger;
+
                     var idNum = "#" + fileModel.value.uiPageMetadata.uiControlTypeName + fileModel.value.uiPageMetadata.id;
                     $(idNum).val(response);
                 },
@@ -414,6 +425,7 @@
 </script>
 <script type="text/javascript">
     function Download(e) {
+        debugger;
         location.href = '@Url.Action("DownloadImage", "Common")?ImageValue=' + e;
         }
  </script>

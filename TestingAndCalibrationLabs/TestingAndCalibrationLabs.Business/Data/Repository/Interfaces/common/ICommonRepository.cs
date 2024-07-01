@@ -108,5 +108,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository.Interfaces
         List<UiPageMetadataModel> GetrecordIndexbyModuleId(int moduleId);
   
         bool FileUpload(int id, FileUploadModel File);
+
+        FileUploadModel ImageonlyDownload(string ImageValue);
     }
 }

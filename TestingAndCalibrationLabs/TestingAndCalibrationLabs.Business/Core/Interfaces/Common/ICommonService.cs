@@ -91,6 +91,6 @@ namespace TestingAndCalibrationLabs.Business.Core.Interfaces
         RecordsModel GetRecordsIndex(int moduleId);
         bool FileUpdate(int id, FileUploadModel fileUploadModel);
 
-
+        FileUploadModel OnlyimageDownload(string ImageValue);
      }
 }  
