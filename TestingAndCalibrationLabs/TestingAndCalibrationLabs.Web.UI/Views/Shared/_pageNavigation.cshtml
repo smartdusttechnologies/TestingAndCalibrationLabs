@@ -5,7 +5,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" id="dropdownContentSettings" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" style="display:none" id="nav-item-FullPage" onclick="toggleFullScreen(++Page)">
-                FullPage
+                Exit FullPage
             </a>
         </div>
     </li>
@@ -113,18 +113,19 @@
     var Page = 0;
     function toggleFullScreen(Screen) {
         var Element = document.getElementById('PageBody');
-        var Size = window.matchMedia("(min-width:0px)");
+        var Size = window.matchMedia("(min-width: 600px)");
         if (Screen == 1 && Size.matches) {
-            Element.style = "padding-right: 0px;padding-left: 0px;";
-            document.getElementById('nav-item-FullPage').innerHTML = "Exit FullPage";
+            Element.style = "padding-right:230px;padding-left: 230px;;";
+            document.getElementById('nav-item-FullPage').innerHTML = " FullPage";
         }
         else {
-            var View = window.matchMedia("(min-width: 600px)")
+            var View = window.matchMedia("(min-width:0px)")
             Page = 0;
             if (View.matches) {
-                Element.style = "padding-right:230px;padding-left: 230px;";
+                Element.style = "padding-right: 0px;padding-left: 0px;";
             }
-            document.getElementById('nav-item-FullPage').innerHTML = "FullPage";
+            document.getElementById('nav-item-FullPage').innerHTML = "Exit FullPage";
         }
     }
+    
 </script>

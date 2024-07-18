@@ -286,6 +286,7 @@ namespace TestingAndCalibrationLabs.Business.Data.Repository
 												 and ucct.IsDeleted=0
 												 and uct.IsDeleted=0
 												 and l.IsDeleted=0
+                                                 and upmmb.IsDeleted=0
                                                     ", new { ModuleLayoutId = moduleLayoutId, moduleIds = ModuleIds }).ToList();
             return Displaynames;
         }

@@ -1,4 +1,21 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.RecordsDTO
+<style>
+    @@media screen and (max-width: 767px) {
+        .icon-plus {
+            display: block;
+            /*  position: fixed;
+            bottom: 20px; */
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+       
+    }
+</style>
 <input type="hidden" asp-for="ModuleId" />
 
 <div class="border width-full" style="margin:0;padding:0;border-bottom:2px solid !important;">

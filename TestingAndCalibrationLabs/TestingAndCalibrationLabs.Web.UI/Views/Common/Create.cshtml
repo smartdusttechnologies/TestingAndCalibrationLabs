@@ -2,11 +2,26 @@
 @{
     ViewData["Title"] = "Create";
 }
-@*<style>
-    .fixed-bottom {
+<style>
+    /* CSS for the Save button */
+    .button-base {
         position: relative;
+        z-index: 1040; 
     }
-</style>*@
+
+    /* CSS for the snackbar or overlay div */
+    /* .snackbar {
+        position: fixed; 
+        bottom: 0; 
+        width: 100%;
+        z-index: 999;
+       
+    } */
+
+   /*  .fixed-bottom {
+        position: relative;
+    } */
+</style>
 <div class="container-fluid">
     <div>
         <form id="commonForm" asp-controller="Common" asp-action="Create">
