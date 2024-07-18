@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {}
+    "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {}
   },
   "projects": {
-    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+    "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
+        "projectUniqueName": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
         "projectName": "TestingAndCalibrationLabs.Business",
-        "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
-        "packagesPath": "C:\\Users\\apurw\\.nuget\\packages\\",
-        "outputPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\obj\\",
+        "projectPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj",
+        "packagesPath": "C:\\Users\\82941\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\apurw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\82941\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -46,15 +52,15 @@
             },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[11.0.0, )"
+              "version": "[12.0.1, )"
             },
             "Dapper": {
               "target": "Package",
-              "version": "[2.0.123, )"
+              "version": "[2.1.35, )"
             },
             "Google.Apis.Drive.v3": {
               "target": "Package",
-              "version": "[1.57.0.2789, )"
+              "version": "[1.68.0.3428, )"
             },
             "ImageProcessor": {
               "target": "Package",
@@ -66,11 +72,23 @@
             },
             "MailKit": {
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.MicrosoftAccount": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             },
             "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
               "target": "Package",
               "version": "[6.0.5, )"
+            },
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
             },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
@@ -83,6 +101,10 @@
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[6.18.0, )"
+            },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.6.2, )"
             },
             "PagedList": {
               "target": "Package",
@@ -124,39 +146,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {
+    "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
         "projectName": "TestingAndCalibrationLabs.Tests",
-        "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
-        "packagesPath": "C:\\Users\\apurw\\.nuget\\packages\\",
-        "outputPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
+        "projectPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\TestingAndCalibrationLabs.Tests.csproj",
+        "packagesPath": "C:\\Users\\82941\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\apurw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\82941\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "netcoreapp6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "netcoreapp6.0",
             "projectReferences": {
-              "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
-                "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+              "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+                "projectPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
               },
-              "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
-                "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
+              "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+                "projectPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj"
               }
             }
           }
@@ -165,15 +188,44 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "netcoreapp6.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
             "FluentAssertions.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[4.2.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.MicrosoftAccount": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
@@ -192,8 +244,10 @@
               "version": "[4.0.0, )"
             },
             "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[6.0.2, )"
             }
           },
           "imports": [
@@ -212,37 +266,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
+    "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
+        "projectUniqueName": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
         "projectName": "TestingAndCalibrationLabs.Web.UI",
-        "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
-        "packagesPath": "C:\\Users\\apurw\\.nuget\\packages\\",
-        "outputPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\obj\\",
+        "projectPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\TestingAndCalibrationLabs.Web.UI.csproj",
+        "packagesPath": "C:\\Users\\82941\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Web.UI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\apurw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\82941\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "netcoreapp6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net6.0": {
+            "targetAlias": "netcoreapp6.0",
             "projectReferences": {
-              "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
-                "projectPath": "D:\\SmartDust\\QueryBuilder\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
+              "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj": {
+                "projectPath": "C:\\Users\\82941\\Desktop\\TemplatewithDashMerge\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs\\TestingAndCalibrationLabs.Business\\TestingAndCalibrationLabs.Business.csproj"
               }
             }
           }
@@ -251,11 +305,16 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net6.0": {
+          "targetAlias": "netcoreapp6.0",
           "dependencies": {
             "AutoMapper": {
               "target": "Package",
@@ -263,7 +322,7 @@
             },
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[12.0.0, )"
+              "version": "[12.0.1, )"
             },
             "CloudinaryDotNet": {
               "target": "Package",
@@ -271,7 +330,7 @@
             },
             "Dapper": {
               "target": "Package",
-              "version": "[2.0.123, )"
+              "version": "[2.1.35, )"
             },
             "EPPlus": {
               "target": "Package",
@@ -279,11 +338,19 @@
             },
             "MailKit": {
               "target": "Package",
-              "version": "[3.3.0, )"
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[3.1.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.MicrosoftAccount": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             },
             "Microsoft.AspNetCore.Hosting": {
               "target": "Package",
@@ -293,9 +360,25 @@
               "target": "Package",
               "version": "[3.1.32, )"
             },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.5, )"
+            },
+            "NLog": {
+              "target": "Package",
+              "version": "[4.7.10, )"
+            },
+            "NLog.Web.AspNetCore": {
+              "target": "Package",
+              "version": "[4.12.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -308,10 +391,6 @@
             "iTextSharp": {
               "target": "Package",
               "version": "[5.5.13.3, )"
-            },
-            "smartdusttechnologies.util.raj.logger": {
-              "target": "Package",
-              "version": "[1.1.2, )"
             }
           },
           "imports": [
@@ -333,7 +412,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
