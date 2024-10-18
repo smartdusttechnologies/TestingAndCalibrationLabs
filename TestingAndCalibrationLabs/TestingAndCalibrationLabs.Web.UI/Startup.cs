@@ -137,7 +137,6 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<ITemplateService, TemplateService>();
             services.AddScoped<IDocumentService, DocumentService>();
 
-
             services.AddScoped<IUiPageNavigationService, UiPageNavigationService>();
             services.AddScoped<IActivityMetadataService, ActivityMetadataService>();         
             services.AddScoped<IActivityService, ActivityService>();
@@ -146,7 +145,9 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
 
             services.AddScoped<IPasswordPolicyService, PasswordPolicyService>();
             services.AddScoped<IDashboardService, DashboardService>();
-            
+            services.AddScoped<ICustomerDetailsService, CustomerDetailsService>();
+
+
 
 
 
@@ -172,6 +173,7 @@ options.ClientSecret = Configuration.GetSection("MicrosoftKeys:ClientSecret").Va
             services.AddScoped<IGenericRepository<LookupCategoryModel>, GenericRepository<LookupCategoryModel>>();
             //services.AddScoped<IGenericRepository<Layout2Model>, GenericRepository<Layout2DTO>>();
             services.AddScoped<IGenericRepository<LookupModel>, GenericRepository<LookupModel>>();
+            services.AddScoped<IGenericRepository<CustomerDetailsModel>, GenericRepository<CustomerDetailsModel>>();
             services.AddScoped<IGenericRepository<UiPageDataModel>, GenericRepository<UiPageDataModel>>();
             services.AddScoped<IGenericRepository<UiNavigationCategoryModel>, GenericRepository<UiNavigationCategoryModel>>();
             services.AddScoped<IGenericRepository<LayoutMModel>, GenericRepository<LayoutMModel>>();

@@ -96,9 +96,12 @@
     var updatedDate = mainModel.updatedDate;
     var url = $("#commonForm").attr("action");
     var id = parseInt($("#Id").val())
+
     function AjaxFormSubmit() {
         WheelLoader();
         var workflowStageId = parseInt($("#WorkflowStageId").val())
+        // var customerId = parseInt($("#CustomerId").val());
+
         //createRipple(this);
         //Set the URL.
         var url = $("#commonForm").attr("action");
@@ -122,7 +125,6 @@
                 var metadataId = uiPageMetaData[i].id;
                 var List;
                 if (uiPageMetaData[i].multiValueControl == true) {
-
                     var filddata = $(fieldId).val();
                     if (filddata != undefined){
                     List = filddata.split(",");
@@ -138,6 +140,7 @@
                    
                 }
                 if (uiPageMetaData[i].multiValueControl != true) {
+
                     var fieldValue = $(fieldId).val();
                     var keyValuepair = {};
                     keyValuepair.UiPageMetadataId = metadataId;

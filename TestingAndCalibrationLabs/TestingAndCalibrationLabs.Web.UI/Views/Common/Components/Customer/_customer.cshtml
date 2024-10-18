@@ -1,47 +1,357 @@
 ﻿@model TestingAndCalibrationLabs.Web.UI.Models.Node<TestingAndCalibrationLabs.Web.UI.Models.LayoutDTO>
-<div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control black-border right-pd-input">
-    <select class="form-input width-full black-border" name="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" placeholder=" " rows="1" onchange="this.setAttribute('value',this.value)" for="@Model.Value.UiPageMetadata.UiControlDisplayName" />
-    </select>
-    <label class="form-label" for="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id"> @Model.Value.UiPageMetadata.UiControlDisplayName</label>
-    <span asp-validation-for="@Model.Value.UiPageMetadata.UiControlDisplayName" class="text-danger"></span>
+<style>
+        .suggestions-dropdown {
+        border: 1px solid #ddd;
+        max-height: 150px;
+        overflow-y: auto;
+        background-color: white;
+        z-index: 1000;
+        position: absolute;
+        width: 100%;
+    }
+
+    .accordion-header{
+        margin-top:10;
+    }
+
+    .suggestions-dropdown div {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .suggestions-dropdown div:hover {
+        background-color: #f0f0f0;
+    }
+
+</style>
+
+<!-- Hidden input to store the selected customer ID -->
+<input type="hidden" id="@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id" name="CustomerId_@Model.Value.UiPageMetadata.Id" value="" />
+
+<div class="accordion accordion-flush" id="accordionFlush-@Model.Value.UiPageMetadata.Id">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-@Model.Value.UiPageMetadata.Id">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-@Model.Value.UiPageMetadata.UiControlTypeName-@Model.Value.UiPageMetadata.Id" aria-expanded="true" aria-controls="flush-@Model.Value.UiPageMetadata.UiControlTypeName-@Model.Value.UiPageMetadata.Id">
+                <span class="fab fa-leanpub me-2"></span>
+                @Model.Value.UiPageMetadata.UiControlDisplayName
+            </button>
+        </h2>
+        <div id="flush-@Model.Value.UiPageMetadata.UiControlTypeName-@Model.Value.UiPageMetadata.Id" class="accordion-collapse collapse" aria-labelledby="flush-@Model.Value.UiPageMetadata.Id" data-bs-parent="#accordionFlush-@Model.Value.UiPageMetadata.Id">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
+                        <input class="form-input width-full black-border" type="text" id="Email_@Model.Value.UiPageMetadata.Id" name="Email_@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" autocomplete="off" />
+                        <label class="form-label" for="Email_@Model.Value.UiPageMetadata.Id">
+                            Email
+                            @if (Model.Value.UiPageMetadata.IsRequired)
+                            {
+                                <span class="red-color">*</span>
+                            }
+                        </label>
+                        <div id="emailSuggestions" class="suggestions-dropdown"></div> 
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
+                        <input class="form-input width-full black-border" type="text" id="Name_@Model.Value.UiPageMetadata.Id" name="Name_@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" autocomplete="off" />
+                        <label class="form-label" for="Name_@Model.Value.UiPageMetadata.Id">
+                            Name
+                            @if (Model.Value.UiPageMetadata.IsRequired)
+                            {
+                                <span class="red-color">*</span>
+                            }
+                        </label>
+                        <div id="nameSuggestions" class="suggestions-dropdown"></div> 
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
+                        <input class="form-input width-full black-border" type="text" id="Address_@Model.Value.UiPageMetadata.Id" name="Address_@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                        <label class="form-label" for="Address_@Model.Value.UiPageMetadata.Id">
+                            Address
+                            @if (Model.Value.UiPageMetadata.IsRequired)
+                            {
+                                <span class="red-color">*</span>
+                            }
+                        </label>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-xs-12 mt-3 form-element-for-common-control right-pd-frm-input">
+                        <input class="form-input width-full black-border" type="text" id="Mobile_@Model.Value.UiPageMetadata.Id" name="Mobile_@Model.Value.UiPageMetadata.Id" placeholder=" " onchange="this.setAttribute('value',this.value)" />
+                        <label class="form-label" for="Mobile_@Model.Value.UiPageMetadata.Id">
+                            Mobile
+                            @if (Model.Value.UiPageMetadata.IsRequired)
+                            {
+                                <span class="red-color">*</span>
+                            }
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script>
     $(document).ready(function () {
         var modelData = JSON.parse('@Json.Serialize(Model)');
-        var lookupCategoryId = modelData.value.uiPageMetadata.moduleLayoutId;
+        var idOfRecord = $("#Id").val();
         var uiPageData = modelData.value.uiPageData;
-        var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("GetByModuleId","WorkflowStage")",
-            data: { moduleId: lookupCategoryId },
-            success: function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    var lookupId = response[i].id;
-                    var lookupName = response[i].name;
-                    if (i == 0) {
-                        $("#WorkflowStageId").val(lookupId);
-                        $(id).append("<option value='" + lookupId + "' selected>" + lookupName + "</option>");
-                    } else {
-                        $(id).append("<option value='" + lookupId + "'>" + lookupName + "</option>");
+        if (idOfRecord != undefined && uiPageData != null) {
+            var lookupCategoryId = modelData.value.uiPageMetadata.moduleLayoutId;
+            var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+            var val = uiPageData[0].value;
+            $(id).val(val);
+            if (val) {
+                $.ajax({
+                    url: '/CustomerDetails/GetbyIdCustomer',
+                    data: { customerId: val },
+                    success: function (response) {
+                        if (response) {
+                            fillFields(response);
+                            makeFieldsReadOnly();
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error retrieving customer details:', error);
                     }
-                }
-                var idOfRecord = $("#Id").val();
-                if (idOfRecord != undefined) {
-                    var selectedId = uiPageData.value;
-                    var changeId = id + " [value=" + selectedId + "]";
-                    $(changeId).attr('selected', 'true');
-                    $("#WorkflowStageId").val(selectedId);
-                }
+                });
+            }
+        }
+
+        var customerData = []; // Store customer data
+        $.ajax({
+            url: "@Url.Action("GetAllCustomerDetails", "CustomerDetails")",
+            success: function (response) {
+                customerData = response; // Store customer data in local memory
             },
             error: function (req, status, error) {
+                console.log("Error fetching customer data: ", error);
             }
         });
 
-        $(id).change(function () {
-            var stageId = this.value;
-            $("#WorkflowStageId").val(stageId);
+        // Function to fill the fields based on selected customer
+        function fillFields(customer) {
+            $('#Email_@Model.Value.UiPageMetadata.Id').val(customer.email);
+            $('#Name_@Model.Value.UiPageMetadata.Id').val(customer.name);
+            $('#Address_@Model.Value.UiPageMetadata.Id').val(customer.address);
+            $('#Mobile_@Model.Value.UiPageMetadata.Id').val(customer.mobile);
+            $('#@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id').val(customer.id);
+        }
+
+        // Function to clear all input fields
+        function clearFields() {
+            $('#Email_@Model.Value.UiPageMetadata.Id').val('');
+            $('#Name_@Model.Value.UiPageMetadata.Id').val('').prop('readonly', false);
+            $('#Address_@Model.Value.UiPageMetadata.Id').val('').prop('readonly', true);
+            $('#Mobile_@Model.Value.UiPageMetadata.Id').val('').prop('readonly', true);
+        }
+
+        // Function to make fields read-only
+        function makeFieldsReadOnly() {
+            $('#Name_@Model.Value.UiPageMetadata.Id').prop('readonly', true);
+            $('#Address_@Model.Value.UiPageMetadata.Id').prop('readonly', true);
+            $('#Mobile_@Model.Value.UiPageMetadata.Id').prop('readonly', true);
+        }
+
+        // Function to filter customer data by email or name
+        function filterCustomerData(searchTerm) {
+            return customerData.filter(function (customer) {
+                return customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+            });
+        }
+
+        // Function to display suggestions in dropdown
+        function showSuggestions(suggestions, dropdownElementId) {
+            var dropdown = $('#' + dropdownElementId);
+            dropdown.empty();
+            if (suggestions.length > 0) {
+                suggestions.forEach(function (customer) {
+                    var suggestionItem = $('<div>').text(customer.name + ' (' + customer.email + ')');
+                    suggestionItem.on('click', function () {
+                        fillFields(customer);
+                        makeFieldsReadOnly();
+                        dropdown.empty();
+                    });
+                    dropdown.append(suggestionItem);
+                });
+            } else {
+                // Show "undefined" if no valid matches
+                dropdown.append($('<div>').text('undefined').css('color', 'red').css('font-weight', 'bold'));
+            }
+        }
+
+        // Function to clear fields if no matching email
+        function clearIfNoMatch(inputValue, type) {
+            var foundCustomer = customerData.find(function (customer) {
+                if (type === "email") {
+                    return customer.email.toLowerCase() === inputValue.toLowerCase();
+                }
+                if (type === "name") {
+                    return customer.name.toLowerCase() === inputValue.toLowerCase();
+                }
+            });
+
+            if (!foundCustomer) {
+                clearFields();
+            }
+        }
+
+        // Email input live search and suggestions
+        $('#Email_@Model.Value.UiPageMetadata.Id').on('input focus', function () {
+            var searchTerm = $(this).val();
+            if (searchTerm.length > 2) {
+                var results = filterCustomerData(searchTerm);
+                showSuggestions(results, 'emailSuggestions');
+            } else {
+                $('#emailSuggestions').empty();
+            }
         });
 
+        // Clear email if no match on blur (when leaving input)
+        $('#Email_@Model.Value.UiPageMetadata.Id').on('blur', function () {
+            var email = $(this).val();
+            if (email.length > 0) {
+                clearIfNoMatch(email, "email");
+            } else {
+                clearFields();
+            }
+        });
+
+        // Name input live search and suggestions
+        $('#Name_@Model.Value.UiPageMetadata.Id').on('input focus', function () {
+            var searchTerm = $(this).val();
+            if (searchTerm.length > 2) {
+                var results = filterCustomerData(searchTerm);
+                showSuggestions(results, 'nameSuggestions');
+            } else {
+                $('#nameSuggestions').empty();
+            }
+        });
+
+        // Clear name if no match on blur
+        $('#Name_@Model.Value.UiPageMetadata.Id').on('blur', function () {
+            var name = $(this).val();
+            if (name.length > 0) {
+                clearIfNoMatch(name, "name");
+            } else {
+                clearFields();
+            }
+        });
+
+        // Hide suggestions if clicked outside the form
+        $(document).click(function (event) {
+            if (!$(event.target).closest('.form-input').length) {
+                $('#emailSuggestions').empty();
+                $('#nameSuggestions').empty();
+            }
+        });
     });
 </script>
+
+@* <script>
+    $(document).ready(function () {
+        debugger;
+        var modelData = JSON.parse('@Json.Serialize(Model)');
+        var idOfRecord = $("#Id").val();
+        var uiPageData = modelData.value.uiPageData;
+        if (idOfRecord != undefined && uiPageData != null) {
+            var lookupCategoryId = modelData.value.uiPageMetadata.moduleLayoutId;
+            var id = "#" + modelData.value.uiPageMetadata.uiControlTypeName + modelData.value.uiPageMetadata.id;
+            var val = uiPageData[0].value;
+            $(id).val(val);
+            if (val) {
+                $.ajax({
+                    url: '/CustomerDetails/GetbyIdCustomer', 
+                    data: { customerId: val }, 
+                    success: function (response) {
+                        debugger;
+                        if (response) {
+                            $("#Email_" + modelData.value.uiPageMetadata.id).val(response.email);
+                            $("#Name_" + modelData.value.uiPageMetadata.id).val(response.name);
+                            $("#Address_" + modelData.value.uiPageMetadata.id).val(response.address);
+                            $("#Mobile_" + modelData.value.uiPageMetadata.id).val(response.mobile);
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error retrieving customer details:', error);
+                    }
+                });
+            }
+        }
+
+        var customerData = []; // Store customer data
+        $.ajax({
+            url: "@Url.Action("GetAllCustomerDetails", "CustomerDetails")",
+            success: function (response) {
+                customerData = response; // Store customer data in local memory
+            },
+            error: function (req, status, error) {
+                console.log("Error fetching customer data: ", error);
+            }
+        });
+
+        // Function to filter customer data
+        function filterCustomerData(searchTerm) {
+            return customerData.filter(function (customer) {
+                return customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+            });
+        }
+
+        // Function to display suggestions in dropdown
+        function showSuggestions(suggestions, dropdownElementId) {
+            var dropdown = $('#' + dropdownElementId);
+            dropdown.empty(); 
+            if (suggestions.length > 0) {
+                suggestions.forEach(function (customer) {
+                    var suggestionItem = $('<div>').text(customer.name + ' (' + customer.email + ')');
+                    suggestionItem.on('click', function () {
+                        $('#Email_@Model.Value.UiPageMetadata.Id').val(customer.email);
+                        $('#Name_@Model.Value.UiPageMetadata.Id').val(customer.name);
+                        $('#Address_@Model.Value.UiPageMetadata.Id').val(customer.address);
+                        $('#Mobile_@Model.Value.UiPageMetadata.Id').val(customer.mobile);
+                        $('#@Model.Value.UiPageMetadata.UiControlTypeName@Model.Value.UiPageMetadata.Id').val(customer.id);
+                        dropdown.empty();
+                    });
+                    dropdown.append(suggestionItem);
+                });
+            }
+        }
+
+        // Hide dropdown if clicked outside the input
+        $(document).click(function (event) {
+            if (!$(event.target).closest('.form-input').length) {
+                $('#emailSuggestions').empty();
+                $('#nameSuggestions').empty();
+            }
+        });
+
+        // Email input change event with focus handling
+        $('#Email_@Model.Value.UiPageMetadata.Id').on('input focus', function () {
+            var searchTerm = $(this).val();
+            if (searchTerm.length > 2) {
+                var results = filterCustomerData(searchTerm);
+                if (results.length > 0) {
+                    showSuggestions(results, 'emailSuggestions'); 
+                } else {
+                    $('#emailSuggestions').empty(); 
+                }
+            } else {
+                $('#emailSuggestions').empty();
+            }
+        });
+        // Name input change event with focus handling
+        $('#Name_@Model.Value.UiPageMetadata.Id').on('input focus', function () {
+            var searchTerm = $(this).val();
+            if (searchTerm.length > 2) {
+                var results = filterCustomerData(searchTerm);
+                if (results.length > 0) {
+                    showSuggestions(results, 'nameSuggestions'); 
+                } else {
+                    $('#nameSuggestions').empty(); 
+                }
+            } else {
+                $('#nameSuggestions').empty(); 
+            }
+        });
+    });
+
+</script>
+ *@

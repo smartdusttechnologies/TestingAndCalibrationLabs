@@ -68,6 +68,8 @@ namespace TestingAndCalibrationLabs.Web.UI.Mappers
             CreateMap<ExternalLogin, UserModel>().ReverseMap();
             CreateMap<PasswordPolicyModel, PasswordPolicyDTO>().ReverseMap();
             CreateMap<DashboardModel , DashboardDTO>().ReverseMap();
+            CreateMap<CustomerDetailsModel, CustomerDetailsDTO>().ReverseMap();
+
         }
     }
 }

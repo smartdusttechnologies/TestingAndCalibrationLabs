@@ -1,0 +1,40 @@
+﻿@model TestingAndCalibrationLabs.Web.UI.Models.CustomerDetailsDTO
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>CustomerDetails</h1>
+<h4>Edit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" _lpchecked="1" class="mb-2" id="pageForm" method="post" asp-controller="CustomerDetails" novalidate>
+            <div asp-validation-summary="All"></div>
+
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Name" name="Name" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Name">
+                <label class="form-label" for="Name">Name</label>
+            </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Email" name="Email" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Email">
+                <label class="form-label" for="Email">Email</label>
+            </div>
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Address" name="Address" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Address">
+                <label class="form-label" for="Address">Address</label>
+            </div>
+
+            <div class="col-lg-8 col-sm-12 col-xs-12 mt-3 form-element-for-common-control  right-pd-frm-input">
+                <input class="form-input width-full black-border" type="text" id="Mobile" name="Mobile" placeholder=" " onchange="this.setAttribute('value',this.value)" asp-for="Mobile">
+                <label class="form-label" for="Mobile">Mobile</label>
+            </div>
+            
+            <div class="col-lg-12 col-sm-12 col-xs-12 mt-3 form-element right-pd-frm-input" style=" margin-bottom:5px;">
+                <input type="submit" value="Save" class="btn btn-lg btn-submit-print text-white" style=" background-color:#4250b5;" onclick="return DisplayProgressMessage(this, 'Saving...');" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
